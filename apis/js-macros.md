@@ -402,12 +402,13 @@ import { RecvMessageEvent } from "jsmacros-types";
 
 JsMacros.on('RecvMessage', JavaWrapper.methodToJavaAsync(event => {
     JsMacros.assertEvent(event, 'RecvMessage');
-    // After this line, TypeScript knows `event` is a RecvMessageEvent
+    // After this line, This throws if event is not a RecvMessage, additionally informing TypeScript that `event` is a RecvMessageEvent
+
     const message: string = event.text.getString();
     Chat.log(message);
 }));
 ```
-Asserts that an event object is of a specific type. This has no effect in standard JavaScript but acts as a type guard in TypeScript, enabling type-safe access to event properties.
+Asserts that an event object is of a specific type. In standard JavaScript this throws if the eventdoes not match and acts as a type guard in TypeScript, enabling type-safe access to event properties.
 
 **Params**
 1. `event: BaseEvent`: The event object to check.
