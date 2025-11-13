@@ -1,21 +1,16 @@
 # EventAttackBlock
-
-This event is fired when the player left-clicks a block, initiating the breaking process.
+This event is fired when the player left-clicks (attacks) a block. It triggers on the initial click, not when the block is broken.
 
 ## Example
 ```javascript
-// Log when a player starts breaking a block
+// Log the details of a block when it is attacked
 const listener = JsMacros.on('AttackBlock', JavaWrapper.methodToJavaAsync(event => {
     JsMacros.assertEvent(event, 'AttackBlock');
-
-    const block = event.block;
-    const side = event.side;
-
-    // Correlates to net.minecraft.util.math.Direction
-    const sideNames = ["DOWN", "UP", "NORTH", "SOUTH", "WEST", "EAST"];
-    const sideName = sideNames[side] || "Unknown";
-
-    Chat.log(`Started attacking ${block.getId()} on its ${sideName} face.`);
+    
+    const sideNames = ['Bottom', 'Top', 'North', 'South', 'West', 'East'];
+    const sideName = sideNames[event.side] || 'Unknown';
+    
+    Chat.log(`Attacked block: ${event.block.getId()} on the ${sideName} face.`);
 }));
 ```
 
@@ -27,7 +22,7 @@ const listener = JsMacros.on('AttackBlock', JavaWrapper.methodToJavaAsync(event 
 - [event.toString()](#eventtostring)
 
 ### event.block
-A helper for the block that is being attacked.
+A helper object containing information about the block that was attacked.
 
 **Type:** `BlockDataHelper`
 
@@ -37,13 +32,13 @@ An integer representing the side of the block that was hit.
 **Type:** `int`
 
 **Notes**
-The integer values correspond to the following sides:
-- `0`: Down (y-negative)
-- `1`: Up (y-positive)
-- `2`: North (z-negative)
-- `3`: South (z-positive)
-- `4`: West (x-negative)
-- `5`: East (x-positive)
+The integer corresponds to a specific face of the block:
+- `0`: Bottom (y-)
+- `1`: Top (y+)
+- `2`: North (z-)
+- `3`: South (z+)
+- `4`: West (x-)
+- `5`: East (x+)
 
 ### event.toString()
 Returns a string representation of the event object.
