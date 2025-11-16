@@ -2,211 +2,285 @@
 
 ## Structure for Event Documentation Files
 
-Based on comprehensive analysis of all event files in the `events/` directory, the following structure is required for all event documentation files:
+All event docs must follow this exact structure and naming so tools and LLMs can reliably index and use them.
 
-### 1. File Header
-- **Level 1 Heading**: The event name (e.g., `# EventAirChange`)
-- **Description**: Brief description of what triggers the event
-  - Should clearly state when the event fires
-  - Should be concise and informative
-  - Should describe the player action or game state change that causes the event
+### 1) File header
 
-### 2. Example Section
-- **Level 2 Heading**: `## Example`
-- **Fenced Code Block**: ` ```js `
-- **Complete Event Listener**: Must show full event registration and handling pattern
-  - **Registration**: `JsMacros.on('EventName', JavaWrapper.methodToJavaAsync(event => { ... }))`
-  - **Event Assertion**: `JsMacros.assertEvent(event, 'EventName')`
-  - **Practical Usage**: Realistic examples of handling the event
-  - **Context**: Include meaningful logic that demonstrates why someone would use this event
-  - **Multiple Lines**: Show complex handling when appropriate
+* **Level 1 heading (`#`)**: the **event name as used in `JsMacros.on`**, followed by the word `Event`
 
-### 3. Fields Index Section (Optional)
-- **Level 2 Heading**: `## Fields` (only if event has fields)
-- **Bulleted List**: All event fields with anchor links
-  - Format: `- [event.fieldName](#event-fieldname)`
-  - Include only for events that have accessible fields
-  - All event properties should be prefixed with `event.`
+  * Example: `# HeldItemChange Event`, `# RecvMessage Event`
+  * (Avoid class-first forms like `EventHeldItemChange`.)
+* **One-sentence description** of what triggers the event
 
-### 4. Methods Index Section
-- **Level 2 Heading**: `## Methods`
-- **Bulleted List**: All methods with anchor links to their detailed sections
-  - Format: `- [event.methodName()](#event-methodname)`
-  - Anchor links use lowercase with hyphens for spaces
-  - At minimum should include `event.toString()`
-  - Methods should be listed in logical order (toString first, then other methods)
+  * State **when** it fires and **what changed**.
 
-### 5. Field Documentation Sections (Optional)
-If the event has fields, each field should be documented with:
+### 2) Signature
 
-#### a. Field Heading
-- **Level 3 Heading**: `### event.fieldName`
-- **Anchor Link**: Matches the link in the Fields index
-- **Consistent Naming**: Use `event.` prefix for all field references
+* **Level 2 heading (`## Signature`)**
+* A fenced `js` code block showing the **canonical listener pattern**:
 
-#### b. Description
-- Brief description of what the field represents
-- Include context about when the field is populated
-- Include usage warnings or special considerations when applicable
+  ```js
+  JsMacros.on("EventName", (event) => {
+    // ...
+  });
+  ```
+* If the async wrapper is commonly used, include it as a second snippet **below** the minimal signature:
 
-#### c. Type Section
-- **Level 4 Heading**: `**Type**`
-- **Type Information**: Direct type specification (no bullet list)
-- Format: `**Type:** `type``
-- Use precise type names: `int`, `string`, `ItemStackHelper`, `BlockDataHelper`, etc.
+  ```js
+  JsMacros.on("EventName", JavaWrapper.methodToJavaAsync((event) => {
+    // ...
+  }));
+  ```
 
-#### d. Notes Section (Optional)
-- **Level 4 Heading**: `**Notes**`
-- Additional context, constraints, or important information
-- Include when there are specific value ranges, possible values, or special considerations
-- For numeric fields, include unit information and typical ranges
-- For enum-like fields, list all possible values
+### 3) Event payload (table)
 
-### 6. Method Documentation Sections
-Each method should have the following structure:
+* **Level 2 heading (`## Event payload`)**
 
-#### a. Method Heading
-- **Level 3 Heading**: `### event.methodName()`
-- **Anchor Link**: Matches the link in the Methods index
-- **Parentheses**: Include `()` in method names to clearly indicate methods
+* A single table listing fields with types and a short description:
 
-#### b. Description
-- Brief description of what the method does
-- For `toString()`, use consistent wording: "Returns a string representation of the event object."
+  | Field       | Type       | Description |
+  | ----------- | ---------- | ----------- |
+  | `fieldName` | `TypeName` | What it is. |
 
-#### c. Parameters Section
-- **Level 4 Heading**: `**Params**`
-- **Standard Format**: `* `(none)`` for methods with no parameters
-- **Numbered List**: Only used when method has parameters (rare for events)
+* Keep names literal (match runtime). Link helper types to their pages.
 
-#### d. Returns Section
-- **Level 4 Heading**: `**Returns**`
-- **Type Information**: Direct type specification (no bullet list)
-- Format: `* `type``
+### 4) Behavior / notes
+
+* **Level 2 heading (`## Behavior`)**
+* Bulleted list calling out **trigger conditions, edge cases, empty states, timing,** and **whether the event can be cancelled** (if applicable).
+* Examples:
+
+  * “Triggers on swap, consume, drop, hotbar scroll.”
+  * “Fields may be empty when …”
+  * “Fires on client tick after …”
+  * “Not cancellable.”
+
+### 5) Examples
+
+Provide **two** focused examples unless the event is trivial:
+
+* **`## Minimal example`**
+  Small, synchronous, copy-paste-ready.
+* **`## Async example`** *(if relevant)*
+  Shows `JavaWrapper.methodToJavaAsync` usage and any common async patterns.
+
+Each example:
+
+* Shows the full listener registration.
+* Contains realistic logic (not just a print).
+* Avoids unnecessary helpers unless they’re central to usage.
+
+### 6) Fields index (optional)
+
+* **`## Fields`** — include **only if** the event exposes fields.
+* Bulleted links to each field section:
+
+  * `- [event.fieldName](#eventfieldname)`
+
+### 7) Methods index
+
+* **`## Methods`**
+* Bulleted links to event methods (if any). Always include `toString()`:
+
+  * `- [event.toString()](#eventtostring)`
+
+### 8) Field documentation sections (per field)
+
+For each field present:
+
+* **`### event.fieldName`**
+  One-paragraph description (what it represents, when populated, caveats).
+* **Type**: inline, exact type name
+
+  * Format: `**Type:** TypeName`
+  * Use precise names: `int`, `string`, `boolean`, `ItemStackHelper`, `BlockDataHelper`, etc.
+* **Notes** (optional): short bullets for constraints, ranges, enum values, “may be empty,” units, etc.
+
+### 9) Method documentation sections (per method)
+
+For each event method:
+
+* **`### event.methodName()`**
+* One-sentence description.
+
+  * For `toString()`: “Returns a string representation of the event.”
+* **Params**:
+
+  * Use `**Params**` then `* \`(none)`` if no parameters,
+  * Or a numbered list if parameters exist (rare for events).
+* **Returns**:
+
+  * Use `**Returns**` then `* \`TypeName``
+
+### 10) See also
+
+* **`## See also`**
+  Cross-link to closely related events/APIs/classes so readers and retrievers can hop:
+
+  * Other events commonly paired with this one
+  * APIs used in examples (e.g., `Chat.actionbar`)
+  * Helper types referenced in payload (e.g., `ItemStackHelper`)
+
+---
 
 ## Event-Specific Guidelines
 
-### Event Names and Classes
-- Use the full event class name in the heading (e.g., `EventAirChange`, `EventArmorChange`)
-- The event name used in `JsMacros.on()` is typically the class name without the "Event" prefix
-- Always include the event assertion: `JsMacros.assertEvent(event, 'EventName')`
+### Event names vs. classes
 
-### Field Naming and Types
-- All fields are accessed via `event.fieldName` pattern
-- Common field types include:
-  - `int`: For numeric values (air levels, side integers, etc.)
-  - `string`: For text values (slot names, etc.)
-  - `ItemStackHelper`: For item-related data
-  - `BlockDataHelper`: For block-related data
-- Provide context for numeric fields (units, ranges, meanings)
+* **Heading uses the event name** (the string passed to `JsMacros.on`), plus “Event”.
 
-### Example Content Standards
-- **Complete Registration**: Always show the full event listener setup
-- **Real-world Scenarios**: Examples should solve actual problems players might encounter
-- **Event Validation**: Include `JsMacros.assertEvent()` for type safety
-- **Error Handling**: Show how to handle edge cases when relevant
-- **Complex Logic**: Include meaningful conditional logic and processing
+  * Example: `# HeldItemChange Event`
+* If helpful, you may mention the backing class in the first description sentence:
 
-### Special Event Considerations
-- **Empty States**: Note when fields might be empty (e.g., unequipped armor slots)
-- **Timing**: Specify when the event fires in the game loop
-- **Cancellation**: Note if the event can be cancelled (not applicable to current events but important for future events)
-- **Threading**: Note any thread safety considerations
+  * “Backed by class `EventHeldItemChange`.”
+* In examples, **do not** assert with the class name—use the event name exactly:
+  `JsMacros.assertEvent(event, "HeldItemChange")`
+
+### Field naming and types
+
+* Access as `event.fieldName`. Use literal names from the runtime.
+* Common types: `int`, `string`, `boolean`, `void`
+* Helper types: `ItemStackHelper`, `BlockDataHelper`, `TextHelper`, etc.
+* Provide context for numbers (units, ranges).
+
+### Example content standards
+
+* **Show full listener** in every example (no partials).
+* Prefer realistic scenarios users actually want to do.
+* Include simple conditional logic and one or two meaningful lines of work.
+* Use the async wrapper **only** in the async example.
+* Keep examples short; avoid unrelated helpers.
+
+### Special considerations
+
+* **Empty states**: document when helpers can be “empty” and what that means.
+* **Timing**: note if it fires pre/post action or on which tick phase, if known.
+* **Cancellation**: call out if supported (most aren’t; say “Not cancellable”).
+* **Threading**: if relevant, add a brief note.
+
+---
 
 ## Type Annotations
 
-### Standard Types
-- Use precise type names without markdown formatting in Type sections
-- Common types: `string`, `int`, `boolean`, `void`
-- Helper types: `ItemStackHelper`, `BlockDataHelper`, `TextHelper`
-- Java types: Use Java class names when appropriate
+### Standard types
 
-### Consistency
-- Use `int` rather than `number` for integer fields
-- Use `string` for text fields
-- Use helper type names consistently (e.g., always `ItemStackHelper`, not variations)
+* Use exact names without markdown formatting in Type/Returns lines:
+
+  * `string`, `int`, `boolean`, `void`
+  * Helper/Java types as needed: `ItemStackHelper`, `BlockDataHelper`, `TextHelper`, `SLF4J.Logger`, etc.
+
+### Consistency rules
+
+* Prefer `int` over `number` for integers.
+* Keep helper type names consistent (e.g., always `ItemStackHelper`).
+
+---
 
 ## Additional Guidelines
 
-### Documentation Standards
-- **No "none" Methods**: Use `* `(none)`` for Params sections with no parameters
-- **Consistent Formatting**: Use `**Type:** `type`` for Type sections
-- **Complete Coverage**: Every public method and field must be documented
-- **Event Pattern**: Always show the complete event listener pattern in examples
+### Formatting rules
 
-### Cross-References
-- Reference other events when they provide similar functionality
-- Use markdown links for cross-references
-- Include related event suggestions where helpful
+* For params with none: `**Params**` then `* \`(none)``.
+* For returns: `**Returns**` then `* \`TypeName`` (no bullets except the single item).
+* Keep section order exactly as defined above across all files.
 
-### File Organization
-- Files should be named with kebab-case matching the event name
-- Empty files should be filled with the standard format before being considered complete
-- All files should follow the same section order
+### Cross-references
 
-## Format Compliance Summary
+* Link to sibling events and API pages with relative paths.
+* Add 1–3 “See also” links maximum, chosen for usefulness.
 
-**Current Status**: GOOD - 3 of 5 event files in the `events/` directory follow this format structure with high-quality documentation.
+### File organization
 
-**Files Analyzed**:
-- ✅ `air-change.md` - Complete and follows format
-- ✅ `armor-change.md` - Complete and follows format
-- ✅ `attack-block.md` - Complete and follows format
-- ❌ `attack-entity.md` - Empty file, needs completion
-- ❌ `index.md` - Empty file, needs completion
+* File name: **kebab-case of the event name** (e.g., `held-item-change.md`).
+* Each file documents **one** event.
+* New files should ship with all standard sections, even if some are briefly “not applicable.”
 
-**Key Strengths**:
-- Consistent structure across completed files
-- High-quality, practical examples with complete event listener patterns
-- Complete field documentation with proper type information
-- Helpful Notes sections with context and constraints
-- Standardized method documentation
-
-**Areas for Improvement**:
-- Complete the empty files (`attack-entity.md`, `index.md`)
-- Ensure all new events follow this established pattern
-- Maintain consistency in example quality and complexity
+---
 
 ## Template for New Event Files
 
-```markdown
-# EventName
+````markdown
+# EventName Event
 
-Brief description of what triggers this event.
+One-sentence description of what triggers this event. (Optionally mention backing class, e.g., `EventEventName`.)
 
-## Example
-```javascript
-// Complete event listener example
-const listener = JsMacros.on('EventName', JavaWrapper.methodToJavaAsync(event => {
-    JsMacros.assertEvent(event, 'EventName');
+## Signature
+```js
+JsMacros.on("EventName", (event) => {
+  // ...
+});
+````
 
-    // Event handling logic here
-    Chat.log("Event occurred with data: " + event.fieldName);
+```js
+// Async pattern (if relevant)
+JsMacros.on("EventName", JavaWrapper.methodToJavaAsync((event) => {
+  // ...
 }));
 ```
 
-## Fields (if applicable)
-- [event.field1](#event-field1)
-- [event.field2](#event-field2)
+## Event payload
+
+| Field     | Type     | Description           |
+| --------- | -------- | --------------------- |
+| fieldName | TypeName | What it is / when set |
+
+## Behavior
+
+* Trigger conditions (e.g., swap, consume, drop)
+* Empty-state notes (when helpers may be empty)
+* Timing (if known)
+* Cancellable: No (or Yes, with details)
+
+## Minimal example
+
+```js
+JsMacros.on("EventName", (e) => {
+  // short, practical logic
+});
+```
+
+## Async example
+
+```js
+JsMacros.on("EventName", JavaWrapper.methodToJavaAsync((e) => {
+  // short, practical async logic
+}));
+```
+
+## Fields
+
+* [event.fieldName](#eventfieldname)
 
 ## Methods
-- [event.toString()](#eventtostring)
-- [event.otherMethod()](#eventothermethod)
 
-### event.field1
-Description of the field.
+* [event.toString()](#eventtostring)
 
-**Type:** `FieldType`
+### event.fieldName
+
+Short description.
+
+**Type:** TypeName
 
 **Notes**
-Additional context or constraints.
+
+* Constraints / ranges / enums as bullets
 
 ### event.toString()
-Returns a string representation of the event object.
+
+Returns a string representation of the event.
 
 **Params**
+
 * `(none)`
 
 **Returns**
+
 * `string`
+
+## See also
+
+* [RelatedEvent](./related-event.md)
+* [Related API](../apis/chat.md#chatactionbar)
+* [Related Helper](../classes/item-stack-helper.md)
+
 ```
