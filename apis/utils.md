@@ -3,16 +3,19 @@
 A collection of miscellaneous utility functions, including clipboard access, hashing, encoding, and more. Accessible from scripts via the global `Utils` variable.
 
 ## Methods
-- [Utils.openUrl](#utilsopenurl)
-- [Utils.openFile](#utilsopenfile)
-- [Utils.copyToClipboard](#utilscopytoclipboard)
-- [Utils.getClipboard](#utilsgetclipboard)
-- [Utils.guessName](#utilsguessname)
-- [Utils.guessNameAndRoles](#utilsguessnameandroles)
-- [Utils.hashString](#utilshashstring)
-- [Utils.encode](#utilsencode)
-- [Utils.decode](#utilsdecode)
-- [Utils.requireNonNull](#utilsrequirenonnull)
+- [Utils](#utils)
+  - [Methods](#methods)
+    - [Utils.openUrl](#utilsopenurl)
+    - [Utils.openFile](#utilsopenfile)
+    - [Utils.copyToClipboard](#utilscopytoclipboard)
+    - [Utils.getClipboard](#utilsgetclipboard)
+    - [Utils.guessName](#utilsguessname)
+    - [Utils.guessNameAndRoles](#utilsguessnameandroles)
+    - [Utils.hashString](#utilshashstring)
+      - [Overloads](#overloads)
+    - [Utils.encode](#utilsencode)
+    - [Utils.decode](#utilsdecode)
+    - [Utils.requireNonNull](#utilsrequirenonnull)
 
 ### Utils.openUrl
 ```js

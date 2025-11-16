@@ -9,11 +9,15 @@ This library handles the different threading models of various scripting languag
 > **Note:** This library was previously available as the `consumer` global variable. `JavaWrapper` is the modern name.
 
 ## Methods
-- [JavaWrapper.methodToJava](#javawrappermethodtojava)
-- [JavaWrapper.methodToJavaAsync](#javawrappermethodtojavaasync)
-- [JavaWrapper.deferCurrentTask](#javawrapperdefercurrenttask)
-- [JavaWrapper.getCurrentPriority](#javawrappergetcurrentpriority)
-- [JavaWrapper.stop](#javawrapperstop)
+- [JavaWrapper](#javawrapper)
+  - [Methods](#methods)
+    - [JavaWrapper.methodToJava](#javawrappermethodtojava)
+    - [JavaWrapper.methodToJavaAsync](#javawrappermethodtojavaasync)
+      - [Overloads](#overloads)
+    - [JavaWrapper.deferCurrentTask](#javawrapperdefercurrenttask)
+      - [Overloads](#overloads-1)
+    - [JavaWrapper.getCurrentPriority](#javawrappergetcurrentpriority)
+    - [JavaWrapper.stop](#javawrapperstop)
 
 ### JavaWrapper.methodToJava
 ```js

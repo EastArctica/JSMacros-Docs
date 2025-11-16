@@ -28,9 +28,14 @@ const listener = JsMacros.on('ArmorChange', JavaWrapper.methodToJavaAsync(event 
 ```
 
 ## Fields
-- [event.slot](#eventslot)
-- [event.item](#eventitem)
-- [event.oldItem](#eventolditem)
+- [EventArmorChange](#eventarmorchange)
+  - [Example](#example)
+  - [Fields](#fields)
+  - [Methods](#methods)
+    - [event.slot](#eventslot)
+    - [event.item](#eventitem)
+    - [event.oldItem](#eventolditem)
+    - [event.toString()](#eventtostring)
 
 ## Methods
 - [event.toString()](#eventtostring)

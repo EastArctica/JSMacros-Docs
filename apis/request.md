@@ -3,11 +3,15 @@
 Functions for making HTTP requests and managing WebSockets. Accessible from scripts via the global `Request` variable.
 
 ## Methods
-- [Request.create](#requestcreate)
-- [Request.get](#requestget)
-- [Request.post](#requestpost)
-- [Request.createWS](#requestcreatews)
-- [Request.createWS2](#requestcreatews2)
+- [Request](#request)
+  - [Methods](#methods)
+    - [Request.create](#requestcreate)
+    - [Request.get](#requestget)
+      - [Overloads](#overloads)
+    - [Request.post](#requestpost)
+      - [Overloads](#overloads-1)
+    - [Request.createWS](#requestcreatews)
+    - [Request.createWS2](#requestcreatews2)
 
 ### Request.create
 ```js

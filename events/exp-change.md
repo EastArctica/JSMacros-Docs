@@ -64,12 +64,21 @@ JsMacros.on("EXPChange", JavaWrapper.methodToJavaAsync((e) => {
 ```
 
 ## Fields
-- [event.progress](#eventprogress)
-- [event.total](#eventtotal)
-- [event.level](#eventlevel)
-- [event.prevProgress](#eventprevprogress)
-- [event.prevTotal](#eventprevtotal)
-- [event.prevLevel](#eventprevlevel)
+- [EXPChange Event](#expchange-event)
+  - [Signature](#signature)
+  - [Event payload](#event-payload)
+  - [Behavior](#behavior)
+  - [Minimal example](#minimal-example)
+  - [Async example](#async-example)
+  - [Fields](#fields)
+  - [Methods](#methods)
+    - [event.progress](#eventprogress)
+    - [event.total](#eventtotal)
+    - [event.level](#eventlevel)
+    - [event.prevProgress](#eventprevprogress)
+    - [event.prevTotal](#eventprevtotal)
+    - [event.prevLevel](#eventprevlevel)
+    - [event.toString()](#eventtostring)
 
 ## Methods
 - [event.toString()](#eventtostring)

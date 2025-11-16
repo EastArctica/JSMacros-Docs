@@ -3,10 +3,15 @@
 A library of helper functions for creating position and vector objects. Accessible from scripts via the global `PositionCommon` variable.
 
 ## Methods
-- [PositionCommon.createVec](#positioncommoncreatevec)
-- [PositionCommon.createLookingVector](#positioncommoncreatelookingvector)
-- [PositionCommon.createPos](#positioncommoncreatepos)
-- [PositionCommon.createBlockPos](#positioncommoncreateblockpos)
+- [PositionCommon](#positioncommon)
+  - [Methods](#methods)
+    - [PositionCommon.createVec](#positioncommoncreatevec)
+      - [Overloads](#overloads)
+    - [PositionCommon.createLookingVector](#positioncommoncreatelookingvector)
+      - [Overloads](#overloads-1)
+    - [PositionCommon.createPos](#positioncommoncreatepos)
+      - [Overloads](#overloads-2)
+    - [PositionCommon.createBlockPos](#positioncommoncreateblockpos)
 
 ### PositionCommon.createVec
 ```js
