@@ -125,7 +125,7 @@ Hashes a string using a specified cryptographic algorithm.
 3. `base64?: boolean = false`: If `true`, the resulting hash is encoded in Base64. Otherwise, it's encoded in hexadecimal.
 
 **Returns**
-* `string`: The resulting hash string.
+* `string`: The resulting hash string. If an unrecognized algorithm is provided, the original message is returned unchanged.
 
 #### Overloads
 - `Utils.hashString(message: string)`

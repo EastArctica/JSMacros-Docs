@@ -48,6 +48,7 @@ Functions for getting and using world data, including blocks, entities, players,
 - [World.getServer1MAverageTPS](#worldgetserver1maveragetps)
 - [World.getServer5MAverageTPS](#worldgetserver5maveragetps)
 - [World.getServer15MAverageTPS](#worldgetserver15maveragetps)
+
 ## Fields
 ### World.serverInstantTPS
 The server's current instantaneous Ticks Per Second (TPS). Do not modify.
