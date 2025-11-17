@@ -139,6 +139,11 @@ Wraps a script execution into a `MethodWrapper`. When the wrapper is called (e.g
 **Returns**
 * `MethodWrapper`: A Java-compatible callback that runs the script.
 
+**Overloads**
+- `wrapScriptRun(file: string)`
+- `wrapScriptRun(language: string, script: string)`
+- `wrapScriptRun(language: string, script: string, file: string)`
+
 ### JsMacros.wrapScriptRunAsync
 ```js
 const onDeathCallback = JsMacros.wrapScriptRunAsync("on_death_handler.js");
@@ -153,6 +158,11 @@ Similar to `wrapScriptRun`, but the script is executed **asynchronously**. The c
 
 **Returns**
 * `MethodWrapper`: A Java-compatible callback that runs the script asynchronously.
+
+**Overloads**
+- `wrapScriptRunAsync(file: string)`
+- `wrapScriptRunAsync(language: string, script: string)`
+- `wrapScriptRunAsync(language: string, script: string, file: string)`
 
 ### JsMacros.open
 **Deprecated.**
@@ -203,6 +213,12 @@ Registers a persistent listener for a given event.
 **Returns**
 * `IEventListener`: The listener object, which can be used with `JsMacros.off()` to unregister it.
 
+**Overloads**
+- `on(event: string, callback: MethodWrapper)`
+- `on(event: string, joined: boolean, callback: MethodWrapper)`
+- `on(event: string, filterer: EventFilterer, callback: MethodWrapper)`
+- `on(event: string, filterer: EventFilterer, joined: boolean, callback: MethodWrapper)`
+
 ### JsMacros.once
 ```js
 // Wait for the next time the player jumps
@@ -216,10 +232,17 @@ JsMacros.once('Key', JavaWrapper.methodToJavaAsync((event, context) => {
 Registers a listener that automatically unregisters itself after it has been triggered once.
 
 **Params**
-- Same as `JsMacros.on()`.
+1. `event: string`: The name of the event to listen for.
+2. `filterer?: EventFilterer`: An optional event filter to improve performance for high-frequency events.
+3. `joined?: boolean = false`: If `true`, the callback runs on the game thread, blocking it until completion (dangerous). Defaults to `false` (asynchronous).
+4. `callback: MethodWrapper(event: BaseEvent, context: EventContainer)`: The function to execute when the event fires. Use `JavaWrapper.methodToJavaAsync()` for this.
 
 **Returns**
 * `IEventListener`: The listener object.
+
+**Overloads**
+- `once(event: string, callback: MethodWrapper)`
+- `once(event: string, joined: boolean, callback: MethodWrapper)`
 
 ### JsMacros.off
 ```js
@@ -299,6 +322,14 @@ Pauses the script's execution and waits for a specific event to occur.
 **Returns**
 * `EventAndContext`: An object containing the `event` that was triggered and its execution `context`.
 
+**Overloads**
+- `waitForEvent(event: string)`
+- `waitForEvent(event: string, join: boolean)`
+- `waitForEvent(event: string, filter: MethodWrapper)`
+- `waitForEvent(event: string, filter: MethodWrapper, runBeforeWaiting: MethodWrapper)`
+- `waitForEvent(event: string, join: boolean, filter: MethodWrapper)`
+- `waitForEvent(event: string, join: boolean, filter: MethodWrapper, runBeforeWaiting: MethodWrapper)`
+
 ### JsMacros.listeners
 ```js
 const keyListeners = JsMacros.listeners('Key');
@@ -327,6 +358,10 @@ Creates a filter for an event. This is highly recommended for performance when l
 
 **Returns**
 * `EventFilterer`: A new event filterer object.
+
+**Notes**
+- Not all events have filterers available. Throws `IllegalArgumentException` if the event doesn't have a filterer class.
+- Throws `IllegalArgumentException` if the event name is not found.
 
 ### JsMacros.createComposedEventFilterer
 ```js

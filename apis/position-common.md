@@ -33,6 +33,9 @@ Creates a new 2D or 3D vector object representing the direction and magnitude fr
 - `y2: double`: The ending Y coordinate.
 - `z2?: double`: The ending Z coordinate (for 3D vector).
 
+**Note**
+Parameters are ordered as start point coordinates followed by end point coordinates: `(x1, y1, [z1], x2, y2, [z2])`
+
 **Returns**
 * `Vec3D` or `Vec2D`: The resulting vector object.
 
@@ -55,8 +58,8 @@ Creates a normalized `Vec3D` (a vector with a length of 1) that represents a dir
 
 **Params**
 - `entity: EntityHelper<?>`: The entity whose direction of sight will be used.
-- `yaw: double`: The yaw (horizontal rotation) in degrees.
-- `pitch: double`: The pitch (vertical rotation) in degrees.
+- `yaw: double`: The horizontal rotation angle in degrees. Positive values rotate clockwise when looking from above (0° = positive Z direction, 90° = positive X direction, -90° = negative X direction).
+- `pitch: double`: The vertical rotation angle in degrees. Positive values look downward, negative values look upward (0° = horizontal, -90° = straight up, 90° = straight down).
 
 **Returns**
 * `Vec3D`: The resulting normalized look vector.

@@ -286,4 +286,4 @@ if (attrs) {
 1. `path: string`: The relative path to the file or directory.
 
 **Returns**
-* `java.nio.file.attribute.BasicFileAttributes | null`: The raw Java file attributes object, or `null` if the file does not exist.
+* `java.nio.file.attribute.BasicFileAttributes`: The raw Java file attributes object, or throws an IOException if the file does not exist.

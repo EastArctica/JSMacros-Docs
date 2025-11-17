@@ -57,7 +57,7 @@ const chatListener = JsMacros.on('RecvMessage', onChat);
 Wraps a script function for **asynchronous** execution. When Java invokes this wrapper, the script function is added to an execution queue, and the Java thread continues immediately without waiting. This is essential for event listeners (like `Tick` or `RecvMessage`) that fire on critical game threads, as it prevents the game from freezing.
 
 **Params**
-1. `priority?: int = 0`: (JavaScript/JEP only) The priority of the task in the execution queue. Higher numbers are executed first.
+1. `priority?: int = 5`: (JavaScript/JEP only) The priority of the task in the execution queue. Higher numbers are executed first.
 2. `c: function`: The script function to wrap.
 
 **Returns**

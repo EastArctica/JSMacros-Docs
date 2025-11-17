@@ -62,7 +62,7 @@ Chat.logf("Hello, %s!", true, ["Steve"]);
 * `void`
 
 **Notes**
-Sends the formatted message to the local chat. The message is formatted using the default String#format(java.lang.String, java.lang.Object...) syntax.
+Sends the formatted message to the local chat. The message is formatted using the default java.lang.String.format(java.lang.String, java.lang.Object...) syntax.
 
 #### Overloads
 - `Chat.logf(message: string, args: any[])`
@@ -210,7 +210,7 @@ logger.info("Player moved!");
 1. `name?: string`:  The logger name
 
 **Returns**
-* `SLF4J.Logger`: An SLF4J logger for logging to console
+* `org.slf4j.Logger`: An SLF4J logger for logging to console
 
 ### Chat.createTextHelperFromJSON
 ```js
