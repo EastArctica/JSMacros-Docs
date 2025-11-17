@@ -11,15 +11,19 @@ Functions for making HTTP requests and managing WebSockets. Accessible from scri
 
 ### Request.create
 ```js
-const req = Request.create("https://api.example.com/data");
-req.setHeader("Authorization", "Bearer my-token");
-req.setMethod("PUT");
-req.setData("{ \"key\": \"value\" }");
+const req = Request.create("https://api.example.com/data")
+    .addHeader("Authorization", "Bearer my-token")
+    .setConnectTimeout(5000)
+    .setReadTimeout(10000);
 
-const response = req.send();
-Chat.log(`Response Code: ${response.getStatusCode()}`);
+const response = req.put("{ \"key\": \"value\" }");
+Chat.log(`Response Code: ${response.responseCode}`);
+Chat.log(`Response Body: ${response.text()}`);
+
+// Or use a custom method
+const customResponse = req.send("DELETE", "{ \"key\": \"value\" }");
 ```
-Creates a configurable `HTTPRequest` handler. This allows for more complex requests where you can specify the method, headers, and body before sending.
+Creates a configurable `HTTPRequest` handler. This allows for more complex requests where you can specify the method, headers, and timeouts before sending.
 
 **Params**
 1. `url: string`: The URL to target.
@@ -27,21 +31,24 @@ Creates a configurable `HTTPRequest` handler. This allows for more complex reque
 **Returns**
 * `HTTPRequest`: A new HTTP request handler object.
 
+**Throws**
+* `IOException`: If there's an error creating the HTTP request.
+
 ### Request.get
 ```js
 // Simple GET request
 const response = Request.get("https://api.github.com/zen");
-if (response.isSuccess()) {
-    Chat.log(`GitHub Zen: ${response.getBody()}`);
+if (response.responseCode === 200) {
+    Chat.log(`GitHub Zen: ${response.text()}`);
 } else {
-    Chat.log(`Error: ${response.getStatusCode()}`);
+    Chat.log(`Error: ${response.responseCode}`);
 }
 
 // GET request with custom headers
 const headers = JavaUtils.createHashMap();
 headers.put("Accept", "application/json");
 const userResponse = Request.get("https://api.github.com/users/wagyourtail", headers);
-const userData = JSON.parse(userResponse.getBody());
+const userData = JSON.parse(userResponse.text());
 Chat.log(`User Login: ${userData.login}`);
 ```
 A shortcut to send an HTTP GET request.
@@ -52,6 +59,9 @@ A shortcut to send an HTTP GET request.
 
 **Returns**
 * `HTTPRequest.Response`: An object containing the response data, including status code and body.
+
+**Throws**
+* `IOException`: If there's an error sending the GET request.
 
 #### Overloads
 - `Request.get(url: string)`
@@ -69,7 +79,11 @@ const headers = JavaUtils.createHashMap();
 headers.put("Content-Type", "application/json");
 
 const response = Request.post(url, postData, headers);
-Chat.log(`Response from server: ${response.getBody()}`);
+Chat.log(`Response from server: ${response.text()}`);
+
+// Access response headers
+const contentType = response.headers.get("content-type").get(0);
+Chat.log(`Content-Type: ${contentType}`);
 ```
 A shortcut to send an HTTP POST request.
 
@@ -81,6 +95,9 @@ A shortcut to send an HTTP POST request.
 **Returns**
 * `HTTPRequest.Response`: An object containing the response data.
 
+**Throws**
+* `IOException`: If there's an error sending the POST request.
+
 #### Overloads
 - `Request.post(url: string, data: string)`
 - `Request.post(url: string, data: string, headers: java.util.Map<string, string>)`
@@ -89,23 +106,23 @@ A shortcut to send an HTTP POST request.
 ```js
 const ws = Request.createWS("wss://echo.websocket.events");
 
-ws.onOpen(JavaWrapper.methodToJava(() => {
+ws.onConnect = JavaWrapper.methodToJava((socket, headers) => {
     Chat.log("WebSocket connected!");
-    ws.send("Hello from JSMacros!");
-}));
+    ws.sendText("Hello from JSMacros!");
+});
 
-ws.onMessage(JavaWrapper.methodToJava((message) => {
+ws.onTextMessage = JavaWrapper.methodToJava((socket, message) => {
     Chat.log(`WebSocket received: ${message}`);
-    ws.close(1000, "Task completed");
-}));
+    ws.close(1000);
+});
 
-ws.onClose(JavaWrapper.methodToJava((code, reason) => {
-    Chat.log(`WebSocket closed! Code: ${code}, Reason: ${reason}`);
-}));
+ws.onDisconnect = JavaWrapper.methodToJava((socket, disconnected) => {
+    Chat.log(`WebSocket closed! Code: ${disconnected.serverFrame.getCloseCode()}, Server: ${disconnected.isServer}`);
+});
 
-ws.onError(JavaWrapper.methodToJava((error) => {
+ws.onError = JavaWrapper.methodToJava((socket, error) => {
     Chat.log(`WebSocket error: ${error.getMessage()}`);
-}));
+});
 
 ws.connect();
 ```
@@ -117,6 +134,9 @@ Creates a `Websocket` handler for persistent, real-time, two-way communication w
 **Returns**
 * `Websocket`: A new WebSocket handler object.
 
+**Throws**
+* `IOException`: If there's an error creating the WebSocket connection.
+
 ### Request.createWS2
 **Deprecated:** Use `Request.createWS()` instead.
 
@@ -126,4 +146,7 @@ An older method for creating a WebSocket handler.
 1. `url: string`: The WebSocket URL.
 
 **Returns**
-* `Websocket`
+* `Websocket`: A new WebSocket handler object.
+
+**Throws**
+* `IOException`: If there's an error creating the WebSocket connection.
