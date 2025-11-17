@@ -3,18 +3,16 @@
 Functions for getting and modifying key pressed states, and for simulating key presses. Accessible from scripts via the global `KeyBind` variable.
 
 ## Methods
-- [KeyBind](#keybind)
-  - [Methods](#methods)
-    - [KeyBind.getKeyCode](#keybindgetkeycode)
-    - [KeyBind.getKeyBindings](#keybindgetkeybindings)
-    - [KeyBind.setKeyBind](#keybindsetkeybind)
-    - [KeyBind.key](#keybindkey)
-    - [KeyBind.pressKey](#keybindpresskey)
-    - [KeyBind.releaseKey](#keybindreleasekey)
-    - [KeyBind.keyBind](#keybindkeybind)
-    - [KeyBind.pressKeyBind](#keybindpresskeybind)
-    - [KeyBind.releaseKeyBind](#keybindreleasekeybind)
-    - [KeyBind.getPressedKeys](#keybindgetpressedkeys)
+- [KeyBind.getKeyCode](#keybindgetkeycode)
+- [KeyBind.getKeyBindings](#keybindgetkeybindings)
+- [KeyBind.setKeyBind](#keybindsetkeybind)
+- [KeyBind.key](#keybindkey)
+- [KeyBind.pressKey](#keybindpresskey)
+- [KeyBind.releaseKey](#keybindreleasekey)
+- [KeyBind.keyBind](#keybindkeybind)
+- [KeyBind.pressKeyBind](#keybindpresskeybind)
+- [KeyBind.releaseKeyBind](#keybindreleasekeybind)
+- [KeyBind.getPressedKeys](#keybindgetpressedkeys)
 
 ### KeyBind.getKeyCode
 ```js

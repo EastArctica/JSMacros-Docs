@@ -3,17 +3,13 @@
 Utility functions for creating and interacting with common Java objects and arrays. Accessible from scripts via the global `JavaUtils` variable.
 
 ## Methods
-- [JavaUtils](#javautils)
-  - [Methods](#methods)
-    - [JavaUtils.createArrayList](#javautilscreatearraylist)
-      - [Overloads](#overloads)
-    - [JavaUtils.createHashMap](#javautilscreatehashmap)
-    - [JavaUtils.createHashSet](#javautilscreatehashset)
-    - [JavaUtils.getRandom](#javautilsgetrandom)
-      - [Overloads](#overloads-1)
-    - [JavaUtils.getHelperFromRaw](#javautilsgethelperfromraw)
-    - [JavaUtils.arrayToString](#javautilsarraytostring)
-    - [JavaUtils.arrayDeepToString](#javautilsarraydeeptostring)
+- [JavaUtils.createArrayList](#javautilscreatearraylist)
+- [JavaUtils.createHashMap](#javautilscreatehashmap)
+- [JavaUtils.createHashSet](#javautilscreatehashset)
+- [JavaUtils.getRandom](#javautilsgetrandom)
+- [JavaUtils.getHelperFromRaw](#javautilsgethelperfromraw)
+- [JavaUtils.arrayToString](#javautilsarraytostring)
+- [JavaUtils.arrayDeepToString](#javautilsarraydeeptostring)
 
 ### JavaUtils.createArrayList
 ```js

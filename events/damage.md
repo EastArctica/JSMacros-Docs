@@ -62,19 +62,10 @@ JsMacros.on("Damage", JavaWrapper.methodToJavaAsync((e) => {
 ```
 
 ## Fields
-- [Damage Event](#damage-event)
-  - [Signature](#signature)
-  - [Event payload](#event-payload)
-  - [Behavior](#behavior)
-  - [Minimal example](#minimal-example)
-  - [Async example](#async-example)
-  - [Fields](#fields)
-  - [Methods](#methods)
-    - [event.attacker](#eventattacker)
-    - [event.source](#eventsource)
-    - [event.health](#eventhealth)
-    - [event.change](#eventchange)
-    - [event.toString()](#eventtostring)
+- [event.attacker](#eventattacker)
+- [event.source](#eventsource)
+- [event.health](#eventhealth)
+- [event.change](#eventchange)
 
 ## Methods
 - [event.toString()](#eventtostring)

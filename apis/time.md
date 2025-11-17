@@ -3,10 +3,8 @@
 Functions for time-related operations, such as getting the current system time and pausing script execution. Accessible from scripts via the global `Time` variable.
 
 ## Methods
-- [Time](#time)
-  - [Methods](#methods)
-    - [Time.time](#timetime)
-    - [Time.sleep](#timesleep)
+- [Time.time](#timetime)
+- [Time.sleep](#timesleep)
 
 ### Time.time
 ```js
