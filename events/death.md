@@ -4,12 +4,6 @@ This event is fired when the player dies. It captures the state of the player, i
 
 ## Signature
 ```js
-JsMacros.on("Death", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("Death", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -33,7 +27,7 @@ JsMacros.on("Death", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("Death", (e) => {
+JsMacros.on("Death", JavaWrapper.methodToJavaAsync((e) => {
   const pos = e.deathPos;
   Chat.log(`Died at X: ${pos.getX()}, Y: ${pos.getY()}, Z: ${pos.getZ()}`);
   e.respawn();

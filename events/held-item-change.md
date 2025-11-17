@@ -4,12 +4,6 @@ This event is fired when the item stack in the player's main hand or off-hand ch
 
 ## Signature
 ```js
-JsMacros.on("HeldItemChange", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("HeldItemChange", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -34,7 +28,7 @@ JsMacros.on("HeldItemChange", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("HeldItemChange", (e) => {
+JsMacros.on("HeldItemChange", JavaWrapper.methodToJavaAsync((e) => {
   if (!e.offHand && !e.item.isEmpty()) {
     Chat.log(`Now holding: ${e.item.getName().getString()}`);
   }

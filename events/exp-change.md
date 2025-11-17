@@ -4,12 +4,6 @@ This event is fired when the player's experience points or level changes. Backed
 
 ## Signature
 ```js
-JsMacros.on("EXPChange", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("EXPChange", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -36,7 +30,7 @@ JsMacros.on("EXPChange", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("EXPChange", (e) => {
+JsMacros.on("EXPChange", JavaWrapper.methodToJavaAsync((e) => {
   if (e.level > e.prevLevel) {
     Chat.log(`Level up! Now level ${e.level}`);
   }

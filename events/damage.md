@@ -4,12 +4,6 @@ This event is fired when the player takes damage from any source. Backed by clas
 
 ## Signature
 ```js
-JsMacros.on("Damage", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("Damage", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -35,7 +29,7 @@ JsMacros.on("Damage", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("Damage", (e) => {
+JsMacros.on("Damage", JavaWrapper.methodToJavaAsync((e) => {
   const damageTaken = -e.change;
   Chat.log(`Took ${damageTaken.toFixed(2)} damage. Health: ${e.health.toFixed(2)}`);
 });

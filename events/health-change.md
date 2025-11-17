@@ -4,12 +4,6 @@ This event is fired whenever the player's health changes, either from taking dam
 
 ## Signature
 ```js
-JsMacros.on("HealthChange", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("HealthChange", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -32,7 +26,7 @@ JsMacros.on("HealthChange", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("HealthChange", (e) => {
+JsMacros.on("HealthChange", JavaWrapper.methodToJavaAsync((e) => {
   const change = e.change < 0 ? "damage" : "healing";
   Chat.log(`Health changed: ${change}, new health: ${e.health.toFixed(1)}`);
 });

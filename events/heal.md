@@ -4,12 +4,6 @@ This event is fired when the player's health increases. Backed by class `EventHe
 
 ## Signature
 ```js
-JsMacros.on("Heal", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("Heal", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -33,7 +27,7 @@ JsMacros.on("Heal", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("Heal", (e) => {
+JsMacros.on("Heal", JavaWrapper.methodToJavaAsync((e) => {
   Chat.log(`Healed for ${e.change.toFixed(2)} HP`);
 });
 ```

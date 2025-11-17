@@ -4,12 +4,6 @@ This event is fired when the player starts or stops gliding with an Elytra. Back
 
 ## Signature
 ```js
-JsMacros.on("FallFlying", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("FallFlying", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -30,7 +24,7 @@ JsMacros.on("FallFlying", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("FallFlying", (e) => {
+JsMacros.on("FallFlying", JavaWrapper.methodToJavaAsync((e) => {
   Chat.log(e.state ? "Started gliding" : "Stopped gliding");
 });
 ```

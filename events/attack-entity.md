@@ -4,12 +4,6 @@ This event is fired when the player attacks an entity by left-clicking it. Backe
 
 ## Signature
 ```js
-JsMacros.on("AttackEntity", (event) => {
-  // ...
-});
-```
-
-```js
 JsMacros.on("AttackEntity", JavaWrapper.methodToJavaAsync((event) => {
   // ...
 }));
@@ -30,10 +24,10 @@ JsMacros.on("AttackEntity", JavaWrapper.methodToJavaAsync((event) => {
 ## Minimal example
 
 ```js
-JsMacros.on("AttackEntity", (e) => {
+JsMacros.on("AttackEntity", JavaWrapper.methodToJavaAsync((e) => {
   const entity = e.entity;
   Chat.log(`Attacked ${entity.getName().getString()}`);
-});
+}));
 ```
 
 ## Async example
