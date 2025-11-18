@@ -2,9 +2,6 @@
 
 Functions that interact with Minecraft that don't fit into their own module. Accessible from scripts via the global `Client` variable.
 
-## Fields
-- [Client.tickSynchronizer](#clientticksynchronizer)
-
 ## Methods
 - [Client.getMinecraft](#clientgetminecraft)
 - [Client.getRegistryManager](#clientgetregistrymanager)
@@ -33,13 +30,6 @@ Functions that interact with Minecraft that don't fit into their own module. Acc
 - [Client.exitGameForcefully](#clientexitgameforcefully)
 - [Client.sendPacket](#clientsendpacket)
 - [Client.receivePacket](#clientreceivepacket)
-
-## Fields
-### Client.tickSynchronizer
-An internal field used for tick synchronization. It is not recommended to interact with this directly.
-
-**Type**
-* `TickSync`
 
 ## Methods
 

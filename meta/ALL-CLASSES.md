@@ -515,8 +515,8 @@ N TextOverlay
 N TextPrompt
 N TextStyleCompiler
 N TickBasedEvents
-Y TickSync
-Y TickSync.TickSyncInt
+N TickSync
+N TickSync.TickSyncInt
 Y TntEntityHelper
 Y TntMinecartEntityHelper
 Y TraceLine

@@ -97,14 +97,6 @@ The server's current instantaneous Ticks Per Second (TPS). Do not modify.
 **Type**: `double`
 ```
 
-```markdown
-### Client.tickSynchronizer
-An internal field used for tick synchronization. It is not recommended to interact with this directly.
-
-**Type**
-* `TickSync`
-```
-
 ### 6. Method Details
 Document each method with its own H3 section immediately after the Methods list or Field Details.
 
