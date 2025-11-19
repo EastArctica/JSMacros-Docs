@@ -1,4 +1,4 @@
-# FallFlying Event
+# EventFallFlying
 
 This event is fired when the player starts or stops gliding with an Elytra. Backed by class `EventFallFlying`.
 

@@ -1,4 +1,4 @@
-# BlockUpdate Event
+# EventBlockUpdate
 
 This event is fired when a block in the world is updated. Backed by class `EventBlockUpdate`.
 

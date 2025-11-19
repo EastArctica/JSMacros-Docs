@@ -1,4 +1,4 @@
-# Bossbar Event
+# EventBossbar
 
 This event is fired when boss bar information is updated. Backed by class `EventBossbar`.
 

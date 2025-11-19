@@ -1,4 +1,4 @@
-# Damage Event
+# EventDamage
 
 This event is fired when the player takes damage from any source. Backed by class `EventDamage`.
 

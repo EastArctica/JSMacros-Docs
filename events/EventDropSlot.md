@@ -1,4 +1,4 @@
-# DropSlot Event
+# EventDropSlot
 
 This event is triggered when an item is dropped from an inventory slot. Backed by class `EventDropSlot`.
 

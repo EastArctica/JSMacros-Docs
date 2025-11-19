@@ -1,4 +1,4 @@
-# ContainerUpdate Event
+# EventContainerUpdate
 
 This event is fired when a container's contents are updated. Backed by class `EventContainerUpdate`.
 

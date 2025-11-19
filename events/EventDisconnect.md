@@ -1,4 +1,4 @@
-# Disconnect Event
+# EventDisconnect
 
 This event is fired when the player disconnects from a server. Backed by class `EventDisconnect`.
 

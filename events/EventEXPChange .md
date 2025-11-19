@@ -1,4 +1,4 @@
-# EXPChange Event
+# EventEXPChange
 
 This event is fired when the player's experience points or level changes. Backed by class `EventEXPChange`.
 

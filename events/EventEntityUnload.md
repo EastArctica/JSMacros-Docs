@@ -1,4 +1,4 @@
-# EntityUnload Event
+# EventEntityUnload
 
 This event is fired when an entity unloads from the world. Backed by class `EventEntityUnload`.
 

@@ -1,4 +1,4 @@
-# DimensionChange Event
+# EventDimensionChange
 
 This event is fired when the player changes dimensions (e.g., from overworld to nether). Backed by class `EventDimensionChange`.
 

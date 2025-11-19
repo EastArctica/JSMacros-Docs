@@ -1,4 +1,4 @@
-# EntityDamaged Event
+# EventEntityDamaged
 
 This event is fired when any entity in the world takes damage. Backed by class `EventEntityDamaged`.
 

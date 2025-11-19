@@ -1,4 +1,4 @@
-# Heal Event
+# EventHeal
 
 This event is fired when the player's health increases. Backed by class `EventHeal`.
 

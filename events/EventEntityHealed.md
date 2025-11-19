@@ -1,4 +1,4 @@
-# EntityHealed Event
+# EventEntityHealed
 
 This event is fired when any entity in the world is healed. Backed by class `EventEntityHealed`.
 

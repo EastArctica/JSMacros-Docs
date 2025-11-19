@@ -1,4 +1,4 @@
-# ChunkLoad Event
+# EventChunkLoad
 
 This event is fired when a chunk is loaded into the world. Backed by class `EventChunkLoad`.
 

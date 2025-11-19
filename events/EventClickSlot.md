@@ -1,4 +1,4 @@
-# ClickSlot Event
+# EventClickSlot
 
 This event is fired when the user clicks a slot in an inventory interface. Backed by class `EventClickSlot`.
 

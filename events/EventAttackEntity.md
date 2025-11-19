@@ -1,4 +1,4 @@
-# AttackEntity Event
+# EventAttackEntity
 
 This event is fired when the player attacks an entity by left-clicking it. Backed by class `EventAttackEntity`.
 

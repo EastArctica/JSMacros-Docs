@@ -1,4 +1,4 @@
-# Custom Event
+# EventCustom
 
 This event allows you to create and trigger your own custom events with custom data. Backed by class `EventCustom`.
 

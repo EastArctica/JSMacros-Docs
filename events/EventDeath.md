@@ -1,4 +1,4 @@
-# Death Event
+# EventDeath
 
 This event is fired when the player dies. It captures the state of the player, including their position and inventory, at the moment of death. Backed by class `EventDeath`.
 

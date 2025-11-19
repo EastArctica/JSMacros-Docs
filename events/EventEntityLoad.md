@@ -1,4 +1,4 @@
-# EntityLoad Event
+# EventEntityLoad
 
 This event is fired when an entity loads into the world. Backed by class `EventEntityLoad`.
 

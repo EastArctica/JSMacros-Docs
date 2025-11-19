@@ -1,4 +1,4 @@
-# ChunkUnload Event
+# EventChunkUnload
 
 This event is fired when a chunk is unloaded from the world. Backed by class `EventChunkUnload`.
 
