@@ -35,10 +35,10 @@ command
     .literalArg("give")
     .itemArg("item")
     .intArg("count", 1, 64)
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         // Command execution logic here
         return true;
-    })
+    }))
     .register();
 ```
 
@@ -57,7 +57,12 @@ Adds a literal argument that must match the exact string provided. Literals are 
 ```javascript
 const command = Chat.createCommandBuilder("weather")
     .literalArg("set")
-    .literalArg("rain"); // Command: /weather set rain
+    .literalArg("rain")
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        // Command execution logic here
+        return true;
+    }))
+    .register(); // Command: /weather set rain
 ```
 
 #### `or()`
@@ -68,16 +73,17 @@ Creates an alternative branch in the command structure. This allows multiple com
 ```javascript
 const command = Chat.createCommandBuilder("fly")
     .literalArg("enable")
-    .executes(() => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         // Enable flying
         return true;
-    })
+    }))
     .or() // Alternative branch
     .literalArg("disable")
-    .executes(() => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         // Disable flying
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `otherwise()`
@@ -88,16 +94,17 @@ Alias for `or()` to work around JavaScript language restrictions where "or" migh
 ```javascript
 const command = Chat.createCommandBuilder("tp")
     .literalArg("here")
-    .executes(() => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         // Teleport to current position
         return true;
-    })
+    }))
     .otherwise() // Alternative branch
     .blockPosArg("position")
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         // Teleport to specified position
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `or(argumentLevel)`
@@ -112,16 +119,17 @@ Creates an alternative branch starting from a specific argument level in the com
 const command = Chat.createCommandBuilder("test")
     .literalArg("sub")
     .intArg("number")
-    .executes(() => {
+    .executes(JavaWrapper.methodToJava(() => {
         // Execute for /test sub <number>
         return true;
-    })
+    }))
     .or(1) // Branch back to first argument level
     .literalArg("other")
-    .executes(() => {
+    .executes(JavaWrapper.methodToJava(() => {
         // Execute for /test other
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `otherwise(argumentLevel)`
@@ -145,11 +153,12 @@ Adds a boolean argument that accepts true/false values.
 ```javascript
 const command = Chat.createCommandBuilder("debug")
     .booleanArg("enabled")
-    .executes((context) => {
-        const enabled = context.getBool("enabled");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const enabled = ctx.getArg("enabled");
         Chat.log(`Debug mode: ${enabled}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `intArg(name)`
@@ -163,11 +172,12 @@ Adds an integer argument without range restrictions.
 ```javascript
 const command = Chat.createCommandBuilder("sethealth")
     .intArg("amount")
-    .executes((context) => {
-        const health = context.getInt("amount");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const health = ctx.getArg("amount");
         // Set player health
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `intArg(name, min, max)`
@@ -184,12 +194,13 @@ Adds an integer argument with value range validation.
 const command = Chat.createCommandBuilder("give")
     .itemArg("item")
     .intArg("count", 1, 64)
-    .executes((context) => {
-        const item = context.getItem("item");
-        const count = context.getInt("count");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const item = ctx.getArg("item");
+        const count = ctx.getArg("count");
         // Give item with specified count
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `longArg(name)`
@@ -203,11 +214,12 @@ Adds a long integer argument without range restrictions.
 ```javascript
 const command = Chat.createCommandBuilder("setseed")
     .longArg("seed")
-    .executes((context) => {
-        const seed = context.getLong("seed");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const seed = ctx.getArg("seed");
         // Set world seed
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `longArg(name, min, max)`
@@ -231,11 +243,12 @@ Adds a double-precision floating point argument without range restrictions.
 ```javascript
 const command = Chat.createCommandBuilder("setspeed")
     .doubleArg("speed")
-    .executes((context) => {
-        const speed = context.getDouble("speed");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const speed = ctx.getArg("speed");
         // Set movement speed
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `doubleArg(name, min, max)`
@@ -257,13 +270,15 @@ Adds a double-precision floating point argument with value range validation.
 Adds a float range argument (accepts ranges like "1.0..5.5").
 
 ```javascript
-const command = Chat.createCommandBuilder("damage")
+const command = Chat.createCommandBuilder("damage123")
     .floatRangeArg("amount")
-    .executes((context) => {
-        const range = context.getFloatRange("amount");
-        Chat.log(`Damage range: ${range.getMin()} to ${range.getMax()}`);
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const range = ctx.getArg("amount");
+        Chat.log(range);
+        Chat.log(`Damage range: ${range.comp_1805().orElse(-1)} to ${range.comp_1806().orElse(-1)}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `intRangeArg(name)`
@@ -287,11 +302,12 @@ Adds a word argument that accepts a single word without spaces.
 ```javascript
 const command = Chat.createCommandBuilder("nickname")
     .wordArg("name")
-    .executes((context) => {
-        const name = context.getString("name");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const name = ctx.getArg("name");
         // Set player nickname
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `quotedStringArg(name)`
@@ -305,11 +321,12 @@ Adds a string argument that can contain spaces if enclosed in quotes.
 ```javascript
 const command = Chat.createCommandBuilder("saycolored")
     .quotedStringArg("message")
-    .executes((context) => {
-        const message = context.getString("message");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const message = ctx.getArg("message");
         Chat.log("&a" + message); // Green colored message
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `greedyStringArg(name)`
@@ -323,11 +340,12 @@ Adds a greedy string argument that consumes all remaining input including spaces
 ```javascript
 const command = Chat.createCommandBuilder("broadcast")
     .greedyStringArg("message")
-    .executes((context) => {
-        const message = context.getString("message");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const message = ctx.getArg("message");
         Chat.say("[Broadcast] " + message);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `regexArgType(name, regex, flags)`
@@ -342,14 +360,15 @@ Adds a custom regex argument that validates input against a regular expression p
 
 ```javascript
 const command = Chat.createCommandBuilder("coords")
-    .regexArgType("coordinates", r"(\-?\d+)\s*,\s*(\-?\d+)", "i")
-    .executes((context) => {
-        const matches = context.get("coordinates"); // Array of matches
+    .regexArgType("coordinates", "(\\-?\\d+)\\s*,\\s*(\\-?\\d+)", "i")
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const matches = ctx.getArg("coordinates"); // Array of matches
         const x = parseInt(matches[1]);
         const z = parseInt(matches[2]);
         Chat.log(`Coordinates: X=${x}, Z=${z}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 ### Minecraft-Specific Argument Methods
@@ -366,12 +385,13 @@ Adds an item argument that accepts Minecraft item identifiers.
 const command = Chat.createCommandBuilder("spawnitem")
     .itemArg("item")
     .intArg("count", 1, 64)
-    .executes((context) => {
-        const item = context.getItem("item");
-        const count = context.getInt("count");
-        Chat.log(`Spawning ${count}x ${item.getId()}`);
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const item = ctx.getArg("item");
+        const count = ctx.getArg("count");
+        Chat.log(`Spawning ${count}x ${item.getItemId()}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `itemPredicateArg(name)`
@@ -394,12 +414,13 @@ Adds a block argument that accepts Minecraft block identifiers.
 const command = Chat.createCommandBuilder("setblock")
     .blockPosArg("position")
     .blockArg("block")
-    .executes((context) => {
-        const pos = context.getBlockPos("position");
-        const block = context.getBlock("block");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const pos = ctx.getArg("position");
+        const block = ctx.getArg("block");
         Chat.log(`Setting ${block.getId()} at ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `blockPredicateArg(name)`
@@ -421,11 +442,12 @@ Adds a block position argument that accepts x, y, z coordinates (supports relati
 ```javascript
 const command = Chat.createCommandBuilder("teleport")
     .blockPosArg("position")
-    .executes((context) => {
-        const pos = context.getBlockPos("position");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const pos = ctx.getArg("position");
         Chat.log(`Teleporting to: ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `columnPosArg(name)`
@@ -447,11 +469,12 @@ Adds a dimension argument that accepts dimension identifiers (overworld, nether,
 ```javascript
 const command = Chat.createCommandBuilder("dimension")
     .dimensionArg("target")
-    .executes((context) => {
-        const dimension = context.getDimension("target");
-        Chat.log(`Target dimension: ${dimension.getId()}`);
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const dimension = ctx.getArg("target");
+        Chat.log(`Target dimension: ${dimension}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `identifierArg(name)`
@@ -465,11 +488,12 @@ Adds a general identifier argument that accepts Minecraft-style resource identif
 ```javascript
 const command = Chat.createCommandBuilder("getrecipe")
     .identifierArg("recipe")
-    .executes((context) => {
-        const recipeId = context.getIdentifier("recipe");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const recipeId = ctx.getArg("recipe");
         Chat.log(`Looking up recipe: ${recipeId}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `nbtArg(name)` / `nbtCompoundArg(name)`
@@ -484,12 +508,13 @@ Adds an NBT compound argument that accepts NBT data in JSON format.
 const command = Chat.createCommandBuilder("givecustom")
     .itemArg("item")
     .nbtArg("data")
-    .executes((context) => {
-        const item = context.getItem("item");
-        const nbt = context.getNbtCompound("data");
-        Chat.log(`Giving ${item.getId()} with NBT: ${nbt}`);
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const item = ctx.getArg("item");
+        const nbt = ctx.getArg("data");
+        Chat.log(`Giving ${item.getItemId()} with NBT: ${nbt}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `nbtElementArg(name)`
@@ -511,11 +536,12 @@ Adds a color argument that accepts color names or hex values.
 ```javascript
 const command = Chat.createCommandBuilder("setcolor")
     .colorArg("color")
-    .executes((context) => {
-        const color = context.getColor("color");
-        Chat.log(`Color set to: ${color}`);
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const color = ctx.getArg("color");
+        Chat.log(`Color set to: 0x${color.getColorValue().toString(16).padStart(6, '0')}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `timeArg(name)`
@@ -577,13 +603,15 @@ Adds an item slot argument that accepts inventory slot identifiers.
 Adds tab completion suggestions that must match exactly.
 
 ```javascript
-const command = Chat.createCommandBuilder("weather")
-    .suggestMatching(["clear", "rain", "thunder"])
-    .executes((context) => {
-        const weather = context.getString("weather");
-        Chat.log(`Setting weather to: ${weather}`);
+const command = Chat.createCommandBuilder("waypoint")
+    .blockPosArg("position")
+    .suggestPositions(["0 64 0", "100 80 100", "~ ~ ~"])
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const pos = ctx.getArg("position");
+        Chat.log(`Waypoint at: ${pos}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `suggestMatching(suggestions)`
@@ -604,12 +632,14 @@ Adds tab completion suggestions for identifiers (with namespace validation).
 
 ```javascript
 const command = Chat.createCommandBuilder("summon")
+    .identifierArg("entity")
     .suggestIdentifier(["minecraft:zombie", "minecraft:skeleton", "minecraft:creeper"])
-    .executes((context) => {
-        const entity = context.getString("entity");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const entity = ctx.getArg("entity");
         Chat.log(`Summoning: ${entity}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `suggestIdentifier(suggestions)`
@@ -630,12 +660,14 @@ Adds tab completion suggestions for block positions.
 
 ```javascript
 const command = Chat.createCommandBuilder("waypoint")
+    .blockPosArg("position")
     .suggestPositions(["0 64 0", "100 80 100", "~ ~ ~"])
-    .executes((context) => {
-        const pos = context.getString("position");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const pos = ctx.getArg("position");
         Chat.log(`Waypoint at: ${pos}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `suggestPositions(positions)`
@@ -656,16 +688,19 @@ Adds tab completion suggestions using BlockPosHelper objects.
 
 ```javascript
 // Get some positions
+const BlockPosHelper = Packages.xyz.wagyourtail.jsmacros.client.api.helper.world.BlockPosHelper;
 const pos1 = new BlockPosHelper(100, 64, 100);
 const pos2 = new BlockPosHelper(-50, 80, -50);
 
-const command = Chat.createCommandBuilder("tp")
+const command = Chat.createCommandBuilder("tp1")
+    .blockPosArg("position")
     .suggestBlockPositions([pos1, pos2])
-    .executes((context) => {
-        const pos = context.getBlockPos("position");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const pos = ctx.getArg("position");
         Chat.log(`Teleporting to: ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);
         return true;
-    });
+    }))
+    .register();
 ```
 
 #### `suggestBlockPositions(positions)`
@@ -685,19 +720,23 @@ Overload that accepts a Collection instead of an array.
 Adds custom dynamic suggestions using a callback function.
 
 ```javascript
-const command = Chat.createCommandBuilder("player")
-    .suggest((context, builder) => {
-        const playerList = Server.getPlayerList();
-        playerList.forEach((entry) => {
-            builder.suggest(entry.getName());
-        });
-        return builder.buildFuture();
-    })
-    .executes((context) => {
-        const playerName = context.getString("player");
-        Chat.log(`Selected player: ${playerName}`);
+// TODO: This crashed me and I'm not sure why - needs further testing
+const command = Chat.createCommandBuilder("tp")
+    .wordArg("player")
+    .suggest(JavaWrapper.methodToJava((ctx) => {
+        // Get all currently loaded/visible players in the world
+        const loadedPlayers = World.getLoadedPlayers();
+        
+        return loadedPlayers
+            ?.toArray()
+            .map(player => player.getPlayerName());
+    }))
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        let playerName = ctx.getArg("player");
+        Chat.log("Teleporting to: " + playerName);
         return true;
-    });
+    }))
+    .register();
 ```
 
 ### Execution and Registration Methods
@@ -713,11 +752,13 @@ Sets the execution callback for the command. The callback receives a `CommandCon
 ```javascript
 const command = Chat.createCommandBuilder("hello")
     .greedyStringArg("message")
-    .executes((context) => {
-        const message = context.getString("message") || "World!";
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const message = ctx.getArg("message");
         Chat.log(`Hello ${message}`);
+        // TODO: Is this true?
         return true; // Return true for success, false for failure
-    });
+    }))
+    .register();
 ```
 
 **Important Notes:**
@@ -733,10 +774,10 @@ Registers the command with Minecraft's command system, making it available for u
 
 ```javascript
 const command = Chat.createCommandBuilder("mycommand")
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         Chat.log("Command executed!");
         return true;
-    })
+    }))
     .register(); // Command is now available as /mycommand
 ```
 
@@ -759,16 +800,16 @@ command.unregister();
 ```javascript
 const command = Chat.createCommandBuilder("greet")
     .wordArg("name")
-    .executes((context) => {
-        const name = context.getString("name");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const name = ctx.getArg("name");
         Chat.say(`Hello, ${name}!`);
         return true;
-    })
+    }))
     .or()
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         Chat.say("Hello, stranger!");
         return true;
-    })
+    }))
     .register();
 
 // Usage:
@@ -779,25 +820,26 @@ const command = Chat.createCommandBuilder("greet")
 ### Example 2: Item Management Command
 
 ```javascript
-const command = Chat.createCommandBuilder("item")
+const command = Chat.createCommandBuilder("item2")
     .literalArg("give")
     .itemArg("item")
     .intArg("count", 1, 64)
-    .executes((context) => {
-        const player = Player.getPlayer();
-        if (!player) {
-            Chat.log("Player not found!");
-            return false;
-        }
-
-        const item = context.getItem("item");
-        const count = context.getInt("count");
-        const inventory = player.getInventory();
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const item = ctx.getArg("item");
+        const count = ctx.getArg("count");
+        const inventory = Player.openInventory();
 
         // Find empty slot or add to existing stack
-        for (let i = 0; i < inventory.getSlots(); i++) {
-            const slot = inventory.getSlot(i);
-            if (slot.isEmpty()) {
+        const freeSlot = inventory.findFreeInventorySlot();
+        if (freeSlot !== -1) {
+            Chat.log(`Giving ${count}x ${item.getName()} to player`);
+            return true;
+        }
+
+        for (let slotId = 0; slotId < inventory.getTotalSlots(); slotId++) {
+            const slot = inventory.getSlot(slotId);
+            // TODO: Check max stack size
+            if (slot.getItemId() === item.getItemId() && slot.getCount() + count <= 64) {
                 Chat.log(`Giving ${count}x ${item.getName()} to player`);
                 return true;
             }
@@ -805,23 +847,20 @@ const command = Chat.createCommandBuilder("item")
 
         Chat.log("No space in inventory!");
         return false;
-    })
-    .or()
+    }))
+    .or(1)
     .literalArg("clear")
-    .executes((context) => {
-        const player = Player.getPlayer();
-        if (!player) return false;
-
-        const inventory = player.getInventory();
-        for (let i = 0; i < inventory.getSlots(); i++) {
-            const slot = inventory.getSlot(i);
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const inventory = Player.openInventory();
+        for (const slotId of inventory.getSlots()) {
+            const slot = inventory.getSlot(slotId);
             if (!slot.isEmpty()) {
                 // Clear slot logic here
             }
         }
         Chat.log("Inventory cleared!");
         return true;
-    })
+    }))
     .register();
 
 // Usage:
@@ -832,45 +871,57 @@ const command = Chat.createCommandBuilder("item")
 ### Example 3: Advanced Teleport Command
 
 ```javascript
-const command = Chat.createCommandBuilder("tpadvanced")
+const BlockPosHelper = Packages.xyz.wagyourtail.jsmacros.client.api.helper.world.BlockPosHelper;
+
+const command = Chat.createCommandBuilder("tpadvance1d")
     .blockPosArg("position")
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         const player = Player.getPlayer();
         if (!player) return false;
 
-        const pos = context.getBlockPos("position");
+        const pos = ctx.getArg("position");
         Chat.log(`Teleporting to ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);
         // Actual teleport logic would go here
         return true;
-    })
+    }))
     .or(1) // Branch back to first argument
     .literalArg("here")
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         const player = Player.getPlayer();
         if (!player) return false;
 
         const pos = player.getPos();
         Chat.log(`Current position: ${Math.floor(pos.x)}, ${Math.floor(pos.y)}, ${Math.floor(pos.z)}`);
         return true;
-    })
+    }))
     .or(1) // Branch back to first argument
     .literalArg("save")
     .wordArg("name")
-    .executes((context) => {
+    .executes(JavaWrapper.methodToJava((ctx) => {
         const player = Player.getPlayer();
         if (!player) return false;
 
-        const name = context.getString("name");
+        const name = ctx.getArg("name");
         const pos = player.getPos();
 
         // Save position logic here
         Chat.log(`Saved position "${name}" at ${Math.floor(pos.x)}, ${Math.floor(pos.y)}, ${Math.floor(pos.z)}`);
         return true;
-    })
+    }))
+    .or(1) // Branch back to first argument
+    // TODO: This isn't suggesting correctly
+    .blockPosArg("position")
     .suggestBlockPositions([
         new BlockPosHelper(0, 64, 0),
         new BlockPosHelper(100, 80, 100)
     ])
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const pos = ctx.getArg("position");
+
+        // Teleport logic would go here
+        Chat.log(`Teleporting to ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);
+        return true;
+    }))
     .register();
 
 // Usage:
@@ -883,47 +934,55 @@ const command = Chat.createCommandBuilder("tpadvanced")
 
 ```javascript
 const command = Chat.createCommandBuilder("server")
-    .suggestMatching(["list", "join", "info"])
-    .executes((context) => {
-        const action = context.getString("action");
-
-        if (action === "list") {
-            Chat.log("Available servers:");
-            Chat.log("- survival.example.com");
-            Chat.log("- creative.example.com");
-            Chat.log("- pvp.example.com");
-        } else {
-            Chat.log("Usage: /server [list|join|info]");
-        }
+    .literalArg("list")
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        Chat.log("Available servers:");
+        Chat.log("- hypixel.net");
+        Chat.log("- creative.example.com");
+        Chat.log("- pvp.example.com");
         return true;
-    })
-    .or()
+    }))
+    // TODO: This example is broken because the .info will apply to
+    // `/server join hypixel.net` but the or will make it allow `/server join info`
+    // This means that last executes has no arg server
+    .or(1)
     .literalArg("join")
-    .suggest((context, builder) => {
+    .greedyStringArg("server")
+    .suggest(JavaWrapper.methodToJava((ctx, builder) => {
         // Dynamic server list suggestion
-        const servers = ["survival.example.com", "creative.example.com", "pvp.example.com"];
-        servers.forEach(server => builder.suggest(server));
-        return builder.buildFuture();
-    })
-    .executes((context) => {
-        // Would need server argument for actual implementation
+        const servers = ["hypixel.net", "creative.example.com", "pvp.example.com"];
+        builder.suggestMatching(servers);
+    }))
+    .executes(JavaWrapper.methodToJava((ctx) => {
         Chat.log("Joining server...");
+        Client.connect(ctx.getArg("server"));
         return true;
-    })
+    }))
+    .or()
+    .literalArg("info")
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const serverInfo = Client.ping(ctx.getArg("server"));
+        Chat.log(`Server Info for ${ctx.getArg("server")}:`);
+        Chat.log(`- MOTD: ${serverInfo.getLabel()}`);
+        Chat.log(`- Players: ${serverInfo.getPlayerCountLabel()}`);
+        Chat.log(`- Latency: ${serverInfo.getPing()}ms`);
+        return true;
+    }))
     .register();
 
 // Usage:
 // /server list
 // /server join survival.example.com
+// /server info survival.example.com
 ```
 
 ### Example 5: Complex Command with Regex
 
 ```javascript
 const command = Chat.createCommandBuilder("calc")
-    .regexArgType("expression", r"(\-?\d+)\s*([+\-*/])\s*(\-?\d+)", "")
-    .executes((context) => {
-        const matches = context.get("expression");
+    .regexArgType("expression", "(\\-?\\d+)\\s*([+\\-*/])\\s*(\\-?\\d+)", "")
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const matches = ctx.getArg("expression");
         const num1 = parseInt(matches[1]);
         const operator = matches[2];
         const num2 = parseInt(matches[3]);
@@ -939,7 +998,7 @@ const command = Chat.createCommandBuilder("calc")
 
         Chat.log(`${num1} ${operator} ${num2} = ${result}`);
         return true;
-    })
+    }))
     .register();
 
 // Usage:
@@ -951,19 +1010,20 @@ const command = Chat.createCommandBuilder("calc")
 ### Example 6: Time and Date Commands
 
 ```javascript
-const command = Chat.createCommandBuilder("time")
+const command = Chat.createCommandBuilder("time123")
     .literalArg("set")
     .timeArg("time")
-    .executes((context) => {
-        const time = context.getTime("time");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const time = ctx.getArg("time");
         Chat.log(`Setting time to: ${time}`);
         return true;
-    })
+    }))
     .or(1)
     .literalArg("query")
+    .greedyStringArg("query")
     .suggestMatching(["daytime", "gametime", "day"])
-    .executes((context) => {
-        const query = context.getString("query");
+    .executes(JavaWrapper.methodToJava((ctx) => {
+        const query = ctx.getArg("query");
         const worldTime = World.getTime();
 
         switch (query) {
@@ -981,7 +1041,7 @@ const command = Chat.createCommandBuilder("time")
                 break;
         }
         return true;
-    })
+    }))
     .register();
 
 // Usage:
