@@ -1,0 +1,839 @@
+{
+  "name": "CommandBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CommandBuilder",
+  "extends": "Registrable<CommandBuilder>",
+  "since": "1.4.2",
+  "description": "A powerful builder-based API for creating and registering custom Minecraft commands with complex argument parsing and execution logic.",
+  "overview": "The CommandBuilder class wraps Minecraft's Brigadier command system to provide a fluent interface for defining command structures. It allows creating custom commands executable via Minecraft's chat, supporting various argument types (numbers, strings, items, blocks, etc.), suggestions, and execution callbacks. It uses a builder pattern where commands are constructed step-by-step by adding arguments and defining execution logic.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "literalArg",
+      "signature": "public CommandBuilder literalArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a literal argument that must match the exact string provided. Used for keywords and subcommands.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The literal string argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"weather\")\n    .literalArg(\"set\")\n    .literalArg(\"rain\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "public CommandBuilder or()",
+      "returnType": "CommandBuilder",
+      "description": "Creates an alternative branch in the command structure, allowing multiple command patterns to execute the same command.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"fly\")\n    .literalArg(\"enable\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        // Enable flying\n        return true;\n    }))\n    .or() // Alternative branch\n    .literalArg(\"disable\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        // Disable flying\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "otherwise",
+      "signature": "public CommandBuilder otherwise()",
+      "returnType": "CommandBuilder",
+      "description": "Alias for or() to work around JavaScript language restrictions where 'or' might be a reserved word.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"tp\")\n    .literalArg(\"here\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        return true;\n    }))\n    .otherwise()\n    .blockPosArg(\"position\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "public CommandBuilder or(int argumentLevel)",
+      "returnType": "CommandBuilder",
+      "description": "Creates an alternative branch starting from a specific argument level in the command tree.",
+      "parameters": [
+        {
+          "name": "argumentLevel",
+          "type": "int",
+          "description": "The argument level to branch from"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"test\")\n    .literalArg(\"sub\")\n    .intArg(\"number\")\n    .executes(JavaWrapper.methodToJava(() => {\n        return true;\n    }))\n    .or(1) // Branch back to first argument level\n    .literalArg(\"other\")\n    .executes(JavaWrapper.methodToJava(() => {\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "otherwise",
+      "signature": "public CommandBuilder otherwise(int argumentLevel)",
+      "returnType": "CommandBuilder",
+      "description": "Alias for or(argumentLevel) to work around JavaScript language restrictions.",
+      "parameters": [
+        {
+          "name": "argumentLevel",
+          "type": "int",
+          "description": "The argument level to branch from"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "booleanArg",
+      "signature": "public CommandBuilder booleanArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a boolean argument that accepts true/false values.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"debug\")\n    .booleanArg(\"enabled\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const enabled = ctx.getArg(\"enabled\");\n        Chat.log(`Debug mode: ${enabled}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "intArg",
+      "signature": "public CommandBuilder intArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an integer argument without range restrictions.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"sethealth\")\n    .intArg(\"amount\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const health = ctx.getArg(\"amount\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "intArg",
+      "signature": "public CommandBuilder intArg(String name, int min, int max)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an integer argument with value range validation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        },
+        {
+          "name": "min",
+          "type": "int",
+          "description": "Minimum value (inclusive)"
+        },
+        {
+          "name": "max",
+          "type": "int",
+          "description": "Maximum value (inclusive)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"give\")\n    .itemArg(\"item\")\n    .intArg(\"count\", 1, 64)\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const item = ctx.getArg(\"item\");\n        const count = ctx.getArg(\"count\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "longArg",
+      "signature": "public CommandBuilder longArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a long integer argument without range restrictions.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"setseed\")\n    .longArg(\"seed\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const seed = ctx.getArg(\"seed\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "longArg",
+      "signature": "public CommandBuilder longArg(String name, long min, long max)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a long integer argument with value range validation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        },
+        {
+          "name": "min",
+          "type": "long",
+          "description": "Minimum value (inclusive)"
+        },
+        {
+          "name": "max",
+          "type": "long",
+          "description": "Maximum value (inclusive)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "doubleArg",
+      "signature": "public CommandBuilder doubleArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a double-precision floating point argument without range restrictions.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"setspeed\")\n    .doubleArg(\"speed\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const speed = ctx.getArg(\"speed\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "doubleArg",
+      "signature": "public CommandBuilder doubleArg(String name, double min, double max)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a double-precision floating point argument with value range validation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        },
+        {
+          "name": "min",
+          "type": "double",
+          "description": "Minimum value (inclusive)"
+        },
+        {
+          "name": "max",
+          "type": "double",
+          "description": "Maximum value (inclusive)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "floatRangeArg",
+      "signature": "public CommandBuilder floatRangeArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a float range argument (accepts ranges like \"1.0..5.5\").",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"damage123\")\n    .floatRangeArg(\"amount\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const range = ctx.getArg(\"amount\");\n        Chat.log(`Damage range: ${range.comp_1805().orElse(-1)} to ${range.comp_1806().orElse(-1)}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "intRangeArg",
+      "signature": "public CommandBuilder intRangeArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an integer range argument (accepts ranges like \"1..5\").",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "wordArg",
+      "signature": "public CommandBuilder wordArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a word argument that accepts a single word without spaces.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"nickname\")\n    .wordArg(\"name\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const name = ctx.getArg(\"name\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "quotedStringArg",
+      "signature": "public CommandBuilder quotedStringArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a string argument that can contain spaces if enclosed in quotes.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"saycolored\")\n    .quotedStringArg(\"message\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const message = ctx.getArg(\"message\");\n        Chat.log(\"&a\" + message);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "greedyStringArg",
+      "signature": "public CommandBuilder greedyStringArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a greedy string argument that consumes all remaining input including spaces. Typically used as the last argument.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"broadcast\")\n    .greedyStringArg(\"message\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const message = ctx.getArg(\"message\");\n        Chat.say(\"[Broadcast] \" + message);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "regexArgType",
+      "signature": "public CommandBuilder regexArgType(String name, String regex, String flags)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a custom regex argument that validates input against a regular expression pattern. Returns an array of matched groups.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        },
+        {
+          "name": "regex",
+          "type": "String",
+          "description": "Regular expression pattern to match"
+        },
+        {
+          "name": "flags",
+          "type": "String",
+          "description": "Regex flags (\"i\" for case-insensitive, \"s\" for dotall, \"u\" for unicode)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"coords\")\n    .regexArgType(\"coordinates\", \"(\\\\-?\\\\d+)\\\\s*,\\\\s*(\\\\-?\\\\d+)\", \"i\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const matches = ctx.getArg(\"coordinates\");\n        const x = parseInt(matches[1]);\n        const z = parseInt(matches[2]);\n        Chat.log(`Coordinates: X=${x}, Z=${z}`);\n        return true;\n    }))\n    .register();",
+        "// Complex calculation example\nconst command = Chat.createCommandBuilder(\"calc\")\n    .regexArgType(\"expression\", \"(\\\\-?\\\\d+)\\\\s*([+\\\\-*/])\\\\s*(\\\\-?\\\\d+)\", \"\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const matches = ctx.getArg(\"expression\");\n        // Math logic...\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "itemArg",
+      "signature": "public CommandBuilder itemArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an item argument that accepts Minecraft item identifiers.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"spawnitem\")\n    .itemArg(\"item\")\n    .intArg(\"count\", 1, 64)\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const item = ctx.getArg(\"item\");\n        const count = ctx.getArg(\"count\");\n        Chat.log(`Spawning ${count}x ${item.getItemId()}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "itemStackArg",
+      "signature": "public CommandBuilder itemStackArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an item argument that accepts Minecraft item identifiers (alias for itemArg).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "itemPredicateArg",
+      "signature": "public CommandBuilder itemPredicateArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an item predicate argument that accepts item filters and selectors.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "blockArg",
+      "signature": "public CommandBuilder blockArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a block argument that accepts Minecraft block identifiers.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"setblock\")\n    .blockPosArg(\"position\")\n    .blockArg(\"block\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const pos = ctx.getArg(\"position\");\n        const block = ctx.getArg(\"block\");\n        Chat.log(`Setting ${block.getId()} at ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "blockStateArg",
+      "signature": "public CommandBuilder blockStateArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a block argument that accepts Minecraft block identifiers (alias for blockArg).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "blockPredicateArg",
+      "signature": "public CommandBuilder blockPredicateArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a block predicate argument that accepts block filters and selectors.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "blockPosArg",
+      "signature": "public CommandBuilder blockPosArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a block position argument that accepts x, y, z coordinates (supports relative coordinates with ~ and ^).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"teleport\")\n    .blockPosArg(\"position\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const pos = ctx.getArg(\"position\");\n        Chat.log(`Teleporting to: ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "columnPosArg",
+      "signature": "public CommandBuilder columnPosArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a column position argument that accepts x, z coordinates (ignores y coordinate).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "dimensionArg",
+      "signature": "public CommandBuilder dimensionArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a dimension argument that accepts dimension identifiers (overworld, nether, end).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"dimension\")\n    .dimensionArg(\"target\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const dimension = ctx.getArg(\"target\");\n        Chat.log(`Target dimension: ${dimension}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "identifierArg",
+      "signature": "public CommandBuilder identifierArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a general identifier argument that accepts Minecraft-style resource identifiers (namespace:path).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"getrecipe\")\n    .identifierArg(\"recipe\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const recipeId = ctx.getArg(\"recipe\");\n        Chat.log(`Looking up recipe: ${recipeId}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "nbtArg",
+      "signature": "public CommandBuilder nbtArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an NBT compound argument that accepts NBT data in JSON format.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"givecustom\")\n    .itemArg(\"item\")\n    .nbtArg(\"data\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const item = ctx.getArg(\"item\");\n        const nbt = ctx.getArg(\"data\");\n        Chat.log(`Giving ${item.getItemId()} with NBT: ${nbt}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "nbtCompoundArg",
+      "signature": "public CommandBuilder nbtCompoundArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an NBT compound argument that accepts NBT data in JSON format (alias for nbtArg).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "nbtElementArg",
+      "signature": "public CommandBuilder nbtElementArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an NBT element argument that accepts any NBT data type.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "colorArg",
+      "signature": "public CommandBuilder colorArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a color argument that accepts color names or hex values.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"setcolor\")\n    .colorArg(\"color\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const color = ctx.getArg(\"color\");\n        Chat.log(`Color set to: 0x${color.getColorValue().toString(16).padStart(6, '0')}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "timeArg",
+      "signature": "public CommandBuilder timeArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a time argument that accepts time values (like \"1d\", \"2h\", \"30m\").",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"time123\")\n    .literalArg(\"set\")\n    .timeArg(\"time\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const time = ctx.getArg(\"time\");\n        Chat.log(`Setting time to: ${time}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "angleArg",
+      "signature": "public CommandBuilder angleArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an angle argument that accepts rotation values.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "uuidArgType",
+      "signature": "public CommandBuilder uuidArgType(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a UUID argument that accepts universally unique identifiers.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textArgType",
+      "signature": "public CommandBuilder textArgType(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a text argument that accepts JSON text components.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "particleArg",
+      "signature": "public CommandBuilder particleArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds a particle argument that accepts particle effect identifiers.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "itemSlotArg",
+      "signature": "public CommandBuilder itemSlotArg(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Adds an item slot argument that accepts inventory slot identifiers.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The argument name"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "suggestMatching",
+      "signature": "public CommandBuilder suggestMatching(String[] suggestions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions that must match exactly.",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "String[]",
+          "description": "Array of suggestion strings"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"waypoint\")\n    .blockPosArg(\"position\")\n    .suggestPositions([\"0 64 0\", \"100 80 100\", \"~ ~ ~\"]) // Example context\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestMatching",
+      "signature": "public CommandBuilder suggestMatching(Collection<String> suggestions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions that must match exactly (Collection overload).",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "Collection<String>",
+          "description": "Collection of suggestion strings"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "suggestIdentifier",
+      "signature": "public CommandBuilder suggestIdentifier(String[] suggestions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions for identifiers (with namespace validation).",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "String[]",
+          "description": "Array of identifier strings"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"summon\")\n    .identifierArg(\"entity\")\n    .suggestIdentifier([\"minecraft:zombie\", \"minecraft:skeleton\", \"minecraft:creeper\"])\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const entity = ctx.getArg(\"entity\");\n        Chat.log(`Summoning: ${entity}`);\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestIdentifier",
+      "signature": "public CommandBuilder suggestIdentifier(Collection<String> suggestions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions for identifiers (Collection overload).",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "Collection<String>",
+          "description": "Collection of identifier strings"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "suggestPositions",
+      "signature": "public CommandBuilder suggestPositions(String[] positions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions for block positions.",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "String[]",
+          "description": "Array of position strings ('x y z')"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"waypoint\")\n    .blockPosArg(\"position\")\n    .suggestPositions([\"0 64 0\", \"100 80 100\", \"~ ~ ~\"]) \n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const pos = ctx.getArg(\"position\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestPositions",
+      "signature": "public CommandBuilder suggestPositions(Collection<String> positions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions for block positions (Collection overload).",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "Collection<String>",
+          "description": "Collection of position strings"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "suggestBlockPositions",
+      "signature": "public CommandBuilder suggestBlockPositions(BlockPosHelper[] positions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions using BlockPosHelper objects.",
+      "parameters": [
+        {
+          "name": "positions",
+          "type": "BlockPosHelper[]",
+          "description": "Array of BlockPosHelper objects"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const BlockPosHelper = Packages.xyz.wagyourtail.jsmacros.client.api.helper.world.BlockPosHelper;\nconst pos1 = new BlockPosHelper(100, 64, 100);\nconst pos2 = new BlockPosHelper(-50, 80, -50);\n\nconst command = Chat.createCommandBuilder(\"tp1\")\n    .blockPosArg(\"position\")\n    .suggestBlockPositions([pos1, pos2])\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const pos = ctx.getArg(\"position\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestBlockPositions",
+      "signature": "public CommandBuilder suggestBlockPositions(Collection<BlockPosHelper> positions)",
+      "returnType": "CommandBuilder",
+      "description": "Adds tab completion suggestions using BlockPosHelper objects (Collection overload).",
+      "parameters": [
+        {
+          "name": "positions",
+          "type": "Collection<BlockPosHelper>",
+          "description": "Collection of BlockPosHelper objects"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "suggest",
+      "signature": "public CommandBuilder suggest(MethodWrapper<CommandContextHelper, SuggestionsBuilderHelper, Object, ?> callback)",
+      "returnType": "CommandBuilder",
+      "description": "Adds custom dynamic suggestions using a callback function.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper<CommandContextHelper, SuggestionsBuilderHelper, Object, ?>",
+          "description": "Custom suggestion function"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"tp\")\n    .wordArg(\"player\")\n    .suggest(JavaWrapper.methodToJava((ctx) => {\n        const loadedPlayers = World.getLoadedPlayers();\n        return loadedPlayers?.toArray().map(player => player.getPlayerName());\n    }))\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        let playerName = ctx.getArg(\"player\");\n        Chat.log(\"Teleporting to: \" + playerName);\n        return true;\n    }))\n    .register();",
+        "// Example with builder context\n.suggest(JavaWrapper.methodToJava((ctx, builder) => {\n    const servers = [\"hypixel.net\", \"creative.example.com\"];\n    builder.suggestMatching(servers);\n}))"
+      ]
+    },
+    {
+      "name": "executes",
+      "signature": "public CommandBuilder executes(MethodWrapper<CommandContextHelper, Object, Object, ?> callback)",
+      "returnType": "CommandBuilder",
+      "description": "Sets the execution callback for the command. The callback receives a CommandContextHelper object containing the parsed arguments and must return true for success or false for failure.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper<CommandContextHelper, Object, Object, ?>",
+          "description": "Execution callback function"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"hello\")\n    .greedyStringArg(\"message\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const message = ctx.getArg(\"message\");\n        Chat.log(`Hello ${message}`);\n        return true; \n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "register",
+      "signature": "public CommandBuilder register()",
+      "returnType": "CommandBuilder",
+      "description": "Registers the command with Minecraft's command system, making it available for use.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"mycommand\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.log(\"Command executed!\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "unregister",
+      "signature": "public CommandBuilder unregister()",
+      "returnType": "CommandBuilder",
+      "description": "Removes the command from Minecraft's command system.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "command.unregister();"
+      ]
+    }
+  ]
+}

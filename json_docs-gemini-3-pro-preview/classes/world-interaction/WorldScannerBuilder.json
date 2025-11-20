@@ -1,0 +1,241 @@
+{
+  "name": "WorldScannerBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.WorldScannerBuilder",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "A powerful World Interaction builder in JSMacros that provides a fluent API for creating custom world scanners.",
+  "overview": "The `WorldScannerBuilder` class is a powerful World Interaction builder in JSMacros that provides a fluent API for creating custom world scanners. It allows you to build complex filters to find specific blocks and block states in the Minecraft world efficiently using native Java functions.\n\nThis builder is particularly useful for JavaScript and other languages that don't support multithreading natively, as it enables parallel processing of world scans that would otherwise run sequentially. The builder supports both string-based filters (for simple matching) and method-based filters (for complex logic).\n\nThe WorldScannerBuilder uses a fluent builder pattern with two main filter categories: Block Filters (based on block properties and methods) and Block State Filters (based on block state properties and methods). Each filter starts with a \"with\" command and can be combined using \"and\", \"or\", \"xor\" commands. The \"not\" command negates the entire filter.",
+  "constructors": [
+    {
+      "signature": "new WorldScannerBuilder()",
+      "description": "Creates a new WorldScannerBuilder instance.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "withBlockFilter",
+      "signature": "withBlockFilter(method)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Starts a new block filter using a method from BlockHelper.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The name of the method from BlockHelper to use for filtering."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter blocks by their ID method\nbuilder.withBlockFilter(\"getId\");"
+      ]
+    },
+    {
+      "name": "andBlockFilter",
+      "signature": "andBlockFilter(method)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new block filter with AND logic.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The name of the method from BlockHelper."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.withBlockFilter(\"getId\").equals(\"minecraft:stone\")\n       .andBlockFilter(\"getHardness\").is(\">=\", 1.5);"
+      ]
+    },
+    {
+      "name": "orBlockFilter",
+      "signature": "orBlockFilter(method)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new block filter with OR logic.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The name of the method from BlockHelper."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.withBlockFilter(\"getId\").equals(\"minecraft:stone\")\n       .orBlockFilter(\"getId\").equals(\"minecraft:cobblestone\");"
+      ]
+    },
+    {
+      "name": "notBlockFilter",
+      "signature": "notBlockFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Negates the current block filter.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withBlockFilter(\"getId\").contains(\"ore\")\n       .notBlockFilter();"
+      ]
+    },
+    {
+      "name": "withStringBlockFilter",
+      "signature": "withStringBlockFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Starts a new string-based block filter for simple text matching.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStringBlockFilter().contains(\"chest\");"
+      ]
+    },
+    {
+      "name": "andStringBlockFilter",
+      "signature": "andStringBlockFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new string block filter with AND logic.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStringBlockFilter().contains(\"oak\")\n       .andStringBlockFilter().contains(\"log\");"
+      ]
+    },
+    {
+      "name": "orStringBlockFilter",
+      "signature": "orStringBlockFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new string block filter with OR logic.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStringBlockFilter().contains(\"chest\")\n       .orStringBlockFilter().contains(\"barrel\");"
+      ]
+    },
+    {
+      "name": "withStateFilter",
+      "signature": "withStateFilter(method)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Starts a new block state filter using a method from BlockStateHelper.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The name of the method from BlockStateHelper."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter by block state opacity\nbuilder.withStateFilter(\"getOpacity\");"
+      ]
+    },
+    {
+      "name": "andStateFilter",
+      "signature": "andStateFilter(method)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new block state filter with AND logic.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The name of the method from BlockStateHelper."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.withStateFilter(\"getOpacity\").is(\">\", 0)\n       .andStateFilter(\"isAir\").is(false);"
+      ]
+    },
+    {
+      "name": "orStateFilter",
+      "signature": "orStateFilter(method)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new block state filter with OR logic.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The name of the method from BlockStateHelper."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.withStateFilter(\"isOpaque\").is(true)\n       .orStateFilter(\"getLuminance\").is(\">\", 0);"
+      ]
+    },
+    {
+      "name": "notStateFilter",
+      "signature": "notStateFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Negates the current block state filter.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStateFilter(\"isAir\").is(true)\n       .notStateFilter();"
+      ]
+    },
+    {
+      "name": "withStringStateFilter",
+      "signature": "withStringStateFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Starts a new string-based block state filter.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStringStateFilter().contains(\"water\");"
+      ]
+    },
+    {
+      "name": "andStringStateFilter",
+      "signature": "andStringStateFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new string block state filter with AND logic.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStringStateFilter().contains(\"facing\")\n       .andStringStateFilter().contains(\"north\");"
+      ]
+    },
+    {
+      "name": "orStringStateFilter",
+      "signature": "orStringStateFilter()",
+      "returnType": "WorldScannerBuilder",
+      "description": "Adds a new string block state filter with OR logic.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "builder.withStringStateFilter().contains(\"east\")\n       .orStringStateFilter().contains(\"west\");"
+      ]
+    },
+    {
+      "name": "is",
+      "signature": "is(methodArgs, filterArgs)",
+      "returnType": "WorldScannerBuilder",
+      "description": "Advanced condition method with separate method arguments and filter arguments.",
+      "parameters": [
+        {
+          "name": "methodArgs",
+          "type": "Any",
+          "description": "Arguments to pass to the helper method (optional/varargs)."
+        },
+        {
+          "name": "filterArgs",
+          "type": "Any",
+          "description": "Arguments to use for the filter comparison (optional/varargs)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Method with arguments\nbuilder.withBlockFilter(\"isIn\", \"minecraft:logs\").is(true);",
+        "// Multiple arguments to the filter condition\nbuilder.withBlockFilter(\"getId\").is([\"method_args\"], [\"EQUALS\", \"minecraft:stone\"]);"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "WorldScanner",
+      "description": "Creates a WorldScanner instance with the configured filters.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scanner = builder.build();\nconst results = scanner.scanChunksAroundPlayer(2);"
+      ]
+    }
+  ]
+}

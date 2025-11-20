@@ -1,0 +1,165 @@
+{
+  "name": "BlockHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.BlockHelper",
+  "extends": "BaseHelper<Block>",
+  "since": "1.6.5",
+  "description": "The BlockHelper class is a World Interaction helper in JSMacros that provides access to Minecraft block properties and behaviors.",
+  "overview": "The BlockHelper class is a World Interaction helper in JSMacros that provides access to Minecraft block properties and behaviors. It wraps Minecraft's native Block class and exposes various methods for retrieving block information such as hardness, resistance, states, and other properties that are useful for scripting.\n\nThis class is typically accessed when working with blocks in the world, either through block events or by querying specific block positions.\n\nYou typically get BlockHelper instances from:\n- Block-related events\n- World block queries\n- Interactions with block states and positions",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "Block",
+      "description": "Returns the underlying Minecraft Block object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawBlock = blockHelper.getRaw();"
+      ]
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Returns the block identifier as a string.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockId = blockHelper.getId();\n// Example: \"minecraft:stone\""
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "TextHelper",
+      "description": "Returns the display name of the block as a TextHelper.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockName = blockHelper.getName();\nChat.log(\"Block name: \" + blockName.getString());"
+      ]
+    },
+    {
+      "name": "getDefaultState",
+      "signature": "getDefaultState()",
+      "returnType": "BlockStateHelper",
+      "description": "Returns the default state of the block as a BlockStateHelper.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const defaultState = blockHelper.getDefaultState();"
+      ]
+    },
+    {
+      "name": "getStates",
+      "signature": "getStates()",
+      "returnType": "List<BlockStateHelper>",
+      "description": "Returns all possible block states of the block as a list of BlockStateHelper objects.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allStates = blockHelper.getStates();\nChat.log(\"Total states: \" + allStates.length);"
+      ]
+    },
+    {
+      "name": "getDefaultItemStack",
+      "signature": "getDefaultItemStack()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the default item stack representation of the block as an ItemStackHelper.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const defaultItem = blockHelper.getDefaultItemStack();"
+      ]
+    },
+    {
+      "name": "getHardness",
+      "signature": "getHardness()",
+      "returnType": "float",
+      "description": "Returns the hardness value of the block (how long it takes to mine).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hardness = blockHelper.getHardness();\nChat.log(\"Block hardness: \" + hardness);"
+      ]
+    },
+    {
+      "name": "getBlastResistance",
+      "signature": "getBlastResistance()",
+      "returnType": "float",
+      "description": "Returns the blast resistance value of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const resistance = blockHelper.getBlastResistance();\nChat.log(\"Blast resistance: \" + resistance);"
+      ]
+    },
+    {
+      "name": "getSlipperiness",
+      "signature": "getSlipperiness()",
+      "returnType": "float",
+      "description": "Returns the slipperiness factor of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const slipperiness = blockHelper.getSlipperiness();\nChat.log(\"Slipperiness: \" + slipperiness);"
+      ]
+    },
+    {
+      "name": "getJumpVelocityMultiplier",
+      "signature": "getJumpVelocityMultiplier()",
+      "returnType": "float",
+      "description": "Returns the jump velocity multiplier when jumping on this block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const jumpMultiplier = blockHelper.getJumpVelocityMultiplier();\nChat.log(\"Jump multiplier: \" + jumpMultiplier);"
+      ]
+    },
+    {
+      "name": "getVelocityMultiplier",
+      "signature": "getVelocityMultiplier()",
+      "returnType": "float",
+      "description": "Returns the velocity multiplier for entities walking on this block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const velocityMultiplier = blockHelper.getVelocityMultiplier();\nChat.log(\"Velocity multiplier: \" + velocityMultiplier);"
+      ]
+    },
+    {
+      "name": "hasDynamicBounds",
+      "signature": "hasDynamicBounds()",
+      "returnType": "boolean",
+      "description": "Returns true if the block has dynamic bounds (bounds that change based on state).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hasDynamicBounds = blockHelper.hasDynamicBounds();\nif (hasDynamicBounds) {\n    Chat.log(\"This block has dynamic bounds\");\n}"
+      ]
+    },
+    {
+      "name": "canMobSpawnInside",
+      "signature": "canMobSpawnInside()",
+      "returnType": "boolean",
+      "description": "Returns true if mobs can spawn inside this block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const canMobsSpawn = blockHelper.canMobSpawnInside();\nif (canMobsSpawn) {\n    Chat.log(\"Mobs can spawn inside this block\");\n}"
+      ]
+    },
+    {
+      "name": "getTags",
+      "signature": "getTags()",
+      "returnType": "List<String>",
+      "description": "Returns all tags associated with the block as a list of strings.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tags = blockHelper.getTags();\nChat.log(\"Block tags:\");\nfor (const tag of tags) {\n    Chat.log(\"- \" + tag);\n}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "WrappedScript",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.WrappedScript<T, U, V>",
+  "extends": "MethodWrapper<T, U, V, BaseScriptContext<?>>",
+  "since": "1.7.0",
+  "description": "A wrapper class that allows scripts to be executed as functional interfaces (Consumer, Function, Predicate, etc.).",
+  "overview": "This class enables JavaScript code to be treated as a first-class function that can be passed to Java APIs expecting functional interfaces, with proper thread management and execution context handling.\n\nWrappedScript objects are typically created using the `JsMacros.wrapScriptRun()` and `JsMacros.wrapScriptRunAsync()` methods, which wrap existing script files or inline script code into executable function objects that can be used with event listeners, collections operations, or any Java API that accepts functional interfaces.\n\n### Integration Notes\n\n#### Event Access in Wrapped Scripts\nWrapped scripts receive access to special event data through the `event` object:\n- `event.arg1` - First parameter passed to the method\n- `event.arg2` - Second parameter passed to the method (for BiConsumer, BiFunction, etc.)\n- `event.setReturn*()` methods - Set return values for Function, Supplier, etc.\n\n#### Thread Management\n- **Synchronous wrapped scripts** (`wrapScriptRun`) block execution until completion\n- **Asynchronous wrapped scripts** (`wrapScriptRunAsync`) run without blocking\n- JsMacros automatically manages thread safety and script context\n- Use async scripts for long operations to avoid game stutter\n\n#### Memory and Performance\n- Wrapped scripts maintain references to their execution context\n- Reuse wrapped script objects when possible for better performance\n- Consider the frequency of execution when choosing sync vs async\n- Async scripts are generally preferred for event handlers",
+  "constructors": [],
+  "methods": []
+}

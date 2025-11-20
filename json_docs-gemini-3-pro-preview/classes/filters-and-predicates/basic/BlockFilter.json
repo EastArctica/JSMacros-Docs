@@ -1,0 +1,106 @@
+{
+  "name": "BlockFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter",
+  "extends": "ClassWrapperFilter<BlockHelper>",
+  "since": "1.6.5",
+  "description": "The BlockFilter class is a specialized filter in JSMacros used with the WorldScanner system to filter blocks based on their properties and method results.",
+  "overview": "The BlockFilter class works by invoking a specified method from BlockHelper on each block being evaluated, applying a comparison filter to the method result, and performing a boolean evaluation. It extends the ClassWrapperFilter class and provides a powerful way to create complex block filtering logic. It supports all public, no-parameter methods from BlockHelper, works with different return types (String, Number, Boolean), and supports logical operations (AND, OR, XOR, NOT). This class is primarily used internally by the WorldScannerBuilder but can be instantiated directly for advanced scenarios.",
+  "constructors": [
+    {
+      "signature": "new BlockFilter(methodName, methodArgs, filterArgs)",
+      "description": "Creates a new BlockFilter instance with the specified method and filter criteria.",
+      "parameters": [
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method from BlockHelper to invoke on each block"
+        },
+        {
+          "name": "methodArgs",
+          "type": "Object[]",
+          "description": "Arguments to pass to the method when invoked (typically empty for no-parameter methods)"
+        },
+        {
+          "name": "filterArgs",
+          "type": "Object[]",
+          "description": "Arguments for the filter comparison operation"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "apply",
+      "signature": "apply(BlockHelper block)",
+      "returnType": "boolean",
+      "description": "Applies the filter to a block and returns the result.",
+      "parameters": [
+        {
+          "name": "block",
+          "type": "BlockHelper",
+          "description": "The block to evaluate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "and",
+      "signature": "and(IFilter<BlockHelper> filter)",
+      "returnType": "BasicFilter<BlockHelper>",
+      "description": "Combines with another filter using AND logic.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<BlockHelper>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const combinedFilter = stoneFilter.and(hardFilter);"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(IFilter<BlockHelper> filter)",
+      "returnType": "BasicFilter<BlockHelper>",
+      "description": "Combines with another filter using OR logic.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<BlockHelper>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const combinedFilter = stoneFilter.and(hardFilter).or(resistantFilter);"
+      ]
+    },
+    {
+      "name": "xor",
+      "signature": "xor(IFilter<BlockHelper> filter)",
+      "returnType": "BasicFilter<BlockHelper>",
+      "description": "Combines with another filter using XOR logic.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<BlockHelper>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "BasicFilter<BlockHelper>",
+      "description": "Negates the current filter.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

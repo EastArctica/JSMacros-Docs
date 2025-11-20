@@ -1,0 +1,46 @@
+[
+  {
+    "name": "DolphinEntityHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.DolphinEntityHelper",
+    "extends": "MobEntityHelper<DolphinEntity>",
+    "since": "1.8.4",
+    "description": "The DolphinEntityHelper class provides specialized access to dolphin entities in Minecraft, offering methods to monitor and interact with dolphin-specific behaviors such as fish carrying, treasure hunting, and moisture levels.",
+    "overview": "This class extends MobEntityHelper and inherits all functionality for mob entities including AI states, pathfinding, and combat behaviors.\n\nDolphins are aquatic passive mobs that spawn in ocean biomes and are known for their playful behavior, ability to lead players to treasure, and unique moisture mechanic that requires them to remain in water to survive.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "hasFish",
+        "signature": "hasFish()",
+        "returnType": "boolean",
+        "description": "Returns whether the dolphin is currently carrying a fish in its mouth. Dolphins can pick up fish items and will hold them until they eat them or drop them. Returns true if the dolphin has a fish in its mouth, false otherwise.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const hasFish = dolphin.hasFish();"
+        ]
+      },
+      {
+        "name": "getTreasurePos",
+        "signature": "getTreasurePos()",
+        "returnType": "BlockPosHelper",
+        "description": "Returns the position of the treasure that the dolphin is currently leading players toward. When dolphins are fed, they will swim to nearby underwater ruins or shipwrecks and remember the location, potentially leading players to treasure. Returns [0, 0, 0] by default if no treasure is set.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const treasurePos = dolphin.getTreasurePos();"
+        ]
+      },
+      {
+        "name": "getMoistness",
+        "signature": "getMoistness()",
+        "returnType": "int",
+        "description": "Returns the current moisture level of the dolphin. Dolphins must maintain moisture by staying in water - their moisture decreases over time when on land and they will take damage if it reaches zero. The maximum moisture is typically 2400 (2 minutes of air time).",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const moistness = dolphin.getMoistness();"
+        ]
+      }
+    ]
+  }
+]

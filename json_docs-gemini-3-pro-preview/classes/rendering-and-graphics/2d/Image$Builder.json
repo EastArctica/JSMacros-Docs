@@ -1,0 +1,516 @@
+{
+  "name": "Image.Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Image$Builder",
+  "extends": "RenderElementBuilder",
+  "since": "JsMacros 1.8.4",
+  "description": "The Image.Builder class provides a fluent interface for creating Image instances with method chaining.",
+  "overview": "The Image.Builder class allows you to construct Image objects through a chain of method calls, making the configuration process more readable and maintainable. Instead of passing multiple parameters to constructors, you can set properties individually using descriptive method names.\n\nThe builder is typically obtained through the Draw2D.image(textureId) method and provides two final operations:\n- build() - Creates the Image instance\n- buildAndAdd() - Creates the Image instance and automatically adds it to the Draw2D context",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "texture",
+      "signature": "texture(textureId)",
+      "returnType": "Image.Builder",
+      "description": "Sets the texture identifier for the image.",
+      "parameters": [
+        {
+          "name": "textureId",
+          "type": "String",
+          "description": "The texture identifier (e.g., \"minecraft:texture/gui/icons.png\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.image()\n    .texture(\"minecraft:texture/gui/icons.png\")\n    .build();"
+      ]
+    },
+    {
+      "name": "fromCustomImage",
+      "signature": "fromCustomImage(customImage)",
+      "returnType": "Image.Builder",
+      "description": "Sets texture, position, and size from a CustomImage object.",
+      "parameters": [
+        {
+          "name": "customImage",
+          "type": "CustomImage",
+          "description": "The CustomImage object containing texture and dimension info"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const customImage = File.createTempImage(\"my_texture.png\", imageBytes);\nconst image = draw2D.image()\n    .fromCustomImage(customImage)\n    .pos(20, 20)\n    .build();"
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "pos(x, y)",
+      "returnType": "Image.Builder",
+      "description": "Sets the position of the image on the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const image = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .pos(50, 100)\n    .build();"
+      ]
+    },
+    {
+      "name": "x",
+      "signature": "x(x)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the X coordinate of the image.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "y",
+      "signature": "y(y)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the Y coordinate of the image.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "size",
+      "signature": "size(width, height)",
+      "returnType": "Image.Builder",
+      "description": "Sets the render size of the image.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width to render the image"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height to render the image"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const image = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .size(32, 32)\n    .build();"
+      ]
+    },
+    {
+      "name": "width",
+      "signature": "width(width)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the width of the image.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width to render the image"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "height",
+      "signature": "height(height)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the height of the image.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height to render the image"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "regions",
+      "signature": "regions(x, y, width, height)",
+      "returnType": "Image.Builder",
+      "description": "Sets the texture region coordinates and dimensions.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate in texture to start from"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate in texture to start from"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the region in texture to use"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the region in texture to use"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Use a 16x16 region starting at coordinates (52, 0) in the texture\nconst heartIcon = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .regions(52, 0, 16, 16)\n    .size(16, 16)\n    .build();"
+      ]
+    },
+    {
+      "name": "regionX",
+      "signature": "regionX(x)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the X coordinate in texture to start from.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate in texture"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "regionY",
+      "signature": "regionY(y)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the Y coordinate in texture to start from.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate in texture"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "regionWidth",
+      "signature": "regionWidth(width)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the width of the region in texture to use.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the region"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "regionHeight",
+      "signature": "regionHeight(height)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the height of the region in texture to use.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the region"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textureSize",
+      "signature": "textureSize(width, height)",
+      "returnType": "Image.Builder",
+      "description": "Sets the total size of the texture.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Total width of the texture"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Total height of the texture"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const image = draw2D.image(\"my_texture.png\")\n    .regions(0, 0, 64, 64)\n    .textureSize(256, 256)\n    .build();"
+      ]
+    },
+    {
+      "name": "textureWidth",
+      "signature": "textureWidth(width)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the total width of the texture.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Total width of the texture"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textureHeight",
+      "signature": "textureHeight(height)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the total height of the texture.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Total height of the texture"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "color",
+      "signature": "color(color)",
+      "returnType": "Image.Builder",
+      "description": "Sets the image color tint using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const redTintedImage = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(color, alpha)",
+      "returnType": "Image.Builder",
+      "description": "Sets the image color tint using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const semiTransparentBlue = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .color(0x0000FF, 128)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b)",
+      "returnType": "Image.Builder",
+      "description": "Sets the image color tint using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const greenTint = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .color(0, 255, 0)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b, a)",
+      "returnType": "Image.Builder",
+      "description": "Sets the image color tint using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const purpleTint = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .color(128, 0, 128, 200)\n    .build();"
+      ]
+    },
+    {
+      "name": "alpha",
+      "signature": "alpha(alpha)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the alpha transparency value.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const transparentImage = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .alpha(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(degrees)",
+      "returnType": "Image.Builder",
+      "description": "Sets the rotation angle of the image (clockwise).",
+      "parameters": [
+        {
+          "name": "degrees",
+          "type": "float",
+          "description": "Rotation angle in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const rotatedIcon = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .rotation(45)\n    .build();"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(index)",
+      "returnType": "Image.Builder",
+      "description": "Sets the z-index for rendering order. Higher values render on top.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "Z-index value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const topLayerImage = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .zIndex(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "align",
+      "signature": "align(horizontal, vertical)",
+      "returnType": "Image.Builder",
+      "description": "Sets the alignment relative to parent container.",
+      "parameters": [
+        {
+          "name": "horizontal",
+          "type": "String",
+          "description": "Horizontal alignment (\"left\", \"center\", \"right\")"
+        },
+        {
+          "name": "vertical",
+          "type": "String",
+          "description": "Vertical alignment (\"top\", \"center\", \"bottom\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const centeredImage = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .align(\"center\", \"center\")\n    .build();"
+      ]
+    },
+    {
+      "name": "alignX",
+      "signature": "alignX(horizontal)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the horizontal alignment.",
+      "parameters": [
+        {
+          "name": "horizontal",
+          "type": "String",
+          "description": "Horizontal alignment (\"left\", \"center\", \"right\")"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "alignY",
+      "signature": "alignY(vertical)",
+      "returnType": "Image.Builder",
+      "description": "Sets only the vertical alignment.",
+      "parameters": [
+        {
+          "name": "vertical",
+          "type": "String",
+          "description": "Vertical alignment (\"top\", \"center\", \"bottom\")"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Image",
+      "description": "Creates the configured Image instance without adding it to the Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const image = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .pos(10, 10)\n    .size(32, 32)\n    .color(0xFF0000)\n    .build();\n\n// Add to context manually later\ndraw2D.addChild(image);"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Image",
+      "description": "Creates the configured Image instance and automatically adds it to the Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const image = draw2D.image(\"minecraft:texture/gui/icons.png\")\n    .pos(10, 10)\n    .size(32, 32)\n    .color(0x00FF00)\n    .buildAndAdd(); // Automatically added to Draw2D context"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "EventOpenScreen",
+  "fullClassName": "EventOpenScreen",
+  "description": "This event is fired when any screen is opened, including menus and non-container interfaces.",
+  "overview": "Backed by class `EventOpenScreen`.\n\n### Signature\n```js\nJsMacros.on(\"OpenScreen\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n### Event payload\n\n| Field      | Type    | Description                              |\n| ---------- | ------- | ---------------------------------------- |\n| screen     | IScreen | The screen helper object (can be null)   |\n| screenName | string  | The name of the screen that opened       |\n\n### Behavior\n\n* Fires when any screen interface is opened\n- The `screen` field provides access to the screen object (can be null)\n- The `screenName` field contains the readable screen name\n- Includes menus, containers, chat, options, etc.\n- Useful for screen-specific macros or UI automation\n\n### Fields\n\n**event.screen**\nType: `IScreen` | `null`\nA helper object for the screen that opened.\n\n**event.screenName**\nType: `string`\nThe readable name of the screen that opened.\n\n### Minimal example\n\n```js\nJsMacros.on(\"OpenScreen\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Screen opened: ${e.screenName}`);\n});\n```\n\n### Async example\n\n```js\nJsMacros.on(\"OpenScreen\", JavaWrapper.methodToJavaAsync((e) => {\n  const screen = e.screen;\n  const screenName = e.screenName;\n\n  Chat.log(`&dScreen Opened: &f${screenName}`);\n\n  // Handle different screen types\n  if (screenName === \"Title Screen\") {\n    Chat.log(\"&6Main menu opened\");\n    Chat.actionbar(\"Welcome to JsMacros!\");\n  }\n\n  // ... additional logic ...\n\n  // Log screen class name for debugging\n  if (screen) {\n    const className = screen.getClassName();\n    Chat.log(`&8Screen class: ${className}`);\n  }\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

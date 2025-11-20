@@ -1,0 +1,88 @@
+{
+  "name": "NBTNumberHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.NBTElementHelper$NBTNumberHelper",
+  "extends": "NBTElementHelper<AbstractNbtNumber>",
+  "since": "JsMacros 1.5.1",
+  "description": "The NBTNumberHelper class is a specialized helper for handling NBT numeric tags in JSMacros. It provides type-safe access to numeric NBT data with support for all Minecraft numeric types including bytes, shorts, integers, longs, floats, and doubles.",
+  "overview": "The `NBTNumberHelper` class is a specialized helper for handling NBT numeric tags in JSMacros. It provides type-safe access to numeric NBT data with support for all Minecraft numeric types including bytes, shorts, integers, longs, floats, and doubles. This helper handles automatic conversion between different numeric types while preserving the underlying data precision.\n\nNBT numeric tags are used throughout Minecraft for storing quantitative data such as health, damage levels, experience points, coordinates, durability, enchantment levels, and various game mechanics. This helper class makes it easy to work with these numeric values in your scripts with proper type conversion and precision handling.\n\n### Features\nThe `NBTNumberHelper` class provides:\n- Type conversion between all numeric NBT types (byte, short, int, long, float, double)\n- Preserved precision for floating-point operations\n- Safe integer conversion with proper range handling\n- Generic Number access for compatibility with JavaScript operations\n- Support for both signed integer and floating-point NBT types\n\n### Accessing NBTNumberHelper\nNBTNumberHelper instances are typically obtained by:\n1. Converting from an existing NBTElementHelper using `asNumberHelper()`\n2. Accessing numeric data from compound NBT structures\n3. Working with numeric elements from NBT lists\n4. Processing game data that uses numeric NBT values\n\n### NBT Number Types\nNBTNumberHelper can represent several types of numeric NBT data:\n\n| NBT Type ID | Name | Range | JavaScript Equivalent | Common Uses |\n| ----------- | ---- | ----- | -------------------- | ----------- |\n| 1 | BYTE | -128 to 127 | Number (8-bit) | Boolean flags, small counts, colors |\n| 2 | SHORT | -32,768 to 32,767 | Number (16-bit) | Item counts, IDs, fuel values |\n| 3 | INT | -2,147,483,648 to 2,147,483,647 | Number (32-bit) | Experience, damage, coordinates |\n| 4 | LONG | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 | BigInt (64-bit) | Time values, UUIDs, large counters |\n| 5 | FLOAT | ~3.4E±38 (7 digits) | Number (32-bit) | Health, movement, partial values |\n| 6 | DOUBLE | ~1.7E±308 (16 digits) | Number (64-bit) | Precise coordinates, physics |",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "asLong",
+      "signature": "asLong()",
+      "returnType": "long",
+      "description": "Returns the numeric value as a 64-bit signed integer.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    // Get creation time (if present)\n    if (compound.has(\"CreationTime\")) {\n        const creationTime = compound.get(\"CreationTime\");\n        if (creationTime && creationTime.isNumber()) {\n            const timeMs = creationTime.asNumberHelper().asLong();\n            Chat.log(`Item created: ${new Date(timeMs).toLocaleString()}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "asInt",
+      "signature": "asInt()",
+      "returnType": "int",
+      "description": "Returns the numeric value as a 32-bit signed integer.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeDurability(item) {\n    const nbt = item.getNBT();\n    if (!nbt || !nbt.isCompound()) return;\n\n    const compound = nbt.asCompoundHelper();\n\n    if (compound.has(\"Damage\")) {\n        const damage = compound.get(\"Damage\");\n        if (damage && damage.isNumber()) {\n            const damageValue = damage.asNumberHelper().asInt();\n            const maxDamage = item.getMaxDamage();\n\n            if (maxDamage > 0) {\n                const durabilityPercent = ((maxDamage - damageValue) / maxDamage) * 100;\n                Chat.log(`Durability: ${Math.round(durabilityPercent)}%`);\n                Chat.log(`Damage: ${damageValue}/${maxDamage}`);\n            }\n        }\n    }\n}\n\n// Usage\nconst mainHand = Player.getPlayer().getMainHand();\nanalyzeDurability(mainHand);"
+      ]
+    },
+    {
+      "name": "asShort",
+      "signature": "asShort()",
+      "returnType": "short",
+      "description": "Returns the numeric value as a 16-bit signed integer.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    // Get fuel value (often stored as short)\n    if (compound.has(\"Fuel\")) {\n        const fuel = compound.get(\"Fuel\");\n        if (fuel && fuel.isNumber()) {\n            const fuelValue = fuel.asNumberHelper().asShort();\n            Chat.log(`Fuel value: ${fuelValue}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "asByte",
+      "signature": "asByte()",
+      "returnType": "byte",
+      "description": "Returns the numeric value as an 8-bit signed integer.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    // Get item count (often stored as byte)\n    if (compound.has(\"Count\")) {\n        const count = compound.get(\"Count\");\n        if (count && count.isNumber()) {\n            const countValue = count.asNumberHelper().asByte();\n            Chat.log(`Item count: ${countValue}`);\n        }\n    }\n\n    // Get color data (often stored as byte array)\n    if (compound.has(\"color\")) {\n        const color = compound.get(\"color\");\n        if (color && color.isNumber()) {\n            const colorValue = color.asNumberHelper().asByte();\n            Chat.log(`Color value: ${colorValue}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "asFloat",
+      "signature": "asFloat()",
+      "returnType": "float",
+      "description": "Returns the numeric value as a 32-bit floating-point number.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityStats(compound) {\n    // Health values are often stored as floats\n    if (compound.has(\"Health\")) {\n        const health = compound.get(\"Health\");\n        if (health && health.isNumber()) {\n            const healthValue = health.asNumberHelper().asFloat();\n            Chat.log(`Health: ${healthValue.toFixed(1)}`);\n        }\n    }\n\n    // Movement speed (if present)\n    if (compound.has(\"MovementSpeed\")) {\n        const speed = compound.get(\"MovementSpeed\");\n        if (speed && speed.isNumber()) {\n            const speedValue = speed.asNumberHelper().asFloat();\n            Chat.log(`Movement speed: ${speedValue}`);\n        }\n    }\n\n    // Fall distance\n    if (compound.has(\"FallDistance\")) {\n        const fallDist = compound.get(\"FallDistance\");\n        if (fallDist && fallDist.isNumber()) {\n            const fallValue = fallDist.asNumberHelper().asFloat();\n            Chat.log(`Fall distance: ${fallValue.toFixed(2)} blocks`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "asDouble",
+      "signature": "asDouble()",
+      "returnType": "double",
+      "description": "Returns the numeric value as a 64-bit floating-point number.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzePosition(positionList) {\n    if (!positionList || !positionList.isList()) return;\n\n    const pos = positionList.asListHelper();\n    if (pos.length() !== 3) return;\n\n    const xElement = pos.get(0);\n    const yElement = pos.get(1);\n    const zElement = pos.get(2);\n\n    if (!xElement || !yElement || !zElement) return;\n    if (!xElement.isNumber() || !yElement.isNumber() || !zElement.isNumber()) return;\n\n    const x = xElement.asNumberHelper().asDouble();\n    const y = yElement.asNumberHelper().asDouble();\n    const z = zElement.asNumberHelper().asDouble();\n\n    Chat.log(`Position: (${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`);\n    Chat.log(`Distance from origin: ${Math.sqrt(x*x + y*y + z*z).toFixed(2)} blocks`);\n}\n\nfunction analyzeMotion(motionList) {\n    if (!motionList || !motionList.isList()) return;\n\n    const motion = motionList.asListHelper();\n    if (motion.length() !== 3) return;\n\n    const xElement = motion.get(0);\n    const yElement = motion.get(1);\n    const zElement = motion.get(2);\n\n    if (!xElement || !yElement || !zElement) return;\n    if (!xElement.isNumber() || !yElement.isNumber() || !zElement.isNumber()) return;\n\n    const vx = xElement.asNumberHelper().asDouble();\n    const vy = yElement.asNumberHelper().asDouble();\n    const vz = zElement.asNumberHelper().asDouble();\n\n    const speed = Math.sqrt(vx*vx + vy*vy + vz*vz);\n    Chat.log(`Velocity: (${vx.toFixed(3)}, ${vy.toFixed(3)}, ${vz.toFixed(3)})`);\n    Chat.log(`Speed: ${speed.toFixed(3)} blocks/tick`);\n}"
+      ]
+    },
+    {
+      "name": "asNumber",
+      "signature": "asNumber()",
+      "returnType": "Number",
+      "description": "Returns the numeric value as a generic JavaScript Number object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function performMathOperation(compound, key, operation) {\n    if (!compound.has(key)) {\n        Chat.log(`${key} not found`);\n        return;\n    }\n\n    const element = compound.get(key);\n    if (!element || !element.isNumber()) {\n        Chat.log(`${key} is not a number`);\n        return;\n    }\n\n    const value = element.asNumberHelper().asNumber();\n    let result;\n\n    switch (operation) {\n        case \"square\":\n            result = value * value;\n            Chat.log(`${key} squared: ${result}`);\n            break;\n\n        case \"double\":\n            result = value * 2;\n            Chat.log(`${key} doubled: ${result}`);\n            break;\n\n        case \"squareRoot\":\n            result = Math.sqrt(value);\n            Chat.log(`Square root of ${key}: ${result}`);\n            break;\n\n        case \"percentage\":\n            result = (value / 100).toFixed(2);\n            Chat.log(`${key} as percentage: ${result}%`);\n            break;\n\n        default:\n            Chat.log(`Unknown operation: ${operation}`);\n    }\n}\n\n// Usage\nconst item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    if (compound.has(\"RepairCost\")) {\n        performMathOperation(compound, \"RepairCost\", \"double\");\n    }\n}"
+      ]
+    }
+  ]
+}

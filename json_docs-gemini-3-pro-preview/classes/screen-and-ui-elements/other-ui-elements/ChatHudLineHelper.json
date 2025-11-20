@@ -1,0 +1,44 @@
+{
+  "name": "ChatHudLineHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.ChatHudLineHelper",
+  "extends": "BaseHelper<ChatHudLine>",
+  "since": "JsMacros 1.6.0",
+  "description": "The ChatHudLineHelper class provides a wrapper for individual chat HUD lines, allowing script writers to interact with and manipulate chat messages that have been displayed in the client's chat interface.",
+  "overview": "The ChatHudLineHelper class represents a single line in the chat HUD, providing access to:\n- The text content of the chat line\n- The tick when the message was created\n- Methods to delete specific messages\n- Access to the underlying Minecraft ChatHudLine object through the BaseHelper interface\n\nChatHudLineHelper objects are typically obtained through the ChatHistoryManager methods like getRecvLine(), getRecvLines(), or from chat-related events.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getText",
+      "signature": "getText()",
+      "returnType": "TextHelper",
+      "description": "Retrieves the text content of the chat line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get the most recent chat message\nconst chatHistory = Chat.getHistory();\nconst recentLine = chatHistory.getRecvLine(0);\n\nif (recentLine) {\n    const text = recentLine.getText();\n    const content = text.getString();\n    Chat.log(`Recent message: \"${content}\"`);\n}"
+      ]
+    },
+    {
+      "name": "getCreationTick",
+      "signature": "getCreationTick()",
+      "returnType": "int",
+      "description": "Retrieves the tick when the message was created.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chatHistory = Chat.getHistory();\nconst recentLine = chatHistory.getRecvLine(0);\n\nif (recentLine) {\n    const creationTick = recentLine.getCreationTick();\n    const age = World.getTime() - creationTick;\n    Chat.log(`Message age: ${age} ticks`);\n}"
+      ]
+    },
+    {
+      "name": "deleteById",
+      "signature": "deleteById()",
+      "returnType": "void",
+      "description": "Deletes the specific message from the client-side chat HUD.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chatHistory = Chat.getHistory();\nconst chatLine = chatHistory.getRecvLine(0);\nif (chatLine) {\n    // Delete the message\n    chatLine.deleteById();\n}"
+      ]
+    }
+  ]
+}

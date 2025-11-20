@@ -1,0 +1,98 @@
+{
+  "name": "CombinedVariableClassLoader",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.FReflection$CombinedVariableClassLoader",
+  "extends": "java.lang.ClassLoader",
+  "since": "1.2.8",
+  "description": "A specialized class loader that combines multiple class loaders into a single unified loader for dynamic JAR file loading.",
+  "overview": "The CombinedVariableClassLoader extends Java's standard ClassLoader and maintains a collection of delegated class loaders, each typically created from dynamically loaded JAR files. This allows scripts to access classes and resources from multiple external libraries simultaneously without conflicts.\n\nThis class is primarily used internally by the Reflection library but can be accessed through FReflection.classLoader for advanced use cases involving custom class loading and resource management.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "addClassLoader",
+      "signature": "addClassLoader(jarPath, classLoader)",
+      "returnType": "void",
+      "description": "Adds a delegate class loader for a specific JAR path to the collection.",
+      "parameters": [
+        {
+          "name": "jarPath",
+          "type": "Object",
+          "description": "The path to the JAR file."
+        },
+        {
+          "name": "classLoader",
+          "type": "ClassLoader",
+          "description": "The class loader instance to add."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasJar",
+      "signature": "hasJar(path)",
+      "returnType": "boolean",
+      "description": "Checks if a specific JAR file has already been loaded into this class loader.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "java.io.File",
+          "description": "The JAR file to check for existence."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Check what JARs are loaded\nconst commonJars = [\n    \"libs/apache-commons.jar\",\n    \"libs/gson-library.jar\",\n    \"libs/my-custom-utils.jar\"\n];\n\nfor (const jar of commonJars) {\n    const jarFile = new java.io.File(jar);\n    if (Reflection.classLoader.hasJar(jarFile)) {\n        Chat.log(`✓ ${jar} is loaded`);\n    } else {\n        Chat.log(`✗ ${jar} is not loaded`);\n        try {\n            Reflection.loadJarFile(jar);\n            Chat.log(`  → Loaded ${jar} successfully`);\n        } catch (e) {\n            Chat.log(`  → Failed to load ${jar}: ${e.message}`);\n        }\n    }\n}",
+        "function safeLoadJar(jarPath) {\n    try {\n        const file = new java.io.File(jarPath);\n\n        // Check if file exists\n        if (!file.exists()) {\n            Chat.log(`&cJAR file not found: ${jarPath}`);\n            return false;\n        }\n\n        // Check if already loaded\n        if (Reflection.classLoader.hasJar(file)) {\n            Chat.log(`&7JAR already loaded: ${jarPath}`);\n            return true;\n        }\n\n        // Attempt to load\n        const success = Reflection.loadJarFile(jarPath);\n        if (success) {\n            Chat.log(`&aSuccessfully loaded JAR: ${jarPath}`);\n            return true;\n        } else {\n            Chat.log(`&cFailed to load JAR: ${jarPath}`);\n            return false;\n        }\n\n    } catch (e) {\n        Chat.log(`&cError loading JAR ${jarPath}: ${e.message}`);\n        return false;\n    }\n}"
+      ]
+    },
+    {
+      "name": "findClass",
+      "signature": "findClass(name)",
+      "returnType": "Class<?>",
+      "description": "Finds a class with the specified name within the delegated loaders.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The binary name of the class."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "findResource",
+      "signature": "findResource(name)",
+      "returnType": "java.net.URL",
+      "description": "Finds the resource with the given name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The resource name."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Access resources from the JAR\nconst configUrl = Reflection.classLoader.findResource(\"config.properties\");"
+      ]
+    },
+    {
+      "name": "findResources",
+      "signature": "findResources(name)",
+      "returnType": "java.util.Enumeration<java.net.URL>",
+      "description": "Returns an enumeration of URL objects representing all the resources with the given name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The resource name."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Find all configuration files across loaded JARs\nfunction findResourcesWithExtension(extension) {\n    const resources = [];\n\n    // Search for common resource locations\n    const searchPaths = [\n        `config${extension}`,\n        `assets/config${extension}`,\n        `META-INF/config${extension}`,\n        `data/config${extension}`\n    ];\n\n    for (const path of searchPaths) {\n        try {\n            const foundResources = Reflection.classLoader.findResources(path);\n            while (foundResources.hasMoreElements()) {\n                resources.push(foundResources.nextElement());\n            }\n        } catch (e) {\n            // Resource not found, continue searching\n        }\n    }\n\n    return resources;\n}"
+      ]
+    }
+  ]
+}

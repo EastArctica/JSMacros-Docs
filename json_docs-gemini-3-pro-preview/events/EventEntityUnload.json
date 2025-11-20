@@ -1,0 +1,20 @@
+{
+  "name": "EventEntityUnload",
+  "fullClassName": "EventEntityUnload",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when an entity unloads from the world.",
+  "overview": "## Behavior\n\n* Fires when any entity unloads from the world\n* Occurs when entities move out of render distance or are removed\n* Includes entity death, despawning, or moving too far away\n* Not cancellable\n* Can be used to clean up entity tracking systems\n\n## Event payload\n\n| Field  | Type          | Description                              |\n| ------ | ------------- | ---------------------------------------- |\n| entity | EntityHelper  | The entity that unloaded                 |\n\n### event.entity\nA helper object for the entity that unloaded.\n\n**Type:** `EntityHelper`\n\n**Notes**\nThis provides access to the entity's properties at the time of unloading. You can still access the entity's name, type, UUID, and other information even though it's no longer in the world.\n\n## Minimal example\n\n```js\nJsMacros.on(\"EntityUnload\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Entity unloaded: ${e.entity.getName()}`);\n}));\n```\n\n## Async example\n\n```js\nJsMacros.on(\"EntityUnload\", JavaWrapper.methodToJavaAsync((e) => {\n  const entity = e.entity;\n  const entityName = entity.getName();\n  const entityType = entity.getType();\n\n  Chat.log(`&7Entity Unloaded: &f${entityName}`);\n  Chat.log(`&8Type: ${entityType}`);\n\n  // Check for specific entity types\n  if (entity.isPlayer()) {\n    Chat.log(`&6Player left: &f${entityName}`);\n\n    if (entityName !== Player.getPlayer().getName()) {\n      Chat.actionbar(`&7${entityName} &fhas left the area`);\n    }\n  }\n\n  if (entity.isHostile()) {\n    Chat.log(`&cHostile mob despawned/removed: &f${entityName}`);\n    Chat.actionbar(`&a${entityName} &7is no longer nearby`);\n\n    // Log when dangerous mobs are gone\n    Chat.log(`&6Clear: Hostile entity &f${entityName} &6has been removed`);\n  }\n\n  if (entity.isAnimal()) {\n    Chat.log(`&bAnimal unloaded: &f${entityName}`);\n  }\n\n  // Check for item entities (picked up or despawned)\n  if (entity.isItem()) {\n    const itemStack = entity.getItemStack();\n    const itemName = itemStack.getName().getString();\n    const itemCount = itemStack.getCount();\n\n    Chat.log(`&6Item removed: &f${itemName} &7(x${itemCount})`);\n\n    // Assume item was picked up if it was valuable\n    if (isValuableItem(itemName)) {\n      Chat.actionbar(`&a${itemName} &7picked up!`);\n    }\n  }\n\n  // Check for vehicles/minecarts\n  if (entity.isVehicle()) {\n    Chat.log(`&dVehicle unloaded: &f${entityName}`);\n  }\n\n  // Clean up any tracked data for this entity\n  // removeEntityData(entity.getUUID());\n}));\n\nfunction isValuableItem(itemName) {\n  const valuableItems = [\n    \"diamond\", \"netherite\", \"elytra\", \"totem\", \"enchanted\",\n    \"god\", \"apple\", \"dragon\", \"beacon\"\n  ];\n  return valuableItems.some(val => itemName.toLowerCase().includes(val));\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

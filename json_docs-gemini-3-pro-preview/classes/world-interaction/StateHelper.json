@@ -1,0 +1,26 @@
+{
+  "name": "StateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.StateHelper",
+  "extends": "BaseHelper<U>",
+  "since": "JsMacros 1.8.4",
+  "description": "The StateHelper class is an abstract base class in JSMacros that provides a foundation for working with Minecraft state objects, particularly block states and fluid states.",
+  "overview": "The StateHelper class is an abstract base class in JSMacros that provides a foundation for working with Minecraft state objects, particularly block states and fluid states. It offers a consistent interface for accessing and modifying state properties through string-based property names and values.\n\nSince this is an abstract class, you typically work with its concrete implementations:\n- `BlockStateHelper` - For block states with block-specific functionality\n- `FluidStateHelper` - For fluid states with fluid-specific functionality\n\nThe `StateHelper` class provides essential functionality for state management in JSMacros:\n- **Property Access**: Retrieve all state properties as a map of string key-value pairs\n- **State Modification**: Create new state instances with modified property values\n- **Type Safety**: Automatic validation of property names and values\n- **Immutable Operations**: All modifications create new state instances rather than modifying existing ones",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create",
+      "signature": "create(base)",
+      "returnType": "StateHelper<U>",
+      "description": "Protected abstract method that must be implemented by concrete classes to create new instances of the appropriate state helper type.\n\nNote: This method is used internally by the `with()` method and typically not called directly.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "U",
+          "description": "The base state object"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

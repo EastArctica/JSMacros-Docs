@@ -1,0 +1,105 @@
+{
+  "name": "EnchantInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.EnchantInventory",
+  "extends": "Inventory<EnchantmentScreen>",
+  "since": "JsMacros 1.3.1",
+  "description": "The EnchantInventory class represents an enchantment table interface in JSMacros.",
+  "overview": "The EnchantInventory class extends the base Inventory class with enchantment-specific functionality: access to all three enchantment options available at the enchantment table, required experience levels for each enchantment option, enchantment details including names, IDs, and levels, methods to perform enchantments programmatically, access to the item being enchanted and lapis lazuli used, and integration with standard inventory operations.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getRequiredLevels",
+      "signature": "getRequiredLevels()",
+      "returnType": "int[]",
+      "description": "Gets the experience levels required for each of the three enchantment options.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const costs = enchantInv.getRequiredLevels();\nChat.log(`Cost for option 1: ${costs[0]} levels`);"
+      ]
+    },
+    {
+      "name": "getEnchantmentLevels",
+      "signature": "getEnchantmentLevels()",
+      "returnType": "int[]",
+      "description": "Gets the displayed level of the enchantment hint for each option.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const levels = enchantInv.getEnchantmentLevels();\nChat.log(`Level for option 1: ${levels[0]}`);"
+      ]
+    },
+    {
+      "name": "getEnchantments",
+      "signature": "getEnchantments()",
+      "returnType": "TextHelper[]",
+      "description": "Gets the names of the hint enchantments for each option.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const names = enchantInv.getEnchantments();\nChat.log(`Name: ${names[0] ? names[0].getString() : \"None\"}`);"
+      ]
+    },
+    {
+      "name": "getEnchantmentIds",
+      "signature": "getEnchantmentIds()",
+      "returnType": "String[]",
+      "description": "Gets the registry IDs (e.g., 'minecraft:sharpness') of the hint enchantments.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const ids = enchantInv.getEnchantmentIds();\nChat.log(`ID: ${ids[0] || \"None\"}`);"
+      ]
+    },
+    {
+      "name": "getItemToEnchant",
+      "signature": "getItemToEnchant()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently placed in the enchantment slot (slot 0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = enchantInv.getItemToEnchant();\nChat.log(`Item to enchant: ${item.isEmpty() ? \"None\" : item.getName()}`);"
+      ]
+    },
+    {
+      "name": "getLapis",
+      "signature": "getLapis()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the lapis lazuli currently placed in the consumable slot (slot 1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const lapis = enchantInv.getLapis();\nChat.log(`Lapis available: ${lapis.getCount()}`);"
+      ]
+    },
+    {
+      "name": "getEnchantmentHelpers",
+      "signature": "getEnchantmentHelpers()",
+      "returnType": "Object[]",
+      "description": "Returns helper objects containing detailed information about the available enchantments.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const helpers = enchantInv.getEnchantmentHelpers();\nconst enchant = helpers[0].getEnchantment();"
+      ]
+    },
+    {
+      "name": "doEnchant",
+      "signature": "doEnchant(int slot)",
+      "returnType": "boolean",
+      "description": "Performs the enchantment associated with the specified slot index (0-2).",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The index of the enchantment option to select (0, 1, or 2)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const success = enchantInv.doEnchant(0);\nif (success) Chat.log(\"Enchanted successfully!\");"
+      ]
+    }
+  ]
+}

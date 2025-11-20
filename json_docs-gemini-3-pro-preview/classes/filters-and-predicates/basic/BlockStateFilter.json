@@ -1,0 +1,32 @@
+{
+  "name": "BlockStateFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockStateFilter",
+  "extends": "ClassWrapperFilter<BlockStateHelper>",
+  "since": "1.6.5",
+  "description": "The BlockStateFilter class is a specialized filter implementation in JSMacros' World Scanner system used to filter block states based on their properties and methods.",
+  "overview": "The BlockStateFilter class is a specialized filter implementation in JSMacros' World Scanner system. It provides a way to filter block states based on their properties and methods by wrapping any public no-parameter method from the BlockStateHelper class and applying comparison operations to the returned values.\n\nThis class is typically not instantiated directly by users, but rather created through the WorldScannerBuilder when using state filtering methods like withStateFilter(). The filter leverages Java reflection to dynamically invoke methods on BlockStateHelper objects and compare their results using various criteria.\n\nThe BlockStateFilter enables developers to:\n- Filter block states based on their properties (like opacity, luminance, air status)\n- Apply numerical, string, or boolean comparisons to block state method results\n- Create complex world scanning logic for finding specific types of blocks\n- Combine multiple filters using logical operators (AND, OR, XOR, NOT)",
+  "constructors": [
+    {
+      "signature": "new BlockStateFilter(methodName, methodArgs, filterArgs)",
+      "description": "Creates a new BlockStateFilter that will invoke the specified method on BlockStateHelper objects and apply filter criteria to the result. This is typically used internally by WorldScannerBuilder.",
+      "parameters": [
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method to invoke on BlockStateHelper (e.g., \"isAir\", \"getLuminance\", \"isOpaque\")"
+        },
+        {
+          "name": "methodArgs",
+          "type": "Object[]",
+          "description": "Arguments to pass to the method when invoked (empty array for no-parameter methods)"
+        },
+        {
+          "name": "filterArgs",
+          "type": "Object[]",
+          "description": "Arguments for the filter comparison operation (depends on return type)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

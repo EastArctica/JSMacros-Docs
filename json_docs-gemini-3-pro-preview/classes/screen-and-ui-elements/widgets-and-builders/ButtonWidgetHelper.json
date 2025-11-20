@@ -1,0 +1,38 @@
+{
+  "name": "ButtonWidgetHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.ButtonWidgetHelper",
+  "extends": "ClickableWidgetHelper<ButtonWidgetHelper<T>, T>",
+  "since": "JsMacros 1.8.4",
+  "description": "The ButtonWidgetHelper class is a comprehensive helper for creating and managing button widgets in JSMacros custom screens and UIs. It provides both standard buttons and textured buttons with full control over appearance, behavior, positioning, and interaction handling. This class serves as a wrapper around Minecraft's native button widgets, exposing them to JSMacros scripts with additional functionality for tooltips, actions, and screen integration.",
+  "overview": "The ButtonWidgetHelper class provides:\n\n- **Button Creation**: Support for both standard and textured button widgets\n- **Position Control**: Precise positioning and sizing with screen-relative coordinates\n- **Visual Customization**: Custom text, colors, textures, and styling options\n- **Event Handling**: Click actions with proper screen context and error handling\n- **Tooltips**: Multi-line tooltip support with various text formats\n- **State Management**: Control over active, visible, and focus states\n- **Builder Patterns**: Fluent API for easy button construction\n- **Z-Index Support**: Layering control for complex UI layouts",
+  "constructors": [
+    {
+      "signature": "new ButtonWidgetHelper(button)",
+      "description": "Creates a new ButtonWidgetHelper from an existing ButtonWidget instance.",
+      "parameters": [
+        {
+          "name": "button",
+          "type": "T extends ButtonWidget",
+          "description": "The underlying ButtonWidget to wrap"
+        }
+      ]
+    },
+    {
+      "signature": "new ButtonWidgetHelper(button, zIndex)",
+      "description": "Creates a new ButtonWidgetHelper with a specified z-index.",
+      "parameters": [
+        {
+          "name": "button",
+          "type": "T extends ButtonWidget",
+          "description": "The underlying ButtonWidget to wrap"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index for rendering order"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

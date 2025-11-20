@@ -1,0 +1,542 @@
+{
+  "name": "Line",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Line",
+  "extends": "Object",
+  "since": "1.8.4",
+  "description": "The Line class is a 2D rendering component in JSMacros that provides functionality to draw lines on the screen.",
+  "overview": "The Line class is a 2D rendering component in JSMacros that provides functionality to draw lines on the screen. It supports custom colors, widths, rotation, positioning, and z-index layering. Lines are rendered using triangle strips for smooth appearance and can be used as part of custom HUDs, overlays, or visual effects.\n\nThis class is part of the JSMacros rendering system available since version 1.8.4 and is designed to work with the 2D drawing context, typically used for creating custom user interface elements or screen overlays.",
+  "constructors": [
+    {
+      "signature": "new Line(x1, y1, x2, y2, color, rotation, width, zIndex)",
+      "description": "Direct constructor usage.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X start position"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y start position"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X end position"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y end position"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Line color"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees"
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "description": "Line width"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Layer index"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "setX1",
+      "signature": "setX1(x1)",
+      "returnType": "Line",
+      "description": "Sets the x position of the start of the line.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "The x position of the start of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setX1(50);"
+      ]
+    },
+    {
+      "name": "getX1",
+      "signature": "getX1()",
+      "returnType": "int",
+      "description": "Returns the x position of the start of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const x1 = line.getX1();"
+      ]
+    },
+    {
+      "name": "setY1",
+      "signature": "setY1(y1)",
+      "returnType": "Line",
+      "description": "Sets the y position of the start of the line.",
+      "parameters": [
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "The y position of the start of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setY1(50);"
+      ]
+    },
+    {
+      "name": "getY1",
+      "signature": "getY1()",
+      "returnType": "int",
+      "description": "Returns the y position of the start of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const y1 = line.getY1();"
+      ]
+    },
+    {
+      "name": "setX2",
+      "signature": "setX2(x2)",
+      "returnType": "Line",
+      "description": "Sets the x position of the end of the line.",
+      "parameters": [
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "The x position of the end of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setX2(200);"
+      ]
+    },
+    {
+      "name": "getX2",
+      "signature": "getX2()",
+      "returnType": "int",
+      "description": "Returns the x position of the end of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const x2 = line.getX2();"
+      ]
+    },
+    {
+      "name": "setY2",
+      "signature": "setY2(y2)",
+      "returnType": "Line",
+      "description": "Sets the y position of the end of the line.",
+      "parameters": [
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "The y position of the end of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setY2(150);"
+      ]
+    },
+    {
+      "name": "getY2",
+      "signature": "getY2()",
+      "returnType": "int",
+      "description": "Returns the y position of the end of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const y2 = line.getY2();"
+      ]
+    },
+    {
+      "name": "setPos1",
+      "signature": "setPos1(x1, y1)",
+      "returnType": "Line",
+      "description": "Sets both x and y coordinates of the start position simultaneously.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "The x position of the start of the line"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "The y position of the start of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setPos1(10, 10);"
+      ]
+    },
+    {
+      "name": "setPos2",
+      "signature": "setPos2(x2, y2)",
+      "returnType": "Line",
+      "description": "Sets both x and y coordinates of the end position simultaneously.",
+      "parameters": [
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "The x position of the end of the line"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "The y position of the end of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setPos2(100, 80);"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(x1, y1, x2, y2)",
+      "returnType": "Line",
+      "description": "Sets both start and end positions of the line in a single call.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "The x position of the start of the line"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "The y position of the start of the line"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "The x position of the end of the line"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "The y position of the end of the line"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setPos(0, 0, 200, 150);"
+      ]
+    },
+    {
+      "name": "setColor",
+      "signature": "setColor(color)",
+      "returnType": "Line",
+      "description": "Sets the color of the line. Automatically adds full alpha if not specified.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "The color of the line (RGB or ARGB format)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Set solid red line\nline.setColor(0xFF0000);",
+        "// Set color with alpha included\nline.setColor(0x80FF0000); // Semi-transparent red"
+      ]
+    },
+    {
+      "name": "setColor",
+      "signature": "setColor(color, alpha)",
+      "returnType": "Line",
+      "description": "Sets the color and alpha separately.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "The RGB color of the line"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "The alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setColor(0xFF0000, 128); // Red color with 50% transparency"
+      ]
+    },
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "int",
+      "description": "Returns the current color of the line (including alpha).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = line.getColor();"
+      ]
+    },
+    {
+      "name": "setAlpha",
+      "signature": "setAlpha(alpha)",
+      "returnType": "Line",
+      "description": "Sets only the alpha component while preserving the RGB color.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "The alpha value (0-255, where 0 is fully transparent and 255 is fully opaque)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setAlpha(128); // 50% transparency"
+      ]
+    },
+    {
+      "name": "getAlpha",
+      "signature": "getAlpha()",
+      "returnType": "int",
+      "description": "Returns the alpha component of the current color.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const alpha = line.getAlpha();"
+      ]
+    },
+    {
+      "name": "setRotation",
+      "signature": "setRotation(rotation)",
+      "returnType": "Line",
+      "description": "Sets the rotation angle of the line (clockwise).",
+      "parameters": [
+        {
+          "name": "rotation",
+          "type": "number",
+          "description": "The rotation angle in degrees (clockwise)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setRotation(45.0); // Rotate 45 degrees clockwise"
+      ]
+    },
+    {
+      "name": "getRotation",
+      "signature": "getRotation()",
+      "returnType": "float",
+      "description": "Returns the current rotation angle.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rotation = line.getRotation();"
+      ]
+    },
+    {
+      "name": "setRotateCenter",
+      "signature": "setRotateCenter(rotateCenter)",
+      "returnType": "Line",
+      "description": "Sets whether the line should rotate around its center point.",
+      "parameters": [
+        {
+          "name": "rotateCenter",
+          "type": "boolean",
+          "description": "Whether to rotate around the line's center"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setRotateCenter(true);  // Rotate around center\nline.setRotateCenter(false); // Rotate around origin (0,0)"
+      ]
+    },
+    {
+      "name": "isRotatingCenter",
+      "signature": "isRotatingCenter()",
+      "returnType": "boolean",
+      "description": "Returns whether the line is configured to rotate around its center.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rotatesCenter = line.isRotatingCenter();"
+      ]
+    },
+    {
+      "name": "setWidth",
+      "signature": "setWidth(width)",
+      "returnType": "Line",
+      "description": "Sets the width (thickness) of the line.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the line in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setWidth(3.5); // 3.5 pixel wide line"
+      ]
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "float",
+      "description": "Returns the current width of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const width = line.getWidth();"
+      ]
+    },
+    {
+      "name": "setZIndex",
+      "signature": "setZIndex(zIndex)",
+      "returnType": "Line",
+      "description": "Sets the z-index for layering order. Higher z-index values appear on top.",
+      "parameters": [
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index value for layering"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.setZIndex(100); // Appear above elements with lower z-index"
+      ]
+    },
+    {
+      "name": "getZIndex",
+      "signature": "getZIndex()",
+      "returnType": "int",
+      "description": "Returns the current z-index value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const zIndex = line.getZIndex();"
+      ]
+    },
+    {
+      "name": "setParent",
+      "signature": "setParent(parent)",
+      "returnType": "Line",
+      "description": "Sets the parent 2D drawing context for this line.",
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "IDraw2D<?>",
+          "description": "The parent 2D drawing context"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const draw2D = Hud.createDraw2D();\nline.setParent(draw2D);"
+      ]
+    },
+    {
+      "name": "moveTo",
+      "signature": "moveTo(x, y)",
+      "returnType": "Line",
+      "description": "Moves the line to a new position while maintaining its dimensions.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The new x position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The new y position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "line.moveTo(50, 50);"
+      ]
+    },
+    {
+      "name": "getScaledWidth",
+      "signature": "getScaledWidth()",
+      "returnType": "int",
+      "description": "Returns the absolute width of the line (difference between x coordinates).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const width = line.getScaledWidth();"
+      ]
+    },
+    {
+      "name": "getScaledHeight",
+      "signature": "getScaledHeight()",
+      "returnType": "int",
+      "description": "Returns the absolute height of the line (difference between y coordinates).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const height = line.getScaledHeight();"
+      ]
+    },
+    {
+      "name": "getParentWidth",
+      "signature": "getParentWidth()",
+      "returnType": "int",
+      "description": "Returns the width of the parent container or window.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentWidth = line.getParentWidth();"
+      ]
+    },
+    {
+      "name": "getParentHeight",
+      "signature": "getParentHeight()",
+      "returnType": "int",
+      "description": "Returns the height of the parent container or window.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentHeight = line.getParentHeight();"
+      ]
+    },
+    {
+      "name": "getScaledLeft",
+      "signature": "getScaledLeft()",
+      "returnType": "int",
+      "description": "Returns the leftmost x coordinate of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const left = line.getScaledLeft();"
+      ]
+    },
+    {
+      "name": "getScaledTop",
+      "signature": "getScaledTop()",
+      "returnType": "int",
+      "description": "Returns the topmost y coordinate of the line.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const top = line.getScaledTop();"
+      ]
+    }
+  ]
+}

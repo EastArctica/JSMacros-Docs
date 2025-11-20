@@ -1,0 +1,56 @@
+{
+  "name": "CartographyInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CartographyInventory",
+  "extends": "Inventory<CartographyTableScreen>",
+  "since": "1.8.4",
+  "description": "The CartographyInventory class provides functionality for interacting with cartography table screens in Minecraft.",
+  "overview": "It extends the base Inventory class and adds cartography-specific functionality while inheriting all standard inventory operations. This class allows you to automate map cloning, extending, locking, and other cartography operations. The interface consists of three main slots: Map Item Slot (Slot 0), Material Slot (Slot 1), and Output Slot (Slot 2).",
+  "constructors": [
+    {
+      "signature": "new CartographyInventory(inventory)",
+      "description": "Creates a new CartographyInventory instance for the specified cartography table screen. Note: This constructor is primarily used internally by JSMacros. Scripts typically obtain instances through Player.getInventory() or Inventory.create().",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "CartographyTableScreen",
+          "description": "The cartography table screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getMapItem",
+      "signature": "getMapItem()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently within the Map Item Slot (Slot 0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.getType() === \"Cartography Table\") {\n    const mapItem = inventory.getMapItem();\n    if (!mapItem.isEmpty()) {\n        Chat.log(\"Map loaded: \" + mapItem.getName().getString());\n    }\n}"
+      ]
+    },
+    {
+      "name": "getMaterial",
+      "signature": "getMaterial()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently within the Material Slot (Slot 1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.getType() === \"Cartography Table\") {\n    const material = inventory.getMaterial();\n    Chat.log(\"Material slot contains: \" + material.getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently within the Output Slot (Slot 2), representing the result of the cartography operation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.getType() === \"Cartography Table\") {\n    const output = inventory.getOutput();\n    if (!output.isEmpty()) {\n        Chat.log(\"Result ready: \" + output.getName().getString());\n        inventory.quick(2); // Take result\n    }\n}"
+      ]
+    }
+  ]
+}

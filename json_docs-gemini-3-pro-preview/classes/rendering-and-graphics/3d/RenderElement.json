@@ -1,0 +1,146 @@
+{
+  "name": "RenderElement",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.RenderElement",
+  "extends": "Drawable",
+  "since": "JsMacros 1.0.5",
+  "description": "The RenderElement is the base interface for all 2D rendering components in JsMacros. It defines the fundamental functionality for rendering visual elements on the screen, providing a standardized framework for 2D graphics such as text, images, rectangles, lines, and other UI components. This interface is implemented by various rendering components that can be added to a Draw2D context for screen-space visualization.",
+  "overview": "The RenderElement interface serves as the foundation for 2D rendering in JsMacros, providing:\n\n- Standardized rendering method that integrates with Minecraft's GUI rendering system\n- Z-index support for controlling element rendering order\n- Matrix transformation utilities for positioning, scaling, and rotation\n- Integration with the Draw2D rendering system for screen-space visualization\n- Compatibility with Minecraft's Drawable interface for seamless integration",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getZIndex",
+      "signature": "int getZIndex()",
+      "returnType": "int",
+      "description": "Returns the Z-index of the element to determine rendering order. Elements with higher Z-indices are rendered on top of elements with lower Z-indices.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Required: Implement getZIndex\ngetZIndex() {\n    return this.zIndex;\n}",
+        "// Check z-index values\nChat.log(`Text z-index: ${text.getZIndex()}`);"
+      ]
+    },
+    {
+      "name": "render",
+      "signature": "void render(DrawContext drawContext, int mouseX, int mouseY, float tickDelta)",
+      "returnType": "void",
+      "description": "Renders the element to the screen. This method is called every frame by the Draw2D context.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The Minecraft drawing context"
+        },
+        {
+          "name": "mouseX",
+          "type": "int",
+          "description": "The current mouse X coordinate"
+        },
+        {
+          "name": "mouseY",
+          "type": "int",
+          "description": "The current mouse Y coordinate"
+        },
+        {
+          "name": "tickDelta",
+          "type": "float",
+          "description": "The time delta between ticks for interpolation"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Required: Implement render (inherited from Drawable)\nrender(drawContext, mouseX, mouseY, tickDelta) {\n    const matrices = drawContext.getMatrices();\n\n    // Use the built-in matrix setup utility\n    this.setupMatrix(matrices, this.x, this.y, 1.0, 0);\n\n    // Custom rendering logic...\n    this.drawCircle(drawContext, this.radius, this.color);\n}"
+      ]
+    },
+    {
+      "name": "setupMatrix",
+      "signature": "void setupMatrix(MatrixStack matrices, double x, double y, double scale, double rotation)",
+      "returnType": "void",
+      "description": "A utility method to handle common matrix transformations including translation, scaling, and rotation.",
+      "parameters": [
+        {
+          "name": "matrices",
+          "type": "MatrixStack",
+          "description": "The matrix stack to transform"
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The x position"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The y position"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scale factor"
+        },
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "The rotation angle in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simple positioning and scaling\nthis.setupMatrix(matrices, x, y, scale, rotation);",
+        "// Position at (100, 50), 2x larger, rotated 30 degrees\nthis.setupMatrix(matrices, 100, 50, 2.0, 30);"
+      ]
+    },
+    {
+      "name": "setupMatrix",
+      "signature": "void setupMatrix(MatrixStack matrices, double x, double y, double scale, double rotation, double width, double height, boolean centerRotation)",
+      "returnType": "void",
+      "description": "A utility method to handle matrix transformations with support for rotating around the element's center point.",
+      "parameters": [
+        {
+          "name": "matrices",
+          "type": "MatrixStack",
+          "description": "The matrix stack to transform"
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The x position"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The y position"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scale factor"
+        },
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "The rotation angle in degrees"
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": "The width of the element (for center calculation)"
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": "The height of the element (for center calculation)"
+        },
+        {
+          "name": "centerRotation",
+          "type": "boolean",
+          "description": "Whether to rotate around the center of the element"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Rotate around element center\nthis.setupMatrix(matrices, x, y, scale, rotation, width, height, true);",
+        "// 100x50 rectangle rotated around its center\nthis.setupMatrix(matrices, 200, 150, 1.0, 45, 100, 50, true);"
+      ]
+    }
+  ]
+}

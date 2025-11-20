@@ -1,0 +1,256 @@
+{
+  "name": "Surface",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.Surface",
+  "extends": "Draw2D",
+  "since": "JsMacros 1.6.5",
+  "description": "The Surface class is a 3D rendering component in JSMacros that represents a 2D drawing surface rendered in 3D world space. It acts as a canvas that can be positioned, rotated, and scaled in the 3D world while supporting 2D drawing operations.",
+  "overview": "The Surface class provides a powerful way to render 2D content in 3D space.\n\nCapabilities include:\n- 3D positioning and rotation in world coordinates\n- Entity binding for dynamic positioning that follows entities\n- Customizable dimensions and subdivision levels for quality control\n- Player-facing rotation for billboarding effects\n- Full integration with Draw2D rendering capabilities\n- Depth testing and face culling options for performance\n- Flexible rotation centers and transform controls\n- Z-index scaling for managing depth precision\n\n### Important Notes\n\n**Coordinate System**\n- World Coordinates: Surfaces use standard Minecraft world coordinates\n- Surface Coordinates: 2D drawing uses a coordinate system where (0,0) is the top-left corner\n- Rotation: Rotation angles are specified in degrees\n- Scale: Surface size is in world blocks, internal drawing is in pixels\n\n**Performance Considerations**\n- Subdivisions: Higher values provide better quality but impact performance\n- Culling: Enable depth culling when surfaces may be obscured\n- Back Rendering: Only enable renderBack when both sides are needed\n- Entity Binding: Use entity binding sparingly as it requires position calculations\n\n**Depth and Z-Fighting**\n- zIndexScale: Increase this value (default 0.001) if surfaces appear to flicker\n- Z-Index: Use z-index values to layer elements within a surface\n- Depth Testing: Control with the cull property",
+  "constructors": [
+    {
+      "signature": "new Surface(pos, rotations, sizes, minSubdivisions, renderBack, cull)",
+      "description": "Creates a new Surface with the specified position, rotation, size, and rendering options.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The 3D position of the surface in world coordinates"
+        },
+        {
+          "name": "rotations",
+          "type": "Pos3D",
+          "description": "The rotation angles (x, y, z) in degrees"
+        },
+        {
+          "name": "sizes",
+          "type": "Pos2D",
+          "description": "The width and height of the surface"
+        },
+        {
+          "name": "minSubdivisions",
+          "type": "int",
+          "description": "Minimum subdivisions for rendering quality"
+        },
+        {
+          "name": "renderBack",
+          "type": "boolean",
+          "description": "Whether to render the back side of the surface"
+        },
+        {
+          "name": "cull",
+          "type": "boolean",
+          "description": "Whether to enable depth culling for performance"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addText",
+      "signature": "addText(textHelper, x, y)",
+      "returnType": "void",
+      "description": "Add text to the surface (Inherited from Draw2D).",
+      "parameters": [
+        {
+          "name": "textHelper",
+          "type": "TextHelper",
+          "description": "The text object to draw"
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate on the surface"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate on the surface"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "surface.addText(textHelper, 0, 0);"
+      ]
+    },
+    {
+      "name": "addRect",
+      "signature": "addRect(x, y, width, height, color)",
+      "returnType": "void",
+      "description": "Add a rectangle to the surface (Inherited from Draw2D).",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": "Width of the rectangle"
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": "Height of the rectangle"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color integer"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addImage",
+      "signature": "addImage(x, y, width, height, imagePath)",
+      "returnType": "void",
+      "description": "Add an image to the surface (Inherited from Draw2D).",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": "Width of the image"
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": "Height of the image"
+        },
+        {
+          "name": "imagePath",
+          "type": "String",
+          "description": "Path to the image file"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addItemStack",
+      "signature": "addItemStack(itemStack, x, y)",
+      "returnType": "void",
+      "description": "Add an item stack display to the surface (Inherited from Draw2D).",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "ItemStack",
+          "description": "The item stack to render"
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addLine",
+      "signature": "addLine(x1, y1, x2, y2, color, width)",
+      "returnType": "void",
+      "description": "Add a line to the surface (Inherited from Draw2D).",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "Start X coordinate"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Start Y coordinate"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "End X coordinate"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "End Y coordinate"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color integer"
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": "Width of the line"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEllipse",
+      "signature": "addEllipse(x, y, radiusX, radiusY, color)",
+      "returnType": "void",
+      "description": "Add an ellipse to the surface (Inherited from Draw2D).",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "Center X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Center Y coordinate"
+        },
+        {
+          "name": "radiusX",
+          "type": "double",
+          "description": "X radius"
+        },
+        {
+          "name": "radiusY",
+          "type": "double",
+          "description": "Y radius"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color integer"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clear",
+      "signature": "clear()",
+      "returnType": "void",
+      "description": "Clear all drawn elements from the surface (Inherited from Draw2D).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "surface.clear();"
+      ]
+    }
+  ]
+}

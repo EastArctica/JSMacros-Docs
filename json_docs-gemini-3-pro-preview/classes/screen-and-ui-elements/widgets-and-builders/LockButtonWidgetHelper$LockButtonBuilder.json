@@ -1,0 +1,41 @@
+{
+  "name": "LockButtonBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.LockButtonWidgetHelper.LockButtonBuilder",
+  "extends": "AbstractWidgetBuilder<LockButtonBuilder, ?, ?>",
+  "since": "1.8.4",
+  "description": "The LockButtonBuilder class provides a fluent builder API for creating lock button widgets in JSMacros custom screens. These are special buttons that can lock or unlock other UI elements, providing control over user interaction with various widgets.",
+  "overview": "The LockButtonBuilder class enables creation of interactive lock controls with:\n\n- **Lock/Unlock Functionality**: Automatically controls accessibility of linked widgets\n- **State Management**: Maintains and toggles between locked and unlocked states\n- **Widget Linking**: Link multiple widgets to be controlled by the lock button\n- **Builder Pattern**: Fluent API for readable and maintainable button creation\n- **Complete Widget Control**: Full control over positioning, sizing, appearance, and behavior\n- **Screen Integration**: Automatic integration with JSMacros custom screens\n- **Error Handling**: Built-in error handling for lock operations",
+  "constructors": [
+    {
+      "signature": "new LockButtonBuilder(screen)",
+      "description": "Creates a new LockButtonBuilder for the specified screen.",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "IScreen",
+          "description": "The screen to add the lock button to"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addLockable",
+      "signature": "addLockable(widget)",
+      "returnType": "LockButtonBuilder",
+      "description": "Adds a widget to the list of lockable widgets controlled by this lock button.",
+      "parameters": [
+        {
+          "name": "widget",
+          "type": "ClickableWidgetHelper",
+          "description": "The widget to control"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const textField = screen.addTextField(10, 60, 200, 20, \"Locked input\");\nconst slider = screen.addSlider(10, 90, 200, 20, 0, 100, 50);\n\nconst lockButton = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .addLockable(textField)\n    .addLockable(slider)\n    .build();",
+        "const screen = Hud.createScreen(\"Locked Controls\", true);\n\n// Create widgets to be locked\nconst textField = screen.addTextField(10, 60, 200, 20, \"Locked input\");\nconst slider = screen.addSlider(10, 90, 200, 20, 0, 100, 50);\nconst button = screen.addButton(10, 120, 100, 20, \"Locked Action\");\n\n// Create lock button\nconst lockButton = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .pos(10, 30)\n    .width(200)\n    .height(20)\n    .message(\"Unlock Controls\")\n    .addLockable(textField)\n    .addLockable(slider)\n    .addLockable(button)\n    .action((lockBtn, screenInstance) => {\n        const isLocked = lockBtn.isLocked();\n        const newState = !isLocked;\n\n        lockBtn.setLocked(newState);\n        lockBtn.setMessage(newState ? \"Unlock Controls\" : \"Lock Controls\");\n\n        Chat.log(`Controls ${newState ? \"locked\" : \"unlocked\"}`);\n    })\n    .build();\n\nHud.openScreen(screen);"
+      ]
+    }
+  ]
+}

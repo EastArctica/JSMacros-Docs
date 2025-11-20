@@ -1,0 +1,10 @@
+{
+  "name": "CheckBoxWidgetHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.CheckBoxWidgetHelper",
+  "extends": "ClickableWidgetHelper<CheckBoxWidgetHelper, CheckboxWidget>",
+  "since": "JsMacros 1.8.4",
+  "description": "The CheckBoxWidgetHelper class provides a wrapper for Minecraft's checkbox widget functionality in JSMacros custom screens. It represents a checkbox UI element that can be checked or unchecked, display text labels, handle user interactions, and trigger callback functions when the state changes. CheckBox widgets are commonly used for boolean settings, toggle options, and user preferences in custom UI screens.",
+  "overview": "The CheckBoxWidgetHelper class offers comprehensive checkbox functionality including:\n- Visual checkbox with check/uncheck states\n- Customizable text labels and positioning\n- Click interaction handling with callback support\n- Tooltip support for additional information\n- Builder pattern for easy creation and configuration\n- Integration with JSMacros custom screen system\n- Inherited widget properties (positioning, sizing, visibility, etc.)\n\nCheckBoxWidgetHelper instances are typically created through IScreen methods or the CheckBoxBuilder, not directly instantiated.",
+  "constructors": [],
+  "methods": []
+}

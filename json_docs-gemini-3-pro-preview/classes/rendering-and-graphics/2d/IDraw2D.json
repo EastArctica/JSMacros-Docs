@@ -1,0 +1,375 @@
+{
+  "name": "Inventory",
+  "fullClassName": "cn.nukkit.inventory.Inventory",
+  "extends": "InventoryHolder",
+  "description": "Interface for all Inventories",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getSize",
+      "signature": "int getSize()",
+      "returnType": "int",
+      "description": "Returns the size of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxStackSize",
+      "signature": "int getMaxStackSize()",
+      "returnType": "int",
+      "description": "Returns the maximum stack size.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "String getName()",
+      "returnType": "String",
+      "description": "Returns the name of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTitle",
+      "signature": "String getTitle()",
+      "returnType": "String",
+      "description": "Returns the title of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItem",
+      "signature": "Item getItem(int index)",
+      "returnType": "Item",
+      "description": "Returns the item at the specified index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index to get."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setItem",
+      "signature": "boolean setItem(int index, Item item)",
+      "returnType": "boolean",
+      "description": "Puts an Item in the specified index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index to set."
+        },
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to set."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addItem",
+      "signature": "Item[] addItem(Item... slots)",
+      "returnType": "Item[]",
+      "description": "Adds items to the inventory.",
+      "parameters": [
+        {
+          "name": "slots",
+          "type": "Item...",
+          "description": "The items to add."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canAddItem",
+      "signature": "boolean canAddItem(Item item)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory can hold the specified item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeItem",
+      "signature": "Item[] removeItem(Item... slots)",
+      "returnType": "Item[]",
+      "description": "Removes items from the inventory.",
+      "parameters": [
+        {
+          "name": "slots",
+          "type": "Item...",
+          "description": "The items to remove."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getContents",
+      "signature": "Map<Integer, Item> getContents()",
+      "returnType": "Map<Integer, Item>",
+      "description": "Returns all items in the inventory mapped by their slot index.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setContents",
+      "signature": "void setContents(Map<Integer, Item> items)",
+      "returnType": "void",
+      "description": "Sets the contents of the inventory.",
+      "parameters": [
+        {
+          "name": "items",
+          "type": "Map<Integer, Item>",
+          "description": "The items to set."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "sendContents",
+      "signature": "void sendContents(Player... players)",
+      "returnType": "void",
+      "description": "Sends the inventory contents to the specified players.",
+      "parameters": [
+        {
+          "name": "players",
+          "type": "Player...",
+          "description": "The players to send to."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(Item item)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains the specified item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "all",
+      "signature": "Map<Integer, Item> all(Item item)",
+      "returnType": "Map<Integer, Item>",
+      "description": "Returns all slots containing the specified item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to look for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "first",
+      "signature": "int first(Item item)",
+      "returnType": "int",
+      "description": "Returns the index of the first occurrence of the specified item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to look for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "firstEmpty",
+      "signature": "int firstEmpty(Item item)",
+      "returnType": "int",
+      "description": "Returns the index of the first empty slot.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to check (optional)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "remove",
+      "signature": "void remove(Item item)",
+      "returnType": "void",
+      "description": "Removes the specified item from the inventory.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Item",
+          "description": "The item to remove."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clear",
+      "signature": "boolean clear(int index)",
+      "returnType": "boolean",
+      "description": "Clears the item at the specified index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index to clear."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clearAll",
+      "signature": "void clearAll()",
+      "returnType": "void",
+      "description": "Clears the entire inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getViewers",
+      "signature": "Set<Player> getViewers()",
+      "returnType": "Set<Player>",
+      "description": "Returns a set of players viewing this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "InventoryType getType()",
+      "returnType": "InventoryType",
+      "description": "Returns the type of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHolder",
+      "signature": "InventoryHolder getHolder()",
+      "returnType": "InventoryHolder",
+      "description": "Returns the holder of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "onOpen",
+      "signature": "void onOpen(Player who)",
+      "returnType": "void",
+      "description": "Called when a player opens the inventory.",
+      "parameters": [
+        {
+          "name": "who",
+          "type": "Player",
+          "description": "The player who opened it."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "open",
+      "signature": "boolean open(Player who)",
+      "returnType": "boolean",
+      "description": "Opens the inventory for a player.",
+      "parameters": [
+        {
+          "name": "who",
+          "type": "Player",
+          "description": "The player to open for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "void close(Player who)",
+      "returnType": "void",
+      "description": "Closes the inventory for a player.",
+      "parameters": [
+        {
+          "name": "who",
+          "type": "Player",
+          "description": "The player to close for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "onClose",
+      "signature": "void onClose(Player who)",
+      "returnType": "void",
+      "description": "Called when a player closes the inventory.",
+      "parameters": [
+        {
+          "name": "who",
+          "type": "Player",
+          "description": "The player who closed it."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "onSlotChange",
+      "signature": "void onSlotChange(int index, Item before, boolean send)",
+      "returnType": "void",
+      "description": "Called when a slot in the inventory changes.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index of the slot."
+        },
+        {
+          "name": "before",
+          "type": "Item",
+          "description": "The item before the change."
+        },
+        {
+          "name": "send",
+          "type": "boolean",
+          "description": "Whether to send the change to viewers."
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

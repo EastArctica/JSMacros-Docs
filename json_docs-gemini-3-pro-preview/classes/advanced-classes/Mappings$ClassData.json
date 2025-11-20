@@ -1,0 +1,35 @@
+{
+  "name": "Mappings$ClassData",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings.ClassData",
+  "since": "JSMacros 1.3.1",
+  "description": "The `Mappings$ClassData` class is a comprehensive data structure that represents all mapping information for a single class within the JSMacros mapping system. It contains the class name along with complete mappings for all methods and fields, serving as the central repository for both forward (intermediary to named) and reverse (named to intermediary) mapping operations.",
+  "overview": "The `ClassData` class serves as a container for all mapping-related information about a specific class. It acts as a bridge between the obfuscated Minecraft bytecode (using intermediary names like `class_1657`) and the human-readable development names (like `PlayerEntity`). Each instance maintains:\n\n- **Class Identity**: The class name in its respective mapping direction\n- **Method Mappings**: Complete mapping table for all class methods\n- **Field Mappings**: Complete mapping table for all class fields\n- **Metadata**: Additional information about the class structure",
+  "constructors": [],
+  "methods": [],
+  "fields": [
+    {
+      "name": "name",
+      "type": "String",
+      "description": "The primary class name for this mapping entry. The format of this name depends on whether this ClassData is part of forward mappings (intermediary format) or reverse mappings (named format).\n\n**Format Examples:**\n- **Intermediary format**: `\"net/minecraft/class_1657\"`\n- **Named format**: `\"net.minecraft.entity.player.PlayerEntity\"`",
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst forwardMappings = mappings.getMappings();\n\n// Get ClassData for intermediary class name\nconst playerClassData = forwardMappings.get(\"net/minecraft/class_1657\");\nif (playerClassData) {\n    Chat.log(\"Class name: \" + playerClassData.name); // \"net.minecraft.entity.player.PlayerEntity\"\n\n    // The name field shows the target mapping format\n    Chat.log(\"This represents mappings for: \" + playerClassData.name);\n}"
+      ]
+    },
+    {
+      "name": "methods",
+      "type": "Map<String, MethodData>",
+      "description": "A comprehensive mapping table containing all method mappings for this class. The map keys are method signatures, and the values are [`MethodData`](Mappings$MethodData.md) objects containing the mapped method information.\n\n**Key Format:** Method signature in the source mapping format\n**Value Type:** [`Mappings$MethodData`](Mappings$MethodData.md)",
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst forwardMappings = mappings.getMappings();\n\nconst playerClassData = forwardMappings.get(\"net/minecraft/class_1657\");\nif (playerClassData) {\n    Chat.log(\"Total methods: \" + playerClassData.methods.size());\n\n    // Iterate through method mappings\n    let count = 0;\n    for (const [signature, methodData] of playerClassData.methods) {\n        if (count < 5) { // Show first 5 methods\n            Chat.log(\"Method: \" + methodData.name + methodData.sig.get());\n            Chat.log(\"  Original signature: \" + signature);\n            count++;\n        }\n    }\n\n    if (playerClassData.methods.size() > 5) {\n        Chat.log(\"... and \" + (playerClassData.methods.size() - 5) + \" more methods\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "fields",
+      "type": "Map<String, String>",
+      "description": "A mapping table containing all field mappings for this class. The map keys are field names in the source mapping format, and the values are field names in the target mapping format.\n\n**Key Format:** Field name in source format (intermediary or named)\n**Value Format:** Field name in target format (named or intermediary)",
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst forwardMappings = mappings.getMappings();\n\nconst playerClassData = forwardMappings.get(\"net/minecraft/class_1657\");\nif (playerClassData) {\n    Chat.log(\"Total fields: \" + playerClassData.fields.size());\n\n    // Iterate through field mappings\n    let count = 0;\n    for (const [originalName, mappedName] of playerClassData.fields) {\n        if (count < 10) { // Show first 10 fields\n            Chat.log(\"Field: \" + originalName + \" -> \" + mappedName);\n            count++;\n        }\n    }\n\n    if (playerClassData.fields.size() > 10) {\n        Chat.log(\"... and \" + (playerClassData.fields.size() - 10) + \" more fields\");\n    }\n}"
+      ]
+    }
+  ]
+}

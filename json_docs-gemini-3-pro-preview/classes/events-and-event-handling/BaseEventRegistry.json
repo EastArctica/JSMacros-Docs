@@ -1,0 +1,205 @@
+{
+  "name": "BaseEventRegistry",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.event.BaseEventRegistry",
+  "since": "1.2.7",
+  "description": "Core event management system in JSMacros that handles all event registration, listener management, and event metadata.",
+  "overview": "BaseEventRegistry is the core event management system in JSMacros that handles all event registration, listener management, and event metadata. This class serves as the foundation for JSMacros' event-driven architecture, managing how events are registered, which listeners respond to them, and how script triggers are processed.\n\nIt is responsible for Event Registration, Listener Management, Script Trigger Management, Event Metadata, and Legacy Support.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "addListener",
+      "signature": "addListener(String event, IEventListener listener)",
+      "returnType": "void",
+      "description": "Adds an event listener for a specific event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The event name to listen for"
+        },
+        {
+          "name": "listener",
+          "type": "IEventListener",
+          "description": "The listener instance to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This is how you typically add listeners in scripts\nJsMacros.on(\"ServiceTick\", (event) => {\n    Chat.log(\"Service tick occurred\");\n});"
+      ]
+    },
+    {
+      "name": "removeListener",
+      "signature": "removeListener(String event, IEventListener listener)",
+      "returnType": "boolean",
+      "description": "Removes a specific event listener. Returns true if listener was removed, false if not found.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The event name"
+        },
+        {
+          "name": "listener",
+          "type": "IEventListener",
+          "description": "The listener to remove"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Store listener reference for removal\nconst listener = JsMacros.on(\"ServiceTick\", handler);\n// Later remove it\nJsMacros.off(\"ServiceTick\", listener);"
+      ]
+    },
+    {
+      "name": "getListeners",
+      "signature": "getListeners()",
+      "returnType": "Map<String, Set<IEventListener>>",
+      "description": "Returns all listeners for all events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getListeners",
+      "signature": "getListeners(String event)",
+      "returnType": "Set<IEventListener>",
+      "description": "Returns all listeners for a specific event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The event name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Get all listeners for an event\nconst listeners = JsMacros.listeners(\"ServiceTick\");\nChat.log(`Found ${listeners.length} listeners`);"
+      ]
+    },
+    {
+      "name": "addScriptTrigger",
+      "signature": "addScriptTrigger(ScriptTrigger rawmacro)",
+      "returnType": "void",
+      "description": "Adds a script trigger from configuration to the event system. (Abstract method)",
+      "parameters": [
+        {
+          "name": "rawmacro",
+          "type": "ScriptTrigger",
+          "description": "The script trigger configuration"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeScriptTrigger",
+      "signature": "removeScriptTrigger(ScriptTrigger rawmacro)",
+      "returnType": "boolean",
+      "description": "Removes a script trigger from the event system. (Abstract method)",
+      "parameters": [
+        {
+          "name": "rawmacro",
+          "type": "ScriptTrigger",
+          "description": "The script trigger to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScriptTriggers",
+      "signature": "getScriptTriggers()",
+      "returnType": "List<ScriptTrigger>",
+      "description": "Gets all currently registered script triggers. (Abstract method)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEvent",
+      "signature": "addEvent(String eventName)",
+      "returnType": "void",
+      "description": "Registers a new event with the system. Marked as Internal.",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "String",
+          "description": "Name of the event to register"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEvent",
+      "signature": "addEvent(String eventName, boolean joinable)",
+      "returnType": "void",
+      "description": "Registers an event with joinable flag.",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "String",
+          "description": "Name of the event"
+        },
+        {
+          "name": "joinable",
+          "type": "boolean",
+          "description": "Whether the event can be joined"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEvent",
+      "signature": "addEvent(String eventName, boolean joinable, boolean cancellable)",
+      "returnType": "void",
+      "description": "Registers an event with both joinable and cancellable flags.",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "String",
+          "description": "Name of the event"
+        },
+        {
+          "name": "joinable",
+          "type": "boolean",
+          "description": "Whether the event can be joined"
+        },
+        {
+          "name": "cancellable",
+          "type": "boolean",
+          "description": "Whether the event can be cancelled"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEvent",
+      "signature": "addEvent(Class<? extends BaseEvent> clazz)",
+      "returnType": "void",
+      "description": "Registers an event using reflection and @Event annotation. Automatically extracts event metadata.",
+      "parameters": [
+        {
+          "name": "clazz",
+          "type": "Class<? extends BaseEvent>",
+          "description": "The event class to register"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clearMacros",
+      "signature": "clearMacros()",
+      "returnType": "void",
+      "description": "Removes all script-based listeners while keeping system listeners intact.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Remove all script listeners\nJsMacros.disableScriptListeners();\n\n// Or for a specific event\nJsMacros.disableScriptListeners(\"ServiceTick\");"
+      ]
+    }
+  ]
+}

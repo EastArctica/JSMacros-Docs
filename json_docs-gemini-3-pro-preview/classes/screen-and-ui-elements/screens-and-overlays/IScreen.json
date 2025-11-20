@@ -1,0 +1,647 @@
+{
+  "name": "IScreen",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.IScreen",
+  "extends": "IDraw2D<IScreen>",
+  "since": "1.0.5",
+  "description": "The IScreen class is a powerful interface for creating and managing custom GUI screens in JSMacros.",
+  "overview": "It provides comprehensive functionality for drawing graphics, adding interactive widgets, handling user input, and managing screen lifecycle events. IScreen serves as the foundation for creating custom user interfaces, overlays, and interactive displays within Minecraft.\n\nThis interface extends IDraw2D<IScreen>, inheriting all drawing capabilities including text rendering, shapes, images, items, and lines, while adding screen-specific functionality like widgets, event handling, and screen management.\n\nIScreen instances are typically created through screen events or by using ScriptScreen for custom script-driven interfaces.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getScreenClassName",
+      "signature": "getScreenClassName()",
+      "returnType": "String",
+      "description": "Retrieves the class name of the current screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTitleText",
+      "signature": "getTitleText()",
+      "returnType": "String",
+      "description": "Retrieves the title text of the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "int",
+      "description": "Gets the width of the screen. Inherited from IDraw2D.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screen.addText(screen.getWidth() / 2 - 100, 20, 0xFFFFFF, \"Title\", true, 2.0, 0);"
+      ]
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "int",
+      "description": "Gets the height of the screen. Inherited from IDraw2D.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screen.addButton(50, screen.getHeight() - 30, 100, 20, \"Refresh\", callback);"
+      ]
+    },
+    {
+      "name": "getButtonWidgets",
+      "signature": "getButtonWidgets()",
+      "returnType": "List",
+      "description": "Retrieves a list of button widgets on the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTextFields",
+      "signature": "getTextFields()",
+      "returnType": "List",
+      "description": "Retrieves a list of text field widgets on the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addButton",
+      "signature": "addButton(x, y, width, height, text, callback)",
+      "returnType": "ButtonWidget",
+      "description": "Adds a button widget to the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the button"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the button"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "Label text"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on click"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addButton(50, y + 90, 120, 20, \"Heal Player\", JavaWrapper.methodToJava((btn) => {\n    Chat.log(\"Heal player action requested\");\n}));"
+      ]
+    },
+    {
+      "name": "addCheckbox",
+      "signature": "addCheckbox(x, y, width, height, text, checked, callback)",
+      "returnType": "CheckBoxWidget",
+      "description": "Adds a checkbox widget to the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the checkbox area"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the checkbox area"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "Label text"
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "description": "Initial state"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on toggle"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addCheckbox(50, y + 20, 200, 20, \"Enable Notifications\", true,\n    JavaWrapper.methodToJava((box) => {\n        Chat.log(`Notifications: ${box.isChecked() ? \"enabled\" : \"disabled\"}`);\n    }));"
+      ]
+    },
+    {
+      "name": "addSlider",
+      "signature": "addSlider(x, y, width, height, text, min, max, callback)",
+      "returnType": "SliderWidget",
+      "description": "Adds a slider widget to the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the slider"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the slider"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "Label text"
+        },
+        {
+          "name": "min",
+          "type": "double",
+          "description": "Minimum value"
+        },
+        {
+          "name": "max",
+          "type": "double",
+          "description": "Maximum value"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on change"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addSlider(50, y + 70, 200, 20, \"Update Rate\", 50, 100,\n    JavaWrapper.methodToJava((slider) => {\n        const rate = Math.floor(slider.getValue());\n        Chat.log(`Update rate: ${rate}%`);\n    }));"
+      ]
+    },
+    {
+      "name": "addLockButton",
+      "signature": "addLockButton()",
+      "returnType": "void",
+      "description": "Adds a lock button widget. See usage in builder section.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addCyclingButton",
+      "signature": "addCyclingButton(x, y, width, height, options, selected, callback)",
+      "returnType": "CyclingButtonWidget",
+      "description": "Adds a button that cycles through a list of values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height"
+        },
+        {
+          "name": "options",
+          "type": "Array<String>",
+          "description": "List of options"
+        },
+        {
+          "name": "selected",
+          "type": "String",
+          "description": "Currently selected option"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback on change"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const tabBtn = screen.addCyclingButton(\n    50 + index * 80, 60, 70, 20,\n    [tab], tab,\n    JavaWrapper.methodToJava((btn) => {\n        currentTab.value = btn.getValue();\n        screen.reloadScreen();\n    })\n);"
+      ]
+    },
+    {
+      "name": "addTextInput",
+      "signature": "addTextInput()",
+      "returnType": "TextFieldWidget",
+      "description": "Adds a text input field.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "buttonBuilder",
+      "signature": "buttonBuilder()",
+      "returnType": "ButtonWidgetBuilder",
+      "description": "Returns a builder for creating button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "checkBoxBuilder",
+      "signature": "checkBoxBuilder()",
+      "returnType": "CheckBoxWidgetBuilder",
+      "description": "Returns a builder for creating checkbox widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "sliderBuilder",
+      "signature": "sliderBuilder()",
+      "returnType": "SliderWidgetBuilder",
+      "description": "Returns a builder for creating slider widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "lockButtonBuilder",
+      "signature": "lockButtonBuilder()",
+      "returnType": "LockButtonWidgetBuilder",
+      "description": "Returns a builder for creating lock button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "cyclicButtonBuilder",
+      "signature": "cyclicButtonBuilder()",
+      "returnType": "CyclingButtonWidgetBuilder",
+      "description": "Returns a builder for creating cycling button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textFieldBuilder",
+      "signature": "textFieldBuilder()",
+      "returnType": "TextFieldWidgetBuilder",
+      "description": "Returns a builder for creating text field widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "texturedButtonBuilder",
+      "signature": "texturedButtonBuilder()",
+      "returnType": "TexturedButtonWidgetBuilder",
+      "description": "Returns a builder for creating textured button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnMouseDown",
+      "signature": "setOnMouseDown(callback)",
+      "returnType": "void",
+      "description": "Sets the callback for mouse down events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback accepting (pos, button)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnMouseDown(JavaWrapper.methodToJava((pos, button) => {\n    if (button === 1 && pos.y > 120) {\n        startPos = pos;\n        Chat.log(`Started drawing ${currentTool} at ${pos.x}, ${pos.y}`);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "setOnMouseDrag",
+      "signature": "setOnMouseDrag(callback)",
+      "returnType": "void",
+      "description": "Sets the callback for mouse drag events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnMouseUp",
+      "signature": "setOnMouseUp(callback)",
+      "returnType": "void",
+      "description": "Sets the callback for mouse up events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback accepting (pos, button)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnMouseUp(JavaWrapper.methodToJava((pos, button) => {\n    // Logic for mouse up\n}));"
+      ]
+    },
+    {
+      "name": "setOnScroll",
+      "signature": "setOnScroll(callback)",
+      "returnType": "void",
+      "description": "Sets the callback for mouse scroll events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnKeyPressed",
+      "signature": "setOnKeyPressed(callback)",
+      "returnType": "void",
+      "description": "Sets the callback for key press events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnCharTyped",
+      "signature": "setOnCharTyped(callback)",
+      "returnType": "void",
+      "description": "Sets the callback for character typed events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnClose",
+      "signature": "setOnClose(callback)",
+      "returnType": "void",
+      "description": "Sets the callback executed when the screen closes.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnClose(JavaWrapper.methodToJava((closingScreen) => {\n    clearInterval(refreshInterval);\n    Chat.log(\"Control Panel closed - auto-refresh stopped\");\n}));"
+      ]
+    },
+    {
+      "name": "close",
+      "signature": "close()",
+      "returnType": "void",
+      "description": "Closes the current screen.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screen.close();"
+      ]
+    },
+    {
+      "name": "reloadScreen",
+      "signature": "reloadScreen()",
+      "returnType": "void",
+      "description": "Reloads the screen, recreating all elements.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screen.reloadScreen();"
+      ]
+    },
+    {
+      "name": "isShiftDown",
+      "signature": "isShiftDown()",
+      "returnType": "boolean",
+      "description": "Checks if the Shift key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isCtrlDown",
+      "signature": "isCtrlDown()",
+      "returnType": "boolean",
+      "description": "Checks if the Control key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAltDown",
+      "signature": "isAltDown()",
+      "returnType": "boolean",
+      "description": "Checks if the Alt key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addText",
+      "signature": "addText(x, y, color, text, shadow, scale, rotation)",
+      "returnType": "TextElement",
+      "description": "Adds a text element to the screen. Inherited from IDraw2D.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Text color (hex)"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "The text to display"
+        },
+        {
+          "name": "shadow",
+          "type": "boolean",
+          "description": "Whether to render shadow"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Text scale (optional)"
+        },
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "Text rotation (optional)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addText(50, y, 0x00FF00, `Player: ${player.getName().getString()}`, true);",
+        "screen.addText(screen.getWidth() / 2 - 100, 20, 0xFFFFFF, \"JSMacros Control Panel\", true, 2.0, 0);"
+      ]
+    },
+    {
+      "name": "addRect",
+      "signature": "addRect(x1, y1, x2, y2, color, alpha)",
+      "returnType": "RectElement",
+      "description": "Adds a rectangle element to the screen. Inherited from IDraw2D.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "Starting X coordinate"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Starting Y coordinate"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "Ending X coordinate"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Ending Y coordinate"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color (hex)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addRect(Math.min(startPos.x, pos.x), Math.min(startPos.y, pos.y), Math.max(startPos.x, pos.x), Math.max(startPos.y, pos.y), currentColor, 128);"
+      ]
+    },
+    {
+      "name": "addLine",
+      "signature": "addLine(x1, y1, x2, y2, color, width)",
+      "returnType": "LineElement",
+      "description": "Adds a line element to the screen. Inherited from IDraw2D.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "Start X"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Start Y"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "End X"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "End Y"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color"
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": "Line width"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addLine(x1, y1, x2, y2, currentColor, 1.0);"
+      ]
+    },
+    {
+      "name": "removeElement",
+      "signature": "removeElement(element)",
+      "returnType": "void",
+      "description": "Removes a specific drawing element from the screen. Inherited from IDraw2D.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "RenderElement",
+          "description": "The element to remove"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "elements.forEach(element => screen.removeElement(element));"
+      ]
+    }
+  ]
+}

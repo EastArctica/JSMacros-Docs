@@ -1,0 +1,181 @@
+{
+  "name": "FoxEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.FoxEntityHelper",
+  "extends": "AnimalEntityHelper<FoxEntity>",
+  "description": "Provides specialized methods for interacting with Fox entities, including variant checks, trust relationships, and behavioral state detection.",
+  "constructors": [
+    {
+      "signature": "new FoxEntityHelper(foxEntity)",
+      "description": "Creates a new FoxEntityHelper wrapper for the given Fox entity.",
+      "parameters": [
+        {
+          "name": "foxEntity",
+          "type": "LivingEntityHelper",
+          "description": "The fox entity to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getItemInMouth",
+      "signature": "getItemInMouth()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item currently in this fox's mouth.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    const itemInMouth = fox.getItemInMouth();\n    if (itemInMouth.getItemId() !== \"minecraft:air\") {\n        Chat.log(`Fox is holding ${itemInMouth.getName()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isSnowFox",
+      "signature": "isSnowFox()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is a snow fox variant.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isSnowFox()) {\n        Chat.log(\"Found a snow fox!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isRedFox",
+      "signature": "isRedFox()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is a red fox variant.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isRedFox()) {\n        Chat.log(\"Found a red fox!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getOwner",
+      "signature": "getOwner()",
+      "returnType": "string|null",
+      "description": "Returns the UUID string of this fox's first owner, or null if it has no owner.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    const ownerUUID = fox.getOwner();\n    if (ownerUUID) {\n        Chat.log(`Fox owner: ${ownerUUID}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getSecondOwner",
+      "signature": "getSecondOwner()",
+      "returnType": "string|null",
+      "description": "Returns the UUID string of this fox's second owner, or null if it has no second owner.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    const secondOwnerUUID = fox.getSecondOwner();\n    if (secondOwnerUUID) {\n        Chat.log(`Fox second owner: ${secondOwnerUUID}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "canTrust",
+      "signature": "canTrust(entity)",
+      "returnType": "boolean",
+      "description": "Returns whether this fox trusts the given entity based on ownership.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to check trust relationship with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nconst players = World.getPlayers();\n\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    for (const player of players) {\n        if (fox.canTrust(player)) {\n            Chat.log(`${player.getName()} is trusted by this fox`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "hasFoundTarget",
+      "signature": "hasFoundTarget()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is preparing its jump (has found a target).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.hasFoundTarget()) {\n        Chat.log(\"This fox has spotted prey!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isSitting",
+      "signature": "isSitting()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is currently sitting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isSitting()) {\n        Chat.log(\"This fox is taking a break\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isWandering",
+      "signature": "isWandering()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is wandering around.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isWandering()) {\n        Chat.log(\"This fox is exploring\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isSleeping",
+      "signature": "isSleeping()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is currently sleeping.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isSleeping()) {\n        Chat.log(\"This fox is sleeping\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isDefending",
+      "signature": "isDefending()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is defending another fox.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isDefending()) {\n        Chat.log(\"This fox is defending its kin!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isPouncing",
+      "signature": "isPouncing()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is just before its leap (pouncing).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isPouncing()) {\n        Chat.log(\"Watch out - fox is about to pounce!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isJumping",
+      "signature": "isJumping()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is currently jumping.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isJumping()) {\n        Chat.log(\"This fox is leaping through the air\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isSneaking",
+      "signature": "isSneaking()",
+      "returnType": "boolean",
+      "description": "Returns whether this fox is sneaking in preparation of an attack.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const foxes = World.getEntities().filter(e => e.getType() === \"minecraft:fox\");\nfor (const foxEntity of foxes) {\n    const fox = foxEntity.asLiving();\n    if (fox.isSneaking()) {\n        Chat.log(\"This fox is stalking its prey\");\n    }\n}"
+      ]
+    }
+  ]
+}

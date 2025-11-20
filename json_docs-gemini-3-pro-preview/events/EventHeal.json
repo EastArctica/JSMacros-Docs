@@ -1,0 +1,18 @@
+{
+  "name": "EventHeal",
+  "fullClassName": "EventHeal",
+  "description": "This event is fired when the player's health increases.",
+  "overview": "Backed by class `EventHeal`.\n\n## Signature\n```js\nJsMacros.on(\"Heal\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n## Event payload\n\n| Field  | Type   | Description                              |\n| ------ | ------ | ---------------------------------------- |\n| source | string | The source that caused the healing       |\n| health | float  | The player's health after healing applied |\n| change | float  | The amount of health gained (positive)   |\n\n## Behavior\n\n* Fires when the player's health increases from any source\n* The `change` field is always positive for healing events\n* Common sources include `magic` (potions), food, regeneration effects\n* Not cancellable\n\n## Fields Detail\n\n### event.source\nThe name of the source that caused the healing.\n**Type:** `string`\n**Notes:** This value is derived from Minecraft's `DamageSource` system. Common sources for healing might include `magic` (from potions) or others depending on mods and game mechanics.\n\n### event.health\nThe player's health after the healing has been applied.\n**Type:** `float`\n**Notes:** A player's base maximum health is `20.0`, which corresponds to 10 full hearts.\n\n### event.change\nThe amount of health gained. This will be a positive value.\n**Type:** `float`\n**Notes:** This value represents the difference in health. For example, healing 2 hearts would result in a `change` of `4.0`.\n\n## Minimal example\n\n```js\nJsMacros.on(\"Heal\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Healed for ${e.change.toFixed(2)} HP`);\n});\n```\n\n## Async example\n\n```js\nJsMacros.on(\"Heal\", JavaWrapper.methodToJavaAsync((e) => {\n  const healedAmount = e.change;\n  Chat.log(`&aHealed for ${healedAmount.toFixed(2)} HP from '${e.source}'.`);\n\n  if (e.health >= 20.0) {\n    Chat.actionbar(\"You are at full health!\");\n  } else {\n    Chat.actionbar(`Health: ${e.health.toFixed(1)} / 20.0`);\n  }\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

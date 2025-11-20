@@ -1,0 +1,303 @@
+{
+  "name": "ItemHelper",
+  "fullClassName": "ItemHelper",
+  "description": "Comprehensive helper class that provides access to Minecraft item properties and behaviors.",
+  "overview": "ItemHelper is a comprehensive helper class that provides access to Minecraft item properties and behaviors. It represents an item type (not a specific item stack) and allows you to query various attributes like enchantability, durability, food properties, and tool capabilities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getCreativeTab",
+      "signature": "getCreativeTab()",
+      "returnType": "List<TextHelper>",
+      "description": "Gets all creative inventory tabs/groups where this item can be found",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tabs = item.getCreativeTab();\nJava.from(tabs).forEach(tab => {\n    log(\"Found in creative tab: \" + tab.getString());\n});"
+      ]
+    },
+    {
+      "name": "getGroupIcon",
+      "signature": "getGroupIcon()",
+      "returnType": "List<ItemStackHelper> | null",
+      "description": "Gets the display item stacks for the creative tabs this item belongs to",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const icons = item.getGroupIcon();\nif (icons) {\n    log(\"Tab icon item: \" + icons[0].getItem().getName());\n}"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Gets the display name of the item translated to the current language",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const itemName = item.getName();\nlog(\"Item name: \" + itemName); // e.g., \"Diamond Sword\""
+      ]
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Gets the unique resource location identifier for this item",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const itemId = item.getId();\nlog(\"Item ID: \" + itemId); // e.g., \"minecraft:diamond_sword\""
+      ]
+    },
+    {
+      "name": "getMaxCount",
+      "signature": "getMaxCount()",
+      "returnType": "int",
+      "description": "Gets the maximum number of items that can be stacked together",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxStack = item.getMaxCount();\nlog(\"Can stack up to: \" + maxStack + \" items\"); // Usually 64 or 16"
+      ]
+    },
+    {
+      "name": "getMaxDurability",
+      "signature": "getMaxDurability()",
+      "returnType": "int",
+      "description": "Gets how much damage the item can take before breaking. Returns 0 for non-damageable items.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxDurability = item.getMaxDurability();\nif (maxDurability > 0) {\n    log(\"Max durability: \" + maxDurability);\n}"
+      ]
+    },
+    {
+      "name": "isDamageable",
+      "signature": "isDamageable()",
+      "returnType": "boolean",
+      "description": "Checks if this item has durability and can be damaged",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.isDamageable()) {\n    log(\"This item can be damaged\");\n}"
+      ]
+    },
+    {
+      "name": "isFireproof",
+      "signature": "isFireproof()",
+      "returnType": "boolean",
+      "description": "Checks if the item will survive in fire or lava",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.isFireproof()) {\n    log(\"Item is fireproof (like netherite)\");\n}"
+      ]
+    },
+    {
+      "name": "canBeNested",
+      "signature": "canBeNested()",
+      "returnType": "boolean",
+      "description": "Checks if this item can be nested inside other containers",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.canBeNested()) {\n    log(\"Can be stored in bundles\");\n}"
+      ]
+    },
+    {
+      "name": "isTool",
+      "signature": "isTool()",
+      "returnType": "boolean",
+      "description": "Checks if this item is a tool (pickaxe, axe, shovel, hoe, etc.)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.isTool()) {\n    log(\"This is a tool\");\n}"
+      ]
+    },
+    {
+      "name": "isWearable",
+      "signature": "isWearable()",
+      "returnType": "boolean",
+      "description": "Checks if this item is armor that can be equipped",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.isWearable()) {\n    log(\"This is armor\");\n}"
+      ]
+    },
+    {
+      "name": "getEnchantability",
+      "signature": "getEnchantability()",
+      "returnType": "int",
+      "description": "Gets the enchantability factor. Higher values mean better enchantments are more likely.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const enchantability = item.getEnchantability();\nif (enchantability > 0) {\n    log(\"Enchantability: \" + enchantability);\n}"
+      ]
+    },
+    {
+      "name": "getMiningSpeedMultiplier",
+      "signature": "getMiningSpeedMultiplier(BlockStateHelper state)",
+      "returnType": "float",
+      "description": "Gets how fast this item can mine the specified block type",
+      "parameters": [
+        {
+          "name": "state",
+          "type": "BlockStateHelper",
+          "description": "Block state to check mining speed against"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockState = blockHelper.getDefaultState();\nconst speed = item.getMiningSpeedMultiplier(blockState);\nlog(\"Mining speed: \" + speed + \"x\");"
+      ]
+    },
+    {
+      "name": "isSuitableFor",
+      "signature": "isSuitableFor(BlockHelper block)",
+      "returnType": "boolean",
+      "description": "Checks if this item is suitable for mining the given block (will cause drops)",
+      "parameters": [
+        {
+          "name": "block",
+          "type": "BlockHelper",
+          "description": "Block to check suitability against"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Using BlockHelper\nif (item.isSuitableFor(blockHelper)) {\n    log(\"Can mine this block effectively\");\n}"
+      ]
+    },
+    {
+      "name": "isSuitableFor",
+      "signature": "isSuitableFor(BlockStateHelper block)",
+      "returnType": "boolean",
+      "description": "Checks if this item is suitable for mining the given block state (will cause drops)",
+      "parameters": [
+        {
+          "name": "block",
+          "type": "BlockStateHelper",
+          "description": "Block state to check suitability against"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Using BlockStateHelper\nif (item.isSuitableFor(blockStateHelper)) {\n    log(\"Can mine this block state effectively\");\n}"
+      ]
+    },
+    {
+      "name": "canBeRepairedWith",
+      "signature": "canBeRepairedWith(ItemStackHelper stack)",
+      "returnType": "boolean",
+      "description": "Checks if the given item stack can be used as repair material",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStackHelper",
+          "description": "Material to test for repairing"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const ironIngot = World.findItem(\"minecraft:iron_ingot\");\nif (item.canBeRepairedWith(ironIngot)) {\n    log(\"Can repair with iron ingot\");\n}"
+      ]
+    },
+    {
+      "name": "isFood",
+      "signature": "isFood()",
+      "returnType": "boolean",
+      "description": "Checks if this item can be eaten by the player",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.isFood()) {\n    log(\"This item is food\");\n}"
+      ]
+    },
+    {
+      "name": "getFood",
+      "signature": "getFood()",
+      "returnType": "FoodComponentHelper | null",
+      "description": "Gets detailed food component information if this item is edible",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const food = item.getFood();\nif (food) {\n    log(\"Hunger restored: \" + food.getHunger());\n    log(\"Saturation: \" + food.getSaturation());\n    log(\"Can always eat: \" + food.isAlwaysEdible());\n}"
+      ]
+    },
+    {
+      "name": "isBlockItem",
+      "signature": "isBlockItem()",
+      "returnType": "boolean",
+      "description": "Checks if this item is a block that can be placed",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.isBlockItem()) {\n    log(\"This is a placeable block\");\n}"
+      ]
+    },
+    {
+      "name": "getBlock",
+      "signature": "getBlock()",
+      "returnType": "BlockHelper | null",
+      "description": "Gets the block representation of this item",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const block = item.getBlock();\nif (block) {\n    log(\"Block ID: \" + block.getId());\n}"
+      ]
+    },
+    {
+      "name": "hasRecipeRemainder",
+      "signature": "hasRecipeRemainder()",
+      "returnType": "boolean",
+      "description": "Checks if crafting with this item leaves a different item behind (like buckets)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (item.hasRecipeRemainder()) {\n    log(\"Item has recipe remainder\");\n}"
+      ]
+    },
+    {
+      "name": "getRecipeRemainder",
+      "signature": "getRecipeRemainder()",
+      "returnType": "ItemHelper | null",
+      "description": "Gets the item that remains after using this item in crafting",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const remainder = item.getRecipeRemainder();\nif (remainder) {\n    log(\"Recipe remainder: \" + remainder.getName());\n}"
+      ]
+    },
+    {
+      "name": "getDefaultStack",
+      "signature": "getDefaultStack()",
+      "returnType": "ItemStackHelper",
+      "description": "Creates a new item stack of this type with default properties",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const newStack = item.getDefaultStack();\nlog(\"Created stack with: \" + newStack.getCount() + \" items\");"
+      ]
+    },
+    {
+      "name": "getStackWithNbt",
+      "signature": "getStackWithNbt(String nbt)",
+      "returnType": "ItemStackHelper",
+      "description": "Creates an item stack with custom NBT data",
+      "parameters": [
+        {
+          "name": "nbt",
+          "type": "String",
+          "description": "NBT data string to apply to the stack"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "try {\n    const enchantedStack = item.getStackWithNbt(\"{Enchantments:[{id:\\\"minecraft:sharpness\\\",lvl:5}]}\");\n    log(\"Created enchanted item stack\");\n} catch (e) {\n    log(\"Invalid NBT: \" + e);\n}"
+      ]
+    }
+  ]
+}

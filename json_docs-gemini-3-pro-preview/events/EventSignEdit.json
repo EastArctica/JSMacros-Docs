@@ -1,0 +1,20 @@
+{
+  "name": "EventSignEdit",
+  "fullClassName": "EventSignEdit",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a sign is being edited.",
+  "overview": "### Signature\n```js\nJsMacros.on(\"SignEdit\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n### Event payload\n\n| Field      | Type    | Description                              |\n| ---------- | ------- | ---------------------------------------- |\n| pos        | Pos3D   | The position of the sign being edited    |\n| closeScreen | boolean | Whether to close the sign editing screen |\n| front      | boolean | Whether editing the front of the sign    |\n| signText   | List    | The current text on the sign             |\n\n### Behavior\n\n* Fires when a player edits a sign\n- The `pos` field contains the sign's world position\n- The `signText` field contains the current sign text lines\n- This event is cancellable - preventing the sign edit\n- Useful for sign filtering, validation, and automation\n\n### Fields\n\n**event.pos** (`Pos3D`): The world position of the sign being edited.\n\n**event.closeScreen** (`boolean`): Whether to close the sign editing screen.\n\n**event.front** (`boolean`): Whether editing the front (true) or back (false) of the sign.\n\n**event.signText** (`List<string> | null`): The current text lines on the sign.\n\n### Minimal example\n\n```js\nJsMacros.on(\"SignEdit\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Editing sign at ${e.pos.x}, ${e.pos.y}, ${e.pos.z}`);\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

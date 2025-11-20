@@ -1,0 +1,259 @@
+{
+  "name": "BlockStateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.BlockStateHelper",
+  "extends": "StateHelper<BlockState>",
+  "since": "1.6.5",
+  "description": "The BlockStateHelper class is a comprehensive helper class in JSMacros that provides access to Minecraft block state information and functionality.",
+  "overview": "The BlockStateHelper class is a comprehensive helper class in JSMacros that provides access to Minecraft block state information and functionality. It acts as a wrapper around Minecraft's BlockState class, exposing various properties and methods that allow script developers to interact with and analyze block states in the game world.\n\nThis class is particularly useful for World Interaction scripts where you need to examine blocks, check their properties, determine their behavior, or make decisions based on block characteristics.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getBlock",
+      "signature": "getBlock()",
+      "returnType": "BlockHelper",
+      "description": "Returns the block that this state belongs to.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockState(Player.getPlayerPos());\nconst block = blockState.getBlock();\nJsMacros.chat(block.getId()); // e.g., \"minecraft:stone\""
+      ]
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Returns the block's registry ID.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockState(Player.getPlayerPos());\nconst blockId = blockState.getId();\n// Returns something like \"minecraft:oak_log\" or \"minecraft:diamond_ore\""
+      ]
+    },
+    {
+      "name": "getHardness",
+      "signature": "getHardness()",
+      "returnType": "float",
+      "description": "Returns the hardness of the block, which affects how long it takes to mine.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockState(Player.getPlayerPos());\nconst hardness = blockState.getHardness();\nif (hardness > 50) {\n    JsMacros.chat(\"This is a very hard block!\");\n}"
+      ]
+    },
+    {
+      "name": "getLuminance",
+      "signature": "getLuminance()",
+      "returnType": "int",
+      "description": "Returns the light level emitted by this block state (0-15).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockState(Player.getPlayerPos());\nconst lightLevel = blockState.getLuminance();\nif (lightLevel > 0) {\n    JsMacros.chat(`This block emits light level ${lightLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "isOpaque",
+      "signature": "isOpaque()",
+      "returnType": "boolean",
+      "description": "Returns true if the block is opaque (light cannot pass through).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isOpaque()) {\n    JsMacros.chat(\"This block blocks light\");\n}"
+      ]
+    },
+    {
+      "name": "isSolid",
+      "signature": "isSolid()",
+      "returnType": "boolean",
+      "description": "Returns true if the block is solid (entities cannot pass through).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isSolid()) {\n    JsMacros.chat(\"This block is solid\");\n}"
+      ]
+    },
+    {
+      "name": "blocksMovement",
+      "signature": "blocksMovement()",
+      "returnType": "boolean",
+      "description": "Returns true if the state blocks the movement of entities.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.blocksMovement()) {\n    JsMacros.chat(\"Cannot walk through this block\");\n}"
+      ]
+    },
+    {
+      "name": "isAir",
+      "signature": "isAir()",
+      "returnType": "boolean",
+      "description": "Returns true if the state represents air.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isAir()) {\n    JsMacros.chat(\"This is an air block\");\n}"
+      ]
+    },
+    {
+      "name": "isLiquid",
+      "signature": "isLiquid()",
+      "returnType": "boolean",
+      "description": "Returns true if the state represents a liquid block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isLiquid()) {\n    JsMacros.chat(\"This is a liquid block\");\n    const fluidState = blockState.getFluidState();\n    JsMacros.chat(`Fluid: ${fluidState.getId()}`);\n}"
+      ]
+    },
+    {
+      "name": "isBurnable",
+      "signature": "isBurnable()",
+      "returnType": "boolean",
+      "description": "Returns true if the block can be burned by fire.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isBurnable()) {\n    JsMacros.chat(\"This block can catch fire\");\n}"
+      ]
+    },
+    {
+      "name": "isReplaceable",
+      "signature": "isReplaceable()",
+      "returnType": "boolean",
+      "description": "Returns true if the block can be replaced without breaking it first. This applies to blocks like air, grass, and tall grass.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isReplaceable()) {\n    JsMacros.chat(\"Can place blocks here without breaking first\");\n}"
+      ]
+    },
+    {
+      "name": "emitsRedstonePower",
+      "signature": "emitsRedstonePower()",
+      "returnType": "boolean",
+      "description": "Returns true if the block state emits redstone power.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.emitsRedstonePower()) {\n    JsMacros.chat(\"This block emits redstone power\");\n}"
+      ]
+    },
+    {
+      "name": "hasComparatorOutput",
+      "signature": "hasComparatorOutput()",
+      "returnType": "boolean",
+      "description": "Returns true if the block can produce a comparator output.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.hasComparatorOutput()) {\n    JsMacros.chat(\"This block can be read by comparators\");\n}"
+      ]
+    },
+    {
+      "name": "getPistonBehaviour",
+      "signature": "getPistonBehaviour()",
+      "returnType": "String",
+      "description": "Returns the piston behavior of the block as a string. Possible values: \"NORMAL\", \"BLOCK\", \"PUSH_ONLY\", \"DESTROY\", \"IGNORE\".",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pistonBehavior = blockState.getPistonBehaviour();\nJsMacros.chat(`Piston behavior: ${pistonBehavior}`);\nif (pistonBehavior === \"BLOCK\") {\n    JsMacros.chat(\"This block will stop pistons\");\n}"
+      ]
+    },
+    {
+      "name": "isToolRequired",
+      "signature": "isToolRequired()",
+      "returnType": "boolean",
+      "description": "Returns true if a specific tool is required to mine this block efficiently.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.isToolRequired()) {\n    JsMacros.chat(\"You need the right tool to mine this efficiently\");\n}"
+      ]
+    },
+    {
+      "name": "getFluidState",
+      "signature": "getFluidState()",
+      "returnType": "FluidStateHelper",
+      "description": "Returns the fluid state of this block state (for blocks containing fluids).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const fluidState = blockState.getFluidState();\nif (fluidState.isStill()) {\n    JsMacros.chat(\"Still fluid\");\n} else {\n    JsMacros.chat(\"Flowing fluid\");\n}"
+      ]
+    },
+    {
+      "name": "hasBlockEntity",
+      "signature": "hasBlockEntity()",
+      "returnType": "boolean",
+      "description": "Returns true if the block has an associated block entity (like chests, furnaces, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.hasBlockEntity()) {\n    JsMacros.chat(\"This block has additional data stored (like a chest or furnace)\");\n}"
+      ]
+    },
+    {
+      "name": "hasRandomTicks",
+      "signature": "hasRandomTicks()",
+      "returnType": "boolean",
+      "description": "Returns true if the block can receive random ticks (used for crops, redstone components, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (blockState.hasRandomTicks()) {\n    JsMacros.chat(\"This block receives random ticks\");\n}"
+      ]
+    },
+    {
+      "name": "allowsSpawning",
+      "signature": "allowsSpawning(pos: BlockPosHelper, entity: String)",
+      "returnType": "boolean",
+      "description": "Returns true if the specified entity type can spawn on this block state at the given position.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "The position to check."
+        },
+        {
+          "name": "entity",
+          "type": "String",
+          "description": "The entity ID to check (e.g., 'minecraft:zombie')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const currentPos = Player.getPlayerPos();\nconst abovePos = currentPos.add(0, 1, 0);\nconst canZombieSpawn = blockState.allowsSpawning(abovePos, \"minecraft:zombie\");\nif (canZombieSpawn) {\n    JsMacros.chat(\"Zombies can spawn here\");\n}"
+      ]
+    },
+    {
+      "name": "shouldSuffocate",
+      "signature": "shouldSuffocate(pos: BlockPosHelper)",
+      "returnType": "boolean",
+      "description": "Returns true if an entity would suffocate in this block state at the given position.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "The position to check."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (blockState.shouldSuffocate(currentPos)) {\n    JsMacros.chat(\"You would suffocate in this block\");\n}"
+      ]
+    },
+    {
+      "name": "getUniversal",
+      "signature": "getUniversal()",
+      "returnType": "UniversalBlockStateHelper",
+      "description": "Returns a UniversalBlockStateHelper that provides access to all possible block properties, including those specific to certain block types.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const universalState = blockState.getUniversal();\n// Now you can access specific properties like:\nif (universalState.getFacing) {\n    const facing = universalState.getFacing();\n    JsMacros.chat(`Block faces: ${facing}`);\n}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "EndCrystalEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.decoration.EndCrystalEntityHelper",
+  "extends": "EntityHelper<EndCrystalEntity>",
+  "since": "1.8.4",
+  "description": "The EndCrystalEntityHelper class provides specialized methods for interacting with End Crystal entities in Minecraft.",
+  "overview": "End Crystals are decorative and functional entities that can be found naturally in the End dimension or placed by players. They serve both as powerful explosive devices (with a blast radius larger than TNT) and as focusing mechanisms for respawning the Ender Dragon.\n\nEnd Crystals have several unique properties that distinguish them from other entities: naturally generated crystals in the End dimension feature a bedrock base that makes them indestructible to normal means, while player-placed crystals lack this protection. Additionally, End Crystals can emit a beam of energy when targeting specific block positions, typically used for healing the Ender Dragon during boss fights.\n\nThis helper provides access to key End Crystal behaviors including determining whether a crystal is naturally generated (with bedrock base) or player-placed, and accessing the crystal's beam target location if it's actively focusing on a block.\n\nThis class extends EntityHelper and inherits all methods for position, movement, entity properties, and other general entity functionality, while adding End Crystal-specific features.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isNatural",
+      "signature": "isNatural()",
+      "returnType": "boolean",
+      "description": "Returns whether the end crystal is naturally generated (has a bedrock base) or was placed by a player. Naturally generated end crystals appear on the obsidian pillars in the End dimension and are indestructible due to their bedrock base, while player-placed crystals can be broken normally.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if nearby end crystals are natural or player-placed\nconst crystals = World.getEntities(\"minecraft:end_crystal\");\nlet naturalCrystals = 0;\nlet playerCrystals = 0;\n\ncrystals.forEach(entity => {\n    const crystal = entity.as(\"minecraft:end_crystal\");\n    if (crystal.isNatural()) {\n        naturalCrystals++;\n        Chat.log(`Found natural crystal at ${entity.getBlockPos()}`);\n    } else {\n        playerCrystals++;\n        Chat.log(`Found player-placed crystal at ${entity.getBlockPos()}`);\n    }\n});\n\nChat.log(`Total: ${naturalCrystals} natural, ${playerCrystals} player-placed crystals`);"
+      ]
+    },
+    {
+      "name": "getBeamTarget",
+      "signature": "getBeamTarget()",
+      "returnType": "BlockPosHelper | null",
+      "description": "Returns the block position that the crystal's beam is targeting, or null if the crystal is not currently projecting a beam. End Crystals project beams when targeting specific block positions, commonly used during the Ender Dragon boss fight to heal the dragon.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor end crystal beams in the End dimension\nconst crystals = World.getEntities(\"minecraft:end_crystal\");\n\ncrystals.forEach(entity => {\n    const crystal = entity.as(\"minecraft:end_crystal\");\n    const beamTarget = crystal.getBeamTarget();\n\n    if (beamTarget) {\n        Chat.log(`Crystal at ${entity.getBlockPos()} is targeting beam at ${beamTarget}`);\n\n        // Calculate distance between crystal and beam target\n        const distance = Math.floor(entity.getPos().distanceTo(beamTarget.toCenterPos()));\n        Chat.log(`Beam distance: ${distance} blocks`);\n\n        // You could use this information to:\n        // - Predict Ender Dragon healing patterns\n        // - Strategically break crystals during dragon fights\n        // - Analyze crystal placement setups\n    } else {\n        Chat.log(`Crystal at ${entity.getBlockPos()} has no active beam target`);\n    }\n});"
+      ]
+    }
+  ]
+}

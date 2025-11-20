@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Inventory",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.Inventory<T extends HandledScreen<?>>",
+    "since": "JsMacros 1.0.8",
+    "description": "The Inventory class is a fundamental component in JSMacros that provides comprehensive interaction with Minecraft inventory systems. It represents any open inventory interface, including player inventory, containers, crafting stations, and special GUIs. The Inventory class enables automated item management, slot manipulation, and inventory operations through a unified API.",
+    "overview": "The Inventory class serves as the base class for all inventory interactions in JSMacros and provides:\n\n- Universal inventory slot access and manipulation\n- Item searching and filtering capabilities\n- Automated clicking, dragging, and moving operations\n- Support for all vanilla Minecraft inventory types\n- Chain-able methods for complex inventory operations\n- Integration with Minecraft's native inventory handling",
+    "constructors": [
+      {
+        "signature": "new Inventory(inventory)",
+        "description": "Creates a new Inventory instance from a HandledScreen.\n\n**Note:** This constructor is primarily used internally by the factory methods.",
+        "parameters": [
+          {
+            "name": "inventory",
+            "type": "HandledScreen<T>",
+            "description": "The screen handler to create inventory from"
+          }
+        ]
+      }
+    ],
+    "methods": []
+  }
+]

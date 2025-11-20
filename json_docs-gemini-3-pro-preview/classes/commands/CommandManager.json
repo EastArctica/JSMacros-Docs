@@ -1,0 +1,104 @@
+{
+  "name": "CommandManager",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CommandManager",
+  "extends": "Object",
+  "since": "1.7.0",
+  "description": "Manages client-side commands in JsMacros, providing functionality to create, register, unregister, and manage custom commands.",
+  "overview": "This class serves as the central point for command registration and handling, supporting both Fabric and Forge mod loaders. The CommandManager is accessible via the Chat API and allows script developers to create sophisticated custom commands with argument parsing, auto-completion, and execution handling.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getValidCommands",
+      "signature": "getValidCommands()",
+      "returnType": "List<String>",
+      "description": "Returns a list of all currently registered client-side commands. Only returns commands that are registered on the client side. Server-side commands are not included unless they have client-side counterparts.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\nconst commands = cmdManager.getValidCommands();\nChat.log(`Available commands: ${commands.toArray().join(', ')}`);",
+        "const cmdManager = Chat.getCommandManager();\n\n// List all available commands\nfunction listCommands() {\n    const commands = cmdManager.getValidCommands();\n    Chat.log(`=== Available Commands (${commands.length}) ===`);\n\n    commands.toArray().sort().forEach(cmd => {\n        Chat.log(`  - /${cmd}`);\n    });\n}"
+      ]
+    },
+    {
+      "name": "createCommandBuilder",
+      "signature": "createCommandBuilder(String name)",
+      "returnType": "CommandBuilder",
+      "description": "Creates a new CommandBuilder for defining a custom command with arguments and execution logic. The CommandBuilder must be registered using .register() before it can be used.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the command to create"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Create a simple command\nconst builder = cmdManager.createCommandBuilder(\"hello\");\n\n// Create a command with arguments\nconst giveCommand = cmdManager.createCommandBuilder(\"ugive\")\n    .itemArg(\"item\")\n    .intArg(\"count\", 1, 64)\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const item = ctx.getArg(\"item\");\n        const count = ctx.getArg(\"count\");\n        Chat.log(`Giving ${count}x ${item} to player`);\n        return true;\n    }))\n    .register();\n\n// Create a command with literals\nconst adminCmd = cmdManager.createCommandBuilder(\"admin\")\n    .literalArg(\"reload\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.log(\"Reloading admin configuration...\");\n        // Reload logic here\n        return true;\n    }))\n    .or()\n    .literalArg(\"status\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.log(\"Admin status: Online\");\n        return true;\n    }))\n    .register();",
+        "// Basic Command Creation\nconst cmdManager = Chat.getCommandManager();\n\n// Create a simple greeting command\ncmdManager.createCommandBuilder(\"hello\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.say(\"Hello, world!\");\n        return true; // Return true for successful execution\n    }))\n    .register();",
+        "// Command with Arguments\nconst cmdManager = Chat.getCommandManager();\n\n// Create a command with different argument types\nconst teleportCommand = cmdManager.createCommandBuilder(\"customtp\")\n    .blockPosArg(\"position\")  // x y z coordinates\n    .greedyStringArg(\"message\") // Optional message\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const pos = ctx.getArg(\"position\");\n        const message = ctx.getArg(\"message\") || \"Teleported!\";\n\n        Chat.say(`/tp @s ${pos.getX()} ${pos.getY()} ${pos.getZ()}`);\n        Chat.actionbar(message);\n        return true;\n    }))\n    .register();",
+        "// Command with Branches\nconst cmdManager = Chat.getCommandManager();\n\n// Create a multi-purpose admin command\nconst adminCommand = cmdManager.createCommandBuilder(\"myadmin\")\n    // Branch 1: clear inventory\n    .literalArg(\"clear\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.say(\"/clear\");\n        Chat.actionbar(\"Inventory cleared!\");\n        return true;\n    }))\n    .or() // Switch to alternative branch\n    // Branch 2: give starting items\n    .literalArg(\"kit\")\n    .literalArg(\"starter\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.say(\"/give @p minecraft:diamond_sword\");\n        Chat.say(\"/give @p minecraft:bread 32\");\n        Chat.actionbar(\"Starter kit given!\");\n        return true;\n    }))\n    .or() // Switch to alternative branch\n    // Branch 3: heal\n    .literalArg(\"heal\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.say(\"/effect give @p instant_health\");\n        Chat.actionbar(\"Healed!\");\n        return true;\n    }))\n    .register();",
+        "// Command with Suggestions\nconst cmdManager = Chat.getCommandManager();\n\n// Create a command with custom suggestions\nconst biomeCommand = cmdManager.createCommandBuilder(\"gotobiome\")\n    .suggestIdentifier(\n        \"minecraft:plains\",\n        \"minecraft:desert\",\n        \"minecraft:forest\",\n        \"minecraft:jungle\",\n        \"minecraft:tundra\",\n        \"minecraft:ocean\"\n    )\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const biome = ctx.getInput().split(\" \")[1];\n        Chat.actionbar(`Locating ${biome} biome...`);\n        // Add biome finding logic here\n        return true;\n    }))\n    .register();",
+        "// Safe command creation with error handling\nfunction createCommandSafely(name, setupFunction) {\n    try {\n        const builder = cmdManager.createCommandBuilder(name);\n        setupFunction(builder);\n        builder.register();\n        Chat.log(`Successfully created command: ${name}`);\n        return true;\n    } catch (e) {\n        Chat.log(`Failed to create command ${name}: ${e.message}`);\n        return false;\n    }\n}"
+      ]
+    },
+    {
+      "name": "unregisterCommand",
+      "signature": "unregisterCommand(String command)",
+      "returnType": "CommandNodeHelper | null",
+      "description": "Removes a command from the command registry, allowing it to be re-registered later if needed. Works on both client-side and network-side command dispatchers.",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "String",
+          "description": "The name of the command to unregister"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Unregister a command and store it for later re-registration\nconst removedCommand = cmdManager.unregisterCommand(\"hello\");\nif (removedCommand) {\n    Chat.log(\"Successfully unregistered 'hello' command\");\n} else {\n    Chat.log(\"Command 'hello' was not found\");\n}\n\n// Temporarily disable a command\nconst disabledCmd = cmdManager.unregisterCommand(\"admin\");\n// Later restore it\nif (disabledCmd) {\n    cmdManager.reRegisterCommand(disabledCmd);\n}",
+        "// Function to temporarily disable all custom commands\nfunction disableCustomCommands(commandNames) {\n    const disabledCommands = [];\n\n    for (const name of commandNames) {\n        try {\n            const cmd = cmdManager.unregisterCommand(name);\n            if (cmd) {\n                disabledCommands.push({ name, node: cmd });\n                Chat.log(`Disabled command: ${name}`);\n            }\n        } catch (e) {\n            Chat.log(`Failed to disable command ${name}: ${e.message}`);\n        }\n    }\n\n    return disabledCommands; // Return for later restoration\n}"
+      ]
+    },
+    {
+      "name": "reRegisterCommand",
+      "signature": "reRegisterCommand(CommandNodeHelper node)",
+      "returnType": "void",
+      "description": "Re-registers a previously unregistered command node back into the command system. This attempts to restore the command to both client-side and network-side dispatchers.",
+      "parameters": [
+        {
+          "name": "node",
+          "type": "CommandNodeHelper",
+          "description": "The command node to re-register (obtained from unregisterCommand())"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Store a command before unregistering it\nconst originalCommand = cmdManager.unregisterCommand(\"weather\");\n\n// Modify the command or perform other operations...\n\n// Re-register the original command\nif (originalCommand) {\n    cmdManager.reRegisterCommand(originalCommand);\n    Chat.log(\"Weather command restored\");\n}",
+        "// Function to restore disabled commands\nfunction restoreCustomCommands(disabledCommands) {\n    for (const { name, node } of disabledCommands) {\n        try {\n            cmdManager.reRegisterCommand(node);\n            Chat.log(`Restored command: ${name}`);\n        } catch (e) {\n            Chat.log(`Failed to restore command ${name}: ${e.message}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getArgumentAutocompleteOptions",
+      "signature": "getArgumentAutocompleteOptions(String commandPart, MethodWrapper<List<String>, Object, Object, ?> callback)",
+      "returnType": "void",
+      "description": "Asynchronously retrieves argument autocomplete suggestions for a given partial command input. The callback receives a list of strings containing the suggested completions.",
+      "parameters": [
+        {
+          "name": "commandPart",
+          "type": "String",
+          "description": "The partial command to get suggestions for"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper<List<String>, Object, Object, ?>",
+          "description": "A callback function that receives the list of suggestions"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Get autocomplete suggestions for a partial command\ncmdManager.getArgumentAutocompleteOptions(\"gamemode \", JavaWrapper.methodToJava((suggestions) => {\n    Chat.log(\"Available gamemode arguments:\");\n    for (const suggestion of suggestions.toArray()) {\n        Chat.log(`  - ${suggestion}`);\n    }\n}));\n\n// Dynamic autocomplete for custom scenarios\nfunction suggestNextArgs(partialCommand) {\n    cmdManager.getArgumentAutocompleteOptions(partialCommand, JavaWrapper.methodToJava((suggestions) => {\n        if (suggestions.length > 0) {\n            Chat.log(`Suggestions for \"${partialCommand}\":`);\n            suggestions.forEach(JavaWrapper.methodToJava(s => Chat.log(`  ${s}`)));\n        } else {\n            Chat.log(`No suggestions available for \"${partialCommand}\"`);\n        }\n    }));\n}\n\nsuggestNextArgs(\"give @p \");\nsuggestNextArgs(\"time set \");",
+        "// Get command suggestions dynamically\nfunction exploreCommand(baseCommand) {\n    cmdManager.getArgumentAutocompleteOptions(baseCommand, JavaWrapper.methodToJava((suggestions) => {\n        if (suggestions.length > 0) {\n            Chat.log(`Suggestions for \"${baseCommand}\":`);\n            suggestions.forEach(JavaWrapper.methodToJava((suggestion) => {\n                let fullCommand = suggestion;\n                if (baseCommand.endsWith(\" \")) {\n                    fullCommand = `${baseCommand}${suggestion}`;\n                }\n                \n                Chat.log(`  ${fullCommand}`);\n            }));\n        } else {\n            Chat.log(`No suggestions found for \"${baseCommand}\"`);\n        }\n    }));\n}"
+      ]
+    }
+  ]
+}

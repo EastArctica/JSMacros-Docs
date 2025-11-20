@@ -1,0 +1,72 @@
+{
+  "name": "NBTListHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.NBTElementHelper$NBTListHelper",
+  "extends": "NBTElementHelper<AbstractNbtList<?>>",
+  "since": "JsMacros 1.5.1",
+  "description": "The NBTListHelper class is a specialized helper for handling NBT list tags in JSMacros. It provides array-like access to NBT list data structures.",
+  "overview": "The NBTListHelper class provides index-based access to list elements with type information, UUID detection and conversion for int arrays, list length and element type querying, and support for multiple NBT list types (lists, byte arrays, int arrays, long arrays). It integrates with other NBT helper classes for nested data access. NBT list tags are extensively used throughout Minecraft for storing ordered collections of data, including item enchantments, entity positions, block inventories, custom patterns, and various other game mechanics.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isPossiblyUUID",
+      "signature": "public boolean isPossiblyUUID()",
+      "returnType": "boolean",
+      "description": "Checks if this list could represent a UUID based on its type and size.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    if (compound.has(\"UUID\")) {\n        const uuid = compound.get(\"UUID\");\n        if (uuid && uuid.isList()) {\n            const uuidList = uuid.asListHelper();\n            if (uuidList.isPossiblyUUID()) {\n                Chat.log(\"Found UUID data\");\n            }\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "asUUID",
+      "signature": "public UUID asUUID()",
+      "returnType": "UUID",
+      "description": "Converts this list to a UUID if it matches the UUID format.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function extractUUID(compound, key) {\n    if (!compound.has(key)) {\n        return null;\n    }\n\n    const uuidData = compound.get(key);\n    if (!uuidData || !uuidData.isList()) {\n        return null;\n    }\n\n    const uuidList = uuidData.asListHelper();\n    if (uuidList.isPossiblyUUID()) {\n        return uuidList.asUUID();\n    }\n\n    return null;\n}\n\n// Usage with entity data\nconst player = Player.getPlayer();\nconst entities = World.getEntities(10);\n\nfor (const entity of entities) {\n    // This would depend on how entity NBT is accessible in your JSMacros version\n    // const entityNBT = entity.getNBT(); // Hypothetical method\n    //\n    // if (entityNBT && entityNBT.isCompound()) {\n    //     const compound = entityNBT.asCompoundHelper();\n    //     const uuid = extractUUID(compound, \"UUID\");\n    //\n    //     if (uuid) {\n    //         Chat.log(`${entity.getName()}: UUID = ${uuid.toString()}`);\n    //     }\n    // }\n}"
+      ]
+    },
+    {
+      "name": "length",
+      "signature": "public int length()",
+      "returnType": "int",
+      "description": "Returns the number of elements in this list.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    // Check enchantments count\n    if (compound.has(\"Enchantments\")) {\n        const enchantments = compound.get(\"Enchantments\");\n        if (enchantments && enchantments.isList()) {\n            const enchantList = enchantments.asListHelper();\n            Chat.log(`Item has ${enchantList.length()} enchantments`);\n        }\n    }\n\n    // Check lore lines count\n    if (compound.has(\"display\")) {\n        const display = compound.get(\"display\");\n        if (display && display.isCompound()) {\n            const displayCompound = display.asCompoundHelper();\n            if (displayCompound.has(\"Lore\")) {\n                const lore = displayCompound.get(\"Lore\");\n                if (lore && lore.isList()) {\n                    const loreList = lore.asListHelper();\n                    Chat.log(`Item has ${loreList.length()} lore lines`);\n                }\n            }\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "get",
+      "signature": "public NBTElementHelper<?> get(int index)",
+      "returnType": "NBTElementHelper<?>",
+      "description": "Retrieves the element at the specified index as an NBTElementHelper.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The zero-based index of the element to retrieve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "function analyzeEnchantments(enchantList) {\n    for (let i = 0; i < enchantList.length(); i++) {\n        const enchantNBT = enchantList.get(i);\n        if (!enchantNBT || !enchantNBT.isCompound()) continue;\n\n        const enchant = enchantNBT.asCompoundHelper();\n\n        // Get enchantment ID\n        let id = \"unknown\";\n        if (enchant.has(\"id\")) {\n            const idElement = enchant.get(\"id\");\n            if (idElement) {\n                id = idElement.asString();\n            }\n        }\n\n        // Get enchantment level\n        let level = 0;\n        if (enchant.has(\"lvl\")) {\n            const lvlElement = enchant.get(\"lvl\");\n            if (lvlElement && lvlElement.isNumber()) {\n                level = lvlElement.asNumberHelper().asInt();\n            }\n        }\n\n        Chat.log(`  ${id} level ${level}`);\n    }\n}\n\n// Usage\nconst item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    if (compound.has(\"Enchantments\")) {\n        const enchantments = compound.get(\"Enchantments\");\n        if (enchantments && enchantments.isList()) {\n            const enchantList = enchantments.asListHelper();\n            Chat.log(`Item enchantments:`);\n            analyzeEnchantments(enchantList);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getHeldType",
+      "signature": "public int getHeldType()",
+      "returnType": "int",
+      "description": "Returns the NBT type ID of elements in this list.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    for (const key of compound.getKeys()) {\n        const element = compound.get(key);\n        if (!element || !element.isList()) continue;\n\n        const list = element.asListHelper();\n        const elementType = list.getHeldType();\n        const elementCount = list.length();\n        const typeName = getTypeName(elementType);\n\n        Chat.log(`${key}: List of ${elementCount} ${typeName}(s)`);\n    }\n}\n\nfunction getTypeName(typeId) {\n    const types = ['END', 'BYTE', 'SHORT', 'INT', 'LONG', 'FLOAT', 'DOUBLE',\n                   'BYTE_ARRAY', 'STRING', 'LIST', 'COMPOUND', 'INT_ARRAY', 'LONG_ARRAY'];\n    return types[typeId] || 'UNKNOWN';\n}"
+      ]
+    }
+  ]
+}

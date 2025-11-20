@@ -1,0 +1,58 @@
+{
+  "name": "ZombieVillagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.ZombieVillagerEntityHelper",
+  "extends": "ZombieEntityHelper<ZombieVillagerEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The ZombieVillagerEntityHelper class is a specialized wrapper for zombie villager entities in JSMacros, providing access to zombie villager-specific properties and behaviors.",
+  "overview": "This class extends ZombieEntityHelper and inherits all zombie methods while adding zombie villager-specific functionality for tracking conversion status, villager biome type, original profession, and level.\n\nZombie villagers are unique hostile mobs that are infected villagers. They can be converted back to regular villagers using weakness and golden apples, and they retain memories of their original villager identity including their biome type, profession, and trade level. This makes them valuable targets for conversion operations and villager trading setups.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getProfession",
+      "signature": "getProfession()",
+      "returnType": "String",
+      "description": "Gets the profession of the villager (e.g., librarian, cleric) that this zombie villager retains.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const profession = zombieVillager.getProfession();",
+        "Chat.log(`Zombie villager spawned! Profession: ${profession}`);"
+      ]
+    },
+    {
+      "name": "getVillagerBiomeType",
+      "signature": "getVillagerBiomeType()",
+      "returnType": "String",
+      "description": "Gets the biome type variant of the villager (e.g., snowy, jungle, desert).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const biomeType = zombieVillager.getVillagerBiomeType();",
+        "Chat.log(`Zombie villager from ${biomeType} biome`);"
+      ]
+    },
+    {
+      "name": "isConvertingToVillager",
+      "signature": "isConvertingToVillager()",
+      "returnType": "boolean",
+      "description": "Checks if the zombie villager is currently in the process of converting back to a regular villager (after being given Weakness and a Golden Apple).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isConverting = zombieVillager.isConvertingToVillager();",
+        "if (isConverting) Chat.log('Do not kill! Converting!');"
+      ]
+    },
+    {
+      "name": "getLevel",
+      "signature": "getLevel()",
+      "returnType": "int",
+      "description": "Gets the trade level of the villager.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const level = zombieVillager.getLevel();"
+      ]
+    }
+  ]
+}

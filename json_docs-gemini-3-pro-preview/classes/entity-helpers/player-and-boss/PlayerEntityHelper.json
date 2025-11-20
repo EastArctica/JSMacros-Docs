@@ -1,0 +1,218 @@
+{
+  "name": "PlayerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.PlayerEntityHelper",
+  "extends": "LivingEntityHelper<PlayerEntity>",
+  "since": "1.0.3",
+  "description": "The PlayerEntityHelper class is a specialized wrapper for player entities in JSMacros, providing access to player-specific functionality, experience management, abilities, inventory information, and various player-state operations. This class extends LivingEntityHelper and inherits all living entity methods while adding player-specific functionality like experience tracking, abilities management, sleep mechanics, combat information, and player identification.",
+  "overview": "This class represents both client players and other players in multiplayer contexts, providing comprehensive methods for accessing player data, checking player states, managing experience and abilities, and interacting with player-specific game mechanics.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "float",
+      "description": "Current health",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "float",
+      "description": "Maximum health",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "float",
+      "description": "Absorption hearts",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "int",
+      "description": "Current armor value",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List",
+      "description": "List of active status effects",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(id)",
+      "returnType": "boolean",
+      "description": "Check for specific status effect",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The status effect ID"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSleeping",
+      "signature": "isSleeping()",
+      "returnType": "boolean",
+      "description": "Check if sleeping (overridden with PlayerEntity version)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isFallFlying",
+      "signature": "isFallFlying()",
+      "returnType": "boolean",
+      "description": "Check if elytra is deployed",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOnGround",
+      "signature": "isOnGround()",
+      "returnType": "boolean",
+      "description": "Check if on ground",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreatheInWater",
+      "signature": "canBreatheInWater()",
+      "returnType": "boolean",
+      "description": "Check if can breathe underwater",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasNoDrag",
+      "signature": "hasNoDrag()",
+      "returnType": "boolean",
+      "description": "Check if has no drag",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasNoGravity",
+      "signature": "hasNoGravity()",
+      "returnType": "boolean",
+      "description": "Check if has no gravity",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canTakeDamage",
+      "signature": "canTakeDamage()",
+      "returnType": "boolean",
+      "description": "Check if can take damage",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isPartOfGame",
+      "signature": "isPartOfGame()",
+      "returnType": "boolean",
+      "description": "Check if is alive and not spectator",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSpectator",
+      "signature": "isSpectator()",
+      "returnType": "boolean",
+      "description": "Check if in spectator mode",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isUndead",
+      "signature": "isUndead()",
+      "returnType": "boolean",
+      "description": "Check if is undead mob type",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Check if is baby variant",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(item)",
+      "returnType": "boolean",
+      "description": "Check if holding specific item",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "Object",
+          "description": "The item to check"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(entity)",
+      "returnType": "boolean",
+      "description": "Check if has line of sight to entity",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to check visibility for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBowPullProgress",
+      "signature": "getBowPullProgress()",
+      "returnType": "float",
+      "description": "Get bow pull progress",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItemUseTimeLeft",
+      "signature": "getItemUseTimeLeft()",
+      "returnType": "int",
+      "description": "Get item use time remaining",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "EventSlotUpdate",
+  "fullClassName": "EventSlotUpdate",
+  "description": "This event is fired when an inventory slot is updated.",
+  "overview": "## Event payload\n\n| Field | Type | Description |\n| --- | --- | --- |\n| type | string | The type of slot update |\n| slot | int | The slot number that was updated |\n| oldStack | ItemStackHelper | The previous item stack in the slot |\n| newStack | ItemStackHelper | The new item stack in the slot |\n\n## Behavior\n\n* Fires when any inventory slot changes\n- The `type` field indicates the update category\n- The `slot` field contains the updated slot number\n- The `oldStack` and `newStack` fields show before/after states\n- Not cancellable\n- Useful for inventory tracking and automation\n\n## Fields Details\n\n### event.type\nThe type of slot update.\nPossible values:\n- 'HELD' - Currently held item slot\n- 'INVENTORY' - Player inventory slots\n- 'SCREEN' - Container screen slots (chests, furnaces, etc.)\n\n### event.slot\nThe slot number that was updated.\nSlot numbers vary by context:\n- Hotbar: 0-8\n- Main inventory: 9-35\n- Armor: 100-103\n- Offhand: 40\n\n### event.oldStack\nThe previous item stack in the slot. Represents what was in the slot before the update.\n\n### event.newStack\nThe new item stack in the slot. Represents what is now in the slot after the update.\n\n## Minimal example\n\n```js\nJsMacros.on(\"SlotUpdate\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Slot ${e.slot} updated: ${e.type}`);\n});\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInventory",
+      "signature": "getInventory()",
+      "returnType": "Inventory<?>",
+      "description": "Returns the inventory associated with this slot update.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From async example\nfunction handleScreenSlotUpdate(slot, oldItem, newItem) {\n  // ...\n  const inventory = e.getInventory();\n  const screenName = inventory.getClassName();\n  // ...\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

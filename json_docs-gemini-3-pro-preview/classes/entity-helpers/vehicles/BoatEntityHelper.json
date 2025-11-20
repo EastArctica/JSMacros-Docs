@@ -1,0 +1,89 @@
+{
+  "name": "BoatEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.vehicle.BoatEntityHelper",
+  "extends": "EntityHelper<BoatEntity>",
+  "since": "1.8.4",
+  "description": "Represents a boat entity in the Minecraft world, providing access to boat-specific properties and states.",
+  "overview": "Represents a boat entity in the Minecraft world, providing access to boat-specific properties and states. BoatEntityHelper allows you to identify boat types, check water/land status, and determine if a boat has chest storage capabilities.\n\nThis class extends EntityHelper and inherits all methods for position, movement, passengers, and general entity properties. BoatEntityHelper instances are typically obtained through entity events, world queries, or when accessing vehicles that players or entities are riding.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isChestBoat",
+      "signature": "public boolean isChestBoat()",
+      "returnType": "boolean",
+      "description": "Determines if the boat has chest storage capabilities.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isChest = boat.isChestBoat();"
+      ]
+    },
+    {
+      "name": "getBoatBlockType",
+      "signature": "public BlockHelper getBoatBlockType()",
+      "returnType": "BlockHelper",
+      "description": "Returns a BlockHelper that represents the wood material of the boat. This can be used for comparison with actual blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const material = boat.getBoatBlockType();",
+        "const materialName = material.getBlockState().getBlock().getName();"
+      ]
+    },
+    {
+      "name": "getBoatType",
+      "signature": "public String getBoatType()",
+      "returnType": "String",
+      "description": "Gets the specific type (wood variant) of the boat (e.g., oak, spruce, birch).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const boatType = boat.getBoatType();"
+      ]
+    },
+    {
+      "name": "isInWater",
+      "signature": "public boolean isInWater()",
+      "returnType": "boolean",
+      "description": "Checks if the boat is currently floating on water.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (boat.isInWater()) {\n    Chat.log(\"Status: Sailing on water\");\n}"
+      ]
+    },
+    {
+      "name": "isOnLand",
+      "signature": "public boolean isOnLand()",
+      "returnType": "boolean",
+      "description": "Checks if the boat is currently grounded on land.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (boat.isOnLand()) {\n    Chat.log(\"Status: On land\");\n}"
+      ]
+    },
+    {
+      "name": "isUnderwater",
+      "signature": "public boolean isUnderwater()",
+      "returnType": "boolean",
+      "description": "Checks if the boat is submerged underwater.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (boat.isUnderwater()) {\n    Chat.log(\"Status: Underwater (!)\");\n}"
+      ]
+    },
+    {
+      "name": "isInAir",
+      "signature": "public boolean isInAir()",
+      "returnType": "boolean",
+      "description": "Checks if the boat is currently in the air (falling or flying).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (boat.isInAir()) {\n    Chat.log(\"Status: In air\");\n}"
+      ]
+    }
+  ]
+}

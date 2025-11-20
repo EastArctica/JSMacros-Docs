@@ -1,0 +1,9 @@
+{
+  "name": "MethodData",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings$MethodData",
+  "since": "JSMacros 1.3.1",
+  "description": "The MethodData class is a data structure that contains comprehensive mapping information for a single method within the JsMacros mapping system.",
+  "overview": "The MethodData class serves as a container for method mapping information, providing source and target method signatures, parameter and return type information, and method metadata. It enables bidirectional translation between different naming conventions (e.g., intermediary obfuscated names and human-readable deobfuscated names).\n\nThis class is primarily used internally by the Mappings system and MappedClass wrapper to perform automatic method name translation during reflection operations.\n\n### Data Structure\nMethodData objects contain the following key components:\n- Source Signature: The original method signature in the source mapping format\n- Target Signature: The translated method signature in the target format\n- Method Name: The translated method name\n- Parameter/Return Types: Information about method parameters and return types\n\n### Fields\n- **name** (String): The translated name of the method in the target mapping format.\n- **sig** (MethodSigParts): The method signature components and translation information.",
+  "constructors": [],
+  "methods": []
+}

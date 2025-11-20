@@ -1,0 +1,26 @@
+{
+  "name": "StringCompareFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.compare.StringCompareFilter",
+  "since": "1.6.5",
+  "description": "A versatile filter class used to compare string values during world scanning operations.",
+  "overview": "This filter provides multiple string comparison methods including equality checks, substring searching, prefix/suffix matching, and regular expression pattern matching. It is commonly used with the WorldScanner to filter blocks or entities based on string properties such as names, IDs, or other textual attributes.",
+  "constructors": [
+    {
+      "signature": "new StringCompareFilter(operation, compareTo)",
+      "description": "Creates a new StringCompareFilter with the specified comparison operation and target string.",
+      "parameters": [
+        {
+          "name": "operation",
+          "type": "String",
+          "description": "The comparison operation to perform. Must be one of: \"CONTAINS\", \"EQUALS\", \"STARTS_WITH\", \"ENDS_WITH\", or \"MATCHES\""
+        },
+        {
+          "name": "compareTo",
+          "type": "String",
+          "description": "The string to compare input values against"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

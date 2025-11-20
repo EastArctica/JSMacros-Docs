@@ -1,0 +1,493 @@
+{
+  "name": "Inventory",
+  "fullClassName": "org.bukkit.inventory.Inventory",
+  "extends": "Iterable<ItemStack>",
+  "description": "Interface to the various inventories available to players, monsters and blocks.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getSize",
+      "signature": "int getSize()",
+      "returnType": "int",
+      "description": "Returns the size of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxStackSize",
+      "signature": "int getMaxStackSize()",
+      "returnType": "int",
+      "description": "Returns the maximum stack size for a ItemStack in this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setMaxStackSize",
+      "signature": "void setMaxStackSize(int size)",
+      "returnType": "void",
+      "description": "This method allows you to change the maximum stack size for an inventory.",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "description": "The new maximum stack size for items in this inventory."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "String getName()",
+      "returnType": "String",
+      "description": "Returns the name of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItem",
+      "signature": "ItemStack getItem(int index)",
+      "returnType": "ItemStack",
+      "description": "Returns the ItemStack found in the slot at the given index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index of the Slot's ItemStack to return."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setItem",
+      "signature": "void setItem(int index, ItemStack item)",
+      "returnType": "void",
+      "description": "Stores the ItemStack at the given index of the inventory.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index where to put the ItemStack"
+        },
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to set"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addItem",
+      "signature": "HashMap<Integer,ItemStack> addItem(ItemStack... items)",
+      "returnType": "HashMap<Integer,ItemStack>",
+      "description": "Stores the given ItemStacks in the inventory.",
+      "parameters": [
+        {
+          "name": "items",
+          "type": "ItemStack...",
+          "description": "The ItemStacks to add"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeItem",
+      "signature": "HashMap<Integer,ItemStack> removeItem(ItemStack... items)",
+      "returnType": "HashMap<Integer,ItemStack>",
+      "description": "Removes the given ItemStacks from the inventory.",
+      "parameters": [
+        {
+          "name": "items",
+          "type": "ItemStack...",
+          "description": "The ItemStacks to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getContents",
+      "signature": "ItemStack[] getContents()",
+      "returnType": "ItemStack[]",
+      "description": "Returns all ItemStacks from the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setContents",
+      "signature": "void setContents(ItemStack[] items)",
+      "returnType": "void",
+      "description": "Completely replaces the inventory's contents. Clears all existing contents and replaces it with the ItemStacks given in the array.",
+      "parameters": [
+        {
+          "name": "items",
+          "type": "ItemStack[]",
+          "description": "A complete replacement for the contents; the length must be less than or equal to getSize()."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(int materialId)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any ItemStacks with the given materialId.",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type": "int",
+          "description": "The materialId to check for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(Material material)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any ItemStacks with the given Material.",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "Material",
+          "description": "The Material to check for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(ItemStack item)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any ItemStacks matching the given ItemStack.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to match against"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(int materialId, int amount)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any ItemStacks with the given materialId, adding to at least the minimum amount specified.",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type": "int",
+          "description": "The materialId to check for"
+        },
+        {
+          "name": "amount",
+          "type": "int",
+          "description": "The minimum amount"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(Material material, int amount)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any ItemStacks with the given Material, adding to at least the minimum amount specified.",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "Material",
+          "description": "The Material to check for"
+        },
+        {
+          "name": "amount",
+          "type": "int",
+          "description": "The minimum amount"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(ItemStack item, int amount)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any ItemStacks matching the given ItemStack, adding to at least the minimum amount specified.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to match against"
+        },
+        {
+          "name": "amount",
+          "type": "int",
+          "description": "The minimum amount"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "containsAtLeast",
+      "signature": "boolean containsAtLeast(ItemStack item, int amount)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains at least the minimum amount specified of exactly matching ItemStacks.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to match against"
+        },
+        {
+          "name": "amount",
+          "type": "int",
+          "description": "The minimum amount"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "all",
+      "signature": "HashMap<Integer,? extends ItemStack> all(int materialId)",
+      "returnType": "HashMap<Integer,? extends ItemStack>",
+      "description": "Returns a HashMap with all slots and ItemStacks in the inventory with the given materialId.",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type": "int",
+          "description": "The materialId to check for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "all",
+      "signature": "HashMap<Integer,? extends ItemStack> all(Material material)",
+      "returnType": "HashMap<Integer,? extends ItemStack>",
+      "description": "Returns a HashMap with all slots and ItemStacks in the inventory with the given Material.",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "Material",
+          "description": "The Material to check for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "all",
+      "signature": "HashMap<Integer,? extends ItemStack> all(ItemStack item)",
+      "returnType": "HashMap<Integer,? extends ItemStack>",
+      "description": "Finds all slots and ItemStacks in the inventory with the given ItemStack.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to look for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "first",
+      "signature": "int first(int materialId)",
+      "returnType": "int",
+      "description": "Returns the first slot in the inventory containing an ItemStack with the given materialId.",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type": "int",
+          "description": "The materialId to check for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "first",
+      "signature": "int first(Material material)",
+      "returnType": "int",
+      "description": "Returns the first slot in the inventory containing an ItemStack with the given Material.",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "Material",
+          "description": "The Material to check for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "first",
+      "signature": "int first(ItemStack item)",
+      "returnType": "int",
+      "description": "Returns the first slot in the inventory containing an ItemStack with the given ItemStack.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to look for"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "firstEmpty",
+      "signature": "int firstEmpty()",
+      "returnType": "int",
+      "description": "Returns the first empty Slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "remove",
+      "signature": "void remove(int materialId)",
+      "returnType": "void",
+      "description": "Removes all ItemStacks from the inventory with the given materialId.",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type": "int",
+          "description": "The materialId to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "remove",
+      "signature": "void remove(Material material)",
+      "returnType": "void",
+      "description": "Removes all ItemStacks from the inventory with the given Material.",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "Material",
+          "description": "The Material to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "remove",
+      "signature": "void remove(ItemStack item)",
+      "returnType": "void",
+      "description": "Removes all ItemStacks from the inventory with the given ItemStack.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The ItemStack to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clear",
+      "signature": "void clear(int index)",
+      "returnType": "void",
+      "description": "Clears out a particular slot in the index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index to empty."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clear",
+      "signature": "void clear()",
+      "returnType": "void",
+      "description": "Clears out the whole Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getViewers",
+      "signature": "List<HumanEntity> getViewers()",
+      "returnType": "List<HumanEntity>",
+      "description": "Gets a list of players viewing the inventory. Note that a player is considered to be viewing their own inventory and internal crafting screen even when said inventory is not open. They will normally be considered to be viewing their inventory even when they have a different inventory screen open, but it's possible for customized inventory screens to exclude the viewer's inventory, so this should never be assumed to be non-empty.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTitle",
+      "signature": "String getTitle()",
+      "returnType": "String",
+      "description": "Returns the title of this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "InventoryType getType()",
+      "returnType": "InventoryType",
+      "description": "Returns what type of inventory this is.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHolder",
+      "signature": "InventoryHolder getHolder()",
+      "returnType": "InventoryHolder",
+      "description": "Gets the block or entity belonging to the open inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "iterator",
+      "signature": "ListIterator<ItemStack> iterator()",
+      "returnType": "ListIterator<ItemStack>",
+      "description": "Returns a ListIterator for the Inventory contents.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "iterator",
+      "signature": "ListIterator<ItemStack> iterator(int index)",
+      "returnType": "ListIterator<ItemStack>",
+      "description": "Returns a ListIterator for the Inventory contents, starting at the specified index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index to start the ListIterator at"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

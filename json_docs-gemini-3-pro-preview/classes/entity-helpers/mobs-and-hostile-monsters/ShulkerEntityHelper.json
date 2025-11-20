@@ -1,0 +1,46 @@
+[
+  {
+    "name": "ShulkerEntityHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.ShulkerEntityHelper",
+    "extends": "MobEntityHelper<ShulkerEntity>",
+    "since": "1.8.4",
+    "description": "The ShulkerEntityHelper class provides specialized access to shulker entities in Minecraft, offering methods to monitor and interact with shulker-specific behaviors such as their closed/open state, attachment position, and color.",
+    "overview": "This class extends MobEntityHelper and inherits all functionality for living entities including health monitoring, status effects, and AI states. This helper is particularly useful for creating scripts that detect shulker positions, monitor their attack state, track shulker boxes in end cities, or analyze shulker behavior patterns during exploration or combat.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "isClosed",
+        "signature": "isClosed()",
+        "returnType": "boolean",
+        "description": "Provides real-time information about shulker attack state (closed/open). Note that this may have slight delays due to network synchronization.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const isClosed = shulker.isClosed();\nif (isClosed) {\n    threatScore += 40;\n    threatLevel = \"high\";\n}"
+        ]
+      },
+      {
+        "name": "getAttachedSide",
+        "signature": "getAttachedSide()",
+        "returnType": "DirectionHelper",
+        "description": "Returns the face (Direction) the shulker is attached to. This is important for tactical positioning and understanding attack angles.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const attachedSide = shulker.getAttachedSide();\n// Position threat (ceiling shulkers are more dangerous)\nif (attachedSide.getName() === \"up\") {\n    threatScore += 20;\n}"
+        ]
+      },
+      {
+        "name": "getColor",
+        "signature": "getColor()",
+        "returnType": "DyeColorHelper",
+        "description": "Returns the color of the shulker. Returns null for the default purple shulker color, and a DyeColorHelper for colored shulkers.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const color = shulker.getColor();\n// Color-based identification\nif (color) {\n    advice.push(`Color: ${color.getName()}`);\n}"
+        ]
+      }
+    ]
+  }
+]

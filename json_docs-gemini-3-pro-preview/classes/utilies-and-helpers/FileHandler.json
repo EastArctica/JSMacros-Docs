@@ -1,0 +1,200 @@
+{
+  "name": "FileHandler",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.FileHandler",
+  "extends": null,
+  "since": "1.1.8",
+  "description": "The FileHandler class is a utility class in JSMacros that provides a convenient interface for file operations. It wraps Java's file I/O operations and exposes methods for reading, writing, and managing files with support for different character encodings and both text and binary data operations.",
+  "overview": "The FileHandler class provides a high-level interface for file operations with the following key features:\n\n- **Text and Binary Support**: Handle both string/text data and raw byte arrays\n- **Encoding Support**: Work with different character encodings (defaults to UTF-8)\n- **Read/Write Operations**: Both destructive (replace) and append operations\n- **Streaming Support**: Stream large files and iterate through lines efficiently\n- **Chaining Support**: Methods return the FileHandler instance for method chaining\n- **Resource Management**: Automatic resource cleanup with proper exception handling",
+  "constructors": [
+    {
+      "signature": "new FileHandler(path)",
+      "description": "Creates a FileHandler for the specified file path using UTF-8 encoding.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "String",
+          "description": "The file path to operate on"
+        }
+      ]
+    },
+    {
+      "signature": "new FileHandler(path, charset)",
+      "description": "Creates a FileHandler for the specified file path with custom encoding.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "String",
+          "description": "The file path to operate on"
+        },
+        {
+          "name": "charset",
+          "type": "String",
+          "description": "The character encoding to use (e.g., \"UTF-8\", \"ISO-8859-1\")"
+        }
+      ]
+    },
+    {
+      "signature": "new FileHandler(file, charset)",
+      "description": "Creates a FileHandler from a File object with specified encoding.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "File",
+          "description": "The File object to operate on"
+        },
+        {
+          "name": "charset",
+          "type": "String",
+          "description": "The character encoding to use"
+        }
+      ]
+    },
+    {
+      "signature": "new FileHandler(file)",
+      "description": "Creates a FileHandler from a File object using UTF-8 encoding.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "File",
+          "description": "The File object to operate on"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "write",
+      "signature": "write(text)",
+      "returnType": "FileHandler",
+      "description": "Writes a string to the file, replacing all existing content. This is a destructive operation.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "String",
+          "description": "The text content to write"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const config = new FileHandler(\"./config/settings.txt\");\n\ntry {\n    config.write(\"language=en\\nvolume=0.8\\nfullscreen=true\");\n    Chat.log(\"Configuration saved successfully\");\n} catch (e) {\n    Chat.log(\"Failed to save configuration: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "write",
+      "signature": "write(bytes)",
+      "returnType": "FileHandler",
+      "description": "Writes a byte array to the file, replacing all existing content. This is a destructive operation.",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "byte[]",
+          "description": "The binary data to write"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const dataFile = new FileHandler(\"./data/binary.dat\");\n\n// Create some binary data\nconst data = Java.type(\"byte[]\");\nconst byteArray = new data([0x48, 0x65, 0x6C, 0x6C, 0x6F]); // \"Hello\" in bytes\n\ntry {\n    dataFile.write(byteArray);\n    Chat.log(\"Binary data saved successfully\");\n} catch (e) {\n    Chat.log(\"Failed to save binary data: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "append",
+      "signature": "append(text)",
+      "returnType": "FileHandler",
+      "description": "Appends a string to the end of the file without replacing existing content.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "String",
+          "description": "The text content to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const logFile = new FileHandler(\"./logs/script.log\");\n\ntry {\n    // Append a timestamped log entry\n    const timestamp = new Date().toISOString();\n    logFile.append(timestamp + \" - Script started\\n\");\n    logFile.append(timestamp + \" - Processing data...\\n\");\n    Chat.log(\"Log entries added successfully\");\n} catch (e) {\n    Chat.log(\"Failed to write to log: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "append",
+      "signature": "append(bytes)",
+      "returnType": "FileHandler",
+      "description": "Appends a byte array to the end of the file without replacing existing content.",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "byte[]",
+          "description": "The binary data to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const dataFile = new FileHandler(\"./data/chunk.dat\");\nconst newData = Java.type(\"byte[]\");\n\ntry {\n    // Append additional data\n    const moreData = new newData([0x0A, 0x0D, 0xFF, 0xFE]);\n    dataFile.append(moreData);\n    Chat.log(\"Additional binary data appended\");\n} catch (e) {\n    Chat.log(\"Failed to append binary data: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "read",
+      "signature": "read()",
+      "returnType": "String",
+      "description": "Reads the entire file content as a string using the file's encoding.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const configFile = new FileHandler(\"./config/settings.txt\");\n\ntry {\n    const content = configFile.read();\n    Chat.log(\"Configuration content:\");\n    Chat.log(content);\n\n    // Parse configuration\n    const lines = content.split(\"\\n\");\n    lines.forEach(line => {\n        if (line.includes(\"=\")) {\n            const [key, value] = line.split(\"=\");\n            Chat.log(\"Setting: \" + key.trim() + \" = \" + value.trim());\n        }\n    });\n} catch (e) {\n    Chat.log(\"Failed to read configuration: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "readBytes",
+      "signature": "readBytes()",
+      "returnType": "byte[]",
+      "description": "Reads the entire file content as a byte array.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const binaryFile = new FileHandler(\"./data/texture.dat\");\n\ntry {\n    const data = binaryFile.readBytes();\n    Chat.log(\"Read \" + data.length + \" bytes from file\");\n\n    // Check first few bytes\n    if (data.length >= 4) {\n        const header = String.fromCharCode(data[0], data[1], data[2], data[3]);\n        Chat.log(\"File header: \" + header);\n    }\n} catch (e) {\n    Chat.log(\"Failed to read binary file: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "readLines",
+      "signature": "readLines()",
+      "returnType": "FileLineIterator",
+      "description": "Returns an iterator for reading the file line by line. This is memory-efficient for large files. You must call `close()` on the iterator when finished.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const logFile = new FileHandler(\"./logs/server.log\");\n\ntry {\n    const lineIterator = logFile.readLines();\n    let lineCount = 0;\n    let errorCount = 0;\n\n    while (lineIterator.hasNext()) {\n        const line = lineIterator.next();\n        lineCount++;\n\n        if (line.includes(\"ERROR\") || line.includes(\"WARN\")) {\n            errorCount++;\n            Chat.log(\"Found issue: \" + line.trim());\n        }\n\n        // Stop after processing 1000 lines to avoid lag\n        if (lineCount >= 1000) break;\n    }\n\n    lineIterator.close();\n    Chat.log(`Processed ${lineCount} lines, found ${errorCount} issues`);\n} catch (e) {\n    Chat.log(\"Failed to read log file: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "streamBytes",
+      "signature": "streamBytes()",
+      "returnType": "BufferedInputStream",
+      "description": "Returns a buffered input stream for reading the file as binary data. This is useful for large files or when you need to process data in chunks. You must call `close()` on the stream when finished.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const largeFile = new FileHandler(\"./data/large_dataset.bin\");\n\ntry {\n    const stream = largeFile.streamBytes();\n    const buffer = Java.type(\"byte[]\");\n    const readBuffer = new buffer(1024); // Read 1KB at a time\n    let totalBytes = 0;\n\n    let bytesRead = stream.read(readBuffer);\n    while (bytesRead > 0) {\n        totalBytes += bytesRead;\n        // Process the buffer here...\n\n        // Read next chunk\n        bytesRead = stream.read(readBuffer);\n    }\n\n    stream.close();\n    Chat.log(\"Read \" + totalBytes + \" bytes from large file\");\n} catch (e) {\n    Chat.log(\"Failed to stream file: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "getFile",
+      "signature": "getFile()",
+      "returnType": "File",
+      "description": "Returns the underlying File object that this FileHandler is operating on.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const fileHandler = new FileHandler(\"./config/settings.txt\");\nconst file = fileHandler.getFile();\n\nChat.log(\"File path: \" + file.getAbsolutePath());\nChat.log(\"File exists: \" + file.exists());\nChat.log(\"File size: \" + file.length() + \" bytes\");\nChat.log(\"Is directory: \" + file.isDirectory());\nChat.log(\"Can read: \" + file.canRead());\nChat.log(\"Can write: \" + file.canWrite());"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the FileHandler, showing the file path.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const fileHandler = new FileHandler(\"./data/test.txt\");\nChat.log(fileHandler.toString());\n// Output: FileHandler:{\"file\": \"/full/path/to/data/test.txt\"}"
+      ]
+    }
+  ]
+}

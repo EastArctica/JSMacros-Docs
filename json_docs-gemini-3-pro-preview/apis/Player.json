@@ -1,0 +1,521 @@
+{
+  "name": "Player",
+  "fullClassName": "Player",
+  "description": "Functions for getting and modifying the player's state, inventory, and movement.",
+  "overview": "Functions for getting and modifying the player's state, inventory, and movement. Accessible from scripts via the global \"Player\" variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "openInventory",
+      "signature": "openInventory()",
+      "returnType": "Inventory",
+      "description": "Gets the handler for the player's inventory.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const inventory = Player.openInventory();\nconst mainHandItem = inventory.getSlot(inventory.getSelectedHotbarSlot() + 36);\nif (mainHandItem) {\n    Chat.log(`Holding: ${mainHandItem.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getPlayer",
+      "signature": "getPlayer()",
+      "returnType": "ClientPlayerEntityHelper",
+      "description": "Returns the wrapper for the player entity, providing access to its properties and methods.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const player = Player.getPlayer();\nconst pos = player.getPos();\nChat.log(`Player is at X: ${pos.x}, Y: ${pos.y}, Z: ${pos.z}`);"
+      ]
+    },
+    {
+      "name": "getInteractionManager",
+      "signature": "getInteractionManager()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Gets the helper for managing player interactions with the world, such as breaking blocks or attacking entities.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const interactionManager = Player.getInteractionManager();\n\n// Example: Start breaking a block\nconst lookingAt = Player.rayTraceBlock(5, false);\nif (lookingAt) {\n    interactionManager.attackBlock(lookingAt.getPos(), lookingAt.getSide());\n}"
+      ]
+    },
+    {
+      "name": "interactions",
+      "signature": "interactions()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Alias for getInteractionManager(). Gets the helper for managing player interactions with the world.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const interactionManager = Player.interactions();"
+      ]
+    },
+    {
+      "name": "getGameMode",
+      "signature": "getGameMode()",
+      "returnType": "string",
+      "description": "Gets the player's current gamemode as a lowercase string (e.g., \"survival\", \"creative\").",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const mode = Player.getGameMode();\nChat.log(`Current gamemode: ${mode}`); // e.g., \"creative\""
+      ]
+    },
+    {
+      "name": "setGameMode",
+      "signature": "setGameMode(gameMode)",
+      "returnType": "void",
+      "description": "Sets the player's gamemode. Requires creative mode and cheats enabled.",
+      "parameters": [
+        {
+          "name": "gameMode",
+          "type": "string",
+          "description": "The desired gamemode. Possible values are \"survival\", \"creative\", \"adventure\", \"spectator\"."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Requires creative mode and cheats enabled\nPlayer.setGameMode(\"creative\");"
+      ]
+    },
+    {
+      "name": "rayTraceBlock",
+      "signature": "rayTraceBlock(distance, fluid)",
+      "returnType": "BlockDataHelper | null",
+      "description": "Performs a ray trace from the player's camera to find the block being looked at.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "double",
+          "description": "The maximum distance to trace."
+        },
+        {
+          "name": "fluid",
+          "type": "boolean",
+          "description": "If true, the trace will include fluid blocks."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const block = Player.rayTraceBlock(5, false); // 5 blocks reach, don't target fluids\nif (block) {\n    Chat.log(`Looking at: ${block.getId()} at ${block.getPos().toString()}`);\n} else {\n    Chat.log(\"Not looking at a block.\");\n}"
+      ]
+    },
+    {
+      "name": "detailedRayTraceBlock",
+      "signature": "detailedRayTraceBlock(distance, fluid)",
+      "returnType": "HitResultHelper$Block | null",
+      "description": "Performs a more detailed ray trace, providing precise hit coordinates and the face of the block that was hit.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "double",
+          "description": "The maximum distance to trace."
+        },
+        {
+          "name": "fluid",
+          "type": "boolean",
+          "description": "If true, the trace will include fluid blocks."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const result = Player.detailedRayTraceBlock(5, false);\nif (result) {\n    Chat.log(`Hit block at ${result.getBlockPos()} on side ${result.getSide()}`);\n    Chat.log(`Exact hit coordinates: ${result.getPos()}`);\n}"
+      ]
+    },
+    {
+      "name": "rayTraceEntity",
+      "signature": "rayTraceEntity(distance)",
+      "returnType": "EntityHelper<?> | null",
+      "description": "Performs a ray trace to find the entity being looked at.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "The maximum distance to trace. Optional."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const entity = Player.rayTraceEntity(20); // 20 block reach\nif (entity) {\n    Chat.log(`Looking at entity: ${entity.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "writeSign",
+      "signature": "writeSign(l1, l2, l3, l4)",
+      "returnType": "boolean",
+      "description": "Writes text to a sign if the sign editing screen is currently open. Returns true if successful.",
+      "parameters": [
+        {
+          "name": "l1",
+          "type": "string",
+          "description": "Text for the first line."
+        },
+        {
+          "name": "l2",
+          "type": "string",
+          "description": "Text for the second line."
+        },
+        {
+          "name": "l3",
+          "type": "string",
+          "description": "Text for the third line."
+        },
+        {
+          "name": "l4",
+          "type": "string",
+          "description": "Text for the fourth line."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// This only works if the player has a sign GUI open\nconst success = Player.writeSign(\"Line 1\", \"Line 2\", \"Line 3\", \"Line 4\");\nif (success) {\n    Chat.log(\"Sign written!\");\n}"
+      ]
+    },
+    {
+      "name": "takeScreenshot",
+      "signature": "takeScreenshot(folder, file, callback)",
+      "returnType": "void",
+      "description": "Takes a screenshot and saves it to a file.",
+      "parameters": [
+        {
+          "name": "folder",
+          "type": "string",
+          "description": "The folder to save the screenshot in, relative to the minecraft directory."
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "description": "An optional file name. If not provided, a name is generated."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper(text: TextHelper)",
+          "description": "A function that is called upon completion."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const callback = JavaWrapper.methodToJava((textHelper) => {\n    if (textHelper) {\n        Chat.log(textHelper.getString());\n    }\n});\n\n// Save to screenshots folder with a generated name\nPlayer.takeScreenshot(\"screenshots\", callback);\n\n// Save to a specific subfolder and file name\nPlayer.takeScreenshot(\"screenshots/custom\", \"my_image.png\", callback);"
+      ]
+    },
+    {
+      "name": "takePanorama",
+      "signature": "takePanorama(folder, width, height, callback)",
+      "returnType": "void",
+      "description": "Takes a 360-degree panorama screenshot.",
+      "parameters": [
+        {
+          "name": "folder",
+          "type": "string",
+          "description": "The folder to save the panorama to, relative to the minecraft directory."
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the final panorama image."
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The height of the final panorama image."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper(text: TextHelper)",
+          "description": "A function called upon completion."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const callback = JavaWrapper.methodToJava((textHelper) => {\n    if (textHelper) {\n        Chat.log(textHelper.getString());\n    }\n});\nPlayer.takePanorama(\"panoramas\", 4096, 2048, callback);"
+      ]
+    },
+    {
+      "name": "getStatistics",
+      "signature": "getStatistics()",
+      "returnType": "StatsHelper",
+      "description": "Gets a helper for querying player statistics.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const stats = Player.getStatistics();\nconst blocksMined = stats.getStat(\"minecraft:mine_block\", \"minecraft:stone\");\nChat.log(`Stone blocks mined: ${blocksMined}`);"
+      ]
+    },
+    {
+      "name": "getReach",
+      "signature": "getReach()",
+      "returnType": "double",
+      "description": "Gets the current reach distance of the player.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const reach = Player.getReach();\nChat.log(`Current reach distance: ${reach}`);"
+      ]
+    },
+    {
+      "name": "createPlayerInput",
+      "signature": "createPlayerInput(movementForward, movementSideways, yaw, pitch, jumping, sneaking, sprinting)",
+      "returnType": "PlayerInput",
+      "description": "Creates a PlayerInput object, which represents a single tick of player actions. These objects are used with the movement queue.",
+      "parameters": [
+        {
+          "name": "movementForward",
+          "type": "double",
+          "description": "1 for forward (W), -1 for backward (S), 0 for none."
+        },
+        {
+          "name": "movementSideways",
+          "type": "double",
+          "description": "1 for left (A), -1 for right (D), 0 for none."
+        },
+        {
+          "name": "yaw",
+          "type": "double",
+          "description": "The absolute yaw (horizontal rotation) of the player."
+        },
+        {
+          "name": "pitch",
+          "type": "double",
+          "description": "The absolute pitch (vertical rotation) of the player."
+        },
+        {
+          "name": "jumping",
+          "type": "boolean",
+          "description": "True if the jump key is pressed."
+        },
+        {
+          "name": "sneaking",
+          "type": "boolean",
+          "description": "True if the sneak key is pressed."
+        },
+        {
+          "name": "sprinting",
+          "type": "boolean",
+          "description": "True if the sprint key is pressed."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create an input for walking forward while looking straight ahead (yaw=0)\nconst forwardInput = Player.createPlayerInput(1, 0, 0);\n\n// Create a complex input: strafing right, looking down, jumping, and sneaking\nconst complexInput = Player.createPlayerInput(0, -1, 0, 90, true, true, false);"
+      ]
+    },
+    {
+      "name": "createPlayerInputsFromCsv",
+      "signature": "createPlayerInputsFromCsv(csv)",
+      "returnType": "java.util.List<PlayerInput>",
+      "description": "Parses a CSV string into a list of PlayerInput objects. The header row is required and case-sensitive.",
+      "parameters": [
+        {
+          "name": "csv",
+          "type": "string",
+          "description": "The CSV data to parse."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const csvData = `yaw,pitch,movementForward\n0,0,1\n45,0,1\n90,0,1`;\nconst inputs = Player.createPlayerInputsFromCsv(csvData);\nPlayer.addInputs(inputs);"
+      ]
+    },
+    {
+      "name": "createPlayerInputsFromJson",
+      "signature": "createPlayerInputsFromJson(json)",
+      "returnType": "java.util.List<PlayerInput>",
+      "description": "Parses a JSON string (representing an array of input objects) into a list of PlayerInput objects.",
+      "parameters": [
+        {
+          "name": "json",
+          "type": "string",
+          "description": "The JSON data to parse."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const jsonData = `[\n    {\"yaw\": 0, \"pitch\": 0, \"movementForward\": 1},\n    {\"yaw\": 45, \"pitch\": 0, \"movementForward\": 1},\n    {\"yaw\": 90, \"pitch\": 0, \"movementForward\": 1}\n]`;\nconst inputs = Player.createPlayerInputsFromJson(jsonData);\nPlayer.addInputs(inputs);"
+      ]
+    },
+    {
+      "name": "getCurrentPlayerInput",
+      "signature": "getCurrentPlayerInput()",
+      "returnType": "PlayerInput",
+      "description": "Gets a new PlayerInput object representing the player's current actions.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const currentInput = Player.getCurrentPlayerInput();\nChat.log(`Currently sprinting: ${currentInput.isSprinting()}`);"
+      ]
+    },
+    {
+      "name": "addInput",
+      "signature": "addInput(input)",
+      "returnType": "void",
+      "description": "Adds a single PlayerInput to the movement queue to be executed on the next tick.",
+      "parameters": [
+        {
+          "name": "input",
+          "type": "PlayerInput",
+          "description": "The input to add to the queue."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const player = Player.getPlayer();\nconst input = Player.createPlayerInput(1, player.getYaw(), true, false); // Forward, jump\nPlayer.addInput(input);"
+      ]
+    },
+    {
+      "name": "addInputs",
+      "signature": "addInputs(inputs)",
+      "returnType": "void",
+      "description": "Adds an array or list of PlayerInput objects to the movement queue.",
+      "parameters": [
+        {
+          "name": "inputs",
+          "type": "PlayerInput[]",
+          "description": "The inputs to add to the queue."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const inputs = [];\nfor (let i = 0; i < 10; i++) {\n    inputs.push(Player.createPlayerInput(1, 0, 0)); // Walk forward for 10 ticks\n}\nPlayer.addInputs(inputs);"
+      ]
+    },
+    {
+      "name": "clearInputs",
+      "signature": "clearInputs()",
+      "returnType": "void",
+      "description": "Clears all pending inputs from the movement queue.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Player.clearInputs();"
+      ]
+    },
+    {
+      "name": "setDrawPredictions",
+      "signature": "setDrawPredictions(val)",
+      "returnType": "void",
+      "description": "Enable visualization for movement predictions.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "True to enable drawing, false to disable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Enable visualization for movement predictions\nPlayer.setDrawPredictions(true);"
+      ]
+    },
+    {
+      "name": "predictInput",
+      "signature": "predictInput(input, draw)",
+      "returnType": "Pos3D",
+      "description": "Predicts the player's position after one tick of a given input.",
+      "parameters": [
+        {
+          "name": "input",
+          "type": "PlayerInput",
+          "description": "The input for the prediction."
+        },
+        {
+          "name": "draw",
+          "type": "boolean",
+          "description": "If true, visualizes the predicted path. Defaults to false."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const currentInput = Player.getCurrentPlayerInput();\nconst nextPos = Player.predictInput(currentInput, true); // Predict and draw\nChat.log(`Next tick's position will be: ${nextPos}`);"
+      ]
+    },
+    {
+      "name": "predictInputs",
+      "signature": "predictInputs(inputs, draw)",
+      "returnType": "java.util.List<Pos3D>",
+      "description": "Predicts the player's path over a series of inputs.",
+      "parameters": [
+        {
+          "name": "inputs",
+          "type": "PlayerInput[]",
+          "description": "The sequence of inputs for the prediction."
+        },
+        {
+          "name": "draw",
+          "type": "boolean",
+          "description": "If true, visualizes the predicted path. Defaults to false."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const inputs = [];\nfor (let i = 0; i < 20; i++) {\n    inputs.push(Player.createPlayerInput(1, 0, 0)); // Walk forward for 20 ticks\n}\nconst path = Player.predictInputs(inputs, true); // Predict and draw the path"
+      ]
+    },
+    {
+      "name": "moveForward",
+      "signature": "moveForward(yaw)",
+      "returnType": "void",
+      "description": "Adds a one-tick forward movement to the queue with a relative yaw change.",
+      "parameters": [
+        {
+          "name": "yaw",
+          "type": "double",
+          "description": "The relative yaw change to apply before moving."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Turn the player 45 degrees to the right and walk forward for one tick\nPlayer.moveForward(45);"
+      ]
+    },
+    {
+      "name": "moveBackward",
+      "signature": "moveBackward(yaw)",
+      "returnType": "void",
+      "description": "Adds a one-tick backward movement to the queue with a relative yaw change.",
+      "parameters": [
+        {
+          "name": "yaw",
+          "type": "double",
+          "description": "The relative yaw change to apply before moving."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Turn 180 degrees and walk \"forward\" (effectively walking backward)\nPlayer.moveBackward(180);"
+      ]
+    },
+    {
+      "name": "moveStrafeLeft",
+      "signature": "moveStrafeLeft(yaw)",
+      "returnType": "void",
+      "description": "Adds a one-tick leftward strafe to the queue with a relative yaw change.",
+      "parameters": [
+        {
+          "name": "yaw",
+          "type": "double",
+          "description": "The relative yaw change to apply before moving."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Turn 90 degrees left and walk \"forward\" (effectively strafing left)\nPlayer.moveStrafeLeft(-90);"
+      ]
+    },
+    {
+      "name": "moveStrafeRight",
+      "signature": "moveStrafeRight(yaw)",
+      "returnType": "void",
+      "description": "Adds a one-tick rightward strafe to the queue with a relative yaw change.",
+      "parameters": [
+        {
+          "name": "yaw",
+          "type": "double",
+          "description": "The relative yaw change to apply before moving."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Turn 90 degrees right and walk \"forward\" (effectively strafing right)\nPlayer.moveStrafeRight(90);"
+      ]
+    }
+  ]
+}

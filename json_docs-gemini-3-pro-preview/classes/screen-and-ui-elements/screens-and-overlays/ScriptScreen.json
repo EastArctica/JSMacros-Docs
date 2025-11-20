@@ -1,0 +1,372 @@
+{
+  "name": "ScriptScreen",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.ScriptScreen",
+  "extends": "BaseScreen",
+  "since": "1.0.5",
+  "description": "A powerful custom screen implementation for JSMacros that allows scripters to create custom user interfaces with buttons, text fields, sliders, checkboxes, and other UI elements.",
+  "overview": "ScriptScreen extends BaseScreen and implements the IScreen interface, giving it access to comprehensive screen management capabilities including widget creation, event handling, rendering control, and user input processing. The class supports both dark and transparent backgrounds, custom rendering hooks, and flexible screen behavior configuration.\n\n### Background Styles\nThe ScriptScreen supports two different background styles based on the `dirt` parameter in the constructor:\n- **Dark Background** (`dirt = true`): Renders a dark dirt texture background.\n- **Transparent Background** (`dirt = false`): Renders a standard semi-transparent background.\n\n### Custom Rendering Order\n1. Background\n2. Title text\n3. Child elements\n4. Custom render callback\n5. Additional JSMacros render hooks\n\n### Lifecycle\n1. **Creation**: Instantiated via constructor.\n2. **Initialization**: `init()` called when opened.\n3. **Rendering**: `render()` called every frame.\n4. **Events**: Input events processed.\n5. **Closure**: Resources cleaned up.\n\nThis class implements the IScreen interface since version 1.2.7.",
+  "constructors": [
+    {
+      "signature": "new ScriptScreen(String title, boolean dirt)",
+      "description": "Creates a new ScriptScreen with the specified title and background style.",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "String",
+          "description": "The title text displayed at the top of the screen"
+        },
+        {
+          "name": "dirt",
+          "type": "boolean",
+          "description": "Background style - true for dark dirt background, false for standard transparent background"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addButton",
+      "signature": "addButton(int x, int y, int width, int height, String text, MethodWrapper callback)",
+      "returnType": "ClickableWidgetHelper",
+      "description": "Adds a button widget to the screen.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the button"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the button"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "Label text"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on click"
+        }
+      ],
+      "examples": [
+        "const myButton = screen.addButton(10, 50, 100, 20, \"Click Me\",\n    JavaWrapper.methodToJavaAsync((btn) => {\n        Chat.log(\"Button clicked!\");\n    })\n);",
+        "// Layered button\nconst layeredButton = screen.addButton(10, 80, 100, 20, 5, \"Layered\",\n    JavaWrapper.methodToJavaAsync((btn) => {\n        Chat.log(\"Layered button clicked!\");\n    })\n);"
+      ]
+    },
+    {
+      "name": "addTextInput",
+      "signature": "addTextInput(int x, int y, int width, int height, String defaultText, MethodWrapper callback)",
+      "returnType": "TextFieldWidgetHelper",
+      "description": "Adds a text input field to the screen.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the field"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the field"
+        },
+        {
+          "name": "defaultText",
+          "type": "String",
+          "description": "Placeholder or default text"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on text change"
+        }
+      ],
+      "examples": [
+        "const textField = screen.addTextInput(10, 120, 200, 20, \"Enter text...\",\n    JavaWrapper.methodToJavaAsync((text) => {\n        Chat.log(`Text changed: ${text}`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "addCheckbox",
+      "signature": "addCheckbox(int x, int y, int width, int height, String text, boolean checked, MethodWrapper callback)",
+      "returnType": "CheckBoxWidgetHelper",
+      "description": "Adds a checkbox widget to the screen.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the checkbox"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the checkbox"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "Label text"
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "description": "Initial state"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on toggle"
+        }
+      ],
+      "examples": [
+        "const checkbox = screen.addCheckbox(10, 180, 200, 20, \"Enable feature\", false,\n    JavaWrapper.methodToJavaAsync((cb) => {\n        Chat.log(`Checkbox state: ${cb.isChecked()}`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "addSlider",
+      "signature": "addSlider(int x, int y, int width, int height, String text, double value, double steps, MethodWrapper callback)",
+      "returnType": "SliderWidgetHelper",
+      "description": "Adds a slider widget to the screen.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the slider"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the slider"
+        },
+        {
+          "name": "text",
+          "type": "String",
+          "description": "Label text"
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "description": "Initial value"
+        },
+        {
+          "name": "steps",
+          "type": "double",
+          "description": "Total steps (use for discrete values)"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to execute on value change"
+        }
+      ],
+      "examples": [
+        "const slider = screen.addSlider(10, 240, 200, 20, \"Volume\", 50.0, 100,\n    JavaWrapper.methodToJavaAsync((slider) => {\n        Chat.log(`Slider value: ${slider.getValue()}`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "addCyclingButton",
+      "signature": "addCyclingButton(int x, int y, int width, int height, int zIndex, Array<String> options, String selected, MethodWrapper callback)",
+      "returnType": "Widget",
+      "description": "Adds a button that cycles through a list of options when clicked.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the button"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the button"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Render layer index"
+        },
+        {
+          "name": "options",
+          "type": "Array<String>",
+          "description": "List of text options"
+        },
+        {
+          "name": "selected",
+          "type": "String",
+          "description": "Initially selected option"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function"
+        }
+      ],
+      "examples": [
+        "screen.addCyclingButton(20, 90, 200, 20, 1, blockNames, \"Diamond Ore\",\n    JavaWrapper.methodToJavaAsync((btn) => {\n        // Handle change\n    })\n);"
+      ]
+    },
+    {
+      "name": "setOnRender",
+      "signature": "setOnRender(MethodWrapper callback)",
+      "returnType": "void",
+      "description": "Sets a callback to be executed every frame during rendering. Used for drawing custom shapes, text, or effects.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback receiving (pos, drawContext)"
+        }
+      ],
+      "examples": [
+        "screen.setOnRender(JavaWrapper.methodToJavaAsync((pos, drawContext) => {\n    Hud.drawRect(20, 120, 200, 80, 0x40000000);\n}));"
+      ]
+    },
+    {
+      "name": "setOnClose",
+      "signature": "setOnClose(MethodWrapper callback)",
+      "returnType": "void",
+      "description": "Sets a callback to be executed when the screen is closed.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback receiving (closedScreen)"
+        }
+      ],
+      "examples": [
+        "screen.setOnClose(JavaWrapper.methodToJavaAsync((closedScreen) => {\n    Chat.log(\"Screen closed\");\n}));"
+      ]
+    },
+    {
+      "name": "setOnKeyPressed",
+      "signature": "setOnKeyPressed(MethodWrapper callback)",
+      "returnType": "void",
+      "description": "Sets a callback for keyboard key press events.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback receiving (key, scanCode)"
+        }
+      ],
+      "examples": [
+        "screen.setOnKeyPressed(JavaWrapper.methodToJavaAsync((key, scanCode) => {\n    if (key === 256) screen.close();\n}));"
+      ]
+    },
+    {
+      "name": "setOnMouseDown",
+      "signature": "setOnMouseDown(MethodWrapper callback)",
+      "returnType": "void",
+      "description": "Sets a callback for mouse button press events.",
+      "static": false,
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback receiving (pos, button)"
+        }
+      ],
+      "examples": [
+        "screen.setOnMouseDown(JavaWrapper.methodToJavaAsync((pos, button) => {\n    // handle click\n}));"
+      ]
+    },
+    {
+      "name": "close",
+      "signature": "close()",
+      "returnType": "void",
+      "description": "Closes the screen.",
+      "static": false,
+      "parameters": [],
+      "examples": [
+        "screen.close();"
+      ]
+    },
+    {
+      "name": "reloadScreen",
+      "signature": "reloadScreen()",
+      "returnType": "void",
+      "description": "Reloads the screen to refresh content display.",
+      "static": false,
+      "parameters": [],
+      "examples": [
+        "screen.reloadScreen();"
+      ]
+    },
+    {
+      "name": "getTitleText",
+      "signature": "getTitleText()",
+      "returnType": "TextHelper",
+      "description": "Gets the screen title as a TextHelper object.",
+      "static": false,
+      "parameters": [],
+      "examples": []
+    },
+    {
+      "name": "getScreenClassName",
+      "signature": "getScreenClassName()",
+      "returnType": "String",
+      "description": "Gets the class name of the screen.",
+      "static": false,
+      "parameters": [],
+      "examples": []
+    }
+  ]
+}

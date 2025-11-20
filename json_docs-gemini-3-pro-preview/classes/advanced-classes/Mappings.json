@@ -1,0 +1,78 @@
+{
+  "name": "Mappings",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings",
+  "since": "1.3.1",
+  "description": "The Mappings class is an advanced utility in JSMacros that provides comprehensive support for handling Minecraft obfuscation mappings and reflection operations.",
+  "overview": "It enables scripts to work with both named and obfuscated (intermediary) class, method, and field names, making it possible to create scripts that work across different Minecraft versions and modding environments.\n\nKey Features:\n- Load mappings from Tiny mapping files or Fabric Yarn JARs\n- Bidirectional mapping between named and intermediary representations\n- Automatic field and method name resolution\n- Support for both local files and remote URLs\n- Cached mapping loading for performance\n- Integration with JSMacros reflection system\n\nThe system works by maintaining two mapping directions (Forward: Intermediary to Named, and Reverse: Named to Intermediary). Accessing Mappings is typically done via the Reflection library:\n\n// Load mappings from a local file\nconst mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n// Load mappings from a remote URL\nconst mappings = Reflection.loadMappingHelper(\"https://maven.fabricmc.net/net/fabricmc/yarn/1.20.1%2Bbuild.10/yarn-1.20.1%2Bbuild.10-v2.jar\");",
+  "constructors": [
+    {
+      "signature": "new Mappings(mappingsource)",
+      "description": "Creates a new Mappings instance with the specified mapping source.",
+      "parameters": [
+        {
+          "name": "mappingsource",
+          "type": "String",
+          "description": "Path or URL to the mapping file (.tiny) or Yarn mappings JAR"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getMappings",
+      "signature": "getMappings()",
+      "returnType": "Map<String, ClassData>",
+      "description": "Retrieves the forward mappings (Intermediary -> Named). Throws IOException if the mapping source is malformed or cannot be accessed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst forwardMappings = mappings.getMappings();\n\n// Access a specific class's mappings\nconst playerClass = forwardMappings.get(\"net/minecraft/class_1657\");\nif (playerClass) {\n    Chat.log(\"Found player class mapping: \" + playerClass.name);\n}"
+      ]
+    },
+    {
+      "name": "getReversedMappings",
+      "signature": "getReversedMappings()",
+      "returnType": "Map<String, ClassData>",
+      "description": "Retrieves the reverse mappings (Named -> Intermediary). Throws IOException if the mapping source is malformed or cannot be accessed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst reversedMappings = mappings.getReversedMappings();\n\n// Get the intermediary name for a class\nconst playerClass = reversedMappings.get(\"net.minecraft.entity.player.PlayerEntity\");\nif (playerClass) {\n    Chat.log(\"Player entity intermediary name: \" + playerClass.name);\n}"
+      ]
+    },
+    {
+      "name": "remapClass",
+      "signature": "remapClass(instance)",
+      "returnType": "MappedClass<T>",
+      "description": "Creates a MappedClass wrapper for an object instance that uses mappings for reflection operations. Throws IOException if mappings cannot be loaded.",
+      "parameters": [
+        {
+          "name": "instance",
+          "type": "T",
+          "description": "The object instance to wrap with mapping support"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst player = Player.getPlayer();\n\n// Create a mapping-aware wrapper for the player\nconst mappedPlayer = mappings.remapClass(player.getRaw());\n\n// Now you can access fields/methods using named versions\n// The wrapper will automatically translate to obfuscated names"
+      ]
+    },
+    {
+      "name": "getClass",
+      "signature": "getClass(className)",
+      "returnType": "MappedClass<?>",
+      "description": "Gets a MappedClass for a class name without requiring an instance (for accessing static members). Throws IOException or ClassNotFoundException.",
+      "parameters": [
+        {
+          "name": "className",
+          "type": "String",
+          "description": "The class name (can be either named or intermediary format)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n// Get class using named format\nconst playerClass = mappings.getClass(\"net.minecraft.entity.player.PlayerEntity\");\n\n// Get class using intermediary format\nconst playerClassIntermediary = mappings.getClass(\"net/minecraft/class_1657\");\n\n// Access static methods/fields through the mapped class"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "RenderElementBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.RenderElementBuilder",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "Abstract base class that provides the foundation for the builder pattern implementation in JSMacros' rendering system.",
+  "overview": "The RenderElementBuilder is an abstract base class that provides the foundation for the builder pattern implementation in JSMacros' rendering system. It serves as the parent class for all specific render element builders (such as Rect.Builder, Text.Builder, Line.Builder, etc.) and provides common functionality for creating and adding render elements to 2D drawing contexts.\n\nThis class implements the builder pattern to allow for fluent, method-chaining configuration of render elements before their creation. It manages the relationship between the builder and its parent IDraw2D context, enabling both standalone element creation and automatic addition to the drawing context.",
+  "constructors": [
+    {
+      "signature": "protected RenderElementBuilder(IDraw2D<?> parent)",
+      "description": "The RenderElementBuilder class has a protected constructor that is used by subclasses.",
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "IDraw2D<?>",
+          "description": "The drawing context this builder is associated with"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "createElement",
+      "signature": "protected abstract T createElement()",
+      "returnType": "T",
+      "description": "Abstract method that must be implemented by subclasses to create the specific render element type. It is called internally by build() and buildAndAdd().",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

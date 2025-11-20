@@ -1,0 +1,265 @@
+{
+  "name": "Item$Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Item$Builder",
+  "extends": "RenderElementBuilder<Item>",
+  "since": "1.8.4",
+  "description": "The Item$Builder class is a nested builder within Item that provides a fluent API for creating and configuring Item instances.",
+  "overview": "The Item$Builder class is a nested builder within Item that provides a fluent API for creating and configuring Item instances. This builder implements the builder pattern, allowing you to construct item render elements with all their properties set through a chainable, readable API.\n\nThe builder is the recommended way to create Item instances for 2D rendering, as it provides type safety, method chaining, and validation during the construction process. It's typically accessed through the Draw2D context's item() method.",
+  "constructors": [
+    {
+      "signature": "Builder()",
+      "description": "The builder constructor creates an empty builder that will construct an Item instance. In most cases, you won't call this constructor directly - instead, you'll obtain a builder through the Draw2D.item() method.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(int x, int y)",
+      "returnType": "Item$Builder",
+      "description": "Sets both x and y positions simultaneously.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x-coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y-coordinate on screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .pos(100, 50); // Position at (100, 50)"
+      ]
+    },
+    {
+      "name": "x",
+      "signature": "x(int x)",
+      "returnType": "Item$Builder",
+      "description": "Sets the x-coordinate of the item.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x-coordinate on screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .x(150); // Position at x=150"
+      ]
+    },
+    {
+      "name": "y",
+      "signature": "y(int y)",
+      "returnType": "Item$Builder",
+      "description": "Sets the y-coordinate of the item.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y-coordinate on screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .y(75); // Position at y=75"
+      ]
+    },
+    {
+      "name": "item",
+      "signature": "item(String itemId)",
+      "returnType": "Item$Builder",
+      "description": "Sets the item using a Minecraft item ID string.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The Minecraft item ID"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .item(\"minecraft:diamond_sword\");"
+      ]
+    },
+    {
+      "name": "item",
+      "signature": "item(ItemStackHelper itemStack)",
+      "returnType": "Item$Builder",
+      "description": "Sets the item using an ItemStackHelper instance.",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to display"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const itemStack = new ItemStackHelper(\"minecraft:apple\", 16);\nconst builder = draw2D.item()\n    .item(itemStack);"
+      ]
+    },
+    {
+      "name": "id",
+      "signature": "id(String itemId)",
+      "returnType": "Item$Builder",
+      "description": "Alternative method for setting the item ID.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The Minecraft item ID"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .id(\"minecraft:emerald\");"
+      ]
+    },
+    {
+      "name": "scale",
+      "signature": "scale(double scale)",
+      "returnType": "Item$Builder",
+      "description": "Sets the scale factor for the item. Scale affects the visual size of the rendered item.",
+      "parameters": [
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .scale(1.5); // 150% normal size"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(float rotation)",
+      "returnType": "Item$Builder",
+      "description": "Sets the rotation angle for the item in degrees. Positive values rotate clockwise.",
+      "parameters": [
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .rotation(45); // Rotate 45 degrees clockwise"
+      ]
+    },
+    {
+      "name": "rotateCenter",
+      "signature": "rotateCenter(boolean rotateCenter)",
+      "returnType": "Item$Builder",
+      "description": "Sets whether rotation should occur around the item's center point or origin (top-left corner).",
+      "parameters": [
+        {
+          "name": "rotateCenter",
+          "type": "boolean",
+          "description": "Whether to rotate around the center point"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .rotateCenter(true); // Rotate around center"
+      ]
+    },
+    {
+      "name": "overlayVisible",
+      "signature": "overlayVisible(boolean overlayVisible)",
+      "returnType": "Item$Builder",
+      "description": "Sets whether the item overlay (count, durability, custom text) should be visible.",
+      "parameters": [
+        {
+          "name": "overlayVisible",
+          "type": "boolean",
+          "description": "Whether to show the overlay"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .overlayVisible(true); // Show overlay"
+      ]
+    },
+    {
+      "name": "overlayText",
+      "signature": "overlayText(String overlayText)",
+      "returnType": "Item$Builder",
+      "description": "Sets custom overlay text to display on the item. Set to null or empty string to use default behavior.",
+      "parameters": [
+        {
+          "name": "overlayText",
+          "type": "String",
+          "description": "Custom overlay text (null for default)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .overlayText(\"✨\"); // Custom overlay text"
+      ]
+    },
+    {
+      "name": "showOverlay",
+      "signature": "showOverlay(boolean showOverlay)",
+      "returnType": "Item$Builder",
+      "description": "Alternative method for setting overlay visibility.",
+      "parameters": [
+        {
+          "name": "showOverlay",
+          "type": "boolean",
+          "description": "Whether to show the overlay"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .showOverlay(true);"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(int zIndex)",
+      "returnType": "Item$Builder",
+      "description": "Sets the z-index for render ordering. Higher values appear on top of lower values.",
+      "parameters": [
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index for rendering order"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw2D.item()\n    .zIndex(10); // Render above elements with lower z-index"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Item",
+      "description": "Creates the Item with the configured properties but does not add it to the parent container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = draw2D.item()\n    .pos(100, 50)\n    .item(\"minecraft:diamond\")\n    .scale(1.0)\n    .build(); // Item is created but not added"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Item",
+      "description": "Creates the Item with the configured properties and automatically adds it to the parent Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = draw2D.item()\n    .pos(100, 50)\n    .item(\"minecraft:diamond\")\n    .scale(1.0)\n    .buildAndAdd(); // Item is created and added"
+      ]
+    }
+  ]
+}

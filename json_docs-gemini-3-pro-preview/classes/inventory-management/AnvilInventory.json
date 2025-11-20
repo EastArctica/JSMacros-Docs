@@ -1,0 +1,105 @@
+{
+  "name": "AnvilInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.AnvilInventory",
+  "extends": "Inventory<AnvilScreen>",
+  "since": "1.8.4",
+  "description": "The AnvilInventory class provides specialized access to Minecraft's anvil interface, allowing scripts to interact with anvil operations such as renaming items, repairing items, and combining enchantments.",
+  "overview": "This class extends the base `Inventory` class and adds anvil-specific functionality for managing the rename field, level costs, and input/output slots.\n\nAnvils in Minecraft have three main slots:\n- **Left Input (Slot 0):** The item to be renamed, repaired, or enchanted\n- **Right Input (Slot 1):** The sacrifice material for repairing or enchanting\n- **Output (Slot 2):** The resulting item after applying the anvil operation\n\nYou typically get `AnvilInventory` instances when the player has an anvil screen open via `Inventory.create()`.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Gets the current text entered in the anvil's rename field.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nif (inv && inv.is(\"Anvil\")) {\n    const currentName = inv.getName();\n    Chat.log(\"Current rename text: \" + currentName);\n}"
+      ]
+    },
+    {
+      "name": "setName",
+      "signature": "setName(name)",
+      "returnType": "void",
+      "description": "Sets the text in the anvil's rename field.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The new name to set for the item."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "function renameItem(itemName) {\n    const inv = Inventory.create();\n\n    // Check if we have an anvil open\n    if (!inv || !inv.is(\"Anvil\")) {\n        Chat.log(\"Please open an anvil first\");\n        return false;\n    }\n\n    const leftItem = inv.getLeftInput();\n    if (leftItem.isEmpty()) {\n        Chat.log(\"Please place an item in the left slot\");\n        return false;\n    }\n\n    // Set the new name\n    inv.setName(itemName);\n    Chat.log(`Set name to: \"${itemName}\"`);\n    return true;\n}"
+      ]
+    },
+    {
+      "name": "getLevelCost",
+      "signature": "getLevelCost()",
+      "returnType": "int",
+      "description": "Gets the current experience level cost required to perform the anvil operation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nif (inv.is(\"Anvil\")) {\n    const cost = inv.getLevelCost();\n    const playerLevel = Player.getPlayer().experienceLevel;\n\n    if (cost > playerLevel) {\n        Chat.log(`Not enough levels! Need ${cost}, have ${playerLevel}`);\n    } else {\n        Chat.log(`Operation costs ${cost} levels.`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getItemRepairCost",
+      "signature": "getItemRepairCost()",
+      "returnType": "int",
+      "description": "Gets the base repair cost penalty associated with the item.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nif (inv.is(\"Anvil\")) {\n    const baseCost = inv.getItemRepairCost();\n    Chat.log(\"Base item repair penalty: \" + baseCost);\n}"
+      ]
+    },
+    {
+      "name": "getMaximumLevelCost",
+      "signature": "getMaximumLevelCost()",
+      "returnType": "int",
+      "description": "Gets the maximum level cost allowed by the anvil (usually 40) before it displays 'Too Expensive'.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nif (inv.is(\"Anvil\")) {\n    const maxCost = inv.getMaximumLevelCost();\n    const currentCost = inv.getLevelCost();\n    \n    Chat.log(`Cost efficiency: ${((currentCost / maxCost) * 100).toFixed(1)}%`);\n}"
+      ]
+    },
+    {
+      "name": "getLeftInput",
+      "signature": "getLeftInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently in the left input slot (Slot 0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nconst leftItem = inv.getLeftInput();\nif (leftItem.isEmpty()) {\n    Chat.log(\"Please place a damaged item in the left slot\");\n} else {\n    Chat.log(\"Item in left slot: \" + leftItem.getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "getRightInput",
+      "signature": "getRightInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently in the right input slot (Slot 1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nconst rightItem = inv.getRightInput();\nif (rightItem.isEmpty()) {\n    Chat.log(\"Please place repair material in the right slot\");\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the resulting item in the output slot (Slot 2).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nconst output = inv.getOutput();\n\nif (output.isEmpty()) {\n    Chat.log(\"Invalid repair combination\");\n} else {\n    // Take the output to apply the rename/repair\n    inv.quick(2); // Shift-click output to inventory\n    Chat.log(`Successfully crafted: \"${output.getName().getString()}\"`);\n}"
+      ]
+    }
+  ]
+}

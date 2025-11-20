@@ -1,0 +1,297 @@
+{
+  "name": "ServiceManager",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.service.ServiceManager",
+  "extends": null,
+  "since": "JsMacros 1.6.3",
+  "description": "The ServiceManager class provides comprehensive management for background services in JsMacros. Services are background scripts designed to run continuously and are primarily noticed by their side effects rather than direct user interaction.",
+  "overview": "The ServiceManager class provides the following main functionalities:\n- Service registration and unregistration with unique names\n- Service lifecycle management (start, stop, restart, enable, disable)\n- Service status monitoring and querying\n- Automatic reloading when service files are modified\n- Configuration persistence and loading\n- Crash detection and recovery mechanisms\n- Integration with the JsMacros event system",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "registerService",
+      "signature": "registerService(String name, String file, boolean enabled)",
+      "returnType": "boolean",
+      "description": "Registers a new service with a unique name and file path.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The unique name for the service."
+        },
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The file path to the service script (relative to macro folder)."
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "Whether the service should be enabled immediately."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const success = serviceManager.registerService(\"MyBackgroundTask\", \"services/background.js\", true);"
+      ]
+    },
+    {
+      "name": "unregisterService",
+      "signature": "unregisterService(String name)",
+      "returnType": "boolean",
+      "description": "Unregisters and removes an existing service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service to unregister."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (serviceManager.unregisterService(serviceName)) {\n    Chat.log(`Cleaned up temporary service: ${serviceName}`);\n}"
+      ]
+    },
+    {
+      "name": "getServices",
+      "signature": "getServices()",
+      "returnType": "Set<String>",
+      "description": "Retrieves a collection of all registered service names.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const services = serviceManager.getServices();\nChat.log(`Registered services: ${Array.from(services).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "status",
+      "signature": "status(String name)",
+      "returnType": "ServiceStatus",
+      "description": "Checks the current status of a specific service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const status = serviceManager.status(\"MyBackgroundTask\");"
+      ]
+    },
+    {
+      "name": "startService",
+      "signature": "startService(String name)",
+      "returnType": "ServiceStatus",
+      "description": "Starts a registered service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service to start."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const previousStatus = serviceManager.startService(\"MyService\");"
+      ]
+    },
+    {
+      "name": "isRunning",
+      "signature": "isRunning(String name)",
+      "returnType": "boolean",
+      "description": "Checks if a specific service is currently running.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (serviceManager.isRunning(\"MyService\")) {\n    Chat.log(\"Service is running!\");\n}"
+      ]
+    },
+    {
+      "name": "isEnabled",
+      "signature": "isEnabled(String name)",
+      "returnType": "boolean",
+      "description": "Checks if a specific service is enabled.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const enabled = serviceManager.isEnabled(serviceName);"
+      ]
+    },
+    {
+      "name": "isCrashed",
+      "signature": "isCrashed(String name)",
+      "returnType": "boolean",
+      "description": "Checks if a specific service has crashed.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const crashed = serviceManager.isCrashed(serviceName);"
+      ]
+    },
+    {
+      "name": "disableService",
+      "signature": "disableService(String name)",
+      "returnType": "ServiceStatus",
+      "description": "Disables a service, stopping it and preventing auto-start.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service to disable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const oldStatus = serviceManager.disableService(\"MyService\");"
+      ]
+    },
+    {
+      "name": "enableService",
+      "signature": "enableService(String name)",
+      "returnType": "void",
+      "description": "Enables a service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service to enable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "serviceManager.enableService(\"MyService\");"
+      ]
+    },
+    {
+      "name": "restartService",
+      "signature": "restartService(String name)",
+      "returnType": "ServiceStatus",
+      "description": "Restarts a specific service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service to restart."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "serviceManager.restartService(\"MyService\");"
+      ]
+    },
+    {
+      "name": "load",
+      "signature": "load()",
+      "returnType": "void",
+      "description": "Loads services from the configuration.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "serviceManager.load();"
+      ]
+    },
+    {
+      "name": "save",
+      "signature": "save()",
+      "returnType": "void",
+      "description": "Saves the current service configuration.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "serviceManager.save();"
+      ]
+    },
+    {
+      "name": "startReloadListener",
+      "signature": "startReloadListener()",
+      "returnType": "void",
+      "description": "Enables auto-reload for all services to monitor file changes.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "serviceManager.startReloadListener();"
+      ]
+    },
+    {
+      "name": "disableReload",
+      "signature": "disableReload(String name)",
+      "returnType": "void",
+      "description": "Disables auto-reload for a specific service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "serviceManager.disableReload(\"CriticalService\");"
+      ]
+    },
+    {
+      "name": "tickReloadListener",
+      "signature": "tickReloadListener()",
+      "returnType": "void",
+      "description": "Manually triggers a check for file modifications to reload services.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "serviceManager.tickReloadListener();"
+      ]
+    },
+    {
+      "name": "getTrigger",
+      "signature": "getTrigger(String name)",
+      "returnType": "ServiceTrigger",
+      "description": "Retrieves the configuration trigger object for a service.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const trigger = serviceManager.getTrigger(\"MyService\");\nif (trigger) {\n    Chat.log(`Service file: ${trigger.file}`);\n}"
+      ]
+    },
+    {
+      "name": "getServiceData",
+      "signature": "getServiceData(String name)",
+      "returnType": "EventService",
+      "description": "Retrieves the running data context (EventService) for a specific service, allowing access to global variables.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The name of the service."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const serviceData = serviceManager.getServiceData(\"MyService\");\nconst someValue = serviceData.getInt(\"counter\");"
+      ]
+    }
+  ]
+}

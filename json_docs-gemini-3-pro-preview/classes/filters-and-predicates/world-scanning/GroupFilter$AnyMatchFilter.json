@@ -1,0 +1,118 @@
+{
+  "name": "AnyMatchFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.GroupFilter.AnyMatchFilter",
+  "extends": "GroupFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `AnyMatchFilter` class is a concrete implementation of `GroupFilter` that returns `true` when **at least one** child filter returns `true` for the given object. This filter is essentially a more flexible version of the `OrFilter` that can work with any number of child filters rather than being limited to just two.",
+  "overview": "The AnyMatchFilter class provides:\n\n- **Multi-condition OR logic**: Requires at least one filter to return true for a match\n- **Flexible filter count**: Can handle any number of child filters\n- **Fluent interface**: Methods return the AnyMatchFilter instance for method chaining\n- **Efficient evaluation**: Can short-circuit once a match is found (implementation dependent)",
+  "constructors": [
+    {
+      "signature": "new AnyMatchFilter()",
+      "description": "Creates a new AnyMatchFilter with no child filters. Use the `add()` method to add filters to the group.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "add",
+      "signature": "add(filter)",
+      "returnType": "AnyMatchFilter",
+      "description": "Adds a child filter to the group.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create filters for different valuable ores\nconst diamondFilter = World.getStringBlockFilter().contains(\"diamond_ore\");\nconst emeraldFilter = World.getStringBlockFilter().contains(\"emerald_ore\");\nconst ancientDebrisFilter = World.getStringBlockFilter().contains(\"ancient_debris\");\n\n// Create AnyMatchFilter to find any valuable ore\nconst valuableOreFilter = new GroupFilter.AnyMatchFilter();\nvaluableOreFilter\n    .add(diamondFilter)\n    .add(emeraldFilter)\n    .add(ancientDebrisFilter);\n\n// Search for any valuable ore\nconst scanner = World.getWorldScanner(valuableOreFilter);\nconst valuableOres = scanner.scanCubeArea(Player.getPlayer().getPos(), 50);\n\nChat.log(`Found ${valuableOres.length} valuable ore blocks`);",
+        "// Create filters for different hostile mob types\nconst zombieFilter = World.getEntityFilter(\"getType\").contains(\"zombie\");\nconst skeletonFilter = World.getEntityFilter(\"getType\").contains(\"skeleton\");\nconst creeperFilter = World.getEntityFilter(\"getType\").contains(\"creeper\");\nconst spiderFilter = World.getEntityFilter(\"getType\").contains(\"spider\");\n\n// Group all hostile mobs\nconst hostileMobsFilter = new GroupFilter.AnyMatchFilter();\nhostileMobsFilter\n    .add(zombieFilter)\n    .add(skeletonFilter)\n    .add(creeperFilter)\n    .add(spiderFilter);\n\n// Find nearby hostile mobs\nconst scanner = World.getWorldScanner(hostileMobsFilter);\nconst threats = scanner.scanAroundPlayer(16);\n\nChat.log(`Found ${threats.length} hostile mobs nearby`);",
+        "// Create filters for different tool materials\nconst ironToolsFilter = World.getStringBlockFilter().contains(\"iron_pickaxe\", \"iron_axe\", \"iron_shovel\");\nconst diamondToolsFilter = World.getStringBlockFilter().contains(\"diamond_pickaxe\", \"diamond_axe\", \"diamond_shovel\");\nconst netheriteToolsFilter = World.getStringBlockFilter().contains(\"netherite_pickaxe\", \"netherite_axe\", \"netherite_shovel\");\n\n// Combine for any good tools\nconst qualityToolsFilter = new GroupFilter.AnyMatchFilter();\nqualityToolsFilter\n    .add(ironToolsFilter)\n    .add(diamondToolsFilter)\n    .add(netheriteToolsFilter);\n\n// Find quality tools in inventory\nconst playerInv = Player.getPlayer().getInventory();\nconst goodTools = playerInv.getItems(qualityToolsFilter);\n\nChat.log(`Found ${goodTools.length} quality tools`);"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "remove(filter)",
+      "returnType": "AnyMatchFilter",
+      "description": "Removes a child filter from the group.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to remove"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create a flexible ore filter\nconst oreFilter = new GroupFilter.AnyMatchFilter();\n\n// Add basic ores\noreFilter.add(World.getStringBlockFilter().contains(\"coal_ore\"));\noreFilter.add(World.getStringBlockFilter().contains(\"iron_ore\"));\n\n// Check player's level and add appropriate ores\nconst player = Player.getPlayer();\nif (player && player.experienceLevel > 15) {\n    oreFilter.add(World.getStringBlockFilter().contains(\"diamond_ore\"));\n    oreFilter.add(World.getStringBlockFilter().contains(\"emerald_ore\"));\n}\n\nif (player && player.experienceLevel > 30) {\n    oreFilter.add(World.getStringBlockFilter().contains(\"ancient_debris\"));\n    oreFilter.add(World.getStringBlockFilter().contains(\"netherite_ore\"));\n}\n\n// Remove common ores if player is advanced\nif (player && player.experienceLevel > 30) {\n    oreFilter.remove(World.getStringBlockFilter().contains(\"coal_ore\"));\n}\n\nconst scanner = World.getWorldScanner(oreFilter);\nconst suitableOres = scanner.scanAroundPlayer(5);"
+      ]
+    },
+    {
+      "name": "getFilters",
+      "signature": "getFilters()",
+      "returnType": "ImmutableList<IFilter<T>>",
+      "description": "Returns an immutable list of all child filters.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "test",
+      "signature": "test(object)",
+      "returnType": "boolean",
+      "description": "Tests whether the given object matches ANY child filters.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to test"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "and",
+      "signature": "and(other)",
+      "returnType": "AndFilter<T>",
+      "description": "Combines this filter with another using AND logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create filters for different wood orientations\nconst xAxisFilter = World.getStateFilter(\"axis\").equals(\"x\");\nconst yAxisFilter = World.getStateFilter(\"axis\").equals(\"y\");\nconst zAxisFilter = World.getStateFilter(\"axis\").equals(\"z\");\n\n// Any log orientation is acceptable\nconst anyLogFilter = new GroupFilter.AnyMatchFilter();\nanyLogFilter\n    .add(xAxisFilter)\n    .add(yAxisFilter)\n    .add(zAxisFilter);\n\n// Combine with wood type filter\nconst woodTypeFilter = World.getStringBlockFilter().contains(\"oak_log\", \"birch_log\", \"spruce_log\");\nconst anyWoodLog = woodTypeFilter.and(anyLogFilter);\n\n// Find all logs\nconst scanner = World.getWorldScanner(anyWoodLog);\nconst logs = scanner.scanAroundPlayer(5);"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(other)",
+      "returnType": "OrFilter<T>",
+      "description": "Combines this filter with another using OR logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "NotFilter<T>",
+      "description": "Creates a negated version of this filter.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

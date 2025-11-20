@@ -1,0 +1,84 @@
+{
+  "name": "StoneCutterInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.StoneCutterInventory",
+  "extends": "Inventory<StonecutterScreen>",
+  "since": "1.8.4",
+  "description": "The StoneCutterInventory class provides specialized access to Minecraft's stonecutter interface, allowing scripts to interact with stonecutter operations such as selecting crafting recipes and managing stone-based crafting recipes.",
+  "overview": "This class extends the base Inventory class and adds stonecutter-specific functionality for managing available recipes, selecting specific recipes, and accessing recipe outputs.\n\nStonecutters in Minecraft have two main slots:\n- Input (Slot 0): The stone-type block to be crafted (e.g., stone, cobblestone, etc.)\n- Output (Slot 1): The resulting stone block variant based on the selected recipe\n\nThe stonecutter interface allows players to craft various stone variants from a single stone input block, making it highly efficient for building projects.\n\nYou typically get StoneCutterInventory instances when the player has a stonecutter screen open via `Inventory.create()`.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getSelectedRecipeIndex",
+      "signature": "public int getSelectedRecipeIndex()",
+      "returnType": "int",
+      "description": "Retrieves the index of the currently selected recipe in the stonecutter interface.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentSelection = inv.getSelectedRecipeIndex();"
+      ]
+    },
+    {
+      "name": "selectRecipe",
+      "signature": "public void selectRecipe(int index)",
+      "returnType": "void",
+      "description": "Selects a specific recipe in the stonecutter based on the provided index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index of the recipe to select."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Select the desired recipe\ninv.selectRecipe(recipeIndex);"
+      ]
+    },
+    {
+      "name": "getAvailableRecipeCount",
+      "signature": "public int getAvailableRecipeCount()",
+      "returnType": "int",
+      "description": "Returns the total number of recipes available for the item currently placed in the input slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const recipeCount = inv.getAvailableRecipeCount();\nif (recipeIndex >= recipeCount) {\n    Chat.log(`Invalid recipe index.`);\n}"
+      ]
+    },
+    {
+      "name": "getRecipes",
+      "signature": "public List<ItemStackHelper> getRecipes()",
+      "returnType": "List<ItemStackHelper>",
+      "description": "Retrieves a list of items representing the output of all available recipes for the current input.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const recipes = inv.getRecipes();\nChat.log(`Available recipes: ${recipes.length}`);",
+        "// Find the target recipe\nconst recipes = inv.getRecipes();\nfor (let i = 0; i < recipes.length; i++) {\n    if (recipes[i].getItemId().includes(targetItem)) {\n        // ...\n    }\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "public ItemStackHelper getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently displayed in the output slot (Slot 1) based on the selected recipe.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const output = inv.getOutput();\nChat.log(`Selected recipe: ${output.getName().getString()}`);"
+      ]
+    },
+    {
+      "name": "canCraft",
+      "signature": "public boolean canCraft()",
+      "returnType": "boolean",
+      "description": "Checks if the current setup allows for crafting (e.g., valid input and valid recipe selection).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if we can craft\nif (!inv.canCraft()) {\n    Chat.log(\"Recipe cannot be crafted\");\n    return false;\n}"
+      ]
+    }
+  ]
+}

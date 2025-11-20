@@ -1,0 +1,66 @@
+{
+  "name": "TropicalFishEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.TropicalFishEntityHelper",
+  "extends": "FishEntityHelper<TropicalFishEntity>",
+  "since": "1.8.4",
+  "description": "The TropicalFishEntityHelper class provides specialized access to tropical fish entities in Minecraft, offering methods to examine and interact with their unique variant properties, colors, and patterns.",
+  "overview": "This class extends FishEntityHelper, inheriting all fish-specific functionality while providing tropical fish-specific methods for variant identification, color analysis, and pattern properties.\n\nThis helper is particularly useful for scripts that need to track specific tropical fish variants, implement aquarium management systems, analyze fish populations, or create automated breeding and collection systems based on tropical fish characteristics.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getVariant",
+      "signature": "public String getVariant()",
+      "returnType": "String",
+      "description": "Returns the string representation of the tropical fish's variant. Each tropical fish has a unique combination of body shape, pattern, and color that determines its variant name.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get the variant name of a tropical fish\nfunction identifyFishVariant(fishHelper) {\n    const variant = fishHelper.getVariant();\n    Chat.log(`Fish variant: ${variant}`);\n\n    // Example variants: \"KOB\", \"SNOB\", \"DASHER\", \"BRinely\", etc.\n    return variant;\n}\n\n// Usage in entity spawn event\nevents.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:tropical_fish\")) {\n        const tropicalFish = entity.asAnimal().asFish(); // Cast through hierarchy\n        const variant = tropicalFish.getVariant();\n        const size = tropicalFish.getSize();\n\n        Chat.log(`Spawned tropical fish: ${variant} (${size})`);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getSize",
+      "signature": "public String getSize()",
+      "returnType": "String",
+      "description": "Returns the size category of the tropical fish. Tropical fish can spawn as either small or normal size, which affects their appearance and may have gameplay implications.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check the size of a tropical fish\nfunction getFishSize(fishHelper) {\n    const size = fishHelper.getSize();\n    Chat.log(`Fish size: ${size}`);\n\n    // Example sizes: \"SMALL\", \"NORMAL\"\n    return size;\n}\n\n// Categorize fish by size for breeding programs\nconst fishCollection = new Map();\n\nevents.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:tropical_fish\")) {\n        const fish = entity.asAnimal().asFish();\n        const variant = fish.getVariant();\n        const size = fish.getSize();\n\n        // Group fish by size\n        if (!fishCollection.has(size)) {\n            fishCollection.set(size, []);\n        }\n        fishCollection.get(size).push({\n            entity: entity,\n            variant: variant,\n            uuid: entity.getUUID()\n        });\n\n        // Highlight small fish for collection\n        if (size === \"SMALL\") {\n            entity.setGlowing(true);\n            entity.setGlowingColor(0x00FFFF); // Cyan for small fish\n        }\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getBaseColor",
+      "signature": "public int getBaseColor()",
+      "returnType": "Number",
+      "description": "Returns the Minecraft color ID for the base color of the tropical fish's pattern. This represents the primary body color of the fish.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Analyze the color composition of tropical fish\nfunction analyzeFishColors(fishHelper) {\n    const baseColor = fishHelper.getBaseColor();\n    const patternColor = fishHelper.getPatternColor();\n\n    Chat.log(`Base Color ID: ${baseColor}, Pattern Color ID: ${patternColor}`);\n\n    return { baseColor, patternColor };\n}\n\n// Color-based fish sorting system\nclass FishColorSorter {\n    constructor() {\n        this.fishByColor = new Map();\n        this.scanRadius = 20;\n    }\n\n    scanAndSort() {\n        const entities = World.getEntities(this.scanRadius);\n        const player = Player.getPlayer();\n\n        if (!player) return;\n\n        entities.forEach(entity => {\n            if (entity.is(\"minecraft:tropical_fish\")) {\n                const fish = entity.asAnimal().asFish();\n                const baseColor = fish.getBaseColor();\n                const patternColor = fish.getPatternColor();\n                const variant = fish.getVariant();\n\n                if (!this.fishByColor.has(baseColor)) {\n                    this.fishByColor.set(baseColor, []);\n                }\n\n                this.fishByColor.get(baseColor).push({\n                    entity: entity,\n                    patternColor: patternColor,\n                    variant: variant,\n                    distance: player.distanceTo(entity)\n                });\n            }\n        });\n\n        this.highlightColorGroups();\n    }\n\n    highlightColorGroups() {\n        // Clear previous highlights\n        for (const [color, fishList] of this.fishByColor) {\n            fishList.forEach(fish => {\n                fish.entity.resetGlowing();\n            });\n        }\n\n        // Highlight by base color groups\n        for (const [baseColor, fishList] of this.fishByColor) {\n            if (fishList.length > 0) {\n                // Use different colors for different base color groups\n                let glowColor;\n                switch (baseColor % 6) {\n                    case 0: glowColor = 0xFF0000; break; // Red\n                    case 1: glowColor = 0x00FF00; break; // Green\n                    case 2: glowColor = 0x0000FF; break; // Blue\n                    case 3: glowColor = 0xFFFF00; break; // Yellow\n                    case 4: glowColor = 0xFF00FF; break; // Magenta\n                    case 5: glowColor = 0x00FFFF; break; // Cyan\n                }\n\n                fishList.forEach(fish => {\n                    fish.entity.setGlowing(true);\n                    fish.entity.setGlowingColor(glowColor);\n                });\n            }\n        }\n    }\n}\n\nconst colorSorter = new FishColorSorter();\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    if (Client.getTime() % 60 === 0) { // Every 3 seconds\n        colorSorter.scanAndSort();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getPatternColor",
+      "signature": "public int getPatternColor()",
+      "returnType": "Number",
+      "description": "Returns the Minecraft color ID for the pattern color of the tropical fish. This represents the secondary color used in the fish's pattern overlay.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a pattern-based fish identification system\nclass PatternIdentifier {\n    identifyFish(fishHelper) {\n        const variant = fishHelper.getVariant();\n        const baseColor = fishHelper.getBaseColor();\n        const patternColor = fishHelper.getPatternColor();\n        const size = fishHelper.getSize();\n\n        const fishData = {\n            variant: variant,\n            baseColor: baseColor,\n            patternColor: patternColor,\n            size: size,\n            colorCombo: `${baseColor}-${patternColor}`\n        };\n\n        // Create unique identifier\n        const fishId = `${variant}_${size}_${fishData.colorCombo}`;\n\n        return { fishData, fishId };\n    }\n\n    getUniqueFishCount(entities) {\n        const seenFish = new Set();\n\n        entities.forEach(entity => {\n            if (entity.is(\"minecraft:tropical_fish\")) {\n                const fish = entity.asAnimal().asFish();\n                const result = this.identifyFish(fish);\n\n                if (!seenFish.has(result.fishId)) {\n                    seenFish.add(result.fishId);\n                    Chat.log(`New fish type found: ${result.fishId}`);\n                }\n            }\n        });\n\n        return seenFish.size;\n    }\n}\n\nconst patternId = new PatternIdentifier();\n\n// Scan for unique fish types\nevents.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:tropical_fish\")) {\n        const fish = entity.asAnimal().asFish();\n        const result = patternId.identifyFish(fish);\n\n        Chat.log(`Fish: ${result.fishData.variant}, Size: ${result.fishData.size}, Colors: Base(${result.fishData.baseColor})/Pattern(${result.fishData.patternColor})`);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getVarietyId",
+      "signature": "public int getVarietyId()",
+      "returnType": "Number",
+      "description": "Returns the unique numeric ID that identifies this specific tropical fish variant. Each combination of body shape, pattern, and colors has a unique variety ID.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Build a comprehensive tropical fish database\nclass TropicalFishDatabase {\n    constructor() {\n        this.fishDatabase = new Map();\n        this.varietyStats = new Map();\n        this.scanCount = 0;\n    }\n\n    catalogFish(fishHelper, entity) {\n        const variant = fishHelper.getVariant();\n        const size = fishHelper.getSize();\n        const baseColor = fishHelper.getBaseColor();\n        const patternColor = fishHelper.getPatternColor();\n        const varietyId = fishHelper.getVarietyId();\n        const uuid = entity.getUUID();\n\n        const fishRecord = {\n            uuid: uuid,\n            variant: variant,\n            size: size,\n            baseColor: baseColor,\n            patternColor: patternColor,\n            varietyId: varietyId,\n            firstSeen: Client.getTime(),\n            lastSeen: Client.getTime()\n        };\n\n        // Update database\n        this.fishDatabase.set(uuid, fishRecord);\n\n        // Update variety statistics\n        if (!this.varietyStats.has(varietyId)) {\n            this.varietyStats.set(varietyId, {\n                count: 0,\n                variants: new Set(),\n                sizes: new Set(),\n                colorCombos: new Set()\n            });\n        }\n\n        const stats = this.varietyStats.get(varietyId);\n        stats.count++;\n        stats.variants.add(variant);\n        stats.sizes.add(size);\n        stats.colorCombos.add(`${baseColor}-${patternColor}`);\n\n        this.scanCount++;\n    }\n\n    generateComprehensiveReport() {\n        Chat.log(\"=== Tropical Fish Database Report ===\");\n        Chat.log(`Total fish cataloged: ${this.fishDatabase.size}`);\n        Chat.log(`Total scans performed: ${this.scanCount}`);\n        Chat.log(`Unique variety IDs: ${this.varietyStats.size}`);\n\n        // Variety statistics\n        Chat.log(\"\\nVariety Breakdown:\");\n        const sortedVarieties = Array.from(this.varietyStats.entries())\n            .sort((a, b) => b[1].count - a[1].count);\n\n        sortedVarieties.slice(0, 10).forEach(([varietyId, stats]) => {\n            Chat.log(`  Variety ${varietyId}: ${stats.count} fish, ${stats.variants.size} variants`);\n        });\n\n        // Most common variants\n        const variantCounts = new Map();\n        for (const [uuid, record] of this.fishDatabase) {\n            variantCounts.set(record.variant, (variantCounts.get(record.variant) || 0) + 1);\n        }\n\n        Chat.log(\"\\nTop 5 Most Common Variants:\");\n        const sortedVariants = Array.from(variantCounts.entries())\n            .sort((a, b) => b[1] - a[1])\n            .slice(0, 5);\n\n        sortedVariants.forEach(([variant, count]) => {\n            Chat.log(`  ${variant}: ${count} fish`);\n        });\n    }\n\n    scanForFish() {\n        const entities = World.getEntities();\n        const player = Player.getPlayer();\n\n        if (!player) return;\n\n        entities.forEach(entity => {\n            if (entity.is(\"minecraft:tropical_fish\")) {\n                try {\n                    const fish = entity.asAnimal().asFish();\n                    this.catalogFish(fish, entity);\n                } catch (e) {\n                    // Handle cases where casting fails\n                }\n            }\n        });\n    }\n}\n\nconst fishDB = new TropicalFishDatabase();\n\n// Comprehensive fish scanning every 10 seconds\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    if (Client.getTime() % (20 * 10) === 0) {\n        fishDB.scanForFish();\n        fishDB.generateComprehensiveReport();\n    }\n}));"
+      ]
+    }
+  ]
+}

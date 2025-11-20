@@ -1,0 +1,85 @@
+{
+  "name": "NbtPredicateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.NbtPredicateHelper",
+  "extends": "BaseHelper<NbtPredicate>",
+  "since": "JsMacros 1.9.1",
+  "description": "The NbtPredicateHelper class is a utility wrapper for Minecraft's NbtPredicate that provides a scripting-friendly interface for testing NBT (Named Binary Tag) data against predicate conditions.",
+  "overview": "The NbtPredicateHelper class provides:\n\n- NBT data testing for entities, items, and raw NBT elements\n- Integration with Minecraft's native NBT predicate system\n- Support for complex NBT matching conditions\n- Use cases in automation, filtering, and targeting systems",
+  "constructors": [
+    {
+      "signature": "new NbtPredicateHelper(base)",
+      "description": "Direct instantiation is not recommended. Use factory methods or obtain from other helpers instead.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "NbtPredicate",
+          "description": "The underlying Minecraft NbtPredicate to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "test",
+      "signature": "test(entity)",
+      "returnType": "boolean",
+      "description": "Tests whether the given entity's NBT data matches this NBT predicate.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper<?>",
+          "description": "The entity to test against the predicate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Test if an entity matches NBT criteria\nconst entities = World.getEntities(10); // Get entities within 10 blocks\nconst nbtPredicate = // obtain your NbtPredicateHelper\n\nfor (const entity of entities) {\n    if (nbtPredicate.test(entity)) {\n        Chat.log(`Entity ${entity.getName()} matches the NBT predicate!`);\n\n        // Get additional entity information\n        const entityType = entity.getType();\n        const pos = entity.getPos();\n        Chat.log(`  Type: ${entityType}, Position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(itemStack)",
+      "returnType": "boolean",
+      "description": "Tests whether the given item stack's NBT data matches this NBT predicate.",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to test against the predicate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter items in inventory based on NBT criteria\nconst player = Player.getPlayer();\nconst inventory = player.getInventory();\nconst nbtPredicate = // obtain your NbtPredicateHelper\n\nfor (let i = 0; i < inventory.getSize(); i++) {\n    const item = inventory.getSlot(i);\n\n    if (item && item.getId() !== \"minecraft:air\" && nbtPredicate.test(item)) {\n        Chat.log(`Slot ${i}: ${item.getName()} matches NBT predicate`);\n\n        // Display item details\n        const count = item.getCount();\n        const nbt = item.getNBT();\n        Chat.log(`  Count: ${count}, Has NBT: ${nbt !== null}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(nbtElement)",
+      "returnType": "boolean",
+      "description": "Tests whether the given NBT element matches this NBT predicate.",
+      "parameters": [
+        {
+          "name": "nbtElement",
+          "type": "NBTElementHelper<?>",
+          "description": "The NBT element to test against the predicate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Test raw NBT data against predicate\nconst item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\nconst nbtPredicate = // obtain your NbtPredicateHelper\n\nif (nbt && nbt.isCompound()) {\n    if (nbtPredicate.test(nbt)) {\n        Chat.log(\"Held item's NBT matches the predicate!\");\n\n        // Show matching NBT structure\n        const compound = nbt.asCompoundHelper();\n        const keys = compound.getKeys();\n        Chat.log(`Matching NBT keys: ${Array.from(keys).join(', ')}`);\n\n        for (const key of keys) {\n            const value = compound.get(key);\n            Chat.log(`  ${key}: ${value ? value.asString() : 'null'}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "NbtPredicate",
+      "description": "Returns the underlying Minecraft NbtPredicate object. This is primarily for advanced use cases where you need access to the underlying Minecraft object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Advanced usage - access raw Minecraft object\nconst rawPredicate = nbtPredicateHelper.getRaw();\n// Use with other Minecraft APIs that require NbtPredicate objects"
+      ]
+    }
+  ]
+}

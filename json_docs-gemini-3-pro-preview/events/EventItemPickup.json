@@ -1,0 +1,20 @@
+{
+  "name": "EventItemPickup",
+  "fullClassName": "EventItemPickup",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player picks up an item from the ground.",
+  "overview": "Backed by class `EventItemPickup`. \n\nBehavior:\n* Fires when the player picks up items from the ground\n* Includes items dropped by players, mobs, or blocks\n- The `item` field contains the picked up item and its count\n* Not cancellable\n* Useful for tracking item collection and inventory management\n\nEvent Payload:\n* item (ItemStackHelper): The item that was picked up. This provides access to all item properties like name, count, enchantments, damage, etc.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "EventSendMessage",
+  "fullClassName": "EventSendMessage",
+  "description": "This event is fired when a message is about to be sent to the server.",
+  "overview": "Backed by class `EventSendMessage`.\n\n### Behavior\n* Fires when a message is about to be sent to the server\n- The `text` field contains the message that will be sent\n- This event is cancellable - preventing the message from being sent\n- Useful for message filtering, auto-correction, and command validation\n\n### Fields\n**text** (`string`): The message text that will be sent to the server. This field can be modified before the message is sent. Changes will be reflected in the message that actually gets sent to the server.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

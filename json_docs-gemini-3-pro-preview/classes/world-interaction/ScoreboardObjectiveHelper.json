@@ -1,0 +1,99 @@
+{
+  "name": "ScoreboardObjectiveHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.ScoreboardObjectiveHelper",
+  "extends": "BaseHelper<ScoreboardObjective>",
+  "since": "1.2.9",
+  "description": "The ScoreboardObjectiveHelper class provides a comprehensive interface for interacting with Minecraft scoreboard objectives in JsMacros scripts.",
+  "overview": "The ScoreboardObjectiveHelper class provides a comprehensive interface for interacting with Minecraft scoreboard objectives in JsMacros scripts. This class allows you to access player scores, display names, objective information, and various scoreboard-related data. It's particularly useful for creating scripts that need to monitor, display, or react to scoreboard changes.\n\nThis class extends BaseHelper<ScoreboardObjective> and wraps Minecraft's internal ScoreboardObjective functionality, making it accessible to GraalJS scripts.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getPlayerScores",
+      "signature": "Map<String, Integer> getPlayerScores()",
+      "returnType": "Map<String, Integer>",
+      "description": "Returns a map of player/entity names to their scores for this objective.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scores = objective.getPlayerScores();\nfor (const [player, score] of scores) {\n    Chat.log(`${player}: ${score}`);\n}"
+      ]
+    },
+    {
+      "name": "scoreToDisplayName",
+      "signature": "Map<Integer, TextHelper> scoreToDisplayName()",
+      "returnType": "Map<Integer, TextHelper>",
+      "description": "Returns a map of scores to their corresponding display names. The display names are formatted according to team decorations and colors.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreDisplayNames = objective.scoreToDisplayName();\nfor (const [score, displayName] of scoreDisplayNames) {\n    Chat.log(`Score ${score}: ${displayName.getString()}`);\n}"
+      ]
+    },
+    {
+      "name": "getTexts",
+      "signature": "List<TextHelper> getTexts()",
+      "returnType": "List<TextHelper>",
+      "description": "Returns a list of formatted text entries that would be displayed on the scoreboard for this objective. The entries are sorted by score (descending) and then by player name, limited to the first 15 visible entries.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const texts = objective.getTexts();\ntexts.forEach((text, index) => {\n    Chat.log(`Entry ${index + 1}: ${text.getString()}`);\n});"
+      ]
+    },
+    {
+      "name": "getKnownPlayers",
+      "signature": "List<String> getKnownPlayers()",
+      "returnType": "List<String>",
+      "description": "Returns a list of all known score holders (players and entities) in the scoreboard system.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const knownPlayers = objective.getKnownPlayers();\nChat.log(`Total known players: ${knownPlayers.length}`);\nknownPlayers.forEach(player => {\n    Chat.log(`Known player: ${player}`);\n});"
+      ]
+    },
+    {
+      "name": "getKnownPlayersDisplayNames",
+      "signature": "List<TextHelper> getKnownPlayersDisplayNames()",
+      "returnType": "List<TextHelper>",
+      "description": "Returns a list of display names for all known score holders. If a player has a custom display name, it will be used; otherwise, their scoreboard name is used.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const displayNames = objective.getKnownPlayersDisplayNames();\ndisplayNames.forEach((displayName, index) => {\n    Chat.log(`Player ${index + 1}: ${displayName.getString()}`);\n});"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "String getName()",
+      "returnType": "String",
+      "description": "Returns the internal name of the scoreboard objective.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const objectiveName = objective.getName();\nChat.log(`Objective name: ${objectiveName}`);"
+      ]
+    },
+    {
+      "name": "getDisplayName",
+      "signature": "TextHelper getDisplayName()",
+      "returnType": "TextHelper",
+      "description": "Returns the display name of the scoreboard objective as a formatted text helper.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const displayName = objective.getDisplayName();\nChat.log(`Display name: ${displayName.getString()}`);"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "String toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the ScoreboardObjectiveHelper, including both the name and display name.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const stringRep = objective.toString();\nChat.log(stringRep);\n// Output: ScoreboardObjectiveHelper:{\"name\": \"kills\", \"displayName\": \"§6Kills\"}"
+      ]
+    }
+  ]
+}

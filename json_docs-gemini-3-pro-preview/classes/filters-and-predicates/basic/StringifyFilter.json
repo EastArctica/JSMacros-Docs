@@ -1,0 +1,22 @@
+{
+  "name": "StringifyFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.StringifyFilter<T>",
+  "extends": "BasicFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The StringifyFilter class is a versatile filter that converts any object to its string representation and then applies string comparison operations against a set of predefined values.",
+  "overview": "This filter is particularly useful when you need to search for objects based on their string properties, such as item names, block identifiers, or any other textual representation of game objects.\n\nAs part of JSMacros' WorldScanner filtering system, StringifyFilter inherits powerful logical operations from BasicFilter, allowing you to combine it with other filters using AND, OR, XOR, and NOT operations to create complex search criteria.",
+  "constructors": [
+    {
+      "signature": "new StringifyFilter(operation)",
+      "description": "Creates a new StringifyFilter with the specified string comparison operation.",
+      "parameters": [
+        {
+          "name": "operation",
+          "type": "String",
+          "description": "The string comparison operation to use (\"CONTAINS\", \"EQUALS\", \"STARTS_WITH\", \"ENDS_WITH\", \"MATCHES\")"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

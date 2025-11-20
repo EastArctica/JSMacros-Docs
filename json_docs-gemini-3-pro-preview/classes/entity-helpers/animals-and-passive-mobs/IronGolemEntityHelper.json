@@ -1,0 +1,22 @@
+{
+  "name": "IronGolemEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.IronGolemEntityHelper",
+  "extends": "MobEntityHelper<IronGolemEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The IronGolemEntityHelper class provides specialized access to iron golem entities in Minecraft, offering methods to determine the origin and creation context of these protective mobs.",
+  "overview": "This class extends MobEntityHelper and inherits comprehensive mob functionality including AI states, combat behaviors, health monitoring, and all living entity properties.\n\nIron golems are large, neutral mobs that protect villagers and players from hostile mobs. They can spawn naturally in villages or be constructed by players. This helper is particularly useful for creating scripts that:\n- Monitor village defenses and iron golem populations\n- Distinguish between naturally spawned and player-created golems\n- Track iron golem behavior and combat activities\n- Manage village protection systems\n- Analyze village health and safety metrics",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isPlayerCreated",
+      "signature": "isPlayerCreated()",
+      "returnType": "boolean",
+      "description": "Checks if this iron golem was created by a player or spawned naturally.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isPlayerBuilt = golem.isPlayerCreated();\nif (isPlayerBuilt) {\n    Chat.log(\"This iron golem was constructed by a player\");\n} else {\n    Chat.log(\"This iron golem spawned naturally in a village\");\n}"
+      ]
+    }
+  ]
+}

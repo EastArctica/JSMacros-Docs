@@ -1,0 +1,47 @@
+{
+  "name": "SheepEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.SheepEntityHelper",
+  "extends": "AnimalEntityHelper<SheepEntity>",
+  "since": "1.8.4",
+  "description": "The SheepEntityHelper class provides specialized access to sheep entities in Minecraft, offering methods for managing wool coloration, shearing states, and the special \"jeb_\" rainbow sheep functionality.",
+  "overview": "This class extends AnimalEntityHelper and inherits all functionality for animal breeding, food preferences, and general mob behaviors.\n\nThis helper is particularly useful for creating scripts that manage sheep farms, automate wool collection, track sheep color variations, or create colorful sheep breeding programs.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isSheared",
+      "signature": "public boolean isSheared()",
+      "returnType": "boolean",
+      "description": "Returns true when the sheep has been sheared and has no wool. Wool regrows over time when sheep eat grass.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isShearable",
+      "signature": "public boolean isShearable()",
+      "returnType": "boolean",
+      "description": "Checks if the sheep can be sheared (must have wool and not be a baby sheep).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getColor",
+      "signature": "public DyeColorHelper getColor()",
+      "returnType": "DyeColorHelper",
+      "description": "Returns a DyeColorHelper with RGB values and color information for sheep wool.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isJeb",
+      "signature": "public boolean isJeb()",
+      "returnType": "boolean",
+      "description": "Detects the special \"jeb_\" named sheep that cycle through all colors when rendered. When sheared, they drop their original colored wool.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

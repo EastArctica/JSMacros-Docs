@@ -1,0 +1,34 @@
+{
+  "name": "IllagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.IllagerEntityHelper",
+  "extends": "MobEntityHelper<IllagerEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The IllagerEntityHelper class is a specialized wrapper for illager entities in JSMacros, providing access to illager-specific behaviors, states, and combat mechanics.",
+  "overview": "This class extends MobEntityHelper and inherits all mob entity methods while adding illager-specific functionality like state tracking, celebration behavior, and combat pattern detection.\n\nThis class represents various illager types including vindicators, pillagers, evokers, and illusioners, providing comprehensive methods for accessing their current states, detecting combat behaviors, and monitoring their special abilities and raid-related activities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getState",
+      "signature": "public String getState()",
+      "returnType": "String",
+      "description": "Gets the current state of the illager (e.g., ATTACKING, SPELLCASTING, CELEBRATING, BOW_AND_ARROW, CROSSBOW_CHARGE).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const illager = entity;\nconst state = illager.getState();\nChat.log(`Illager spawned with state: ${state}`);",
+        "// Check for attacking state\nif (illager.getState() === \"ATTACKING\") {\n    Chat.log(\"Illager is attacking!\");\n}"
+      ]
+    },
+    {
+      "name": "isCelebrating",
+      "signature": "public boolean isCelebrating()",
+      "returnType": "boolean",
+      "description": "Checks if the illager is currently performing a celebration animation (typically during or after a raid).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (illager.isCelebrating()) {\n    Chat.log(\"Illager is celebrating!\");\n}"
+      ]
+    }
+  ]
+}

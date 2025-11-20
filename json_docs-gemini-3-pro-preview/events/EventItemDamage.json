@@ -1,0 +1,18 @@
+{
+  "name": "EventItemDamage",
+  "fullClassName": "EventItemDamage",
+  "description": "This event is fired when an item takes damage.",
+  "overview": "### Signature\n```js\nJsMacros.on(\"ItemDamage\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n### Behavior\n* Fires when items with durability take damage\n* Common for tools, weapons, and armor\n* The `damage` field indicates how much durability was lost\n- Occurs from mining, attacking, taking damage, etc.\n* Not cancellable\n\n### Fields\n* **item** (`ItemStackHelper`): The item that took damage. This provides access to all item properties like name, damage, durability, enchantments, etc. You can check if it's a tool, weapon, or armor and examine its current state.\n* **damage** (`int`): The amount of damage the item took. This represents the durability loss from this specific action. The total damage can be obtained from `event.item.getDamage()`.\n\n### Minimal example\n```js\nJsMacros.on(\"ItemDamage\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`${e.item.getName()} took ${e.damage} damage`);\n});\n```\n\n### Async example\n```js\nJsMacros.on(\"ItemDamage\", JavaWrapper.methodToJavaAsync((e) => {\n  const item = e.item;\n  const damageAmount = e.damage;\n  const itemName = item.getName().getString();\n  const currentDamage = item.getDamage();\n  const maxDurability = item.getMaxDamage();\n  const remainingDurability = maxDurability - currentDamage;\n\n  Chat.log(`&6Item Damaged: &f${itemName}`);\n  Chat.log(`&7Damage: &f${damageAmount} &7- Total: &f${currentDamage}/${maxDurability}`);\n\n  // ... (rest of logic)\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "name": "BlockDataHelper",
+  "fullClassName": "BlockDataHelper",
+  "description": "The BlockDataHelper class is a comprehensive helper class in JSMacros that provides access to block data and properties at specific positions in the Minecraft world.",
+  "overview": "The `BlockDataHelper` class is a comprehensive helper class in JSMacros that provides access to block data and properties at specific positions in the Minecraft world. It combines information about a block's state, position, and entity data (if the block has a tile entity) into a single, convenient interface.\n\nThis class is primarily used in world interaction contexts where you need to access detailed information about blocks in the world, such as in event handlers or when scanning the world for specific block types.\n\nInstances are typically obtained through Block Events, World Methods (querying coordinates), or Raycasting.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "number",
+      "description": "The X coordinate of the block",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);",
+        "Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);"
+      ]
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "number",
+      "description": "The Y coordinate of the block",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);"
+      ]
+    },
+    {
+      "name": "getZ",
+      "signature": "getZ()",
+      "returnType": "number",
+      "description": "The Z coordinate of the block",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);"
+      ]
+    },
+    {
+      "name": "getBlockPos",
+      "signature": "getBlockPos()",
+      "returnType": "BlockPosHelper",
+      "description": "A position helper for the block's location",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "string",
+      "description": "The block ID (e.g., \"minecraft:stone\", \"minecraft:oak_log\"). Returns the registered block ID in the format \"namespace:block_name\".",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockId = blockData.getId();",
+        "Chat.log(`Block ID: ${blockData.getId()}`);",
+        "return blockId.includes(\"chest\") || blockId.includes(\"shulker_box\");"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "TextHelper",
+      "description": "The translated name of the block. Returns a TextHelper object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Name: ${blockData.getName().getString()}`);",
+        "Chat.log(`Display Name: ${blockData.getName().getString()}`);"
+      ]
+    },
+    {
+      "name": "getBlockState",
+      "signature": "getBlockState()",
+      "returnType": "Map<string, string>",
+      "description": "Block state properties as key-value pairs. Example: For a door, this might return {\"facing\": \"north\", \"open\": \"false\", \"half\": \"lower\"}",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const state = blockData.getBlockState();",
+        "if (state.facing) { Chat.log(`Block faces: ${state.facing}`); }",
+        "if (state.waterlogged === \"true\") { Chat.log(\"Block is waterlogged\"); }"
+      ]
+    },
+    {
+      "name": "getBlockStateHelper",
+      "signature": "getBlockStateHelper()",
+      "returnType": "BlockStateHelper",
+      "description": "A helper object providing detailed block state information, such as hardness, luminance, etc.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockStateHelper = blockData.getBlockStateHelper();",
+        "Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);"
+      ]
+    },
+    {
+      "name": "getBlock",
+      "signature": "getBlock()",
+      "returnType": "BlockHelper",
+      "description": "A helper object for the block type.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockHelper = blockData.getBlock();"
+      ]
+    },
+    {
+      "name": "getBlockHelper",
+      "signature": "getBlockHelper()",
+      "returnType": "BlockHelper",
+      "description": "A helper object for the block type. DEPRECATED: Use getBlock() instead. Kept for backward compatibility.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getNBT",
+      "signature": "getNBT()",
+      "returnType": "NBTElementHelper.NBTCompoundHelper | null",
+      "description": "The NBT data of the block's tile entity. Returns null if the block has no tile entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const nbt = blockData.getNBT();",
+        "const items = nbt.get(\"Items\")?.asList() || [];",
+        "if (blockData.getNBT()) { Chat.log(\"Container block placed - has NBT data\"); }"
+      ]
+    },
+    {
+      "name": "getRawBlock",
+      "signature": "getRawBlock()",
+      "returnType": "Block",
+      "description": "The raw Minecraft Block object (advanced use only).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRawBlockState",
+      "signature": "getRawBlockState()",
+      "returnType": "BlockState",
+      "description": "The raw Minecraft BlockState object (advanced use only).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRawBlockEntity",
+      "signature": "getRawBlockEntity()",
+      "returnType": "BlockEntity | null",
+      "description": "The raw Minecraft BlockEntity object (advanced use only).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

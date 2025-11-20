@@ -1,0 +1,55 @@
+{
+  "name": "WitherEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.boss.WitherEntityHelper",
+  "extends": "MobEntityHelper<WitherEntity>",
+  "since": "1.8.4",
+  "description": "Represents a Wither boss entity in the world. WitherEntityHelper provides access to wither-specific behaviors, phases, and invulnerability states that are unique to the Wither boss mob.",
+  "overview": "The Wither is a three-headed boss mob that goes through distinct phases: an initial invulnerable summoning phase and a second combat phase where it becomes immune to projectiles and aggressively pursues players. This specialized helper allows you to monitor the wither's combat phases, track its invulnerability periods, and understand its two-phase attack pattern.\n\nInstances are typically obtained from entity events, world entity queries, or by casting existing entity helpers that represent Withers.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getRemainingInvulnerableTime",
+      "signature": "getRemainingInvulnerableTime()",
+      "returnType": "int",
+      "description": "Returns the remaining time in ticks that the Wither is invulnerable during its summoning phase.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const wither = entity;\nconst invulnerableTime = wither.getRemainingInvulnerableTime();\nChat.log(`Found wither with ${invulnerableTime} ticks of invulnerability remaining`);"
+      ]
+    },
+    {
+      "name": "isInvulnerable",
+      "signature": "isInvulnerable()",
+      "returnType": "boolean",
+      "description": "Returns whether the Wither is currently in its initial invulnerable summoning phase.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    Chat.log(\"&c⚡ Wither is invulnerable for \" + Math.ceil(invulnerableTime / 20) + \" seconds\");\n}"
+      ]
+    },
+    {
+      "name": "isFirstPhase",
+      "signature": "isFirstPhase()",
+      "returnType": "boolean",
+      "description": "Returns whether the Wither is in its first combat phase. In this phase, the Wither flies and is vulnerable to projectiles.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (wither.isFirstPhase()) {\n    Chat.log(\"Phase 1 (Ranged)\");\n    Chat.log(\"  🏹 Bow with Power V or Infinity\");\n}"
+      ]
+    },
+    {
+      "name": "isSecondPhase",
+      "signature": "isSecondPhase()",
+      "returnType": "boolean",
+      "description": "Returns whether the Wither is in its second combat phase. In this phase, the Wither drops to the ground and becomes immune to projectiles.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (wither.isSecondPhase()) {\n    Chat.log(\"Phase 2 (Melee)\");\n    Chat.log(\"  ⚔️ Diamond/Netherite sword with Sharpness\");\n}"
+      ]
+    }
+  ]
+}

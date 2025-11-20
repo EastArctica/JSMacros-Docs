@@ -1,0 +1,78 @@
+{
+  "name": "FiltererInverted",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.event.impl.FiltererInverted",
+  "extends": "Object",
+  "since": "JsMacros 1.9.1",
+  "description": "The FiltererInverted class is an event filter that inverts the logic of another event filter. It wraps a base filter and returns the opposite result when testing events, making it useful for creating \"NOT\" conditions in event filtering logic.",
+  "overview": "FiltererInverted is a specialized event filterer that takes another EventFilterer as its base and inverts its filtering logic. When the base filter would return true (allowing the event to pass), the inverted filter returns false (blocking the event), and vice versa.\n\nThis class is part of the Event Filterers system and implements the EventFilterer.Compound interface, which means it can be used in composed filter combinations. The main use case is creating negative filtering conditions - for example, listening to all damage events EXCEPT fall damage.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "invert",
+      "signature": "invert(EventFilterer base)",
+      "returnType": "EventFilterer",
+      "description": "A smart factory method that inverts the logic of the base filter. It automatically handles double inversions; if a FiltererInverted instance is passed as the base, it returns the original inner filter. Exposed in the API as JsMacros.invertEventFilterer().",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer",
+          "description": "The base filter to invert. Cannot be null."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const notFallDamageFilter = JsMacros.invertEventFilterer(fallDamageFilter);",
+        "// Basic Inverted Filtering\n// Create a filter for fall damage events\nconst fallDamageFilter = JsMacros.createEventFilterer('Damage')\n    .addFilter(\"source\", \"fall\");\n\n// Create an inverted filter - matches any damage EXCEPT fall damage\nconst notFallDamageFilter = JsMacros.invertEventFilterer(fallDamageFilter);\n\n// Listen for non-fall damage events\nJsMacros.on('Damage', notFallDamageFilter, JavaWrapper.methodToJavaAsync(event => {\n    const damageAmount = event.amount;\n    const damageSource = event.source;\n\n    Chat.log(`Took ${damageAmount} damage from ${damageSource} (not fall damage!)`);\n}));",
+        "// Complex Filtering Logic\n// Create filters for different damage sources\nconst fallDamageFilter = JsMacros.createEventFilterer('Damage')\n    .addFilter(\"source\", \"fall\");\nconst fireDamageFilter = JsMacros.createEventFilterer('Damage')\n    .addFilter(\"source\", \"fire\");\nconst drowningFilter = JsMacros.createEventFilterer('Damage')\n    .addFilter(\"source\", \"drown\");\n\n// Create inverted filters\nconst notFireDamageFilter = JsMacros.invertEventFilterer(fireDamageFilter);\n\n// Create composed filters with inverted logic\nconst environmentalFilter = JsMacros.createComposedEventFilterer(fallDamageFilter);\nenvironmentalFilter.or(drowningFilter); // Fall OR drowning damage\n\n// Listen for damage that is environmental OR not fire damage\nconst complexFilter = JsMacros.createComposedEventFilterer(environmentalFilter);\ncomplexFilter.or(notFireDamageFilter);\n\nJsMacros.on('Damage', complexFilter, JavaWrapper.methodToJavaAsync(event => {\n    Chat.log(`Special damage case: ${event.source} - Amount: ${event.amount}`);\n}));",
+        "// Double Inversion Handling\n// The factory method automatically handles double inversions\nconst originalFilter = JsMacros.createEventFilterer('Damage');\nconst invertedFilter = JsMacros.invertEventFilterer(originalFilter);\nconst doubleInvertedFilter = JsMacros.invertEventFilterer(invertedFilter);\n\n// doubleInvertedFilter will be the same as originalFilter\n// (not (not original)) == original\nChat.log(doubleInvertedFilter === originalFilter); // true"
+      ]
+    },
+    {
+      "name": "canFilter",
+      "signature": "canFilter(string event)",
+      "returnType": "boolean",
+      "description": "Determines whether this filter can handle the specified event type. Delegates to the base filter's canFilter() method.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "The name of the event to check."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const damageFilter = JsMacros.createEventFilterer('Damage');\nconst notDamageFilter = JsMacros.invertEventFilterer(damageFilter);\n\nChat.log(notDamageFilter.canFilter('Damage'));     // true\nChat.log(notDamageFilter.canFilter('RecvMessage')); // false"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(BaseEvent event)",
+      "returnType": "boolean",
+      "description": "Tests whether an event should pass through the filter. Returns the opposite of the base filter's result (logical negation).",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event to test."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "checkCyclicRef",
+      "signature": "checkCyclicRef(EventFilterer.Compound base)",
+      "returnType": "void",
+      "description": "Checks for cyclic references in compound filter chains to prevent infinite loops. Throws IllegalArgumentException if a cycle is detected.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer.Compound",
+          "description": "The base compound filter to check against."
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

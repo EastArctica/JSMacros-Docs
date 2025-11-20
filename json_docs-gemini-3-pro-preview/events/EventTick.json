@@ -1,0 +1,22 @@
+[
+  {
+    "name": "EventTick",
+    "fullClassName": "EventTick",
+    "extends": null,
+    "since": null,
+    "description": "This event is fired every game tick.",
+    "overview": "Signature:\n```js\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\nBehavior:\n* Fires 20 times per second (once per Minecraft tick)\n- No specific fields or data\n- Very high frequency event\n- Not cancellable\n- Useful for continuous monitoring and automation\n\nExample:\n```js\n// Simple tick counter\nlet tickCount = 0;\n\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n  tickCount++;\n\n  // Only process every 20 ticks (once per second) to avoid spam\n  if (tickCount % 20 === 0) {\n    const player = Player.getPlayer();\n    if (player) {\n      const pos = player.getPos();\n      const health = player.getHealth();\n      const food = player.getHunger();\n\n      Chat.actionbar(`&7Pos: [${Math.floor(pos.x)}, ${Math.floor(pos.y)}, ${Math.floor(pos.z)}] | Health: ${health.toFixed(1)} | Food: ${food}`);\n    }\n  }\n\n  // Process every 100 ticks (every 5 seconds)\n  if (tickCount % 100 === 0) {\n    const worldTime = World.getTime();\n    const dayTime = worldTime % 24000;\n    const hours = Math.floor(dayTime / 1000);\n    const minutes = Math.floor((dayTime % 1000) * 60 / 1000);\n\n    Chat.log(`&7In-game time: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);\n  }\n\n  // Check for dangerous conditions every 10 ticks\n  if (tickCount % 10 === 0) {\n    checkDangerousConditions();\n  }\n}));\n\nfunction checkDangerousConditions() {\n  const player = Player.getPlayer();\n  if (!player) return;\n\n  const health = player.getHealth();\n  const food = player.getHunger();\n  const pos = player.getPos();\n\n  // Health warnings\n  if (health <= 5) {\n    Chat.actionbar(\"&cLow health warning!\");\n  }\n\n  // Hunger warnings\n  if (food <= 6) {\n    Chat.actionbar(\"&eLow hunger warning!\");\n  }\n\n  // Check for fall danger\n  const blockBelow = World.getBlock(Math.floor(pos.x), Math.floor(pos.y - 2), Math.floor(pos.z));\n  if (!blockBelow || blockBelow.getBlockState().getBlock().getTranslationKey().includes(\"air\")) {\n    const fallHeight = calculateFallHeight(pos);\n    if (fallHeight > 3) {\n      Chat.actionbar(`&6Fall danger: ${fallHeight.toFixed(0)} blocks`);\n    }\n  }\n}\n\nfunction calculateFallHeight(pos) {\n  let y = Math.floor(pos.y - 1);\n  while (y > 0) {\n    const block = World.getBlock(Math.floor(pos.x), y, Math.floor(pos.z));\n    if (block && !block.getBlockState().getBlock().getTranslationKey().includes(\"air\")) {\n      return pos.y - y - 1;\n    }\n    y--;\n  }\n  return pos.y;\n}\n```",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "toString",
+        "signature": "event.toString()",
+        "returnType": "string",
+        "description": "Returns a string representation of the event object.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

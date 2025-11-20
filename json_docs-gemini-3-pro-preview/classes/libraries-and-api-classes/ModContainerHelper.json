@@ -1,0 +1,88 @@
+{
+  "name": "ModContainerHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.ModContainerHelper<T>",
+  "extends": "BaseHelper<T>",
+  "since": "1.8.4",
+  "description": "Helper class providing access to loaded mod information and metadata.",
+  "overview": "The ModContainerHelper class is a helper class in JSMacros that provides access to mod information and metadata. It represents a loaded mod and exposes various methods for retrieving details about the mod such as its ID, name, version, authors, and dependencies.\n\nThis class is typically accessed when working with mods through the Client.getMod() method or when iterating through the list of loaded mods returned by Client.getLoadedMods().\n\nNotes and Limitations:\n- ModContainerHelper instances are read-only representations of loaded mods.\n- Mod information may vary depending on the mod loader (Fabric vs Forge).\n- Some mods might not provide complete metadata.\n\nImplementation-Specific Behavior:\n- Fabric (FabricModContainer): Authors and dependencies are typically fully available. Environment is precisely determined.\n- Forge (ForgeModContainer): Authors may be null. Environment may be 'UNKNOWN'.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getId",
+      "signature": "public String getId()",
+      "returnType": "String",
+      "description": "Retrieves the unique identifier (mod ID) of the mod.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mod = Client.getMod(\"jsmacros\");\nChat.log(`ID: ${mod.getId()}`);"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "public String getName()",
+      "returnType": "String",
+      "description": "Retrieves the display name of the mod.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mod = Client.getMod(\"jsmacros\");\nChat.log(`Name: ${mod.getName()}`);"
+      ]
+    },
+    {
+      "name": "getVersion",
+      "signature": "public String getVersion()",
+      "returnType": "String",
+      "description": "Retrieves the version string of the mod. Format may vary between mod loaders.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mod = Client.getMod(\"jsmacros\");\nChat.log(`Version: ${mod.getVersion()}`);"
+      ]
+    },
+    {
+      "name": "getEnv",
+      "signature": "public String getEnv()",
+      "returnType": "String",
+      "description": "Retrieves the environment type the mod is intended for (e.g., CLIENT, SERVER, BOTH). May return 'UNKNOWN' on some Forge mods.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mod = Client.getMod(\"jsmacros\");\nChat.log(`Environment: ${mod.getEnv()}`);"
+      ]
+    },
+    {
+      "name": "getAuthors",
+      "signature": "public List<String> getAuthors()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of the mod's authors. May return null or empty depending on the mod and loader (specifically on Forge).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const authors = mod.getAuthors();\nif (authors && authors.size() > 0) {\n    Chat.log(`Authors: ${authors.join(\", \")}`);\n}"
+      ]
+    },
+    {
+      "name": "getDescription",
+      "signature": "public String getDescription()",
+      "returnType": "String",
+      "description": "Retrieves the description of the mod. May be empty or null.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const description = mod.getDescription();\nif (description) {\n    Chat.log(`Description: ${description}`);\n}"
+      ]
+    },
+    {
+      "name": "getDependencies",
+      "signature": "public List<String> getDependencies()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of mod IDs that this mod depends on.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const dependencies = mod.getDependencies();\nif (dependencies.size() > 0) {\n    Chat.log(`Dependencies: ${dependencies.join(\", \")}`);\n}"
+      ]
+    }
+  ]
+}

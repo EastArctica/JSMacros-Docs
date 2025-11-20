@@ -1,0 +1,156 @@
+{
+  "name": "PlayerAbilitiesHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.PlayerAbilitiesHelper",
+  "extends": "BaseHelper<PlayerAbilities>",
+  "since": "1.0.3",
+  "description": "The PlayerAbilitiesHelper class provides access to a player's ability settings and properties in Minecraft.",
+  "overview": "The PlayerAbilitiesHelper class provides access to a player's ability settings and properties in Minecraft. This helper allows scripts to read and modify various player abilities such as flying, creative mode, invulnerability, movement speeds, and world modification permissions. It wraps Minecraft's native PlayerAbilities class and exposes both getter and setter methods for common player ability modifications.\n\nThis class is commonly accessed through player-related events or by directly querying the player object, making it essential for scripts that need to modify or monitor player capabilities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInvulnerable",
+      "signature": "getInvulnerable()",
+      "returnType": "boolean",
+      "description": "Returns whether the player is invulnerable (cannot take damage).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nconst isInvulnerable = abilities.getInvulnerable();\nif (isInvulnerable) {\n    Chat.log(\"Player is currently invulnerable\");\n}"
+      ]
+    },
+    {
+      "name": "getFlying",
+      "signature": "getFlying()",
+      "returnType": "boolean",
+      "description": "Returns whether the player is currently flying.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nif (abilities.getFlying()) {\n    Chat.log(\"Player is currently flying\");\n} else {\n    Chat.log(\"Player is on the ground\");\n}"
+      ]
+    },
+    {
+      "name": "getAllowFlying",
+      "signature": "getAllowFlying()",
+      "returnType": "boolean",
+      "description": "Returns whether the player is allowed to fly (has flight capability).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nif (abilities.getAllowFlying()) {\n    Chat.log(\"Player can fly\");\n} else {\n    Chat.log(\"Player cannot fly\");\n}"
+      ]
+    },
+    {
+      "name": "getCreativeMode",
+      "signature": "getCreativeMode()",
+      "returnType": "boolean",
+      "description": "Returns whether the player is in creative mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nif (abilities.getCreativeMode()) {\n    Chat.log(\"Player is in creative mode\");\n} else {\n    Chat.log(\"Player is in survival or adventure mode\");\n}"
+      ]
+    },
+    {
+      "name": "canModifyWorld",
+      "signature": "canModifyWorld()",
+      "returnType": "boolean",
+      "description": "Returns whether the player is allowed to modify the world (place/break blocks, interact with blocks).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nif (abilities.canModifyWorld()) {\n    Chat.log(\"Player can modify the world\");\n} else {\n    Chat.log(\"Player cannot modify the world\");\n}"
+      ]
+    },
+    {
+      "name": "getFlySpeed",
+      "signature": "getFlySpeed()",
+      "returnType": "float",
+      "description": "Returns the player's flying speed multiplier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nconst flySpeed = abilities.getFlySpeed();\nChat.log(\"Current fly speed: \" + flySpeed);"
+      ]
+    },
+    {
+      "name": "setFlySpeed",
+      "signature": "setFlySpeed(double flySpeed)",
+      "returnType": "PlayerAbilitiesHelper",
+      "description": "Sets the player's flying speed multiplier.",
+      "parameters": [
+        {
+          "name": "flySpeed",
+          "type": "double",
+          "description": "The new fly speed multiplier (typical range: 0.0 to 1.0+)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\n// Set fly speed to 2x normal speed\nabilities.setFlySpeed(0.1);\nChat.log(\"Fly speed increased!\");\n\n// Reset to normal speed\nabilities.setFlySpeed(0.05);"
+      ]
+    },
+    {
+      "name": "getWalkSpeed",
+      "signature": "getWalkSpeed()",
+      "returnType": "float",
+      "description": "Returns the player's walking speed multiplier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\nconst walkSpeed = abilities.getWalkSpeed();\nChat.log(\"Current walk speed: \" + walkSpeed);"
+      ]
+    },
+    {
+      "name": "setWalkSpeed",
+      "signature": "setWalkSpeed(double speed)",
+      "returnType": "PlayerAbilitiesHelper",
+      "description": "Sets the player's walking speed multiplier.",
+      "parameters": [
+        {
+          "name": "speed",
+          "type": "double",
+          "description": "The new walk speed multiplier (typical range: 0.0 to 1.0+)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\n// Set walk speed to 2x normal speed\nabilities.setWalkSpeed(0.2);\nChat.log(\"Walk speed increased!\");\n\n// Reset to normal speed\nabilities.setWalkSpeed(0.1);"
+      ]
+    },
+    {
+      "name": "setFlying",
+      "signature": "setFlying(boolean flying)",
+      "returnType": "PlayerAbilitiesHelper",
+      "description": "Sets whether the player is currently flying.",
+      "parameters": [
+        {
+          "name": "flying",
+          "type": "boolean",
+          "description": "Whether the player should be flying (true) or not (false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\n// Enable flying\nabilities.setFlying(true);\nChat.log(\"Flying enabled\");\n\n// Disable flying\nabilities.setFlying(false);\nChat.log(\"Flying disabled\");"
+      ]
+    },
+    {
+      "name": "setAllowFlying",
+      "signature": "setAllowFlying(boolean allowFlying)",
+      "returnType": "PlayerAbilitiesHelper",
+      "description": "Sets whether the player is allowed to fly.",
+      "parameters": [
+        {
+          "name": "allowFlying",
+          "type": "boolean",
+          "description": "Whether the player should be allowed to fly (true) or not (false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const abilities = player.getAbilities();\n// Enable flight capability\nabilities.setAllowFlying(true);\nChat.log(\"Flight capability granted\");\n\n// Disable flight capability\nabilities.setAllowFlying(false);\nChat.log(\"Flight capability revoked\");"
+      ]
+    }
+  ]
+}

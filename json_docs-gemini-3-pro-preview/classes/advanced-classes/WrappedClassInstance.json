@@ -1,0 +1,193 @@
+{
+  "name": "WrappedClassInstance",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.WrappedClassInstance",
+  "since": "1.6.5",
+  "description": "An advanced reflection-based wrapper that provides dynamic access to Java class instances and their members in JSMacros scripts.",
+  "overview": "The WrappedClassInstance class serves as a universal wrapper around any Java object. It allows for dynamic method invocation using method names or signatures, field access and modification for any accessible field, support for inheritance hierarchies and interface implementation, automatic parameter type conversion and compatibility checking, and method signature parsing for precise method identification. It is primarily used through the FReflection library.",
+  "constructors": [
+    {
+      "signature": "new WrappedClassInstance(instance)",
+      "description": "Creates a new wrapper around an existing Java instance, automatically detecting its class type.",
+      "parameters": [
+        {
+          "name": "instance",
+          "type": "T",
+          "description": "The Java object to wrap"
+        }
+      ]
+    },
+    {
+      "signature": "new WrappedClassInstance(instance, tClass)",
+      "description": "Creates a wrapper for a class type, useful when working with static members or when the instance is null.",
+      "parameters": [
+        {
+          "name": "instance",
+          "type": "T",
+          "description": "The Java object to wrap (can be null)"
+        },
+        {
+          "name": "tClass",
+          "type": "Class<T>",
+          "description": "The class type to use for reflection"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getRawInstance",
+      "signature": "getRawInstance()",
+      "returnType": "T",
+      "description": "Retrieves the raw Java object instance being wrapped.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRawClass",
+      "signature": "getRawClass()",
+      "returnType": "Class<T>",
+      "description": "Retrieves the Class object of the wrapped instance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawClass = wrapped.getRawClass();\nChat.log(`Class: ${rawClass.getName()}`);"
+      ]
+    },
+    {
+      "name": "getFieldValue",
+      "signature": "getFieldValue(fieldName)",
+      "returnType": "Object",
+      "description": "Retrieves the value of a specific field from the wrapped instance.",
+      "parameters": [
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to access"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const value = wrapped.getFieldValue(\"value\");",
+        "const count = wrapped.getFieldValue(\"count\");"
+      ]
+    },
+    {
+      "name": "getFieldValueAsClass",
+      "signature": "getFieldValueAsClass(asClass, fieldName)",
+      "returnType": "Object",
+      "description": "Retrieves the value of a field treating the instance as a specific class.",
+      "parameters": [
+        {
+          "name": "asClass",
+          "type": "Class<?>",
+          "description": "The class context to use"
+        },
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to access"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setFieldValue",
+      "signature": "setFieldValue(fieldName, fieldValue)",
+      "returnType": "void",
+      "description": "Modifies the value of a specific field in the wrapped instance.",
+      "parameters": [
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to modify"
+        },
+        {
+          "name": "fieldValue",
+          "type": "Object",
+          "description": "The new value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "wrapped.setFieldValue(\"count\", 5);"
+      ]
+    },
+    {
+      "name": "setFieldValueAsClass",
+      "signature": "setFieldValueAsClass(asClass, fieldName, fieldValue)",
+      "returnType": "void",
+      "description": "Modifies the value of a field treating the instance as a specific class.",
+      "parameters": [
+        {
+          "name": "asClass",
+          "type": "Class<?>",
+          "description": "The class context to use"
+        },
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to modify"
+        },
+        {
+          "name": "fieldValue",
+          "type": "Object",
+          "description": "The new value to set"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "invokeMethod",
+      "signature": "invokeMethod(methodNameOrSig, ...params)",
+      "returnType": "Object",
+      "description": "Invokes a method on the wrapped instance using its name or full signature.",
+      "parameters": [
+        {
+          "name": "methodNameOrSig",
+          "type": "String",
+          "description": "The simple name of the method or its specific bytecode signature"
+        },
+        {
+          "name": "params",
+          "type": "Object...",
+          "description": "Variable arguments to pass to the method"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "wrappedMap.invokeMethod(\"put\", \"key1\", \"value1\");",
+        "const size = wrappedMap.invokeMethod(\"size\");",
+        "const sub1 = wrapped.invokeMethod(\"substring\", 3); // By name",
+        "const sub2 = wrapped.invokeMethod(\"substring(II)Ljava/lang/String;\", 3, 8); // By signature"
+      ]
+    },
+    {
+      "name": "invokeMethodAsClass",
+      "signature": "invokeMethodAsClass(asClass, methodNameOrSig, ...params)",
+      "returnType": "Object",
+      "description": "Invokes a method on the wrapped instance treating it as a specific class context.",
+      "parameters": [
+        {
+          "name": "asClass",
+          "type": "Class<?>",
+          "description": "The class context to use"
+        },
+        {
+          "name": "methodNameOrSig",
+          "type": "String",
+          "description": "The method name or signature"
+        },
+        {
+          "name": "params",
+          "type": "Object...",
+          "description": "Variable arguments"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "name": "CheckBoxBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.CheckBoxWidgetHelper.CheckBoxBuilder",
+  "extends": "AbstractWidgetBuilder<CheckBoxBuilder, CheckboxWidget, CheckBoxWidgetHelper>",
+  "since": "JsMacros 1.8.4",
+  "description": "The CheckBoxWidgetHelper.CheckBoxBuilder class provides a fluent builder API for creating and configuring checkbox widgets in JSMacros custom screens. This builder offers method chaining for easy configuration of checkbox properties including position, size, text label, initial state, action callbacks, and common widget properties.",
+  "overview": "The CheckBoxBuilder class simplifies the creation of checkbox widgets with:\n\n- Fluent Builder Pattern: Method chaining for readable, sequential configuration\n- Position and Sizing: Flexible widget positioning and dimension control\n- Text Labels: Custom checkbox text with support for TextHelper objects\n- Initial State Control: Set whether the checkbox starts checked or unchecked\n- Action Callbacks: Define functions to execute when checkbox state changes\n- Widget Properties: Inherited features like z-index, visibility, alpha transparency\n- Error Handling: Safe callback execution with proper error logging",
+  "constructors": [
+    {
+      "signature": "new CheckBoxBuilder(screen)",
+      "description": "Creates a new CheckBoxBuilder instance associated with the specified screen. This constructor is typically called internally by screen methods and not directly instantiated by users.",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "IScreen",
+          "description": "The screen this checkbox will be added to"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "isChecked",
+      "signature": "isChecked()",
+      "returnType": "boolean",
+      "description": "Returns whether the checkbox will be initially checked when created.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = screen.checkBoxBuilder(true);\nif (builder.isChecked()) {\n    Chat.log(\"Checkbox will be initially checked\");\n}"
+      ]
+    },
+    {
+      "name": "checked",
+      "signature": "checked(checked)",
+      "returnType": "CheckBoxBuilder",
+      "description": "Sets whether the checkbox should be initially checked when created.",
+      "parameters": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "description": "true to make the checkbox initially checked, false for unchecked"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = screen.checkBoxBuilder()\n    .checked(true)  // Start in checked state\n    .message(\"Enable Notifications\");"
+      ]
+    },
+    {
+      "name": "getAction",
+      "signature": "getAction()",
+      "returnType": "MethodWrapper<CheckBoxWidgetHelper, IScreen, Object, ?>",
+      "description": "Returns the current action callback that will be executed when the checkbox is clicked.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = screen.checkBoxBuilder();\nconst action = builder.getAction();\nif (action) {\n    Chat.log(\"Builder has an action callback set\");\n}"
+      ]
+    },
+    {
+      "name": "action",
+      "signature": "action(action)",
+      "returnType": "CheckBoxBuilder",
+      "description": "Sets the action callback that will be executed when the checkbox is clicked.",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "MethodWrapper<CheckBoxWidgetHelper, IScreen, Object, ?>",
+          "description": "The callback function to execute when clicked, or null to remove"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = screen.checkBoxBuilder()\n    .action(JavaWrapper.methodToJavaAsync((checkBox, screen) => {\n        Chat.log(`Checkbox state changed to: ${checkBox.isChecked()}`);\n    }));"
+      ]
+    }
+  ]
+}

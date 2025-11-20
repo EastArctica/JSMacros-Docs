@@ -1,0 +1,388 @@
+{
+  "name": "Pos2D",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.math.Pos2D",
+  "extends": null,
+  "since": "1.2.6",
+  "description": "The Pos2D class represents a 2D position or point in mathematical space with double-precision X and Y coordinates.",
+  "overview": "The `Pos2D` class represents a 2D position or point in mathematical space with double-precision X and Y coordinates. This class provides essential mathematical operations for 2D positioning, including addition, subtraction, multiplication, division, and scaling. It's commonly used for screen coordinates, UI positioning, 2D geometry calculations, and vector operations in JSMacros scripts.\n\nThe class is designed to be immutable - all mathematical operations return new `Pos2D` instances rather than modifying the original object.",
+  "constructors": [
+    {
+      "signature": "new Pos2D(double x, double y)",
+      "description": "Creates a new Pos2D instance with the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y coordinate"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "double",
+      "description": "Returns the X coordinate of the position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(150.75, 300.25);\nconst x = pos.getX(); // 150.75\nconst y = pos.getY(); // 300.25"
+      ]
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "double",
+      "description": "Returns the Y coordinate of the position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(150.75, 300.25);\nconst x = pos.getX(); // 150.75\nconst y = pos.getY(); // 300.25"
+      ]
+    },
+    {
+      "name": "add",
+      "signature": "add(Pos2D pos)",
+      "returnType": "Pos2D",
+      "description": "Adds another Pos2D to this position and returns a new Pos2D.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos2D",
+          "description": "The position to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos2D(10, 20);\nconst pos2 = new Pos2D(5, 15);\n\n// Add another position\nconst sum1 = pos1.add(pos2); // Pos2D(15, 35)\n\n// Add coordinate values\nconst sum2 = pos1.add(5, 15); // Pos2D(15, 35)"
+      ]
+    },
+    {
+      "name": "add",
+      "signature": "add(double x, double y)",
+      "returnType": "Pos2D",
+      "description": "Adds the specified coordinate values to this position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X value to add"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y value to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos2D(10, 20);\nconst pos2 = new Pos2D(5, 15);\n\n// Add another position\nconst sum1 = pos1.add(pos2); // Pos2D(15, 35)\n\n// Add coordinate values\nconst sum2 = pos1.add(5, 15); // Pos2D(15, 35)"
+      ]
+    },
+    {
+      "name": "sub",
+      "signature": "sub(Pos2D pos)",
+      "returnType": "Pos2D",
+      "description": "Subtracts another Pos2D from this position and returns a new Pos2D.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos2D",
+          "description": "The position to subtract"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos2D(20, 30);\nconst pos2 = new Pos2D(5, 10);\n\n// Subtract another position\nconst diff1 = pos1.sub(pos2); // Pos2D(15, 20)\n\n// Subtract coordinate values\nconst diff2 = pos1.sub(5, 10); // Pos2D(15, 20)"
+      ]
+    },
+    {
+      "name": "sub",
+      "signature": "sub(double x, double y)",
+      "returnType": "Pos2D",
+      "description": "Subtracts the specified coordinate values from this position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X value to subtract"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y value to subtract"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos2D(20, 30);\nconst pos2 = new Pos2D(5, 10);\n\n// Subtract another position\nconst diff1 = pos1.sub(pos2); // Pos2D(15, 20)\n\n// Subtract coordinate values\nconst diff2 = pos1.sub(5, 10); // Pos2D(15, 20)"
+      ]
+    },
+    {
+      "name": "multiply",
+      "signature": "multiply(Pos2D pos)",
+      "returnType": "Pos2D",
+      "description": "Multiplies this position by another Pos2D (component-wise multiplication).",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos2D",
+          "description": "The position to multiply by"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(3, 4);\nconst factor = new Pos2D(2, 3);\n\n// Multiply by another position\nconst product1 = pos.multiply(factor); // Pos2D(6, 12)\n\n// Multiply by coordinate values\nconst product2 = pos.multiply(2, 3); // Pos2D(6, 12)"
+      ]
+    },
+    {
+      "name": "multiply",
+      "signature": "multiply(double x, double y)",
+      "returnType": "Pos2D",
+      "description": "Multiplies this position by the specified coordinate values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X value to multiply by"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y value to multiply by"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(3, 4);\nconst factor = new Pos2D(2, 3);\n\n// Multiply by another position\nconst product1 = pos.multiply(factor); // Pos2D(6, 12)\n\n// Multiply by coordinate values\nconst product2 = pos.multiply(2, 3); // Pos2D(6, 12)"
+      ]
+    },
+    {
+      "name": "divide",
+      "signature": "divide(Pos2D pos)",
+      "returnType": "Pos2D",
+      "description": "Divides this position by another Pos2D (component-wise division).",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos2D",
+          "description": "The position to divide by"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(12, 18);\nconst divisor = new Pos2D(2, 3);\n\n// Divide by another position\nconst quotient1 = pos.divide(divisor); // Pos2D(6, 6)\n\n// Divide by coordinate values\nconst quotient2 = pos.divide(2, 3); // Pos2D(6, 6)"
+      ]
+    },
+    {
+      "name": "divide",
+      "signature": "divide(double x, double y)",
+      "returnType": "Pos2D",
+      "description": "Divides this position by the specified coordinate values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X value to divide by"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y value to divide by"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(12, 18);\nconst divisor = new Pos2D(2, 3);\n\n// Divide by another position\nconst quotient1 = pos.divide(divisor); // Pos2D(6, 6)\n\n// Divide by coordinate values\nconst quotient2 = pos.divide(2, 3); // Pos2D(6, 6)"
+      ]
+    },
+    {
+      "name": "scale",
+      "signature": "scale(double factor)",
+      "returnType": "Pos2D",
+      "description": "Multiplies both coordinates by the same scaling factor.",
+      "parameters": [
+        {
+          "name": "factor",
+          "type": "double",
+          "description": "The scaling factor"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(10, 20);\nconst scaled = pos.scale(2.5); // Pos2D(25, 50)"
+      ]
+    },
+    {
+      "name": "to3D",
+      "signature": "to3D()",
+      "returnType": "Pos3D",
+      "description": "Converts this 2D position to a 3D position by setting Z to 0.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos2D = new Pos2D(100, 200);\nconst pos3D = pos2D.to3D(); // Pos3D(100, 200, 0)"
+      ]
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector()",
+      "returnType": "Vec2D",
+      "description": "Creates a Vec2D from the origin (0, 0) to this position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(10, 20);\nconst vector = pos.toVector(); // Vec2D from (0, 0) to (10, 20)"
+      ]
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector(Pos2D startPos)",
+      "returnType": "Vec2D",
+      "description": "Creates a Vec2D from a starting position to this position.",
+      "parameters": [
+        {
+          "name": "startPos",
+          "type": "Pos2D",
+          "description": "The starting position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const start = new Pos2D(5, 10);\nconst end = new Pos2D(15, 25);\nconst vector = end.toVector(start); // Vec2D from (5, 10) to (15, 25)"
+      ]
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector(double startX, double startY)",
+      "returnType": "Vec2D",
+      "description": "Creates a Vec2D from starting coordinates to this position.",
+      "parameters": [
+        {
+          "name": "startX",
+          "type": "double",
+          "description": "The starting X coordinate"
+        },
+        {
+          "name": "startY",
+          "type": "double",
+          "description": "The starting Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(15, 25);\nconst vector = pos.toVector(5, 10); // Vec2D from (5, 10) to (15, 25)"
+      ]
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector()",
+      "returnType": "Vec2D",
+      "description": "Creates a Vec2D from this position to the origin (0, 0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(10, 20);\nconst vector = pos.toReverseVector(); // Vec2D from (10, 20) to (0, 0)"
+      ]
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector(Pos2D endPos)",
+      "returnType": "Vec2D",
+      "description": "Creates a Vec2D from this position to an ending position.",
+      "parameters": [
+        {
+          "name": "endPos",
+          "type": "Pos2D",
+          "description": "The ending position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const start = new Pos2D(5, 10);\nconst end = new Pos2D(15, 25);\nconst vector = start.toReverseVector(end); // Vec2D from (5, 10) to (15, 25)"
+      ]
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector(double endX, double endY)",
+      "returnType": "Vec2D",
+      "description": "Creates a Vec2D from this position to ending coordinates.",
+      "parameters": [
+        {
+          "name": "endX",
+          "type": "double",
+          "description": "The ending X coordinate"
+        },
+        {
+          "name": "endY",
+          "type": "double",
+          "description": "The ending Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(5, 10);\nconst vector = pos.toReverseVector(15, 25); // Vec2D from (5, 10) to (15, 25)"
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(Object obj)",
+      "returnType": "boolean",
+      "description": "Compares this Pos2D with another object for equality.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": "Object to compare with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos2D(10, 20);\nconst pos2 = new Pos2D(10, 20);\nconst pos3 = new Pos2D(15, 20);\n\nChat.log(pos1.equals(pos2)); // true\nChat.log(pos1.equals(pos3)); // false"
+      ]
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code for this position.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos2D(10.5, 20.3);\nChat.log(pos.toString()); // \"10.500000, 20.300000\""
+      ]
+    },
+    {
+      "name": "compareTo",
+      "signature": "compareTo(Pos2D other)",
+      "returnType": "int",
+      "description": "Compares this Pos2D with another position lexicographically (first by X, then by Y).",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "Pos2D",
+          "description": "The position to compare with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos2D(10, 20);\nconst pos2 = new Pos2D(15, 25);\nconst pos3 = new Pos2D(10, 30);\n\nChat.log(pos1.compareTo(pos2)); // -1 (10 < 15)\nChat.log(pos2.compareTo(pos1)); // 1 (15 > 10)\nChat.log(pos1.compareTo(pos3)); // -1 (same X, but 20 < 30)"
+      ]
+    }
+  ]
+}

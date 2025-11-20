@@ -1,0 +1,474 @@
+{
+  "name": "JsMacros",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.FJsMacros",
+  "description": "Functions that interact directly with JsMacros or Events. This is the main entry point library that provides access to JsMacros core functionality including script execution, event management, and configuration access.",
+  "overview": "The JsMacros library is available to scripts via the global `JsMacros` variable and provides essential functions for running scripts, managing events, and accessing core JsMacros services.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getProfile",
+      "signature": "getProfile()",
+      "returnType": "BaseProfile",
+      "description": "Returns the JsMacros profile class that manages user settings and script configurations.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const profile = JsMacros.getProfile();\nChat.log(`Current profile: ${profile.getName()}`);"
+      ]
+    },
+    {
+      "name": "getConfig",
+      "signature": "getConfig()",
+      "returnType": "ConfigManager",
+      "description": "Returns the JsMacros configuration management class that handles all configuration settings.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const config = JsMacros.getConfig();\nconst options = config.getOptions();\nChat.log(`Auto-reload services: ${options.serviceAutoReload}`);"
+      ]
+    },
+    {
+      "name": "getServiceManager",
+      "signature": "getServiceManager()",
+      "returnType": "ServiceManager",
+      "description": "Returns the service manager for managing background scripts (services) that run continuously.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const serviceManager = JsMacros.getServiceManager();\nconst services = serviceManager.getServices();\nfor (const service of services) {\n    Chat.log(`Service running: ${service.getFile().getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getOpenContexts",
+      "signature": "getOpenContexts()",
+      "returnType": "List<BaseScriptContext>",
+      "description": "Returns a list of non-garbage-collected ScriptContext instances that are currently running.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const contexts = JsMacros.getOpenContexts();\nChat.log(`Currently open script contexts: ${contexts.length}`);\nfor (const ctx of contexts) {\n    Chat.log(`Context: ${ctx.getScriptName()}`);\n}"
+      ]
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(language: string, script: string, file: string, event: BaseEvent, callback: MethodWrapper)",
+      "returnType": "EventContainer",
+      "description": "Runs a script file or string with optional parameters and callback.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "Path to the script file relative to the macro folder"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Script language (e.g., \"javascript\", \"python\")"
+        },
+        {
+          "name": "script",
+          "type": "string",
+          "description": "Script code to execute"
+        },
+        {
+          "name": "fakeEvent",
+          "type": "BaseEvent",
+          "description": "Optional event to pass to the script"
+        },
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "Optional event context"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Optional callback for completion/error handling"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Run a script file\nJsMacros.runScript(\"examples/hello.js\");",
+        "// Run with a custom event\nconst customEvent = JsMacros.createCustomEvent(\"MyEvent\");\nJsMacros.runScript(\"examples/custom_handler.js\", customEvent);",
+        "// Run with callback\nJsMacros.runScript(\"examples/async_task.js\", JavaWrapper.methodToJava((error) => {\n    if (error) {\n        Chat.log(`Script error: ${error.message}`);\n    } else {\n        Chat.log(\"Script completed successfully!\");\n    }\n}));",
+        "// Run a string as script\nJsMacros.runScript(\"javascript\", \"Chat.log('Hello from dynamic script!');\");"
+      ]
+    },
+    {
+      "name": "wrapScriptRun",
+      "signature": "wrapScriptRun(language: string, script: string, file: string)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a script execution as a MethodWrapper that can be called multiple times.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "Path to script file (or file name for error reporting if wrapping string)"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Script language"
+        },
+        {
+          "name": "script",
+          "type": "string",
+          "description": "Script code to wrap"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Wrap a script as a method\nconst wrappedScript = JsMacros.wrapScriptRun(\"utils/calculator.js\");\n\n// Call the wrapped script with an event\nconst event = JsMacros.createCustomEvent(\"Calculate\");\nwrappedScript.accept(event);",
+        "// Wrap a string script with file reference\nconst dynamicScript = JsMacros.wrapScriptRun(\"javascript\", \"return args[0] * args[1];\", \"multiply.js\");"
+      ]
+    },
+    {
+      "name": "wrapScriptRunAsync",
+      "signature": "wrapScriptRunAsync(language: string, script: string, file: string)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a script execution as an asynchronous MethodWrapper for non-blocking execution.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "Path to script file (or file name for error reporting if wrapping string)"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Script language"
+        },
+        {
+          "name": "script",
+          "type": "string",
+          "description": "Script code to wrap"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create an async wrapper for frequently called script\nconst asyncWrapper = JsMacros.wrapScriptRunAsync(\"utils/performance_monitor.js\");\n\n// Use in event listener without blocking\nconst event = JsMacros.createCustomEvent(\"PerformanceCheck\");\nasyncWrapper.accept(event);"
+      ]
+    },
+    {
+      "name": "on",
+      "signature": "on(event: string, filterer: EventFilterer, joined: boolean, callback: MethodWrapper)",
+      "returnType": "IEventListener",
+      "description": "Creates a persistent event listener that can be more efficient than running script files when used properly.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Event name to listen for"
+        },
+        {
+          "name": "joined",
+          "type": "boolean",
+          "description": "Whether the event should be joined (wait for completion)"
+        },
+        {
+          "name": "filterer",
+          "type": "EventFilterer",
+          "description": "Optional filter to limit events"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to call when event triggers"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Basic event listener\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJava((event) => {\n    Chat.log(`Received message: ${event.message}`);\n}));",
+        "// Event listener with join flag\nJsMacros.on(\"Key\", true, JavaWrapper.methodToJava((event) => {\n    Chat.log(`Key pressed: ${event.key}`);\n}));",
+        "// Event listener with filterer\nconst movementFilter = JsMacros.createEventFilterer(\"SendPacket\").setType(\"PlayerMoveC2SPacket\");\nJsMacros.on(\"SendPacket\", movementFilter, JavaWrapper.methodToJava((event) => {\n    Chat.log(\"Movement packet detected\");\n}));",
+        "// Full parameters\nconst filter = JsMacros.createEventFilterer(\"SendPacket\").setType(\"ChatMessageC2SPacket\");\nJsMacros.on(\"SendPacket\", filter, true, JavaWrapper.methodToJava((event) => {\n    Chat.log(`Chat packet: ${event.type}`);\n}));"
+      ]
+    },
+    {
+      "name": "once",
+      "signature": "once(event: string, joined: boolean, callback: MethodWrapper)",
+      "returnType": "IEventListener",
+      "description": "Creates a single-run event listener that automatically removes itself after triggering once.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Event name to listen for"
+        },
+        {
+          "name": "joined",
+          "type": "boolean",
+          "description": "Whether the event should be joined (wait for completion)"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Function to call when event triggers"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Single-use event listener\nJsMacros.once(\"ServiceStop\", JavaWrapper.methodToJava((event) => {\n    Chat.log(`Service stopped: ${event.serviceName}`);\n}));",
+        "// Single-use with join\nJsMacros.once(\"GameLoad\", true, JavaWrapper.methodToJava((event) => {\n    Chat.log(\"Game fully loaded!\");\n    // Do initialization tasks\n}));"
+      ]
+    },
+    {
+      "name": "off",
+      "signature": "off(event: string, listener: IEventListener)",
+      "returnType": "boolean",
+      "description": "Removes an event listener from all events or a specific event.",
+      "parameters": [
+        {
+          "name": "listener",
+          "type": "IEventListener",
+          "description": "The listener to remove"
+        },
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Specific event to remove from (optional)"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Remove specific listener\nconst listener = JsMacros.on(\"Key\", JavaWrapper.methodToJava((event) => {\n    Chat.log(\"Key pressed!\");\n}));\nJsMacros.off(listener);",
+        "// Remove from specific event\nJsMacros.off(\"Key\", listener);"
+      ]
+    },
+    {
+      "name": "disableAllListeners",
+      "signature": "disableAllListeners(event: string)",
+      "returnType": "void",
+      "description": "Disables all listeners for a specific event or globally, including JsMacros' own internal listeners.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Specific event to remove all listeners from (optional)"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Disable all listeners for specific event\nJsMacros.disableAllListeners(\"RecvMessage\");",
+        "// Disable ALL listeners globally\nJsMacros.disableAllListeners();"
+      ]
+    },
+    {
+      "name": "disableScriptListeners",
+      "signature": "disableScriptListeners(event: string)",
+      "returnType": "void",
+      "description": "Disables only user-created event listeners (from on(), once(), waitForEvent()), preserving internal JsMacros listeners.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Specific event to remove script listeners from (optional)"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Disable only script listeners for specific event\nJsMacros.disableScriptListeners(\"Key\");",
+        "// Disable all script listeners globally\nJsMacros.disableScriptListeners();"
+      ]
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(event: string, join: boolean, filter: MethodWrapper, runBeforeWaiting: MethodWrapper)",
+      "returnType": "EventAndContext<E>",
+      "description": "Waits for a specific event to occur, optionally filtering events and providing early exit functionality.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Event name to wait for"
+        },
+        {
+          "name": "join",
+          "type": "boolean",
+          "description": "Whether to join the event (default: false)"
+        },
+        {
+          "name": "filter",
+          "type": "MethodWrapper",
+          "description": "Optional filter function, returns true when condition met"
+        },
+        {
+          "name": "runBeforeWaiting",
+          "type": "MethodWrapper",
+          "description": "Optional function to run before waiting for thread safety"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Basic wait for event\nconst result = JsMacros.waitForEvent(\"RecvMessage\");\nChat.log(`Waited for message: ${result.event.message}`);",
+        "// Wait with filter\nconst chatEvent = JsMacros.waitForEvent(\"RecvMessage\", JavaWrapper.methodToJava((event) => {\n    return event.message.includes(\"important\");\n}));\nChat.log(`Important message: ${chatEvent.event.message}`);",
+        "// Wait with join flag\nconst joinedResult = JsMacros.waitForEvent(\"GameLoad\", true);\n// Can use joinedResult.context.releaseLock() to exit early if needed",
+        "// Wait with runBefore callback\nconst timedResult = JsMacros.waitForEvent(\"Tick\",\n    JavaWrapper.methodToJava((event) => false), // filter to wait until condition met\n    JavaWrapper.methodToJava(() => {\n        Chat.log(\"Starting to wait for specific tick...\");\n    })\n);"
+      ]
+    },
+    {
+      "name": "listeners",
+      "signature": "listeners(event: string)",
+      "returnType": "List<IEventListener>",
+      "description": "Returns a list of script-added listeners for a specific event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Event name to get listeners for"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Get all script listeners for an event\nconst keyListeners = JsMacros.listeners(\"Key\");\nChat.log(`Key listeners: ${keyListeners.length}`);\nfor (const listener of keyListeners) {\n    Chat.log(`Listener: ${listener.toString()}`);\n}"
+      ]
+    },
+    {
+      "name": "createEventFilterer",
+      "signature": "createEventFilterer(event: string)",
+      "returnType": "EventFilterer",
+      "description": "Creates an event filterer to reduce lag when listening to frequently triggered events.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "Event name to create filterer for"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create filterer for packet events\nconst packetFilter = JsMacros.createEventFilterer(\"SendPacket\");\npacketFilter.setType(\"PlayerMoveC2SPacket\");",
+        "// Create filterer for different event types\nconst keyFilter = JsMacros.createEventFilterer(\"Key\");\nkeyFilter.setKeys(\"key.keyboard.k\"); // Only K key",
+        "// Use with event listener\nJsMacros.on(\"SendPacket\", packetFilter, JavaWrapper.methodToJava((event) => {\n    Chat.log(\"Movement packet detected!\");\n}));"
+      ]
+    },
+    {
+      "name": "createComposedEventFilterer",
+      "signature": "createComposedEventFilterer(initial: EventFilterer)",
+      "returnType": "FiltererComposed",
+      "description": "Creates a composed event filterer that combines multiple filterers with AND/OR logic.",
+      "parameters": [
+        {
+          "name": "initial",
+          "type": "EventFilterer",
+          "description": "Initial filterer to compose with"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const movementFilter = JsMacros.createEventFilterer(\"SendPacket\").setType(\"PlayerMoveC2SPacket\");\nconst chatFilter = JsMacros.createEventFilterer(\"SendPacket\").setType(\"ChatMessageC2SPacket\");\n\n// Create OR filter (movement OR chat)\nconst orFilter = JsMacros.createComposedEventFilterer(movementFilter)\n    .or(chatFilter);",
+        "// Create AND filter (movement AND specific condition)\nconst andFilter = JsMacros.createComposedEventFilterer(movementFilter)\n    .and(JavaWrapper.methodToJava((event) => {\n        return event.someCondition === true;\n    }));\n\nJsMacros.on(\"SendPacket\", orFilter, JavaWrapper.methodToJava((event) => {\n    Chat.log(\"Movement or chat packet detected\");\n}));"
+      ]
+    },
+    {
+      "name": "createModulusEventFilterer",
+      "signature": "createModulusEventFilterer(quotient: int)",
+      "returnType": "FiltererModulus",
+      "description": "Creates a modulus event filterer that only lets every nth event pass through.",
+      "parameters": [
+        {
+          "name": "quotient",
+          "type": "int",
+          "description": "Process every nth event (e.g., 10 = every 10th event)"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Only process every 10th tick event\nconst tenthTickFilter = JsMacros.createModulusEventFilterer(10);\nJsMacros.on(\"Tick\", tenthTickFilter, JavaWrapper.methodToJava((event) => {\n    Chat.log(`10th tick: ${event.tick}`);\n}));",
+        "// Process every 100th packet\nconst packetFilter = JsMacros.createModulusEventFilterer(100);\nJsMacros.on(\"SendPacket\", packetFilter, JavaWrapper.methodToJava((event) => {\n    Chat.log(`100th packet: ${event.type}`);\n}));"
+      ]
+    },
+    {
+      "name": "invertEventFilterer",
+      "signature": "invertEventFilterer(base: EventFilterer)",
+      "returnType": "EventFilterer",
+      "description": "Inverts a base filterer's result, making it match the opposite conditions.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer",
+          "description": "Filterer to invert"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const movementFilter = JsMacros.createEventFilterer(\"SendPacket\").setType(\"PlayerMoveC2SPacket\");\n\n// Create filter for everything EXCEPT movement packets\nconst nonMovementFilter = JsMacros.invertEventFilterer(movementFilter);\n\nJsMacros.on(\"SendPacket\", nonMovementFilter, JavaWrapper.methodToJava((event) => {\n    Chat.log(`Non-movement packet: ${event.type}`);\n}));"
+      ]
+    },
+    {
+      "name": "createCustomEvent",
+      "signature": "createCustomEvent(eventName: string)",
+      "returnType": "EventCustom",
+      "description": "Creates a custom event object that can trigger custom events with optional GUI registration.",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "string",
+          "description": "Name of the custom event (should not conflict with existing events)"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a custom event\nconst myEvent = JsMacros.createCustomEvent(\"MyScriptEvent\");\n\n// Set custom data\nmyEvent.data = { message: \"Hello from custom event!\", value: 42 };\n\n// Register to make it visible in GUI\nmyEvent.registerEvent();\n\n// Trigger the event\nmyEvent.trigger();",
+        "// Listen for the custom event\nJsMacros.on(\"MyScriptEvent\", JavaWrapper.methodToJava((event) => {\n    Chat.log(`Custom event received: ${event.data.message}`);\n    Chat.log(`Custom value: ${event.data.value}`);\n}));"
+      ]
+    },
+    {
+      "name": "assertEvent",
+      "signature": "assertEvent(event: BaseEvent, type: string)",
+      "returnType": "void",
+      "description": "Asserts that an event is of the correct type for type safety and converts the event type in TypeScript.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event to assert"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "description": "Expected event type name"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Type-safe event handling\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJava((event) => {\n    // Assert this is a RecvMessage event for type safety\n    JsMacros.assertEvent(event, \"RecvMessage\");\n\n    // Now TypeScript/intellisense knows the specific event type\n    Chat.log(`Message from ${event.username}: ${event.message}`);\n}));",
+        "// Will throw if event type is wrong\nJsMacros.on(\"Key\", JavaWrapper.methodToJava((event) => {\n    // This will throw an AssertionError because \"Key\" ≠ \"RecvMessage\"\n    JsMacros.assertEvent(event, \"RecvMessage\");\n}));"
+      ]
+    },
+    {
+      "name": "open",
+      "signature": "open(path: string)",
+      "returnType": "void",
+      "description": "Opens a file with the default system program. Paths are relative to the script's folder. (Deprecated)",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "File path relative to script folder"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Deprecated - use Utils library instead\nJsMacros.open(\"config/settings.txt\");"
+      ]
+    },
+    {
+      "name": "openUrl",
+      "signature": "openUrl(url: string)",
+      "returnType": "void",
+      "description": "Opens a URL with the default system web browser. (Deprecated)",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "URL to open"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Deprecated - use Utils library instead\nJsMacros.openUrl(\"https://github.com/wagyourtail/JsMacros\");"
+      ]
+    }
+  ]
+}

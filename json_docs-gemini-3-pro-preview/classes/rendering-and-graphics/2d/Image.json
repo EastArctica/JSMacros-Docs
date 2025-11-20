@@ -1,0 +1,167 @@
+{
+  "name": "Image",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Image",
+  "since": "JsMacros 1.2.3",
+  "description": "The Image class is a powerful rendering component for displaying images in JSMacros 2D rendering contexts.",
+  "overview": "The `Image` class is a powerful rendering component for displaying images in JSMacros 2D rendering contexts. It provides comprehensive control over image positioning, sizing, coloring, rotation, and texture region selection. This class is commonly used for creating custom HUDs, overlays, GUI elements, and visual effects in Minecraft scripts.\n\nImage instances can display portions of textures, apply color tints and transparency, support rotation transformations, and can be easily positioned relative to other elements using the built-in alignment system.",
+  "constructors": [
+    {
+      "signature": "new Image(x, y, width, height, zIndex, color, id, imageX, imageY, regionWidth, regionHeight, textureWidth, textureHeight, rotation)",
+      "description": "Creates a new Image with the specified properties.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position of the image"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position of the image"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width to render the image"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height to render the image"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-order depth for rendering"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color tint (0xRRGGBB)"
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "description": "Texture identifier (e.g., \"minecraft:texture/gui/icons.png\")"
+        },
+        {
+          "name": "imageX",
+          "type": "int",
+          "description": "X coordinate in texture to start from"
+        },
+        {
+          "name": "imageY",
+          "type": "int",
+          "description": "Y coordinate in texture to start from"
+        },
+        {
+          "name": "regionWidth",
+          "type": "int",
+          "description": "Width of the region in texture to use"
+        },
+        {
+          "name": "regionHeight",
+          "type": "int",
+          "description": "Height of the region in texture to use"
+        },
+        {
+          "name": "textureWidth",
+          "type": "int",
+          "description": "Total width of the texture"
+        },
+        {
+          "name": "textureHeight",
+          "type": "int",
+          "description": "Total height of the texture"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        }
+      ]
+    },
+    {
+      "signature": "new Image(x, y, width, height, zIndex, alpha, color, id, imageX, imageY, regionWidth, regionHeight, textureWidth, textureHeight, rotation)",
+      "description": "Creates a new Image with separate alpha and color values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position of the image"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position of the image"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width to render the image"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height to render the image"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-order depth for rendering"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency (0-255)"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color tint (0xRRGGBB)"
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "description": "Texture identifier"
+        },
+        {
+          "name": "imageX",
+          "type": "int",
+          "description": "X coordinate in texture to start from"
+        },
+        {
+          "name": "imageY",
+          "type": "int",
+          "description": "Y coordinate in texture to start from"
+        },
+        {
+          "name": "regionWidth",
+          "type": "int",
+          "description": "Width of the region in texture to use"
+        },
+        {
+          "name": "regionHeight",
+          "type": "int",
+          "description": "Height of the region in texture to use"
+        },
+        {
+          "name": "textureWidth",
+          "type": "int",
+          "description": "Total width of the texture"
+        },
+        {
+          "name": "textureHeight",
+          "type": "int",
+          "description": "Total height of the texture"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

@@ -1,0 +1,307 @@
+{
+  "name": "Draw2DElement",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Draw2DElement",
+  "extends": null,
+  "since": "1.8.4",
+  "description": "The Draw2DElement class is a rendering component that wraps a Draw2D instance and provides it with positioning, scaling, rotation, and z-indexing capabilities.",
+  "overview": "Draw2DElement acts as a bridge between the powerful 2D drawing capabilities of Draw2D and the flexible positioning system of render components, making it possible to create sophisticated HUDs, overlays, and interactive visual interfaces.\n\n**Key Features:**\n- **Position Control:** Precise x/y positioning with parent-relative coordinates\n- **Scaling:** Dynamic scaling with size constraints\n- **Rotation:** Clockwise rotation with optional center-point rotation\n- **Z-Indexing:** Layer ordering control for overlapping elements\n- **Parent Integration:** Seamless integration with IDraw2D parent containers\n- **Alignment Support:** Built-in alignment utilities for easy positioning",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getDraw2D",
+      "signature": "getDraw2D()",
+      "returnType": "Draw2D",
+      "description": "Returns the internal Draw2D instance that this element is wrapping.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst internalDraw2D = element.getDraw2D();\n\n// You can now add elements to the internal Draw2D\ninternalDraw2D.addText(\"Hello World!\", 10, 10, 0xFFFFFF, true);"
+      ]
+    },
+    {
+      "name": "setX",
+      "signature": "setX(int x)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the x-position of this element relative to its parent.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The new x-coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setX(100); // Move to x=100"
+      ]
+    },
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "int",
+      "description": "Gets the current x-position of this element.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst x = element.getX();\nChat.log(`Element X position: ${x}`);"
+      ]
+    },
+    {
+      "name": "setY",
+      "signature": "setY(int y)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the y-position of this element relative to its parent.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The new y-coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setY(200); // Move to y=200"
+      ]
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "int",
+      "description": "Gets the current y-position of this element.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst y = element.getY();\nChat.log(`Element Y position: ${y}`);"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(int x, int y)",
+      "returnType": "Draw2DElement",
+      "description": "Sets both x and y positions simultaneously.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The new x-coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The new y-coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setPos(50, 75); // Move to (50, 75)"
+      ]
+    },
+    {
+      "name": "setWidth",
+      "signature": "setWidth(int width)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the width of this element and creates a fixed-size supplier. Throws IllegalArgumentException if width is negative.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The new width (must be non-negative)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setWidth(200); // Set width to 200 pixels"
+      ]
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "int",
+      "description": "Gets the current width of this element by evaluating the width supplier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst width = element.getWidth();\nChat.log(`Element width: ${width}px`);"
+      ]
+    },
+    {
+      "name": "setHeight",
+      "signature": "setHeight(int height)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the height of this element and creates a fixed-size supplier. Throws IllegalArgumentException if height is negative.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The new height (must be non-negative)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setHeight(150); // Set height to 150 pixels"
+      ]
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "int",
+      "description": "Gets the current height of this element by evaluating the height supplier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst height = element.getHeight();\nChat.log(`Element height: ${height}px`);"
+      ]
+    },
+    {
+      "name": "setSize",
+      "signature": "setSize(int width, int height)",
+      "returnType": "Draw2DElement",
+      "description": "Convenience method to set both width and height simultaneously.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The new width"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The new height"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setSize(300, 200); // Set size to 300x200 pixels"
+      ]
+    },
+    {
+      "name": "setScale",
+      "signature": "setScale(double scale)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the scale factor for this element. Scale affects both size and visual appearance. Throws IllegalArgumentException if scale is not positive.",
+      "parameters": [
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The new scale factor (must be greater than 0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setScale(1.5); // Make element 50% larger\nelement.setScale(0.5); // Make element 50% smaller"
+      ]
+    },
+    {
+      "name": "getScale",
+      "signature": "getScale()",
+      "returnType": "float",
+      "description": "Gets the current scale factor of this element.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst scale = element.getScale();\nChat.log(`Element scale: ${scale}x`);"
+      ]
+    },
+    {
+      "name": "setRotation",
+      "signature": "setRotation(double rotation)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the rotation angle for this element in degrees. Positive values rotate clockwise.",
+      "parameters": [
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "The rotation angle in degrees (clockwise)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setRotation(45); // Rotate 45 degrees clockwise\nelement.setRotation(-90); // Rotate 90 degrees counter-clockwise"
+      ]
+    },
+    {
+      "name": "getRotation",
+      "signature": "getRotation()",
+      "returnType": "float",
+      "description": "Gets the current rotation angle of this element.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst rotation = element.getRotation();\nChat.log(`Element rotation: ${rotation}°`);"
+      ]
+    },
+    {
+      "name": "setRotateCenter",
+      "signature": "setRotateCenter(boolean rotateCenter)",
+      "returnType": "Draw2DElement",
+      "description": "Sets whether rotation should occur around the element's center point or its origin.",
+      "parameters": [
+        {
+          "name": "rotateCenter",
+          "type": "boolean",
+          "description": "Whether to rotate around the center"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setRotateCenter(true);  // Rotate around center\nelement.setRotateCenter(false); // Rotate around top-left corner"
+      ]
+    },
+    {
+      "name": "isRotatingCenter",
+      "signature": "isRotatingCenter()",
+      "returnType": "boolean",
+      "description": "Gets whether this element is configured to rotate around its center point.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst centerRotation = element.isRotatingCenter();\nChat.log(`Center rotation: ${centerRotation}`);"
+      ]
+    },
+    {
+      "name": "setZIndex",
+      "signature": "setZIndex(int zIndex)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the z-index for render ordering. Higher values appear on top.",
+      "parameters": [
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The new z-index value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nelement.setZIndex(10); // Render above elements with lower z-index"
+      ]
+    },
+    {
+      "name": "getZIndex",
+      "signature": "getZIndex()",
+      "returnType": "int",
+      "description": "Gets the current z-index of this element.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst zIndex = element.getZIndex();\nChat.log(`Element z-index: ${zIndex}`);"
+      ]
+    },
+    {
+      "name": "setParent",
+      "signature": "setParent(IDraw2D<?> parent)",
+      "returnType": "Draw2DElement",
+      "description": "Sets the parent container for this element. This is typically called automatically when adding elements to a container.",
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "IDraw2D<?>",
+          "description": "The parent container"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const element = // ... obtain Draw2DElement\nconst parentHud = Hud.createDraw2D();\nelement.setParent(parentHud);"
+      ]
+    }
+  ]
+}

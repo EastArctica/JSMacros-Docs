@@ -1,0 +1,102 @@
+{
+  "name": "Websocket",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.Websocket",
+  "since": "1.1.9",
+  "description": "A WebSocket client class that provides real-time, bidirectional communication with WebSocket servers.",
+  "overview": "The Websocket class uses the NV WebSocket library under the hood and provides a simple, event-driven API for handling WebSocket connections, message exchanges, and connection lifecycle events. It supports both secure (wss://) and non-secure (ws://) WebSocket connections and provides comprehensive error handling and connection state management.",
+  "constructors": [
+    {
+      "signature": "new Websocket(address)",
+      "description": "Creates a new Websocket instance with the specified server address. This constructor initializes the WebSocket connection but does not automatically connect to the server. You must call the connect() method to establish the actual connection.",
+      "parameters": [
+        {
+          "name": "address",
+          "type": "string",
+          "description": "The WebSocket server URL (e.g., \"wss://example.com/socket\" or \"ws://localhost:8080\")"
+        }
+      ]
+    },
+    {
+      "signature": "new Websocket(url)",
+      "description": "Creates a new Websocket instance using a Java URL object. This constructor is useful when you already have a URL object or need to work with URLs programmatically.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "java.net.URL",
+          "description": "The WebSocket server URL as a Java URL object"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "connect",
+      "signature": "instance.connect()",
+      "returnType": "void",
+      "description": "Establishes the actual connection to the WebSocket server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "ws.connect();",
+        "// With event handlers setup first\nechoWs.onConnect = JavaWrapper.methodToJava((websocket, headers) => {\n    Chat.log(\"&aConnected to echo server!\");\n});\nechoWs.connect();"
+      ]
+    },
+    {
+      "name": "getWs",
+      "signature": "instance.getWs()",
+      "returnType": "com.neovisionaries.ws.client.WebSocket",
+      "description": "Returns the underlying NV WebSocket object, allowing access to lower-level methods.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (monitorWs.getWs().isOpen()) {\n    sendStatusUpdate();\n}"
+      ]
+    },
+    {
+      "name": "sendText",
+      "signature": "instance.sendText(text)",
+      "returnType": "void",
+      "description": "Sends a text message to the connected WebSocket server.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "String",
+          "description": "The text string to send."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "ws.sendText(\"Hello from JsMacros WebSocket!\");",
+        "const testMessage = {\n    type: \"test\",\n    data: \"value\"\n};\nws.sendText(JSON.stringify(testMessage));"
+      ]
+    },
+    {
+      "name": "close",
+      "signature": "instance.close()",
+      "returnType": "void",
+      "description": "Closes the WebSocket connection.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "instance.close();"
+      ]
+    },
+    {
+      "name": "close",
+      "signature": "instance.close(closeCode)",
+      "returnType": "void",
+      "description": "Closes the WebSocket connection with a specific close code.",
+      "parameters": [
+        {
+          "name": "closeCode",
+          "type": "int",
+          "description": "The status code indicating the reason for closure."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "monitorWs.close(1000);"
+      ]
+    }
+  ]
+}

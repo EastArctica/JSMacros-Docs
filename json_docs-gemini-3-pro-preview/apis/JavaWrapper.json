@@ -1,0 +1,87 @@
+{
+  "name": "JavaWrapper",
+  "fullClassName": "JavaWrapper",
+  "description": "A crucial utility for wrapping script functions into a format that Java can understand and execute.",
+  "overview": "A crucial utility for wrapping script functions into a format that Java can understand and execute. This is essential for creating callbacks for events, GUI elements, or any other scenario where Java code needs to trigger script code. Accessible from scripts via the global `JavaWrapper` variable.\n\nThis library handles the different threading models of various scripting languages to ensure stability:\n- **JavaScript/JEP (Python):** These languages have a single-threaded execution model. `JavaWrapper` manages a queue to ensure that calls from different Java threads are executed one at a time, preventing race conditions and crashes.\n- **Jython/Lua:** These languages do not have the same strict single-threaded limitations, and calls are handled more directly.\n\n> **Note:** This library was previously available as the `consumer` global variable. `JavaWrapper` is the modern name.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "methodToJava",
+      "signature": "methodToJava(c)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a script function into a Java-compatible `MethodWrapper`. When Java invokes this wrapper, the calling Java thread will **block** and wait for the script function to complete. This is suitable for simple, quick callbacks like button clicks.",
+      "parameters": [
+        {
+          "name": "c",
+          "type": "function",
+          "description": "The script function to wrap."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const screen = Hud.createScreen(\"My Screen\", true);\nconst callback = JavaWrapper.methodToJava(() => {\n    Chat.log(\"Button was clicked!\");\n    screen.close();\n});\nscreen.addButton(10, 10, 100, 20, \"Click Me\", callback);\nHud.openScreen(screen);"
+      ]
+    },
+    {
+      "name": "methodToJavaAsync",
+      "signature": "methodToJavaAsync(priority, c)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a script function for **asynchronous** execution. When Java invokes this wrapper, the script function is added to an execution queue, and the Java thread continues immediately without waiting. This is essential for event listeners (like `Tick` or `RecvMessage`) that fire on critical game threads, as it prevents the game from freezing.",
+      "parameters": [
+        {
+          "name": "priority",
+          "type": "int",
+          "description": "(Optional, Default: 5) (JavaScript/JEP only) The priority of the task in the execution queue. Higher numbers are executed first."
+        },
+        {
+          "name": "c",
+          "type": "function",
+          "description": "The script function to wrap."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create an asynchronous callback for the 'Tick' event\nconst onTick = JavaWrapper.methodToJavaAsync(() => {\n    // This code runs every tick without freezing the game\n});\nconst listener = JsMacros.on('Tick', onTick);\n\n// Create a high-priority async callback\nconst onChat = JavaWrapper.methodToJavaAsync(100, (event, context) => {\n    // This chat handler will likely run before others\n    Chat.log(\"High priority chat listener fired!\");\n});\nconst chatListener = JsMacros.on('RecvMessage', onChat);"
+      ]
+    },
+    {
+      "name": "deferCurrentTask",
+      "signature": "deferCurrentTask(priorityAdjust)",
+      "returnType": "void",
+      "description": "(JavaScript/JEP only) Puts the currently executing task at the back of the execution queue, allowing other pending tasks to run. This is an advanced feature for long-running loops or tasks within an event callback that need to avoid blocking other events for too long.",
+      "parameters": [
+        {
+          "name": "priorityAdjust",
+          "type": "int",
+          "description": "(Optional, Default: 0) An amount to add to the task's current priority before it is re-queued."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Example of a long-running task that yields to other events\nconst longTask = () => {\n    while (true) {\n        // do some work...\n        Time.sleep(10); // prevent 100% cpu usage\n        JavaWrapper.deferCurrentTask(); // Move to the back of the queue to let other events run\n    }\n};\n// Run this in a separate thread to not block the main script\nJsMacros.runScript(\"path/to/script/with/longTask.js\", true);"
+      ]
+    },
+    {
+      "name": "getCurrentPriority",
+      "signature": "getCurrentPriority()",
+      "returnType": "int",
+      "description": "(JavaScript/JEP only) Gets the priority of the currently executing task.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const onTick = JavaWrapper.methodToJavaAsync(() => {\n    const priority = JavaWrapper.getCurrentPriority();\n    Chat.log(`This tick task is running with priority: ${priority}`);\n});\nJsMacros.on('Tick', onTick);"
+      ]
+    },
+    {
+      "name": "stop",
+      "signature": "stop()",
+      "returnType": "void",
+      "description": "Stops the execution of the current script context.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const file = FS.open(\"config.json\");\nconst content = file.read();\nfile.close();\n\nif (!content) {\n    Chat.log(\"&cError: config.json is empty! Stopping script.\");\n    JavaWrapper.stop();\n}\n\n// This part will not be reached if the file is empty\nChat.log(\"Config loaded successfully.\");"
+      ]
+    }
+  ]
+}

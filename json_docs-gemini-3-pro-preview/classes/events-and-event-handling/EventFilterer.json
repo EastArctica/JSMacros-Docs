@@ -1,0 +1,348 @@
+[
+  {
+    "name": "EventFilterer",
+    "fullClassName": "EventFilterer",
+    "since": "1.9.1",
+    "description": "A fundamental interface in JSMacros that provides sophisticated event filtering capabilities to control which events trigger listeners.",
+    "overview": "Event filters are essential when working with frequently triggered events like packet events or block updates. Instead of processing every single event, you can specify conditions that must be met before your script logic executes.",
+    "methods": [
+      {
+        "name": "canFilter",
+        "signature": "canFilter(event)",
+        "returnType": "boolean",
+        "description": "Returns whether this filterer can handle the specified event type.",
+        "parameters": [
+          {
+            "name": "event",
+            "type": "String",
+            "description": "The event name to check"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "test",
+        "signature": "test(event)",
+        "returnType": "boolean",
+        "description": "Tests whether an event passes the filter criteria.",
+        "parameters": [
+          {
+            "name": "event",
+            "type": "BaseEvent",
+            "description": "The event to test"
+          }
+        ],
+        "static": false,
+        "examples": []
+      }
+    ],
+    "constructors": []
+  },
+  {
+    "name": "FiltererSendPacket",
+    "fullClassName": "FiltererSendPacket",
+    "extends": "EventFilterer",
+    "since": "1.9.1",
+    "description": "Filters outgoing packet events based on packet type.",
+    "methods": [
+      {
+        "name": "setType",
+        "signature": "setType(type)",
+        "returnType": "FiltererSendPacket",
+        "description": "Set the packet type to filter.",
+        "parameters": [
+          {
+            "name": "type",
+            "type": "String|null",
+            "description": "Packet name or null for all packets"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Create filter for chat messages\nconst chatFilter = JsMacros.createEventFilterer(\"SendPacket\");\nchatFilter.setType(\"ChatMessage\");\n\nJsMacros.on(\"SendPacket\", chatFilter, (event) => {\n    Chat.log(\"Sending chat message:\", event.message);\n});",
+          "// Filter for command packets containing \"help\"\nconst filterer = JsMacros.createEventFilterer(\"SendPacket\");\nfilterer.setType(\"ChatMessage\");\n\nJsMacros.on(\"SendPacket\", filterer, (event) => {\n    if (event.message && event.message.includes(\"/help\")) {\n        Chat.log(\"Help command detected:\", event.message);\n    }\n});"
+        ]
+      }
+    ],
+    "constructors": []
+  },
+  {
+    "name": "FiltererRecvPacket",
+    "fullClassName": "FiltererRecvPacket",
+    "extends": "EventFilterer",
+    "since": "1.9.1",
+    "description": "Filters incoming packet events based on packet type.",
+    "methods": [
+      {
+        "name": "setType",
+        "signature": "setType(type)",
+        "returnType": "FiltererRecvPacket",
+        "description": "Set the packet type to filter.",
+        "parameters": [
+          {
+            "name": "type",
+            "type": "String|null",
+            "description": "Packet name or null for all packets"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Filter for health update packets\nconst healthFilter = JsMacros.createEventFilterer(\"RecvPacket\");\nhealthFilter.setType(\"HealthUpdate\");\n\nJsMacros.on(\"RecvPacket\", healthFilter, (event) => {\n    Chat.log(\"Health updated:\", event.health);\n});",
+          "// Listen to all packets except keepalive packets\nconst keepaliveFilter = JsMacros.createEventFilterer(\"RecvPacket\").setType(\"KeepAlive\");\nconst allPacketsFilter = JsMacros.createEventFilterer(\"RecvPacket\");\nconst nonKeepaliveFilter = JsMacros.invertEventFilterer(keepaliveFilter);\n\nJsMacros.on(\"RecvPacket\", nonKeepaliveFilter, (event) => {\n    Chat.log(\"Interesting packet received:\", event.type);\n});"
+        ]
+      }
+    ],
+    "constructors": []
+  },
+  {
+    "name": "FiltererBlockUpdate",
+    "fullClassName": "FiltererBlockUpdate",
+    "extends": "EventFilterer",
+    "since": "1.9.1",
+    "description": "Filters block update events based on position, block type, update type, and block states.",
+    "methods": [
+      {
+        "name": "setPos",
+        "signature": "setPos(x, y, z)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set a single position to filter using coordinates.",
+        "parameters": [
+          {
+            "name": "x",
+            "type": "int",
+            "description": "X coordinate"
+          },
+          {
+            "name": "y",
+            "type": "int",
+            "description": "Y coordinate"
+          },
+          {
+            "name": "z",
+            "type": "int",
+            "description": "Z coordinate"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setPos",
+        "signature": "setPos(pos)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set a single position to filter using a BlockPosHelper object.",
+        "parameters": [
+          {
+            "name": "pos",
+            "type": "BlockPosHelper",
+            "description": "Position object"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setArea",
+        "signature": "setArea(x1, y1, z1, x2, y2, z2)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set a cubic area to filter using coordinates.",
+        "parameters": [
+          {
+            "name": "x1",
+            "type": "int",
+            "description": "Start X"
+          },
+          {
+            "name": "y1",
+            "type": "int",
+            "description": "Start Y"
+          },
+          {
+            "name": "z1",
+            "type": "int",
+            "description": "Start Z"
+          },
+          {
+            "name": "x2",
+            "type": "int",
+            "description": "End X"
+          },
+          {
+            "name": "y2",
+            "type": "int",
+            "description": "End Y"
+          },
+          {
+            "name": "z2",
+            "type": "int",
+            "description": "End Z"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Filter for diamond ore updates in specific area\nconst diamondFilter = JsMacros.createEventFilterer(\"BlockUpdate\");\ndiamondFilter.setBlockId(\"minecraft:diamond_ore\");\ndiamondFilter.setArea(100, 0, 100, 200, 50, 200);\n\nJsMacros.on(\"BlockUpdate\", diamondFilter, (event) => {\n    Chat.log(\"Diamond ore found at:\", event.block.getBlockPos());\n});"
+        ]
+      },
+      {
+        "name": "setArea",
+        "signature": "setArea(pos1, pos2)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set a cubic area to filter using BlockPosHelper objects.",
+        "parameters": [
+          {
+            "name": "pos1",
+            "type": "BlockPosHelper",
+            "description": "Corner position 1"
+          },
+          {
+            "name": "pos2",
+            "type": "BlockPosHelper",
+            "description": "Corner position 2"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setBlockId",
+        "signature": "setBlockId(id)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set the block ID to filter.",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "String",
+            "description": "Block ID (e.g., \"minecraft:diamond_ore\")"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setUpdateType",
+        "signature": "setUpdateType(type)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set the update type to filter.",
+        "parameters": [
+          {
+            "name": "type",
+            "type": "String",
+            "description": "Update type name"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setBlockStates",
+        "signature": "setBlockStates(states)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set multiple block state properties.",
+        "parameters": [
+          {
+            "name": "states",
+            "type": "Map<String,String>",
+            "description": "Map of property names to values"
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setBlockState",
+        "signature": "setBlockState(property, value)",
+        "returnType": "FiltererBlockUpdate",
+        "description": "Set a single block state property.",
+        "parameters": [
+          {
+            "name": "property",
+            "type": "String",
+            "description": "Property name"
+          },
+          {
+            "name": "value",
+            "type": "String|null",
+            "description": "Property value, or null to ensure property is absent"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Monitor any redstone-related block changes in a loaded area\nconst redstoneFilter = JsMacros.createEventFilterer(\"BlockUpdate\");\nredstoneFilter.setBlockId(\"minecraft:redstone_wire\");\nredstoneFilter.setArea(0, 0, 0, 100, 255, 100);\nredstoneFilter.setBlockState(\"power\", \"15\"); // Only maximum power\n\nJsMacros.on(\"BlockUpdate\", redstoneFilter, (event) => {\n    Chat.log(\"Redstone activated at:\", event.block.getBlockPos());\n});"
+        ]
+      }
+    ],
+    "constructors": []
+  },
+  {
+    "name": "FiltererModulus",
+    "fullClassName": "FiltererModulus",
+    "extends": "EventFilterer",
+    "since": "1.9.1",
+    "description": "Process only every nth event to reduce lag with high-frequency events.",
+    "methods": [
+      {
+        "name": "setQuotient",
+        "signature": "setQuotient(quotient)",
+        "returnType": "FiltererModulus",
+        "description": "Change the divisor used to determine how often events are processed.",
+        "parameters": [
+          {
+            "name": "quotient",
+            "type": "int",
+            "description": "New divisor value (will be converted to positive)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Process only every 10th packet\nconst modFilter = JsMacros.createModulusEventFilterer(10);\n\nJsMacros.on(\"SendPacket\", modFilter, (event) => {\n    Chat.log(\"Processing 1 in 10 packets:\", event.type);\n});"
+        ]
+      }
+    ],
+    "constructors": []
+  },
+  {
+    "name": "ComposedEventFilterer",
+    "fullClassName": "ComposedEventFilterer",
+    "extends": "EventFilterer",
+    "since": "1.9.1",
+    "description": "Allows combining multiple filters using AND/OR logic.",
+    "methods": [
+      {
+        "name": "and",
+        "signature": "and(filterer)",
+        "returnType": "ComposedEventFilterer",
+        "description": "Adds a filter using logical AND (all conditions must be true).",
+        "parameters": [
+          {
+            "name": "filterer",
+            "type": "EventFilterer",
+            "description": "The filterer to combine"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Only check every 5th event to reduce processing\nconst modulatedFilter = JsMacros.createModulusEventFilterer(5);\nconst composedFilter = JsMacros.createComposedEventFilterer(oreFilter);\ncomposedFilter.and(modulatedFilter);"
+        ]
+      },
+      {
+        "name": "or",
+        "signature": "or(filterer)",
+        "returnType": "ComposedEventFilterer",
+        "description": "Adds a filter using logical OR (any condition can be true).",
+        "parameters": [
+          {
+            "name": "filterer",
+            "type": "EventFilterer",
+            "description": "The filterer to combine"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Create composed filter with OR logic\nconst messageFilter = JsMacros.createComposedEventFilterer(chatFilter);\nmessageFilter.or(commandFilter); // Triggers for chat OR command packets"
+        ]
+      }
+    ],
+    "constructors": []
+  }
+]

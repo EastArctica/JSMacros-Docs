@@ -1,0 +1,58 @@
+{
+  "name": "GrindStoneInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.GrindStoneInventory",
+  "extends": "Inventory<GrindstoneScreen>",
+  "since": "1.8.4",
+  "description": "The GrindStoneInventory class provides specialized access to Minecraft's grindstone interface, allowing scripts to interact with grindstone operations such as disenchanting items and repairing equipment.",
+  "overview": "This class extends the base Inventory class and adds grindstone-specific functionality for managing input slots, output results, and experience calculation. Grindstones in Minecraft have three main slots: Top Input (Slot 0), Bottom Input (Slot 1), and Output (Slot 2). instances are typically obtained via Inventory.create() when a grindstone screen is open.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getTopInput",
+      "signature": "getTopInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently placed in the top input slot (Slot 0) of the grindstone.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const topItem = inv.getTopInput();",
+        "if (topItem.isEmpty()) { Chat.log('Top slot is empty'); }"
+      ]
+    },
+    {
+      "name": "getBottomInput",
+      "signature": "getBottomInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently placed in the bottom input slot (Slot 1) of the grindstone.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bottomItem = inv.getBottomInput();"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the resulting item in the output slot (Slot 2). This slot contains the result of the repair or disenchanting operation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const output = inv.getOutput();",
+        "if (!output.isEmpty()) { Chat.log('Result is ready: ' + output.getName().getString()); }"
+      ]
+    },
+    {
+      "name": "simulateXp",
+      "signature": "simulateXp()",
+      "returnType": "int",
+      "description": "Calculates the simulated experience point reward for the current operation. Note that actual XP rewards can vary between the calculated minimum and double that amount.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const xpReward = inv.simulateXp();",
+        "Chat.log(`Expected XP: ${xpReward} - ${xpReward * 2} orbs`);"
+      ]
+    }
+  ]
+}

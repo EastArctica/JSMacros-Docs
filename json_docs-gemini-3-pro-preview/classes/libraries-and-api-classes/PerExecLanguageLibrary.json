@@ -1,0 +1,27 @@
+{
+  "name": "PerExecLanguageLibrary",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.PerExecLanguageLibrary",
+  "extends": "BaseLibrary",
+  "since": "1.0.0",
+  "description": "A base abstract class for per-execution, per-language libraries in JsMacros. This class serves as the foundation for creating library implementations that are specific to both a particular script execution context and a particular language implementation.",
+  "overview": "The `PerExecLanguageLibrary` combines the characteristics of both per-execution and per-language libraries, meaning that a new instance is created for each script execution and each language type that supports it. This provides maximum isolation and language-specific functionality while still being tied to individual script contexts.\n\nThis class is part of JsMacros' library system architecture.\n\n## Class Purpose\n\nThe `PerExecLanguageLibrary` is designed for libraries that need:\n1. **Execution Context Access**: Access to the specific script context (`T`) in which they are running\n2. **Language Integration**: Knowledge of the specific language implementation (`Class<? extends BaseLanguage<U, T>>`) being used\n3. **Instance Isolation**: A fresh instance for each script execution to prevent state contamination\n4. **Language-Specific Behavior**: Different implementations or behavior based on the language being used\n\n## Fields\n\n### protected final ctx\nThe script execution context this library instance is bound to. This context provides access to script-specific information and functionality.\nType: `T extends BaseScriptContext<U>`\n\n### protected final language\nThe language class this library is associated with. This allows the library to adapt its behavior based on the specific language implementation being used.\nType: `Class<? extends BaseLanguage<U, T>>`\n\n## Library System Architecture\n\nLibraries extending `PerExecLanguageLibrary` are automatically discovered and registered through the `@Library` annotation. The library system automatically discovers classes, maps them to language types, and creates new instances for each script execution.\n\n## Key Benefits\n\n1. **Maximum Isolation**: Each script execution has its own library instance, preventing state conflicts\n2. **Language Optimization**: Libraries can optimize behavior for specific languages\n3. **Context Integration**: Full access to script execution context and state\n4. **Resource Management**: Proper cleanup and resource management per script execution\n5. **Type Safety**: Generic parameters ensure type-safe language and context handling",
+  "constructors": [
+    {
+      "signature": "PerExecLanguageLibrary(T context, Class<? extends BaseLanguage<U, T>> language)",
+      "description": "Internal Use Only. This constructor is used internally by JsMacros' library system and should not be called directly from scripts. Instances of PerExecLanguageLibrary subclasses are automatically created by the LibraryRegistry when a script requires them.",
+      "parameters": [
+        {
+          "name": "context",
+          "type": "T extends BaseScriptContext<U>",
+          "description": "The script execution context this library belongs to"
+        },
+        {
+          "name": "language",
+          "type": "Class<? extends BaseLanguage<U, T>>",
+          "description": "The language class this library is associated with"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

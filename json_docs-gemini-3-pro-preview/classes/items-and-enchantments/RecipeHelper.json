@@ -1,0 +1,154 @@
+{
+  "name": "RecipeHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.RecipeHelper",
+  "since": "JsMacros 1.3.1",
+  "description": "The RecipeHelper class provides a powerful interface for interacting with Minecraft crafting recipes in JSMacros scripts. It allows you to examine recipe details, check craftability, get ingredients and outputs, and even automate the crafting process.",
+  "overview": "RecipeHelper wraps around Minecraft's internal RecipeEntry system and exposes recipe information in a script-friendly format. This class is essential for any scripts that need to work with crafting, recipe management, or automated crafting systems.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Gets the recipe's unique identifier in the format namespace:path.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const recipeId = recipe.getId();\nChat.log(\"Recipe ID:\", recipeId); // e.g., \"minecraft:stick\""
+      ]
+    },
+    {
+      "name": "getIngredients",
+      "signature": "getIngredients()",
+      "returnType": "List<List<ItemStackHelper>>",
+      "description": "Returns the ingredients required for this recipe. Each ingredient slot contains a list of possible items that can be used for that slot (accounting for tags and alternative items).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const ingredients = recipe.getIngredients();\nfor (let i = 0; i < ingredients.length; i++) {\n    const slot = ingredients[i];\n    Chat.log(`Slot ${i} accepts:`, slot.map(item => item.getName()));\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the output item that will be produced when crafting this recipe.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const output = recipe.getOutput();\nChat.log(\"Produces:\", output.getName());\nChat.log(\"Quantity:\", output.getCount());"
+      ]
+    },
+    {
+      "name": "craft",
+      "signature": "craft(boolean craftAll)",
+      "returnType": "RecipeHelper",
+      "description": "Executes the crafting recipe. This method requires that the appropriate crafting screen is still open.",
+      "parameters": [
+        {
+          "name": "craftAll",
+          "type": "boolean",
+          "description": "If true, crafts as many items as possible. If false, crafts one set."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Craft one set\nrecipe.craft(false);\n\n// Craft as many as possible\nrecipe.craft(true);\n\n// Chain multiple operations\nrecipe.craft(false).craft(true);"
+      ]
+    },
+    {
+      "name": "getGroup",
+      "signature": "getGroup()",
+      "returnType": "String",
+      "description": "Gets the group this recipe belongs to. Groups are used to organize similar recipes in the recipe book.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const group = recipe.getGroup();\nif (group) {\n    Chat.log(\"Recipe group:\", group);\n}"
+      ]
+    },
+    {
+      "name": "hasRecipeRemainders",
+      "signature": "hasRecipeRemainders()",
+      "returnType": "boolean",
+      "description": "Checks if any ingredient in this recipe has a remainder item (like buckets retaining their empty form after crafting).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (recipe.hasRecipeRemainders()) {\n    Chat.log(\"This recipe has remainder items\");\n}"
+      ]
+    },
+    {
+      "name": "getRecipeRemainders",
+      "signature": "getRecipeRemainders()",
+      "returnType": "List<List<ItemStackHelper>>",
+      "description": "Returns all possible remainder items for ingredients that have recipe remainders.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const remainders = recipe.getRecipeRemainders();\nfor (const remainderList of remainders) {\n    Chat.log(\"Possible remainders:\", remainderList.map(item => item.getName()));\n}"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "String",
+      "description": "Gets the type of recipe (e.g., \"minecraft:crafting_shaped\", \"minecraft:smelting\").",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const recipeType = recipe.getType();\nChat.log(\"Recipe type:\", recipeType);\nswitch (recipeType) {\n    case \"minecraft:crafting_shaped\":\n        Chat.log(\"Shaped crafting recipe\");\n        break;\n    case \"minecraft:crafting_shapeless\":\n        Chat.log(\"Shapeless crafting recipe\");\n        break;\n    case \"minecraft:smelting\":\n        Chat.log(\"Smelting recipe\");\n        break;\n}"
+      ]
+    },
+    {
+      "name": "canCraft",
+      "signature": "canCraft()",
+      "returnType": "boolean",
+      "description": "Checks if the player has sufficient materials to craft at least one set of this recipe.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (recipe.canCraft()) {\n    Chat.log(\"You can craft this recipe!\");\n    recipe.craft(false);\n} else {\n    Chat.log(\"Insufficient materials\");\n}"
+      ]
+    },
+    {
+      "name": "canCraft",
+      "signature": "canCraft(int amount)",
+      "returnType": "boolean",
+      "description": "Checks if the player has sufficient materials to craft the specified number of recipe sets.",
+      "parameters": [
+        {
+          "name": "amount",
+          "type": "int",
+          "description": "The number of recipe sets to check for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const desiredAmount = 10;\nif (recipe.canCraft(desiredAmount)) {\n    Chat.log(`You can craft ${desiredAmount} of this recipe`);\n} else {\n    Chat.log(`Insufficient materials for ${desiredAmount} sets`);\n}"
+      ]
+    },
+    {
+      "name": "getCraftableAmount",
+      "signature": "getCraftableAmount()",
+      "returnType": "int",
+      "description": "Calculates how many complete sets of the recipe can be crafted with the player's current inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxCraftable = recipe.getCraftableAmount();\nChat.log(`You can craft ${maxCraftable} sets of this recipe`);\n\nif (maxCraftable > 0) {\n    recipe.craft(true); // Craft as many as possible\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a formatted string representation of the recipe containing its ID.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(recipe.toString()); // RecipeHelper:{\"id\": \"minecraft:stick\"}"
+      ]
+    }
+  ]
+}

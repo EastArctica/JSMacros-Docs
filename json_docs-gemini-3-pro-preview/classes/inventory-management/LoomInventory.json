@@ -1,0 +1,151 @@
+{
+  "name": "LoomInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.LoomInventory",
+  "extends": "Inventory<LoomScreen>",
+  "since": "1.5.1",
+  "description": "The LoomInventory class provides functionality for interacting with loom screens in Minecraft, allowing for the addition of patterns to banners.",
+  "overview": "The LoomInventory class provides functionality for interacting with loom screens in Minecraft. Looms are used to add patterns to banners using various dye patterns and banner pattern items. This class extends the base Inventory class and adds loom-specific functionality while inheriting all standard inventory operations.\n\nThis class is automatically created when you open a loom screen and can be accessed through Player.getInventory() or Inventory.create() when a loom is open.\n\nThe loom interface consists of:\n- **Banner Slot** - The banner to be modified (Slot 0)\n- **Dye Slot** - The dye color to use (Slot 1)\n- **Pattern Slot** - Banner pattern items that unlock special patterns (Slot 2)\n- **Output Slot** - The resulting banner with applied pattern (Slot 3)\n- **Pattern Selection** - Scrollable list of available patterns",
+  "constructors": [
+    {
+      "signature": "LoomInventory(inventory)",
+      "description": "Creates a new LoomInventory instance for the specified loom screen. Note: This constructor is primarily used internally by JSMacros; scripts typically obtain instances through Player.getInventory() or Inventory.create().",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "LoomScreen",
+          "description": "The loom screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "listAvailablePatterns",
+      "signature": "listAvailablePatterns()",
+      "returnType": "Array<String>",
+      "description": "Lists the pattern IDs currently available based on the items in the loom.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function explorePatterns() {\n    const inventory = Player.getInventory();\n    if (!inventory || !inventory.getType().includes(\"Loom\")) {\n        Chat.log(\"Open a loom first!\");\n        return;\n    }\n\n    const currentPatterns = inventory.listAvailablePatterns();\n    Chat.log(`Found ${currentPatterns.length} patterns:`);\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "selectPatternId",
+      "signature": "selectPatternId(patternId)",
+      "returnType": "boolean",
+      "description": "Selects a specific pattern by its resource ID (e.g., 'minecraft:stripe_bottom'). Returns true if successful.",
+      "parameters": [
+        {
+          "name": "patternId",
+          "type": "String",
+          "description": "The resource location ID of the pattern to select"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Select the pattern\nconst success = inventory.selectPatternId(\"minecraft:stripe_middle\");\nif (success) {\n    Chat.log(`Successfully applied pattern`);\n}",
+        "function createMultipleBanners() {\n    // ...\n    // Apply pattern\n    if (inventory.selectPatternId(pattern)) {\n        // Wait a moment for pattern to be applied\n        JsMacros.waitForEvent(\"Tick\");\n\n        // Take result\n        const output = inventory.getSlot(3);\n        if (!output.isEmpty()) {\n            inventory.click(3);\n            Chat.log(`✓ Created banner with ${pattern}`);\n        }\n    }\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "selectPatternName",
+      "signature": "selectPatternName()",
+      "returnType": "void",
+      "description": "Deprecated. Throws an exception. Use selectPatternId() instead.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "String",
+      "description": "Gets the inventory type information. Used to detect if the current inventory is a Loom.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if current inventory is a loom\nconst inventory = Player.getInventory();\nif (inventory && inventory.getType().includes(\"Loom\")) {\n    Chat.log(\"Currently viewing a loom\");\n    Chat.log(`Loom title: ${inventory.getContainerTitle()}`);\n}"
+      ]
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(slotId)",
+      "returnType": "ItemStack",
+      "description": "Gets the item stack in the specified slot. In a Loom: Slot 0 (Banner), Slot 1 (Dye), Slot 2 (Pattern), Slot 3 (Output).",
+      "parameters": [
+        {
+          "name": "slotId",
+          "type": "int",
+          "description": "The slot index"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Get items from loom slots\nconst inventory = Player.getInventory();\nif (inventory && inventory.getType().includes(\"Loom\")) {\n    // Slot 0: Banner\n    const banner = inventory.getSlot(0);\n    if (!banner.isEmpty()) {\n        Chat.log(`Banner: ${banner.getName().getString()}`);\n    }\n\n    // Slot 1: Dye\n    const dye = inventory.getSlot(1);\n    // ...\n\n    // Slot 3: Output\n    const output = inventory.getSlot(3);\n    if (!output.isEmpty()) {\n        Chat.log(`Output: ${output.getName().getString()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "click",
+      "signature": "click(slotId)",
+      "returnType": "Inventory",
+      "description": "Clicks on a slot in the inventory. Used to place items in the loom or take the output result.",
+      "parameters": [
+        {
+          "name": "slotId",
+          "type": "int",
+          "description": "The slot index to click"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n\n// Place items in loom slots\ninventory.click(0); // Click banner slot\ninventory.click(1); // Click dye slot\ninventory.click(2); // Click pattern item slot\n\n// Take result from output slot\ninventory.click(3); // Click output slot"
+      ]
+    },
+    {
+      "name": "quick",
+      "signature": "quick(slotId)",
+      "returnType": "Inventory",
+      "description": "Performs a shift-click (quick move) on a slot.",
+      "parameters": [
+        {
+          "name": "slotId",
+          "type": "int",
+          "description": "The slot index to shift-click"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Quick move items\ninventory.quick(36); // Move banner from player inventory to loom\ninventory.quick(37); // Move dye from player inventory to loom"
+      ]
+    },
+    {
+      "name": "contains",
+      "signature": "contains(item)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains a specific item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "String | ItemStack",
+          "description": "The item ID or ItemStack to search for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n\n// Check if loom has specific dye\nconst hasRedDye = inventory.contains(\"minecraft:red_dye\");\nif (hasRedDye) {\n    Chat.log(\"Loom has red dye!\");\n}"
+      ]
+    },
+    {
+      "name": "getTotalSlots",
+      "signature": "getTotalSlots()",
+      "returnType": "int",
+      "description": "Gets the total number of slots in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst totalSlots = inventory.getTotalSlots();\nChat.log(`Total loom slots: ${totalSlots}`);"
+      ]
+    }
+  ]
+}

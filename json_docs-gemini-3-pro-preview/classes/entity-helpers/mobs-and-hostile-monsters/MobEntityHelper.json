@@ -1,0 +1,10 @@
+{
+  "name": "MobEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.MobEntityHelper<T extends MobEntity>",
+  "extends": "LivingEntityHelper<T>",
+  "since": "1.8.4",
+  "description": "Represents a mob entity in the world. MobEntityHelper provides access to mob-specific properties and behaviors such as attack states and AI control. This class serves as a base for all mob entities including hostile monsters, passive mobs, and boss entities.",
+  "overview": "Mob entities are living entities that have artificial intelligence (AI) and can actively participate in combat or other autonomous behaviors. This includes most creatures in Minecraft that can move, attack, and make decisions independently.\n\nThis class extends `LivingEntityHelper` and inherits all methods for health, movement, equipment, and other living entity properties.",
+  "constructors": [],
+  "methods": []
+}

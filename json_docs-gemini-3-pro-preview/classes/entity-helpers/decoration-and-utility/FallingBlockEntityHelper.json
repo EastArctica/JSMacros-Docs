@@ -1,0 +1,33 @@
+{
+  "name": "FallingBlockEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.other.FallingBlockEntityHelper",
+  "extends": "EntityHelper<FallingBlockEntity>",
+  "since": "1.8.4",
+  "description": "The FallingBlockEntityHelper class provides specialized access to falling block entities in Minecraft, offering methods to monitor falling blocks and their properties.",
+  "overview": "The `FallingBlockEntityHelper` class provides specialized access to falling block entities in Minecraft, offering methods to monitor falling blocks and their properties. This class extends `EntityHelper` and inherits all functionality for entities including position tracking, movement states, and world interaction capabilities.\n\nThis helper is particularly useful for creating scripts that monitor falling blocks, track block physics, detect block falling events, or coordinate with falling block mechanics in contraptions and redstone devices.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getOriginBlockPos",
+      "signature": "public BlockPosHelper getOriginBlockPos()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns the original position where the block started falling from. This is useful for tracking how far blocks have fallen, detecting block collapse patterns, or monitoring structural integrity of buildings.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entities = World.getEntities();\nentities.forEach(entity => {\n    if (entity.is(\"minecraft:falling_block\")) {\n        const fallingBlock = entity;\n        const originPos = fallingBlock.getOriginBlockPos();\n        const currentPos = fallingBlock.getPos();\n\n        Chat.log(`Falling block from [${originPos.x}, ${originPos.y}, ${originPos.z}] now at [${currentPos.x.toFixed(1)}, ${currentPos.y.toFixed(1)}, ${currentPos.z.toFixed(1)}]`);\n\n        // Highlight falling blocks with different colors based on distance fallen\n        const fallDistance = originPos.y - currentPos.y;\n        if (fallDistance > 10) {\n            fallingBlock.setGlowing(true);\n            fallingBlock.setGlowingColor(0xFF0000); // Red for long falls\n        } else {\n            fallingBlock.setGlowing(true);\n            fallingBlock.setGlowingColor(0xFFFF00); // Yellow for short falls\n        }\n    }\n});"
+      ]
+    },
+    {
+      "name": "getBlockState",
+      "signature": "public BlockStateHelper getBlockState()",
+      "returnType": "BlockStateHelper",
+      "description": "Returns the block state of this falling block, containing information about the block type and properties. This is essential for identifying dangerous blocks like anvils, valuable blocks like diamonds, or for categorizing different types of falling materials.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entities = World.getEntities();\nentities.forEach(entity => {\n    if (entity.is(\"minecraft:falling_block\")) {\n        const fallingBlock = entity;\n        const blockState = fallingBlock.getBlockState();\n        const blockType = blockState.getBlock().getId();\n        const currentPos = fallingBlock.getPos();\n\n        Chat.log(`${blockType} is falling at [${currentPos.x.toFixed(1)}, ${currentPos.y.toFixed(1)}, ${currentPos.z.toFixed(1)}]`);\n\n        // Different behavior based on block type\n        if (blockType === \"minecraft:anvil\") {\n            Chat.log(\"&cWarning: Falling anvil detected! Potential damage zone.\");\n            fallingBlock.setGlowing(true);\n            fallingBlock.setGlowingColor(0xFF0000); // Red for dangerous blocks\n        } else if (blockType === \"minecraft:gravel\" || blockType === \"minecraft:sand\") {\n            fallingBlock.setGlowing(true);\n            fallingBlock.setGlowingColor(0xFFD700); // Gold for natural falling blocks\n        } else {\n            fallingBlock.setGlowing(true);\n            fallingBlock.setGlowingColor(0x00FF00); // Green for other blocks\n        }\n    }\n});"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "ClassBuilder.BodyBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.BodyBuilder<T>",
+  "extends": null,
+  "since": "1.8.4",
+  "description": "The ClassBuilder.BodyBuilder class is an advanced builder for creating method bodies that combine Java bytecode with JavaScript (Guest) code.",
+  "overview": "This powerful tool enables seamless integration between compiled Java code and runtime JavaScript execution, allowing you to build sophisticated methods with mixed execution contexts.\n\nBodyBuilder instances are obtained through the buildBody() method of MethodBuilder or ConstructorBuilder and provide a fluent API for constructing method bodies that can execute both Java code and JavaScript functions within the same method implementation.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "appendJavaCode",
+      "signature": "appendJavaCode(String code)",
+      "returnType": "BodyBuilder<T>",
+      "description": "Appends Java bytecode code to the method body. Code is appended in the order specified and can access fields, parameters, and local variables.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "String",
+          "description": "The Java code to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "bodyBuilder.appendJavaCode(\"int result = this.calculate();\");\nbodyBuilder.appendJavaCode(\"if (result > 0) {\");\nbodyBuilder.appendJavaCode(\"    Chat.log(\\\"Positive result: \\\" + result);\");\nbodyBuilder.appendJavaCode(\"}\");"
+      ]
+    },
+    {
+      "name": "appendGuestCode",
+      "signature": "appendGuestCode(MethodWrapper methodWrapper, String parameterCode, String returnCode)",
+      "returnType": "BodyBuilder<T>",
+      "description": "Appends JavaScript (Guest) code that will be executed at runtime. The code executes in JavaScript context and can access JSMacros APIs.",
+      "parameters": [
+        {
+          "name": "methodWrapper",
+          "type": "MethodWrapper",
+          "description": "JavaScript function wrapped for Java execution"
+        },
+        {
+          "name": "parameterCode",
+          "type": "String",
+          "description": "Java code that creates Object[] parameter array"
+        },
+        {
+          "name": "returnCode",
+          "type": "String",
+          "description": "Java code for return type casting (can be null)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const wrapper = JavaWrapper.methodToJava((self, args) => {\n    const value = args[0];\n    return value.toUpperCase();\n});\n\nbodyBuilder.appendGuestCode(\n    wrapper,\n    \"new Object[]{input}\",           // Parameters to pass to JavaScript\n    \"String.class\"                   // Return type casting\n);"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "T",
+      "description": "Finalizes the method body and returns to the parent builder. This method must be called to compile and apply the method body.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = bodyBuilder.finish();"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "name": "DisplayEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.display.DisplayEntityHelper",
+  "extends": "EntityHelper<DisplayEntity>",
+  "since": "1.9.1",
+  "description": "Specialized wrapper for Minecraft display entities providing access to properties such as transformation, rendering settings, brightness, and visual effects.",
+  "overview": "The `DisplayEntityHelper` class is a specialized wrapper for Minecraft display entities (introduced in 1.19.4). It serves as the base class for all display entity helpers and offers comprehensive methods for querying display entity information, positioning, interpolation states, and rendering properties. Display entities are typically obtained through entity-related events, world queries, or when specifically filtering for display entity types.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getLerpTargetX",
+      "signature": "getLerpTargetX()",
+      "returnType": "double",
+      "description": "Gets the target X coordinate for the entity's interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const targetX = entity.getLerpTargetX();"
+      ]
+    },
+    {
+      "name": "getLerpTargetY",
+      "signature": "getLerpTargetY()",
+      "returnType": "double",
+      "description": "Gets the target Y coordinate for the entity's interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const targetY = entity.getLerpTargetY();"
+      ]
+    },
+    {
+      "name": "getLerpTargetZ",
+      "signature": "getLerpTargetZ()",
+      "returnType": "double",
+      "description": "Gets the target Z coordinate for the entity's interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const targetZ = entity.getLerpTargetZ();"
+      ]
+    },
+    {
+      "name": "getLerpTargetPitch",
+      "signature": "getLerpTargetPitch()",
+      "returnType": "float",
+      "description": "Gets the target pitch rotation for the entity's interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLerpTargetYaw",
+      "signature": "getLerpTargetYaw()",
+      "returnType": "float",
+      "description": "Gets the target yaw rotation for the entity's interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLerpProgress",
+      "signature": "getLerpProgress(partialTick)",
+      "returnType": "float",
+      "description": "Gets the current interpolation progress.",
+      "parameters": [
+        {
+          "name": "partialTick",
+          "type": "float",
+          "description": "The partial tick value (usually 1.0 for scripts)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const progress = entity.getLerpProgress(1.0);"
+      ]
+    },
+    {
+      "name": "getBillboardMode",
+      "signature": "getBillboardMode()",
+      "returnType": "String",
+      "description": "Gets the billboard render mode of the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const billboardMode = entity.getBillboardMode();"
+      ]
+    },
+    {
+      "name": "getVisibilityBoundingBox",
+      "signature": "getVisibilityBoundingBox()",
+      "returnType": "Box",
+      "description": "Gets the bounding box used for visibility checks.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getViewRange",
+      "signature": "getViewRange()",
+      "returnType": "float",
+      "description": "Gets the view range of the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const viewRange = entity.getViewRange();"
+      ]
+    },
+    {
+      "name": "getDisplayWidth",
+      "signature": "getDisplayWidth()",
+      "returnType": "float",
+      "description": "Gets the width of the display.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const width = entity.getDisplayWidth();"
+      ]
+    },
+    {
+      "name": "getDisplayHeight",
+      "signature": "getDisplayHeight()",
+      "returnType": "float",
+      "description": "Gets the height of the display.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const height = entity.getDisplayHeight();"
+      ]
+    },
+    {
+      "name": "getBrightness",
+      "signature": "getBrightness()",
+      "returnType": "int",
+      "description": "Gets the overall brightness override for the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brightness = entity.getBrightness();"
+      ]
+    },
+    {
+      "name": "getSkyBrightness",
+      "signature": "getSkyBrightness()",
+      "returnType": "int",
+      "description": "Gets the sky light brightness component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skyBrightness = entity.getSkyBrightness();"
+      ]
+    },
+    {
+      "name": "getBlockBrightness",
+      "signature": "getBlockBrightness()",
+      "returnType": "int",
+      "description": "Gets the block light brightness component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockBrightness = entity.getBlockBrightness();"
+      ]
+    },
+    {
+      "name": "getShadowRadius",
+      "signature": "getShadowRadius()",
+      "returnType": "float",
+      "description": "Gets the radius of the shadow cast by the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const shadowRadius = entity.getShadowRadius();"
+      ]
+    },
+    {
+      "name": "getShadowStrength",
+      "signature": "getShadowStrength()",
+      "returnType": "float",
+      "description": "Gets the strength/opacity of the shadow cast by the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const shadowStrength = entity.getShadowStrength();"
+      ]
+    },
+    {
+      "name": "getGlowColorOverride",
+      "signature": "getGlowColorOverride()",
+      "returnType": "int",
+      "description": "Gets the glow color override for the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const glowColor = entity.getGlowColorOverride();",
+        "if (glowColor !== 0) Chat.log('#' + glowColor.toString(16));"
+      ]
+    }
+  ]
+}

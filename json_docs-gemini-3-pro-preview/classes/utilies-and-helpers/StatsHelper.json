@@ -1,0 +1,221 @@
+{
+  "name": "StatsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StatsHelper",
+  "extends": "BaseHelper<StatHandler>",
+  "since": "JsMacros 1.8.4",
+  "description": "The StatsHelper class provides access to player statistics and achievements in Minecraft. It allows you to retrieve various statistical data about the player's gameplay, including blocks mined, items crafted, entities killed, custom stats, and more.",
+  "overview": "The StatsHelper class interfaces with Minecraft's native stat tracking system to provide comprehensive access to player statistics. It supports Entity Statistics (kills/deaths), Block Statistics (mined/broken), Item Statistics (usage/crafting/breaking), Custom Statistics, Formatted Display, Bulk Operations, and Server Sync. This helper is typically accessed through Player.getStatistics().",
+  "constructors": [
+    {
+      "signature": "new StatsHelper(StatHandler statHandler)",
+      "description": "Constructs a new StatsHelper. This constructor is primarily for internal use. Use Player.getStatistics() instead.",
+      "parameters": [
+        {
+          "name": "statHandler",
+          "type": "StatHandler",
+          "description": "The underlying Minecraft stat handler object"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getRawStatValue",
+      "signature": "public int getRawStatValue(String statKey)",
+      "returnType": "int",
+      "description": "Retrieves the raw numerical value (ticks, counts, cm) for a specific statistic key.",
+      "parameters": [
+        {
+          "name": "statKey",
+          "type": "String",
+          "description": "The statistic key (e.g., \"stat.minecraft.playOneMinute\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const minutesPlayed = stats.getRawStatValue(\"stat.minecraft.playOneMinute\");"
+      ]
+    },
+    {
+      "name": "getFormattedStatValue",
+      "signature": "public String getFormattedStatValue(String statKey)",
+      "returnType": "String",
+      "description": "Retrieves the human-readable formatted display string for a specific statistic key.",
+      "parameters": [
+        {
+          "name": "statKey",
+          "type": "String",
+          "description": "The statistic key (e.g., \"stat.minecraft.walkOneCm\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const distanceWalked = stats.getFormattedStatValue(\"stat.minecraft.walkOneCm\");"
+      ]
+    },
+    {
+      "name": "getEntityKilled",
+      "signature": "public int getEntityKilled(String entityId)",
+      "returnType": "int",
+      "description": "Gets the count of a specific entity type killed by the player.",
+      "parameters": [
+        {
+          "name": "entityId",
+          "type": "String",
+          "description": "The entity identifier (e.g., \"minecraft:zombie\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const kills = stats.getEntityKilled(\"minecraft:zombie\");"
+      ]
+    },
+    {
+      "name": "getKilledByEntity",
+      "signature": "public int getKilledByEntity(String entityId)",
+      "returnType": "int",
+      "description": "Gets the number of times the player has been killed by a specific entity type.",
+      "parameters": [
+        {
+          "name": "entityId",
+          "type": "String",
+          "description": "The entity identifier (e.g., \"minecraft:skeleton\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const deaths = stats.getKilledByEntity(\"minecraft:skeleton\");"
+      ]
+    },
+    {
+      "name": "getBlockMined",
+      "signature": "public int getBlockMined(String blockId)",
+      "returnType": "int",
+      "description": "Gets the number of times a specific block has been mined.",
+      "parameters": [
+        {
+          "name": "blockId",
+          "type": "String",
+          "description": "The block identifier (e.g., \"minecraft:diamond_ore\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mined = stats.getBlockMined(\"minecraft:diamond_ore\");"
+      ]
+    },
+    {
+      "name": "getItemPickedUp",
+      "signature": "public int getItemPickedUp(String itemId)",
+      "returnType": "int",
+      "description": "Gets the number of times a specific item has been picked up.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The item identifier (e.g., \"minecraft:diamond\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickedUp = stats.getItemPickedUp(\"minecraft:diamond\");"
+      ]
+    },
+    {
+      "name": "getItemUsed",
+      "signature": "public int getItemUsed(String itemId)",
+      "returnType": "int",
+      "description": "Gets the number of times a specific item (tool or consumable) has been used.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The item identifier (e.g., \"minecraft:diamond_pickaxe\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const used = stats.getItemUsed(\"minecraft:diamond_pickaxe\");"
+      ]
+    },
+    {
+      "name": "getItemBroken",
+      "signature": "public int getItemBroken(String itemId)",
+      "returnType": "int",
+      "description": "Gets the number of times a specific item has been broken/depleted.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The item identifier (e.g., \"minecraft:diamond_pickaxe\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const broken = stats.getItemBroken(\"minecraft:diamond_pickaxe\");"
+      ]
+    },
+    {
+      "name": "getItemCrafted",
+      "signature": "public int getItemCrafted(String itemId)",
+      "returnType": "int",
+      "description": "Gets the number of times a specific item has been crafted.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The item identifier (e.g., \"minecraft:bread\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const crafted = stats.getItemCrafted(\"minecraft:bread\");"
+      ]
+    },
+    {
+      "name": "getRawStatMap",
+      "signature": "public Map<String, Integer> getRawStatMap()",
+      "returnType": "Map<String, Integer>",
+      "description": "Retrieves a map containing all available raw statistics keys and their values.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawStats = stats.getRawStatMap();\nfor (const [key, value] of rawStats) {\n    // process stats\n}"
+      ]
+    },
+    {
+      "name": "getCustomFormattedStat",
+      "signature": "public String getCustomFormattedStat(String statKey)",
+      "returnType": "String",
+      "description": "Gets a formatted string for a custom statistic key.",
+      "parameters": [
+        {
+          "name": "statKey",
+          "type": "String",
+          "description": "The custom statistic key (e.g., \"minecraft.boat_one_cm\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const distance = stats.getCustomFormattedStat(\"minecraft.boat_one_cm\");"
+      ]
+    },
+    {
+      "name": "getCustomStat",
+      "signature": "public int getCustomStat(String statKey)",
+      "returnType": "int",
+      "description": "Gets the raw value for a custom statistic key.",
+      "parameters": [
+        {
+          "name": "statKey",
+          "type": "String",
+          "description": "The custom statistic key (e.g., \"minecraft.sneak_time\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sneakTime = stats.getCustomStat(\"minecraft.sneak_time\");"
+      ]
+    }
+  ]
+}

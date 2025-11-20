@@ -1,0 +1,35 @@
+{
+  "name": "RabbitEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.RabbitEntityHelper",
+  "extends": "AnimalEntityHelper<RabbitEntity>",
+  "since": "1.8.4",
+  "description": "The RabbitEntityHelper class provides specialized access to rabbit entities in Minecraft, offering methods to monitor and interact with rabbit-specific behaviors such as variant identification and detection of the special \"killer bunny\" variant.",
+  "overview": "This class extends AnimalEntityHelper and inherits all functionality for animals including breeding mechanics, food preferences, and basic mob behaviors.\n\nThis helper is particularly useful for creating scripts that manage rabbit populations, analyze rabbit variants for breeding or collection purposes, or coordinate with multiple rabbits in automated farming systems.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getVariant",
+      "signature": "getVariant()",
+      "returnType": "String",
+      "description": "Retrieves the specific variant of the rabbit (e.g., 'minecraft:brown', 'minecraft:gold').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const variant = rabbit.getVariant();",
+        "if (rabbit.getVariant() === 'minecraft:gold') {\n    Chat.log('Found a golden rabbit!');\n}"
+      ]
+    },
+    {
+      "name": "isKillerBunny",
+      "signature": "isKillerBunny()",
+      "returnType": "boolean",
+      "description": "Checks if the rabbit is the special hostile 'killer bunny' variant.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isKiller = rabbit.isKillerBunny();",
+        "if (rabbit.isKillerBunny()) {\n    Chat.log('Warning: Killer Bunny detected!');\n}"
+      ]
+    }
+  ]
+}

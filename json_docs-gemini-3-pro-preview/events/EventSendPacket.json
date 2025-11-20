@@ -1,0 +1,18 @@
+{
+  "name": "EventSendPacket",
+  "fullClassName": "EventSendPacket",
+  "description": "This event is fired when a packet is about to be sent to the server.",
+  "overview": "Fires when any packet is about to be sent to the server.\n- The `packet` field contains the packet data\n- This event is cancellable - preventing the packet from being sent\n- Advanced event for network-level monitoring\n- Use with caution as this fires very frequently",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

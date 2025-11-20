@@ -1,0 +1,18 @@
+{
+  "name": "EventRiding",
+  "fullClassName": "EventRiding",
+  "description": "This event is fired when the player starts or stops riding an entity.",
+  "overview": "Backed by class `EventRiding`. This event is fired when the player starts or stops riding any entity. It is not cancellable and is useful for travel tracking and vehicle management.\n\n### Fields\n- **state** (boolean): True if starting to ride, false if stopping.\n- **entity** (EntityHelper | null): The entity being ridden. Can be null when stopping riding or in edge cases.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

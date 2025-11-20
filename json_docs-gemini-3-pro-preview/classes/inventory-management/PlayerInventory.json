@@ -1,0 +1,633 @@
+{
+  "name": "PlayerInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.PlayerInventory",
+  "extends": "RecipeInventory<InventoryScreen>",
+  "since": "1.8.4",
+  "description": "The PlayerInventory class provides comprehensive functionality for interacting with the player's survival inventory screen in Minecraft.",
+  "overview": "The PlayerInventory class provides comprehensive functionality for interacting with the player's survival inventory screen in Minecraft. This includes accessing the main inventory, hotbar, armor slots, offhand, crafting grid, and recipe book functionality. It extends the RecipeInventory class and inherits all standard inventory operations while adding player-specific inventory management features.\n\nThis class is automatically created when you open your inventory screen (typically with 'E' key) and can be accessed through Player.getInventory() or Inventory.create() when the survival inventory is open.\n\nInventory Layout:\n- Hotbar: Slots 0-8 (9 slots)\n- Main Inventory: Slots 9-35 (27 slots)\n- Armor: Slots 5-8 (4 slots)\n- Offhand: Slot 45\n- Crafting Grid: Slots 1-4 (2x2)\n- Crafting Output: Slot 0\n- Crafting Book: Recipe book interface",
+  "constructors": [
+    {
+      "signature": "PlayerInventory(InventoryScreen inventory)",
+      "description": "Creates a new PlayerInventory instance for the player inventory screen. Primarily used internally by JSMacros.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "InventoryScreen",
+          "description": "The player inventory screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getHelmet",
+      "signature": "getHelmet()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently in the helmet armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst helmet = inventory.getHelmet();\nif (!helmet.isEmpty()) {\n    Chat.log(\"Helmet: \" + helmet.getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "getChestplate",
+      "signature": "getChestplate()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently in the chestplate armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst chestplate = inventory.getChestplate();"
+      ]
+    },
+    {
+      "name": "getLeggings",
+      "signature": "getLeggings()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently in the leggings armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst leggings = inventory.getLeggings();"
+      ]
+    },
+    {
+      "name": "getBoots",
+      "signature": "getBoots()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently in the boots armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst boots = inventory.getBoots();"
+      ]
+    },
+    {
+      "name": "getOffhand",
+      "signature": "getOffhand()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently in the offhand slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst offhand = inventory.getOffhand();\nif (!offhand.isEmpty()) {\n    Chat.log(\"Offhand: \" + offhand.getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "isInHotbar",
+      "signature": "isInHotbar(int slot)",
+      "returnType": "boolean",
+      "description": "Checks if the specified slot index is within the hotbar section.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (inventory.isInHotbar(slotUnderMouse)) {\n    Chat.log(\"This is a hotbar slot\");\n}"
+      ]
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput(int x, int y)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item in the crafting grid at the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x coordinate in the grid"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y coordinate in the grid"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the current output item from the crafting result slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const output = inventory.getOutput();\nif (!output.isEmpty()) {\n    Chat.log(\"Can craft: \" + output.getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput()",
+      "returnType": "ItemStackHelper[][]",
+      "description": "Retrieves the entire crafting grid as a 2D array of items.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const craftingGrid = inventory.getInput();\nconst item = craftingGrid[0][0]; // Top-left slot"
+      ]
+    },
+    {
+      "name": "getCraftingWidth",
+      "signature": "getCraftingWidth()",
+      "returnType": "int",
+      "description": "Gets the width of the crafting grid (2 for PlayerInventory).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCraftingHeight",
+      "signature": "getCraftingHeight()",
+      "returnType": "int",
+      "description": "Gets the height of the crafting grid (2 for PlayerInventory).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCraftingSlotCount",
+      "signature": "getCraftingSlotCount()",
+      "returnType": "int",
+      "description": "Gets the total number of slots in the crafting grid.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInputSize",
+      "signature": "getInputSize()",
+      "returnType": "int",
+      "description": "Gets the size of the input area.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCategory",
+      "signature": "getCategory()",
+      "returnType": "Object",
+      "description": "Gets the current recipe book category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCraftableRecipes",
+      "signature": "getCraftableRecipes()",
+      "returnType": "List<RecipeHelper>",
+      "description": "Retrieves a list of recipes that can be crafted with current inventory items.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const recipes = inventory.getCraftableRecipes();\nfor (const recipe of recipes) {\n    Chat.log(\"Can craft: \" + recipe.getOutput().getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "getRecipes",
+      "signature": "getRecipes(boolean craftable)",
+      "returnType": "List<RecipeHelper>",
+      "description": "Retrieves recipes from the recipe book, optionally filtering for craftable ones only.",
+      "parameters": [
+        {
+          "name": "craftable",
+          "type": "boolean",
+          "description": "If true, returns only recipes craftable with current items"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isRecipeBookOpened",
+      "signature": "isRecipeBookOpened()",
+      "returnType": "boolean",
+      "description": "Checks if the recipe book GUI is currently open.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toggleRecipeBook",
+      "signature": "toggleRecipeBook()",
+      "returnType": "void",
+      "description": "Toggles the visibility of the recipe book.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setRecipeBook",
+      "signature": "setRecipeBook(boolean open)",
+      "returnType": "void",
+      "description": "Sets the open state of the recipe book.",
+      "parameters": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "description": "True to open, false to close"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "is",
+      "signature": "is(String type)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory matches a specific type.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "String",
+          "description": "The inventory type to check against (e.g., \"Survival Inventory\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (inventory.is(\"Survival Inventory\")) {\n    Chat.log(\"Player inventory is open\");\n}"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "String",
+      "description": "Gets the type name of the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(\"Inventory type: \" + inventory.getType());"
+      ]
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(int index)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item stack in a specific slot.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The slot index"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = inventory.getSlot(36);\nif (!item.isEmpty()) {\n    Chat.log(\"Item: \" + item.getName().getString());\n}"
+      ]
+    },
+    {
+      "name": "getSlots",
+      "signature": "getSlots(String... sections)",
+      "returnType": "int[]",
+      "description": "Gets the slot indices for specific sections of the inventory.",
+      "parameters": [
+        {
+          "name": "sections",
+          "type": "String...",
+          "description": "Sections to retrieve (e.g., \"main\", \"hotbar\", \"helmet\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainSlots = inventory.getSlots(\"main\");",
+        "const armorSlots = inventory.getSlots(\"helmet\", \"chestplate\", \"leggings\", \"boots\");"
+      ]
+    },
+    {
+      "name": "findFreeHotbarSlot",
+      "signature": "findFreeHotbarSlot()",
+      "returnType": "int",
+      "description": "Finds the first empty slot in the hotbar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const freeSlot = inventory.findFreeHotbarSlot();\nif (freeSlot !== -1) Chat.log(\"Found free slot at \" + freeSlot);"
+      ]
+    },
+    {
+      "name": "findFreeInventorySlot",
+      "signature": "findFreeInventorySlot()",
+      "returnType": "int",
+      "description": "Finds the first empty slot in the main inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "findFreeSlot",
+      "signature": "findFreeSlot(String section)",
+      "returnType": "int",
+      "description": "Finds the first empty slot in a specific section.",
+      "parameters": [
+        {
+          "name": "section",
+          "type": "String",
+          "description": "The section to search"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const freeMain = inventory.findFreeSlot(\"main\");"
+      ]
+    },
+    {
+      "name": "getSlotUnderMouse",
+      "signature": "getSlotUnderMouse()",
+      "returnType": "int",
+      "description": "Gets the index of the slot currently under the mouse cursor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const slot = inventory.getSlotUnderMouse();\nif (slot >= 0) {\n    const item = inventory.getSlot(slot);\n}"
+      ]
+    },
+    {
+      "name": "getLocation",
+      "signature": "getLocation(int slot)",
+      "returnType": "String",
+      "description": "Gets the section name (location) for a specific slot index.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const location = inventory.getLocation(slotUnderMouse);\nChat.log(\"Slot location: \" + location);"
+      ]
+    },
+    {
+      "name": "contains",
+      "signature": "contains(String itemId)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains a specific item.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The item ID to search for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const hasDiamonds = inventory.contains(\"minecraft:diamond\");"
+      ]
+    },
+    {
+      "name": "findItem",
+      "signature": "findItem(String itemId)",
+      "returnType": "int[]",
+      "description": "Finds all slots containing a specific item.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "String",
+          "description": "The item ID to search for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const diamondSlots = inventory.findItem(\"minecraft:diamond\");\nChat.log(\"Diamonds found in: \" + diamondSlots.join(\", \"));"
+      ]
+    },
+    {
+      "name": "getItemCount",
+      "signature": "getItemCount()",
+      "returnType": "Map<String, Integer>",
+      "description": "Returns a summary of counts for all items in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const itemCounts = inventory.getItemCount();\nfor (const [itemId, count] of Object.entries(itemCounts)) {\n    Chat.log(itemId + \": \" + count);\n}"
+      ]
+    },
+    {
+      "name": "getItems",
+      "signature": "getItems(String... sections)",
+      "returnType": "List<ItemStackHelper>",
+      "description": "Retrieves all items from specific sections of the inventory.",
+      "parameters": [
+        {
+          "name": "sections",
+          "type": "String...",
+          "description": "The sections to retrieve items from"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const armorItems = inventory.getItems(\"helmet\", \"chestplate\", \"leggings\", \"boots\");",
+        "const hotbarItems = inventory.getItems(\"hotbar\");"
+      ]
+    },
+    {
+      "name": "click",
+      "signature": "click(int slot)",
+      "returnType": "void",
+      "description": "Simulates a left-click on a slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index to click"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.click(36); // Click first hotbar slot"
+      ]
+    },
+    {
+      "name": "click",
+      "signature": "click(int slot, int button)",
+      "returnType": "void",
+      "description": "Simulates a click on a slot with a specific mouse button.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index to click"
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "description": "0 for left click, 1 for right click"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.click(9, 1); // Right-click main inventory slot"
+      ]
+    },
+    {
+      "name": "quick",
+      "signature": "quick(int slot)",
+      "returnType": "void",
+      "description": "Simulates a shift-click (quick move) on a slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.quick(10); // Shift-click to move items"
+      ]
+    },
+    {
+      "name": "dropSlot",
+      "signature": "dropSlot(int slot, boolean all)",
+      "returnType": "void",
+      "description": "Drops items from a specific slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "description": "True to drop stack, false to drop single item"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.dropSlot(36, false); // Drop one",
+        "inventory.dropSlot(9, true); // Drop stack"
+      ]
+    },
+    {
+      "name": "swapHotbar",
+      "signature": "swapHotbar(int slot, int hotbarSlot)",
+      "returnType": "void",
+      "description": "Swaps an item in the inventory with a specific hotbar slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The source slot index"
+        },
+        {
+          "name": "hotbarSlot",
+          "type": "int",
+          "description": "The target hotbar slot index (0-8)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.swapHotbar(9, 0); // Swap slot 9 with hotbar slot 1"
+      ]
+    },
+    {
+      "name": "split",
+      "signature": "split(int from, int to)",
+      "returnType": "void",
+      "description": "Splits a stack of items from one slot to another.",
+      "parameters": [
+        {
+          "name": "from",
+          "type": "int",
+          "description": "Source slot"
+        },
+        {
+          "name": "to",
+          "type": "int",
+          "description": "Destination slot"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.split(10, 11);"
+      ]
+    },
+    {
+      "name": "grabAll",
+      "signature": "grabAll(int slot)",
+      "returnType": "void",
+      "description": "Double-clicks a slot to grab all matching items.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.grabAll(9);"
+      ]
+    },
+    {
+      "name": "dragClick",
+      "signature": "dragClick(int[] slots, int button)",
+      "returnType": "void",
+      "description": "Performs a drag-click operation across multiple slots.",
+      "parameters": [
+        {
+          "name": "slots",
+          "type": "int[]",
+          "description": "Array of slot indices to drag over"
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "description": "The mouse button (0 for left, 1 for right)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.dragClick([36, 37, 38], 0);"
+      ]
+    },
+    {
+      "name": "getSelectedHotbarSlotIndex",
+      "signature": "getSelectedHotbarSlotIndex()",
+      "returnType": "int",
+      "description": "Gets the index of the currently selected hotbar slot (0-8).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentSlot = inventory.getSelectedHotbarSlotIndex();"
+      ]
+    },
+    {
+      "name": "setSelectedHotbarSlotIndex",
+      "signature": "setSelectedHotbarSlotIndex(int index)",
+      "returnType": "void",
+      "description": "Sets the currently selected hotbar slot.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The hotbar slot index (0-8)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.setSelectedHotbarSlotIndex(2); // Select 3rd slot"
+      ]
+    },
+    {
+      "name": "getHeld",
+      "signature": "getHeld()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently held by the mouse cursor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const heldItem = inventory.getHeld();"
+      ]
+    }
+  ]
+}

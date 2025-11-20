@@ -1,0 +1,18 @@
+{
+  "name": "EventTitle",
+  "fullClassName": "EventTitle",
+  "description": "This event is fired when a title is displayed on screen.",
+  "overview": "Fires when any title is displayed.\n- The `text` field contains the title content\n- Includes server titles and game notifications\n- Not cancellable\n- Useful for tracking important announcements",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

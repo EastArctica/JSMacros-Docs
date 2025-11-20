@@ -1,0 +1,20 @@
+{
+  "name": "EventHealthChange",
+  "fullClassName": "EventHealthChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired whenever the player's health changes, either from taking damage or being healed. It serves as a general event for any health modification.",
+  "overview": "Fields available in the event payload:\n- health (float): The player's new health after change. Base max health is 20.0 (10 hearts).\n- change (float): The amount by which health changed. Negative for damage, positive for healing.\n\nBehavior:\n* Fires for any health modification (damage or healing)\n* The `change` field is negative for damage, positive for healing\n* Serves as a general-purpose health monitoring event\n* Not cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

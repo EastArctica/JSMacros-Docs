@@ -1,0 +1,71 @@
+{
+  "name": "Inventory",
+  "fullClassName": "com.game.api.Inventory",
+  "extends": "com.game.api.Container",
+  "since": "1.2.0",
+  "description": "Represents a storage system for Items within the game world.",
+  "overview": "The Inventory class allows for the management of ItemStacks. It supports fixed capacities, adding/removing items, and checking for containment. It is used by Player and Chest classes to manage contents.",
+  "constructors": [
+    {
+      "signature": "public Inventory(int size, String title)",
+      "description": "Creates a new empty inventory with a specific size and title.",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "description": "The number of slots in the inventory. Must be a multiple of 9."
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "description": "The display title of the inventory UI."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addItem",
+      "signature": "public HashMap<Integer, ItemStack> addItem(ItemStack... items)",
+      "returnType": "HashMap<Integer, ItemStack>",
+      "description": "Stores the given items in the inventory. This will try to fill existing stacks and empty slots as well as it can.",
+      "parameters": [
+        {
+          "name": "items",
+          "type": "ItemStack...",
+          "description": "The items to be added."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.addItem(new ItemStack(Material.DIRT, 64));"
+      ]
+    },
+    {
+      "name": "clear",
+      "signature": "public void clear()",
+      "returnType": "void",
+      "description": "Clears out the whole Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "deserialize",
+      "signature": "public static Inventory deserialize(Map<String, Object> args)",
+      "returnType": "Inventory",
+      "description": "Deserializes an inventory from a map structure.",
+      "parameters": [
+        {
+          "name": "args",
+          "type": "Map<String, Object>",
+          "description": "The map data to deserialize."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Inventory inv = Inventory.deserialize(dataMap);"
+      ]
+    }
+  ]
+}

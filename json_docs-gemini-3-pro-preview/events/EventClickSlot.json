@@ -1,0 +1,29 @@
+{
+  "name": "EventClickSlot",
+  "fullClassName": "EventClickSlot",
+  "description": "This event is fired when the user clicks a slot in an inventory interface.",
+  "overview": "Fires when a player clicks on any inventory slot.\nDifferent click modes and buttons represent different click actions.\nThis event is cancellable - preventing the original click action.\nThe mode and button values follow Minecraft's window click protocol.\nCan be used to intercept or modify inventory interactions.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInventory",
+      "signature": "getInventory()",
+      "returnType": "Inventory<?>",
+      "description": "Returns the inventory object associated with this click event. This provides access to the full inventory, allowing you to examine other slots, get item details, or perform additional inventory operations.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = e.getInventory();\nconst slotItem = inventory.getSlot(slot);"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

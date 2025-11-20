@@ -1,0 +1,132 @@
+{
+  "name": "Pair",
+  "fullClassName": "xyz.wagyourtail.Pair",
+  "extends": "Object",
+  "since": "JSMacros 1.0.0",
+  "description": "The Pair class is a generic utility class in JSMacros that represents a pair of values. It provides a simple way to store and manage two related values together as a single object.",
+  "overview": "The Pair class is a generic container that holds two values of potentially different types:\n- Type-safe storage for two values using Java generics\n- Simple getter and setter methods for both values\n- Useful for returning multiple values from methods\n- Commonly used for key-value associations\n- Lightweight and efficient for temporary data storage\n\nThe class has two variants with different field naming conventions:\n- **Core version** (t, u): General-purpose pair storage\n- **BuildSrc version** (key, value): Optimized for map-like key-value operations",
+  "constructors": [
+    {
+      "signature": "new Pair(first, second)",
+      "description": "Creates a new Pair with the specified first and second values.",
+      "parameters": [
+        {
+          "name": "first",
+          "type": "T",
+          "description": "The first value to store in the pair"
+        },
+        {
+          "name": "second",
+          "type": "U",
+          "description": "The second value to store in the pair"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getFirst",
+      "signature": "getFirst()",
+      "returnType": "T",
+      "description": "Returns the first value stored in the pair.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pair = new Pair(\"username\", \"Player123\");\nconst first = pair.getFirst();\nChat.log(\"First value: \" + first); // Output: \"username\""
+      ]
+    },
+    {
+      "name": "getSecond",
+      "signature": "getSecond()",
+      "returnType": "U",
+      "description": "Returns the second value stored in the pair.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pair = new Pair(\"username\", \"Player123\");\nconst second = pair.getSecond();\nChat.log(\"Second value: \" + second); // Output: \"Player123\""
+      ]
+    },
+    {
+      "name": "setFirst",
+      "signature": "setFirst(first)",
+      "returnType": "void",
+      "description": "Sets the first value of the pair.",
+      "parameters": [
+        {
+          "name": "first",
+          "type": "T",
+          "description": "The new first value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pair = new Pair(\"old\", \"value\");\npair.setFirst(\"new\");\nChat.log(\"Updated first: \" + pair.getFirst()); // Output: \"new\""
+      ]
+    },
+    {
+      "name": "setSecond",
+      "signature": "setSecond(second)",
+      "returnType": "void",
+      "description": "Sets the second value of the pair.",
+      "parameters": [
+        {
+          "name": "second",
+          "type": "U",
+          "description": "The new second value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pair = new Pair(\"key\", \"oldValue\");\npair.setSecond(\"newValue\");\nChat.log(\"Updated second: \" + pair.getSecond()); // Output: \"newValue\""
+      ]
+    },
+    {
+      "name": "getT",
+      "signature": "getT()",
+      "returnType": "T",
+      "description": "Returns the first value using the generic type name. (Alternative to getFirst())",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getU",
+      "signature": "getU()",
+      "returnType": "U",
+      "description": "Returns the second value using the generic type name. (Alternative to getSecond())",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setT",
+      "signature": "setT(t)",
+      "returnType": "void",
+      "description": "Sets the first value using the generic type name. (Alternative to setFirst())",
+      "parameters": [
+        {
+          "name": "t",
+          "type": "T",
+          "description": "The new first value"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setU",
+      "signature": "setU(u)",
+      "returnType": "void",
+      "description": "Sets the second value using the generic type name. (Alternative to setSecond())",
+      "parameters": [
+        {
+          "name": "u",
+          "type": "U",
+          "description": "The new second value"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

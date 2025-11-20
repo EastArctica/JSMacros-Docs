@@ -1,0 +1,131 @@
+{
+  "name": "AdvancementHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.AdvancementHelper",
+  "since": "1.8.4",
+  "description": "The AdvancementHelper class is a World Interaction helper in JsMacros that provides access to Minecraft advancement information.",
+  "overview": "The `AdvancementHelper` class is a World Interaction helper in JsMacros that provides access to Minecraft advancement information. It allows scripts to inspect advancement details, check progress, retrieve rewards, and navigate advancement trees.\n\nThis class wraps around Minecraft's `PlacedAdvancement` and provides a scripting-friendly interface for interacting with the advancement system.\n\n### Accessing AdvancementHelper\n\nAdvancementHelper instances are typically obtained through:\n\n1. **From Advancement Events** - Many advancement-related events provide AdvancementHelper objects\n2. **From Client Methods** - Using methods that return advancement information\n3. **Through Navigation** - Using `getParent()` and `getChildren()` methods to traverse advancement trees",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getParent",
+      "signature": "getParent()",
+      "returnType": "AdvancementHelper | null",
+      "description": "Returns the parent advancement in the advancement tree. Returns null if this is a root advancement.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst parent = advancement.getParent();\n\nif (parent) {\n    Chat.log(`Parent: ${parent.getId()}`);\n} else {\n    Chat.log(\"This is a root advancement\");\n}"
+      ]
+    },
+    {
+      "name": "getChildren",
+      "signature": "getChildren()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns all child advancements that have this advancement as their parent.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst children = advancement.getChildren();\n\nChat.log(`Found ${children.length} child advancements:`);\nchildren.forEach(child => {\n    Chat.log(`- ${child.getId()}`);\n});"
+      ]
+    },
+    {
+      "name": "getRequirements",
+      "signature": "getRequirements()",
+      "returnType": "List<List<String>>",
+      "description": "Returns the requirements structure for this advancement. Requirements are organized as groups where at least one criterion from each group must be met.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst requirements = advancement.getRequirements();\n\nChat.log(`Requirement groups: ${requirements.length}`);\nrequirements.forEach((group, index) => {\n    Chat.log(`Group ${index + 1}: ${group.join(\", \")}`);\n});"
+      ]
+    },
+    {
+      "name": "getRequirementCount",
+      "signature": "getRequirementCount()",
+      "returnType": "int",
+      "description": "Returns the total number of requirement groups for this advancement.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst count = advancement.getRequirementCount();\nChat.log(`Advancement has ${count} requirement groups`);"
+      ]
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Returns the unique identifier for this advancement (e.g., \"minecraft:story/root\").",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst id = advancement.getId();\nChat.log(`Advancement ID: ${id}`);\n\n// Example: Check for specific advancements\nif (id === \"minecraft:story/mine_diamond\") {\n    Chat.log(\"Player mined their first diamond!\");\n}"
+      ]
+    },
+    {
+      "name": "getExperience",
+      "signature": "getExperience()",
+      "returnType": "int",
+      "description": "Returns the amount of experience points awarded by completing this advancement. Returns 0 if no experience reward.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst experience = advancement.getExperience();\n\nif (experience > 0) {\n    Chat.log(`This advancement awards ${experience} XP`);\n} else {\n    Chat.log(\"This advancement doesn't award XP\");\n}"
+      ]
+    },
+    {
+      "name": "getLoot",
+      "signature": "getLoot()",
+      "returnType": "String[]",
+      "description": "Returns the loot table identifiers for this advancement's rewards.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst loot = advancement.getLoot();\n\nif (loot.length > 0) {\n    Chat.log(\"Loot rewards:\");\n    loot.forEach(lootTable => {\n        Chat.log(`- ${lootTable}`);\n    });\n}"
+      ]
+    },
+    {
+      "name": "getRecipes",
+      "signature": "getRecipes()",
+      "returnType": "String[]",
+      "description": "Returns the recipe identifiers that are unlocked by completing this advancement.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst recipes = advancement.getRecipes();\n\nif (recipes.length > 0) {\n    Chat.log(`Unlocks ${recipes.length} recipes:`);\n    recipes.forEach(recipe => {\n        Chat.log(`- ${recipe}`);\n    });\n}"
+      ]
+    },
+    {
+      "name": "getProgress",
+      "signature": "getProgress()",
+      "returnType": "AdvancementProgressHelper",
+      "description": "Returns the current progress of this advancement for the local player.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst progress = advancement.getProgress();\n\nChat.log(`Progress: ${(progress.getPercentage() * 100).toFixed(1)}%`);\nChat.log(`Completed: ${progress.isDone()}`);\nChat.log(`Requirements met: ${progress.countObtainedRequirements()}`);\n\n// Get obtained criteria\nconst obtained = progress.getObtainedCriteria();\nif (obtained.length > 0) {\n    Chat.log(\"Obtained criteria:\", obtained.join(\", \"));\n}"
+      ]
+    },
+    {
+      "name": "toJson",
+      "signature": "toJson()",
+      "returnType": "String",
+      "description": "Returns a JSON string representation of this advancement's data.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nconst jsonData = advancement.toJson();\nChat.log(\"Advancement JSON:\", jsonData);\n\n// You can parse this for detailed inspection\nconst advancementData = JSON.parse(jsonData);\nChat.log(\"Display name:\", advancementData.display?.title);"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this advancement helper.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancement = event.advancement;\nChat.log(advancement.toString()); // e.g., \"AdvancementHelper:{\\\"id\\\": \\\"minecraft:story/root\\\"}\""
+      ]
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "name": "StatusEffectHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StatusEffectHelper",
+  "extends": "BaseHelper<StatusEffectInstance>",
+  "since": "JsMacros 1.2.4",
+  "description": "The StatusEffectHelper class provides a wrapper around Minecraft's status effect instances (potions and effects), allowing scripts to query information about active status effects on entities.",
+  "overview": "The `StatusEffectHelper` class provides a wrapper around Minecraft's status effect instances (potions and effects), allowing scripts to query information about active status effects on entities. Status effects include beneficial effects like Speed and Strength, harmful effects like Poison and Wither, and neutral effects like Night Vision.\n\nThis helper class provides methods to access all key properties of status effects including their type identifier, amplifier level, remaining duration, visual properties, and categorization. It's commonly used when examining player status effects, monitoring entity effects during combat, or tracking potion effects in automation scripts.",
+  "constructors": [
+    {
+      "signature": "StatusEffectHelper(StatusEffectInstance statusEffectInstance)",
+      "description": "Internal constructor that wraps a Minecraft status effect instance.",
+      "parameters": [
+        {
+          "name": "statusEffectInstance",
+          "type": "StatusEffectInstance",
+          "description": "The underlying Minecraft status effect instance to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Gets the identifier of the status effect (e.g., 'minecraft:speed').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const id = effect.getId();",
+        "const name = id.replace('minecraft:', '');"
+      ]
+    },
+    {
+      "name": "getStrength",
+      "signature": "getStrength()",
+      "returnType": "int",
+      "description": "Gets the amplifier level of the status effect. Note that this is 0-based (e.g., Strength I is 0, Strength II is 1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const strength = effect.getStrength();",
+        "const level = strength + 1; // Convert to in-game level"
+      ]
+    },
+    {
+      "name": "getTime",
+      "signature": "getTime()",
+      "returnType": "int",
+      "description": "Gets the remaining duration of the effect in ticks (20 ticks = 1 second).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const time = effect.getTime();",
+        "const minutes = Math.floor(time / 1200);",
+        "const seconds = Math.floor((time % 1200) / 20);"
+      ]
+    },
+    {
+      "name": "getCategory",
+      "signature": "getCategory()",
+      "returnType": "String",
+      "description": "Gets the category of the status effect (BENEFICIAL, HARMFUL, or NEUTRAL).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const category = effect.getCategory();",
+        "if (category === 'HARMFUL') {\n    Chat.log('Warning: Harmful effect!');\n}"
+      ]
+    },
+    {
+      "name": "isAmbient",
+      "signature": "isAmbient()",
+      "returnType": "boolean",
+      "description": "Checks if the effect is ambient, usually originating from a beacon or conduit.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isBeaconEffect = effect.isAmbient();"
+      ]
+    },
+    {
+      "name": "hasIcon",
+      "signature": "hasIcon()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect has a HUD icon.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (effect.hasIcon()) {\n    // Logic for effects displayed on HUD\n}"
+      ]
+    },
+    {
+      "name": "isVisible",
+      "signature": "isVisible()",
+      "returnType": "boolean",
+      "description": "Checks if the effect produces visible particles.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const visible = effect.isVisible();"
+      ]
+    },
+    {
+      "name": "isInstant",
+      "signature": "isInstant()",
+      "returnType": "boolean",
+      "description": "Checks if the effect is instant (e.g., Instant Health, Instant Damage).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (effect.isInstant()) {\n    Chat.log('Instant effect applied');\n}"
+      ]
+    },
+    {
+      "name": "isBeneficial",
+      "signature": "isBeneficial()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is categorized as beneficial.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isNeutral",
+      "signature": "isNeutral()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is categorized as neutral.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHarmful",
+      "signature": "isHarmful()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is categorized as harmful.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isPermanent",
+      "signature": "isPermanent()",
+      "returnType": "boolean",
+      "description": "Checks if the effect is considered permanent (infinite duration).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

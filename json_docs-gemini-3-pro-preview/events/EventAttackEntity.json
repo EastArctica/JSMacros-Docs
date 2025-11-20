@@ -1,0 +1,18 @@
+{
+  "name": "EventAttackEntity",
+  "fullClassName": "EventAttackEntity",
+  "description": "This event is fired when the player attacks an entity by left-clicking it.",
+  "overview": "Backed by class `EventAttackEntity`.\n\n### Behavior\n* Fires when the player left-clicks an entity to attack it\n* Only triggers for entities that can be attacked (living entities, players, etc.)\n* Not cancellable\n\n### Event payload\nThe event contains an `entity` field (Type: `EntityHelper`) representing the entity that was attacked.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

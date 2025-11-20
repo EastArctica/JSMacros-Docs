@@ -1,0 +1,78 @@
+{
+  "name": "WrappedClassInstance$MethodSigParts",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.WrappedClassInstance$MethodSigParts",
+  "since": "1.6.5",
+  "description": "A utility class that parses and represents components of Java method signatures.",
+  "overview": "The `MethodSigParts` class serves as a parser and container for JVM method signatures in their internal format. It breaks down complex method signatures into their constituent components, making it easier to work with method metadata, perform type checking, and resolve method calls accurately.\n\nIt supports the JVM's internal method signature format, where object types are denoted by `Lpackage/ClassName;`, primitives by single letters (e.g., `Z` for boolean, `I` for int), and arrays by `[`.",
+  "constructors": [
+    {
+      "signature": "new WrappedClassInstance$MethodSigParts(String signature)",
+      "description": "Creates a new MethodSigParts instance by parsing the provided JVM method signature string.",
+      "parameters": [
+        {
+          "name": "signature",
+          "type": "String",
+          "description": "The raw JVM method signature (e.g., \"method(Ljava/lang/String;)V\")."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "get",
+      "signature": "get()",
+      "returnType": "String",
+      "description": "Retrieves the full formatted method signature string.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = wrapped.invokeMethod(\"someMethodReturningSignature\");\nconst formattedSig = sigParts.get();",
+        "// Output might be: \"someMethod(Ljava/lang/String;I)Ljava/lang/Object;\""
+      ]
+    },
+    {
+      "name": "getOriginal",
+      "signature": "getOriginal()",
+      "returnType": "String",
+      "description": "Retrieves the original raw signature string used to create this instance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(\"toString()Ljava/lang/String;\");\nChat.log(sigParts.getOriginal()); // \"toString()Ljava/lang/String;\""
+      ]
+    },
+    {
+      "name": "getReturnType",
+      "signature": "getReturnType()",
+      "returnType": "String",
+      "description": "Retrieves the return type component of the signature in JVM format.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(\"getHealth()F\");\nChat.log(sigParts.getReturnType()); // \"F\" (float)"
+      ]
+    },
+    {
+      "name": "getParameters",
+      "signature": "getParameters()",
+      "returnType": "String[]",
+      "description": "Retrieves an array of parameter types in JVM format.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(\"setHealth(F)V\");\nconst params = sigParts.getParameters();\n// params[0] is \"F\""
+      ]
+    },
+    {
+      "name": "getParameterCount",
+      "signature": "getParameterCount()",
+      "returnType": "int",
+      "description": "Retrieves the number of parameters defined in the method signature.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(\"put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;\");\nChat.log(sigParts.getParameterCount()); // 2"
+      ]
+    }
+  ]
+}

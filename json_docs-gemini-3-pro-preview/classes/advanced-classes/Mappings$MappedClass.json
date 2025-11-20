@@ -1,0 +1,10 @@
+{
+  "name": "Mappings$MappedClass",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings$MappedClass",
+  "extends": "WrappedClassInstance<T>",
+  "since": "JSMacros 1.6.0",
+  "description": "The MappedClass class is a powerful reflection wrapper that extends WrappedClassInstance with mapping-aware capabilities. It provides dynamic access to Java class instances and their members while automatically translating between human-readable names and obfuscated Minecraft internals using mapping data.",
+  "overview": "The MappedClass wrapper combines the reflection capabilities of WrappedClassInstance with mapping translation from the Mappings system. This enables:\n\n- Automatic translation between named and obfuscated member names\n- Version-compatible method invocation and field access\n- Fallback to direct reflection when mappings are unavailable\n- Seamless integration with existing reflection-based code\n- Support for both instance and static member access",
+  "constructors": [],
+  "methods": []
+}

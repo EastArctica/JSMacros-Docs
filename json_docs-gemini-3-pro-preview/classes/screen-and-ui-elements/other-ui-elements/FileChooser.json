@@ -1,0 +1,267 @@
+[
+  {
+    "name": "FileChooser",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.gui.overlays.FileChooser",
+    "extends": "OverlayContainer",
+    "description": "A comprehensive file system navigation and management overlay providing a graphical interface to browse, select, create, rename, and delete files and directories.",
+    "overview": "The FileChooser class is a comprehensive file system navigation and management overlay that provides users with a graphical interface to browse, select, create, rename, and delete files and directories. It features a grid-based file display, directory navigation, file filtering, and integration with the operating system's file explorer. This component is extensively used throughout JSMacros for script selection, configuration file management, and various file operation scenarios.\n\nKey features include a grid-based file and directory display with a 5-column layout, directory navigation with parent directory traversal, file selection with visual highlighting, file operations (create, rename, delete, edit), automatic file extension detection, operating system folder integration, a scrollable interface for large directories, and a root directory anchored to the JSMacros macro folder.",
+    "constructors": [
+      {
+        "signature": "new FileChooser(x, y, width, height, textRenderer, directory, selected, parent, setFile, editFile)",
+        "description": "Creates a new FileChooser overlay with the specified configuration and callbacks.",
+        "parameters": [
+          {
+            "name": "x",
+            "type": "int",
+            "description": "The x coordinate of the overlay's top-left corner"
+          },
+          {
+            "name": "y",
+            "type": "int",
+            "description": "The y coordinate of the overlay's top-left corner"
+          },
+          {
+            "name": "width",
+            "type": "int",
+            "description": "The width of the overlay in pixels"
+          },
+          {
+            "name": "height",
+            "type": "int",
+            "description": "The height of the overlay in pixels"
+          },
+          {
+            "name": "textRenderer",
+            "type": "TextRenderer",
+            "description": "The text renderer for drawing text elements"
+          },
+          {
+            "name": "directory",
+            "type": "File",
+            "description": "The initial directory to display"
+          },
+          {
+            "name": "selected",
+            "type": "File",
+            "description": "The initially selected file (can be null)"
+          },
+          {
+            "name": "parent",
+            "type": "IOverlayParent",
+            "description": "The parent overlay container"
+          },
+          {
+            "name": "setFile",
+            "type": "Consumer<File>",
+            "description": "Callback function when a file is selected and confirmed"
+          },
+          {
+            "name": "editFile",
+            "type": "Consumer<File>",
+            "description": "Callback function when a file is chosen for editing"
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "setDir",
+        "signature": "setDir(dir)",
+        "returnType": "void",
+        "description": "Sets the current directory and refreshes the file display. Creates the directory if it doesn't exist and falls back to root directory on failure.",
+        "parameters": [
+          {
+            "name": "dir",
+            "type": "File",
+            "description": "The directory to display"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Navigate to a specific subdirectory\nconst scriptsDir = new File(macroFolder, \"scripts\");\nfileChooser.setDir(scriptsDir);\n\n// Navigate to parent directory\nfileChooser.setDir(fileChooser.directory.getParentFile());"
+        ]
+      },
+      {
+        "name": "selectFile",
+        "signature": "selectFile(f)",
+        "returnType": "void",
+        "description": "Selects a file or directory in the chooser. If the file is a directory, it navigates to it; if it's a file, it highlights it as the current selection.",
+        "parameters": [
+          {
+            "name": "f",
+            "type": "File",
+            "description": "The file or directory to select"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Select a specific file\nconst targetFile = new File(currentDir, \"myscript.js\");\nfileChooser.selectFile(targetFile);\n\n// Navigate to a subdirectory\nconst subDir = new File(currentDir, \"utilities\");\nfileChooser.selectFile(subDir);"
+        ]
+      },
+      {
+        "name": "addFile",
+        "signature": "addFile(f)",
+        "returnType": "void",
+        "description": "Adds a file to the display grid with its default name.",
+        "parameters": [
+          {
+            "name": "f",
+            "type": "File",
+            "description": "The file to add to the display"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Add a new file to the display\nconst newFile = new File(currentDir, \"newscript.js\");\nfileChooser.addFile(newFile);"
+        ]
+      },
+      {
+        "name": "addFile",
+        "signature": "addFile(f, btnText)",
+        "returnType": "void",
+        "description": "Adds a file to the display grid with custom button text.",
+        "parameters": [
+          {
+            "name": "f",
+            "type": "File",
+            "description": "The file to add to the display"
+          },
+          {
+            "name": "btnText",
+            "type": "String",
+            "description": "Custom text to display on the file button"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Add parent directory with custom text\nfileChooser.addFile(parentDir, \"..\");\n\n// Add file with display name\nfileChooser.addFile(file, file.getName());"
+        ]
+      },
+      {
+        "name": "delete",
+        "signature": "delete(fileObj)",
+        "returnType": "void",
+        "description": "Deletes a file from both the display and the file system.",
+        "parameters": [
+          {
+            "name": "fileObj",
+            "type": "fileObj",
+            "description": "The file object wrapper to delete"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Find and delete a specific file\nconst targetFileObj = fileChooser.files.find(fo => fo.file.getName().equals(\"oldscript.js\"));\nif (targetFileObj) {\n    fileChooser.delete(targetFileObj);\n}"
+        ]
+      },
+      {
+        "name": "confirmDelete",
+        "signature": "confirmDelete(fileObj)",
+        "returnType": "void",
+        "description": "Shows a confirmation dialog before deleting a file.",
+        "parameters": [
+          {
+            "name": "fileObj",
+            "type": "fileObj",
+            "description": "The file object wrapper to delete after confirmation"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Show delete confirmation for selected file\nif (fileChooser.selected && fileChooser.selected.isFile()) {\n    const fileObj = fileChooser.files.find(fo => fo.file.equals(fileChooser.selected));\n    if (fileObj) {\n        fileChooser.confirmDelete(fileObj);\n    }\n}"
+        ]
+      },
+      {
+        "name": "updateFilePos",
+        "signature": "updateFilePos()",
+        "returnType": "void",
+        "description": "Updates the positions and visibility of all file buttons based on the current scroll position. This is called automatically during scrolling operations.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Manually update file positions (usually called internally)\nfileChooser.updateFilePos();"
+        ]
+      },
+      {
+        "name": "onScrollbar",
+        "signature": "onScrollbar(page)",
+        "returnType": "void",
+        "description": "Handles scrollbar scrolling by updating the visible file positions and scroll offset.",
+        "parameters": [
+          {
+            "name": "page",
+            "type": "double",
+            "description": "The scroll page position (0.0 to 1.0)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Scroll to specific position\nfileChooser.onScrollbar(0.5); // Scroll halfway\n\n// Scroll to top\nfileChooser.onScrollbar(0.0);\n\n// Scroll to bottom\nfileChooser.onScrollbar(1.0);"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "fileObj",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.gui.overlays.FileChooser.fileObj",
+    "description": "A wrapper class that associates a File object with its corresponding Button widget in the FileChooser display grid.",
+    "overview": "The FileChooser.fileObj class is a simple but essential wrapper class that associates a File object with its corresponding Button widget in the FileChooser's grid display. It serves as the bridge between the file system representation and the visual interface elements, allowing the FileChooser to manage file selection, display, and user interactions efficiently. Each file or directory shown in the FileChooser interface is represented by an instance of this class.",
+    "constructors": [
+      {
+        "signature": "new fileObj(file, btn)",
+        "description": "Creates a new fileObj instance that associates a File object with its corresponding Button widget.",
+        "parameters": [
+          {
+            "name": "file",
+            "type": "File",
+            "description": "The file or directory object this wrapper represents"
+          },
+          {
+            "name": "btn",
+            "type": "Button",
+            "description": "The button widget that displays this file in the FileChooser grid"
+          }
+        ]
+      }
+    ],
+    "methods": []
+  },
+  {
+    "name": "sortFile",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.gui.overlays.FileChooser.sortFile",
+    "since": "1.0.0",
+    "description": "A Comparator implementation that sorts files with directories first (alphabetically), followed by files (alphabetically).",
+    "overview": "The FileChooser.sortFile class is a specialized comparator that provides intelligent file sorting functionality for the FileChooser component. It implements a hierarchical sorting strategy that prioritizes directories over files while maintaining alphabetical ordering within each category. This sorting approach ensures an intuitive and user-friendly file browsing experience.",
+    "constructors": [
+      {
+        "signature": "new FileChooser.sortFile()",
+        "description": "Creates a new instance of the sortFile comparator.",
+        "parameters": []
+      }
+    ],
+    "methods": [
+      {
+        "name": "compare",
+        "signature": "compare(a, b)",
+        "returnType": "int",
+        "description": "Compares two File objects to determine their sorting order. Directories come before files; otherwise, comparison is alphabetical by name.",
+        "parameters": [
+          {
+            "name": "a",
+            "type": "File",
+            "description": "The first file to compare"
+          },
+          {
+            "name": "b",
+            "type": "File",
+            "description": "The second file to compare"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const sorter = new FileChooser.sortFile();\nconst file1 = new File(\"/path/to/file.txt\");\nconst file2 = new File(\"/path/to/another.txt\");\nconst result = sorter.compare(file1, file2);"
+        ]
+      }
+    ]
+  }
+]

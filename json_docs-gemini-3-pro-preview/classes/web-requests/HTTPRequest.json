@@ -1,0 +1,219 @@
+{
+  "name": "HTTPRequest",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.HTTPRequest",
+  "extends": "Object",
+  "since": "1.1.8",
+  "description": "The HTTPRequest class is a Library and API helper in JSMacros that provides functionality for making HTTP requests to web servers and APIs. It supports common HTTP methods including GET, POST, PUT, and custom methods, with flexible header management and timeout configuration.",
+  "overview": "The HTTPRequest class provides a straightforward way to perform HTTP operations from JSMacros scripts:\n\n- **HTTP Method Support:** GET, POST, PUT, and custom HTTP methods\n- **Header Management:** Add custom headers to requests\n- **Data Types:** Support for both string and binary data payloads\n- **Timeout Control:** Configurable connection and read timeouts\n- **Response Handling:** Structured response objects with text, binary, and header access\n\n**Key Features:**\n- Chainable method calls for fluent API design\n- Automatic content-length header calculation\n- UTF-8 string encoding by default\n- Structured response objects with status codes and headers\n- Support for both text and binary response data",
+  "constructors": [
+    {
+      "signature": "new HTTPRequest(url)",
+      "description": "Creates a new HTTPRequest instance for the specified URL.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "String",
+          "description": "The target URL to make requests to"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addHeader",
+      "signature": "addHeader(key, value)",
+      "returnType": "HTTPRequest",
+      "description": "Adds a custom header to the request. If a header with the same key already exists, it will be overwritten.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The header name (e.g., \"Content-Type\", \"Authorization\")"
+        },
+        {
+          "name": "value",
+          "type": "String",
+          "description": "The header value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/data\")\n    .addHeader(\"Content-Type\", \"application/json\")\n    .addHeader(\"Authorization\", \"Bearer your-token-here\")\n    .addHeader(\"User-Agent\", \"JsMacros/1.0\");"
+      ]
+    },
+    {
+      "name": "setConnectTimeout",
+      "signature": "setConnectTimeout(timeout)",
+      "returnType": "HTTPRequest",
+      "description": "Sets the connection timeout for the HTTP request.",
+      "parameters": [
+        {
+          "name": "timeout",
+          "type": "int",
+          "description": "Connection timeout in milliseconds"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/data\")\n    .setConnectTimeout(5000); // 5 seconds"
+      ]
+    },
+    {
+      "name": "setReadTimeout",
+      "signature": "setReadTimeout(timeout)",
+      "returnType": "HTTPRequest",
+      "description": "Sets the read timeout for the HTTP request.",
+      "parameters": [
+        {
+          "name": "timeout",
+          "type": "int",
+          "description": "Read timeout in milliseconds"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/data\")\n    .setReadTimeout(10000); // 10 seconds"
+      ]
+    },
+    {
+      "name": "get",
+      "signature": "get()",
+      "returnType": "Response",
+      "description": "Performs an HTTP GET request to the configured URL.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/users\")\n    .addHeader(\"Accept\", \"application/json\");\n\ntry {\n    const response = request.get();\n    Chat.log(\"Response code: \" + response.responseCode);\n    Chat.log(\"Response body: \" + response.text());\n} catch (e) {\n    Chat.log(\"GET request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "post",
+      "signature": "post(data)",
+      "returnType": "Response",
+      "description": "Performs an HTTP POST request with the specified data.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "String",
+          "description": "The request body data to send"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/users\")\n    .addHeader(\"Content-Type\", \"application/json\");\n\nconst userData = JSON.stringify({\n    name: \"Steve\",\n    email: \"steve@example.com\"\n});\n\ntry {\n    const response = request.post(userData);\n    Chat.log(\"Created user with status: \" + response.responseCode);\n    Chat.log(\"Response: \" + response.text());\n} catch (e) {\n    Chat.log(\"POST request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "post",
+      "signature": "post(data)",
+      "returnType": "Response",
+      "description": "Performs an HTTP POST request with binary data.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "byte[]",
+          "description": "The binary data to send"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/upload\")\n    .addHeader(\"Content-Type\", \"application/octet-stream\");\n\n// Example: Upload image data (you would get this from a file or other source)\nconst fileData = new Packages.java.io.FileInputStream(\"image.png\").readAllBytes();\n\ntry {\n    const response = request.post(fileData);\n    Chat.log(\"Upload completed with status: \" + response.responseCode);\n} catch (e) {\n    Chat.log(\"POST binary request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "put",
+      "signature": "put(data)",
+      "returnType": "Response",
+      "description": "Performs an HTTP PUT request with the specified data.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "String",
+          "description": "The request body data to send"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/users/123\")\n    .addHeader(\"Content-Type\", \"application/json\");\n\nconst updateData = JSON.stringify({\n    name: \"Updated Name\",\n    email: \"updated@example.com\"\n});\n\ntry {\n    const response = request.put(updateData);\n    Chat.log(\"Updated user with status: \" + response.responseCode);\n    Chat.log(\"Response: \" + response.text());\n} catch (e) {\n    Chat.log(\"PUT request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "put",
+      "signature": "put(data)",
+      "returnType": "Response",
+      "description": "Performs an HTTP PUT request with binary data.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "byte[]",
+          "description": "The binary data to send"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/files/123\")\n    .addHeader(\"Content-Type\", \"application/octet-stream\");\n\nconst fileData = new Packages.java.io.FileInputStream(\"document.pdf\").readAllBytes();\n\ntry {\n    const response = request.put(fileData);\n    Chat.log(\"File uploaded with status: \" + response.responseCode);\n} catch (e) {\n    Chat.log(\"PUT binary request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "send",
+      "signature": "send(method)",
+      "returnType": "Response",
+      "description": "Performs an HTTP request with a custom method and no body.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The HTTP method to use (e.g., \"DELETE\", \"PATCH\", \"HEAD\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// DELETE request\nconst deleteRequest = new HTTPRequest(\"https://api.example.com/users/123\");\n\ntry {\n    const response = deleteRequest.send(\"DELETE\");\n    Chat.log(\"User deleted with status: \" + response.responseCode);\n} catch (e) {\n    Chat.log(\"DELETE request failed: \" + e.message);\n}\n\n// HEAD request\nconst headRequest = new HTTPRequest(\"https://api.example.com/data\");\n\ntry {\n    const response = headRequest.send(\"HEAD\");\n    Chat.log(\"HEAD request status: \" + response.responseCode);\n    // Headers are available via response.headers\n} catch (e) {\n    Chat.log(\"HEAD request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "send",
+      "signature": "send(method, data)",
+      "returnType": "Response",
+      "description": "Performs an HTTP request with a custom method and string data.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The HTTP method to use"
+        },
+        {
+          "name": "data",
+          "type": "String",
+          "description": "The request body data"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/users/123\")\n    .addHeader(\"Content-Type\", \"application/json\");\n\nconst patchData = JSON.stringify({\n    status: \"active\"\n});\n\ntry {\n    const response = request.send(\"PATCH\", patchData);\n    Chat.log(\"PATCH request status: \" + response.responseCode);\n    Chat.log(\"Response: \" + response.text());\n} catch (e) {\n    Chat.log(\"PATCH request failed: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "send",
+      "signature": "send(method, data)",
+      "returnType": "Response",
+      "description": "Performs an HTTP request with a custom method and binary data.",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "String",
+          "description": "The HTTP method to use"
+        },
+        {
+          "name": "data",
+          "type": "byte[]",
+          "description": "The binary data to send"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const request = new HTTPRequest(\"https://api.example.com/upload/123\")\n    .addHeader(\"Content-Type\", \"application/octet-stream\");\n\nconst fileData = new Packages.java.io.FileInputStream(\"update.bin\").readAllBytes();\n\ntry {\n    const response = request.send(\"PATCH\", fileData);\n    Chat.log(\"Binary PATCH status: \" + response.responseCode);\n} catch (e) {\n    Chat.log(\"Binary PATCH request failed: \" + e.message);\n}"
+      ]
+    }
+  ]
+}

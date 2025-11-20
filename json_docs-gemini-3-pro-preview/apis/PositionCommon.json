@@ -1,0 +1,198 @@
+{
+  "name": "PositionCommon",
+  "fullClassName": "PositionCommon",
+  "description": "A library of helper functions for creating position and vector objects.",
+  "overview": "Accessible from scripts via the global `PositionCommon` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "createVec",
+      "signature": "createVec(double x1, double y1, double z1, double x2, double y2, double z2)",
+      "returnType": "Vec3D",
+      "description": "Creates a new 3D vector object representing the direction and magnitude from a starting point to an ending point.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "The starting X coordinate."
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "The starting Y coordinate."
+        },
+        {
+          "name": "z1",
+          "type": "double",
+          "description": "The starting Z coordinate."
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "The ending X coordinate."
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "The ending Y coordinate."
+        },
+        {
+          "name": "z2",
+          "type": "double",
+          "description": "The ending Z coordinate."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a 3D vector from point (0, 0, 0) to (10, 20, 30)\nconst vec3 = PositionCommon.createVec(0, 0, 0, 10, 20, 30);\nChat.log(`3D Vector length: ${vec3.getLength()}`);"
+      ]
+    },
+    {
+      "name": "createVec",
+      "signature": "createVec(double x1, double y1, double x2, double y2)",
+      "returnType": "Vec2D",
+      "description": "Creates a new 2D vector object representing the direction and magnitude from a starting point to an ending point.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "The starting X coordinate."
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "The starting Y coordinate."
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "The ending X coordinate."
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "The ending Y coordinate."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a 2D vector from point (5, 5) to (15, 10)\nconst vec2 = PositionCommon.createVec(5, 5, 15, 10);\nChat.log(`2D Vector length: ${vec2.getLength()}`);"
+      ]
+    },
+    {
+      "name": "createLookingVector",
+      "signature": "createLookingVector(EntityHelper<?> entity)",
+      "returnType": "Vec3D",
+      "description": "Creates a normalized Vec3D (a vector with a length of 1) that represents an entity's direction of sight.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper<?>",
+          "description": "The entity whose direction of sight will be used."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Get the player's look vector\nconst player = Player.getPlayer();\nconst playerLookVec = PositionCommon.createLookingVector(player);\nChat.log(`Player is looking towards: ${playerLookVec}`);"
+      ]
+    },
+    {
+      "name": "createLookingVector",
+      "signature": "createLookingVector(double yaw, double pitch)",
+      "returnType": "Vec3D",
+      "description": "Creates a normalized Vec3D (a vector with a length of 1) from yaw and pitch angles.",
+      "parameters": [
+        {
+          "name": "yaw",
+          "type": "double",
+          "description": "The horizontal rotation angle in degrees. Positive values rotate clockwise when looking from above (0° = positive Z direction)."
+        },
+        {
+          "name": "pitch",
+          "type": "double",
+          "description": "The vertical rotation angle in degrees. Positive values look downward, negative values look upward (0° = horizontal)."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a look vector from specific angles (facing east)\nconst eastLookVec = PositionCommon.createLookingVector(-90, 0);\nChat.log(`East vector: ${eastLookVec}`);"
+      ]
+    },
+    {
+      "name": "createPos",
+      "signature": "createPos(double x, double y, double z)",
+      "returnType": "Pos3D",
+      "description": "Creates a new 3D position object.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X coordinate."
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y coordinate."
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "The Z coordinate."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a 3D position object\nconst pos3d = PositionCommon.createPos(10.5, 64.0, -100.2);\nChat.log(`3D Position: ${pos3d}`);"
+      ]
+    },
+    {
+      "name": "createPos",
+      "signature": "createPos(double x, double y)",
+      "returnType": "Pos2D",
+      "description": "Creates a new 2D position object.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X coordinate."
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y coordinate."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a 2D position object\nconst pos2d = PositionCommon.createPos(10.5, -100.2);\nChat.log(`2D Position: ${pos2d}`);"
+      ]
+    },
+    {
+      "name": "createBlockPos",
+      "signature": "createBlockPos(int x, int y, int z)",
+      "returnType": "BlockPosHelper",
+      "description": "Creates a new BlockPosHelper for the given integer coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The X block coordinate."
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The Y block coordinate."
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "The Z block coordinate."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const blockPos = PositionCommon.createBlockPos(10, 64, -100);\nconst blockAtPos = World.getBlock(blockPos);\nif (blockAtPos) {\n    Chat.log(`Block at ${blockPos} is ${blockAtPos.getId()}`);\n}"
+      ]
+    }
+  ]
+}

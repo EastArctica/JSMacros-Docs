@@ -1,0 +1,890 @@
+{
+  "name": "JsMacros",
+  "fullClassName": "JsMacros",
+  "description": "Core functions for interacting with the JsMacros mod itself, including running scripts, managing events, and accessing configuration.",
+  "overview": "Accessible from scripts via the global `JsMacros` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getProfile",
+      "signature": "getProfile()",
+      "returnType": "BaseProfile",
+      "description": "Gets the current profile manager.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const profile = JsMacros.getProfile();\nChat.log(`Current profile: ${profile.getName()}`);"
+      ]
+    },
+    {
+      "name": "getConfig",
+      "signature": "getConfig()",
+      "returnType": "ConfigManager",
+      "description": "Gets the JsMacros config manager.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const config = JsMacros.getConfig();"
+      ]
+    },
+    {
+      "name": "getServiceManager",
+      "signature": "getServiceManager()",
+      "returnType": "ServiceManager",
+      "description": "Gets the manager for background script services.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const serviceManager = JsMacros.getServiceManager();\nif (serviceManager.isServiceRunning(\"my_service.js\")) {\n    Chat.log(\"My service is running.\");\n}"
+      ]
+    },
+    {
+      "name": "getOpenContexts",
+      "signature": "getOpenContexts()",
+      "returnType": "java.util.List<BaseScriptContext<?>>",
+      "description": "Returns a list of all currently active (non-garbage-collected) script contexts.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const contexts = JsMacros.getOpenContexts();\nChat.log(`There are ${contexts.size()} scripts currently running.`);"
+      ]
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String file)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a file.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The path to the script file."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.runScript(\"utility/helper.js\");"
+      ]
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String file, BaseEvent fakeEvent)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a file with a custom event.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The path to the script file."
+        },
+        {
+          "name": "fakeEvent",
+          "type": "BaseEvent",
+          "description": "The event to pass to the script."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.runScript(\"task_handler.js\", customEvent);"
+      ]
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String file, BaseEvent fakeEvent, MethodWrapper callback)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a file with a custom event and a callback.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The path to the script file."
+        },
+        {
+          "name": "fakeEvent",
+          "type": "BaseEvent",
+          "description": "The event to pass to the script."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "A function called when the script finishes."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String language, String script)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a string.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script (e.g., 'javascript')."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.runScript(\"javascript\", \"Chat.log('Hello from a string!')\");"
+      ]
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String language, String script, MethodWrapper callback)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a string with a callback.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "A function called when the script finishes."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String language, String script, String file, MethodWrapper callback)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a string, pretending it's from a file, with a callback.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        },
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The fake file path for the script (for debugging/stack traces)."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "A function called when the script finishes."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "runScript",
+      "signature": "runScript(String language, String script, String file, BaseEvent event, MethodWrapper callback)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes a script from a string with full options.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        },
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The fake file path."
+        },
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "Custom event to pass."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "Callback function."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "wrapScriptRun",
+      "signature": "wrapScriptRun(String file)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a file script execution into a blocking callback.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The path to the script file."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const scriptRunner = JsMacros.wrapScriptRun(\"my_button_script.js\");"
+      ]
+    },
+    {
+      "name": "wrapScriptRun",
+      "signature": "wrapScriptRun(String language, String script)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a string script execution into a blocking callback.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "wrapScriptRun",
+      "signature": "wrapScriptRun(String language, String script, String file)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a string script execution into a blocking callback with a fake filename.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        },
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The fake file path."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "wrapScriptRunAsync",
+      "signature": "wrapScriptRunAsync(String file)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a file script execution into an asynchronous callback.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The path to the script file."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const onDeathCallback = JsMacros.wrapScriptRunAsync(\"on_death_handler.js\");"
+      ]
+    },
+    {
+      "name": "wrapScriptRunAsync",
+      "signature": "wrapScriptRunAsync(String language, String script)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a string script execution into an asynchronous callback.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "wrapScriptRunAsync",
+      "signature": "wrapScriptRunAsync(String language, String script, String file)",
+      "returnType": "MethodWrapper",
+      "description": "Wraps a string script execution into an asynchronous callback with a fake filename.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "String",
+          "description": "The language of the script."
+        },
+        {
+          "name": "script",
+          "type": "String",
+          "description": "The code to execute."
+        },
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The fake file path."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "open",
+      "signature": "open(String path)",
+      "returnType": "void",
+      "description": "Deprecated. Opens a file with the default system program.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "String",
+          "description": "The path to the file."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "openUrl",
+      "signature": "openUrl(String url)",
+      "returnType": "void",
+      "description": "Deprecated. Opens a URL in the default web browser.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "String",
+          "description": "The URL to open."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "on",
+      "signature": "on(String event, MethodWrapper callback)",
+      "returnType": "IEventListener",
+      "description": "Registers a persistent listener for a given event asynchronously.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to execute when the event fires."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const listener = JsMacros.on('RecvMessage', JavaWrapper.methodToJavaAsync(onChat));"
+      ]
+    },
+    {
+      "name": "on",
+      "signature": "on(String event, boolean joined, MethodWrapper callback)",
+      "returnType": "IEventListener",
+      "description": "Registers a persistent listener for a given event, optionally blocking.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "joined",
+          "type": "boolean",
+          "description": "If true, runs on the game thread (blocking)."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to execute."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "on",
+      "signature": "on(String event, EventFilterer filterer, MethodWrapper callback)",
+      "returnType": "IEventListener",
+      "description": "Registers a filtered listener for a given event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "filterer",
+          "type": "EventFilterer",
+          "description": "An event filterer."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to execute."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.on('Damage', damageFilter, JavaWrapper.methodToJavaAsync(event => { ... }));"
+      ]
+    },
+    {
+      "name": "on",
+      "signature": "on(String event, EventFilterer filterer, boolean joined, MethodWrapper callback)",
+      "returnType": "IEventListener",
+      "description": "Registers a filtered listener for a given event, optionally blocking.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "filterer",
+          "type": "EventFilterer",
+          "description": "An event filterer."
+        },
+        {
+          "name": "joined",
+          "type": "boolean",
+          "description": "If true, runs on the game thread."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to execute."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "once",
+      "signature": "once(String event, MethodWrapper callback)",
+      "returnType": "IEventListener",
+      "description": "Registers a one-time listener for a given event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to execute."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.once('Key', JavaWrapper.methodToJavaAsync((event, context) => { ... }));"
+      ]
+    },
+    {
+      "name": "once",
+      "signature": "once(String event, boolean joined, MethodWrapper callback)",
+      "returnType": "IEventListener",
+      "description": "Registers a one-time listener for a given event, optionally blocking.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "joined",
+          "type": "boolean",
+          "description": "If true, runs on the game thread."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to execute."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "off",
+      "signature": "off(IEventListener listener)",
+      "returnType": "boolean",
+      "description": "Unregisters an event listener.",
+      "parameters": [
+        {
+          "name": "listener",
+          "type": "IEventListener",
+          "description": "The listener object to remove."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "off",
+      "signature": "off(String event, IEventListener listener)",
+      "returnType": "boolean",
+      "description": "Unregisters an event listener from a specific event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "listener",
+          "type": "IEventListener",
+          "description": "The listener object to remove."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.off('Tick', listener);"
+      ]
+    },
+    {
+      "name": "disableAllListeners",
+      "signature": "disableAllListeners(String event)",
+      "returnType": "void",
+      "description": "Disables all listeners for a given event. Use with caution.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The event to clear all listeners from."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.disableAllListeners(\"Tick\");"
+      ]
+    },
+    {
+      "name": "disableAllListeners",
+      "signature": "disableAllListeners()",
+      "returnType": "void",
+      "description": "Disables ALL listeners for ALL events. Destructive.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "JsMacros.disableAllListeners();"
+      ]
+    },
+    {
+      "name": "disableScriptListeners",
+      "signature": "disableScriptListeners()",
+      "returnType": "void",
+      "description": "Disables all listeners created by user scripts.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "JsMacros.disableScriptListeners();"
+      ]
+    },
+    {
+      "name": "disableScriptListeners",
+      "signature": "disableScriptListeners(String event)",
+      "returnType": "void",
+      "description": "Disables all listeners created by user scripts for a specific event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.disableScriptListeners('Key');"
+      ]
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(String event)",
+      "returnType": "EventAndContext",
+      "description": "Pauses execution until the specified event occurs.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event to wait for."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const result = JsMacros.waitForEvent('RecvMessage');"
+      ]
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(String event, boolean join)",
+      "returnType": "EventAndContext",
+      "description": "Pauses execution until the specified event occurs, optionally blocking the game thread.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "join",
+          "type": "boolean",
+          "description": "If true, waits on the game thread (blocking)."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(String event, MethodWrapper filter)",
+      "returnType": "EventAndContext",
+      "description": "Pauses execution until the specified event matching a filter occurs.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "filter",
+          "type": "MethodWrapper",
+          "description": "A function returning boolean to filter events."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const stopResult = JsMacros.waitForEvent('RecvMessage', filter);"
+      ]
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(String event, MethodWrapper filter, MethodWrapper runBeforeWaiting)",
+      "returnType": "EventAndContext",
+      "description": "Pauses execution until the filtered event occurs, running a callback before waiting.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "filter",
+          "type": "MethodWrapper",
+          "description": "A function returning boolean to filter events."
+        },
+        {
+          "name": "runBeforeWaiting",
+          "type": "MethodWrapper",
+          "description": "Function to run before waiting starts."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(String event, boolean join, MethodWrapper filter)",
+      "returnType": "EventAndContext",
+      "description": "Pauses execution until the specified event matching a filter occurs, optionally blocking.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "join",
+          "type": "boolean",
+          "description": "If true, blocks game thread."
+        },
+        {
+          "name": "filter",
+          "type": "MethodWrapper",
+          "description": "Filter callback."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "waitForEvent",
+      "signature": "waitForEvent(String event, boolean join, MethodWrapper filter, MethodWrapper runBeforeWaiting)",
+      "returnType": "EventAndContext",
+      "description": "Pauses execution until the filtered event occurs, optionally blocking, running a callback before waiting.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        },
+        {
+          "name": "join",
+          "type": "boolean",
+          "description": "If true, blocks game thread."
+        },
+        {
+          "name": "filter",
+          "type": "MethodWrapper",
+          "description": "Filter callback."
+        },
+        {
+          "name": "runBeforeWaiting",
+          "type": "MethodWrapper",
+          "description": "Function to run before waiting starts."
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "listeners",
+      "signature": "listeners(String event)",
+      "returnType": "java.util.List<IEventListener>",
+      "description": "Gets a list of all active script-created listeners for an event.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const keyListeners = JsMacros.listeners('Key');"
+      ]
+    },
+    {
+      "name": "createEventFilterer",
+      "signature": "createEventFilterer(String event)",
+      "returnType": "EventFilterer",
+      "description": "Creates a filter for an event to improve performance.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const damageFilter = JsMacros.createEventFilterer('Damage');"
+      ]
+    },
+    {
+      "name": "createComposedEventFilterer",
+      "signature": "createComposedEventFilterer(EventFilterer initial)",
+      "returnType": "FiltererComposed",
+      "description": "Creates a filter that combines multiple other filters.",
+      "parameters": [
+        {
+          "name": "initial",
+          "type": "EventFilterer",
+          "description": "The first filter to start with."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const composed = JsMacros.createComposedEventFilterer(fallDamageFilter);"
+      ]
+    },
+    {
+      "name": "createModulusEventFilterer",
+      "signature": "createModulusEventFilterer(int quotient)",
+      "returnType": "FiltererModulus",
+      "description": "Creates a filter that only lets every Nth event pass through.",
+      "parameters": [
+        {
+          "name": "quotient",
+          "type": "int",
+          "description": "The interval for the event to pass."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const everySecond = JsMacros.createModulusEventFilterer(20);"
+      ]
+    },
+    {
+      "name": "invertEventFilterer",
+      "signature": "invertEventFilterer(EventFilterer base)",
+      "returnType": "EventFilterer",
+      "description": "Inverts the logic of a given filter.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer",
+          "description": "The filter to invert."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const notFallDamageFilter = JsMacros.invertEventFilterer(fallDamageFilter);"
+      ]
+    },
+    {
+      "name": "createCustomEvent",
+      "signature": "createCustomEvent(String eventName)",
+      "returnType": "EventCustom",
+      "description": "Creates a new custom event object.",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "String",
+          "description": "The unique name for the custom event."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const myEvent = JsMacros.createCustomEvent(\"MyCustomEvent\");"
+      ]
+    },
+    {
+      "name": "assertEvent",
+      "signature": "assertEvent(BaseEvent event, String type)",
+      "returnType": "void",
+      "description": "Asserts that an event object is of a specific type, useful for TypeScript type guards.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event object to check."
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "description": "The expected event type name."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "JsMacros.assertEvent(event, 'RecvMessage');"
+      ]
+    }
+  ]
+}

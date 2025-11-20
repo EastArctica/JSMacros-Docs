@@ -1,0 +1,44 @@
+{
+  "name": "Response",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.HTTPRequest$Response",
+  "extends": null,
+  "since": "1.1.8",
+  "description": "The Response class is a nested class within HTTPRequest that encapsulates HTTP response data including status codes, headers, and response body.",
+  "overview": "The Response class is a nested class within HTTPRequest that encapsulates HTTP response data including status codes, headers, and response body. This class provides structured access to all aspects of an HTTP response, making it easy to handle different types of responses from web servers and APIs.\n\nThe Response class is returned by all HTTP request methods (get(), post(), put(), send()) and contains both metadata about the response and methods to access the response content in various formats.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "text",
+      "signature": "public String text()",
+      "returnType": "String",
+      "description": "Returns the response body as a string. The result is cached after the first call for efficiency. This is the most commonly used method for accessing text-based response data.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const response = request.get();\nconst body = response.text();\n\nChat.log(\"Response body length: \" + body.length);\nChat.log(\"First 100 characters: \" + body.substring(0, 100));\n\n// Parse JSON response\ntry {\n    const data = JSON.parse(body);\n    Chat.log(\"Parsed JSON keys: \" + Object.keys(data));\n} catch (e) {\n    Chat.log(\"Failed to parse JSON: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "byteArray",
+      "signature": "public byte[] byteArray()",
+      "returnType": "byte[]",
+      "description": "Returns the response body as a byte array. Useful for handling binary responses like images, files, or other non-text data. Throws IOException if reading the binary data fails.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const response = request.get();\nconst binaryData = response.byteArray();\n\nChat.log(\"Received \" + binaryData.length + \" bytes\");\n\n// For demonstration, show first few bytes as hex\nconst hexBytes = [];\nfor (let i = 0; i < Math.min(16, binaryData.length); i++) {\n    hexBytes.push(binaryData[i].toString(16).padStart(2, '0'));\n}\nChat.log(\"First bytes: \" + hexBytes.join(' '));\n\n// Save binary data to file\ntry {\n    const outputStream = new Packages.java.io.FileOutputStream(\"downloaded_file.bin\");\n    outputStream.write(binaryData);\n    outputStream.close();\n    Chat.log(\"File saved successfully\");\n} catch (e) {\n    Chat.log(\"Failed to save file: \" + e.message);\n}"
+      ]
+    },
+    {
+      "name": "json",
+      "signature": "public Object json()",
+      "returnType": "Object",
+      "description": "Deprecated: This method is deprecated and should not be used. Instead, use text() and parse the JSON in your JavaScript code. Always returns null.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const response = request.get();\nconst body = response.text();\n\ntry {\n    const jsonData = JSON.parse(body);\n    Chat.log(\"Successfully parsed JSON\");\n    Chat.log(\"Data keys: \" + Object.keys(jsonData));\n} catch (e) {\n    Chat.log(\"Failed to parse JSON: \" + e.message);\n    Chat.log(\"Response content: \" + body.substring(0, 200));\n}"
+      ]
+    }
+  ]
+}

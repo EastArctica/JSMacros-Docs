@@ -1,0 +1,43 @@
+[
+  {
+    "name": "SleepRunnable",
+    "fullClassName": "xyz.wagyourtail.jsmacros.core.language.BaseScriptContext$SleepRunnable",
+    "since": "1.2.8",
+    "description": "The SleepRunnable class is a specialized runnable implementation used within JSMacros for handling delayed or timed script execution. It encapsulates script execution logic that needs to run after a specified delay, enabling asynchronous operations, timed events, and delayed script continuations within the JSMacros scripting environment.",
+    "overview": "The SleepRunnable class serves as a bridge between JSMacros' synchronous script execution model and asynchronous, timed operations. It provides: delayed execution of script code after specified time periods; integration with JSMacros' thread management system; safe execution context for delayed operations; support for both one-time and recurring delayed tasks; and proper resource management and cleanup for delayed executions. This class is primarily used internally by JSMacros for operations like Time.sleep(), Time.setTimeout(), and other timing-related functionality.",
+    "constructors": [
+      {
+        "signature": "new SleepRunnable(scriptContext, delay, runnableCode)",
+        "description": "Conceptual constructor for the internal implementation.",
+        "parameters": [
+          {
+            "name": "scriptContext",
+            "type": "BaseScriptContext",
+            "description": "The script context to preserve for execution."
+          },
+          {
+            "name": "delay",
+            "type": "long",
+            "description": "The delay duration."
+          },
+          {
+            "name": "runnableCode",
+            "type": "Runnable",
+            "description": "The code to execute after the delay."
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "run",
+        "signature": "run()",
+        "returnType": "void",
+        "description": "Execute the delayed code in proper script context. Implements the Runnable interface.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

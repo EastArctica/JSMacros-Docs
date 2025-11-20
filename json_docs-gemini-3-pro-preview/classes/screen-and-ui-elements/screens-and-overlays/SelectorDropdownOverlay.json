@@ -1,0 +1,214 @@
+{
+  "name": "SelectorDropdownOverlay",
+  "fullClassName": "xyz.wagyourtail.wagyourgui.overlays.SelectorDropdownOverlay",
+  "extends": "OverlayContainer",
+  "description": "The SelectorDropdownOverlay class is a specialized overlay component that provides a dropdown selection interface for users.",
+  "overview": "The SelectorDropdownOverlay class is a specialized overlay component that provides a dropdown selection interface for users. It displays a scrollable list of text choices that users can navigate through keyboard controls or mouse clicks. This overlay is commonly used for language selection, setting options, and other scenarios where users need to choose from a list of items.\n\nKey Features:\n- Scrollable list of text choices\n- Keyboard navigation (arrow keys, enter/tab)\n- Mouse click selection\n- Visual selection highlighting\n- Automatic scrollbar for long lists\n- Click-outside-to-close functionality\n- Customizable positioning and dimensions",
+  "constructors": [
+    {
+      "signature": "new SelectorDropdownOverlay(int x, int y, int width, int height, Collection<Text> choices, TextRenderer textRenderer, IOverlayParent parent, Consumer<Integer> onChoice)",
+      "description": "Creates a new selector dropdown overlay with the specified parameters.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x coordinate of the overlay's top-left corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y coordinate of the overlay's top-left corner"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the overlay in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The height of the overlay in pixels"
+        },
+        {
+          "name": "choices",
+          "type": "Collection<Text>",
+          "description": "A collection of Text objects representing the selectable choices"
+        },
+        {
+          "name": "textRenderer",
+          "type": "TextRenderer",
+          "description": "The text renderer for drawing text elements"
+        },
+        {
+          "name": "parent",
+          "type": "IOverlayParent",
+          "description": "The parent overlay container"
+        },
+        {
+          "name": "onChoice",
+          "type": "Consumer<Integer>",
+          "description": "Callback function that accepts the index of the selected choice"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "init",
+      "signature": "init()",
+      "returnType": "void",
+      "description": "Initializes the overlay by creating buttons for each choice and setting up the scrollbar if needed. This method is called automatically when the overlay is opened.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Note: This is typically called internally, but here's how it works:\nconst overlay = new SelectorDropdownOverlay(x, y, width, height, choices, textRenderer, parent, onChoice);\noverlay.init(); // Creates buttons and scrollbar"
+      ]
+    },
+    {
+      "name": "setSelected",
+      "signature": "setSelected(int sel)",
+      "returnType": "void",
+      "description": "Sets the currently selected choice by index and updates the visual highlighting.",
+      "parameters": [
+        {
+          "name": "sel",
+          "type": "int",
+          "description": "The index of the choice to select. Use -1 for no selection."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Select the first item\noverlay.setSelected(0);\n\n// Clear selection\noverlay.setSelected(-1);\n\n// Select last item (note: this needs validation)\nconst lastIndex = overlay.choices.size() - 1;\noverlay.setSelected(lastIndex);"
+      ]
+    },
+    {
+      "name": "onScroll",
+      "signature": "onScroll(double page)",
+      "returnType": "void",
+      "description": "Handles scrolling functionality by updating the visibility and positions of choice buttons based on the current scroll position.",
+      "parameters": [
+        {
+          "name": "page",
+          "type": "double",
+          "description": "The current scroll page offset"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scroll to top (page 0)\noverlay.onScroll(0);\n\n// Scroll halfway through the list\nconst halfwayPoint = overlay.pages / 2;\noverlay.onScroll(halfwayPoint);"
+      ]
+    },
+    {
+      "name": "onClick",
+      "signature": "onClick(double mouseX, double mouseY, int button)",
+      "returnType": "void",
+      "description": "Handles mouse click events. Closes the overlay if the click occurs outside the overlay bounds.",
+      "parameters": [
+        {
+          "name": "mouseX",
+          "type": "double",
+          "description": "The x coordinate of the mouse click"
+        },
+        {
+          "name": "mouseY",
+          "type": "double",
+          "description": "The y coordinate of the mouse click"
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "description": "The mouse button that was clicked"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This is typically called internally by the GUI system\noverlay.onClick(100, 50, 0); // Left click at position (100, 50)"
+      ]
+    },
+    {
+      "name": "keyPressed",
+      "signature": "keyPressed(int keyCode, int scanCode, int modifiers)",
+      "returnType": "boolean",
+      "description": "Handles keyboard input for navigation and selection. Returns true if the key was handled, false otherwise.",
+      "parameters": [
+        {
+          "name": "keyCode",
+          "type": "int",
+          "description": "The GLFW key code"
+        },
+        {
+          "name": "scanCode",
+          "type": "int",
+          "description": "The platform-specific scan code"
+        },
+        {
+          "name": "modifiers",
+          "type": "int",
+          "description": "Modifier key flags"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simulate keyboard input\noverlay.keyPressed(265, 0, 0); // Up arrow\noverlay.keyPressed(264, 0, 0); // Down arrow\noverlay.keyPressed(257, 0, 0); // Enter key"
+      ]
+    },
+    {
+      "name": "render",
+      "signature": "render(DrawContext drawContext, int mouseX, int mouseY, float delta)",
+      "returnType": "void",
+      "description": "Renders the overlay including background, buttons, and scrollbar.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The drawing context for rendering"
+        },
+        {
+          "name": "mouseX",
+          "type": "int",
+          "description": "Current mouse x position"
+        },
+        {
+          "name": "mouseY",
+          "type": "int",
+          "description": "Current mouse y position"
+        },
+        {
+          "name": "delta",
+          "type": "float",
+          "description": "Delta time for animations"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This is typically called automatically each frame\noverlay.render(drawContext, mouseX, mouseY, delta);"
+      ]
+    },
+    {
+      "name": "renderBackground",
+      "signature": "renderBackground(DrawContext drawContext)",
+      "returnType": "void",
+      "description": "Renders the overlay background with borders. Inherited from OverlayContainer.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The drawing context for rendering"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "close()",
+      "returnType": "void",
+      "description": "Closes the overlay and returns control to the parent container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Close the dropdown programmatically\noverlay.close();"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "ClassWrapperFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.ClassWrapperFilter<T>",
+  "extends": "BasicFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The ClassWrapperFilter is an abstract base class that provides a powerful reflection-based filtering mechanism for the WorldScanner system.",
+  "overview": "It acts as a generic wrapper that can invoke methods on objects and filter the results using appropriate comparison filters. This class enables dynamic filtering based on object method calls, making it extremely versatile for creating custom filtering criteria.\n\nWhile ClassWrapperFilter itself is abstract and cannot be instantiated directly, it serves as the foundation for concrete filter implementations like BlockFilter and BlockStateFilter. The class uses Java reflection to dynamically invoke methods on objects and applies appropriate filters to the returned values.\n\nThe ClassWrapperFilter provides:\n- Reflection-based method invocation: Calls methods on objects dynamically at runtime\n- Automatic filter selection: Chooses appropriate comparison filters based on return type\n- Type safety: Maintains generic type safety throughout the filtering process\n- Multi-type support: Handles boolean, string, character, and numeric return types\n- Error handling: Gracefully handles reflection exceptions during method invocation\n\nSupported Return Types:\nClassWrapperFilter automatically creates appropriate comparison filters based on the method return type:\n- Boolean Types: boolean and Boolean (Creates BooleanCompareFilter)\n- String Type: String (Creates StringCompareFilter)\n- Character Types: char and Character (Creates CharCompareFilter)\n- Numeric Types: int, Integer, float, Float, double, Double, short, Short, long, Long, byte, Byte (Usage: Filter with comparison operator and target value)",
+  "constructors": [
+    {
+      "signature": "protected ClassWrapperFilter(methodName, methods, methodArgs, filterArgs)",
+      "description": "Creates a new ClassWrapperFilter with the specified method and filter parameters. This constructor is protected and intended for use by concrete subclasses.",
+      "parameters": [
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method to invoke on objects"
+        },
+        {
+          "name": "methods",
+          "type": "Map<String, Method>",
+          "description": "Map of available methods for lookup"
+        },
+        {
+          "name": "methodArgs",
+          "type": "Object[]",
+          "description": "Arguments to pass when invoking the method"
+        },
+        {
+          "name": "filterArgs",
+          "type": "Object[]",
+          "description": "Arguments for creating the comparison filter"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

@@ -1,0 +1,303 @@
+{
+  "name": "CreativeInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CreativeInventory",
+  "extends": "Inventory<CreativeInventoryScreen>",
+  "since": "1.8.4",
+  "description": "The CreativeInventory class provides specialized access to Minecraft's creative mode inventory interface, allowing scripts to interact with creative inventory tabs, search functionality, hotbar management, and item spawning capabilities.",
+  "overview": "This class extends the base Inventory class and adds creative mode-specific functionality for browsing item categories, searching items, managing saved hotbars, and directly manipulating inventory contents in creative mode.\n\nCreative mode inventory in Minecraft has the following main components:\n- Creative Item Tabs: Categorized item groups (Building Blocks, Decorations, Redstone, etc.)\n- Search Tab: Text-based item search functionality\n- Inventory Tab: Player's survival-style inventory\n- Hotbar Tab: Saved creative hotbar configurations\n- Item List: Scrollable list of all items in selected category\n- Cursor Stack: Creative mode's ability to hold item stacks on the mouse cursor",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "scroll",
+      "signature": "scroll(amount)",
+      "returnType": "void",
+      "description": "Scrolls the creative inventory item list.",
+      "parameters": [
+        {
+          "name": "amount",
+          "type": "int",
+          "description": "The amount to scroll."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "scrollTo",
+      "signature": "scrollTo(position)",
+      "returnType": "void",
+      "description": "Scrolls the creative inventory to a specific position.",
+      "parameters": [
+        {
+          "name": "position",
+          "type": "float",
+          "description": "The position to scroll to (0.0 to 1.0)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "selectTab",
+      "signature": "selectTab(tabName)",
+      "returnType": "void",
+      "description": "Selects a specific creative inventory tab by name.",
+      "parameters": [
+        {
+          "name": "tabName",
+          "type": "String",
+          "description": "The name of the tab to select."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "function navigateCreativeTabs() {\n    const inv = Inventory.create();\n\n    if (!inv || !inv.is(\"Creative\")) {\n        Chat.log(\"Please open creative inventory first\");\n        return;\n    }\n\n    const tabNames = inv.getTabNames();\n\n    // Cycle through tabs\n    for (let i = 0; i < Math.min(tabNames.size(), 5); i++) {\n        const tabName = tabNames.get(i);\n        try {\n            inv.selectTab(tabName);\n            // ... logic ...\n        } catch (e) {\n            Chat.log(`Could not select tab \"${tabName}\": ${e.message}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "selectSearch",
+      "signature": "selectSearch()",
+      "returnType": "void",
+      "description": "Switches to the search tab in the creative inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function creativeSearchAssistant() {\n    const inv = Inventory.create();\n    // ... check inv ...\n\n    function performSearch(term) {\n        return new Promise((resolve) => {\n            inv.selectSearch().search(term);\n            // ... logic ...\n        });\n    }\n}"
+      ]
+    },
+    {
+      "name": "selectInventory",
+      "signature": "selectInventory()",
+      "returnType": "void",
+      "description": "Switches to the player inventory tab.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function organizeCreativeInventory() {\n    const inv = Inventory.create();\n\n    if (!inv || !inv.is(\"Creative\")) {\n        Chat.log(\"Creative inventory not open\");\n        return;\n    }\n\n    // Switch to inventory tab to see player's inventory\n    inv.selectInventory();\n    \n    // ... logic ...\n}"
+      ]
+    },
+    {
+      "name": "selectHotbar",
+      "signature": "selectHotbar()",
+      "returnType": "void",
+      "description": "Switches to the saved hotbars tab.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTabNames",
+      "signature": "getTabNames()",
+      "returnType": "List<String>",
+      "description": "Retrieves the names of all available creative tabs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tabNames = inv.getTabNames();\nChat.log(`Available tabs (${tabNames.size()}):`);\nfor (let i = 0; i < tabNames.size(); i++) {\n    Chat.log(`  ${i + 1}. ${tabNames.get(i)}`);\n}"
+      ]
+    },
+    {
+      "name": "getTabTexts",
+      "signature": "getTabTexts()",
+      "returnType": "List<String>",
+      "description": "Retrieves the text labels of all available creative tabs.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "search",
+      "signature": "search(searchString)",
+      "returnType": "void",
+      "description": "Performs a search in the creative inventory. Requires the search tab to be selected.",
+      "parameters": [
+        {
+          "name": "searchString",
+          "type": "String",
+          "description": "The string to search for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.selectSearch().search(term);"
+      ]
+    },
+    {
+      "name": "getShownItems",
+      "signature": "getShownItems()",
+      "returnType": "List<ItemStack>",
+      "description": "Retrieves the list of items currently shown in the creative interface (filtered by tab or search).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "setTimeout(() => {\n    const items = inv.getShownItems();\n    Chat.log(`${tabName}: ${items.size()} items`);\n    // ...\n}, 100);"
+      ]
+    },
+    {
+      "name": "setStack",
+      "signature": "setStack(slot, stack)",
+      "returnType": "void",
+      "description": "Sets the item stack at a specific slot. Useful for spawning items in creative mode.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index."
+        },
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item stack to place."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create the item stack\nconst count = itemData.count || 1;\nconst itemStack = RegistryHelper.getItemStack(itemData.id, count.toString());\n\n// Place it in the slot\ninv.setStack(slot, itemStack);"
+      ]
+    },
+    {
+      "name": "setCursorStack",
+      "signature": "setCursorStack(stack)",
+      "returnType": "void",
+      "description": "Sets the item stack held on the mouse cursor.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item stack to hold."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "destroyHeldItem",
+      "signature": "destroyHeldItem()",
+      "returnType": "void",
+      "description": "Destroys the item currently held on the mouse cursor.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "destroyAllItems",
+      "signature": "destroyAllItems()",
+      "returnType": "void",
+      "description": "Destroys all items in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "saveHotbar",
+      "signature": "saveHotbar(index)",
+      "returnType": "void",
+      "description": "Saves the current hotbar configuration to the specified saved hotbar index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index (0-8) to save the hotbar to."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.saveHotbar(emptySlot);"
+      ]
+    },
+    {
+      "name": "restoreHotbar",
+      "signature": "restoreHotbar(index)",
+      "returnType": "void",
+      "description": "Restores a saved hotbar configuration from the specified index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The saved hotbar index (0-8) to restore."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.restoreHotbar(slotIndex) // where slotIndex is 0-8"
+      ]
+    },
+    {
+      "name": "getSavedHotbar",
+      "signature": "getSavedHotbar(index)",
+      "returnType": "List<ItemStack>",
+      "description": "Retrieves the items stored in a specific saved hotbar index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The saved hotbar index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const savedItems = inv.getSavedHotbar(i);\nfor (let j = 0; j < savedItems.size(); j++) {\n    const item = savedItems.get(j);\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "isInHotbar",
+      "signature": "isInHotbar(slot)",
+      "returnType": "boolean",
+      "description": "Checks if a specific slot is part of the hotbar.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOffhand",
+      "signature": "getOffhand()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the item in the offhand slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHelmet",
+      "signature": "getHelmet()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the item in the helmet slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getChestplate",
+      "signature": "getChestplate()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the item in the chestplate slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLeggings",
+      "signature": "getLeggings()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the item in the leggings slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBoots",
+      "signature": "getBoots()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the item in the boots slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

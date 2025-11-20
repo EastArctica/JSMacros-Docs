@@ -1,0 +1,20 @@
+{
+  "name": "EventInteractBlock",
+  "fullClassName": "EventInteractBlock",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player interacts with a block.",
+  "overview": "Backed by class `EventInteractBlock`.\n\n### Behavior\n* Fires when the player right-clicks on a block\n* The `block` field contains information about the clicked block\n* The `face` field indicates which side of the block was clicked\n- Occurs for opening containers, using levers, pressing buttons, etc.\n* This event is cancellable - preventing the interaction\n\n### Fields\n* `block` (BlockDataHelper): The block that was interacted with. Includes the block state, position, and other block information.\n* `face` (string): The face of the block that was clicked. Possible values: 'down', 'up', 'north', 'south', 'west', 'east'.\n\n### Minimal example\n```js\nJsMacros.on(\"InteractBlock\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Interacted with ${e.block.getBlockState().getBlock().getTranslationKey()} on face ${e.face}`);\n});\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

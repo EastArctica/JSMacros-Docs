@@ -1,0 +1,106 @@
+{
+  "name": "Request",
+  "fullClassName": "Request",
+  "description": "Functions for making HTTP requests and managing WebSockets. Accessible from scripts via the global `Request` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create",
+      "signature": "create(url)",
+      "returnType": "HTTPRequest",
+      "description": "Creates a configurable `HTTPRequest` handler. This allows for more complex requests where you can specify the method, headers, and timeouts before sending.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The URL to target."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const req = Request.create(\"https://api.example.com/data\")\n    .addHeader(\"Authorization\", \"Bearer my-token\")\n    .setConnectTimeout(5000)\n    .setReadTimeout(10000);\n\nconst response = req.put(\"{ \\\"key\\\": \\\"value\\\" }\");\nChat.log(`Response Code: ${response.responseCode}`);\nChat.log(`Response Body: ${response.text()}`);\n\n// Or use a custom method\nconst customResponse = req.send(\"DELETE\", \"{ \\\"key\\\": \\\"value\\\" }\");"
+      ]
+    },
+    {
+      "name": "get",
+      "signature": "get(url, headers)",
+      "returnType": "HTTPRequest.Response",
+      "description": "A shortcut to send an HTTP GET request.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The URL to send the request to."
+        },
+        {
+          "name": "headers",
+          "type": "java.util.Map<string, string>",
+          "description": "An optional map of request headers."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Simple GET request\nconst response = Request.get(\"https://api.github.com/zen\");\nif (response.responseCode === 200) {\n    Chat.log(`GitHub Zen: ${response.text()}`);\n} else {\n    Chat.log(`Error: ${response.responseCode}`);\n}\n\n// GET request with custom headers\nconst headers = JavaUtils.createHashMap();\nheaders.put(\"Accept\", \"application/json\");\nconst userResponse = Request.get(\"https://api.github.com/users/wagyourtail\", headers);\nconst userData = JSON.parse(userResponse.text());\nChat.log(`User Login: ${userData.login}`);"
+      ]
+    },
+    {
+      "name": "post",
+      "signature": "post(url, data, headers)",
+      "returnType": "HTTPRequest.Response",
+      "description": "A shortcut to send an HTTP POST request.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The URL to send the request to."
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "description": "The data/body to send with the request."
+        },
+        {
+          "name": "headers",
+          "type": "java.util.Map<string, string>",
+          "description": "An optional map of request headers."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const url = \"https://httpbin.org/post\";\nconst postData = JSON.stringify({\n    username: \"Steve\",\n    score: 100\n});\n\nconst headers = JavaUtils.createHashMap();\nheaders.put(\"Content-Type\", \"application/json\");\n\nconst response = Request.post(url, postData, headers);\nChat.log(`Response from server: ${response.text()}`);\n\n// Access response headers\nconst contentType = response.headers.get(\"content-type\").get(0);\nChat.log(`Content-Type: ${contentType}`);"
+      ]
+    },
+    {
+      "name": "createWS",
+      "signature": "createWS(url)",
+      "returnType": "Websocket",
+      "description": "Creates a `Websocket` handler for persistent, real-time, two-way communication with a server.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The WebSocket URL (usually starting with `ws://` or `wss://`)."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const ws = Request.createWS(\"wss://echo.websocket.events\");\n\nws.onConnect = JavaWrapper.methodToJava((socket, headers) => {\n    Chat.log(\"WebSocket connected!\");\n    ws.sendText(\"Hello from JSMacros!\");\n});\n\nws.onTextMessage = JavaWrapper.methodToJava((socket, message) => {\n    Chat.log(`WebSocket received: ${message}`);\n    ws.close(1000);\n});\n\nws.onDisconnect = JavaWrapper.methodToJava((socket, disconnected) => {\n    Chat.log(`WebSocket closed! Code: ${disconnected.serverFrame.getCloseCode()}, Server: ${disconnected.isServer}`);\n});\n\nws.onError = JavaWrapper.methodToJava((socket, error) => {\n    Chat.log(`WebSocket error: ${error.getMessage()}`);\n});\n\nws.connect();"
+      ]
+    },
+    {
+      "name": "createWS2",
+      "signature": "createWS2(url)",
+      "returnType": "Websocket",
+      "description": "Deprecated: Use `Request.createWS()` instead. An older method for creating a WebSocket handler.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The WebSocket URL."
+        }
+      ],
+      "static": true,
+      "examples": []
+    }
+  ]
+}

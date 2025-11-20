@@ -1,0 +1,97 @@
+{
+  "name": "VillagerInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.VillagerInventory",
+  "extends": "Inventory<MerchantScreen>",
+  "since": "1.3.1",
+  "description": "The VillagerInventory class provides specialized access to Minecraft's villager trading interface, allowing scripts to interact with villager trades, experience systems, and merchant mechanics.",
+  "overview": "This class extends the base Inventory class and adds villager-specific functionality for managing trades, selecting offers, and monitoring villager progression.\n\nVillager trading in Minecraft consists of:\n- **Trade Offers:** Available trades that can be selected and executed\n- **Experience System:** Villager gains experience from trades and levels up\n- **Level Progress:** Visual indicator of villager's current level progress\n- **Trade Refreshing:** Ability to refresh trades under certain conditions\n\n## Accessing VillagerInventory\nYou typically get VillagerInventory instances when the player has a villager trading screen open:\n```javascript\n// Check if current screen is a villager\nconst inv = Inventory.create();\nif (inv && inv.getType() === \"Villager\") {\n    const villagerInv = inv; // Already typed as VillagerInventory\n    Chat.log(\"Villager inventory detected!\");\n\n    const trades = villagerInv.getTrades();\n    Chat.log(`Available trades: ${trades.length}`);\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "selectTrade",
+      "signature": "selectTrade(index)",
+      "returnType": "void",
+      "description": "Selects the trade offer at the specified index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The index of the trade to select."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.selectTrade(i);",
+        "// From Auto Trade Execution\nif (involvesTarget) {\n    // Select the trade\n    inv.selectTrade(i);\n\n    // Get inventory slot mappings for villager interface\n    const slotMap = inv.getMap();\n    // ... execute click\n}"
+      ]
+    },
+    {
+      "name": "getTrades",
+      "signature": "getTrades()",
+      "returnType": "List<TradeOfferHelper>",
+      "description": "Retrieves a list of all trade offers available from the villager.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const trades = inv.getTrades();",
+        "// From Basic Trade Analysis\nconst trades = inv.getTrades();\nChat.log(`Total Trades: ${trades.length}`);\n\ntrades.forEach((trade, index) => {\n    const inputs = trade.getInput();\n    const output = trade.getOutput();\n    // ...\n});"
+      ]
+    },
+    {
+      "name": "getExperience",
+      "signature": "getExperience()",
+      "returnType": "int",
+      "description": "Gets the current experience points of the villager.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const exp = inv.getExperience();",
+        "// From Villager Level Progress Monitor\nconst currentExp = currentInv.getExperience();\nif (currentExp > lastExp) {\n    const expGained = currentExp - lastExp;\n    Chat.log(`Trade completed! +${expGained} XP`);\n}"
+      ]
+    },
+    {
+      "name": "getLevelProgress",
+      "signature": "getLevelProgress()",
+      "returnType": "int",
+      "description": "Gets the villager's current level progress percentage.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const progress = inv.getLevelProgress();",
+        "// From Villager Level Progress Monitor\nconst currentProgress = currentInv.getLevelProgress();\nif (currentProgress !== lastProgress) {\n    Chat.log(`Level progress updated: ${lastProgress}% → ${currentProgress}%`);\n}"
+      ]
+    },
+    {
+      "name": "getMerchantRewardedExperience",
+      "signature": "getMerchantRewardedExperience()",
+      "returnType": "int",
+      "description": "Gets the amount of experience rewarded to the merchant.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canRefreshTrades",
+      "signature": "canRefreshTrades()",
+      "returnType": "boolean",
+      "description": "Checks if the villager can refresh their trades (e.g., after sleeping or working).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const canRefresh = inv.canRefreshTrades();\nChat.log(`Can Refresh Trades: ${canRefresh ? \"Yes\" : \"No\"}`);"
+      ]
+    },
+    {
+      "name": "isLeveled",
+      "signature": "isLeveled()",
+      "returnType": "boolean",
+      "description": "Checks if the villager is leveled or capable of leveling up.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isLeveled = inv.isLeveled();",
+        "// From Smart Trade Manager\nif (inv.isLeveled()) {\n    Chat.log(\"&a&lVillager can level up! Close and reopen trading to unlock new trades.\");\n}"
+      ]
+    }
+  ]
+}

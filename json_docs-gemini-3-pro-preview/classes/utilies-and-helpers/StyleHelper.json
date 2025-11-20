@@ -1,0 +1,218 @@
+[
+  {
+    "name": "StyleHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StyleHelper",
+    "extends": "BaseHelper<Style>",
+    "since": "1.6.5",
+    "description": "A wrapper for Minecraft's text styling system, providing access to text formatting properties including colors, font styles, click events, and hover effects.",
+    "overview": "The StyleHelper class serves as a bridge between JSMacros scripts and Minecraft's internal text styling capabilities. It is typically obtained from text components through methods like TextHelper.visit() or used with TextBuilder.withStyle() to apply styling to text elements. StyleHelper instances contain the complete styling information for a text segment, allowing for detailed inspection and manipulation of text appearance.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "hasColor",
+        "signature": "public boolean hasColor()",
+        "returnType": "boolean",
+        "description": "Checks if the style has a specific color defined.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.hasColor()) {\n    // Handle color logic\n}"
+        ]
+      },
+      {
+        "name": "getColorIndex",
+        "signature": "public int getColorIndex()",
+        "returnType": "int",
+        "description": "Gets the Minecraft formatting code index for the color.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const index = style.getColorIndex();"
+        ]
+      },
+      {
+        "name": "getColorValue",
+        "signature": "public int getColorValue()",
+        "returnType": "int",
+        "description": "Gets the RGB integer value of the color. Returns -1 if no color value is present.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const colorValue = style.getColorValue();\nif (colorValue !== -1) {\n    builder.withColor(colorValue);\n}"
+        ]
+      },
+      {
+        "name": "getColorName",
+        "signature": "public String getColorName()",
+        "returnType": "String",
+        "description": "Gets the name of the color (e.g., 'red', 'blue').",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const colorName = style.getColorName();"
+        ]
+      },
+      {
+        "name": "hasCustomColor",
+        "signature": "public boolean hasCustomColor()",
+        "returnType": "boolean",
+        "description": "Checks if the style uses a custom RGB color rather than a standard Minecraft color code.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.hasCustomColor()) {\n    const color = style.getCustomColor();\n}"
+        ]
+      },
+      {
+        "name": "getCustomColor",
+        "signature": "public int getCustomColor()",
+        "returnType": "int",
+        "description": "Gets the integer value of the custom RGB color.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const hexColor = style.getCustomColor().toString(16);"
+        ]
+      },
+      {
+        "name": "getFormatting",
+        "signature": "public FormattingHelper getFormatting()",
+        "returnType": "FormattingHelper",
+        "description": "Returns a FormattingHelper instance providing additional formatting information.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "bold",
+        "signature": "public boolean bold()",
+        "returnType": "boolean",
+        "description": "Checks if the text is formatted as bold.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.bold()) formats.push(\"bold\");"
+        ]
+      },
+      {
+        "name": "italic",
+        "signature": "public boolean italic()",
+        "returnType": "boolean",
+        "description": "Checks if the text is formatted as italic.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.italic()) formats.push(\"italic\");"
+        ]
+      },
+      {
+        "name": "underlined",
+        "signature": "public boolean underlined()",
+        "returnType": "boolean",
+        "description": "Checks if the text is formatted as underlined.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.underlined()) formats.push(\"underlined\");"
+        ]
+      },
+      {
+        "name": "strikethrough",
+        "signature": "public boolean strikethrough()",
+        "returnType": "boolean",
+        "description": "Checks if the text is formatted with a strikethrough.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.strikethrough()) formats.push(\"strikethrough\");"
+        ]
+      },
+      {
+        "name": "obfuscated",
+        "signature": "public boolean obfuscated()",
+        "returnType": "boolean",
+        "description": "Checks if the text is obfuscated (random changing characters).",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "if (style.obfuscated()) formats.push(\"obfuscated\");"
+        ]
+      },
+      {
+        "name": "getClickAction",
+        "signature": "public String getClickAction()",
+        "returnType": "String",
+        "description": "Gets the action type of the click event (e.g., 'run_command', 'open_url').",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const clickAction = style.getClickAction();\nif (clickAction) {\n    // Handle click event\n}"
+        ]
+      },
+      {
+        "name": "getClickValue",
+        "signature": "public String getClickValue()",
+        "returnType": "String",
+        "description": "Gets the value associated with the click event (e.g., the URL or command).",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const clickValue = style.getClickValue();"
+        ]
+      },
+      {
+        "name": "getCustomClickValue",
+        "signature": "public String getCustomClickValue()",
+        "returnType": "String",
+        "description": "Gets the custom value associated with the click event if present.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "getHoverAction",
+        "signature": "public String getHoverAction()",
+        "returnType": "String",
+        "description": "Gets the action type of the hover event (e.g., 'show_text').",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const hoverAction = style.getHoverAction();"
+        ]
+      },
+      {
+        "name": "getHoverValue",
+        "signature": "public Object getHoverValue()",
+        "returnType": "Object",
+        "description": "Gets the content of the hover event. Can return complex objects depending on the content type.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const hoverValue = style.getHoverValue();"
+        ]
+      },
+      {
+        "name": "getInsertion",
+        "signature": "public String getInsertion()",
+        "returnType": "String",
+        "description": "Gets the text string to be inserted into the chat input when shift-clicked.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const insertion = style.getInsertion();"
+        ]
+      },
+      {
+        "name": "toString",
+        "signature": "public String toString()",
+        "returnType": "String",
+        "description": "Returns a string representation of the style instance.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "Chat.log(`Style: ${style.toString()}`);"
+        ]
+      }
+    ]
+  }
+]

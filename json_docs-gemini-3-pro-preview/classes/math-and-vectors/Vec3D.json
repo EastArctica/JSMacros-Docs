@@ -1,0 +1,541 @@
+{
+  "name": "Vec3D",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.math.Vec3D",
+  "extends": "Vec2D",
+  "since": "JsMacros 1.2.6",
+  "description": "The Vec3D class represents a 3D vector with a start point and an end point.",
+  "overview": "The `Vec3D` class represents a 3D vector with a start point and an end point. It provides comprehensive functionality for 3D vector mathematics, including basic vector operations, coordinate access, magnitude calculations, directional operations, and rotation calculations. This class extends `Vec2D` to add Z-axis support for full 3D spatial operations.\n\nA `Vec3D` is defined by two 3D points: a start point `(x1, y1, z1)` and an end point `(x2, y2, z2)`. The vector represents the displacement from the start to the end point.",
+  "constructors": [
+    {
+      "signature": "new Vec3D(x1, y1, z1, x2, y2, z2)",
+      "description": "Creates a new Vec3D with the specified start and end coordinates.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "X coordinate of the start point"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Y coordinate of the start point"
+        },
+        {
+          "name": "z1",
+          "type": "double",
+          "description": "Z coordinate of the start point"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "X coordinate of the end point"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "Y coordinate of the end point"
+        },
+        {
+          "name": "z2",
+          "type": "double",
+          "description": "Z coordinate of the end point"
+        }
+      ]
+    },
+    {
+      "signature": "new Vec3D(start, end)",
+      "description": "Creates a new Vec3D from two Pos3D points.",
+      "parameters": [
+        {
+          "name": "start",
+          "type": "Pos3D",
+          "description": "The start position"
+        },
+        {
+          "name": "end",
+          "type": "Pos3D",
+          "description": "The end position"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getX1",
+      "signature": "getX1()",
+      "returnType": "double",
+      "description": "Returns the X coordinate of the start point.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY1",
+      "signature": "getY1()",
+      "returnType": "double",
+      "description": "Returns the Y coordinate of the start point.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZ1",
+      "signature": "getZ1()",
+      "returnType": "double",
+      "description": "Returns the Z coordinate of the start point.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getX2",
+      "signature": "getX2()",
+      "returnType": "double",
+      "description": "Returns the X coordinate of the end point.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY2",
+      "signature": "getY2()",
+      "returnType": "double",
+      "description": "Returns the Y coordinate of the end point.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZ2",
+      "signature": "getZ2()",
+      "returnType": "double",
+      "description": "Returns the Z coordinate of the end point.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getDeltaX",
+      "signature": "getDeltaX()",
+      "returnType": "double",
+      "description": "Returns the X component of the vector (x2 - x1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const dx = vector.getDeltaX();"
+      ]
+    },
+    {
+      "name": "getDeltaY",
+      "signature": "getDeltaY()",
+      "returnType": "double",
+      "description": "Returns the Y component of the vector (y2 - y1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const dy = vector.getDeltaY();"
+      ]
+    },
+    {
+      "name": "getDeltaZ",
+      "signature": "getDeltaZ()",
+      "returnType": "double",
+      "description": "Returns the Z component of the vector (z2 - z1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const dz = vector.getDeltaZ();"
+      ]
+    },
+    {
+      "name": "getStart",
+      "signature": "getStart()",
+      "returnType": "Pos3D",
+      "description": "Returns the start point as a Pos3D object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const startPos = vector.getStart();"
+      ]
+    },
+    {
+      "name": "getEnd",
+      "signature": "getEnd()",
+      "returnType": "Pos3D",
+      "description": "Returns the end point as a Pos3D object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const endPos = vector.getEnd();"
+      ]
+    },
+    {
+      "name": "getMagnitude",
+      "signature": "getMagnitude()",
+      "returnType": "double",
+      "description": "Returns the magnitude (length) of the vector using Euclidean distance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const length = vector.getMagnitude();"
+      ]
+    },
+    {
+      "name": "getMagnitudeSq",
+      "signature": "getMagnitudeSq()",
+      "returnType": "double",
+      "description": "Returns the squared magnitude of the vector. More efficient than getMagnitude() when only relative comparisons are needed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const lengthSquared = vector.getMagnitudeSq();"
+      ]
+    },
+    {
+      "name": "add",
+      "signature": "add(vec)",
+      "returnType": "Vec3D",
+      "description": "Adds another Vec3D to this vector component-wise.",
+      "parameters": [
+        {
+          "name": "vec",
+          "type": "Vec3D",
+          "description": "The vector to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const offset = new Vec3D(5, 0, 3, 5, 0, 3);\nconst shifted = vector.add(offset);"
+      ]
+    },
+    {
+      "name": "add",
+      "signature": "add(x1, y1, z1, x2, y2, z2)",
+      "returnType": "Vec3D",
+      "description": "Adds the specified coordinates to both start and end points of this vector.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "X coordinate to add to start point"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Y coordinate to add to start point"
+        },
+        {
+          "name": "z1",
+          "type": "double",
+          "description": "Z coordinate to add to start point"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "X coordinate to add to end point"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "Y coordinate to add to end point"
+        },
+        {
+          "name": "z2",
+          "type": "double",
+          "description": "Z coordinate to add to end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addStart",
+      "signature": "addStart(pos)",
+      "returnType": "Vec3D",
+      "description": "Adds a position to only the start point of this vector.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "Position to add to the start point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addStart",
+      "signature": "addStart(x, y, z)",
+      "returnType": "Vec3D",
+      "description": "Adds coordinates to only the start point of this vector.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate to add to start point"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate to add to start point"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate to add to start point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEnd",
+      "signature": "addEnd(pos)",
+      "returnType": "Vec3D",
+      "description": "Adds a position to only the end point of this vector.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "Position to add to the end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEnd",
+      "signature": "addEnd(x, y, z)",
+      "returnType": "Vec3D",
+      "description": "Adds coordinates to only the end point of this vector.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate to add to end point"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate to add to end point"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate to add to end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "multiply",
+      "signature": "multiply(vec)",
+      "returnType": "Vec3D",
+      "description": "Multiplies this vector by another Vec3D component-wise.",
+      "parameters": [
+        {
+          "name": "vec",
+          "type": "Vec3D",
+          "description": "The vector to multiply by"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const stretched = vector.multiply(new Vec3D(1, 2, 1, 1, 2, 1));"
+      ]
+    },
+    {
+      "name": "multiply",
+      "signature": "multiply(x1, y1, z1, x2, y2, z2)",
+      "returnType": "Vec3D",
+      "description": "Multiplies the start and end points of this vector by the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "X factor to multiply start point by"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Y factor to multiply start point by"
+        },
+        {
+          "name": "z1",
+          "type": "double",
+          "description": "Z factor to multiply start point by"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "X factor to multiply end point by"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "Y factor to multiply end point by"
+        },
+        {
+          "name": "z2",
+          "type": "double",
+          "description": "Z factor to multiply end point by"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "scale",
+      "signature": "scale(scale)",
+      "returnType": "Vec3D",
+      "description": "Scales both the start and end points of this vector by the specified factor.",
+      "parameters": [
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scaling factor"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const doubled = vector.scale(2.0);",
+        "const halved = vector.scale(0.5);"
+      ]
+    },
+    {
+      "name": "normalize",
+      "signature": "normalize()",
+      "returnType": "Vec3D",
+      "description": "Returns a normalized version of this vector with magnitude 1.0, maintaining the same direction.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const unitVector = vector.normalize();",
+        "const direction = new Vec3D(shooterPos, targetPos).normalize();"
+      ]
+    },
+    {
+      "name": "getPitch",
+      "signature": "getPitch()",
+      "returnType": "float",
+      "description": "Calculates the pitch (vertical angle) of this vector in degrees. Pitch represents the angle up or down from the horizontal plane.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pitch = vector.getPitch();"
+      ]
+    },
+    {
+      "name": "getYaw",
+      "signature": "getYaw()",
+      "returnType": "float",
+      "description": "Calculates the yaw (horizontal angle) of this vector in degrees. Yaw represents the compass direction.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const yaw = vector.getYaw();"
+      ]
+    },
+    {
+      "name": "dotProduct",
+      "signature": "dotProduct(vec)",
+      "returnType": "double",
+      "description": "Calculates the dot product of this vector with another Vec3D.",
+      "parameters": [
+        {
+          "name": "vec",
+          "type": "Vec3D",
+          "description": "The vector to calculate the dot product with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const vec1 = new Vec3D(0, 0, 0, 1, 0, 0);\nconst vec2 = new Vec3D(0, 0, 0, 0, 1, 0);\nconst dotProduct = vec1.dotProduct(vec2);"
+      ]
+    },
+    {
+      "name": "crossProduct",
+      "signature": "crossProduct(vec)",
+      "returnType": "Vec3D",
+      "description": "Calculates the cross product of this vector with another Vec3D, resulting in a vector perpendicular to both.",
+      "parameters": [
+        {
+          "name": "vec",
+          "type": "Vec3D",
+          "description": "The vector to calculate the cross product with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const east = new Vec3D(0, 0, 0, 1, 0, 0);\nconst north = new Vec3D(0, 0, 0, 0, 0, -1);\nconst up = east.crossProduct(north);"
+      ]
+    },
+    {
+      "name": "reverse",
+      "signature": "reverse()",
+      "returnType": "Vec3D",
+      "description": "Returns a new Vec3D with the start and end points swapped, effectively reversing the vector direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toMojangFloatVector",
+      "signature": "toMojangFloatVector()",
+      "returnType": "Vector3f",
+      "description": "Converts this vector to a JOML Vector3f object representing the vector's direction and magnitude.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this vector.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "equals",
+      "signature": "equals(obj)",
+      "returnType": "boolean",
+      "description": "Compares this Vec3D with another object for equality.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": "Object to compare with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code for this vector.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "compareTo",
+      "signature": "compareTo(other)",
+      "returnType": "int",
+      "description": "Compares this Vec3D with another Vec3D for ordering.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "Vec3D",
+          "description": "The vector to compare with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

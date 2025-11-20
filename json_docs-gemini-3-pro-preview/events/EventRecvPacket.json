@@ -1,0 +1,20 @@
+{
+  "name": "EventRecvPacket",
+  "fullClassName": "EventRecvPacket",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a packet is received from the server.",
+  "overview": "Behavior:\n* Fires when any packet is received from the server\n- The `packet` field contains the packet data\n- This event is cancellable - preventing packet processing\n- Advanced event for network-level monitoring\n- Use with caution as this fires very frequently\n\nEvent payload:\n- packet (Packet): The received packet object\n\nExample:\n```js\nJsMacros.on(\"RecvPacket\", JavaWrapper.methodToJavaAsync((e) => {\n  const packetId = e.packet.getId();\n\n  // Only log certain packet types to avoid spam\n  if (shouldLogPacket(packetId)) {\n    Chat.log(`&bPacket received: ${packetId}`);\n  }\n}));\n\nfunction shouldLogPacket(packetId) {\n  const logThesePackets = [\n    'CHAT',\n    'TITLE',\n    'BOSSBAR',\n    'PLAYER_LIST',\n    'GAME_EVENT'\n  ];\n\n  return logThesePackets.includes(packetId);\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

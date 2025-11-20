@@ -1,0 +1,52 @@
+{
+  "name": "PigEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.PigEntityHelper",
+  "extends": "AnimalEntityHelper<PigEntity>",
+  "since": "1.8.4",
+  "description": "The PigEntityHelper class provides specialized functionality for interacting with pig entities in Minecraft, specifically regarding saddling and riding mechanics.",
+  "overview": "The `PigEntityHelper` class provides specialized functionality for interacting with pig entities in Minecraft. This helper offers access to pig-specific properties including saddling status for riding capabilities, along with all the inherited functionality from animal entities for breeding and feeding mechanics. It extends `AnimalEntityHelper` and inherits comprehensive methods for managing animal behaviors, breeding compatibility, and food preferences.\n\nPigs are passive mobs that can be ridden by players when equipped with a saddle. They are bred using carrots, potatoes, and beetroots, making them valuable for food production and transportation in early game scenarios. Unlike horses, pigs require a carrot on a stick to steer while being ridden.\n\nThis class is typically obtained through entity events, world queries, or by casting from `EntityHelper` using the `asAnimal()` method when dealing with pig entities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isSaddled",
+      "signature": "isSaddled()",
+      "returnType": "boolean",
+      "description": "Returns true if this pig has a saddle equipped, making it rideable by players.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if a pig is saddled and ready for riding\nconst pig = entity.asAnimal();\nif (pig.isSaddled()) {\n    Chat.log(\"This pig is saddled and ready to ride!\");\n    // Highlight rideable pigs\n    pig.setGlowing(true);\n    pig.setGlowingColor(0xFFD700); // Gold for saddled pigs\n} else {\n    Chat.log(\"This pig needs a saddle before it can be ridden.\");\n    // Check if player has a saddle to equip\n    const mainHand = Player.getPlayer().getMainHand();\n    if (mainHand && mainHand.getId() === \"minecraft:saddle\") {\n        Chat.log(\"Hold right-click on the pig to saddle it!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isFood",
+      "signature": "isFood(item)",
+      "returnType": "boolean",
+      "description": "Check if an item can be used to feed and breed this pig. Valid items: carrots, potatoes, beetroots.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper | ItemStackHelper",
+          "description": "The item to check"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreedWith",
+      "signature": "canBreedWith(other)",
+      "returnType": "boolean",
+      "description": "Check if this pig can breed with another pig.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "AnimalEntityHelper",
+          "description": "The other pig to check compatibility with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

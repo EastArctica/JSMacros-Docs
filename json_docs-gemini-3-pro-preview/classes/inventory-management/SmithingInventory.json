@@ -1,0 +1,46 @@
+[
+  {
+    "name": "SmithingInventory",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.SmithingInventory",
+    "extends": "Inventory<SmithingScreen>",
+    "since": "1.8.4",
+    "description": "The SmithingInventory class provides specialized access to Minecraft's smithing table interface, allowing scripts to interact with smithing operations such as upgrading diamond gear to netherite gear.",
+    "overview": "This class extends the base Inventory class and adds smithing-specific functionality for managing the input slots and output slot.\n\nSmithing tables in Minecraft have three main slots:\n- **Left Input (Slot 0):** The template item (e.g., Netherite Upgrade Smithing Template)\n- **Right Input (Slot 1):** The base item to be upgraded (e.g., Diamond Sword) and the mineral (e.g., Netherite Ingot)\n- **Output (Slot 2):** The resulting upgraded item after applying the smithing operation",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "getLeftInput",
+        "signature": "public ItemStackHelper getLeftInput()",
+        "returnType": "ItemStackHelper",
+        "description": "Retrieves the item currently in the Left Input slot (Slot 0), typically used for the smithing template.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const inv = Inventory.create();\nconst leftItem = inv.getLeftInput();\nif (leftItem.isEmpty()) {\n    Chat.log(\"Please place a smithing template in the left slot\");\n}"
+        ]
+      },
+      {
+        "name": "getRightInput",
+        "signature": "public ItemStackHelper getRightInput()",
+        "returnType": "ItemStackHelper",
+        "description": "Retrieves the item currently in the Right Input slot (Slot 1), typically used for the base item to be upgraded or the mineral.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const inv = Inventory.create();\nconst rightItem = inv.getRightInput();\nif (rightItem.isEmpty()) {\n    Chat.log(\"Please place items to upgrade in the right slot\");\n}"
+        ]
+      },
+      {
+        "name": "getOutput",
+        "signature": "public ItemStackHelper getOutput()",
+        "returnType": "ItemStackHelper",
+        "description": "Retrieves the item currently in the Output slot (Slot 2), representing the resulting upgraded item.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const inv = Inventory.create();\nconst output = inv.getOutput();\nif (!output.isEmpty()) {\n    Chat.log(`Output: ${output.getName().getString()}`);\n    inv.quick(2); // Shift-click output to inventory\n}"
+        ]
+      }
+    ]
+  }
+]

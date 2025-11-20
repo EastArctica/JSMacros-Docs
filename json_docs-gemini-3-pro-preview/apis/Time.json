@@ -1,0 +1,37 @@
+{
+  "name": "Time",
+  "fullClassName": "Time",
+  "description": "Functions for time-related operations, such as getting the current system time and pausing script execution.",
+  "overview": "Accessible from scripts via the global `Time` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "time",
+      "signature": "time()",
+      "returnType": "long",
+      "description": "Gets the current system time in milliseconds since the Unix epoch (January 1, 1970 UTC).",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const startTime = Time.time();\n// ... do some work ...\nconst endTime = Time.time();\nconst duration = endTime - startTime;\nChat.log(`The operation took ${duration} ms.`);"
+      ]
+    },
+    {
+      "name": "sleep",
+      "signature": "sleep(long millis)",
+      "returnType": "void",
+      "description": "Pauses the execution of the current script thread for the specified duration. This method blocks the current script thread. It should not be used in a synchronous callback (one created with `JavaWrapper.methodToJava()`) that runs on the main game thread (e.g., a button click), as it will freeze the game. It is safe to use in the main body of your script or in asynchronous event listeners.",
+      "parameters": [
+        {
+          "name": "millis",
+          "type": "long",
+          "description": "The number of milliseconds to sleep."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.log(\"Waiting for 2 seconds...\");\nTime.sleep(2000); // 2000 milliseconds = 2 seconds\nChat.log(\"Done waiting!\");"
+      ]
+    }
+  ]
+}

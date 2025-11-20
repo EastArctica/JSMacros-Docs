@@ -1,0 +1,33 @@
+{
+  "name": "SpellcastingIllagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.SpellcastingIllagerEntityHelper<T extends SpellcastingIllagerEntity>",
+  "extends": "IllagerEntityHelper<T>",
+  "since": "JsMacros 1.8.4",
+  "description": "The SpellcastingIllagerEntityHelper class provides specialized functionality for spellcasting illager entities in JSMacros, particularly evokers and illusioners.",
+  "overview": "This class extends IllagerEntityHelper and inherits all illager-specific methods while adding spellcasting-specific functionality for tracking magical attacks, spell identification, and combat pattern analysis.\n\nThis class represents intelligent hostile mobs that use magical spells in combat, making them significantly more dangerous than regular illagers. Spellcasting illagers can summon vexes, create evoker fangs, cast blindness spells, disappear and reappear, and use other magical abilities that require special defensive strategies and tactical awareness.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isCastingSpell",
+      "signature": "public boolean isCastingSpell()",
+      "returnType": "boolean",
+      "description": "Checks if the spellcasting illager is currently casting a spell.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (spellcaster.isCastingSpell()) {\n    const spell = spellcaster.getCastedSpell();\n    Chat.log(`&cWARNING: ${name} is casting ${spell} immediately!`);\n}"
+      ]
+    },
+    {
+      "name": "getCastedSpell",
+      "signature": "public String getCastedSpell()",
+      "returnType": "String",
+      "description": "Retrieves the type of spell currently being cast. Common values include \"SUMMON_VEX\", \"FANGS\", \"BLINDNESS\", \"DISAPPEAR\", \"WOLOLO\", or \"NONE\".",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentSpell = entity.getCastedSpell();\nif (currentSpell === \"SUMMON_VEX\") {\n    Chat.log(\"Evoker is summoning vexes!\");\n}"
+      ]
+    }
+  ]
+}

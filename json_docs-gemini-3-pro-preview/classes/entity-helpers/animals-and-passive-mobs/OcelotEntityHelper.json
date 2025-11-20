@@ -1,0 +1,22 @@
+{
+  "name": "OcelotEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.OcelotEntityHelper",
+  "extends": "AnimalEntityHelper<OcelotEntity>",
+  "since": "1.8.4",
+  "description": "The OcelotEntityHelper class provides specialized access to ocelot entities in Minecraft, offering methods to monitor and interact with ocelot-specific behaviors such as trust states and feeding mechanics.",
+  "overview": "This class extends AnimalEntityHelper and inherits all functionality for animals including breeding, food preferences, and basic animal behaviors.\n\nThis helper is particularly useful for creating scripts that manage ocelot interactions, monitor ocelot behavior patterns, track ocelot trust status for breeding or companion purposes, or coordinate with ocelots in jungle biomes.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isTrusting",
+      "signature": "isTrusting()",
+      "returnType": "boolean",
+      "description": "Check if an ocelot trusts the player (won't run away).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if an ocelot trusts the player (won't run away)\nfunction checkOcelotTrust(entity) {\n    if (entity.is(\"minecraft:ocelot\")) {\n        const ocelot = entity.asOcelot();\n        const isTrusting = ocelot.isTrusting();\n        const distance = Player.getPlayer().distanceTo(entity);\n\n        Chat.log(`Ocelot trust status: ${isTrusting ? \"Trusting\" : \"Wild\"} (${distance.toFixed(1)}m away)`);\n\n        // Visual feedback based on trust status\n        if (isTrusting) {\n            entity.setGlowing(true);\n            entity.setGlowingColor(0x00FF00); // Green for trusting\n            Chat.actionbar(\"&aThis ocelot trusts you!\");\n        } else {\n            entity.setGlowing(true);\n            entity.setGlowingColor(0xFFA500); // Orange for wild\n            Chat.actionbar(\"&eThis ocelot is still wild and cautious\");\n        }\n\n        return isTrusting;\n    }\n    return false;\n}"
+      ]
+    }
+  ]
+}

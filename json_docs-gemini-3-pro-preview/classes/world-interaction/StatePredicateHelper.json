@@ -1,0 +1,59 @@
+{
+  "name": "StatePredicateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StatePredicateHelper",
+  "extends": "BaseHelper<StatePredicate>",
+  "since": "1.9.1",
+  "description": "A wrapper around Minecraft's StatePredicate that provides JavaScript functionality for testing block and fluid state conditions in JsMacros scripts.",
+  "overview": "The StatePredicateHelper class is a wrapper around Minecraft's StatePredicate that provides JavaScript functionality for testing block and fluid state conditions in JsMacros scripts. This helper allows you to test whether specific block states or fluid states match defined criteria based on state properties.\n\nStatePredicateHelper is primarily used in World Interaction contexts where you need to:\n- Test if a block state matches specific property conditions\n- Test if a fluid state matches specific property conditions\n- Validate state-based conditions for block predicates\n- Create complex state matching logic for automation scripts\n\nThis class is typically obtained from:\n- BlockPredicateHelper.getStatePredicate() - Get state predicate from a block predicate\n- Command arguments and other APIs that return state predicates\n- Events that provide state predicate information\n\nNotes:\n1. Null Safety: StatePredicateHelper can be null when obtained from BlockPredicateHelper.getStatePredicate() if no state conditions are defined. Always check for null before using.\n2. Method Overloads: The class provides two separate test() methods - one for BlockStateHelper and one for FluidStateHelper. Make sure to use the appropriate one for your use case.\n3. State Properties: State predicates test block state properties (like facing, powered, level, axis, etc.) rather than block types. Use BlockStateHelper.toMap() to see what properties a block state has.\n4. Minecraft Integration: This class wraps Minecraft's native StatePredicate functionality, so all state matching rules follow Minecraft's built-in predicate system.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "test",
+      "signature": "test(BlockStateHelper state)",
+      "returnType": "boolean",
+      "description": "Tests whether the given block state matches this state predicate's conditions. Returns true if the block state matches all property conditions defined in this predicate, false otherwise.",
+      "parameters": [
+        {
+          "name": "state",
+          "type": "BlockStateHelper",
+          "description": "The block state to test against this predicate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockState(x, y, z);\nconst matches = statePredicate.test(blockState);\nif (matches) {\n    Chat.log(\"Block state matches the predicate!\");\n}",
+        "// Basic Block State Testing\nfunction testBlockState(x, y, z, statePredicate) {\n    if (!statePredicate) {\n        Chat.log(\"No state predicate provided\");\n        return false;\n    }\n\n    const blockState = World.getBlockState(x, y, z);\n    return statePredicate.test(blockState);\n}\n\n// Example usage\nconst matches = testBlockState(100, 64, 200, someStatePredicate);\nChat.log(\"Block state matches:\", matches);",
+        "// Analyze what states a predicate matches\nfunction analyzeStatePredicate(statePredicate) {\n    Chat.log(\"=== State Predicate Analysis ===\");\n\n    if (!statePredicate) {\n        Chat.log(\"No state predicate defined\");\n        return;\n    }\n\n    // Test against various common block states\n    const testStates = [\n        World.createBlockState(\"minecraft:stone\"),\n        World.createBlockState(\"minecraft:oak_log[axis=y]\"),\n        World.createBlockState(\"minecraft:water[level=0]\"),\n        World.createBlockState(\"minecraft:lava[level=0]\"),\n        World.createBlockState(\"minecraft:redstone_wire[powered=true]\")\n    ];\n\n    for (const testState of testStates) {\n        const matches = statePredicate.test(testState);\n        Chat.log(`${testState.getId()}: ${matches ? \"✓ MATCH\" : \"✗ NO MATCH\"}`);\n\n        // Show state properties\n        const properties = testState.toMap();\n        if (Object.keys(properties).length > 0) {\n            Chat.log(`  Properties: ${JSON.stringify(properties)}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(FluidStateHelper state)",
+      "returnType": "boolean",
+      "description": "Tests whether the given fluid state matches this state predicate's conditions. Returns true if the fluid state matches all property conditions defined in this predicate, false otherwise.",
+      "parameters": [
+        {
+          "name": "state",
+          "type": "FluidStateHelper",
+          "description": "The fluid state to test against this predicate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockState(x, y, z);\nconst fluidState = blockState.getFluidState();\nconst matches = statePredicate.test(fluidState);\nif (matches) {\n    Chat.log(\"Fluid state matches the predicate!\");\n}",
+        "// Test if a fluid state matches a predicate\nfunction testFluidState(x, y, z, statePredicate) {\n    if (!statePredicate) {\n        Chat.log(\"No state predicate provided\");\n        return false;\n    }\n\n    const blockState = World.getBlockState(x, y, z);\n    const fluidState = blockState.getFluidState();\n\n    // Don't test empty fluid states\n    if (fluidState.isEmpty()) {\n        return false;\n    }\n\n    return statePredicate.test(fluidState);\n}\n\n// Example usage\nconst fluidMatches = testFluidState(100, 63, 200, someStatePredicate);\nChat.log(\"Fluid state matches:\", fluidMatches);"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "StatePredicate",
+      "description": "Returns the underlying Minecraft StatePredicate object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawPredicate = statePredicate.getRaw();"
+      ]
+    }
+  ]
+}

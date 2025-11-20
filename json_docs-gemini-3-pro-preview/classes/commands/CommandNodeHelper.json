@@ -1,0 +1,51 @@
+{
+  "name": "CommandNodeHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.CommandNodeHelper",
+  "extends": "BaseHelper<CommandNode<?>>",
+  "since": "1.6.5",
+  "description": "The CommandNodeHelper class is a wrapper around Minecraft's Brigadier command system that represents a command node in the command tree.",
+  "overview": "This class is primarily used internally for command registration and management operations, allowing users to temporarily unregister commands and re-register them later.\n\nCommand nodes are the fundamental building blocks of Minecraft's command system, representing individual commands, arguments, and literals in the command tree structure.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "CommandNode<?>",
+      "description": "Returns the underlying Brigadier CommandNode object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawNode = commandNode.getRaw();\nChat.log(`Raw command node: ${rawNode.getClass().getName()}`);",
+        "// Access the raw command node for advanced operations\nconst commandNode = Chat.getCommandManager().unregisterCommand(\"help\");\nif (commandNode) {\n    const rawNode = commandNode.getRaw();\n    // Use raw Brigadier API methods\n    const name = rawNode.getName();\n    const usage = rawNode.getUsageText();\n    Chat.log(`Command: ${name}, Usage: ${usage}`);\n}"
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(Object obj)",
+      "returnType": "boolean",
+      "description": "Compares this CommandNodeHelper to another object for equality.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": "Object to compare with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// TODO: These do not reference the same command\nconst node1 = Chat.getCommandManager().unregisterCommand(\"test\");\nconst node2 = Chat.getCommandManager().unregisterCommand(\"test\");\nif (node1 && node2 && node1.equals(node2)) {\n    Chat.log(\"Both command nodes represent the same command\");\n}"
+      ]
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code of the underlying command node.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const commandNode = Chat.getCommandManager().unregisterCommand(\"example\");\nif (commandNode) {\n    const hashCode = commandNode.hashCode();\n    Chat.log(`Command node hash code: ${hashCode}`);\n}"
+      ]
+    }
+  ]
+}

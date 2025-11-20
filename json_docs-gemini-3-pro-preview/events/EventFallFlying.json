@@ -1,0 +1,18 @@
+{
+  "name": "EventFallFlying",
+  "fullClassName": "EventFallFlying",
+  "description": "This event is fired when the player starts or stops gliding with an Elytra.",
+  "overview": "Backed by class `EventFallFlying`.\n\n### Behavior\n* Fires when the player starts or stops gliding with an Elytra\n* State is true when gliding starts, false when gliding stops\n* Not cancellable\n\n### Fields\n* `state` (boolean): The new fall flying state.\n\n### Examples\nMinimal:\n```js\nJsMacros.on(\"FallFlying\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(e.state ? \"Started gliding\" : \"Stopped gliding\");\n});\n```\n\nAsync:\n```js\nJsMacros.on(\"FallFlying\", JavaWrapper.methodToJavaAsync((e) => {\n  if (e.state) {\n    Chat.actionbar(\"&bElytra deployed! You are now gliding.\");\n  } else {\n    Chat.actionbar(\"&7No longer gliding.\");\n  }\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

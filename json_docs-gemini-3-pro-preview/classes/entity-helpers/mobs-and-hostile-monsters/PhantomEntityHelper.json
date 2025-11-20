@@ -1,0 +1,26 @@
+{
+  "name": "PhantomEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.PhantomEntityHelper",
+  "extends": "MobEntityHelper<PhantomEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a phantom entity in the world. PhantomEntityHelper provides access to phantom-specific properties and behaviors such as size variations and attack patterns.",
+  "overview": "Phantom entities are flying hostile mobs that appear in the Overworld after the player hasn't slept for at least three in-game days. They have unique behaviors like circling players, dive-bombing attacks, and varying sizes that affect their health and attack damage. This helper provides access to the specific phantom functionality beyond the general mob behaviors.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, movement, AI control, and other mob properties, while adding phantom-specific functionality for size management and behavior tracking.\n\nNotes and Limitations:\n- PhantomEntityHelper provides access to phantom-specific behaviors beyond general mob functionality\n- The `getSize()` method is crucial for understanding phantom strength and behavior patterns\n- Phantom size directly affects health points, attack damage, and collision box size\n- Size 0 phantoms are the smallest and fastest, while size 4 phantoms are the largest and most dangerous\n- Phantoms spawn after players haven't slept for at least 3 in-game days\n- Phantom spawning is affected by the current moon phase and player location\n- Phantoms will burn in sunlight unless they are in shade or water\n- Size-based attack patterns: smaller phantoms are more agile, larger phantoms hit harder\n- Phantom size cannot be changed after spawning - it's determined at creation time\n- Multiple phantoms can attack simultaneously, with coordinated diving patterns",
+  "constructors": [
+    {
+      "signature": "PhantomEntityHelper",
+      "description": "PhantomEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through: Entity-related events (e.g., EntityDeath, EntityInteract, EntitySpawn), World entity queries and type casting, methods that return phantom entities, or type casting from EntityHelper using entity.is(\"minecraft:phantom\") and appropriate casting methods.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getSize",
+      "signature": "getSize()",
+      "returnType": "int",
+      "description": "Retrieves the size of the phantom (0-4). The size is crucial for understanding phantom strength and behavior patterns. Phantom size directly affects health points, attack damage, and collision box size. Size 0 phantoms are the smallest and fastest, while size 4 phantoms are the largest and most dangerous.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

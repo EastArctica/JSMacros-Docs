@@ -1,0 +1,346 @@
+{
+  "name": "ControlOptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper$ControlOptionsHelper",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The `ControlOptionsHelper` class provides access to control-related game options in Minecraft. This includes mouse settings, key bindings, toggles for various movement actions, and other input-related configurations. It allows scripts to read and modify control settings programmatically.",
+  "overview": "The `ControlOptionsHelper` class manages all player control settings:\n- Mouse sensitivity and input settings\n- Key bindings and their configurations\n- Toggle functionality for sneaking and sprinting\n- Auto-jump settings\n- Raw mouse input and discrete scrolling options\n- Access to all key binding categories and configurations",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getParent",
+      "signature": "getParent()",
+      "returnType": "OptionsHelper",
+      "description": "Returns the parent OptionsHelper instance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const controlOptions = Options.control;\nconst parent = controlOptions.getParent();\nChat.log(`Parent helper: ${parent}`);"
+      ]
+    },
+    {
+      "name": "getMouseSensitivity",
+      "signature": "getMouseSensitivity()",
+      "returnType": "double",
+      "description": "Returns the current mouse sensitivity value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sensitivity = Options.control.getMouseSensitivity();\nChat.log(`Current mouse sensitivity: ${sensitivity}`);"
+      ]
+    },
+    {
+      "name": "setMouseSensitivity",
+      "signature": "setMouseSensitivity(double val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets the mouse sensitivity to the specified value.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The new mouse sensitivity value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Set mouse sensitivity to 50%\nOptions.control.setMouseSensitivity(0.5).saveOptions();"
+      ]
+    },
+    {
+      "name": "isMouseInverted",
+      "signature": "isMouseInverted()",
+      "returnType": "boolean",
+      "description": "Returns whether the mouse Y-axis is inverted.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inverted = Options.control.isMouseInverted();\nChat.log(`Mouse inverted: ${inverted}`);"
+      ]
+    },
+    {
+      "name": "invertMouse",
+      "signature": "invertMouse(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to invert the mouse Y-axis.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to invert the mouse"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Invert mouse for flight controls\nOptions.control.invertMouse(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "getMouseWheelSensitivity",
+      "signature": "getMouseWheelSensitivity()",
+      "returnType": "double",
+      "description": "Returns the current mouse wheel sensitivity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const wheelSensitivity = Options.control.getMouseWheelSensitivity();\nChat.log(`Mouse wheel sensitivity: ${wheelSensitivity}`);"
+      ]
+    },
+    {
+      "name": "setMouseWheelSensitivity",
+      "signature": "setMouseWheelSensitivity(double val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets the mouse wheel sensitivity to the specified value.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The new mouse wheel sensitivity value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Make mouse wheel scrolling slower\nOptions.control.setMouseWheelSensitivity(0.3).saveOptions();"
+      ]
+    },
+    {
+      "name": "isDiscreteScrollingEnabled",
+      "signature": "isDiscreteScrollingEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether discrete scrolling is enabled. This option was added to address a bug on some systems where the mouse wheel would scroll too fast.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const discreteScroll = Options.control.isDiscreteScrollingEnabled();\nChat.log(`Discrete scrolling: ${discreteScroll}`);"
+      ]
+    },
+    {
+      "name": "enableDiscreteScrolling",
+      "signature": "enableDiscreteScrolling(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to enable discrete scrolling.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable discrete scrolling"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable discrete scrolling to prevent overly fast scrolling\nOptions.control.enableDiscreteScrolling(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "isTouchscreenEnabled",
+      "signature": "isTouchscreenEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether touchscreen mode is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const touchscreen = Options.control.isTouchscreenEnabled();\nChat.log(`Touchscreen mode: ${touchscreen}`);"
+      ]
+    },
+    {
+      "name": "enableTouchscreen",
+      "signature": "enableTouchscreen(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to enable touchscreen mode.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable touchscreen mode"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable touchscreen mode for tablet gameplay\nOptions.control.enableTouchscreen(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "isRawMouseInputEnabled",
+      "signature": "isRawMouseInputEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether raw mouse input is enabled. Raw input directly reads mouse data without adjustments from other programs or the operating system.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawInput = Options.control.isRawMouseInputEnabled();\nChat.log(`Raw mouse input: ${rawInput}`);"
+      ]
+    },
+    {
+      "name": "enableRawMouseInput",
+      "signature": "enableRawMouseInput(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to enable raw mouse input.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable raw mouse input"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable raw mouse input for more precise control\nOptions.control.enableRawMouseInput(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "isAutoJumpEnabled",
+      "signature": "isAutoJumpEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether auto-jump is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const autoJump = Options.control.isAutoJumpEnabled();\nChat.log(`Auto-jump: ${autoJump}`);"
+      ]
+    },
+    {
+      "name": "enableAutoJump",
+      "signature": "enableAutoJump(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to enable auto-jump.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable auto-jump"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable auto-jump for easier parkour\nOptions.control.enableAutoJump(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "isSneakTogglingEnabled",
+      "signature": "isSneakTogglingEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether the toggle functionality for sneaking is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sneakToggle = Options.control.isSneakTogglingEnabled();\nChat.log(`Sneak toggle: ${sneakToggle}`);"
+      ]
+    },
+    {
+      "name": "toggleSneak",
+      "signature": "toggleSneak(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to enable the toggle functionality for sneaking.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable sneak toggling"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable toggle sneaking for accessibility\nOptions.control.toggleSneak(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "isSprintTogglingEnabled",
+      "signature": "isSprintTogglingEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether the toggle functionality for sprinting is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sprintToggle = Options.control.isSprintTogglingEnabled();\nChat.log(`Sprint toggle: ${sprintToggle}`);"
+      ]
+    },
+    {
+      "name": "toggleSprint",
+      "signature": "toggleSprint(boolean val)",
+      "returnType": "ControlOptionsHelper",
+      "description": "Sets whether to enable the toggle functionality for sprinting.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable sprint toggling"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable toggle sprinting for long-distance travel\nOptions.control.toggleSprint(true).saveOptions();"
+      ]
+    },
+    {
+      "name": "getRawKeys",
+      "signature": "getRawKeys()",
+      "returnType": "KeyBinding[]",
+      "description": "Returns an array of all raw Minecraft key bindings.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawKeys = Options.control.getRawKeys();\nChat.log(`Total key bindings: ${rawKeys.length}`);"
+      ]
+    },
+    {
+      "name": "getCategories",
+      "signature": "getCategories()",
+      "returnType": "JavaList<String>",
+      "description": "Returns a list of all key binding categories.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const categories = Options.control.getCategories();\nChat.log(`Key categories: ${categories.join(', ')}`);"
+      ]
+    },
+    {
+      "name": "getKeys",
+      "signature": "getKeys()",
+      "returnType": "JavaList<String>",
+      "description": "Returns a list of all key names.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const keys = Options.control.getKeys();\nkeys.forEach(key => Chat.log(`Key: ${key}`));"
+      ]
+    },
+    {
+      "name": "getKeyBinds",
+      "signature": "getKeyBinds()",
+      "returnType": "JavaMap<Bind, Key>",
+      "description": "Returns a map of all key bindings and their bound keys.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const keyBinds = Options.control.getKeyBinds();\nfor (const [action, key] of Object.entries(keyBinds)) {\n    Chat.log(`${action}: ${key}`);\n}"
+      ]
+    },
+    {
+      "name": "getKeyBindsByCategory",
+      "signature": "getKeyBindsByCategory(string category)",
+      "returnType": "JavaMap<Bind, Key>",
+      "description": "Returns a map of key bindings and their bound keys for a specific category.",
+      "parameters": [
+        {
+          "name": "category",
+          "type": "string",
+          "description": "The category to get keybindings from"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const movementKeys = Options.control.getKeyBindsByCategory(\"key.categories.movement\");\nChat.log(\"Movement keys:\");\nfor (const [action, key] of Object.entries(movementKeys)) {\n    Chat.log(`  ${action}: ${key}`);\n}"
+      ]
+    },
+    {
+      "name": "getKeyBindsByCategory",
+      "signature": "getKeyBindsByCategory()",
+      "returnType": "JavaMap<String, JavaMap<Bind, Key>>",
+      "description": "Returns a map of all key binding categories, each containing a map of keybindings and their bound keys.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allKeyBinds = Options.control.getKeyBindsByCategory();\nfor (const [category, keys] of Object.entries(allKeyBinds)) {\n    Chat.log(`\\nCategory: ${category}`);\n    for (const [action, key] of Object.entries(keys)) {\n        Chat.log(`  ${action}: ${key}`);\n    }\n}"
+      ]
+    }
+  ]
+}

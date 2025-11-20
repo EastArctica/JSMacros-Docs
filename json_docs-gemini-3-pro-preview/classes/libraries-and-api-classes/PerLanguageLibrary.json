@@ -1,0 +1,22 @@
+{
+  "name": "PerLanguageLibrary",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.PerLanguageLibrary",
+  "extends": "BaseLibrary",
+  "since": "1.0.0",
+  "description": "An abstract base class for libraries that are specific to particular scripting languages in JsMacros.",
+  "overview": "An abstract base class for libraries that are specific to particular scripting languages in JsMacros. This class serves as a foundation for creating library implementations that provide functionality tailored to specific languages (like JavaScript) while being available across the JsMacros system.\n\nPerLanguageLibrary instances are created once per language type and shared across all scripts using that language. This makes them ideal for storing language-specific utilities, helpers, or state that should persist between script executions but be isolated between different language types.\n\nThe class is designed to provide language-specific functionality, share state across scripts, optimize resource usage, and enable language extensions. It is an abstract class that cannot be instantiated directly and must be extended by concrete implementations. Each instance is associated with a specific BaseLanguage implementation.",
+  "constructors": [
+    {
+      "signature": "PerLanguageLibrary(Class<? extends BaseLanguage<?, ?>> language)",
+      "description": "Initializes the per-language library with the specific language class it is bound to.",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "Class<? extends BaseLanguage<?, ?>>",
+          "description": "The specific BaseLanguage implementation class this library instance is associated with."
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

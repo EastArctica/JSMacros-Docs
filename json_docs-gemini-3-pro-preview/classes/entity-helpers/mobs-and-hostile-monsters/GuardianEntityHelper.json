@@ -1,0 +1,47 @@
+{
+  "name": "GuardianEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.GuardianEntityHelper",
+  "extends": "MobEntityHelper<GuardianEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a guardian entity in the world. GuardianEntityHelper provides access to guardian-specific properties and behaviors, particularly their beam targeting abilities and spike states.",
+  "overview": "Guardians are formidable underwater guardians that protect ocean monuments and their precious treasures. They possess a unique laser beam attack that charges up before dealing damage, and defensive spikes that extend when threatened. This helper provides access to their targeting system, allowing you to monitor who they're attacking, and their defensive state through spike positioning.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, AI control, movement, and other mob properties, while adding guardian-specific functionality for beam targeting and defensive behavior monitoring.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isElder",
+      "signature": "isElder()",
+      "returnType": "boolean",
+      "description": "Checks if the guardian entity is an Elder Guardian variant.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasTarget",
+      "signature": "hasTarget()",
+      "returnType": "boolean",
+      "description": "Checks if the guardian currently has an active target (often indicating it is charging its laser beam).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTarget",
+      "signature": "getTarget()",
+      "returnType": "LivingEntityHelper",
+      "description": "Retrieves the entity currently being targeted by the guardian.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasSpikesRetracted",
+      "signature": "hasSpikesRetracted()",
+      "returnType": "boolean",
+      "description": "Checks the state of the guardian's spikes. Note: The logic for this method may be inverted in some versions (checking if spikes are extended vs retracted).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

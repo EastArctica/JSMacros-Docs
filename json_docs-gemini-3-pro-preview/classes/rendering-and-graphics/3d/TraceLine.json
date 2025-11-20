@@ -1,0 +1,105 @@
+{
+  "name": "TraceLine",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.TraceLine",
+  "extends": "RenderElement3D<TraceLine>",
+  "since": "JsMacros 1.9.0",
+  "description": "The TraceLine class is a 3D rendering component in JSMacros that represents a line drawn from a screen position to a world position.",
+  "overview": "The `TraceLine` class provides a way to draw lines from 2D screen coordinates to 3D world positions:\n- Draws a line from a screen position to a world position\n- Customizable line color with alpha transparency support\n- World-space positioning for precise targeting\n- Integration with the Draw3D rendering system\n- Builder pattern for fluent configuration",
+  "constructors": [
+    {
+      "signature": "new TraceLine(double x, double y, double z, int color)",
+      "description": "Creates a new TraceLine from the screen center (0, 0) to the specified world coordinates with a color.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate of the target world position"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate of the target world position"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate of the target world position"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "ARGB color value for the line"
+        }
+      ]
+    },
+    {
+      "signature": "new TraceLine(double x, double y, double z, int color, int alpha)",
+      "description": "Creates a new TraceLine from the screen center (0, 0) to the specified world coordinates with separate color and alpha.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate of the target world position"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate of the target world position"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate of the target world position"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value for the line"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha value for transparency (0-255)"
+        }
+      ]
+    },
+    {
+      "signature": "new TraceLine(Pos3D pos, int color)",
+      "description": "Creates a new TraceLine from the screen center to the specified world position using a Pos3D object.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The target world position as Pos3D"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "ARGB color value for the line"
+        }
+      ]
+    },
+    {
+      "signature": "new TraceLine(Pos3D pos, int color, int alpha)",
+      "description": "Creates a new TraceLine from the screen center to the specified world position using a Pos3D object with separate alpha.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The target world position as Pos3D"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value for the line"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha value for transparency (0-255)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

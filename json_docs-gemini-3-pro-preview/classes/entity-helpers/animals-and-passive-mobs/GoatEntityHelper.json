@@ -1,0 +1,55 @@
+{
+  "name": "GoatEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.GoatEntityHelper",
+  "extends": "AnimalEntityHelper<GoatEntity>",
+  "since": "1.8.4",
+  "description": "The GoatEntityHelper class provides specialized access to goat entities in Minecraft, offering methods to monitor goat-specific behaviors such as screaming states and horn status.",
+  "overview": "The GoatEntityHelper class provides specialized access to goat entities in Minecraft, offering methods to monitor goat-specific behaviors such as screaming states and horn status. This class extends AnimalEntityHelper and inherits all functionality for animals including breeding mechanics, food preferences, and animal compatibility checking.\n\nThis helper is particularly useful for creating scripts that manage goat farming, monitor goat behavior patterns, track horn status for collection purposes, or coordinate with multiple goats in mountain environments.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isScreaming",
+      "signature": "isScreaming()",
+      "returnType": "boolean",
+      "description": "Checks if the goat is currently screaming. Screaming goats are a rare variant that make different sounds and have unique behaviors.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entities = World.getEntities();\nentities.forEach(entity => {\n    if (entity.is(\"minecraft:goat\")) {\n        const goat = entity; // Automatically cast to GoatEntityHelper\n        if (goat.isScreaming()) {\n            Chat.log(`Screaming goat detected at ${goat.getPos()}`);\n            goat.setGlowing(true);\n            goat.setGlowingColor(0xFF0000); // Red for screaming goats\n        }\n    }\n});"
+      ]
+    },
+    {
+      "name": "hasLeftHorn",
+      "signature": "hasLeftHorn()",
+      "returnType": "boolean",
+      "description": "Checks if the goat still has its left horn.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const goat = entity; // Assuming entity is a goat\nif (!goat.hasLeftHorn()) {\n    Chat.log(\"This goat is missing its left horn!\");\n    // Could trigger horn collection logic\n}"
+      ]
+    },
+    {
+      "name": "hasRightHorn",
+      "signature": "hasRightHorn()",
+      "returnType": "boolean",
+      "description": "Checks if the goat still has its right horn.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const goat = entity; // Assuming entity is a goat\nif (!goat.hasRightHorn()) {\n    Chat.log(\"This goat is missing its right horn!\");\n}"
+      ]
+    },
+    {
+      "name": "hasHorns",
+      "signature": "hasHorns()",
+      "returnType": "boolean",
+      "description": "Checks if the goat has at least one horn. This is a convenience method that checks if the goat has either horn remaining.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const goat = entity; // Assuming entity is a goat\nif (!goat.hasHorns()) {\n    Chat.log(\"This goat has lost both horns!\");\n    goat.setGlowingColor(0x808080); // Gray for hornless goats\n}"
+      ]
+    }
+  ]
+}

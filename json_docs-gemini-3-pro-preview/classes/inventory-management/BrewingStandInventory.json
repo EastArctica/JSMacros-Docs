@@ -1,0 +1,221 @@
+{
+  "name": "BrewingStandInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.BrewingStandInventory",
+  "extends": "Inventory<BrewingStandScreen>",
+  "since": "1.8.4",
+  "description": "A specialized inventory helper that provides access to Minecraft brewing stand screen functionality. It allows interaction with potion brewing operations, fuel management, progress monitoring, and result previewing.",
+  "overview": "The BrewingStandInventory represents the interface to a Minecraft brewing stand when its GUI is open. It provides access to brewing-specific operations such as checking if potions and ingredients can be brewed together, monitoring brewing progress, accessing individual potion/ingredient/fuel slots, and previewing brewing results before starting the process.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isBrewablePotion",
+      "signature": "isBrewablePotion(potion)",
+      "returnType": "boolean",
+      "description": "Returns true if the given potion can be brewed in a brewing stand (i.e., it's a valid base potion or potion that can be modified), false otherwise.",
+      "parameters": [
+        {
+          "name": "potion",
+          "type": "ItemStackHelper",
+          "description": "The potion item stack to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const firstPotion = brewing.getFirstPotion();\n    if (!firstPotion.isEmpty()) {\n        const isBrewable = brewing.isBrewablePotion(firstPotion);\n        if (isBrewable) {\n            Chat.log(\"This potion can be brewed further\");\n        } else {\n            Chat.log(\"This potion cannot be brewed further\");\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "isValidIngredient",
+      "signature": "isValidIngredient(ingredient)",
+      "returnType": "boolean",
+      "description": "Returns true if the given item is a valid brewing ingredient (e.g., nether wart, glowstone dust, redstone, gunpowder, etc.), false otherwise.",
+      "parameters": [
+        {
+          "name": "ingredient",
+          "type": "ItemStackHelper",
+          "description": "The ingredient item stack to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const ingredient = brewing.getIngredient();\n    if (!ingredient.isEmpty()) {\n        const isValid = brewing.isValidIngredient(ingredient);\n        if (isValid) {\n            Chat.log(`${ingredient.getName()} is a valid brewing ingredient`);\n        } else {\n            Chat.log(`${ingredient.getName()} cannot be used for brewing`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "isValidRecipe",
+      "signature": "isValidRecipe(potion, ingredient)",
+      "returnType": "boolean",
+      "description": "Returns true if the given potion and ingredient combination can be brewed together, false otherwise.",
+      "parameters": [
+        {
+          "name": "potion",
+          "type": "ItemStackHelper",
+          "description": "The potion item stack to check"
+        },
+        {
+          "name": "ingredient",
+          "type": "ItemStackHelper",
+          "description": "The ingredient item stack to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const firstPotion = brewing.getFirstPotion();\n    const ingredient = brewing.getIngredient();\n\n    if (!firstPotion.isEmpty() && !ingredient.isEmpty()) {\n        const canBrew = brewing.isValidRecipe(firstPotion, ingredient);\n        if (canBrew) {\n            Chat.log(`${firstPotion.getName()} + ${ingredient.getName()} = Valid recipe!`);\n        } else {\n            Chat.log(`${firstPotion.getName()} + ${ingredient.getName()} = Invalid recipe`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "previewPotion",
+      "signature": "previewPotion(potion, ingredient)",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the resulting potion item stack that would be created by brewing the given potion with the ingredient. If no recipe exists, returns the original potion unchanged.",
+      "parameters": [
+        {
+          "name": "potion",
+          "type": "ItemStackHelper",
+          "description": "The base potion to preview"
+        },
+        {
+          "name": "ingredient",
+          "type": "ItemStackHelper",
+          "description": "The ingredient to apply"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const potion = brewing.getFirstPotion();\n    const ingredient = brewing.getIngredient();\n\n    if (!potion.isEmpty() && !ingredient.isEmpty()) {\n        const result = brewing.previewPotion(potion, ingredient);\n        Chat.log(`Result: ${result.getName()}`);\n\n        // Show NBT data for more detailed preview\n        if (result.hasNBT()) {\n            Chat.log(`NBT: ${result.getNBT()}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "previewPotions",
+      "signature": "previewPotions()",
+      "returnType": "List<ItemStackHelper>",
+      "description": "Returns a list of all resulting potions from the current brewing input (all three potion slots with the current ingredient). Each item in the list corresponds to the result of brewing the potion in that slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const results = brewing.previewPotions();\n\n    Chat.log(\"=== Brewing Preview ===\");\n    const slotNames = [\"Left\", \"Middle\", \"Right\"];\n    results.forEach((result, index) => {\n        const inputPotion = brewing.getSlot(index);\n        if (!inputPotion.isEmpty()) {\n            Chat.log(`${slotNames[index]}: ${inputPotion.getName()} → ${result.getName()}`);\n        } else {\n            Chat.log(`${slotNames[index]}: Empty slot`);\n        }\n    });\n}"
+      ]
+    },
+    {
+      "name": "canBrewCurrentInput",
+      "signature": "canBrewCurrentInput()",
+      "returnType": "boolean",
+      "description": "Returns true if the brewing stand can brew any of the currently held potions with the current ingredient, false otherwise. This checks if there's a valid ingredient, fuel, and at least one valid recipe.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const canBrew = brewing.canBrewCurrentInput();\n    if (canBrew) {\n        Chat.log(\"✓ Ready to brew!\");\n\n        // Show what will be brewed\n        const results = brewing.previewPotions();\n        results.forEach((result, index) => {\n            const input = brewing.getSlot(index);\n            if (!input.isEmpty() && result.getName() !== input.getName()) {\n                Chat.log(`  ${input.getName()} → ${result.getName()}`);\n            }\n        });\n    } else {\n        Chat.log(\"✗ Cannot brew with current setup\");\n\n        // Diagnose the issue\n        const ingredient = brewing.getIngredient();\n        if (ingredient.isEmpty()) {\n            Chat.log(\"  - No ingredient in slot\");\n        } else if (!brewing.isValidIngredient(ingredient)) {\n            Chat.log(\"  - Invalid ingredient: \" + ingredient.getName());\n        } else if (brewing.getFuelCount() <= 0) {\n            Chat.log(\"  - No fuel remaining\");\n        } else {\n            Chat.log(\"  - No valid recipes with current potions and ingredient\");\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFuelCount",
+      "signature": "getFuelCount()",
+      "returnType": "int",
+      "description": "Returns the current amount of fuel remaining in the brewing stand. Each blaze powder provides 20 fuel units. Returns 0 when no fuel is remaining.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const fuel = brewing.getFuelCount();\n    const maxFuel = brewing.getMaxFuelUses();\n\n    Chat.log(`Fuel: ${fuel}/${maxFuel} (${Math.round(fuel/maxFuel*100)}%)`);\n\n    if (fuel <= 4) {\n        Chat.log(\"⚠ Low fuel warning!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getMaxFuelUses",
+      "signature": "getMaxFuelUses()",
+      "returnType": "int",
+      "description": "Returns the maximum fuel capacity of the brewing stand. This is always 20, representing the maximum fuel units a brewing stand can hold.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const maxFuel = brewing.getMaxFuelUses();\n    Chat.log(`Maximum fuel capacity: ${maxFuel} units`);\n\n    // Calculate how many more brew operations can be done\n    const currentFuel = brewing.getFuelCount();\n    Chat.log(`Remaining brew operations: ${Math.floor(currentFuel / 1)}`); // Each brew uses 1 fuel\n}"
+      ]
+    },
+    {
+      "name": "getBrewTime",
+      "signature": "getBrewTime()",
+      "returnType": "int",
+      "description": "Returns the time that the current potions have been brewing, in ticks. Returns 0 if no brewing is in progress.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const brewTime = brewing.getBrewTime();\n\n    if (brewTime > 0) {\n        const seconds = Math.round(brewTime / 20);\n        const progress = (brewTime / 400) * 100; // 400 ticks = full cycle\n        Chat.log(`Brewing progress: ${Math.round(progress)}% (${seconds}s elapsed)`);\n\n        // Create a progress bar\n        const barLength = 20;\n        const filled = Math.round((progress / 100) * barLength);\n        const bar = \"█\".repeat(filled) + \"░\".repeat(barLength - filled);\n        Chat.log(`[${bar}]`);\n    } else {\n        Chat.log(\"No brewing in progress\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getRemainingTicks",
+      "signature": "getRemainingTicks()",
+      "returnType": "int",
+      "description": "Returns the remaining time until the current brewing cycle completes, in ticks. Returns the full brew time (typically 400) if no brewing is in progress.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const remaining = brewing.getRemainingTicks();\n\n    if (remaining < 400) { // 400 is the full brew time\n        const seconds = Math.round(remaining / 20);\n        Chat.log(`Time remaining: ${seconds} seconds`);\n\n        // Calculate completion time\n        const now = new Date();\n        const completion = new Date(now.getTime() + remaining * 50); // 1 tick = 50ms\n        Chat.log(`Brewing completes at: ${completion.toLocaleTimeString()}`);\n    } else {\n        Chat.log(\"No active brewing process\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getIngredient",
+      "signature": "getIngredient()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the ingredient slot (slot 3, top slot). This is where brewing ingredients like nether wart, glowstone dust, etc. are placed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const ingredient = brewing.getIngredient();\n\n    if (!ingredient.isEmpty()) {\n        Chat.log(`Ingredient: ${ingredient.getName()} x${ingredient.getCount()}`);\n\n        if (brewing.isValidIngredient(ingredient)) {\n            Chat.log(\"✓ Valid brewing ingredient\");\n        } else {\n            Chat.log(\"✗ Not a valid brewing ingredient\");\n        }\n    } else {\n        Chat.log(\"No ingredient in brewing stand\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFuel",
+      "signature": "getFuel()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the fuel slot (slot 4, bottom left). This is typically where blaze powder is placed for fuel.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const fuel = brewing.getFuel();\n\n    if (!fuel.isEmpty()) {\n        Chat.log(`Fuel item: ${fuel.getName()} x${fuel.getCount()}`);\n        Chat.log(`Fuel remaining: ${brewing.getFuelCount()}/${brewing.getMaxFuelUses()}`);\n    } else {\n        Chat.log(\"No fuel in brewing stand\");\n        Chat.log(\"Add blaze powder to start brewing\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFirstPotion",
+      "signature": "getFirstPotion()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the first potion slot (slot 0, left slot). This is where potion bottles are placed for brewing.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const potion = brewing.getFirstPotion();\n\n    if (!potion.isEmpty()) {\n        Chat.log(`First potion: ${potion.getName()}`);\n\n        if (brewing.isBrewablePotion(potion)) {\n            Chat.log(\"This potion can be brewed further\");\n        } else {\n            Chat.log(\"This potion is fully brewed or invalid\");\n        }\n    } else {\n        Chat.log(\"First potion slot is empty\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getSecondPotion",
+      "signature": "getSecondPotion()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the second potion slot (slot 1, middle slot).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const potion = brewing.getSecondPotion();\n\n    if (!potion.isEmpty()) {\n        Chat.log(`Second potion: ${potion.getName()}`);\n    } else {\n        Chat.log(\"Second potion slot is empty\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getThirdPotion",
+      "signature": "getThirdPotion()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the third potion slot (slot 2, right slot).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const potion = brewing.getThirdPotion();\n\n    if (!potion.isEmpty()) {\n        Chat.log(`Third potion: ${potion.getName()}`);\n    } else {\n        Chat.log(\"Third potion slot is empty\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getPotions",
+      "signature": "getPotions()",
+      "returnType": "List<ItemStackHelper>",
+      "description": "Returns a list containing all three potion slot item stacks (slots 0, 1, and 2). Empty slots will be represented by empty item stacks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const brewing = Inventory.create();\nif (brewing && brewing.getType() === \"BrewingStand\") {\n    const potions = brewing.getPotions();\n    const slotNames = [\"Left\", \"Middle\", \"Right\"];\n\n    Chat.log(\"=== Potion Slots ===\");\n    potions.forEach((potion, index) => {\n        if (!potion.isEmpty()) {\n            Chat.log(`${slotNames[index]}: ${potion.getName()}`);\n        } else {\n            Chat.log(`${slotNames[index]}: Empty`);\n        }\n    });\n\n    const filledSlots = potions.filter(p => !p.isEmpty()).length;\n    Chat.log(`Filled slots: ${filledSlots}/3`);\n}"
+      ]
+    }
+  ]
+}

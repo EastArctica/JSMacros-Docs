@@ -1,0 +1,77 @@
+{
+  "name": "ParrotEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.ParrotEntityHelper",
+  "extends": "TameableEntityHelper<ParrotEntity>",
+  "since": "1.8.4",
+  "description": "The ParrotEntityHelper class provides specialized methods for interacting with Parrot entities in Minecraft.",
+  "overview": "Parrots are flying passive mobs that come in various colors, can mimic sounds, sit on players' shoulders, and dance to music. These colorful birds spawn naturally in jungle biomes and can be tamed with seeds, making them excellent companions with unique behaviors.\n\nParrots are special among Minecraft mobs for their ability to mimic nearby mob sounds, sit on player shoulders, and dance to jukebox or note block music. They can be tamed using any type of seed (grass seeds, melon seeds, pumpkin seeds, beetroot seeds, wheat seeds, or torchflower seeds), and tamed parrots will follow their owners like other tamed animals. However, parrots have the unique ability to perch on player shoulders, making them portable companions.\n\nThis helper class provides access to key parrot behaviors including their color variant, current state (sitting, flying, dancing), shoulder perching status, and all standard tameable entity functionality. The class extends TameableEntityHelper and inherits comprehensive methods for ownership management, health tracking, AI control, and other tameable animal behaviors, while adding parrot-specific functionality.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getVariant",
+      "signature": "getVariant()",
+      "returnType": "String",
+      "description": "Returns the color variant of this parrot. Parrots come in 5 different color variants that affect their appearance but don't affect gameplay mechanics. Returns one of: \"minecraft:red\", \"minecraft:blue\", \"minecraft:green\", \"minecraft:cyan\", \"minecraft:gray\".",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Analyze all parrots in the area by their color variants\nconst parrots = World.getEntities(\"minecraft:parrot\");\nconst variantCounts = new Map();\nconst player = Player.getPlayer();\n\nif (!player) return;\n\nconst playerPos = player.getPos();\nconst range = 64; // Search range for parrots\n\nChat.log(\"🦜=== Parrot Color Analysis ===\");\n\nparrots.forEach(entity => {\n    const distance = player.distanceTo(entity);\n    if (distance <= range) {\n        const parrot = entity.as(\"minecraft:parrot\");\n        const variant = parrot.getVariant();\n        const pos = entity.getPos();\n\n        // Count variants\n        variantCounts.set(variant, (variantCounts.get(variant) || 0) + 1);\n\n        // Log detailed information\n        Chat.log(`${getVariantDisplayName(variant)} parrot at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}] (${distance.toFixed(1)}m away)`);\n\n        // Additional states\n        const isTamed = parrot.isTamed();\n        const isDancing = parrot.isPartying();\n        const isFlying = parrot.isFlying();\n        const isShoulder = parrot.isSittingOnShoulder();\n\n        Chat.log(`  Status: ${isTamed ? \"Tamed\" : \"Wild\"}, ${isDancing ? \"Dancing 🎵\" : \"\"}${isFlying ? \"Flying\" : \"\"}${isShoulder ? \"Shoulder-perched\" : \"\"}`);\n    }\n});\n\n// Display variant collection summary\nChat.log(`\\n📊 Found ${parrots.length} parrots within ${range} blocks:`);\nfor (const [variant, count] of variantCounts) {\n    const variantName = getVariantDisplayName(variant);\n    Chat.log(`  ${variantName}: ${count}`);\n}\n\nfunction getVariantDisplayName(variantId) {\n    const variantNames = {\n        \"minecraft:red\": \"Red\",\n        \"minecraft:blue\": \"Blue\",\n        \"minecraft:green\": \"Green\",\n        \"minecraft:cyan\": \"Cyan\",\n        \"minecraft:gray\": \"Gray\"\n    };\n    return variantNames[variantId] || variantId.replace(\"minecraft:\", \"\");\n}"
+      ]
+    },
+    {
+      "name": "isSitting",
+      "signature": "isSitting()",
+      "returnType": "boolean",
+      "description": "Returns whether this parrot is currently in a sitting pose. Parrots can sit when commanded by their owner or when they land on the ground after flying.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor tamed parrot activity and sitting behavior\nclass ParrotActivityMonitor {\n    constructor() {\n        this.monitoredParrots = new Map();\n        this.sittingStats = {\n            totalTimeSitting: 0,\n            totalTimeFlying: 0,\n            totalTimeDancing: 0\n        };\n    }\n\n    updateParrotActivity() {\n        const entities = World.getEntities(32); // 32 block range\n        const currentParrotUUIDs = new Set();\n\n        entities.forEach(entity => {\n            if (entity.is(\"minecraft:parrot\")) {\n                const parrot = entity.as(\"minecraft:parrot\");\n                const uuid = entity.getUUID();\n                currentParrotUUIDs.add(uuid);\n\n                if (!this.monitoredParrots.has(uuid)) {\n                    // New parrot detected\n                    this.monitoredParrots.set(uuid, {\n                        entity: entity,\n                        parrot: parrot,\n                        lastState: this.getParrotState(parrot),\n                        stateStartTime: Client.getTime(),\n                        name: parrot.isTamed() ? parrot.getName().getString() : \"Wild Parrot\"\n                    });\n\n                    Chat.log(`🦜 Started monitoring: ${this.monitoredParrots.get(uuid).name}`);\n                } else {\n                    // Update existing parrot\n                    this.updateParrotState(uuid, parrot);\n                }\n            }\n        });\n\n        // Remove parrots that are no longer in range\n        for (const [uuid, parrotData] of this.monitoredParrots) {\n            if (!currentParrotUUIDs.has(uuid)) {\n                Chat.log(`🦜 ${parrotData.name} left monitoring range`);\n                this.monitoredParrots.delete(uuid);\n            }\n        }\n    }\n\n    getParrotState(parrot) {\n        return {\n            isSitting: parrot.isSitting(),\n            isFlying: parrot.isFlying(),\n            isDancing: parrot.isPartying(),\n            isStanding: parrot.isStanding(),\n            isOnShoulder: parrot.isSittingOnShoulder(),\n            isTamed: parrot.isTamed()\n        };\n    }\n// ... (rest of the class omitted for brevity)\n}"
+      ]
+    },
+    {
+      "name": "isFlying",
+      "signature": "isFlying()",
+      "returnType": "boolean",
+      "description": "Returns whether this parrot is currently flying. Parrots fly when moving between locations, escaping threats, or following their owner.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Parrot flight pattern analysis and monitoring\nfunction analyzeParrotFlightPatterns() {\n    const parrots = World.getEntities(\"minecraft:parrot\");\n    const player = Player.getPlayer();\n\n    if (!player) return;\n\n    const flightData = [];\n    const playerPos = player.getPos();\n\n    Chat.log(\"🦜=== Parrot Flight Analysis ===\");\n\n    parrots.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance <= 48) { // 48 block range\n            const parrot = entity.as(\"minecraft:parrot\");\n            const pos = entity.getPos();\n            const variant = parrot.getVariant();\n            const isFlying = parrot.isFlying();\n            const isTamed = parrot.isTamed();\n\n            flightData.push({\n                entity: entity,\n                parrot: parrot,\n                position: pos,\n                variant: variant,\n                isFlying: isFlying,\n                isTamed: isTamed,\n                distance: distance,\n                height: pos.y - playerPos.y // Height relative to player\n            });\n\n            // Log individual parrot status\n            const variantName = getVariantDisplayName(variant);\n            Chat.log(`${variantName} parrot [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]:`);\n            Chat.log(`  Status: ${isFlying ? \"✈️ Flying\" : \"🏃 Grounded\"}`);\n// ...\n    });\n// ...\n}"
+      ]
+    },
+    {
+      "name": "isPartying",
+      "signature": "isPartying()",
+      "returnType": "boolean",
+      "description": "Returns whether this parrot is currently dancing to music. Parrots dance when they hear music from jukeboxes or note blocks within a certain range.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive parrot party monitoring system\nclass ParrotPartyMonitor {\n    constructor() {\n        this.partyingParrots = new Set();\n        this.partyHistory = [];\n        this.musicSources = new Map(); // Track detected music sources\n        this.lastMusicCheck = 0;\n    }\n\n    updateParrotParties() {\n        const parrots = World.getEntities(\"minecraft:parrot\");\n        const currentTime = Client.getTime();\n        const newPartyParrots = new Set();\n\n        parrots.forEach(entity => {\n            const parrot = entity.as(\"minecraft:parrot\");\n            if (parrot.isPartying()) {\n                const uuid = entity.getUUID();\n                const variant = parrot.getVariant();\n                const pos = entity.getPos();\n                const isTamed = parrot.isTamed();\n\n                newPartyParrots.add(uuid);\n\n                if (!this.partyingParrots.has(uuid)) {\n                    // Parrot just started dancing!\n                    this.partyHistory.push({\n                        startTime: currentTime,\n                        parrotUuid: uuid,\n                        variant: variant,\n                        position: { x: pos.x, y: pos.y, z: pos.z },\n                        isTamed: isTamed,\n                        name: isTamed ? entity.getName().getString() : \"Wild Parrot\"\n                    });\n\n                    Chat.log(`🎵🦜 ${this.partyHistory[this.partyHistory.length - 1].name} started dancing!`);\n// ...\n                }\n            }\n        });\n// ...\n    }\n// ...\n}"
+      ]
+    },
+    {
+      "name": "isStanding",
+      "signature": "isStanding()",
+      "returnType": "boolean",
+      "description": "Returns whether this parrot is currently standing still. This method returns `true` when the parrot is neither sitting, flying, nor dancing - essentially when it's just standing on the ground in a neutral state.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Parrot behavior state analysis including standing detection\nfunction analyzeParrotBehaviorStates() {\n    const parrots = World.getEntities(\"minecraft:parrot\");\n    const player = Player.getPlayer();\n\n    if (!player) return;\n\n    const stateAnalysis = {\n        sitting: 0,\n        flying: 0,\n        dancing: 0,\n        standing: 0,\n        total: 0\n    };\n// ...\n    parrots.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance <= 32) { // 32 block range\n            const parrot = entity.as(\"minecraft:parrot\");\n            const pos = entity.getPos();\n            const variant = parrot.getVariant();\n\n            // Get all states\n            const isSitting = parrot.isSitting();\n            const isFlying = parrot.isFlying();\n            const isDancing = parrot.isPartying();\n            const isStanding = parrot.isStanding();\n            const isTamed = parrot.isTamed();\n            const isOnShoulder = parrot.isSittingOnShoulder();\n// ...\n            // Standing-specific analysis\n            if (isStanding) {\n                Chat.log(`  Standing behavior: Parrot is alert but inactive`);\n                Chat.log(`  This is a neutral state - parrot may be observing or resting`);\n            }\n        }\n    });\n// ...\n}"
+      ]
+    },
+    {
+      "name": "isSittingOnShoulder",
+      "signature": "isSittingOnShoulder()",
+      "returnType": "boolean",
+      "description": "Returns whether this parrot is currently perched on any player's shoulder. Tamed parrots can sit on player shoulders, making them portable companions.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive shoulder parrot monitoring and management system\nclass ShoulderParrotManager {\n    constructor() {\n        this.shoulderParrots = new Map(); // Track parrots on shoulders\n        this.parrotHistory = []; // Track shoulder perching history\n        this.lastShoulderCheck = 0;\n        this.shoulderStats = {\n            totalShoulderTime: 0,\n            leftShoulderUses: 0,\n            rightShoulderUses: 0,\n            uniqueParrotsOnShoulder: new Set()\n        };\n    }\n\n    updateShoulderParrots() {\n        const currentTime = Client.getTime();\n        const player = Player.getPlayer();\n\n        if (!player) return;\n\n        const parrots = World.getEntities(\"minecraft:parrot\");\n        const currentShoulderParrots = new Set();\n\n        parrots.forEach(entity => {\n            const parrot = entity.as(\"minecraft:parrot\");\n            if (parrot.isSittingOnShoulder()) {\n                const uuid = entity.getUUID();\n                const variant = parrot.getVariant();\n                const isTamed = parrot.isTamed();\n                const name = isTamed ? entity.getName().getString() : \"Wild Parrot\";\n\n                currentShoulderParrots.add(uuid);\n// ...\n            }\n        });\n// ...\n    }\n// ...\n}"
+      ]
+    }
+  ]
+}

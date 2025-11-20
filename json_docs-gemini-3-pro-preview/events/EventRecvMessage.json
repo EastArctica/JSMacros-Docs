@@ -1,0 +1,18 @@
+{
+  "name": "EventRecvMessage",
+  "fullClassName": "EventRecvMessage",
+  "description": "This event is fired when a message is received from the server.",
+  "overview": "### Behavior\n\n* Fires when any message is received from the server\n- The `text` field contains the raw message content\n- Includes chat messages, system messages, server announcements\n- Not cancellable\n- Useful for message filtering, logging, and automated responses\n\n### Fields\n\n**event.text** (`string`)\nThe raw message text received from the server. This contains the original message with Minecraft formatting codes intact.\n\n### Minimal example\n\n```js\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Message received: ${e.text}`);\n});\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

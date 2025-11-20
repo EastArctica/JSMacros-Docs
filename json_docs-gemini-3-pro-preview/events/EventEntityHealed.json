@@ -1,0 +1,18 @@
+{
+  "name": "EventEntityHealed",
+  "fullClassName": "EventEntityHealed",
+  "description": "This event is fired when any entity in the world is healed.",
+  "overview": "## Event payload\n\n| Field  | Type          | Description                              |\n| ------ | ------------- | ---------------------------------------- |\n| entity | EntityHelper  | The entity that was healed               |\n| health | float         | The entity's current health after healing |\n| amount | float         | The amount of health healed              |\n\n## Behavior\n\n* Fires when any entity (not just the player) receives healing\n* Includes mobs, animals, players, etc.\n* The `health` field represents current health after the healing\n* The `amount` field is the amount of health restored\n* Not cancellable\n\n## Fields\n\n### event.entity\nA helper object for the entity that was healed.\n**Type:** `EntityHelper`\n\n### event.health\nThe entity's current health after being healed.\n**Type:** `float`\n\n### event.amount\nThe amount of health the entity gained from healing.\n**Type:** `float`\n\n## Minimal example\n\n```js\nJsMacros.on(\"EntityHealed\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`${e.entity.getName()} healed for ${e.amount}, health: ${e.health}`);\n});\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "EndermanEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.EndermanEntityHelper",
+  "extends": "MobEntityHelper<EndermanEntity>",
+  "since": "1.8.4",
+  "description": "Represents an Enderman entity in the world.",
+  "overview": "EndermanEntityHelper provides access to enderman-specific behaviors, states, and properties that are unique to the Enderman mob. This specialized helper allows you to monitor the enderman's aggression state, check if it's holding blocks, and track its provoked status. Instances are typically obtained from entity events, world entity queries, or by casting existing entity helpers that represent Endermen.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isScreaming",
+      "signature": "isScreaming()",
+      "returnType": "boolean",
+      "description": "Checks if the enderman is currently screaming.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isScreaming = enderman.isScreaming();",
+        "Chat.log(`Enderman is screaming: ${isScreaming}`);"
+      ]
+    },
+    {
+      "name": "isProvoked",
+      "signature": "isProvoked()",
+      "returnType": "boolean",
+      "description": "Checks if the enderman is currently provoked.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isProvoked = enderman.isProvoked();",
+        "if (isProvoked) Chat.log('Enderman is aggressive!');"
+      ]
+    },
+    {
+      "name": "isHoldingBlock",
+      "signature": "isHoldingBlock()",
+      "returnType": "boolean",
+      "description": "Checks if the enderman is currently holding a block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isHolding = enderman.isHoldingBlock();",
+        "Chat.log(`Holding block: ${isHolding}`);"
+      ]
+    },
+    {
+      "name": "getHeldBlock",
+      "signature": "getHeldBlock()",
+      "returnType": "BlockStateHelper",
+      "description": "Retrieves the helper for the block currently held by the enderman.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (enderman.isHoldingBlock()) {",
+        "    const heldBlock = enderman.getHeldBlock();",
+        "    Chat.log(`Holding block: ${heldBlock.getBlock().getName()}`);",
+        "}"
+      ]
+    }
+  ]
+}

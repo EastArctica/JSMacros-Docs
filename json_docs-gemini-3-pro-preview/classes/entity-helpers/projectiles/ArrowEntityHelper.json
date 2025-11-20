@@ -1,0 +1,58 @@
+{
+  "name": "ArrowEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.projectile.ArrowEntityHelper",
+  "extends": "EntityHelper<PersistentProjectileEntity>",
+  "since": "1.8.4",
+  "description": "Represents arrow entities and other persistent projectiles in the world such as arrows, spectral arrows, and crossbow bolts.",
+  "overview": "ArrowEntityHelper provides access to arrow-specific properties like critical hits, piercing level, color effects, and weapon source. Instances are typically obtained from entity events, world queries, or by accessing nearby projectile entities.\n\nThis class extends `EntityHelper` and inherits all methods for position, movement, and general entity properties, while adding specialized functionality for arrows and projectiles.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "int",
+      "description": "Gets the color of the arrow. Used to identify specific arrow types (like Spectral arrows) or tipped arrow colors.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = arrow.getColor();\nif (color === 0xF8FFFE) {\n    parts.push(\"Spectral\");\n} else if (color !== -1) {\n    parts.push(\"Tipped\");\n}"
+      ]
+    },
+    {
+      "name": "isCritical",
+      "signature": "isCritical()",
+      "returnType": "boolean",
+      "description": "Checks if the arrow is critical. Critical status is usually determined at firing time (e.g. fully charged bow) and affects damage.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (arrow.isCritical()) {\n    this.arrowStats.criticalHits++;\n}",
+        "let threatLevel = \"LOW\";\nif (arrow.isCritical()) threatLevel = \"HIGH\";"
+      ]
+    },
+    {
+      "name": "getPiercingLevel",
+      "signature": "getPiercingLevel()",
+      "returnType": "int",
+      "description": "Gets the piercing level of the arrow, typically determined by the enchantment level of the weapon used to fire it.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (arrow.getPiercingLevel() > 0) {\n    this.arrowStats.piercingHits++;\n}",
+        "const piercing = arrow.getPiercingLevel();\nif (piercing > 0) {\n    parts.push(`Piercing ${piercing}`);\n}"
+      ]
+    },
+    {
+      "name": "isShotFromCrossbow",
+      "signature": "isShotFromCrossbow()",
+      "returnType": "boolean",
+      "description": "Determines if the arrow was fired from a crossbow rather than a regular bow.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (arrow.isShotFromCrossbow()) {\n    this.arrowStats.crossbowBolts++;\n} else {\n    this.arrowStats.bowArrows++;\n}",
+        "if (arrow.isShotFromCrossbow()) return \"Crossbow Bolt\";"
+      ]
+    }
+  ]
+}

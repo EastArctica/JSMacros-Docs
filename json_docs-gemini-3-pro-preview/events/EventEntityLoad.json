@@ -1,0 +1,18 @@
+{
+  "name": "EventEntityLoad",
+  "fullClassName": "EventEntityLoad",
+  "description": "This event is fired when an entity loads into the world.",
+  "overview": "Backed by class `EventEntityLoad`.\n\n### Event payload\n\n| Field  | Type          | Description                              |\n| ------ | ------------- | ---------------------------------------- |\n| entity | EntityHelper  | The entity that loaded                   |\n\n### Behavior\n\n* Fires when any entity loads into render distance\n* Includes mobs, animals, players, item entities, etc.\n* Occurs when entities come into range or newly spawn\n* Not cancellable\n* Can be used for entity tracking or detection systems\n\n### Field: event.entity\nA helper object for the entity that loaded.\nType: `EntityHelper`\nNotes: This provides access to all entity properties like name, type, position, health, etc.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

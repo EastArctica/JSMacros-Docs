@@ -1,0 +1,85 @@
+[
+  {
+    "name": "InteractionEntityHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.other.InteractionEntityHelper",
+    "extends": "EntityHelper<InteractionEntity>",
+    "since": "1.9.1",
+    "description": "The InteractionEntityHelper class provides specialized methods for interacting with Minecraft's interaction entities (introduced in 1.19.4). Interaction entities are invisible, non-collidable entities that define interaction areas for players to click or interact with, commonly used in custom maps, data packs, and mods to create invisible buttons, triggers, or interaction zones without visible entities.",
+    "overview": "This helper allows you to query interaction properties such as dimensions, interaction state, attacker tracking, and configure whether the entity can be hit. It's particularly useful for detecting custom interaction mechanisms, monitoring player engagement with invisible triggers, and managing interaction-based systems in adventure maps or custom game modes.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "setCanHit",
+        "signature": "setCanHit(boolean value)",
+        "returnType": "void",
+        "description": "Sets whether the interaction entity can be hit by players or other entities.",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "boolean",
+            "description": "Whether the entity can be hit (true) or not (false)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Example: Make an interaction entity hittable\nconst interactionEntities = World.getEntities(\"minecraft:interaction\");\n\ninteractionEntities.forEach(entity => {\n    const interaction = entity.as();\n    interaction.setCanHit(true);\n    Chat.log(`Made interaction entity at [${entity.getPos().x.toFixed(1)}, ${entity.getPos().y.toFixed(1)}, ${entity.getPos().z.toFixed(1)}] hittable`);\n});"
+        ]
+      },
+      {
+        "name": "getWidth",
+        "signature": "getWidth()",
+        "returnType": "float",
+        "description": "Returns the width of the interaction entity's collision/interaction box.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Example: Check interaction entity sizes\nconst interactions = World.getEntities(\"minecraft:interaction\");\n\ninteractions.forEach(entity => {\n    const interaction = entity.as();\n    const width = interaction.getWidth();\n    const height = interaction.getHeight();\n    const pos = entity.getPos();\n\n    Chat.log(`Interaction at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]:`);\n    Chat.log(`  Size: ${width.toFixed(2)} x ${height.toFixed(2)} blocks`);\n});"
+        ]
+      },
+      {
+        "name": "getHeight",
+        "signature": "getHeight()",
+        "returnType": "float",
+        "description": "Returns the height of the interaction entity's collision/interaction box.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Example: Find tall interaction entities (potential vertical triggers)\nconst interactions = World.getEntities(\"minecraft:interaction\");\n\nconst tallInteractions = interactions.filter(entity => {\n    const interaction = entity.as();\n    return interaction.getHeight() > 2.0; // Taller than 2 blocks\n});\n\nChat.log(`Found ${tallInteractions.length} tall interaction entities:`);\ntallInteractions.forEach(entity => {\n    const interaction = entity.as();\n    const pos = entity.getPos();\n    Chat.log(`  Height ${interaction.getHeight().toFixed(2)} at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n});"
+        ]
+      },
+      {
+        "name": "shouldRespond",
+        "signature": "shouldRespond()",
+        "returnType": "boolean",
+        "description": "Checks whether the interaction entity should respond to player interactions.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Example: Monitor responsive interaction entities\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const interactions = World.getEntities(\"minecraft:interaction\");\n    const player = Player.getPlayer();\n\n    if (!player) return;\n\n    interactions.forEach(entity => {\n        const interaction = entity.as();\n        const distance = player.distanceTo(entity);\n\n        // Only check nearby interactions\n        if (distance <= 10) {\n            const shouldRespond = interaction.shouldRespond();\n            const pos = entity.getPos();\n\n            if (shouldRespond) {\n                Chat.actionbar(`Interactive zone at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}] (${distance.toFixed(1)}m)`);\n            }\n        }\n    });\n}));"
+        ]
+      },
+      {
+        "name": "getLastAttacker",
+        "signature": "getLastAttacker()",
+        "returnType": "EntityHelper<?> | null",
+        "description": "Returns the last entity that attacked the interaction entity, if any.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Example: Monitor attacks on interaction entities\nclass InteractionMonitor {\n    constructor() {\n        this.lastAttackers = new Map();\n    }\n\n    checkAttacks() {\n        const interactions = World.getEntities(\"minecraft:interaction\");\n\n        interactions.forEach(entity => {\n            const interaction = entity.as();\n            const lastAttacker = interaction.getLastAttacker();\n            const entityId = entity.getUUID();\n\n            if (lastAttacker) {\n                const attackerName = lastAttacker.getName().getString();\n                const previousAttacker = this.lastAttackers.get(entityId);\n\n                // Check if this is a new attacker\n                if (!previousAttacker || previousAttacker !== attackerName) {\n                    const pos = entity.getPos();\n                    Chat.log(`${attackerName} attacked interaction at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n                    this.lastAttackers.set(entityId, attackerName);\n                }\n            } else {\n                // Clear attacker if none found (entity may have been reset)\n                this.lastAttackers.delete(entityId);\n            }\n        });\n    }\n}\n\nconst monitor = new InteractionMonitor();\n\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    monitor.checkAttacks();\n}));"
+        ]
+      },
+      {
+        "name": "getLastInteracted",
+        "signature": "getLastInteracted()",
+        "returnType": "EntityHelper<?> | null",
+        "description": "Returns the last entity that interacted with the interaction entity, if any.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Example: Track interaction patterns\nclass InteractionTracker {\n    constructor() {\n        this.interactionHistory = new Map();\n        this.maxHistory = 10;\n    }\n\n    recordInteraction(entity) {\n        const interaction = entity.as();\n        const lastInteracted = interaction.getLastInteracted();\n        const entityId = entity.getUUID();\n        const pos = entity.getPos();\n\n        if (lastInteracted) {\n            const entityName = lastInteracted.getName().getString();\n            const timestamp = Date.now();\n\n            // Get or create history for this interaction\n            if (!this.interactionHistory.has(entityId)) {\n                this.interactionHistory.set(entityId, []);\n            }\n\n            const history = this.interactionHistory.get(entityId);\n\n            // Add new interaction record\n            history.push({\n                entity: entityName,\n                time: timestamp,\n                position: { x: pos.x, y: pos.y, z: pos.z }\n            });\n\n            // Limit history size\n            if (history.length > this.maxHistory) {\n                history.shift();\n            }\n\n            // Log the interaction\n            Chat.log(`${entityName} interacted with zone at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n        }\n    }\n\n    getInteractionReport(entityId) {\n        const history = this.interactionHistory.get(entityId) || [];\n        return history.map(record => `${record.entity} at ${new Date(record.time).toLocaleTimeString()}`).join(\", \");\n    }\n}\n\nconst tracker = new InteractionTracker();\n\n// Monitor interactions every tick\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const interactions = World.getEntities(\"minecraft:interaction\");\n    interactions.forEach(entity => tracker.recordInteraction(entity));\n}));"
+        ]
+      }
+    ]
+  }
+]

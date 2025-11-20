@@ -1,0 +1,10 @@
+{
+  "name": "RenderElement3D",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.RenderElement3D<T>",
+  "extends": "Comparable<RenderElement3D<?>>",
+  "since": "JsMacros 1.0.5",
+  "description": "The RenderElement3D is a generic interface that defines the base functionality for all 3D rendering elements in JsMacros. It provides a common framework for rendering 3D objects in the world such as boxes, lines, and trace lines.",
+  "overview": "The RenderElement3D interface serves as the foundation for 3D rendering in JsMacros, providing:\n\n- Standardized rendering method that integrates with Minecraft's rendering system\n- Comparable interface for sorting and ordering 3D elements\n- Generic type parameter T that allows implementing classes to specify their own type for method chaining\n- Integration with the Draw3D rendering system for world-space visualization",
+  "constructors": [],
+  "methods": []
+}

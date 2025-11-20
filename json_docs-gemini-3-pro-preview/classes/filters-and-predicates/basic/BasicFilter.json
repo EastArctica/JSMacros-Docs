@@ -1,0 +1,76 @@
+{
+  "name": "BasicFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.BasicFilter<T>",
+  "extends": "Object",
+  "since": "1.6.5",
+  "description": "The BasicFilter class is an abstract base class that provides the foundation for all filters used in JSMacros' WorldScanner system, implementing logical operations for combining search criteria.",
+  "overview": "The BasicFilter class implements logical operations that allow filters to be combined and manipulated using boolean logic, making it a powerful tool for creating complex search criteria when scanning the Minecraft world.\n\nWhile BasicFilter itself is abstract and cannot be instantiated directly, it provides the core functionality that all concrete filter classes inherit. These filters are primarily used with the WorldScanner class to search for blocks and entities based on specific conditions.\n\n## Usage with WorldScanner\n\nWhile BasicFilter is abstract, its concrete implementations are used extensively with WorldScanner. Filter composition creates new filter objects but doesn't execute the filtering logic until used by a scanner.\n\n## Implementation Notes\n\n- **Abstract Nature**: BasicFilter is abstract and cannot be instantiated directly. Concrete implementations are created through WorldScannerBuilder.\n- **Type Safety**: All filters are generic (BasicFilter<T>) with type T representing the type of object being filtered.\n- **Method Chaining**: Logical operations return IAdvancedFilter<T> for continued chaining.\n- **Evaluation Order**: AND/OR operations are evaluated left-to-right and short-circuit.\n\n## Concrete Filter Classes\n\n- BlockFilter\n- BlockStateFilter\n- ClassWrapperFilter\n- StringCompareFilter\n- NumberCompareFilter\n- BooleanCompareFilter",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "and",
+      "signature": "and(IAdvancedFilter<T> filter)",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Performs a logical AND operation. Requires ALL conditions to be true. Useful when you need multiple criteria simultaneously.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IAdvancedFilter<T>",
+          "description": "The filter to combine with the current filter."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Finding diamond ore that's also below Y=15\nconst rareDeepAccessible = oreFilter\n    .and(deepFilter)\n    .and(accessibleFilter);",
+        "// Find building materials that are both common and easy to mine\nconst commonMaterials = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"stone\", \"cobblestone\", \"wood\", \"dirt\");\n\nconst easyToMine = World.getWorldScanner()\n    .withBlockFilter(\"getHardness\")\n    .is(\"<=\", 2);\n\nconst buildingMaterials = commonMaterials.and(easyToMine);\nconst positions = buildingMaterials.scanAroundPlayer(2);"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(IAdvancedFilter<T> filter)",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Performs a logical OR operation. Requires AT LEAST ONE condition to be true. Useful when you want to match multiple types or conditions.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IAdvancedFilter<T>",
+          "description": "The filter to combine with the current filter."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Finding chests, barrels, OR shulker boxes\nconst valuableStorageFilter = scannerBuilder\n    .withStringBlockFilter()\n    .contains(\"chest\", \"barrel\", \"shulker_box\"); // Implicit OR in contains usually, but explicit OR used between filters",
+        "// Find rare ores OR accessible blocks\nconst alternative = oreFilter.or(accessibleFilter);"
+      ]
+    },
+    {
+      "name": "xor",
+      "signature": "xor(IAdvancedFilter<T> filter)",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Performs a logical XOR (exclusive OR) operation. Requires EXACTLY ONE condition to be true. Useful when you want mutually exclusive conditions.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IAdvancedFilter<T>",
+          "description": "The filter to combine with the current filter."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Find blocks that are either light sources OR opaque, but not both\nconst lightSources = World.getWorldScanner()\n    .withBlockFilter(\"getLuminance\")\n    .is(\">\", 0);\n\nconst opaqueBlocks = World.getWorldScanner()\n    .withBlockFilter(\"getOpacity\")\n    .is(\">\", 0);\n\nconst exclusive = lightSources.xor(opaqueBlocks);"
+      ]
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Performs a logical NOT operation. Inverts the filter logic. Useful when you want to exclude certain blocks or conditions.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Find all blocks that are NOT air\nconst notAir = airFilter.not();",
+        "// Find all ore blocks EXCEPT common ones\nconst allOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"_ore\");\n\nconst commonOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"coal_ore\", \"iron_ore\", \"copper_ore\");\n\nconst rareOres = allOres.and(commonOres.not());"
+      ]
+    }
+  ]
+}

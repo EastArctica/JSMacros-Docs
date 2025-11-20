@@ -1,0 +1,138 @@
+{
+  "name": "Item",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Item",
+  "since": "JsMacros 1.0.5",
+  "description": "The `Item` class is a 2D rendering component in JSMacros that represents a Minecraft item that can be drawn on screen.",
+  "overview": "The `Item` class provides a flexible way to draw Minecraft items on screen with various properties:\n- Customizable position and z-index for layering\n- Scaling support for different item sizes\n- Rotation capabilities with center-based rotation option\n- Optional overlay display showing item count, durability, or custom text\n- Integration with the Draw2D rendering system\n- Support for both ItemStackHelper and item IDs\n\nItem objects are typically created through `Draw2D` methods or by using the constructor directly for custom HUD elements, item displays, and inventory overlays.\n\n### Item ID Format\nItem IDs should be formatted as Minecraft resource identifiers:\n- Format: \"namespace:item_name\"\n- Common namespaces: minecraft (can be omitted), various mod namespaces\n\n### Scale and Size\n- Default size: 16x16 pixels (base Minecraft item size)\n- Scale multiplier: Applied to the default size\n\n### Overlay Behavior\nWhen `overlay` is true, the following is displayed:\n- Item count for stacks with more than 1 item\n- Durability bar for damageable items\n- Custom overlay text if set via `setOverlayText()`\n\n### Rotation\n- Angle measured in degrees (0-360)\n- Clockwise rotation (positive values rotate clockwise)\n- Center rotation option available\n\n### Z-Index\n- Higher values render on top\n- Negative values are supported\n\n### Important Notes\n1. Item objects should be created and modified on the main render thread.\n2. Creating many Item objects with high scale values can impact performance.\n3. Item objects are managed by their parent Draw2D context.\n4. Invalid item IDs will result in empty/missing item displays.\n5. Scale cannot be set to 0.\n6. Custom overlay text takes priority over default item count display.",
+  "constructors": [
+    {
+      "signature": "new Item(x, y, zIndex, id, overlay, scale, rotation)",
+      "description": "Creates a new Item with the specified item ID and rendering properties.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Item ID (e.g., \"minecraft:diamond_sword\")"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "description": "Whether to show overlay (count/durability)"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees (clockwise)"
+        }
+      ]
+    },
+    {
+      "signature": "new Item(x, y, zIndex, itemStack, overlay, scale, rotation)",
+      "description": "Creates a new Item using an ItemStackHelper.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        },
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to display"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "description": "Whether to show overlay (count/durability)"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees (clockwise)"
+        }
+      ]
+    },
+    {
+      "signature": "new Item(x, y, zIndex, itemStack, overlay, scale, rotation, ovText)",
+      "description": "Creates a new Item with custom overlay text.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        },
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to display"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "description": "Whether to show overlay (count/durability)"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees (clockwise)"
+        },
+        {
+          "name": "ovText",
+          "type": "string",
+          "description": "Custom overlay text (null for default)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

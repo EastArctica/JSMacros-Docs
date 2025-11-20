@@ -1,0 +1,38 @@
+{
+  "name": "ClickableWidgetHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.ClickableWidgetHelper<B extends ClickableWidgetHelper<B, T>, T extends ClickableWidget>",
+  "extends": "BaseHelper<T>",
+  "since": "JsMacros 1.0.5",
+  "description": "The ClickableWidgetHelper class is a foundational wrapper for clickable UI widgets in JSMacros that provides common functionality for buttons and other interactive screen elements. This class serves as a base for more specific widget helpers and offers essential methods for positioning, sizing, text management, state control, and user interaction handling.",
+  "overview": "The ClickableWidgetHelper abstracts the complexity of working with Minecraft's native clickable widgets while providing a consistent API for JSMacros scripts. It handles common widget operations like mouse interactions, tooltip rendering, positioning, and state management.\n\nKey Features:\n- Generic type system for type-safe method chaining\n- Position and dimension management with pixel precision\n- Text labeling with support for both string and TextHelper objects\n- Active/inactive state control for user interaction\n- Comprehensive tooltip system with multiple content types\n- Mouse interaction simulation with programmatic clicking\n- Integration with JSMacros rendering and screen systems\n- Z-index control for proper layering in complex UIs\n\nClass Declaration and Type Parameters:\nClickableWidgetHelper<B, T>\n\nWhere:\nB - The specific helper subclass (for method chaining)\nT - The underlying Minecraft widget type\n\nThe class implements RenderElement and Alignable<B>.",
+  "constructors": [
+    {
+      "signature": "new ClickableWidgetHelper(widget)",
+      "description": "Creates a helper wrapper around an existing clickable widget with default z-index of 0.",
+      "parameters": [
+        {
+          "name": "widget",
+          "type": "T",
+          "description": "The underlying Minecraft clickable widget to wrap"
+        }
+      ]
+    },
+    {
+      "signature": "new ClickableWidgetHelper(widget, zIndex)",
+      "description": "Creates a helper wrapper with specified z-index.",
+      "parameters": [
+        {
+          "name": "widget",
+          "type": "T",
+          "description": "The underlying Minecraft clickable widget"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index for rendering order"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

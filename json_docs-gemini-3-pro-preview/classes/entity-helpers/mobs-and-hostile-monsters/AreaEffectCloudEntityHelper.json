@@ -1,0 +1,59 @@
+{
+  "name": "AreaEffectCloudEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.other.AreaEffectCloudEntityHelper",
+  "extends": "EntityHelper<AreaEffectCloudEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The AreaEffectCloudEntityHelper class provides specialized access to Minecraft area effect cloud entities (also known as lingering potions).",
+  "overview": "These entities are created when splash potions or lingering potions are thrown, creating a cloud that applies effects to entities passing through them. This helper extends the base EntityHelper class and adds specific functionality for inspecting cloud properties like radius, color, particle effects, and waiting state.\n\nArea effect clouds are commonly used in combat, area denial, and status effect application in Minecraft. They persist for a duration and can affect multiple entities within their radius with various potion effects.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getRadius",
+      "signature": "getRadius()",
+      "returnType": "float",
+      "description": "Returns the current radius of the area effect cloud.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const radius = cloud.getRadius();",
+        "if (distance <= radius + 1) { ... }"
+      ]
+    },
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "int",
+      "description": "Returns the color of the cloud (often corresponding to the potion effect color).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = cloud.getColor();",
+        "const hexColor = `#${color.toString(16).padStart(6, '0')}`;"
+      ]
+    },
+    {
+      "name": "getParticleType",
+      "signature": "getParticleType()",
+      "returnType": "String",
+      "description": "Returns the type of particle displayed by this cloud.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const particleType = cloud.getParticleType();",
+        "Chat.log(`Particles: ${particleType}`);"
+      ]
+    },
+    {
+      "name": "isWaiting",
+      "signature": "isWaiting()",
+      "returnType": "boolean",
+      "description": "Checks if the cloud is currently in a waiting state.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isWaiting = cloud.isWaiting();",
+        "const status = isWaiting ? \"Waiting\" : \"Active\";"
+      ]
+    }
+  ]
+}

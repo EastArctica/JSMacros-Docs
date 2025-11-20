@@ -1,0 +1,110 @@
+{
+  "name": "ArmorStandEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.decoration.ArmorStandEntityHelper",
+  "extends": "LivingEntityHelper<ArmorStandEntity>",
+  "since": "1.8.4",
+  "description": "The ArmorStandEntityHelper class provides specialized methods for interacting with armor stand entities in Minecraft.",
+  "overview": "The ArmorStandEntityHelper class provides specialized methods for interacting with armor stand entities in Minecraft. Armor stands are decorative entities that can be customized with different poses, visibility settings, and equipment. This helper allows you to query and manipulate various properties of armor stands including their pose, visibility, physical characteristics, and limb rotations.\n\nThis class inherits all methods from LivingEntityHelper and EntityHelper, providing access to standard entity operations like positioning, health tracking, and world interaction, in addition to armor stand-specific functionality.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isVisible",
+      "signature": "public boolean isVisible()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSmall",
+      "signature": "public boolean isSmall()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand is small. Small armor stands have reduced collision boxes.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasArms",
+      "signature": "public boolean hasArms()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand has arms.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasBasePlate",
+      "signature": "public boolean hasBasePlate()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand has a base plate.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isMarker",
+      "signature": "public boolean isMarker()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand is a marker. Marker armor stands have no hitbox and cannot be interacted with.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHeadRotation",
+      "signature": "public float[] getHeadRotation()",
+      "returnType": "float[]",
+      "description": "Gets the rotation of the armor stand's head. Returns an array of [yaw, pitch, roll] in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBodyRotation",
+      "signature": "public float[] getBodyRotation()",
+      "returnType": "float[]",
+      "description": "Gets the rotation of the armor stand's body. Returns an array of [yaw, pitch, roll] in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLeftArmRotation",
+      "signature": "public float[] getLeftArmRotation()",
+      "returnType": "float[]",
+      "description": "Gets the rotation of the armor stand's left arm. Returns an array of [yaw, pitch, roll] in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRightArmRotation",
+      "signature": "public float[] getRightArmRotation()",
+      "returnType": "float[]",
+      "description": "Gets the rotation of the armor stand's right arm. Returns an array of [yaw, pitch, roll] in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLeftLegRotation",
+      "signature": "public float[] getLeftLegRotation()",
+      "returnType": "float[]",
+      "description": "Gets the rotation of the armor stand's left leg. Returns an array of [yaw, pitch, roll] in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRightLegRotation",
+      "signature": "public float[] getRightLegRotation()",
+      "returnType": "float[]",
+      "description": "Gets the rotation of the armor stand's right leg. Returns an array of [yaw, pitch, roll] in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

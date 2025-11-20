@@ -1,0 +1,45 @@
+{
+  "name": "sortFile",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.gui.overlays.FileChooser.sortFile",
+  "extends": null,
+  "since": "JsMacros 1.0.0",
+  "description": "The FileChooser.sortFile class is a specialized comparator that provides intelligent file sorting functionality for the FileChooser component. It implements a hierarchical sorting strategy that prioritizes directories over files while maintaining alphabetical ordering within each category. This sorting approach ensures an intuitive and user-friendly file browsing experience by presenting directories first, followed by files, both sorted alphabetically.",
+  "overview": "The sortFile class implements Java's Comparator<File> interface to provide a consistent and predictable sorting order for file listings in JSMacros' FileChooser interface. The sorting logic follows a user-friendly pattern commonly found in file explorers and operating systems:\n\n1. **Directory Priority**: Directories are always displayed before files, regardless of their names\n2. **Alphabetical Ordering**: Within each category (directories or files), items are sorted alphabetically by name\n3. **Case Sensitivity**: Uses Java's default string comparison, which is case-sensitive\n4. **Natural Ordering**: Provides the expected behavior users anticipate from file browsers\n\nThis comparator is essential for creating an organized and navigable file interface where users can easily locate directories and files in a logical order.",
+  "constructors": [
+    {
+      "signature": "new FileChooser.sortFile()",
+      "description": "Creates a new instance of the sortFile comparator.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "compare",
+      "signature": "compare(File a, File b)",
+      "returnType": "int",
+      "description": "Compares two File objects to determine their sorting order. This method implements the core sorting logic of the comparator: directories come before files, and items of the same type are sorted alphabetically.",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "File",
+          "description": "The first file to compare"
+        },
+        {
+          "name": "b",
+          "type": "File",
+          "description": "The second file to compare"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sorter = new FileChooser.sortFile();\n\n// Compare two files\nconst file1 = new File(\"/path/to/file.txt\");\nconst file2 = new File(\"/path/to/another.txt\");\nconst result = sorter.compare(file1, file2);\n\nif (result < 0) {\n    Chat.log(\"file1 comes before file2\");\n} else if (result > 0) {\n    Chat.log(\"file1 comes after file2\");\n} else {\n    Chat.log(\"file1 and file2 are equal in order\");\n}",
+        "const sorter = new FileChooser.sortFile();\nconst directory = new File(\"/path/documents\");\nconst file = new File(\"/path/document.txt\");\n\n// Returns negative value (directory comes first)\nconst result = sorter.compare(directory, file);\nChat.log(`Directory vs File: ${result < 0 ? \"Directory first\" : \"File first\"}`);",
+        "const sorter = new FileChooser.sortFile();\n\n// Comparing two files\nconst fileA = new File(\"/path/apple.txt\");\nconst fileB = new File(\"/path/banana.txt\");\nChat.log(`File comparison: ${sorter.compare(fileA, fileB) < 0 ? \"apple.txt comes first\" : \"banana.txt comes first\"}`);\n\n// Comparing two directories\nconst dirA = new File(\"/path/archive\");\nconst dirB = new File(\"/path/backup\");\nChat.log(`Directory comparison: ${sorter.compare(dirA, dirB) < 0 ? \"archive comes first\" : \"backup comes first\"}`);",
+        "const sorter = new FileChooser.sortFile();\n\n// Uppercase letters come before lowercase in ASCII ordering\nconst upperFile = new File(\"/path/Zeus.txt\");\nconst lowerFile = new File(\"/path/apple.txt\");\nChat.log(`Case sensitive: ${sorter.compare(upperFile, lowerFile) < 0 ? \"Zeus comes before apple\" : \"apple comes before Zeus\"}`);",
+        "function sortFileList(directory) {\n    const sorter = new FileChooser.sortFile();\n    const files = directory.listFiles();\n\n    if (files) {\n        // Convert Java array to JavaScript array for easier manipulation\n        const fileList = Array.from(files);\n\n        // Sort using the FileChooser.sortFile comparator\n        fileList.sort(sorter);\n\n        // Display the sorted results\n        Chat.log(\"§6Sorted File List:\");\n        fileList.forEach((file, index) => {\n            const type = file.isDirectory() ? \"§e[DIR]\" : \"§f[FILE]\";\n            const name = file.getName();\n            Chat.log(`${(index + 1).toString().padStart(3, \" \")}. ${type} ${name}`);\n        });\n    }\n}\n\n// Usage\nconst macroFolder = JsMacros.getFile(\"macros\").getFile();\nsortFileList(macroFolder);",
+        "function createCustomFileBrowser(startDirectory) {\n    const sorter = new FileChooser.sortFile();\n\n    return {\n        currentDirectory: startDirectory,\n\n        getSortedFiles: function() {\n            const files = this.currentDirectory.listFiles();\n            if (!files) return [];\n\n            const fileList = Array.from(files);\n            fileList.sort(sorter);\n\n            return fileList.map(file => ({\n                name: file.getName(),\n                isDirectory: file.isDirectory(),\n                size: file.isDirectory() ? null : file.length(),\n                lastModified: new Date(file.lastModified()),\n                file: file\n            }));\n        },\n        // ... remaining implementation ...\n    };\n}",
+        "const sorter = new FileChooser.sortFile();\n\n// Handles null values (though File objects shouldn't be null in normal usage)\ntry {\n    // This would normally not occur in FileChooser usage\n    const result = sorter.compare(null, null);\n} catch (e) {\n    Chat.log(\"§cComparator error: \" + e.message);\n}\n\n// Handles files with the same name\nconst file1 = new File(\"/path/test.txt\");\nconst file2 = new File(\"/path/test.txt\");\nChat.log(`Same files: ${sorter.compare(file1, file2) === 0 ? \"Equal\" : \"Different\"}`);"
+      ]
+    }
+  ]
+}

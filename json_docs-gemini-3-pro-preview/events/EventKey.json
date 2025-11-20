@@ -1,0 +1,48 @@
+{
+  "name": "EventKey",
+  "fullClassName": "EventKey",
+  "description": "This event is fired when a key is pressed or released.",
+  "overview": "Fires when keyboard or mouse keys are pressed/released.\n- The `action` field indicates press (1) or release (0)\n- The `key` field contains the key translation key\n- The `mods` field contains held modifier keys\n- This event is cancellable - preventing the original key action\n- Can be filtered to only trigger for specific keys",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getKeyModifiers",
+      "signature": "getKeyModifiers(mods)",
+      "returnType": "string",
+      "description": "Converts an integer modifier mask to a translation key string. This is a static method for converting modifier bit masks to readable strings.",
+      "parameters": [
+        {
+          "name": "mods",
+          "type": "int",
+          "description": "Integer modifier mask"
+        }
+      ],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "getModInt",
+      "signature": "getModInt(mods)",
+      "returnType": "int",
+      "description": "Converts a translation key string to an integer modifier mask. This is a static method for converting readable modifier strings back to integer masks.",
+      "parameters": [
+        {
+          "name": "mods",
+          "type": "string",
+          "description": "+ separated modifier key string"
+        }
+      ],
+      "static": true,
+      "examples": []
+    }
+  ]
+}

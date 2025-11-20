@@ -1,0 +1,38 @@
+{
+  "name": "PacketByteBufferHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.PacketByteBufferHelper",
+  "extends": "BaseHelper<PacketByteBuf>",
+  "since": "JsMacros 1.8.4",
+  "description": "The PacketByteBufferHelper class is a utility wrapper around Minecraft's PacketByteBuf that provides methods for reading and writing various data types to and from packet buffers. This class is essential for working with network packets, custom payload data, and binary data operations in JSMacros. It supports packet creation, manipulation, sending, and receiving with a comprehensive set of serialization methods.",
+  "overview": "Packet buffers are the fundamental data structure used in Minecraft's networking system for transmitting information between the client and server. The PacketByteBufferHelper provides a JavaScript-friendly interface to:\n\n- Create and manipulate packet buffers\n- Read and write primitive data types (bytes, ints, strings, etc.)\n- Serialize complex Minecraft objects (positions, items, entities)\n- Work with collections and maps\n- Convert buffers to actual packet objects\n- Send custom packets to the server\n- Receive and process incoming packets",
+  "constructors": [
+    {
+      "signature": "new PacketByteBufferHelper()",
+      "description": "Creates a new empty packet buffer with no underlying packet object.",
+      "parameters": []
+    },
+    {
+      "signature": "new PacketByteBufferHelper(PacketByteBuf base)",
+      "description": "Creates a helper wrapper around an existing PacketByteBuf object.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "PacketByteBuf",
+          "description": "The existing packet buffer to wrap"
+        }
+      ]
+    },
+    {
+      "signature": "new PacketByteBufferHelper(Packet<?> packet)",
+      "description": "Creates a packet buffer from an existing Minecraft packet, automatically serializing the packet data into the buffer.",
+      "parameters": [
+        {
+          "name": "packet",
+          "type": "Packet<?>",
+          "description": "The packet to serialize into the buffer"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

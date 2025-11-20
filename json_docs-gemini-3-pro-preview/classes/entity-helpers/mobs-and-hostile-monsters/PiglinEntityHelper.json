@@ -1,0 +1,67 @@
+{
+  "name": "PiglinEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.PiglinEntityHelper",
+  "extends": "AbstractPiglinEntityHelper<PiglinEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The PiglinEntityHelper class provides specialized access to piglin entities in Minecraft, offering detailed insight into their activities, behaviors, and combat states.",
+  "overview": "This class extends the base functionality of AbstractPiglinEntityHelper with piglin-specific activity detection that is essential for understanding piglin AI behavior, bartering interactions, and combat patterns.\n\nPiglins are complex hostile mobs that exhibit unique behaviors like bartering with players, dancing to music, admiring items, and switching between melee and ranged combat. This helper class allows scripters to monitor these behavioral states and create sophisticated piglin interaction systems, automated bartering monitors, combat analysis tools, and behavioral research utilities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isWandering",
+      "signature": "public boolean isWandering()",
+      "returnType": "boolean",
+      "description": "Checks if the piglin is currently in a wandering state.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Advanced piglin combat behavior analyzer\nclass PiglinCombatAnalyzer {\n    constructor() {\n        this.combatLog = [];\n        this.threatAssessment = new Map();\n        this.weaponAnalysis = new Map();\n        this.tacticalRecommendations = [];\n    }\n\n    analyzePiglinCombat(entity) {\n        const piglin = entity.asPiglin();\n        if (!piglin) return;\n\n        const uuid = entity.getUUID();\n        const name = entity.getName().getString();\n        const pos = entity.getPos();\n        const player = Player.getPlayer();\n\n        const combatState = this.assessCombatState(piglin);\n        const threatLevel = this.calculateThreatLevel(piglin, combatState);\n        const tacticalData = this.gatherTacticalData(piglin, entity);\n\n        // Update threat assessment\n        this.threatAssessment.set(uuid, {\n            entity: entity,\n            name: name,\n            combatState: combatState,\n            threatLevel: threatLevel,\n            tacticalData: tacticalData,\n            lastUpdate: Client.getTime(),\n            position: pos\n        });\n\n        // Log combat state changes\n        this.logCombatStateChange(uuid, name, combatState, threatLevel);\n\n        // Generate tactical recommendations\n        this.updateTacticalRecommendations(uuid, combatState, threatLevel);\n\n        // Update weapon analysis\n        this.updateWeaponAnalysis(uuid, combatState);\n    }\n\n    assessCombatState(piglin) {\n        const states = {\n            wandering: piglin.isWandering(),\n            dancing: piglin.isDancing(),\n            admiring: piglin.isAdmiring(),\n            meleeAttacking: piglin.isMeleeAttacking(),\n            chargingCrossbow: piglin.isChargingCrossbow(),\n            crossbowReady: piglin.hasCrossbowReady()\n        };\n\n        // Determine primary state\n        if (states.meleeAttacking) return \"MELEE_COMBAT\";\n        if (states.chargingCrossbow) return \"RANGED_PREPARING\";\n        if (states.crossbowReady) return \"RANGED_READY\";\n        if (states.admiring) return \"ADMIRING\";\n        if (states.dancing) return \"DANCING\";\n        if (states.wandering) return \"WANDERING\";\n\n        return \"UNKNOWN\";\n    }\n\n    // ... (See full example in documentation for helper methods)\n}"
+      ]
+    },
+    {
+      "name": "isDancing",
+      "signature": "public boolean isDancing()",
+      "returnType": "boolean",
+      "description": "Checks if the piglin is dancing (usually triggered by nearby music sources). This represents a safe state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAdmiring",
+      "signature": "public boolean isAdmiring()",
+      "returnType": "boolean",
+      "description": "Checks if the piglin is admiring a gold item. This state is valuable for bartering operations.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isMeleeAttacking",
+      "signature": "public boolean isMeleeAttacking()",
+      "returnType": "boolean",
+      "description": "Checks if the piglin is currently performing a melee attack.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isChargingCrossbow",
+      "signature": "public boolean isChargingCrossbow()",
+      "returnType": "boolean",
+      "description": "Checks if the piglin is currently charging a crossbow.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasCrossbowReady",
+      "signature": "public boolean hasCrossbowReady()",
+      "returnType": "boolean",
+      "description": "Checks if the piglin has a crossbow fully charged and ready to fire.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

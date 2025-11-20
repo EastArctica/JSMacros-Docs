@@ -1,0 +1,29 @@
+{
+  "name": "ProxyBuilder$ProxyReference",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ProxyBuilder$ProxyReference",
+  "since": "JSMacros 1.6.0",
+  "description": "The ProxyReference class provides a reference mechanism for accessing the original (parent) implementation within proxy method handlers.",
+  "overview": "The ProxyReference class serves as a bridge between proxy method implementations and the original underlying object or method. It enables:\n\n- Calling original method implementations from proxy methods\n- Method interception and decoration patterns\n- Conditional method overriding based on runtime logic\n- Access to super/parent functionality in dynamic proxies\n- Method chaining and delegation patterns\n\nThis class is typically passed as the first parameter to proxy method handlers, providing access to the original implementation while allowing custom behavior to be added before, after, or instead of the original call.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "parent",
+      "signature": "parent(Object... args)",
+      "returnType": "Object",
+      "description": "A function reference to the original method implementation. When available, this function can be called with the original method parameters to invoke the parent implementation. In the JavaScript wrapper context, this acts as a callable property on the reference object.",
+      "parameters": [
+        {
+          "name": "args",
+          "type": "Object[]",
+          "description": "The arguments to be passed to the original method implementation. The order and type must match the original method signature."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Check if parent method is available\nif (ref.parent) {\n    // Call original method with parameters\n    const result = ref.parent(param1, param2, param3);\n} else {\n    // Handle case where no parent implementation exists\n}",
+        "builder.addMethod(\"add(Ljava/lang/Object;)Z\", JavaWrapper.methodToJava((ref, args) => {\n    const item = args[0];\n\n    // Pre-processing: Log the addition\n    Chat.log(`Adding item to list: ${item}`);\n\n    // Call original method through proxy reference\n    const result = ref.parent ? ref.parent([item]) : false;\n\n    return result;\n}));",
+        "// Method signature: \"toString()Ljava/lang/String;\"\nbuilder.addMethod(\"toString()Ljava/lang/String;\", JavaWrapper.methodToJava((ref, args) => {\n    // ref.parent will match the toString() method\n    return ref.parent ? ref.parent() : \"default string\";\n}));"
+      ]
+    }
+  ]
+}

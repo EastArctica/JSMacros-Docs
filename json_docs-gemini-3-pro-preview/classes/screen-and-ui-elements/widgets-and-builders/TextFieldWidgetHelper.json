@@ -1,0 +1,227 @@
+{
+  "name": "TextFieldWidgetHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.TextFieldWidgetHelper",
+  "extends": "ClickableWidgetHelper<TextFieldWidgetHelper, TextFieldWidget>",
+  "since": "JsMacros 1.0.5",
+  "description": "The TextFieldWidgetHelper class provides a wrapper for Minecraft's text input widget, allowing script writers to create and manage text input fields in custom screens and UIs. This widget supports text input, editing, selection, validation, and various visual customization options.",
+  "overview": "The TextFieldWidgetHelper class provides comprehensive text input functionality including:\n\n- Text input and editing with full cursor control\n- Text selection and manipulation\n- Input validation and filtering\n- Visual customization with colors and suggestions\n- Editable/read-only modes\n- Maximum length constraints\n- Change event callbacks\n- Tooltip support\n- Keyboard navigation and text editing shortcuts",
+  "constructors": [
+    {
+      "signature": "new TextFieldWidgetHelper(textFieldWidget)",
+      "description": "Creates a helper for an existing TextFieldWidget.",
+      "parameters": [
+        {
+          "name": "textFieldWidget",
+          "type": "TextFieldWidget",
+          "description": "The underlying Minecraft text field widget"
+        }
+      ]
+    },
+    {
+      "signature": "new TextFieldWidgetHelper(textFieldWidget, zIndex)",
+      "description": "Creates a helper for an existing TextFieldWidget with a specific z-index.",
+      "parameters": [
+        {
+          "name": "textFieldWidget",
+          "type": "TextFieldWidget",
+          "description": "The underlying Minecraft text field widget"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index for rendering order"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": null,
+      "description": "Get X coordinate",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": null,
+      "description": "Get Y coordinate",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(x, y)",
+      "returnType": null,
+      "description": "Set position",
+      "parameters": [
+        {
+          "name": "x",
+          "type": null,
+          "description": null
+        },
+        {
+          "name": "y",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": null,
+      "description": "Get width",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": null,
+      "description": "Get height",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setWidth",
+      "signature": "setWidth(width)",
+      "returnType": null,
+      "description": "Set width",
+      "parameters": [
+        {
+          "name": "width",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getActive",
+      "signature": "getActive()",
+      "returnType": null,
+      "description": "Get active state",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setActive",
+      "signature": "setActive(active)",
+      "returnType": null,
+      "description": "Set active state",
+      "parameters": [
+        {
+          "name": "active",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "click",
+      "signature": "click()",
+      "returnType": null,
+      "description": "Click the text field",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "click",
+      "signature": "click(await)",
+      "returnType": null,
+      "description": "Click with thread synchronization",
+      "parameters": [
+        {
+          "name": "await",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setTooltip",
+      "signature": "setTooltip(...tooltips)",
+      "returnType": null,
+      "description": "Set tooltips",
+      "parameters": [
+        {
+          "name": "...tooltips",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addTooltip",
+      "signature": "addTooltip(tooltip)",
+      "returnType": null,
+      "description": "Add tooltip",
+      "parameters": [
+        {
+          "name": "tooltip",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeTooltip",
+      "signature": "removeTooltip(index)",
+      "returnType": null,
+      "description": "Remove tooltip by index",
+      "parameters": [
+        {
+          "name": "index",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeTooltip",
+      "signature": "removeTooltip(tooltip)",
+      "returnType": null,
+      "description": "Remove tooltip by object",
+      "parameters": [
+        {
+          "name": "tooltip",
+          "type": null,
+          "description": null
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTooltips",
+      "signature": "getTooltips()",
+      "returnType": null,
+      "description": "Get all tooltips",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

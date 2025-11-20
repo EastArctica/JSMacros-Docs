@@ -1,0 +1,159 @@
+{
+  "name": "ServerInfoHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.ServerInfoHelper",
+  "extends": "BaseHelper<ServerInfo>",
+  "since": "JsMacros 1.6.5",
+  "description": "The ServerInfoHelper class provides access to server information and connection details for multiplayer servers.",
+  "overview": "The ServerInfoHelper class serves as a wrapper around server information, providing convenient access to server identification, player information, server status, network information, and NBT data. This class is particularly useful for server management scripts, server selection interfaces, and connection monitoring tools.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getName",
+      "signature": "public String getName()",
+      "returnType": "String",
+      "description": "Gets the name of the server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Name: ${serverInfo.getName()}`);"
+      ]
+    },
+    {
+      "name": "getAddress",
+      "signature": "public String getAddress()",
+      "returnType": "String",
+      "description": "Gets the IP address or hostname of the server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Address: ${serverInfo.getAddress()}`);"
+      ]
+    },
+    {
+      "name": "getPlayerCountLabel",
+      "signature": "public TextHelper getPlayerCountLabel()",
+      "returnType": "TextHelper",
+      "description": "Gets the player count information as a text component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const playerCountLabel = serverInfo.getPlayerCountLabel();\nif (playerCountLabel) {\n    Chat.log(`Players: ${playerCountLabel.getString()}`);\n}"
+      ]
+    },
+    {
+      "name": "getLabel",
+      "signature": "public TextHelper getLabel()",
+      "returnType": "TextHelper",
+      "description": "Gets the label of the server description/MOTD.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPing",
+      "signature": "public long getPing()",
+      "returnType": "long",
+      "description": "Gets the server latency in milliseconds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const ping = serverInfo.getPing();\nChat.log(`Ping: ${ping}ms`);"
+      ]
+    },
+    {
+      "name": "getProtocolVersion",
+      "signature": "public int getProtocolVersion()",
+      "returnType": "int",
+      "description": "Gets the protocol version number of the server, useful for determining client compatibility.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const protocol = serverInfo.getProtocolVersion();"
+      ]
+    },
+    {
+      "name": "getVersion",
+      "signature": "public TextHelper getVersion()",
+      "returnType": "TextHelper",
+      "description": "Gets the game version of the server as a text component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const version = serverInfo.getVersion();\nif (version) {\n    Chat.log(`Version: ${version.getString()}`);\n}"
+      ]
+    },
+    {
+      "name": "getPlayerListSummary",
+      "signature": "public List<TextHelper> getPlayerListSummary()",
+      "returnType": "List<TextHelper>",
+      "description": "Gets a summary list of players currently on the server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const playerList = serverInfo.getPlayerListSummary();\nif (playerList && playerList.size() > 0) {\n    for (let i = 0; i < playerList.size(); i++) {\n        Chat.log(playerList.get(i).getString());\n    }\n}"
+      ]
+    },
+    {
+      "name": "resourcePackPolicy",
+      "signature": "public String resourcePackPolicy()",
+      "returnType": "String",
+      "description": "Gets the resource pack policy status (e.g., ENABLED, DISABLED, PROMPT) as a translation key string.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const policy = serverInfo.resourcePackPolicy();\nChat.log(`Resource Pack Policy: ${policy}`);"
+      ]
+    },
+    {
+      "name": "getIcon",
+      "signature": "public String getIcon()",
+      "returnType": "String",
+      "description": "Gets the server icon data, typically as a Base64 string.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hasIcon = serverInfo.getIcon() ? serverInfo.getIcon().length > 0 : false;"
+      ]
+    },
+    {
+      "name": "isOnline",
+      "signature": "public boolean isOnline()",
+      "returnType": "boolean",
+      "description": "Checks if the server is an online (remote) server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (!serverInfo.isOnline()) {\n    Chat.log(\"Local server (no ping measurement)\");\n}"
+      ]
+    },
+    {
+      "name": "isLocal",
+      "signature": "public boolean isLocal()",
+      "returnType": "boolean",
+      "description": "Checks if the server is a local (LAN) server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (serverInfo.isLocal()) {\n    Chat.log(`Type: Local/LAN Server`);\n} else {\n    Chat.log(`Type: Online Server`);\n}"
+      ]
+    },
+    {
+      "name": "getNbt",
+      "signature": "public NBTCompoundHelper getNbt()",
+      "returnType": "NBTCompoundHelper",
+      "description": "Gets the raw NBT data representation for the server info.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "public String toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the server info object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

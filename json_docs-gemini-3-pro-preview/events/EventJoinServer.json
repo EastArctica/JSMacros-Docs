@@ -1,0 +1,20 @@
+{
+  "name": "EventJoinServer",
+  "fullClassName": "EventJoinServer",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player successfully joins a server.",
+  "overview": "Behaviors:\n* Fires when the player successfully connects to a server\n- The `player` field contains player information\n- The `address` field contains the server IP/domain\n- Not cancellable\n- Good for server-specific configurations and greetings\n\nFields:\n- player (ClientPlayerEntityHelper): The player instance. This provides access to player information like name, health, hunger, position, inventory, etc.\n- address (string): The address of the server the player joined. This contains the server IP address or domain name.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

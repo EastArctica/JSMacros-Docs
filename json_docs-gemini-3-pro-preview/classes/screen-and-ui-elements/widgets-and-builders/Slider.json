@@ -1,0 +1,206 @@
+{
+  "name": "Slider",
+  "fullClassName": "xyz.wagyourtail.wagyourgui.elements.Slider",
+  "extends": "ClickableWidget",
+  "since": "JsMacros 1.8.4",
+  "description": "The Slider class is a native Minecraft UI widget that provides a draggable slider control for selecting numeric values within a configurable range. It supports keyboard navigation, mouse interaction, and real-time value updates with event callbacks. This class is the underlying implementation used by SliderWidgetHelper for creating slider controls in custom JSMacros screens.",
+  "overview": "The Slider class provides core slider functionality with: Draggable Handle, Keyboard Support, Visual Feedback, Step-based Values, Event Callbacks, Bounds Checking, and Customizable Appearance.",
+  "constructors": [
+    {
+      "signature": "new Slider(x, y, width, height, text, value, action, steps)",
+      "description": "Creates a new Slider with full configuration options.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the slider"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the slider"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the slider in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the slider in pixels (typically 20)"
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "description": "Display text for the slider label"
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "description": "Initial value (0.0 to 1.0, will be rounded)"
+        },
+        {
+          "name": "action",
+          "type": "Consumer",
+          "description": "Callback function when value changes"
+        },
+        {
+          "name": "steps",
+          "type": "int",
+          "description": "Number of discrete steps (minimum 2)"
+        }
+      ]
+    },
+    {
+      "signature": "new Slider(x, y, width, height, text, value, action)",
+      "description": "Creates a new Slider with default 2 steps (minimum and maximum).",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the slider"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the slider"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the slider in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the slider in pixels (typically 20)"
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "description": "Display text for the slider label"
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "description": "Initial value (0.0 to 1.0, will be rounded)"
+        },
+        {
+          "name": "action",
+          "type": "Consumer",
+          "description": "Callback function when value changes"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getValue",
+      "signature": "getValue()",
+      "returnType": "double",
+      "description": "Returns the current value of the slider (0.0 to 1.0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentValue = slider.getValue();\nChat.log(`Current slider value: ${currentValue}`);"
+      ]
+    },
+    {
+      "name": "setValue",
+      "signature": "setValue(value)",
+      "returnType": "void",
+      "description": "Sets the slider value and triggers the action callback if the value changes.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "double",
+          "description": "New value (will be clamped and rounded to nearest step)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Set slider to 75% position\nslider.setValue(0.75);\n\n// Set slider based on external value\nconst percentage = 60;\nslider.setValue(percentage / 100.0);"
+      ]
+    },
+    {
+      "name": "roundValue",
+      "signature": "roundValue(value)",
+      "returnType": "double",
+      "description": "Rounds a value to the nearest valid step position.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "double",
+          "description": "Value to round"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Round a value to nearest step\nconst roundedValue = slider.roundValue(0.37);\nChat.log(`Rounded to nearest step: ${roundedValue}`);\n\n// Convert external value to slider coordinate\nconst externalValue = 7;  // 7 out of 10\nconst sliderValue = slider.roundValue(externalValue / 10.0);"
+      ]
+    },
+    {
+      "name": "getSteps",
+      "signature": "getSteps()",
+      "returnType": "int",
+      "description": "Returns the total number of steps for the slider.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const totalSteps = slider.getSteps();\nChat.log(`Slider has ${totalSteps} steps`);"
+      ]
+    },
+    {
+      "name": "setSteps",
+      "signature": "setSteps(steps)",
+      "returnType": "void",
+      "description": "Sets the number of steps for the slider.",
+      "parameters": [
+        {
+          "name": "steps",
+          "type": "int",
+          "description": "Number of steps (minimum 2)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Change slider precision\nslider.setSteps(11);  // 0-10 range with 11 steps\nslider.setSteps(101); // 0-100 range with 101 steps"
+      ]
+    },
+    {
+      "name": "setMessage",
+      "signature": "setMessage(message)",
+      "returnType": "void",
+      "description": "Sets the slider's display text using a string.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "New display text"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "slider.setMessage(\"Volume Control\");\nslider.setMessage(`Brightness: ${Math.round(slider.getValue() * 100)}%`);"
+      ]
+    },
+    {
+      "name": "setMessage",
+      "signature": "setMessage(text)",
+      "returnType": "void",
+      "description": "Sets the slider's display text using a Text object.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "Text",
+          "description": "New display text"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "slider.setMessage(Text.literal(\"Settings\").formatted(Formatting.BOLD));\nslider.setMessage(Text.literal(\"Active\").formatted(Formatting.GREEN));"
+      ]
+    }
+  ]
+}

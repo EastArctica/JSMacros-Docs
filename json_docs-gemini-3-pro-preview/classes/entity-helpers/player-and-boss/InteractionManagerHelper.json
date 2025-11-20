@@ -1,0 +1,868 @@
+{
+  "name": "InteractionManagerHelper",
+  "fullClassName": "InteractionManagerHelper",
+  "since": "1.5.0",
+  "description": "The InteractionManagerHelper class provides comprehensive control over player interactions in Minecraft through JSMacros.",
+  "overview": "The `InteractionManagerHelper` class provides comprehensive control over player interactions in Minecraft through JSMacros. This helper wraps Minecraft's native `ClientPlayerInteractionManager` and exposes methods for attacking entities, breaking blocks, interacting with objects, and managing targeting systems. It serves as the primary interface for script-based automation of player actions.\n\nThis class is essential for creating scripts that need to perform in-game actions like mining, combat, block placement, or entity interactions. It provides both immediate action methods and async/blocking variants for different use cases.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getGameMode",
+      "signature": "getGameMode()",
+      "returnType": "string",
+      "description": "Returns the player's current game mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst gameMode = interactionManager.getGameMode();\n// Possible values: \"survival\", \"creative\", \"adventure\", \"spectator\"\nChat.log(\"Current game mode: \" + gameMode);"
+      ]
+    },
+    {
+      "name": "setGameMode",
+      "signature": "setGameMode(gameMode)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the player's game mode.",
+      "parameters": [
+        {
+          "name": "gameMode",
+          "type": "string",
+          "description": "Game mode to set (\"survival\", \"creative\", \"adventure\", \"spectator\", case insensitive)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setGameMode(\"creative\");\ninteractionManager.setGameMode(\"survival\");"
+      ]
+    },
+    {
+      "name": "setTarget",
+      "signature": "setTarget(x, y, z)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to a specific block position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setTarget(100, 64, 200);"
+      ]
+    },
+    {
+      "name": "setTarget",
+      "signature": "setTarget(x, y, z, direction)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to a block with a specific facing direction.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction (\"up\", \"down\", \"north\", \"south\", \"east\", \"west\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setTarget(100, 64, 200, \"up\");\ninteractionManager.setTarget(100, 64, 200, \"north\");"
+      ]
+    },
+    {
+      "name": "setTarget",
+      "signature": "setTarget(x, y, z, direction)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to a block using numeric direction values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        },
+        {
+          "name": "direction",
+          "type": "int",
+          "description": "Direction value (0-5: [DOWN, UP, NORTH, SOUTH, WEST, EAST])"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\n// Direction values: 0=down, 1=up, 2=north, 3=south, 4=west, 5=east\ninteractionManager.setTarget(100, 64, 200, 1); // up"
+      ]
+    },
+    {
+      "name": "setTarget",
+      "signature": "setTarget(pos)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to a block using BlockPosHelper.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "Block position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst pos = World.getBlock(player.getX(), player.getY(), player.getZ()).getPos();\ninteractionManager.setTarget(pos);"
+      ]
+    },
+    {
+      "name": "setTarget",
+      "signature": "setTarget(pos, direction)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to a block with direction using BlockPosHelper.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "Block position"
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction (\"up\", \"down\", \"north\", \"south\", \"east\", \"west\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst pos = World.getBlock(player.getX(), player.getY(), player.getZ()).getPos();\ninteractionManager.setTarget(pos, \"up\");"
+      ]
+    },
+    {
+      "name": "setTarget",
+      "signature": "setTarget(entity)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "Entity to target"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst entity = player.getTargetedEntity();\nif (entity) {\n    interactionManager.setTarget(entity);\n}"
+      ]
+    },
+    {
+      "name": "getTarget",
+      "signature": "getTarget()",
+      "returnType": "HitResultHelper | null",
+      "description": "Returns the current hit result target.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst target = interactionManager.getTarget();\nif (target) {\n    Chat.log(\"Currently targeting: \" + target.getType());\n}"
+      ]
+    },
+    {
+      "name": "getTargetedBlock",
+      "signature": "getTargetedBlock()",
+      "returnType": "BlockPosHelper | null",
+      "description": "Returns the currently targeted block position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst blockPos = interactionManager.getTargetedBlock();\nif (blockPos) {\n    Chat.log(\"Targeting block at: \" + blockPos.getX() + \", \" + blockPos.getY() + \", \" + blockPos.getZ());\n}"
+      ]
+    },
+    {
+      "name": "getTargetedEntity",
+      "signature": "getTargetedEntity()",
+      "returnType": "EntityHelper | null",
+      "description": "Returns the currently targeted entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst entity = interactionManager.getTargetedEntity();\nif (entity) {\n    Chat.log(\"Targeting entity: \" + entity.getName());\n}"
+      ]
+    },
+    {
+      "name": "setTargetMissed",
+      "signature": "setTargetMissed()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Sets the crosshair target to nothing (missed).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setTargetMissed();"
+      ]
+    },
+    {
+      "name": "hasTargetOverride",
+      "signature": "hasTargetOverride()",
+      "returnType": "boolean",
+      "description": "Checks if a target override is currently active.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nif (interactionManager.hasTargetOverride()) {\n    Chat.log(\"Target override is active\");\n}"
+      ]
+    },
+    {
+      "name": "clearTargetOverride",
+      "signature": "clearTargetOverride()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Clears the target override, restoring normal targeting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.clearTargetOverride();"
+      ]
+    },
+    {
+      "name": "setTargetRangeCheck",
+      "signature": "setTargetRangeCheck(enabled, autoClear)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Configures target range checking behavior.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "Whether to check target range (default: true)"
+        },
+        {
+          "name": "autoClear",
+          "type": "boolean",
+          "description": "Whether to auto-clear target when out of range (default: true)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setTargetRangeCheck(true, true); // Enable range checking with auto-clear"
+      ]
+    },
+    {
+      "name": "setTargetAirCheck",
+      "signature": "setTargetAirCheck(enabled, autoClear)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Configures target air checking behavior.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "Whether to check if target is air (default: false)"
+        },
+        {
+          "name": "autoClear",
+          "type": "boolean",
+          "description": "Whether to auto-clear target when it's air (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setTargetAirCheck(true, false); // Enable air checking without auto-clear"
+      ]
+    },
+    {
+      "name": "setTargetShapeCheck",
+      "signature": "setTargetShapeCheck(enabled, autoClear)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Configures target block shape checking behavior.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "Whether to check block shape (default: true)"
+        },
+        {
+          "name": "autoClear",
+          "type": "boolean",
+          "description": "Whether to auto-clear target when shape is empty (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.setTargetShapeCheck(true, false); // Enable shape checking without auto-clear"
+      ]
+    },
+    {
+      "name": "resetTargetChecks",
+      "signature": "resetTargetChecks()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Resets all target checking settings to their defaults.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.resetTargetChecks();"
+      ]
+    },
+    {
+      "name": "attack",
+      "signature": "attack()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Performs an attack action on whatever is currently targeted.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.attack();"
+      ]
+    },
+    {
+      "name": "attack",
+      "signature": "attack(await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Performs an attack with optional waiting.",
+      "parameters": [
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the attack to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.attack(true); // Wait for attack to complete"
+      ]
+    },
+    {
+      "name": "attack",
+      "signature": "attack(entity)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Attacks a specific entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "Entity to attack"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst entity = player.getTargetedEntity();\nif (entity) {\n    interactionManager.attack(entity);\n}"
+      ]
+    },
+    {
+      "name": "attack",
+      "signature": "attack(entity, await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Attacks a specific entity with optional waiting.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "Entity to attack"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the attack to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst entity = player.getTargetedEntity();\nif (entity) {\n    interactionManager.attack(entity, true); // Wait for attack to complete\n}"
+      ]
+    },
+    {
+      "name": "attack",
+      "signature": "attack(x, y, z, direction)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Attacks a block at specific coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction (\"up\", \"down\", \"north\", \"south\", \"east\", \"west\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.attack(100, 64, 200, \"up\");"
+      ]
+    },
+    {
+      "name": "attack",
+      "signature": "attack(x, y, z, direction, await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Attacks a block with optional waiting.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction (\"up\", \"down\", \"north\", \"south\", \"east\", \"west\")"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the attack to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.attack(100, 64, 200, \"up\", true);"
+      ]
+    },
+    {
+      "name": "breakBlock",
+      "signature": "breakBlock()",
+      "returnType": "BreakBlockResult | null",
+      "description": "Breaks the currently targeted block, waiting until completion.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\n// Set target first if needed\ninteractionManager.setTarget(player.getX(), player.getY() - 1, player.getZ());\nconst result = interactionManager.breakBlock();\n\nif (result) {\n    Chat.log(\"Block break result: \" + result.getStatus());\n    Chat.log(\"Block position: \" + result.getPos());\n}"
+      ]
+    },
+    {
+      "name": "breakBlock",
+      "signature": "breakBlock(x, y, z)",
+      "returnType": "BreakBlockResult | null",
+      "description": "Breaks a block at specific coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst result = interactionManager.breakBlock(100, 64, 200);"
+      ]
+    },
+    {
+      "name": "breakBlock",
+      "signature": "breakBlock(pos)",
+      "returnType": "BreakBlockResult | null",
+      "description": "Breaks a block at a specific position using BlockPosHelper.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "Block position to break"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst pos = World.getBlock(player.getX(), player.getY() - 1, player.getZ()).getPos();\nconst result = interactionManager.breakBlock(pos);"
+      ]
+    },
+    {
+      "name": "breakBlockAsync",
+      "signature": "breakBlockAsync(callback)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Starts breaking a block asynchronously with callback.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper | null",
+          "description": "Callback function to receive break result (null for no callback)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.breakBlockAsync(JavaWrapper.methodToJavaAsync((result) => {\n    Chat.log(\"Block break completed!\");\n    Chat.log(\"Status: \" + result.getStatus());\n    if (result.getPos()) {\n        Chat.log(\"Position: \" + result.getPos());\n    }\n}));"
+      ]
+    },
+    {
+      "name": "isBreakingBlock",
+      "signature": "isBreakingBlock()",
+      "returnType": "boolean",
+      "description": "Checks if currently breaking a block (vanilla breaking, not from breakBlock method).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nif (interactionManager.isBreakingBlock()) {\n    Chat.log(\"Currently breaking a block\");\n}"
+      ]
+    },
+    {
+      "name": "hasBreakBlockOverride",
+      "signature": "hasBreakBlockOverride()",
+      "returnType": "boolean",
+      "description": "Checks if there's an active block breaking override from breakBlock() methods.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nif (interactionManager.hasBreakBlockOverride()) {\n    Chat.log(\"Block breaking override is active\");\n}"
+      ]
+    },
+    {
+      "name": "cancelBreakBlock",
+      "signature": "cancelBreakBlock()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Cancels an active block breaking operation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.cancelBreakBlock();"
+      ]
+    },
+    {
+      "name": "interact",
+      "signature": "interact()",
+      "returnType": "InteractionManagerHelper",
+      "description": "Performs an interaction action with whatever is currently targeted.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.interact();"
+      ]
+    },
+    {
+      "name": "interact",
+      "signature": "interact(await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Performs an interaction with optional waiting.",
+      "parameters": [
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the interaction to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.interact(true); // Wait for interaction to complete"
+      ]
+    },
+    {
+      "name": "interactEntity",
+      "signature": "interactEntity(entity, offHand)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Interacts with a specific entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "Entity to interact with"
+        },
+        {
+          "name": "offHand",
+          "type": "boolean",
+          "description": "Whether to use off-hand (false for main hand)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst entity = player.getTargetedEntity();\nif (entity) {\n    interactionManager.interactEntity(entity, false); // Use main hand\n}"
+      ]
+    },
+    {
+      "name": "interactEntity",
+      "signature": "interactEntity(entity, offHand, await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Interacts with an entity with optional waiting.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "Entity to interact with"
+        },
+        {
+          "name": "offHand",
+          "type": "boolean",
+          "description": "Whether to use off-hand (false for main hand)"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the interaction to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nconst entity = player.getTargetedEntity();\nif (entity) {\n    interactionManager.interactEntity(entity, false, true); // Main hand, wait for completion\n}"
+      ]
+    },
+    {
+      "name": "interactItem",
+      "signature": "interactItem(offHand)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Uses the currently held item.",
+      "parameters": [
+        {
+          "name": "offHand",
+          "type": "boolean",
+          "description": "Whether to use off-hand (false for main hand)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.interactItem(false); // Use main hand\ninteractionManager.interactItem(true);  // Use off-hand"
+      ]
+    },
+    {
+      "name": "interactItem",
+      "signature": "interactItem(offHand, await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Uses the currently held item with optional waiting.",
+      "parameters": [
+        {
+          "name": "offHand",
+          "type": "boolean",
+          "description": "Whether to use off-hand (false for main hand)"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the interaction to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.interactItem(false, true); // Main hand, wait for completion"
+      ]
+    },
+    {
+      "name": "interactBlock",
+      "signature": "interactBlock(x, y, z, direction, offHand)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Interacts with a block at specific coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction (\"up\", \"down\", \"north\", \"south\", \"east\", \"west\")"
+        },
+        {
+          "name": "offHand",
+          "type": "boolean",
+          "description": "Whether to use off-hand (false for main hand)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.interactBlock(100, 64, 200, \"up\", false); // Main hand"
+      ]
+    },
+    {
+      "name": "interactBlock",
+      "signature": "interactBlock(x, y, z, direction, offHand, await)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Interacts with a block with optional waiting.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction (\"up\", \"down\", \"north\", \"south\", \"east\", \"west\")"
+        },
+        {
+          "name": "offHand",
+          "type": "boolean",
+          "description": "Whether to use off-hand (false for main hand)"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the interaction to complete (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.interactBlock(100, 64, 200, \"up\", false, true); // Main hand, wait for completion"
+      ]
+    },
+    {
+      "name": "holdInteract",
+      "signature": "holdInteract(holding)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Starts or stops a continuous interaction (right-click and hold).",
+      "parameters": [
+        {
+          "name": "holding",
+          "type": "boolean",
+          "description": "Whether to start (true) or stop (false) holding interaction"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.holdInteract(true);  // Start holding interaction\n// ... do something while holding\ninteractionManager.holdInteract(false); // Stop holding interaction"
+      ]
+    },
+    {
+      "name": "holdInteract",
+      "signature": "holdInteract(holding, awaitFirstClick)",
+      "returnType": "InteractionManagerHelper",
+      "description": "Starts or stops holding with optional waiting for first click.",
+      "parameters": [
+        {
+          "name": "holding",
+          "type": "boolean",
+          "description": "Whether to start (true) or stop (false) holding interaction"
+        },
+        {
+          "name": "awaitFirstClick",
+          "type": "boolean",
+          "description": "Whether to wait for the first interaction click (default: false)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.holdInteract(true, true); // Start and wait for first click"
+      ]
+    },
+    {
+      "name": "holdInteract",
+      "signature": "holdInteract(ticks)",
+      "returnType": "int",
+      "description": "Holds interaction for a specific number of ticks.",
+      "parameters": [
+        {
+          "name": "ticks",
+          "type": "int",
+          "description": "Number of ticks to hold interaction (20 ticks = 1 second)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.holdInteract(60); // Hold for 3 seconds (60 ticks)"
+      ]
+    },
+    {
+      "name": "holdInteract",
+      "signature": "holdInteract(ticks, stopOnPause)",
+      "returnType": "int",
+      "description": "Holds interaction for ticks with pause handling option.",
+      "parameters": [
+        {
+          "name": "ticks",
+          "type": "int",
+          "description": "Number of ticks to hold interaction"
+        },
+        {
+          "name": "stopOnPause",
+          "type": "boolean",
+          "description": "Whether to stop when game is paused (default: true)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\ninteractionManager.holdInteract(60, false); // Hold for 60 ticks, don't stop on pause"
+      ]
+    },
+    {
+      "name": "hasInteractOverride",
+      "signature": "hasInteractOverride()",
+      "returnType": "boolean",
+      "description": "Checks if a hold interact override is currently active.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const interactionManager = player.getInteractionManager();\nif (interactionManager.hasInteractOverride()) {\n    Chat.log(\"Hold interaction is currently active\");\n}"
+      ]
+    },
+    {
+      "name": "checkBase",
+      "signature": "checkBase(update)",
+      "returnType": "boolean",
+      "description": "Internal method to verify the base interaction manager matches the current one.",
+      "parameters": [
+        {
+          "name": "update",
+          "type": "boolean",
+          "description": "Whether to update the base if it doesn't match"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "name": "FormattingHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.FormattingHelper",
+  "extends": "BaseHelper<Formatting>",
+  "since": "1.8.4",
+  "description": "A utility wrapper around Minecraft's Formatting enum that provides access to text formatting codes for colors and text modifiers.",
+  "overview": "The FormattingHelper class represents standard Minecraft formatting options like colors (red, blue, green), styles (bold, italic, underline), and special effects (obfuscated, strikethrough). It is typically used with text builders and styling operations to apply consistent formatting to text elements in JSMacros scripts.",
+  "constructors": [
+    {
+      "signature": "new FormattingHelper(base)",
+      "description": "Creates a new FormattingHelper wrapper around a Minecraft Formatting enum.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "Formatting",
+          "description": "The base Minecraft Formatting object to wrap."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getColorValue",
+      "signature": "getColorValue()",
+      "returnType": "Integer",
+      "description": "Returns the RGB integer value of the color if this is a color formatting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get formatting from styled text\nconst text = Chat.createTextHelperFromString(\"§c§lBold Red Text\");\nconst style = text.getStyle();\nconst formatting = style.getFormatting();\n\nif (formatting && formatting.isColor()) {\n    Chat.log(`Color Value: 0x${formatting.getColorValue().toString(16)}`);\n}"
+      ]
+    },
+    {
+      "name": "getColorIndex",
+      "signature": "getColorIndex()",
+      "returnType": "int",
+      "description": "Returns the numerical index (0-15) for color codes. Returns -1 if the formatting is a modifier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeFormatting(formatting) {\n    if (formatting.isColor()) {\n        Chat.log(`Index: ${formatting.getColorIndex()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Returns the friendly name of the formatting (e.g., 'red', 'bold', 'obfuscated').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const text = Chat.createTextHelperFromString(\"§cHello\");\nconst formatting = text.getStyle().getFormatting();\nif (formatting) {\n    Chat.log(`Name: ${formatting.getName()}`); // Logs: Name: red\n}"
+      ]
+    },
+    {
+      "name": "getCode",
+      "signature": "getCode()",
+      "returnType": "char",
+      "description": "Returns the character code used with the paragraph symbol (§) for in-game text formatting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const text = Chat.createTextHelperFromString(\"§6Gold Text\");\nconst formatting = text.getStyle().getFormatting();\n// Logs: Code: §6\nChat.log(`Code: §${formatting.getCode()}`);"
+      ]
+    },
+    {
+      "name": "isColor",
+      "signature": "isColor()",
+      "returnType": "boolean",
+      "description": "Checks if the formatting represents a color (e.g., red, blue) rather than a style modifier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const text = Chat.createTextHelperFromString(\"§cRed Text\");\nconst formatting = text.getStyle().getFormatting();\n\nif (formatting.isColor()) {\n    Chat.log(\"This is a color.\");\n}"
+      ]
+    },
+    {
+      "name": "isModifier",
+      "signature": "isModifier()",
+      "returnType": "boolean",
+      "description": "Checks if the formatting represents a text style modifier (e.g., bold, italic, underline).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const text = Chat.createTextHelperFromString(\"§lBold Text\");\nconst formatting = text.getStyle().getFormatting();\n\nif (formatting.isModifier()) {\n    Chat.log(\"This is a style modifier\");\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns the string representation of the helper instance.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

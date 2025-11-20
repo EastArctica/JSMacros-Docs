@@ -1,0 +1,254 @@
+{
+  "name": "TraceLine.Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.TraceLine$Builder",
+  "extends": null,
+  "since": "JsMacros 1.9.0",
+  "description": "The TraceLine.Builder class provides a fluent interface for creating TraceLine instances with method chaining. It's the recommended way to create trace lines that draw from screen positions to world positions with complex configurations.",
+  "overview": "The TraceLine.Builder class allows you to construct TraceLine objects through a chain of method calls, making the configuration process more readable and maintainable. Instead of passing multiple parameters to constructors, you can set properties individually using descriptive method names.\n\nThe builder is typically obtained through the Draw3D.traceLine() method and provides two final operations:\n- build() - Creates the TraceLine instance\n- buildAndAdd() - Creates the TraceLine instance and automatically adds it to the Draw3D context",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(double x, double y, double z)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the world position where the trace line should end.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate of the target world position"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate of the target world position"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate of the target world position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const traceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "pos(Pos3D position)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the world position using a Pos3D object.",
+      "parameters": [
+        {
+          "name": "position",
+          "type": "Pos3D",
+          "description": "The target world position as a Pos3D object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const targetPos = new Pos3D(50, 70, -100);\nconst traceLine = draw3D.traceLine()\n    .pos(targetPos)\n    .color(0x00FF00)\n    .build();"
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "pos(BlockPosHelper blockPos)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the world position using a BlockPosHelper object.",
+      "parameters": [
+        {
+          "name": "blockPos",
+          "type": "BlockPosHelper",
+          "description": "The target block position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockPos = BlockPosHelper.create(100, 65, -50);\nconst traceLine = draw3D.traceLine()\n    .pos(blockPos)\n    .color(0x0000FF)\n    .build();"
+      ]
+    },
+    {
+      "name": "x",
+      "signature": "x(double x)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets only the X coordinate of the target world position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate of the target world position"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "y",
+      "signature": "y(double y)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets only the Y coordinate of the target world position.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate of the target world position"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "z",
+      "signature": "z(double z)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets only the Z coordinate of the target world position.",
+      "parameters": [
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate of the target world position"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "color",
+      "signature": "color(int color)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the trace line color using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const redTraceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(int color, int alpha)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the trace line color using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const semiTransparentBlue = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0x0000FF, 128)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(int r, int g, int b)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the trace line color using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const greenTraceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0, 255, 0)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(int r, int g, int b, int a)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets the trace line color using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const purpleTraceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(128, 0, 128, 200)\n    .build();"
+      ]
+    },
+    {
+      "name": "alpha",
+      "signature": "alpha(int alpha)",
+      "returnType": "TraceLine.Builder",
+      "description": "Sets only the alpha transparency value while preserving RGB color.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const fadedTraceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0xFF0000)\n    .alpha(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "TraceLine",
+      "description": "Creates the configured TraceLine instance without adding it to the Draw3D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const traceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0xFF0000)\n    .build();\n\n// Add to context manually later\ndraw3D.addTraceLine(traceLine);"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "TraceLine",
+      "description": "Creates the configured TraceLine instance and automatically adds it to the Draw3D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const traceLine = draw3D.traceLine()\n    .pos(100, 64, 200)\n    .color(0x00FF00)\n    .buildAndAdd(); // Automatically added to Draw3D context"
+      ]
+    }
+  ]
+}

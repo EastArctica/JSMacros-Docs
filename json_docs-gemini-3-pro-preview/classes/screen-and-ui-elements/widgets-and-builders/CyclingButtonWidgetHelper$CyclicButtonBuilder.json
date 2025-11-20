@@ -1,0 +1,186 @@
+{
+  "name": "CyclicButtonBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.CyclingButtonWidgetHelper.CyclicButtonBuilder<T>",
+  "extends": "AbstractWidgetBuilder<CyclicButtonBuilder<T>, CyclingButtonWidget<T>, CyclingButtonWidgetHelper<T>>",
+  "since": "JsMacros 1.8.4",
+  "description": "The CyclicButtonBuilder class is a fluent builder for creating cycling button widgets that allow users to cycle through predefined values with each click. This builder provides a comprehensive API for configuring all aspects of cycling buttons including value sets, display formatting, behavior customization, and event handling.",
+  "overview": "The CyclicButtonBuilder class offers a powerful and flexible way to create cycling buttons with:\n\n- **Value Management**: Support for default and alternative value sets with automatic cycling\n- **Custom Display Formatting**: Configurable value-to-text conversion for rich text display\n- **Behavior Control**: Toggle functions for conditional value sets and custom actions\n- **Visual Customization**: Optional prefix text and display formatting options\n- **Event Handling**: Action callbacks for responding to value changes\n- **Builder Pattern**: Fluent API with method chaining for easy configuration",
+  "constructors": [
+    {
+      "signature": "new CyclicButtonBuilder(screen, valueToText)",
+      "description": "Creates a new CyclicButtonBuilder with the specified screen and value-to-text conversion function.",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "IScreen",
+          "description": "The screen to add the button to"
+        },
+        {
+          "name": "valueToText",
+          "type": "MethodWrapper<T, ?, TextHelper, ?>",
+          "description": "Function to convert values to display text"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "initially",
+      "signature": "initially(value)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets the initial value for the cycling button.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "T",
+          "description": "The initial value for the button"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "values",
+      "signature": "values(values...)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets the default values that the button will cycle through.",
+      "parameters": [
+        {
+          "name": "values",
+          "type": "T...",
+          "description": "Variable number of values to cycle through"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "alternatives",
+      "signature": "alternatives(values...)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets alternative values that the button will cycle through when the alternate toggle condition is true.",
+      "parameters": [
+        {
+          "name": "values",
+          "type": "T...",
+          "description": "Variable number of alternative values"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "values",
+      "signature": "values(defaults, alternatives)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets both default and alternative value arrays.",
+      "parameters": [
+        {
+          "name": "defaults",
+          "type": "T[]",
+          "description": "Default value array"
+        },
+        {
+          "name": "alternatives",
+          "type": "T[]",
+          "description": "Alternative value array"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "option",
+      "signature": "option(option)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets a prefix text that appears before the button value, separated by a colon.",
+      "parameters": [
+        {
+          "name": "option",
+          "type": "String | TextHelper",
+          "description": "The prefix text to display"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "omitTextOption",
+      "signature": "omitTextOption(optionTextOmitted)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Controls whether the prefix text should be displayed or omitted.",
+      "parameters": [
+        {
+          "name": "optionTextOmitted",
+          "type": "boolean",
+          "description": "Whether to omit the prefix text"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "action",
+      "signature": "action(action)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets the action to run when the button is clicked.",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "MethodWrapper<CyclingButtonWidgetHelper<T>, IScreen, Object, ?>",
+          "description": "The action callback"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "valueToText",
+      "signature": "valueToText(valueToText)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets a custom function to convert button values to display text.",
+      "parameters": [
+        {
+          "name": "valueToText",
+          "type": "MethodWrapper<T, ?, TextHelper, ?>",
+          "description": "Function to convert values to text"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "alternateToggle",
+      "signature": "alternateToggle(alternateToggle)",
+      "returnType": "CyclicButtonBuilder<T>",
+      "description": "Sets a function to determine whether the button should use alternative values.",
+      "parameters": [
+        {
+          "name": "alternateToggle",
+          "type": "MethodWrapper<?, ?, Boolean, ?>",
+          "description": "Function returning true for alternatives"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "CyclingButtonWidgetHelper<T>",
+      "description": "Creates the cycling button and adds it to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "createWidget",
+      "signature": "createWidget()",
+      "returnType": "CyclingButtonWidgetHelper<T>",
+      "description": "Creates the cycling button widget with all configured settings.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "name": "TeamHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.TeamHelper",
+  "extends": "BaseHelper<Team>",
+  "since": "1.3.0",
+  "description": "The TeamHelper class provides access to Minecraft scoreboard team information within JsMacros scripts.",
+  "overview": "The `TeamHelper` class provides access to Minecraft scoreboard team information within JsMacros scripts. This class allows you to interact with teams, including retrieving team properties, member lists, colors, and visibility settings. Teams are typically used in multiplayer environments to group players and apply specific rules and formatting.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Returns the raw team name used internally by Minecraft",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let teamName = team.getName();"
+      ]
+    },
+    {
+      "name": "getDisplayName",
+      "signature": "getDisplayName()",
+      "returnType": "TextHelper",
+      "description": "Returns the team's display name with formatting codes preserved",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let displayName = team.getDisplayName();\nChat.log(\"Team display: \" + displayName.getString());"
+      ]
+    },
+    {
+      "name": "getPlayerList",
+      "signature": "getPlayerList()",
+      "returnType": "List<String>",
+      "description": "Returns an array list containing all players currently assigned to this team",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let players = team.getPlayerList();\nfor (let player of players) {\n    Chat.log(\"Team member: \" + player);\n}"
+      ]
+    },
+    {
+      "name": "getColorFormat",
+      "signature": "getColorFormat()",
+      "returnType": "FormattingHelper",
+      "description": "Returns a FormattingHelper object containing the team's color formatting information",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let colorFormat = team.getColorFormat();\nChat.log(\"Color code: \" + colorFormat.getCode());"
+      ]
+    },
+    {
+      "name": "getColorIndex",
+      "signature": "getColorIndex()",
+      "returnType": "int",
+      "description": "Returns the numeric color index used by Minecraft's formatting system",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let colorIndex = team.getColorIndex();"
+      ]
+    },
+    {
+      "name": "getColorValue",
+      "signature": "getColorValue()",
+      "returnType": "int",
+      "description": "Returns the actual RGB color value, or -1 if the team has no specific color",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let colorValue = team.getColorValue();\nif (colorValue !== -1) {\n    Chat.log(\"Team RGB color: \" + colorValue.toString(16));\n}"
+      ]
+    },
+    {
+      "name": "getColorName",
+      "signature": "getColorName()",
+      "returnType": "String",
+      "description": "Returns the color name (e.g., \"red\", \"blue\", \"gold\")",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let colorName = team.getColorName();\nChat.log(\"Team color: \" + colorName);"
+      ]
+    },
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "int",
+      "description": "Deprecated method that returns the same value as getColorIndex()",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScoreboard",
+      "signature": "getScoreboard()",
+      "returnType": "ScoreboardsHelper",
+      "description": "Returns the ScoreboardsHelper object for the scoreboard containing this team",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let scoreboard = team.getScoreboard();\nlet allTeams = scoreboard.getTeams();"
+      ]
+    },
+    {
+      "name": "getPrefix",
+      "signature": "getPrefix()",
+      "returnType": "TextHelper",
+      "description": "Returns the prefix that appears before team member names",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let prefix = team.getPrefix();\nChat.log(\"Team prefix: \" + prefix.getString());"
+      ]
+    },
+    {
+      "name": "getSuffix",
+      "signature": "getSuffix()",
+      "returnType": "TextHelper",
+      "description": "Returns the suffix that appears after team member names",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let suffix = team.getSuffix();\nChat.log(\"Team suffix: \" + suffix.getString());"
+      ]
+    },
+    {
+      "name": "getCollisionRule",
+      "signature": "getCollisionRule()",
+      "returnType": "String",
+      "description": "Returns how team members can collide with each other. Possible values: \"always\", \"never\", \"pushOtherTeams\", \"pushOwnTeam\"",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let collisionRule = team.getCollisionRule();\nif (collisionRule === \"never\") {\n    Chat.log(\"Team members don't collide\");\n}"
+      ]
+    },
+    {
+      "name": "isFriendlyFire",
+      "signature": "isFriendlyFire()",
+      "returnType": "boolean",
+      "description": "Returns true if team members can damage each other",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (team.isFriendlyFire()) {\n    Chat.log(\"Friendly fire is enabled for this team\");\n}"
+      ]
+    },
+    {
+      "name": "showFriendlyInvisibles",
+      "signature": "showFriendlyInvisibles()",
+      "returnType": "boolean",
+      "description": "Returns true if team members can see invisible teammates",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (team.showFriendlyInvisibles()) {\n    Chat.log(\"Invisible teammates are visible\");\n}"
+      ]
+    },
+    {
+      "name": "nametagVisibility",
+      "signature": "nametagVisibility()",
+      "returnType": "String",
+      "description": "Returns how team member nametags are displayed. Possible values: \"always\", \"never\", \"hideForOtherTeams\", \"hideForOwnTeam\"",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let nametagVisibility = team.nametagVisibility();\nif (nametagVisibility === \"hideForOtherTeams\") {\n    Chat.log(\"Nametags hidden from other teams\");\n}"
+      ]
+    },
+    {
+      "name": "deathMessageVisibility",
+      "signature": "deathMessageVisibility()",
+      "returnType": "String",
+      "description": "Returns how death messages for team members are displayed. Possible values: \"always\", \"never\", \"hideForOtherTeams\", \"hideForOwnTeam\"",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let deathVisibility = team.deathMessageVisibility();\nif (deathVisibility === \"always\") {\n    Chat.log(\"Death messages always shown\");\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a formatted string containing basic team information",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let teamString = team.toString();\n// Output example: TeamHelper:{\"name\": \"§6Red Team\"}"
+      ]
+    }
+  ]
+}

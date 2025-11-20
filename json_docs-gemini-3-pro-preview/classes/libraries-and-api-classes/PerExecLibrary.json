@@ -1,0 +1,22 @@
+{
+  "name": "PerExecLibrary",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.PerExecLibrary",
+  "extends": "BaseLibrary",
+  "since": "1.0.0",
+  "description": "An abstract base class for libraries that are instantiated per script execution in JsMacros.",
+  "overview": "This class serves as the foundation for creating library implementations that maintain isolated state for each script execution while having access to the current script context.\n\nPerExecLibrary instances are created fresh for each script execution and destroyed when the script finishes. This makes them ideal for libraries that need to maintain script-specific state, access script context information, or provide isolated functionality that shouldn't be shared between different script executions.\n\nThe class is designed to provide per-execution isolation, access script context (via the protected 'ctx' field), maintain script-specific state, and enable context-aware functionality. Implementations are automatically discovered and registered using the @Library annotation.",
+  "constructors": [
+    {
+      "signature": "PerExecLibrary(BaseScriptContext<?> context)",
+      "description": "Creates a new PerExecLibrary instance with the specified script context. This is a protected constructor meant to be called by subclasses.",
+      "parameters": [
+        {
+          "name": "context",
+          "type": "BaseScriptContext<?>",
+          "description": "The script context for this library instance"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

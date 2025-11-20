@@ -1,0 +1,246 @@
+{
+  "name": "ClientPlayerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.ClientPlayerEntityHelper",
+  "extends": "PlayerEntityHelper<ClientPlayerEntity>",
+  "since": "1.0.3",
+  "description": "A specialized wrapper for the client-side player entity in JSMacros, providing access to player-specific functionality, movement controls, interaction methods, and client-side operations.",
+  "overview": "The ClientPlayerEntityHelper class is a specialized wrapper for the client-side player entity in JSMacros, providing access to player-specific functionality, movement controls, interaction methods, and client-side operations. This class extends PlayerEntityHelper and inherits all player and living entity methods while adding client-specific functionality like camera control, movement manipulation, and client-side interactions. This class is typically obtained through the Player.getPlayer() method and represents the local client player.",
+  "constructors": [
+    {
+      "signature": "Player.getPlayer()",
+      "description": "Obtains the instance of ClientPlayerEntityHelper for the local client player. This is a static factory method on the Player class.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "setPos",
+      "signature": "setPos(double x, double y, double z, boolean await)",
+      "returnType": "Promise<void>",
+      "description": "Sets the player's position to the specified coordinates. This executes on the main thread.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "Target X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Target Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Target Z coordinate"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Whether to wait for the operation to complete (added in 1.9.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Move step by step\nconst currentPos = player.getPos();\nconst distance = currentPos.distanceTo(targetPos);\n\nif (distance > 5) {\n    // Teleport if far\n    await player.setPos(x, y, z, true);\n} else {\n    // Walk to target\n    const steps = Math.ceil(distance * 4);\n    for (let i = 1; i <= steps; i++) {\n        // ... interpolation logic\n        await player.setPos(newX, newY, newZ, true);\n        await Time.sleep(50);\n    }\n}"
+      ]
+    },
+    {
+      "name": "lookAt",
+      "signature": "lookAt(double x, double y, double z)",
+      "returnType": "void",
+      "description": "Makes the player look at the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "Target X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Target Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Target Z coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Look at target first\nplayer.lookAt(x, y + player.getEyeHeight(), z);",
+        "if (nearestHostile) {\n    const pos = nearestHostile.getPos();\n    player.lookAt(pos.x, pos.y + nearestHostile.getEyeHeight(), pos.z);\n    Chat.log(`Looking at ${nearestHostile.getName().getString()}`);\n    return true;\n}"
+      ]
+    },
+    {
+      "name": "calculateMiningSpeed",
+      "signature": "calculateMiningSpeed(ItemStackHelper item, BlockStateHelper block)",
+      "returnType": "double",
+      "description": "Calculates the time in ticks required to mine a specific block with a specific item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStackHelper",
+          "description": "The tool/item to use"
+        },
+        {
+          "name": "block",
+          "type": "BlockStateHelper",
+          "description": "The target block state"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockState = World.getBlockFromId(block.id);\nif (blockState) {\n    const miningTime = player.calculateMiningSpeed(mainHand, blockState);\n    const seconds = miningTime / 20;\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "getAttackCooldownProgress",
+      "signature": "getAttackCooldownProgress()",
+      "returnType": "float",
+      "description": "Gets the current attack cooldown progress (0.0 to 1.0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "canAttack() {\n    const player = Player.getPlayer();\n    const cooldownProgress = player.getAttackCooldownProgress();\n    return cooldownProgress >= 1.0;\n}"
+      ]
+    },
+    {
+      "name": "getAttackCooldownProgressPerTick",
+      "signature": "getAttackCooldownProgressPerTick()",
+      "returnType": "float",
+      "description": "Gets the amount the attack cooldown increases per tick.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const progress = player.getAttackCooldownProgress();\nconst progressPerTick = player.getAttackCooldownProgressPerTick();\n\nif (progress >= 1.0) return 0;\n\nconst ticksToFull = Math.ceil((1.0 - progress) / progressPerTick);\nreturn ticksToFull;"
+      ]
+    },
+    {
+      "name": "getItemCooldownsRemainingTicks",
+      "signature": "getItemCooldownsRemainingTicks()",
+      "returnType": "Map<String, Integer>",
+      "description": "Gets the remaining cooldown ticks for items currently on cooldown.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const cooldowns = player.getItemCooldownsRemainingTicks();\n\nconst activeCooldowns = [];\nfor (const [item, ticks] of cooldowns) {\n    if (ticks > 0) {\n        activeCooldowns.push({\n            item: item,\n            remaining: ticks,\n            seconds: (ticks / 20).toFixed(1)\n        });\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFoodLevel",
+      "signature": "getFoodLevel()",
+      "returnType": "int",
+      "description": "Gets the player's current food level (0-20).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const player = Player.getPlayer();\nconst food = player.getFoodLevel();\nconst saturation = player.getSaturation();\n\n// Determine food status\nif (food <= this.criticalFoodThreshold) {\n    status = \"CRITICAL\";\n}"
+      ]
+    },
+    {
+      "name": "getSaturation",
+      "signature": "getSaturation()",
+      "returnType": "float",
+      "description": "Gets the player's current saturation level.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const saturation = player.getSaturation();\n\n// Check saturation\nconst saturationStatus = saturation < 1 ? \" (Low Saturation)\" : \"\";"
+      ]
+    },
+    {
+      "name": "getPlayerName",
+      "signature": "getPlayerName()",
+      "returnType": "String",
+      "description": "Gets the player's actual name (not display name).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAbilities",
+      "signature": "getAbilities()",
+      "returnType": "PlayerAbilitiesHelper",
+      "description": "Gets the player's abilities (gamemode, flying status, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getXP",
+      "signature": "getXP()",
+      "returnType": "int",
+      "description": "Gets the total experience points of the player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getXPLevel",
+      "signature": "getXPLevel()",
+      "returnType": "int",
+      "description": "Gets the current experience level of the player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "float",
+      "description": "Gets the current health of the player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "float",
+      "description": "Gets the maximum health of the player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMainHand",
+      "signature": "getMainHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack currently held in the main hand.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mainHand = player.getMainHand();\nif (mainHand.isEmpty()) {\n    Chat.log(\"Please hold a tool to analyze mining efficiency\");\n    return;\n}"
+      ]
+    },
+    {
+      "name": "getOffHand",
+      "signature": "getOffHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack currently held in the off hand.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSleepingLongEnough",
+      "signature": "isSleepingLongEnough()",
+      "returnType": "boolean",
+      "description": "Checks if the player has been sleeping long enough to skip the night.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFishingBobber",
+      "signature": "getFishingBobber()",
+      "returnType": "EntityHelper",
+      "description": "Gets the fishing bobber entity if the player is currently fishing.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

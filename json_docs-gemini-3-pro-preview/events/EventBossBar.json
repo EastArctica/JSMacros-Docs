@@ -1,0 +1,20 @@
+[
+  {
+    "name": "EventBossbar",
+    "fullClassName": "EventBossbar",
+    "description": "This event is fired when boss bar information is updated. Backed by class `EventBossbar`.",
+    "overview": "## Signature\n```js\nJsMacros.on(\"Bossbar\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n## Event payload\n\n| Field  | Type         | Description                                |\n| ------ | ------------ | ------------------------------------------ |\n| bossBar | BossBarHelper | The boss bar helper object (can be null)   |\n| uuid    | string       | The UUID of the boss bar                   |\n| type    | string       | The type of boss bar update that occurred |\n\n## Behavior\n\n* Fires when a boss bar is added, removed, or updated\n* The `bossBar` field will be `null` for \"REMOVE\" events\n* The `type` field indicates what specifically changed about the boss bar\n* Not cancellable\n\n## Minimal example\n\n```js\nJsMacros.on(\"Bossbar\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Bossbar update: ${e.type} for UUID: ${e.uuid}`);\n  if (e.bossBar) {\n    Chat.log(`Bossbar name: ${e.bossBar.getName()}`);\n  }\n});\n```\n\n## Async example\n\n```js\nJsMacros.on(\"Bossbar\", JavaWrapper.methodToJavaAsync((e) => {\n  const type = e.type;\n  const uuid = e.uuid;\n\n  let message = `&6Bossbar: &f${type}`;\n\n  if (e.bossBar) {\n    const name = e.bossBar.getName();\n    const percent = Math.round(e.bossBar.getPercent() * 100);\n    message += ` &7- &f${name} &7(${percent}%)`;\n  } else {\n    message += ` &7- &fUUID: ${uuid.substring(0, 8)}`;\n  }\n\n  Chat.log(message);\n\n  if (type === \"ADD\") {\n    Chat.actionbar(\"&cBoss appeared!\");\n  } else if (type === \"REMOVE\") {\n    Chat.actionbar(\"&aBoss defeated!\");\n  }\n}));\n```\n\n## Fields\n\n### event.bossBar\nA helper object containing information about the boss bar.\n**Type:** `BossBarHelper` | `null`\n**Notes**\nThis field will be `null` for \"REMOVE\" events since the boss bar no longer exists. For other event types, it contains methods to get the boss bar name, percentage, color, and other properties.\n\n### event.uuid\nThe unique identifier for this boss bar.\n**Type:** `string`\n**Notes**\nThis UUID can be used to track specific boss bars across multiple events. The format is a standard UUID string.\n\n### event.type\nThe type of update that occurred for the boss bar.\n**Type:** `string`\n**Notes**\nPossible values:\n- `'ADD'` - A new boss bar was created\n- `'REMOVE'` - The boss bar was removed\n- `'UPDATE_PERCENT'` - The health percentage changed\n- `'UPDATE_NAME'` - The boss bar name changed\n- `'UPDATE_STYLE'` - The visual style changed\n- `'UPDATE_PROPERTIES'` - Other properties (like visibility, color, etc.) changed",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "toString",
+        "signature": "event.toString()",
+        "returnType": "string",
+        "description": "Returns a string representation of the event object.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

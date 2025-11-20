@@ -1,0 +1,29 @@
+{
+  "name": "Events",
+  "fullClassName": null,
+  "description": "This section contains documentation for all available events in JsMacros. Events allow you to respond to various game actions and state changes.",
+  "overview": "Events are categorized into several groups such as Player Events, World Events, Inventory Events, Status Effects, Network Events, and System Events. All events inherit common properties and methods.\n\n### Event Usage\nEvents are registered using `JsMacros.on`. Handlers can filter events based on properties or cancel cancellable events.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "cancel",
+      "signature": "cancel()",
+      "returnType": "void",
+      "description": "Cancel the event (if supported).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"SendMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    JsMacros.assertEvent(event, 'SendMessage');\n\n    // Prevent sending messages with bad words\n    if (event.msg.includes(\"badword\")) {\n        event.cancel();\n        Chat.log(\"Message blocked due to inappropriate content\");\n    }\n}));"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Get a string representation of the event.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

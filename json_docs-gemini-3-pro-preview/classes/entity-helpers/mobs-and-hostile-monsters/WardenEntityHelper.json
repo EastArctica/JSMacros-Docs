@@ -1,0 +1,78 @@
+{
+  "name": "WardenEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.WardenEntityHelper<WardenEntity>",
+  "extends": "MobEntityHelper<WardenEntity>",
+  "since": "1.8.4",
+  "description": "Represents a Warden entity in the world. WardenEntityHelper provides access to warden-specific properties and behaviors such as anger levels, pose states, and special attack animations.",
+  "overview": "The Warden is a blind but powerful mob that detects players through vibrations and scent. It has unique behaviors including emerging from the ground, sniffing to detect targets, roaring, charging sonic boom attacks, and digging back into the ground when not pursuing targets. The Warden's anger system determines its aggression level toward targets.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, movement, AI control, and other mob properties, while adding warden-specific functionality for monitoring and responding to the Warden's unique behaviors.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getAnger",
+      "signature": "public int getAnger()",
+      "returnType": "int",
+      "description": "Gets the current anger level of the Warden.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const anger = warden.getAnger();",
+        "// Anger threat calculation\nthreat += Math.min(anger, 100);"
+      ]
+    },
+    {
+      "name": "isDigging",
+      "signature": "public boolean isDigging()",
+      "returnType": "boolean",
+      "description": "Checks if the Warden is currently performing the digging animation (burrowing into the ground).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (warden.isDigging()) states.push(\"DIGGING\");"
+      ]
+    },
+    {
+      "name": "isEmerging",
+      "signature": "public boolean isEmerging()",
+      "returnType": "boolean",
+      "description": "Checks if the Warden is currently performing the emerging animation (spawning/rising from the ground).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (warden.isEmerging()) Chat.log(\"Warden emerging - prepare for fight!\");"
+      ]
+    },
+    {
+      "name": "isRoaring",
+      "signature": "public boolean isRoaring()",
+      "returnType": "boolean",
+      "description": "Checks if the Warden is currently performing the roaring animation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (warden.isRoaring()) Chat.log(\"Warden roaring - area damage imminent!\");"
+      ]
+    },
+    {
+      "name": "isSniffing",
+      "signature": "public boolean isSniffing()",
+      "returnType": "boolean",
+      "description": "Checks if the Warden is currently performing the sniffing animation to detect targets.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (warden.isSniffing()) states.push(\"SNIFFING\");"
+      ]
+    },
+    {
+      "name": "isChargingSonicBoom",
+      "signature": "public boolean isChargingSonicBoom()",
+      "returnType": "boolean",
+      "description": "Checks if the Warden is currently charging a sonic boom attack.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (warden.isChargingSonicBoom()) {\n    Chat.log(\"SONIC BOOM - BREAK LINE OF SIGHT NOW!\");\n}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "name": "HitResultHelper$Block",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.HitResultHelper$Block",
+  "extends": "HitResultHelper",
+  "since": "1.9.1",
+  "description": "The HitResultHelper$Block class is a specialized nested class within HitResultHelper that represents ray casting results specifically for block intersections.",
+  "overview": "The `HitResultHelper$Block` class is a specialized nested class within `HitResultHelper` that represents ray casting results specifically for block intersections. This class provides block-specific information and methods for working with block hit detection in Minecraft, including block position, hit face, and block access functionality.\n\nWhen a ray trace operation hits a block, the result is automatically cast to this specialized type, providing access to block-specific properties and methods that are not available in the generic hit result.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getBlockPos",
+      "signature": "getBlockPos()",
+      "returnType": "BlockPosHelper",
+      "description": "Gets the integer block coordinates of the block that was hit by the ray trace.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockHit = player.detailedRayTraceBlock(5.0, false);\nif (blockHit && !blockHit.isMissed()) {\n    const pos = blockHit.getBlockPos();\n    Chat.log(`Hit block at ${pos.getX()}, ${pos.getY()}, ${pos.getZ()}`);\n}"
+      ]
+    },
+    {
+      "name": "getSide",
+      "signature": "getSide()",
+      "returnType": "DirectionHelper",
+      "description": "Gets the specific face of the block that the ray trace intersected with. This is useful for determining which direction the player is looking at the block from.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockHit = player.detailedRayTraceBlock(5.0, false);\nif (blockHit && !blockHit.isMissed()) {\n    const side = blockHit.getSide();\n    Chat.log(`Hit block face: ${side.getName()}`);\n\n    // Use face information for directional operations\n    if (side.getName() === \"up\") {\n        Chat.log(\"Looking at the top of the block\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getBlockState",
+      "signature": "getBlockState()",
+      "returnType": "BlockStateHelper",
+      "description": "Gets the complete block state information including block properties like rotation, waterlogged state, and other block-specific attributes.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockHit = player.detailedRayTraceBlock(5.0, false);\nif (blockHit && !blockHit.isMissed()) {\n    const blockState = blockHit.getBlockState();\n    Chat.log(`Block type: ${blockState.getBlockId()}`);\n\n    // Check specific block properties\n    if (blockState.getBlockId() === \"minecraft:chest\") {\n        const facing = blockState.get(\"facing\");\n        Chat.log(`Chest is facing: ${facing}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getBlock",
+      "signature": "getBlock()",
+      "returnType": "BlockHelper",
+      "description": "Gets a BlockHelper instance that provides access to block-specific methods and properties.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockHit = player.detailedRayTraceBlock(5.0, false);\nif (blockHit && !blockHit.isMissed()) {\n    const block = blockHit.getBlock();\n    Chat.log(`Block name: ${block.getName()}`);\n    Chat.log(`Block registry: ${block.getRegistryName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getPos",
+      "signature": "getPos()",
+      "returnType": "Pos3D",
+      "description": "Gets the precise world coordinates where the ray trace made contact with the block.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isMissed",
+      "signature": "isMissed()",
+      "returnType": "boolean",
+      "description": "Whether the ray trace missed. Always returns false for Block instances since they represent successful hits.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

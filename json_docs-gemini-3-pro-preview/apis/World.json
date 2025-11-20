@@ -1,0 +1,763 @@
+{
+  "name": "World",
+  "fullClassName": "World",
+  "description": "Functions for getting and using world data, including blocks, entities, players, and environmental information. Accessible from scripts via the global `World` variable.",
+  "methods": [
+    {
+      "name": "isWorldLoaded",
+      "signature": "isWorldLoaded()",
+      "returnType": "boolean",
+      "description": "Checks if a world is currently loaded.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (World.isWorldLoaded()) {\n    Chat.log(\"A world is currently loaded.\");\n}"
+      ]
+    },
+    {
+      "name": "getLoadedPlayers",
+      "signature": "getLoadedPlayers()",
+      "returnType": "java.util.List<PlayerEntityHelper>",
+      "description": "Gets a list of player entities currently within render distance.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const nearbyPlayers = World.getLoadedPlayers();\nChat.log(`There are ${nearbyPlayers.size()} players in render distance.`);"
+      ]
+    },
+    {
+      "name": "getPlayers",
+      "signature": "getPlayers()",
+      "returnType": "java.util.List<PlayerListEntryHelper>",
+      "description": "Gets a list of all players currently on the tab list.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const tabListPlayers = World.getPlayers();\nChat.log(\"Players on tab list:\");\nfor (const player of tabListPlayers) {\n    Chat.log(`- ${player.getName()} (${player.getPing()}ms)`);\n}"
+      ]
+    },
+    {
+      "name": "getPlayerEntry",
+      "signature": "getPlayerEntry(name)",
+      "returnType": "PlayerListEntryHelper | null",
+      "description": "Gets the tab list entry for the given player, or null if they are not on the list.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the player."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const playerEntry = World.getPlayerEntry(\"Notch\");\nif (playerEntry) {\n    Chat.log(`Notch's gamemode: ${playerEntry.getGameMode()}`);\n}"
+      ]
+    },
+    {
+      "name": "getBlock",
+      "signature": "getBlock(x, y, z)",
+      "returnType": "BlockDataHelper | null",
+      "description": "Gets a helper for the block at the specified position (coordinates or Pos object). Returns null if the location is not loaded.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The X coordinate of the block."
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The Y coordinate of the block."
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "The Z coordinate of the block."
+        },
+        {
+          "name": "pos",
+          "type": "BlockPosHelper | Pos3D",
+          "description": "Alternatively, a position object for the block."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// By coordinates\nconst block1 = World.getBlock(0, 64, 0);\n\n// By BlockPosHelper\nconst pos = PositionCommon.createBlockPos(0, 64, 0);\nconst block2 = World.getBlock(pos);"
+      ]
+    },
+    {
+      "name": "getChunk",
+      "signature": "getChunk(x, z)",
+      "returnType": "ChunkHelper | null",
+      "description": "Gets a helper for the specified chunk, or null if it is not loaded.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The X coordinate of the chunk (block coordinate >> 4)."
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "The Z coordinate of the chunk (block coordinate >> 4)."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const playerPos = Player.getPlayer().getPos();\nconst chunkX = Math.floor(playerPos.x) >> 4;\nconst chunkZ = Math.floor(playerPos.z) >> 4;\nconst chunk = World.getChunk(chunkX, chunkZ);\nif (chunk) {\n    Chat.log(`Current chunk status: ${chunk.getStatus()}`);\n}"
+      ]
+    },
+    {
+      "name": "getWorldScanner",
+      "signature": "getWorldScanner(blockFilter, stateFilter)",
+      "returnType": "WorldScanner | WorldScannerBuilder",
+      "description": "Creates a WorldScanner or a WorldScannerBuilder to perform complex, filtered searches for blocks in the world.",
+      "parameters": [
+        {
+          "name": "blockFilter",
+          "type": "MethodWrapper",
+          "description": "Optional function to filter by block type."
+        },
+        {
+          "name": "stateFilter",
+          "type": "MethodWrapper",
+          "description": "Optional function to filter by block state properties."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Find all south-facing chests or barrels with a hardness <= 10\nconst scanner = World.getWorldScanner()\n    .withBlockFilter(\"getHardness\").is(\"<=\", 10)\n    .andStringBlockFilter().contains(\"chest\", \"barrel\")\n    .withStringStateFilter().contains(\"facing=south\")\n    .build();\n\nconst results = scanner.scan(10); // Scan in a 10 chunk radius\nChat.log(`Found ${results.size()} matching blocks.`);"
+      ]
+    },
+    {
+      "name": "findBlocksMatching",
+      "signature": "findBlocksMatching(id, chunkrange)",
+      "returnType": "java.util.List<Pos3D>",
+      "description": "Finds the positions of all blocks matching a given set of IDs or filters within a specified chunk range.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string | string[]",
+          "description": "A single block ID or an array of block IDs."
+        },
+        {
+          "name": "chunkrange",
+          "type": "int",
+          "description": "The radius of chunks around the center to search."
+        },
+        {
+          "name": "centerX",
+          "type": "int",
+          "description": "Optional center chunk X."
+        },
+        {
+          "name": "centerZ",
+          "type": "int",
+          "description": "Optional center chunk Z."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Find all diamonds within a 5 chunk radius of the player\nconst diamonds = World.findBlocksMatching(\"minecraft:diamond_ore\", 5);\nif (diamonds.size() > 0) {\n    Chat.log(`Found ${diamonds.size()} diamond ores! First one at: ${diamonds.get(0)}`);\n}"
+      ]
+    },
+    {
+      "name": "iterateSphere",
+      "signature": "iterateSphere(pos, radius, callback, ignoreAir)",
+      "returnType": "void",
+      "description": "Iterates over every block within a spherical radius and executes a callback function for each one.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "The center of the sphere."
+        },
+        {
+          "name": "radius",
+          "type": "int",
+          "description": "The radius of the sphere in blocks."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to call for each block found."
+        },
+        {
+          "name": "ignoreAir",
+          "type": "boolean",
+          "description": "Optional. If true, the callback will not be called for air blocks."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const center = Player.getPlayer().getBlockPos();\nconst callback = JavaWrapper.methodToJava(blockData => {\n    if (blockData.getId() === 'minecraft:torch') {\n        Chat.log(`Found a torch at ${blockData.getPos()}`);\n    }\n});\n// Iterate a 5-block radius sphere around the player, ignoring air\nWorld.iterateSphere(center, 5, callback);"
+      ]
+    },
+    {
+      "name": "iterateBox",
+      "signature": "iterateBox(pos1, pos2, callback, ignoreAir)",
+      "returnType": "void",
+      "description": "Iterates over every block within a box defined by two corner positions.",
+      "parameters": [
+        {
+          "name": "pos1",
+          "type": "BlockPosHelper",
+          "description": "The first corner of the box."
+        },
+        {
+          "name": "pos2",
+          "type": "BlockPosHelper",
+          "description": "The second corner of the box."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "The function to call for each block found."
+        },
+        {
+          "name": "ignoreAir",
+          "type": "boolean",
+          "description": "Optional. If true, the callback will not be called for air blocks."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const pos1 = Player.getPlayer().getBlockPos().add(5, 5, 5);\nconst pos2 = Player.getPlayer().getBlockPos().add(-5, -5, -5);\nconst callback = JavaWrapper.methodToJava(blockData => {\n    // ... process block\n});\nWorld.iterateBox(pos1, pos2, callback);"
+      ]
+    },
+    {
+      "name": "getScoreboards",
+      "signature": "getScoreboards()",
+      "returnType": "ScoreboardsHelper",
+      "description": "Gets a helper for accessing scoreboard data.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const scoreboards = World.getScoreboards();\nconst sidebar = scoreboards.getSidebar();\nif (sidebar) {\n    Chat.log(`Sidebar Title: ${sidebar.getTitle()}`);\n}"
+      ]
+    },
+    {
+      "name": "getEntities",
+      "signature": "getEntities(filterOrDistance)",
+      "returnType": "java.util.List<EntityHelper<?>>",
+      "description": "Gets a list of entities in the world, with optional filters for distance, type, or custom logic.",
+      "parameters": [
+        {
+          "name": "(none)",
+          "type": "void",
+          "description": "Get all entities in render distance."
+        },
+        {
+          "name": "distance",
+          "type": "double",
+          "description": "Get entities within this distance from the player."
+        },
+        {
+          "name": "types",
+          "type": "string[]",
+          "description": "Get entities whose type ID is in this array."
+        },
+        {
+          "name": "filter",
+          "type": "MethodWrapper",
+          "description": "Get entities for which this function returns true."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Get all entities within 10 blocks\nconst nearbyEntities = World.getEntities(10);\n\n// Get all cows and sheep in render distance\nconst farmAnimals = World.getEntities([\"minecraft:cow\", \"minecraft:sheep\"]);\n\n// Get all living entities within 20 blocks\nconst filter = JavaWrapper.methodToJava(entity => entity.isLiving());\nconst livingEntities = World.getEntities(filter);"
+      ]
+    },
+    {
+      "name": "rayTraceBlock",
+      "signature": "rayTraceBlock(x1, y1, z1, x2, y2, z2, fluid)",
+      "returnType": "BlockDataHelper | null",
+      "description": "Performs a ray trace between two arbitrary points in the world to find a block.",
+      "parameters": [
+        {
+          "name": "x1, y1, z1",
+          "type": "double",
+          "description": "The starting coordinates."
+        },
+        {
+          "name": "x2, y2, z2",
+          "type": "double",
+          "description": "The ending coordinates."
+        },
+        {
+          "name": "fluid",
+          "type": "boolean",
+          "description": "Whether to include fluids in the trace."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const start = Player.getPlayer().getPos();\nconst end = start.add(0, -10, 0); // 10 blocks straight down\nconst block = World.rayTraceBlock(start.x, start.y, start.z, end.x, end.y, end.z, false);\nif (block) {\n    Chat.log(`Block below is: ${block.getId()}`);\n}"
+      ]
+    },
+    {
+      "name": "rayTraceEntity",
+      "signature": "rayTraceEntity(x1, y1, z1, x2, y2, z2)",
+      "returnType": "EntityHelper<?> | null",
+      "description": "Performs a ray trace between two points to find the first entity intersected.",
+      "parameters": [
+        {
+          "name": "x1, y1, z1",
+          "type": "double",
+          "description": "The starting coordinates."
+        },
+        {
+          "name": "x2, y2, z2",
+          "type": "double",
+          "description": "The ending coordinates."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const start = Player.getPlayer().getPos();\nconst end = start.add(0, 10, 0); // 10 blocks straight up\nconst entity = World.rayTraceEntity(start.x, start.y, start.z, end.x, end.y, end.z);\nif (entity) {\n    Chat.log(`Entity above is: ${entity.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getDimension",
+      "signature": "getDimension()",
+      "returnType": "string",
+      "description": "Gets the identifier of the current dimension.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const dimension = World.getDimension();\nChat.log(`Current dimension: ${dimension}`); // e.g., \"minecraft:the_nether\""
+      ]
+    },
+    {
+      "name": "getBiome",
+      "signature": "getBiome()",
+      "returnType": "string",
+      "description": "Gets the identifier of the player's current biome.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const biome = World.getBiome();\nChat.log(`Current biome: ${biome}`); // e.g., \"minecraft:plains\""
+      ]
+    },
+    {
+      "name": "getTime",
+      "signature": "getTime()",
+      "returnType": "long",
+      "description": "Gets the total number of ticks processed since the world was created. Returns -1 if no world is loaded.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const worldTime = World.getTime();\nChat.log(`Total world ticks: ${worldTime}`);"
+      ]
+    },
+    {
+      "name": "getTimeOfDay",
+      "signature": "getTimeOfDay()",
+      "returnType": "long",
+      "description": "Gets the current time of day in ticks (0-23999). Returns -1 if no world is loaded.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const timeOfDay = World.getTimeOfDay();\nconst day = Math.floor(timeOfDay / 24000);\nChat.log(`It is day ${day}.`);"
+      ]
+    },
+    {
+      "name": "isDay",
+      "signature": "isDay()",
+      "returnType": "boolean",
+      "description": "Checks if it is currently day time.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (World.isDay()) {\n    Chat.log(\"It is daytime.\");\n}"
+      ]
+    },
+    {
+      "name": "isNight",
+      "signature": "isNight()",
+      "returnType": "boolean",
+      "description": "Checks if it is currently night time.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (World.isNight()) {\n    Chat.log(\"It is nighttime.\");\n}"
+      ]
+    },
+    {
+      "name": "isRaining",
+      "signature": "isRaining()",
+      "returnType": "boolean",
+      "description": "Checks if it is currently raining.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (World.isRaining()) {\n    Chat.log(\"It is raining.\");\n}"
+      ]
+    },
+    {
+      "name": "isThundering",
+      "signature": "isThundering()",
+      "returnType": "boolean",
+      "description": "Checks if it is currently thundering.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (World.isThundering()) {\n    Chat.log(\"It is thundering.\");\n}"
+      ]
+    },
+    {
+      "name": "getWorldIdentifier",
+      "signature": "getWorldIdentifier()",
+      "returnType": "string",
+      "description": "Gets a unique identifier for the current world/server.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const id = World.getWorldIdentifier();\nChat.log(`World ID: ${id}`); // e.g., \"127_0_0_1_25565\" for a local server"
+      ]
+    },
+    {
+      "name": "getRespawnPos",
+      "signature": "getRespawnPos()",
+      "returnType": "BlockPosHelper | null",
+      "description": "Gets the player's current respawn position.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const respawnPos = World.getRespawnPos();\nif (respawnPos) {\n    Chat.log(`Respawn position is at: ${respawnPos}`);\n}"
+      ]
+    },
+    {
+      "name": "getDifficulty",
+      "signature": "getDifficulty()",
+      "returnType": "int",
+      "description": "Gets the current world difficulty as an integer (0: peaceful, 1: easy, 2: normal, 3: hard). Returns -1 if no world is loaded.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const difficulty = World.getDifficulty(); // 0: peaceful, 1: easy, 2: normal, 3: hard\nChat.log(`Difficulty level: ${difficulty}`);"
+      ]
+    },
+    {
+      "name": "getMoonPhase",
+      "signature": "getMoonPhase()",
+      "returnType": "int",
+      "description": "Gets the current moon phase as an integer (0-7). Returns -1 if no world is loaded.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const phase = World.getMoonPhase(); // 0: full moon, 4: new moon\nChat.log(`Moon phase: ${phase}`);"
+      ]
+    },
+    {
+      "name": "getSkyLight",
+      "signature": "getSkyLight(x, y, z)",
+      "returnType": "int",
+      "description": "Gets the sky light level (0-15) at the specified position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const playerPos = Player.getPlayer().getBlockPos();\nconst skyLight = World.getSkyLight(playerPos.x, playerPos.y, playerPos.z);\nChat.log(`Sky Light: ${skyLight}`);"
+      ]
+    },
+    {
+      "name": "getBlockLight",
+      "signature": "getBlockLight(x, y, z)",
+      "returnType": "int",
+      "description": "Gets the block light level (0-15) at the specified position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const playerPos = Player.getPlayer().getBlockPos();\nconst blockLight = World.getBlockLight(playerPos.x, playerPos.y, playerPos.z);\nChat.log(`Block Light: ${blockLight}`);"
+      ]
+    },
+    {
+      "name": "playSoundFile",
+      "signature": "playSoundFile(file, volume)",
+      "returnType": "javax.sound.sampled.Clip",
+      "description": "Plays a sound from an external audio file relative to the script's folder.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "The path to the sound file."
+        },
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The volume to play the sound at (0.0 to 1.0)."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const clip = World.playSoundFile(\"notification.wav\", 1.0);\n// clip.stop();"
+      ]
+    },
+    {
+      "name": "playSound",
+      "signature": "playSound(id, volume, pitch, x, y, z)",
+      "returnType": "void",
+      "description": "Plays a built-in Minecraft sound.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The sound event ID."
+        },
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "Optional volume."
+        },
+        {
+          "name": "pitch",
+          "type": "double",
+          "description": "Optional pitch."
+        },
+        {
+          "name": "x, y, z",
+          "type": "double",
+          "description": "Optional world coordinates. If missing, sound is played globally."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Play a sound at the player's location\nconst playerPos = Player.getPlayer().getPos();\nWorld.playSound(\"minecraft:entity.experience_orb.pickup\", 1.0, 1.0, playerPos.x, playerPos.y, playerPos.z);",
+        "// Play a sound only to the player (UI sound)\nWorld.playSound(\"minecraft:ui.button.click\", 1.0, 1.0);"
+      ]
+    },
+    {
+      "name": "getBossBars",
+      "signature": "getBossBars()",
+      "returnType": "java.util.Map<string, BossBarHelper>",
+      "description": "Gets a map of active boss bars.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const bossBars = World.getBossBars();\nif (bossBars.size() > 0) {\n    for (const bar of bossBars.values()) {\n        Chat.log(`Boss Bar: ${bar.getName()} - ${Math.round(bar.getPercent() * 100)}%`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isChunkLoaded",
+      "signature": "isChunkLoaded(chunkX, chunkZ)",
+      "returnType": "boolean",
+      "description": "Checks if a specific chunk is loaded.",
+      "parameters": [
+        {
+          "name": "chunkX",
+          "type": "int",
+          "description": "The X coordinate of the chunk."
+        },
+        {
+          "name": "chunkZ",
+          "type": "int",
+          "description": "The Z coordinate of the chunk."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "if (World.isChunkLoaded(0, 0)) {\n    Chat.log(\"Chunk (0, 0) is loaded.\");\n}"
+      ]
+    },
+    {
+      "name": "getCurrentServerAddress",
+      "signature": "getCurrentServerAddress()",
+      "returnType": "string | null",
+      "description": "Gets the address of the current server, or null if in singleplayer.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const address = World.getCurrentServerAddress();\nif (address) {\n    Chat.log(`Connected to: ${address}`);\n} else {\n    Chat.log(\"In a singleplayer world.\");\n}"
+      ]
+    },
+    {
+      "name": "getBiomeAt",
+      "signature": "getBiomeAt(x, y, z)",
+      "returnType": "string | null",
+      "description": "Gets the biome at a specific location, provided the chunk is loaded.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The X coordinate."
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The Y coordinate (optional in some signatures)."
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "The Z coordinate."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const biome = World.getBiomeAt(100, 64, 200);\nif (biome) {\n    Chat.log(`Biome at (100, 200) is: ${biome}`);\n}"
+      ]
+    },
+    {
+      "name": "getServerTPS",
+      "signature": "getServerTPS()",
+      "returnType": "string",
+      "description": "Gets a formatted string containing various TPS measurements.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const tpsInfo = World.getServerTPS();\nChat.log(tpsInfo);"
+      ]
+    },
+    {
+      "name": "getTabListHeader",
+      "signature": "getTabListHeader()",
+      "returnType": "TextHelper | null",
+      "description": "Gets the current tab list header.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const header = World.getTabListHeader();\nif (header) Chat.log(`Header: ${header.getString()}`);"
+      ]
+    },
+    {
+      "name": "getTabListFooter",
+      "signature": "getTabListFooter()",
+      "returnType": "TextHelper | null",
+      "description": "Gets the current tab list footer.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const footer = World.getTabListFooter();\nif (footer) Chat.log(`Footer: ${footer.getString()}`);"
+      ]
+    },
+    {
+      "name": "spawnParticle",
+      "signature": "spawnParticle(id, x, y, z, count, deltaX, deltaY, deltaZ, speed, force)",
+      "returnType": "void",
+      "description": "Spawns particles in the world.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The particle ID."
+        },
+        {
+          "name": "x, y, z",
+          "type": "double",
+          "description": "The central position to spawn the particles."
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "description": "The number of particles to spawn."
+        },
+        {
+          "name": "deltaX, deltaY, deltaZ",
+          "type": "double",
+          "description": "The random offset range for particle positions."
+        },
+        {
+          "name": "speed",
+          "type": "double",
+          "description": "The speed/velocity of the particles."
+        },
+        {
+          "name": "force",
+          "type": "boolean",
+          "description": "If true, particles will be visible from further away."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const pos = Player.getPlayer().getPos();\n// Spawn 10 flame particles at the player's feet\nWorld.spawnParticle(\"minecraft:flame\", pos.x, pos.y, pos.z, 10);\n\n// Spawn a cloud of smoke particles\nWorld.spawnParticle(\"minecraft:smoke\", pos.x, pos.y, pos.z, 0.5, 0.5, 0.5, 0.1, 50, false);"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "net.minecraft.client.world.ClientWorld",
+      "description": "Gets the raw Minecraft ClientWorld object.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const rawWorld = World.getRaw();\n// Advanced, low-level interaction with the raw ClientWorld object"
+      ]
+    },
+    {
+      "name": "getServerInstantTPS",
+      "signature": "getServerInstantTPS()",
+      "returnType": "double",
+      "description": "Gets the server's current instantaneous TPS.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const tps = World.getServerInstantTPS();\nChat.log(`Instant TPS: ${tps.toFixed(2)}`);"
+      ]
+    },
+    {
+      "name": "getServer1MAverageTPS",
+      "signature": "getServer1MAverageTPS()",
+      "returnType": "double",
+      "description": "Gets the server's average TPS over the last minute.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const tps = World.getServer1MAverageTPS();\nChat.log(`1-Min Avg TPS: ${tps.toFixed(2)}`);"
+      ]
+    },
+    {
+      "name": "getServer5MAverageTPS",
+      "signature": "getServer5MAverageTPS()",
+      "returnType": "double",
+      "description": "Gets the server's average TPS over the last 5 minutes.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const tps = World.getServer5MAverageTPS();\nChat.log(`5-Min Avg TPS: ${tps.toFixed(2)}`);"
+      ]
+    },
+    {
+      "name": "getServer15MAverageTPS",
+      "signature": "getServer15MAverageTPS()",
+      "returnType": "double",
+      "description": "Gets the server's average TPS over the last 15 minutes.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const tps = World.getServer15MAverageTPS();\nChat.log(`15-Min Avg TPS: ${tps.toFixed(2)}`);"
+      ]
+    }
+  ]
+}

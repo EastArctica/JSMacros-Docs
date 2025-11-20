@@ -1,0 +1,76 @@
+{
+  "name": "FoodComponentHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.FoodComponentHelper",
+  "since": "1.8.4",
+  "description": "The FoodComponentHelper class provides access to food properties and behaviors for items that can be consumed by players.",
+  "overview": "The `FoodComponentHelper` class provides access to food properties and behaviors for items that can be consumed by players. This helper class exposes information about hunger restoration, saturation, special eating conditions, and status effects that may be applied when consuming food items.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getHunger",
+      "signature": "int getHunger()",
+      "returnType": "int",
+      "description": "Returns the amount of hunger points this food restores.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const steak = Player.getHeldItem();\nconst food = steak.getFood();\nif (food) {\n    Chat.log(`This steak restores ${food.getHunger()} hunger points`);\n    // Output: \"This steak restores 8 hunger points\"\n}"
+      ]
+    },
+    {
+      "name": "getSaturation",
+      "signature": "float getSaturation()",
+      "returnType": "float",
+      "description": "Returns the amount of saturation this food restores.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const apple = Player.getHeldItem();\nconst food = apple.getFood();\nif (food) {\n    Chat.log(`Saturation: ${food.getSaturation()}`);\n    // Output: \"Saturation: 0.3\"\n}"
+      ]
+    },
+    {
+      "name": "isAlwaysEdible",
+      "signature": "boolean isAlwaysEdible()",
+      "returnType": "boolean",
+      "description": "Determines if this food can be eaten even when the player is not hungry.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const goldenApple = Player.getHeldItem();\nconst food = goldenApple.getFood();\nif (food && food.isAlwaysEdible()) {\n    Chat.log(\"This item can be eaten even when not hungry!\");\n}"
+      ]
+    },
+    {
+      "name": "isFastFood",
+      "signature": "boolean isFastFood()",
+      "returnType": "boolean",
+      "description": "Determines if this food can be eaten faster than normal (eating time less than 1.6 seconds).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const driedKelp = Player.getHeldItem();\nconst food = driedKelp.getFood();\nif (food && food.isFastFood()) {\n    Chat.log(\"This food eats quickly!\");\n}"
+      ]
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "Map<StatusEffectHelper, Float> getStatusEffects()",
+      "returnType": "Map<StatusEffectHelper, Float>",
+      "description": "Returns a map of status effects that may be applied when consuming this food, along with their probabilities.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const suspiciousStew = Player.getHeldItem();\nconst food = suspiciousStew.getFood();\nif (food) {\n    const effects = food.getStatusEffects();\n    if (effects.size() > 0) {\n        Chat.log(\"This food may apply the following effects:\");\n        for (const [effect, probability] of effects) {\n            Chat.log(`- ${effect.getId()}: ${(probability * 100).toFixed(1)}% chance`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "String toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the food component with key properties.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bread = Player.getHeldItem();\nconst food = bread.getFood();\nif (food) {\n    Chat.log(food.toString());\n    // Output: \"FoodComponentHelper:{\"hunger\": 5, \"saturation\": 0.600000, \"alwaysEdible\": false, \"fastFood\": false}\"\n}"
+      ]
+    }
+  ]
+}

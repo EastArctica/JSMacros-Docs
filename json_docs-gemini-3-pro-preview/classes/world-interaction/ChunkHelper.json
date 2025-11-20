@@ -1,0 +1,267 @@
+{
+  "name": "ChunkHelper",
+  "fullClassName": "ChunkHelper",
+  "description": "The ChunkHelper class provides access to Minecraft chunk data and functionality within JsMacros scripts. This class allows you to interact with 16×16 world chunks, including reading block information, accessing entities, and querying various chunk properties.",
+  "overview": "A chunk in Minecraft is a 16×16×384 section of the world that contains blocks, entities, and various metadata. The ChunkHelper class provides methods to:\n\n- Get chunk coordinates and dimensions\n- Access blocks and their properties within the chunk\n- Query heightmaps and biome information\n- Find entities and tile entities in the chunk\n- Search for specific block types\n- Iterate through all blocks in the chunk",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getChunkX",
+      "signature": "getChunkX()",
+      "returnType": "number",
+      "description": "Returns the X coordinate of the chunk (not the world coordinate). This is the chunk coordinate, ranging from negative to positive values depending on world location.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let chunkX = chunk.getChunkX();\nChat.log(\"Chunk X coordinate: \" + chunkX);"
+      ]
+    },
+    {
+      "name": "getChunkZ",
+      "signature": "getChunkZ()",
+      "returnType": "number",
+      "description": "Returns the Z coordinate of the chunk (not the world coordinate). This is the chunk coordinate, ranging from negative to positive values depending on world location.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let chunkZ = chunk.getChunkZ();\nChat.log(\"Chunk Z coordinate: \" + chunkZ);"
+      ]
+    },
+    {
+      "name": "getStartingBlock",
+      "signature": "getStartingBlock()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns the starting block position of this chunk (coordinate 0, 0, 0 relative to the chunk, which corresponds to world coordinates chunkX×16, chunkBottomY, chunkZ×16).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let startingBlock = chunk.getStartingBlock();\nChat.log(\"Chunk starts at: \" + startingBlock.toString());"
+      ]
+    },
+    {
+      "name": "getOffsetBlock",
+      "signature": "getOffsetBlock(xOffset, y, zOffset)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a block position relative to the starting block of this chunk by the specified offsets.",
+      "parameters": [
+        {
+          "name": "xOffset",
+          "type": "number",
+          "description": "The X offset within the chunk (0-15)"
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The actual world Y coordinate"
+        },
+        {
+          "name": "zOffset",
+          "type": "number",
+          "description": "The Z offset within the chunk (0-15)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let block = chunk.getOffsetBlock(8, 64, 8); // Center of chunk at Y=64\nChat.log(\"Block at chunk center: \" + block.toString());"
+      ]
+    },
+    {
+      "name": "getMaxBuildHeight",
+      "signature": "getMaxBuildHeight()",
+      "returnType": "number",
+      "description": "Returns the maximum build height of this chunk (typically 320 in Minecraft 1.17+).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let maxHeight = chunk.getMaxBuildHeight();\nChat.log(\"Maximum build height: \" + maxHeight);"
+      ]
+    },
+    {
+      "name": "getMinBuildHeight",
+      "signature": "getMinBuildHeight()",
+      "returnType": "number",
+      "description": "Returns the minimum build height of this chunk (typically -64 in Minecraft 1.17+).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let minHeight = chunk.getMinBuildHeight();\nChat.log(\"Minimum build height: \" + minHeight);"
+      ]
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "number",
+      "description": "Returns the total height of this chunk (max height - min height).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let height = chunk.getHeight();\nChat.log(\"Chunk height: \" + height);"
+      ]
+    },
+    {
+      "name": "getBiome",
+      "signature": "getBiome(xOffset, y, zOffset)",
+      "returnType": "string",
+      "description": "Returns the biome identifier at the given position within the chunk.",
+      "parameters": [
+        {
+          "name": "xOffset",
+          "type": "number",
+          "description": "The X offset within the chunk (0-15)"
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate in world space"
+        },
+        {
+          "name": "zOffset",
+          "type": "number",
+          "description": "The Z offset within the chunk (0-15)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let biome = chunk.getBiome(8, 64, 8);\nChat.log(\"Biome at chunk center: \" + biome);\n// Example output: \"minecraft:plains\""
+      ]
+    },
+    {
+      "name": "getEntities",
+      "signature": "getEntities()",
+      "returnType": "List<EntityHelper>",
+      "description": "Returns a list of all entities currently inside this chunk.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let entities = chunk.getEntities();\nChat.log(\"Found \" + entities.size() + \" entities in chunk\");\n\nentities.forEach(entity => {\n    Chat.log(\"Entity: \" + entity.getType());\n});"
+      ]
+    },
+    {
+      "name": "getTileEntities",
+      "signature": "getTileEntities()",
+      "returnType": "List<BlockPosHelper>",
+      "description": "Returns a list of all tile entity (block entity) positions inside this chunk. Tile entities include chests, furnaces, signs, etc.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let tileEntities = chunk.getTileEntities();\nChat.log(\"Found \" + tileEntities.size() + \" tile entities in chunk\");\n\ntileEntities.forEach(pos => {\n    Chat.log(\"Tile entity at: \" + pos.toString());\n});"
+      ]
+    },
+    {
+      "name": "getInhabitedTime",
+      "signature": "getInhabitedTime()",
+      "returnType": "number",
+      "description": "Returns the cumulative time (in ticks) that players have spent inside this chunk. This value affects local difficulty - the higher the inhabited time, the more difficult the chunk becomes, resulting in stronger mob spawns.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let inhabitedTime = chunk.getInhabitedTime();\nChat.log(\"Inhabited time: \" + inhabitedTime + \" ticks\");"
+      ]
+    },
+    {
+      "name": "getTopYAt",
+      "signature": "getTopYAt(xOffset, zOffset, heightmap)",
+      "returnType": "number",
+      "description": "Returns the maximum Y position of all blocks at the specified position according to the given heightmap.",
+      "parameters": [
+        {
+          "name": "xOffset",
+          "type": "number",
+          "description": "The X offset within the chunk (0-15)"
+        },
+        {
+          "name": "zOffset",
+          "type": "number",
+          "description": "The Z offset within the chunk (0-15)"
+        },
+        {
+          "name": "heightmap",
+          "type": "Heightmap",
+          "description": "The heightmap type to use"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Note: Heightmap access depends on available heightmap constants\nlet topY = chunk.getTopYAt(8, 8, Heightmap.Type.WORLD_SURFACE);\nChat.log(\"Top Y at chunk center: \" + topY);"
+      ]
+    },
+    {
+      "name": "getHeightmaps",
+      "signature": "getHeightmaps()",
+      "returnType": "Collection<Heightmap>",
+      "description": "Returns a collection of all raw heightmap data for this chunk.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSurfaceHeightmap",
+      "signature": "getSurfaceHeightmap()",
+      "returnType": "Heightmap",
+      "description": "Returns the raw world surface heightmap for this chunk.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOceanFloorHeightmap",
+      "signature": "getOceanFloorHeightmap()",
+      "returnType": "Heightmap",
+      "description": "Returns the raw ocean floor heightmap for this chunk.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMotionBlockingHeightmap",
+      "signature": "getMotionBlockingHeightmap()",
+      "returnType": "Heightmap",
+      "description": "Returns the raw motion blocking heightmap for this chunk (blocks that prevent movement).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMotionBlockingNoLeavesHeightmap",
+      "signature": "getMotionBlockingNoLeavesHeightmap()",
+      "returnType": "Heightmap",
+      "description": "Returns the raw motion blocking heightmap for this chunk, excluding leaves.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "forEach",
+      "signature": "forEach(includeAir, callback)",
+      "returnType": "ChunkHelper",
+      "description": "Iterates through all blocks in the chunk and calls the callback function for each block (optionally excluding air blocks).",
+      "parameters": [
+        {
+          "name": "includeAir",
+          "type": "boolean",
+          "description": "Whether to include air blocks in the iteration"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper<BlockDataHelper, ?, ?, ?>",
+          "description": "Function to call for each block"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Iterate through all non-air blocks in the chunk\nchunk.forEach(false, (blockData) => {\n    let blockType = blockData.getId();\n    if (blockType.includes(\"ore\")) {\n        Chat.log(\"Found ore at: \" + blockData.getX() + \", \" +\n                   blockData.getY() + \", \" + blockData.getZ());\n    }\n});\n\n// Iterate through all blocks including air\nchunk.forEach(true, (blockData) => {\n    // Process all blocks\n});"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the chunk containing its coordinates.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let chunkString = chunk.toString();\nChat.log(chunkString);\n// Example output: \"ChunkHelper:{\\\"x\\\": 5, \\\"z\\\": -3}\""
+      ]
+    }
+  ]
+}

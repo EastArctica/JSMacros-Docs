@@ -1,0 +1,294 @@
+{
+  "name": "WorldScanner",
+  "fullClassName": "WorldScanner",
+  "description": "The WorldScanner class is a powerful tool in JSMacros for efficiently scanning the Minecraft world and finding specific blocks based on customizable filters. This class provides high-performance block searching capabilities with caching optimizations for repeated scans.",
+  "overview": "The WorldScanner is designed to search through Minecraft chunks and identify blocks that match specific criteria. It features:\n\n- **High Performance**: Optimized scanning algorithms with optional parallel processing\n- **Caching**: Results are cached to improve performance on repeated scans\n- **Flexible Filtering**: Support for both block-level and block state-level filtering\n- **Multiple Scan Types**: Support for chunk-based, area-based, spherical, and player-reachable scanning\n- **Counting Capabilities**: Can return either positions or counts of matching blocks",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "scanAroundPlayer",
+      "signature": "scanAroundPlayer(chunkRange)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans chunks around the player's current position.",
+      "parameters": [
+        {
+          "name": "chunkRange",
+          "type": "number",
+          "description": "Range of chunks to scan around the player (0 = only current chunk, 1 = 3x3 area)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scan a 3x3 chunk area around the player\nconst positions = scanner.scanAroundPlayer(1);\nChat.log(`Found ${positions.length} matching blocks`);"
+      ]
+    },
+    {
+      "name": "scanChunkRange",
+      "signature": "scanChunkRange(centerX, centerZ, chunkRange)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans chunks around a specified center point.",
+      "parameters": [
+        {
+          "name": "centerX",
+          "type": "number",
+          "description": "X coordinate of center chunk"
+        },
+        {
+          "name": "centerZ",
+          "type": "number",
+          "description": "Z coordinate of center chunk"
+        },
+        {
+          "name": "chunkRange",
+          "type": "number",
+          "description": "Range of chunks to scan"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scan around chunk coordinates (10, 15)\nconst positions = scanner.scanChunkRange(10, 15, 2);"
+      ]
+    },
+    {
+      "name": "scanCubeArea",
+      "signature": "scanCubeArea(pos, range)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans a cubic area around a center position.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "Center position of the cube"
+        },
+        {
+          "name": "range",
+          "type": "number",
+          "description": "Range in blocks from center"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scan 10 blocks around position (100, 64, 200)\nconst centerPos = new BlockPosHelper(100, 64, 200);\nconst positions = scanner.scanCubeArea(centerPos, 10);"
+      ]
+    },
+    {
+      "name": "scanCubeArea",
+      "signature": "scanCubeArea(x1, y1, z1, x2, y2, z2)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans a rectangular area between two coordinates.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "number",
+          "description": "First corner coordinates (inclusive)"
+        },
+        {
+          "name": "y1",
+          "type": "number",
+          "description": "First corner coordinates (inclusive)"
+        },
+        {
+          "name": "z1",
+          "type": "number",
+          "description": "First corner coordinates (inclusive)"
+        },
+        {
+          "name": "x2",
+          "type": "number",
+          "description": "Second corner coordinates (exclusive)"
+        },
+        {
+          "name": "y2",
+          "type": "number",
+          "description": "Second corner coordinates (exclusive)"
+        },
+        {
+          "name": "z2",
+          "type": "number",
+          "description": "Second corner coordinates (exclusive)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scan from (100, 60, 200) to (110, 70, 210)\nconst positions = scanner.scanCubeArea(100, 60, 200, 110, 70, 210);"
+      ]
+    },
+    {
+      "name": "scanCubeAreaInclusive",
+      "signature": "scanCubeAreaInclusive(x1, y1, z1, x2, y2, z2)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans a rectangular area with both coordinates inclusive.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "number",
+          "description": "First corner coordinates (inclusive)"
+        },
+        {
+          "name": "y1",
+          "type": "number",
+          "description": "First corner coordinates (inclusive)"
+        },
+        {
+          "name": "z1",
+          "type": "number",
+          "description": "First corner coordinates (inclusive)"
+        },
+        {
+          "name": "x2",
+          "type": "number",
+          "description": "Second corner coordinates (inclusive)"
+        },
+        {
+          "name": "y2",
+          "type": "number",
+          "description": "Second corner coordinates (inclusive)"
+        },
+        {
+          "name": "z2",
+          "type": "number",
+          "description": "Second corner coordinates (inclusive)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "scanSphereArea",
+      "signature": "scanSphereArea(pos, radius)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans a spherical area around a center position.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "Center position of the sphere"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "description": "Radius of the sphere in blocks"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scan a 15-block radius around player position\nconst playerPos = new Pos3D(Player.getPlayer().getPos());\nconst positions = scanner.scanSphereArea(playerPos, 15);"
+      ]
+    },
+    {
+      "name": "scanReachable",
+      "signature": "scanReachable()",
+      "returnType": "List<Pos3D>",
+      "description": "Scans for blocks within player's reach distance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Find all reachable ore blocks\nconst reachable = scanner.scanReachable();"
+      ]
+    },
+    {
+      "name": "scanReachable",
+      "signature": "scanReachable(pos, reach, strict)",
+      "returnType": "List<Pos3D>",
+      "description": "Scans for reachable blocks from a specific position.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "Position to scan from"
+        },
+        {
+          "name": "reach",
+          "type": "number",
+          "description": "Maximum reach distance"
+        },
+        {
+          "name": "strict",
+          "type": "boolean",
+          "description": "Whether to check block outlines (default: true)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "scanClosestReachable",
+      "signature": "scanClosestReachable()",
+      "returnType": "Pos3D | null",
+      "description": "Finds the closest reachable block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Find the closest chest to interact with\nconst nearestChest = scanner.scanClosestReachable();\nif (nearestChest) {\n    Chat.log(`Chest found at ${nearestChest.toString()}`);\n}"
+      ]
+    },
+    {
+      "name": "getBlocksInChunk",
+      "signature": "getBlocksInChunk(chunkX, chunkZ, ignoreState)",
+      "returnType": "Map<String, Integer>",
+      "description": "Gets a count of blocks matching the criteria in a specific chunk.",
+      "parameters": [
+        {
+          "name": "chunkX",
+          "type": "number",
+          "description": "X coordinate of the chunk"
+        },
+        {
+          "name": "chunkZ",
+          "type": "number",
+          "description": "Z coordinate of the chunk"
+        },
+        {
+          "name": "ignoreState",
+          "type": "boolean",
+          "description": "Whether to combine different states of the same block"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Count blocks in chunk (5, 10)\nconst blockCounts = scanner.getBlocksInChunk(5, 10, false);\nfor (const [blockId, count] of Object.entries(blockCounts)) {\n    Chat.log(`${blockId}: ${count}`);\n}"
+      ]
+    },
+    {
+      "name": "getBlocksInChunks",
+      "signature": "getBlocksInChunks(centerX, centerZ, chunkRange, ignoreState)",
+      "returnType": "Map<String, Integer>",
+      "description": "Gets block counts across multiple chunks.",
+      "parameters": [
+        {
+          "name": "centerX",
+          "type": "number",
+          "description": "X coordinate of center chunk"
+        },
+        {
+          "name": "centerZ",
+          "type": "number",
+          "description": "Z coordinate of center chunk"
+        },
+        {
+          "name": "chunkRange",
+          "type": "number",
+          "description": "Range of chunks to scan"
+        },
+        {
+          "name": "ignoreState",
+          "type": "boolean",
+          "description": "Whether to combine different states"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCachedAmount",
+      "signature": "getCachedAmount()",
+      "returnType": "number",
+      "description": "Gets the number of cached block states for performance monitoring.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Cached ${scanner.getCachedAmount()} block states`);"
+      ]
+    }
+  ]
+}

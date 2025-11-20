@@ -1,0 +1,38 @@
+{
+  "name": "CatEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.CatEntityHelper",
+  "extends": "TameableEntityHelper<CatEntity>",
+  "since": "1.8.4",
+  "description": "The CatEntityHelper class provides specialized access to cat entities in Minecraft, offering methods to monitor and interact with cat-specific behaviors.",
+  "overview": "The `CatEntityHelper` class provides specialized access to cat entities in Minecraft, offering methods to monitor and interact with cat-specific behaviors such as sleeping states, collar colors, and breed variants. This class extends `TameableEntityHelper` and inherits all functionality for tameable animals including taming status, sitting behavior, and ownership tracking.\n\nThis helper is particularly useful for creating scripts that manage cat companions, monitor cat behavior patterns, track different cat variants for breeding purposes, or coordinate with multiple cats in the world.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isSleeping",
+      "signature": "public boolean isSleeping()",
+      "returnType": "boolean",
+      "description": "Checks if the cat is sleeping. Returns true when cats are sleeping on beds, chests, or other furniture. They will wake up when disturbed or when night ends.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCollarColor",
+      "signature": "public DyeColorHelper getCollarColor()",
+      "returnType": "DyeColorHelper",
+      "description": "Returns a DyeColorHelper with color information. Collar colors are only visible on tamed cats.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getVariant",
+      "signature": "public String getVariant()",
+      "returnType": "String",
+      "description": "Returns one of 11 possible cat variants, which affects appearance and breeding patterns.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

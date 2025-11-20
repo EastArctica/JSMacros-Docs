@@ -1,0 +1,33 @@
+{
+  "name": "WitchEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.WitchEntityHelper<T extends WitchEntity>",
+  "extends": "MobEntityHelper<T>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a witch entity in the world. WitchEntityHelper provides access to witch-specific properties and behaviors, particularly their potion drinking and throwing mechanics.",
+  "overview": "Represents a witch entity in the world. WitchEntityHelper provides access to witch-specific properties and behaviors, particularly their potion drinking and throwing mechanics. Witches are hostile mobs that use potions for both offensive and defensive purposes, making them unique among hostile mobs due to their complex combat AI and support capabilities.\n\nWitch entities are magical hostile mobs that attack players by throwing harmful potions and can drink beneficial potions to heal themselves or gain resistance effects. They have distinct combat patterns involving drinking potions before engaging in combat and using various potion types depending on the situation. This helper provides access to their current drinking state and held potion items, which is crucial for understanding their combat behavior and predicting their next actions.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, AI control, movement, and other mob properties, while adding witch-specific functionality for potion state monitoring and inventory inspection.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isDrinkingPotion",
+      "signature": "public boolean isDrinkingPotion()",
+      "returnType": "boolean",
+      "description": "Checks if the witch is currently drinking a potion. This indicates vulnerability as witches cannot attack while drinking.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const witch = witchEntity.as(\"minecraft:witch\");\nconst isDrinking = witch.isDrinkingPotion();\nChat.log(`State: ${isDrinking ? \"Drinking\" : \"Ready to attack\"}`);"
+      ]
+    },
+    {
+      "name": "getPotion",
+      "signature": "public ItemStackHelper getPotion()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the potion item the witch is currently holding or using. Helps predict upcoming attacks or defensive maneuvers.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const witch = witchEntity.as(\"minecraft:witch\");\nconst potion = witch.getPotion();\nif (potion && !potion.isEmpty()) {\n    Chat.log(`Witch holding: ${potion.getName().getString()}`);\n}"
+      ]
+    }
+  ]
+}

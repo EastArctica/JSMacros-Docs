@@ -1,0 +1,28 @@
+{
+  "name": "NameUtil",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.util.NameUtil",
+  "since": "1.8.4",
+  "description": "The NameUtil class is a specialized utility class in JSMacros that provides intelligent parsing and extraction of player names and roles from Minecraft chat messages.",
+  "overview": "NameUtil uses sophisticated pattern matching to handle different chat message formats, including:\n- Standard chat messages with colons (`PlayerName: message`)\n- Messages with angle brackets (`<PlayerName> message`)\n- Whisper/direct messages (`PlayerName whispers to you`)\n- Guild or team messages (`Guild > PlayerName: message`)\n- Messages with role prefixes or suffixes\n\nThe class is designed to work with a wide variety of server chat formats and can handle edge cases commonly found in multiplayer environments with different chat plugins and formatting styles.\n\nKey Features:\n- Extracts player names from complex chat message formats\n- Identifies and separates role information from player names\n- Handles whisper messages specially\n- Supports multiple chat formatting patterns\n- Robust against common edge cases and formatting variations\n- Optimized for performance with message length limits",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "guessNameAndRoles",
+      "signature": "List<String> guessNameAndRoles(String text)",
+      "returnType": "java.util.List<String>",
+      "description": "Extracts player names and role information from a chat message using intelligent pattern matching. This method analyzes a chat message and attempts to extract the player name and any associated roles using a sophisticated algorithm that handles various chat formats (Whispers, Angle brackets, Colons, Arrows, Role brackets). It also validates that extracted names follow valid Minecraft username patterns.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "String",
+          "description": "The chat message text to analyze for name extraction"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const NameUtil = Java.type(\"xyz.wagyourtail.jsmacros.client.util.NameUtil\");\n\n// Example chat messages and their parsing results\nconst testMessages = [\n    \"PlayerName: Hello everyone!\",\n    \"<Admin> PlayerName: This is an announcement\",\n    \"GuildName > PlayerName: Guild chat message\",\n    \"PlayerName whispers to you: secret message\",\n    \"[Mod] PlayerName -> Staff chat: important info\",\n    \"PlayerName >> response to someone\",\n    \"Just a random message without player names\"\n];\n\ntestMessages.forEach(message => {\n    const result = NameUtil.guessNameAndRoles(message);\n    if (result.size() > 0) {\n        const name = result.get(0);\n        const roles = result.size() > 1 ? result.subList(1, result.size()).join(\", \") : \"none\";\n        Chat.log(`Message: \"${message}\"`);\n        Chat.log(`  Name: ${name}, Roles: ${roles}`);\n    } else {\n        Chat.log(`Message: \"${message}\" -> No name found`);\n    }\n});",
+        "// Chat Message Processor Example\nconst NameUtil = Java.type(\"xyz.wagyourtail.jsmacros.client.util.NameUtil\");\n\n// Process incoming chat messages to extract player information\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    const message = event.message.getString();\n    const result = NameUtil.guessNameAndRoles(message);\n\n    if (result.size() > 0) {\n        const playerName = result.get(0);\n        const roles = result.size() > 1 ? result.subList(1, result.size()) : [];\n\n        Chat.log(`&6Detected player: &a${playerName}`);\n\n        if (roles.length > 0) {\n            Chat.log(`&6Roles: &e${roles.join(\", \")}`);\n        }\n\n        // Do something with the extracted information\n        // handlePlayerMessage(playerName, roles, message);\n    }\n}));"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "name": "FieldInitializerBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.FieldBuilder.FieldInitializerBuilder",
+  "extends": null,
+  "since": "1.8.4",
+  "description": "The ClassBuilder.FieldBuilder.FieldInitializerBuilder class is a specialized builder for creating complex field initialization expressions.",
+  "overview": "This builder allows you to construct sophisticated initialization logic that goes beyond simple constant values, enabling method calls, constructor invocations, arithmetic operations, and other complex expressions. FieldInitializerBuilder instances are obtained through the buildInitializer() method of FieldBuilder and provide a fluent API for building initialization expressions that will be executed when the field is initialized.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "appendJavaCode",
+      "signature": "appendJavaCode(String code)",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Appends Java code to the initialization expression. Code is appended in the order specified and can declare local variables and perform operations.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "String",
+          "description": "The Java code to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "initializerBuilder.appendJavaCode(\"java.util.Properties props = new java.util.Properties();\");",
+        "initializerBuilder.appendJavaCode(\"props.setProperty(\\\"timeout\\\", \\\"30000\\\");\");",
+        "initializerBuilder.appendJavaCode(\"props.setProperty(\\\"retries\\\", \\\"3\\\");\");"
+      ]
+    },
+    {
+      "name": "appendLine",
+      "signature": "appendLine(String code)",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Appends a single line of Java code with automatic newline. This is a convenience method for improving code readability.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "String",
+          "description": "The Java code line to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "initializerBuilder.appendLine(\"List<String> items = new ArrayList<>();\");",
+        "initializerBuilder.appendLine(\"items.add(\\\"DEFAULT\\\");\");",
+        "initializerBuilder.appendLine(\"items.add(\\\"UNKNOWN\\\");\");"
+      ]
+    },
+    {
+      "name": "returnExpression",
+      "signature": "returnExpression(String expression)",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Specifies the return expression for the field initialization. The expression must return a value compatible with the field type.",
+      "parameters": [
+        {
+          "name": "expression",
+          "type": "String",
+          "description": "The Java expression that returns the field value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "initializerBuilder.returnExpression(\"new java.util.HashMap(props)\");",
+        "initializerBuilder.returnExpression(\"System.currentTimeMillis()\");",
+        "initializerBuilder.returnExpression(\"items.toArray(new String[0])\");"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "FieldBuilder",
+      "description": "Finalizes the initializer and returns to the parent FieldBuilder. This method must be called to apply the initialization to the field.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = initializerBuilder.finish();"
+      ]
+    }
+  ]
+}

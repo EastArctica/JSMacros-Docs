@@ -1,0 +1,18 @@
+{
+  "name": "EventEntityDamaged",
+  "fullClassName": "EventEntityDamaged",
+  "description": "This event is fired when any entity in the world takes damage.",
+  "overview": "Backed by class `EventEntityDamaged`.\n\n### Event payload\n\n| Field | Type | Description |\n| :--- | :--- | :--- |\n| entity | EntityHelper | The entity that took damage |\n| health | float | The entity's current health after damage |\n| damage | float | The amount of damage taken |\n\n### Behavior\n\n* Fires when any entity (not just the player) takes damage\n* Includes mobs, animals, item entities, etc.\n* The `health` field represents current health after the damage\n* The `damage` field is the amount of damage taken\n* Not cancellable\n\n### Fields Detail\n\n**event.entity** (`EntityHelper`)\nA helper object for the entity that took damage. This provides access to entity properties like name, type, position, health, etc. You can check if the entity is a player, hostile mob, animal, etc. using the helper methods.\n\n**event.health** (`float`)\nThe entity's current health after taking damage. This represents the remaining health after the damage has been applied. Different entities have different maximum health values. Players typically have 20.0 maximum health.\n\n**event.damage** (`float`)\nThe amount of damage the entity took. This is the raw damage amount that was applied to the entity. This value is always positive and represents the damage taken, not the change in health.\n\n### Examples\n\n**Minimal example**\n\n```js\nJsMacros.on(\"EntityDamaged\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`${e.entity.getName()} took ${e.damage} damage, health: ${e.health}`);\n});\n```\n\n**Async example**\n\n```js\nJsMacros.on(\"EntityDamaged\", JavaWrapper.methodToJavaAsync((e) => {\n  const entity = e.entity;\n  const entityName = entity.getName();\n  const damage = e.damage;\n  const currentHealth = e.health;\n\n  Chat.log(`&cEntity Damaged: &f${entityName}`);\n  Chat.log(`&7Damage: &f${damage.toFixed(1)} &7- Health: &f${currentHealth.toFixed(1)}`);\n\n  // Check if it's a hostile mob\n  if (entity.isHostile()) {\n    Chat.log(`&6Hostile mob injured: &f${entityName}`);\n\n    // Check if it's close to death\n    if (currentHealth <= 2) {\n      Chat.actionbar(`&a${entityName} &7is almost defeated!`);\n    }\n  }\n\n  // Check if it's the player\n  if (entity.isPlayer()) {\n    Chat.log(`&6Player took damage!`);\n    if (currentHealth <= 5) {\n      Chat.actionbar(\"&cLow health warning!\");\n    }\n  }\n\n  // Check for animals\n  if (entity.isAnimal()) {\n    Chat.log(`&bAnimal injured: &f${entityName}`);\n\n    // Warn if hurting passive animals\n    Chat.actionbar(`&e${entityName} &7was hurt!`);\n  }\n\n  // Log significant damage events\n  if (damage >= 10) {\n    Chat.log(`&6Major damage event: &f${entityName} &7took &c${damage.toFixed(1)} &7damage`);\n  }\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

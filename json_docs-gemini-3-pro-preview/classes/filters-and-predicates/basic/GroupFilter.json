@@ -1,0 +1,55 @@
+{
+  "name": "GroupFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.GroupFilter",
+  "extends": "IFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The GroupFilter class is an abstract filter that provides a way to group multiple filters together and apply logical operations to them as a collection. This class serves as the foundation for specialized group filters that can evaluate multiple child filters using different matching strategies (all match, any match, none match, or count-based matching).",
+  "overview": "The GroupFilter class provides:\n\n- **Multiple filter management**: Add, remove, and organize any number of child filters\n- **Immutable filter collection**: Child filters are protected from external modification\n- **Fluent interface**: Methods return the GroupFilter instance for method chaining\n- **Specialized implementations**: Four concrete subclasses for different matching strategies\n- **Generic type support**: Can work with any type `T` that the child filters can handle",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add",
+      "signature": "add(filter)",
+      "returnType": "GroupFilter",
+      "description": "Adds a child filter to the filter group. Returns the GroupFilter instance for method chaining.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to add to the group."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const perfectDiamondFilter = new GroupFilter.AllMatchFilter();\nperfectDiamondFilter\n    .add(diamondOreFilter)\n    .add(deepLevelFilter)\n    .add(exposedFilter);",
+        "oreFilter.add(World.getStringBlockFilter().contains(\"coal_ore\"));"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "remove(filter)",
+      "returnType": "GroupFilter",
+      "description": "Removes a child filter from the filter group. Returns the GroupFilter instance for method chaining.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to remove from the group."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Remove common ores if player is advanced\nif (player && player.experienceLevel > 30) {\n    oreFilter.remove(World.getStringBlockFilter().contains(\"coal_ore\"));\n}"
+      ]
+    },
+    {
+      "name": "getFilters",
+      "signature": "getFilters()",
+      "returnType": "List<IFilter<T>>",
+      "description": "Returns the internal list of child filters. The list is immutable.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

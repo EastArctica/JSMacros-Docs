@@ -1,0 +1,18 @@
+{
+  "name": "EventQuitGame",
+  "fullClassName": "EventQuitGame",
+  "description": "This event is fired when the game is being quit.",
+  "overview": "Fires when the player quits the game completely. Occurs when closing Minecraft from the main menu or quit button. Not cancellable. Useful for cleanup operations and saving data before shutdown.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

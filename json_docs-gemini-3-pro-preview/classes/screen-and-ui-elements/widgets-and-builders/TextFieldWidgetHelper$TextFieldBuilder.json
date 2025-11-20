@@ -1,0 +1,89 @@
+{
+  "name": "TextFieldBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.TextFieldWidgetHelper.TextFieldBuilder",
+  "extends": "AbstractWidgetBuilder<TextFieldBuilder, TextFieldWidget, TextFieldWidgetHelper>",
+  "since": "JsMacros 1.8.4",
+  "description": "The TextFieldBuilder class provides a fluent builder API for creating text input field widgets in JSMacros custom screens and UIs.",
+  "overview": "The TextFieldBuilder class enables creation of sophisticated text input fields with:\n\n- **Text Input Control**: Full support for text entry, editing, and manipulation\n- **Input Validation**: Real-time text filtering and validation with custom predicates\n- **Event Handling**: Text change callbacks with proper screen context and error handling\n- **Visual Customization**: Custom messages, suggestions, colors, and styling\n- **Position Control**: Precise positioning and sizing with screen-relative coordinates\n- **Builder Pattern**: Fluent API for readable and maintainable field creation\n- **Z-Index Support**: Layering control for complex UI layouts",
+  "constructors": [
+    {
+      "signature": "new TextFieldBuilder(screen, textRenderer)",
+      "description": "Creates a new TextFieldBuilder for the specified screen with the given text renderer. Note: This constructor is typically not called directly. Instead, use screen.textField() to obtain a builder instance.",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "IScreen",
+          "description": "The screen to add the text field to"
+        },
+        {
+          "name": "textRenderer",
+          "type": "TextRenderer",
+          "description": "The text renderer for displaying text content"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "action",
+      "signature": "action(action)",
+      "returnType": "TextFieldBuilder",
+      "description": "Sets a callback function that will be invoked when the text field's content changes.",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "MethodWrapper<String, IScreen, Object, ?>",
+          "description": "Callback function that receives the new text and screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const textField = screen.textField()\n    .pos(10, 10)\n    .size(200, 20)\n    .message(\"Search:\")\n    .action(JavaWrapper.methodToJava((newText, scr) => {\n        Chat.log(`Text changed to: ${newText}`);\n        performSearch(newText);\n    }))\n    .build();"
+      ]
+    },
+    {
+      "name": "suggestion",
+      "signature": "suggestion(suggestion)",
+      "returnType": "TextFieldBuilder",
+      "description": "Sets the suggestion text that appears when the field is empty and unfocused.",
+      "parameters": [
+        {
+          "name": "suggestion",
+          "type": "String",
+          "description": "The suggestion text to display"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const textField = screen.textField()\n    .pos(10, 10)\n    .size(200, 20)\n    .message(\"Username:\")\n    .suggestion(\"Enter your username\")\n    .build();"
+      ]
+    },
+    {
+      "name": "getAction",
+      "signature": "getAction()",
+      "returnType": "MethodWrapper<String, IScreen, Object, ?> | null",
+      "description": "Returns the currently configured action callback for text changes.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSuggestion",
+      "signature": "getSuggestion()",
+      "returnType": "String",
+      "description": "Returns the currently configured suggestion text.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "createWidget",
+      "signature": "createWidget()",
+      "returnType": "TextFieldWidgetHelper",
+      "description": "Creates and returns the configured TextFieldWidgetHelper instance. Note: This method is automatically called by build(). You typically use build() instead.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

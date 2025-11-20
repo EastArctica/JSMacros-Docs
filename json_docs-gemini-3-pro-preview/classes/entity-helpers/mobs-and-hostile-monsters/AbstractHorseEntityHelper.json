@@ -1,0 +1,216 @@
+{
+  "name": "AbstractHorseEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.AbstractHorseEntityHelper<T extends AbstractHorseEntity>",
+  "extends": "AnimalEntityHelper<T>",
+  "since": "1.8.4",
+  "description": "The AbstractHorseEntityHelper class provides specialized access to horse-like entities in Minecraft, including horses, donkeys, mules, and llamas.",
+  "overview": "This class offers comprehensive methods for monitoring and interacting with horse-specific behaviors such as taming status, equipment, statistics, and various states. It is particularly useful for creating scripts that manage horse companions, analyze horse stats for breeding purposes, coordinate mounted combat, or track the status of tameable horse-like entities in the world.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getOwner",
+      "signature": "public UUID getOwner()",
+      "returnType": "UUID",
+      "description": "Retrieves the UUID of the owner of the horse entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isTame",
+      "signature": "public boolean isTame()",
+      "returnType": "boolean",
+      "description": "Checks if the horse entity is currently tamed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (!horse.isTame()) {\n    Chat.log(`&e${name} is not tame - cannot analyze`);\n    return null;\n}"
+      ]
+    },
+    {
+      "name": "isAngry",
+      "signature": "public boolean isAngry()",
+      "returnType": "boolean",
+      "description": "Checks if the horse is in an angry state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSaddled",
+      "signature": "public boolean isSaddled()",
+      "returnType": "boolean",
+      "description": "Checks if the horse is equipped with a saddle. Note: This provides information but does not modify the state.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "isSaddled: horse.isSaddled(),"
+      ]
+    },
+    {
+      "name": "canWearArmor",
+      "signature": "public boolean canWearArmor()",
+      "returnType": "boolean",
+      "description": "Checks if this specific type of horse entity is capable of wearing armor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "canWearArmor: horse.canWearArmor(),"
+      ]
+    },
+    {
+      "name": "canBeSaddled",
+      "signature": "public boolean canBeSaddled()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is capable of being equipped with a saddle.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInventorySize",
+      "signature": "public int getInventorySize()",
+      "returnType": "int",
+      "description": "Gets the size of the horse's inventory. Varies by type (2 for horses, 3 for donkeys/mules, varying for llamas).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "inventorySize: horse.getInventorySize(),",
+        "if (stats.inventorySize > 2) {\n    uses.push(`Transport (${stats.inventorySize - 2} storage slots)`);\n}"
+      ]
+    },
+    {
+      "name": "isBred",
+      "signature": "public boolean isBred()",
+      "returnType": "boolean",
+      "description": "Checks if the horse was bred by players rather than spawned naturally.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "isBred: horse.isBred(),",
+        "const bredBonus = (horse1.genetics.isBred ? 5 : 0) + (horse2.genetics.isBred ? 5 : 0);"
+      ]
+    },
+    {
+      "name": "isEating",
+      "signature": "public boolean isEating()",
+      "returnType": "boolean",
+      "description": "Checks if the horse is currently eating grass. Does not detect when fed items by players.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getJumpStrengthStat",
+      "signature": "public double getJumpStrengthStat()",
+      "returnType": "double",
+      "description": "Gets the raw jump strength attribute value of the horse.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "jumpStrength: horse.getJumpStrengthStat(),",
+        "jumpPercentile: ((horse.getJumpStrengthStat() - 0.4) / 0.6) * 100,"
+      ]
+    },
+    {
+      "name": "getHorseJumpHeight",
+      "signature": "public double getHorseJumpHeight()",
+      "returnType": "double",
+      "description": "Calculates the approximate jump height in blocks based on the jump strength attribute.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "jumpHeight: horse.getHorseJumpHeight(),"
+      ]
+    },
+    {
+      "name": "getMaxJumpStrengthStat",
+      "signature": "public double getMaxJumpStrengthStat()",
+      "returnType": "double",
+      "description": "Gets the maximum possible jump strength attribute value for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinJumpStrengthStat",
+      "signature": "public double getMinJumpStrengthStat()",
+      "returnType": "double",
+      "description": "Gets the minimum possible jump strength attribute value for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSpeedStat",
+      "signature": "public double getSpeedStat()",
+      "returnType": "double",
+      "description": "Gets the raw speed attribute value of the horse.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "speedStat: horse.getSpeedStat(),",
+        "speedPercentile: ((horse.getSpeedStat() - 0.1125) / 0.225) * 100,"
+      ]
+    },
+    {
+      "name": "getHorseSpeed",
+      "signature": "public double getHorseSpeed()",
+      "returnType": "double",
+      "description": "Returns the actual movement speed of the horse in blocks per second.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "speed: horse.getHorseSpeed(),"
+      ]
+    },
+    {
+      "name": "getMaxSpeedStat",
+      "signature": "public double getMaxSpeedStat()",
+      "returnType": "double",
+      "description": "Gets the maximum possible speed attribute value for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinSpeedStat",
+      "signature": "public double getMinSpeedStat()",
+      "returnType": "double",
+      "description": "Gets the minimum possible speed attribute value for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHealthStat",
+      "signature": "public double getHealthStat()",
+      "returnType": "double",
+      "description": "Gets the current health value of the horse.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "health: horse.getHealthStat(),",
+        "healthPercentile: ((horse.getHealthStat() - 15) / 15) * 100"
+      ]
+    },
+    {
+      "name": "getMaxHealthStat",
+      "signature": "public double getMaxHealthStat()",
+      "returnType": "double",
+      "description": "Gets the maximum possible health value for this entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinHealthStat",
+      "signature": "public double getMinHealthStat()",
+      "returnType": "double",
+      "description": "Gets the minimum possible health value for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

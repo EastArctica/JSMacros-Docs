@@ -1,0 +1,20 @@
+{
+  "name": "EventChunkUnload",
+  "fullClassName": "EventChunkUnload",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a chunk is unloaded from the world.",
+  "overview": "Backed by class `EventChunkUnload`.\n\n### Behavior\n* Fires when a chunk is unloaded by the client\n* Occurs when chunks are outside the render distance or server unloads them\n* Chunk coordinates are in chunk units (not block coordinates)\n* Not cancellable\n\n### Event payload\n| Field | Type | Description |\n| :--- | :--- | :--- |\n| x | int | The X coordinate of the unloaded chunk |\n| z | int | The Z coordinate of the unloaded chunk |\n\n### Minimal example\n```js\nJsMacros.on(\"ChunkUnload\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Chunk unloaded at (${e.x}, ${e.z})`);\n});\n```\n\n### Async example\n```js\nJsMacros.on(\"ChunkUnload\", JavaWrapper.methodToJavaAsync((e) => {\n  const chunkX = e.x;\n  const chunkZ = e.z;\n\n  // Convert chunk coordinates to block coordinates\n  const blockX = chunkX * 16;\n  const blockZ = chunkZ * 16;\n\n  Chat.actionbar(`&cChunk unloaded&7: &f[${chunkX}, ${chunkZ}]`);\n  Chat.log(`&7Chunk unloaded at block coordinates: ${blockX}, ${blockZ}`);\n\n  // You might want to clean up data related to this chunk\n  const world = World.getWorld();\n  const loadedChunks = world.getLoadedChunks();\n  Chat.log(`&7Remaining loaded chunks: &f${loadedChunks.length}`);\n\n  // Example: Clear any stored data for this chunk\n  // clearChunkData(chunkX, chunkZ);\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

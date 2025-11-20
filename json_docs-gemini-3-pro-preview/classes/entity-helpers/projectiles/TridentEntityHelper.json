@@ -1,0 +1,35 @@
+{
+  "name": "TridentEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.projectile.TridentEntityHelper",
+  "extends": "EntityHelper<TridentEntity>",
+  "since": "1.8.4",
+  "description": "The TridentEntityHelper class provides specialized access to trident entities in Minecraft, offering methods to monitor and interact with trident-specific behaviors such as loyalty enchantment status and enchantment detection.",
+  "overview": "This class extends EntityHelper and inherits all functionality for entities including position tracking, movement monitoring, and world interaction. This helper is particularly useful for creating scripts that detect trident projectiles, monitor their behavior patterns, track loyalty effects, or analyze combat scenarios involving tridents.\n\nTridentEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through Entity-related events (e.g., EntitySpawn, EntityDeath, ProjectileHit), World entity queries using type filtering for \"minecraft:trident\", or casting from generic EntityHelper instances when dealing with trident entities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "hasLoyalty",
+      "signature": "hasLoyalty()",
+      "returnType": "boolean",
+      "description": "Checks the internal loyalty level data tracker, returning true for any loyalty level greater than 0.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Detect and classify tridents in the world\nfunction detectAndClassifyTridents() {\n    const entities = World.getEntities();\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const tridents = [];\n\n    entities.forEach(entity => {\n        if (entity.is(\"minecraft:trident\")) {\n            const trident = entity;\n            // Check loyalty status\n            const hasLoyalty = trident.hasLoyalty();\n            // ... additional logic\n        }\n    });\n}",
+        "// Track trident loyalty behavior and return patterns\nclass LoyaltyTracker {\n    onTridentSpawn(trident) {\n        const uuid = trident.getUUID();\n        const hasLoyalty = trident.hasLoyalty();\n\n        this.loyaltyStatistics.totalTridents++;\n        if (hasLoyalty) {\n            this.loyaltyStatistics.loyalTridents++;\n        }\n        // ... tracking logic\n    }\n    // ... rest of class\n}"
+      ]
+    },
+    {
+      "name": "isEnchanted",
+      "signature": "isEnchanted()",
+      "returnType": "boolean",
+      "description": "Provides a quick check for any enchantments on the trident. Detailed enchantment information requires reading the entity's NBT data.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Detect and classify tridents in the world\nfunction detectAndClassifyTridents() {\n    const entities = World.getEntities();\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    entities.forEach(entity => {\n        if (entity.is(\"minecraft:trident\")) {\n            const trident = entity;\n            const isEnchanted = trident.isEnchanted();\n            \n            if (isEnchanted) {\n                trident.setGlowing(true);\n                trident.setGlowingColor(0xFFAA00); // Orange for enchanted\n            }\n        }\n    });\n}",
+        "// Analyze the effectiveness of tridents in combat scenarios\nclass TridentCombatAnalyzer {\n    recordTridentLaunch(trident, sourcePlayer) {\n        const uuid = trident.getUUID();\n        const isEnchanted = trident.isEnchanted();\n\n        let enchantments = [];\n        if (isEnchanted) {\n            const nbt = trident.getNBT();\n            if (nbt.contains(\"Loyalty\")) enchantments.push(`Loyalty ${nbt.getInt(\"Loyalty\")}`);\n            if (nbt.contains(\"Impaling\")) enchantments.push(`Impaling ${nbt.getInt(\"Impaling\")}`);\n            // ... check other enchantments\n        }\n        // ... logging logic\n    }\n}"
+      ]
+    }
+  ]
+}

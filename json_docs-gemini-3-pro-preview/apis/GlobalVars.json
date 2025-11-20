@@ -1,0 +1,334 @@
+{
+  "name": "GlobalVars",
+  "fullClassName": "GlobalVars",
+  "description": "Provides a way to store and share variables between different scripts and contexts.",
+  "overview": "Provides a way to store and share variables between different scripts and contexts (e.g., from a script to a custom GUI). Accessible from scripts via the global `GlobalVars` variable. Also contains a `globalRaw` field (`java.util.Map<string, any>`) regarding the raw map storage.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "putInt",
+      "signature": "putInt(String name, int i)",
+      "returnType": "int | null",
+      "description": "Stores an integer value associated with a specific name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "i",
+          "type": "int",
+          "description": "The integer value to store."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putInt(\"player_deaths\", 5);"
+      ]
+    },
+    {
+      "name": "putString",
+      "signature": "putString(String name, String str)",
+      "returnType": "string | null",
+      "description": "Stores a string value associated with a specific name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "description": "The string value to store."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putString(\"player_name\", \"Steve\");"
+      ]
+    },
+    {
+      "name": "putDouble",
+      "signature": "putDouble(String name, double d)",
+      "returnType": "double | null",
+      "description": "Stores a double value associated with a specific name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "d",
+          "type": "double",
+          "description": "The double value to store."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putDouble(\"player_health\", 19.5);"
+      ]
+    },
+    {
+      "name": "putBoolean",
+      "signature": "putBoolean(String name, boolean b)",
+      "returnType": "boolean | null",
+      "description": "Stores a boolean value associated with a specific name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "b",
+          "type": "boolean",
+          "description": "The boolean value to store."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putBoolean(\"is_afk\", true);"
+      ]
+    },
+    {
+      "name": "putObject",
+      "signature": "putObject(String name, Object o)",
+      "returnType": "any | null",
+      "description": "Stores an arbitrary object associated with a specific name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "o",
+          "type": "any",
+          "description": "The object to store."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const playerPos = { x: 10, y: 64, z: -20 };\nGlobalVars.putObject(\"last_pos\", playerPos);"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType(String name)",
+      "returnType": "string | null",
+      "description": "Retrieves the Java class name of the stored object.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable to check."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putInt(\"my_var\", 10);\nconst type = GlobalVars.getType(\"my_var\");\nChat.log(type); // \"java.lang.Integer\""
+      ]
+    },
+    {
+      "name": "getInt",
+      "signature": "getInt(String name)",
+      "returnType": "int | null",
+      "description": "Retrieves an stored integer value by name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const deaths = GlobalVars.getInt(\"player_deaths\");\nif (deaths !== null) {\n    Chat.log(`Player has died ${deaths} times.`);\n}"
+      ]
+    },
+    {
+      "name": "getAndIncrementInt",
+      "signature": "getAndIncrementInt(String name)",
+      "returnType": "int | null",
+      "description": "Increments an integer variable and returns the value before incrementing.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 0);\nconst value = GlobalVars.getAndIncrementInt(\"counter\");\n// value is 0, stored value is now 1"
+      ]
+    },
+    {
+      "name": "getAndDecrementInt",
+      "signature": "getAndDecrementInt(String name)",
+      "returnType": "int | null",
+      "description": "Decrements an integer variable and returns the value before decrementing.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 10);\nconst value = GlobalVars.getAndDecrementInt(\"counter\");\n// value is 10, stored value is now 9"
+      ]
+    },
+    {
+      "name": "incrementAndGetInt",
+      "signature": "incrementAndGetInt(String name)",
+      "returnType": "int | null",
+      "description": "Increments an integer variable and returns the new value.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 0);\nconst value = GlobalVars.incrementAndGetInt(\"counter\");\n// value is 1, stored value is now 1"
+      ]
+    },
+    {
+      "name": "decrementAndGetInt",
+      "signature": "decrementAndGetInt(String name)",
+      "returnType": "int | null",
+      "description": "Decrements an integer variable and returns the new value.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 10);\nconst value = GlobalVars.decrementAndGetInt(\"counter\");\n// value is 9, stored value is now 9"
+      ]
+    },
+    {
+      "name": "getString",
+      "signature": "getString(String name)",
+      "returnType": "string | null",
+      "description": "Retrieves a stored string value by name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const name = GlobalVars.getString(\"player_name\");"
+      ]
+    },
+    {
+      "name": "getDouble",
+      "signature": "getDouble(String name)",
+      "returnType": "double | null",
+      "description": "Retrieves a stored double value by name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const health = GlobalVars.getDouble(\"player_health\");"
+      ]
+    },
+    {
+      "name": "getBoolean",
+      "signature": "getBoolean(String name)",
+      "returnType": "boolean | null",
+      "description": "Retrieves a stored boolean value by name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const afk = GlobalVars.getBoolean(\"is_afk\");"
+      ]
+    },
+    {
+      "name": "toggleBoolean",
+      "signature": "toggleBoolean(String name)",
+      "returnType": "boolean | null",
+      "description": "Toggles the boolean state associated with the name and returns the new value.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the boolean variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.putBoolean(\"is_running\", false);\nconst newState = GlobalVars.toggleBoolean(\"is_running\");\nChat.log(`New state: ${newState}`); // \"New state: true\""
+      ]
+    },
+    {
+      "name": "getObject",
+      "signature": "getObject(String name)",
+      "returnType": "any | null",
+      "description": "Retrieves a stored object by name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const pos = GlobalVars.getObject(\"last_pos\");\nif (pos) {\n    Chat.log(`Last X position: ${pos.x}`);\n}"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "remove(String key)",
+      "returnType": "void",
+      "description": "Removes the variable with the specified name.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The name of the variable to remove."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "GlobalVars.remove(\"player_name\");"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "java.util.Map<string, any>",
+      "description": "Retrieves the raw underlying Java Map that stores all global variables.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const rawMap = GlobalVars.getRaw();\nrawMap.put(\"new_key\", \"new_value\");"
+      ]
+    }
+  ]
+}

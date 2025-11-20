@@ -1,0 +1,18 @@
+{
+  "name": "EventDimensionChange",
+  "fullClassName": "EventDimensionChange",
+  "description": "This event is fired when the player changes dimensions (e.g., from overworld to nether).",
+  "overview": "Backed by class `EventDimensionChange`.\n\n### Fields\n\n*   **dimension** (`string`): The ID of the new dimension the player is entering. Common IDs include 'minecraft:overworld', 'minecraft:the_nether', 'minecraft:the_end'.\n*   **from** (`string`): The ID of the dimension the player is leaving.\n\n### Behavior\n\n*   Fires when the player travels between different dimensions\n*   Common dimension transitions include Overworld ↔ Nether, Overworld ↔ End\n*   Not cancellable\n\n### Signature\n\n```js\nJsMacros.on(\"DimensionChange\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n### Minimal example\n\n```js\nJsMacros.on(\"DimensionChange\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Dimension changed from ${e.from} to ${e.dimension}`);\n});\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

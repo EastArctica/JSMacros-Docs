@@ -1,0 +1,27 @@
+{
+  "name": "fileObj",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.gui.overlays.FileChooser.fileObj",
+  "extends": null,
+  "since": null,
+  "description": "The FileChooser.fileObj class is a simple but essential wrapper class that associates a File object with its corresponding Button widget in the FileChooser's grid display.",
+  "overview": "The fileObj class is a fundamental component of the FileChooser system. It wraps File objects with their corresponding UI Button widgets to enable efficient file selection and visual feedback management. It provides direct access to both file system data and UI components, supporting both files and directories in a unified interface. \n\nKey responsibilities include:\n- **Binds File to UI**: Creates a direct association between file system entries and their visual representations\n- **Manages State**: Tracks the selected state and visual appearance of each file entry\n- **Enables Interactions**: Provides the infrastructure for file selection, navigation, and user interactions\n- **Supports Grid Layout**: Works seamlessly with the 5-column grid display system\n- **Handles Both Types**: Uniformly represents both files and directories with appropriate visual differentiation\n\nThe class exposes two main public fields: `file` (java.io.File) and `btn` (xyz.wagyourtail.wagyourgui.elements.Button), which are accessed directly in scripts.",
+  "constructors": [
+    {
+      "signature": "new fileObj(File file, Button btn)",
+      "description": "Creates a new fileObj instance that associates a File object with its corresponding Button widget.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "File",
+          "description": "The file or directory object this wrapper represents"
+        },
+        {
+          "name": "btn",
+          "type": "Button",
+          "description": "The button widget that displays this file in the FileChooser grid"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

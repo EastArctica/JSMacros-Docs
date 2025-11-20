@@ -1,0 +1,211 @@
+[
+  {
+    "name": "PandaEntityHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.PandaEntityHelper",
+    "extends": "AnimalEntityHelper<PandaEntity>",
+    "since": "1.8.4",
+    "description": "The PandaEntityHelper class provides specialized access to Panda entities in Minecraft, offering comprehensive methods for genetic information, behavioral states, and panda-specific characteristics.",
+    "overview": "This class extends `AnimalEntityHelper`, inheriting breeding functionality, food checking, and animal compatibility while adding panda-specific features like gene analysis, behavior monitoring, and state detection.\n\nPandas have complex genetic systems that determine their appearance and behavior, with main and hidden genes that can be recessive or dominant. This helper provides full access to genetic information, behavioral states (sneezing, playing, sitting, lying on back), and special conditions like thunderstorm sensitivity and various personality traits (lazy, worried, playful, brown, weak, aggressive).\n\nThis helper is essential for scripts that manage panda breeding programs, behavioral monitoring, sanctuary automation, or any functionality that requires interaction with Minecraft's complex panda genetics and behavior system.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "getMainGene",
+        "signature": "getMainGene()",
+        "returnType": "number",
+        "description": "Returns the ID of this panda's main gene.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    const mainGeneId = panda.getMainGene();\n    Chat.log(`Panda main gene ID: ${mainGeneId}`);\n}"
+        ]
+      },
+      {
+        "name": "getMainGeneName",
+        "signature": "getMainGeneName()",
+        "returnType": "string",
+        "description": "Returns the name of this panda's main gene as a string.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nconst geneNames = new Set();\n\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    const geneName = panda.getMainGeneName();\n    geneNames.add(geneName);\n}\n\nChat.log(`Panda genes found: ${Array.from(geneNames).join(\", \")}`);"
+        ]
+      },
+      {
+        "name": "isMainGeneRecessive",
+        "signature": "isMainGeneRecessive()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's main gene is recessive.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nlet recessiveCount = 0;\n\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isMainGeneRecessive()) {\n        recessiveCount++;\n    }\n}\n\nChat.log(`Pandas with recessive main genes: ${recessiveCount}`);"
+        ]
+      },
+      {
+        "name": "getHiddenGene",
+        "signature": "getHiddenGene()",
+        "returnType": "number",
+        "description": "Returns the ID of this panda's hidden gene.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    const hiddenGeneId = panda.getHiddenGene();\n    Chat.log(`Panda hidden gene ID: ${hiddenGeneId}`);\n}"
+        ]
+      },
+      {
+        "name": "getHiddenGeneName",
+        "signature": "getHiddenGeneName()",
+        "returnType": "string",
+        "description": "Returns the name of this panda's hidden gene as a string.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    const mainGene = panda.getMainGeneName();\n    const hiddenGene = panda.getHiddenGeneName();\n    Chat.log(`Panda genes - Main: ${mainGene}, Hidden: ${hiddenGene}`);\n}"
+        ]
+      },
+      {
+        "name": "isHiddenGeneRecessive",
+        "signature": "isHiddenGeneRecessive()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's hidden gene is recessive.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nlet hiddenRecessiveCount = 0;\n\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isHiddenGeneRecessive()) {\n        hiddenRecessiveCount++;\n    }\n}\n\nChat.log(`Pandas with recessive hidden genes: ${hiddenRecessiveCount}`);"
+        ]
+      },
+      {
+        "name": "isIdle",
+        "signature": "isIdle()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda is currently idling.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isIdle()) {\n        Chat.log(\"This panda is relaxing\");\n        panda.entity.setGlowing(true);\n        panda.entity.setGlowingColor(0xFFFF00); // Yellow for idle\n    }\n}"
+        ]
+      },
+      {
+        "name": "isSneezing",
+        "signature": "isSneezing()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda is currently sneezing.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isSneezing()) {\n        Chat.log(\"This panda is sneezing! Achoo!\");\n        // Pandas can drop slime balls when sneezing\n    }\n}"
+        ]
+      },
+      {
+        "name": "isPlaying",
+        "signature": "isPlaying()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda is currently playing.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isPlaying()) {\n        Chat.log(\"This panda is having fun!\");\n        panda.entity.setGlowing(true);\n        panda.entity.setGlowingColor(0x00FF00); // Green for playing\n    }\n}"
+        ]
+      },
+      {
+        "name": "isSitting",
+        "signature": "isSitting()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda is currently sitting.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isSitting()) {\n        Chat.log(\"This panda is sitting down\");\n    }\n}"
+        ]
+      },
+      {
+        "name": "isLyingOnBack",
+        "signature": "isLyingOnBack()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda is lying on its back.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isLyingOnBack()) {\n        Chat.log(\"This panda is lying on its back\");\n    }\n}"
+        ]
+      },
+      {
+        "name": "isLazy",
+        "signature": "isLazy()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's genes make it lazy.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nlet lazyCount = 0;\n\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isLazy()) {\n        lazyCount++;\n        Chat.log(\"Found a lazy panda!\");\n    }\n}\n\nChat.log(`Total lazy pandas: ${lazyCount}`);"
+        ]
+      },
+      {
+        "name": "isWorried",
+        "signature": "isWorried()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's genes make it worried.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isWorried()) {\n        Chat.log(\"This panda is worried about something\");\n        // Worried pandas avoid players and shake during thunderstorms\n    }\n}"
+        ]
+      },
+      {
+        "name": "isScaredByThunderstorm",
+        "signature": "isScaredByThunderstorm()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda is scared by an active thunderstorm.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isScaredByThunderstorm()) {\n        Chat.log(\"This panda is scared by thunderstorms\");\n        // These pandas will hide and shake during storms\n    }\n}"
+        ]
+      },
+      {
+        "name": "isPlayful",
+        "signature": "isPlayful()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's genes make it playful.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nlet playfulCount = 0;\n\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isPlayful()) {\n        playfulCount++;\n        Chat.log(\"Found a playful panda!\");\n    }\n}\n\nChat.log(`Total playful pandas: ${playfulCount}`);"
+        ]
+      },
+      {
+        "name": "isBrown",
+        "signature": "isBrown()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's genes make it brown.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isBrown()) {\n        Chat.log(\"Found a rare brown panda!\");\n        panda.entity.setGlowing(true);\n        panda.entity.setGlowingColor(0x8B4513); // Brown color\n    }\n}"
+        ]
+      },
+      {
+        "name": "isWeak",
+        "signature": "isWeak()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's genes make it weak.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isWeak()) {\n        Chat.log(\"This panda is weak and has trouble following players\");\n    }\n}"
+        ]
+      },
+      {
+        "name": "isAttacking",
+        "signature": "isAttacking()",
+        "returnType": "boolean",
+        "description": "Returns whether this panda's genes make it aggressive.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const pandas = World.getEntities().filter(e => e.getType() === \"minecraft:panda\");\nfor (const pandaEntity of pandas) {\n    const panda = pandaEntity.asAnimal();\n    if (panda.isAttacking()) {\n        Chat.log(\"This panda is aggressive! Watch out!\");\n        panda.entity.setGlowing(true);\n        panda.entity.setGlowingColor(0xFF0000); // Red for aggressive\n    }\n}"
+        ]
+      }
+    ]
+  }
+]

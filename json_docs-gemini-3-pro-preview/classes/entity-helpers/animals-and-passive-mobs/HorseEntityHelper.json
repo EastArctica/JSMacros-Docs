@@ -1,0 +1,239 @@
+{
+  "name": "HorseEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.HorseEntityHelper",
+  "extends": "AbstractHorseEntityHelper<HorseEntity>",
+  "since": "1.8.4",
+  "description": "The HorseEntityHelper class provides specialized functionality for interacting with horse entities in Minecraft, offering access to horse-specific properties like variants and stats.",
+  "overview": "The HorseEntityHelper class provides specialized functionality for interacting with horse entities in Minecraft. This helper offers access to horse-specific properties including variant information, taming status, equipment, and performance statistics like speed and jump height. It extends AbstractHorseEntityHelper and inherits comprehensive methods for managing horse ownership, breeding, and combat attributes.\n\nHorses are tamable passive mobs that can be ridden by players after taming and equipping with a saddle. They come in different color variants with marking patterns, and each horse has randomized stats for health, speed, and jump strength that determine their overall quality for riding and transportation.\n\nNotes and Limitations:\n- HorseEntityHelper only works with entities of type minecraft:horse.\n- The getVariant() method returns raw integer values that need to be decoded to understand the horse's appearance.\n- Horse stats are determined at spawn and cannot be changed through normal gameplay mechanics.\n- Performance calculations like getHorseSpeed() are approximations but are very close to actual values.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getVariant",
+      "signature": "public int getVariant()",
+      "returnType": "int",
+      "description": "Returns the raw integer variant value representing the horse's color and markings. This value needs to be decoded to understand the specific appearance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const variant = horse.getVariant();"
+      ]
+    },
+    {
+      "name": "getOwner",
+      "signature": "public String getOwner()",
+      "returnType": "String",
+      "description": "Get the UUID of the horse's owner, or null if unowned.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isTame",
+      "signature": "public boolean isTame()",
+      "returnType": "boolean",
+      "description": "Check if the horse is tamed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isTame = horse.isTame();"
+      ]
+    },
+    {
+      "name": "isAngry",
+      "signature": "public boolean isAngry()",
+      "returnType": "boolean",
+      "description": "Check if the horse is angry (will not accept taming attempts).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBred",
+      "signature": "public boolean isBred()",
+      "returnType": "boolean",
+      "description": "Check if the horse was bred by players.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSaddled",
+      "signature": "public boolean isSaddled()",
+      "returnType": "boolean",
+      "description": "Check if the horse has a saddle equipped.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isSaddled = horse.isSaddled();"
+      ]
+    },
+    {
+      "name": "canWearArmor",
+      "signature": "public boolean canWearArmor()",
+      "returnType": "boolean",
+      "description": "Check if the horse can wear horse armor.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBeSaddled",
+      "signature": "public boolean canBeSaddled()",
+      "returnType": "boolean",
+      "description": "Check if the horse can be saddled.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInventorySize",
+      "signature": "public int getInventorySize()",
+      "returnType": "int",
+      "description": "Get the size of the horse's inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSpeedStat",
+      "signature": "public double getSpeedStat()",
+      "returnType": "double",
+      "description": "Get the horse's movement speed attribute value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const speedStat = horse.getSpeedStat();"
+      ]
+    },
+    {
+      "name": "getHorseSpeed",
+      "signature": "public double getHorseSpeed()",
+      "returnType": "double",
+      "description": "Get the horse's speed in blocks per second.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const speed = horse.getHorseSpeed();"
+      ]
+    },
+    {
+      "name": "getJumpStrengthStat",
+      "signature": "public double getJumpStrengthStat()",
+      "returnType": "double",
+      "description": "Get the horse's jump strength attribute value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const jumpStat = horse.getJumpStrengthStat();"
+      ]
+    },
+    {
+      "name": "getHorseJumpHeight",
+      "signature": "public double getHorseJumpHeight()",
+      "returnType": "double",
+      "description": "Get the horse's maximum jump height.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const jumpHeight = horse.getHorseJumpHeight();"
+      ]
+    },
+    {
+      "name": "getHealthStat",
+      "signature": "public double getHealthStat()",
+      "returnType": "double",
+      "description": "Get the horse's maximum health value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxHealth = horse.getHealthStat();"
+      ]
+    },
+    {
+      "name": "getMaxSpeedStat",
+      "signature": "public double getMaxSpeedStat()",
+      "returnType": "double",
+      "description": "Get the maximum possible speed stat for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinSpeedStat",
+      "signature": "public double getMinSpeedStat()",
+      "returnType": "double",
+      "description": "Get the minimum possible speed stat for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxJumpStrengthStat",
+      "signature": "public double getMaxJumpStrengthStat()",
+      "returnType": "double",
+      "description": "Get the maximum possible jump strength stat for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinJumpStrengthStat",
+      "signature": "public double getMinJumpStrengthStat()",
+      "returnType": "double",
+      "description": "Get the minimum possible jump strength stat for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealthStat",
+      "signature": "public double getMaxHealthStat()",
+      "returnType": "double",
+      "description": "Get the maximum possible health stat for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinHealthStat",
+      "signature": "public double getMinHealthStat()",
+      "returnType": "double",
+      "description": "Get the minimum possible health stat for this entity type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isFood",
+      "signature": "public boolean isFood(ItemHelper item)",
+      "returnType": "boolean",
+      "description": "Check if an item can be used to feed/breed the horse.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper",
+          "description": "The item to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreedWith",
+      "signature": "public boolean canBreedWith(EntityHelper other)",
+      "returnType": "boolean",
+      "description": "Check if this horse can breed with another entity.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "EntityHelper",
+          "description": "The other entity to check compatibility with."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const canBreed = horse1.canBreedWith(horse2);"
+      ]
+    }
+  ]
+}

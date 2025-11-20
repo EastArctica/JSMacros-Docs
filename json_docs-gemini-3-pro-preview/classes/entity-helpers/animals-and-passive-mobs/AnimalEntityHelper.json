@@ -1,0 +1,45 @@
+{
+  "name": "AnimalEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.AnimalEntityHelper",
+  "extends": "MobEntityHelper<AnimalEntity>",
+  "since": "1.8.4",
+  "description": "The AnimalEntityHelper class provides specialized access to animal entities in Minecraft, offering methods for breeding mechanics, food preferences, and animal compatibility checking.",
+  "overview": "This class serves as the base class for all passive animal helpers and extends MobEntityHelper, inheriting comprehensive functionality for mob behaviors, living entity properties, and basic entity operations. This helper is essential for scripts that manage animal breeding, farm automation, animal feeding systems, or any functionality that requires interaction with Minecraft's animal ecosystem.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isFood",
+      "signature": "public boolean isFood(Object item)",
+      "returnType": "boolean",
+      "description": "Checks if the provided item is considered food for this animal. Accepts both ItemHelper and ItemStackHelper instances.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper | ItemStackHelper",
+          "description": "The item or item stack to check."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (mainHand && animalData.animal.isFood(mainHand)) canFeed = true;"
+      ]
+    },
+    {
+      "name": "canBreedWith",
+      "signature": "public boolean canBreedWith(AnimalEntityHelper other)",
+      "returnType": "boolean",
+      "description": "Checks if this animal can breed with another animal. This includes checks for species compatibility, relationship (inbreeding prevention), and breeding readiness.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "AnimalEntityHelper",
+          "description": "The other animal entity to check breeding compatibility with."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (animals[i].animal.canBreedWith(animals[j].animal)) {\n    // ... logic for breeding pair\n}"
+      ]
+    }
+  ]
+}

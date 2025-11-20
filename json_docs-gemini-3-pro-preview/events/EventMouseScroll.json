@@ -1,0 +1,20 @@
+{
+  "name": "EventMouseScroll",
+  "fullClassName": "EventMouseScroll",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the mouse wheel is scrolled.",
+  "overview": "This event is fired when the mouse wheel is scrolled.\n\n## Behavior\n* Fires when the mouse wheel is scrolled\n- The `amount` field indicates scroll direction and magnitude\n- Positive values scroll down, negative values scroll up\n- This event is cancellable - preventing the scroll action\n- Useful for custom hotkey systems or UI interactions\n\n## Event Payload\n**amount** (`double`): The scroll amount and direction. Positive values indicate scrolling down, negative values indicate scrolling up. The magnitude typically ranges from -1.0 to 1.0 for normal scrolling, though some systems may produce larger values.\n\n## Minimal example\n```js\nJsMacros.on(\"MouseScroll\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Mouse scrolled: ${e.amount}`);\n});\n```\n\n## Async example\n```js\nJsMacros.on(\"MouseScroll\", JavaWrapper.methodToJavaAsync((e) => {\n  const scrollAmount = e.amount;\n  const direction = scrollAmount > 0 ? \"down\" : \"up\";\n  const magnitude = Math.abs(scrollAmount);\n\n  Chat.log(`&6Mouse Scroll: &f${direction} (${magnitude.toFixed(1)})`);\n\n  // Check current screen to determine scroll behavior\n  const player = Player.getPlayer();\n  const currentScreen = Hud.getOpenScreen();\n\n  if (currentScreen) {\n    Chat.log(`&7Scrolling in screen: &f${currentScreen.getClassName()}`);\n\n    // Handle inventory scrolling\n    if (currentScreen.getClassName().includes(\"InventoryScreen\")) {\n      Chat.actionbar(`&eScrolling inventory ${direction}`);\n      // Could implement custom hotbar switching\n      if (scrollAmount > 0) {\n        Chat.actionbar(\"&7Next hotbar slot\");\n      } else {\n        Chat.actionbar(\"&7Previous hotbar slot\");\n      }\n    }\n\n    // Handle creative inventory scrolling\n    if (currentScreen.getClassName().includes(\"CreativeInventoryScreen\")) {\n      Chat.actionbar(`&eCreative inventory scroll ${direction}`);\n    }\n\n    // Handle chat scrolling\n    if (currentScreen.getClassName().includes(\"ChatScreen\")) {\n      Chat.actionbar(`&7Chat history scroll ${direction}`);\n    }\n  } else {\n    // In-game scrolling\n    Chat.actionbar(`&eIn-game scroll ${direction}`);\n\n    // Check if player is sneaking for different behavior\n    if (player && player.isSneaking()) {\n      Chat.log(`&7Sneaking + scroll: custom action`);\n      // Implement custom hotkey while sneaking\n      if (scrollAmount > 0) {\n        Chat.actionbar(`&cNext tool (sneak+scroll)`);\n      } else {\n        Chat.actionbar(`&aPrevious tool (sneak+scroll)`);\n      }\n    } else {\n      // Normal hotbar switching\n      const currentSlot = player ? player.getInventory().getSelectedSlot() : 0;\n      Chat.log(`&7Current hotbar: &f${currentSlot}`);\n    }\n  }\n\n  // Detect scroll intensity\n  if (magnitude > 3) {\n    Chat.log(`&cFast scroll detected!`);\n  } else if (magnitude < 1) {\n    Chat.log(`&7Slow scroll detected`);\n  }\n\n  // Custom scroll zones (could be used for custom UI)\n  const mouseX = Hud.getMouseX();\n  const mouseY = Hud.getMouseY();\n  Chat.log(`&7Scroll position: &f${mouseX}, ${mouseY}`);\n\n  // Example: Custom zoom with scroll while holding Ctrl\n  // This would need to be implemented with the actual game zoom controls\n  if (isKeyDown(\"key.keyboard.left.control\")) {\n    Chat.log(`&6Ctrl+Scroll: Zoom ${direction}`);\n    // implementZoom(direction, magnitude);\n  }\n}));\n\nfunction isKeyDown(keyName) {\n  // This would need to be implemented with actual key checking\n  // For now, just return false as placeholder\n  return false;\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ContainerInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.ContainerInventory",
+  "extends": "Inventory<T>",
+  "since": "1.8.4",
+  "description": "The ContainerInventory class provides functionality for interacting with general container screens in Minecraft, including chests, shulker boxes, and hoppers.",
+  "overview": "The ContainerInventory class provides functionality for interacting with general container screens in Minecraft. This includes chests, shulker boxes, hoppers, and other generic storage containers. It extends the base Inventory class and adds container-specific functionality while inheriting all standard inventory operations.\n\nThis class is automatically created when you open a container screen and can be accessed through Player.getInventory() or Inventory.create() when a container is open.",
+  "constructors": [
+    {
+      "signature": "new ContainerInventory(inventory)",
+      "description": "Creates a new ContainerInventory instance for the specified container screen. Note: This constructor is primarily used internally by JSMacros. Scripts typically obtain instances through Player.getInventory() or Inventory.create().",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "HandledScreen<T>",
+          "description": "The container screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "findFreeContainerSlot",
+      "signature": "findFreeContainerSlot()",
+      "returnType": "int",
+      "description": "Finds a free slot within the container section of the open inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n\n// Find free container slot\nconst containerFree = inventory.findFreeContainerSlot();\nif (containerFree !== -1) {\n    Chat.log(`Free container slot: ${containerFree}`);\n}"
+      ]
+    }
+  ]
+}

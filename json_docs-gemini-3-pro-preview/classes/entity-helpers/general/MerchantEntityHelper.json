@@ -1,0 +1,55 @@
+{
+  "name": "MerchantEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.MerchantEntityHelper<T extends MerchantEntity>",
+  "extends": "LivingEntityHelper<T>",
+  "since": "1.6.3",
+  "description": "The MerchantEntityHelper class is a World Interaction helper in JSMacros that provides access to merchant entities (villagers, wandering traders, etc.) and their trading functionality.",
+  "overview": "The `MerchantEntityHelper` class is a World Interaction helper in JSMacros that provides access to merchant entities (villagers, wandering traders, etc.) and their trading functionality. It extends `LivingEntityHelper` and provides methods to interact with merchant-specific properties like trade offers, experience, and customer status.\n\nThis class is particularly useful for creating scripts that:\n- Analyze villager trading opportunities\n- Monitor merchant inventory and prices\n- Create automated trading systems\n- Track merchant experience and reputation",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getTrades",
+      "signature": "getTrades()",
+      "returnType": "List<TradeOfferHelper>",
+      "description": "Returns a list of all currently available trade offers from this merchant. Each trade is represented as a `TradeOfferHelper` object containing information about required items, output items, pricing, and usage limits.\n\nNote: These methods might not work reliably depending on the data the server sends. They work best in singleplayer environments.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const trades = merchant.getTrades();\nChat.log(`Merchant has ${trades.length} trades available:`);\n\nfor (let i = 0; i < trades.length; i++) {\n    const trade = trades[i];\n    const inputs = trade.getInput();\n    const output = trade.getOutput();\n\n    Chat.log(`Trade ${i + 1}:`);\n\n    // Show input items\n    for (let j = 0; j < inputs.length; j++) {\n        const input = inputs[j];\n        Chat.log(`  Input ${j + 1}: ${input.getCount()}x ${input.getName()}`);\n    }\n\n    // Show output item\n    Chat.log(`  Output: ${output.getCount()}x ${output.getName()}`);\n    Chat.log(`  Available: ${trade.isAvailable() ? 'Yes' : 'No'}`);\n    Chat.log(`  Uses: ${trade.getUses()}/${trade.getMaxUses()}`);\n}"
+      ]
+    },
+    {
+      "name": "refreshTrades",
+      "signature": "refreshTrades()",
+      "returnType": "List<TradeOfferHelper>",
+      "description": "Refreshes the merchant's trade offers and returns the updated list. This can be useful when you want to force a restock or check for new trades that might have become available.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Refresh trades to see if any new ones are available\nconst refreshedTrades = merchant.refreshTrades();\nChat.log(`After refresh: ${refreshedTrades.length} trades available`);\n\n// Compare with previous trades\nconst oldTrades = merchant.getTrades();\nif (refreshedTrades.length > oldTrades.length) {\n    Chat.log(\"New trades have become available!\");\n}"
+      ]
+    },
+    {
+      "name": "getExperience",
+      "signature": "getExperience()",
+      "returnType": "int",
+      "description": "Returns the current experience level of the merchant. For villagers, this affects their trading abilities and prices. Higher experience levels generally indicate more favorable trading conditions.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const experience = merchant.getExperience();\nChat.log(`Merchant experience level: ${experience}`);\n\nif (experience > 0) {\n    Chat.log(\"This merchant has gained experience from previous trades.\");\n}"
+      ]
+    },
+    {
+      "name": "hasCustomer",
+      "signature": "hasCustomer()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the merchant currently has a customer, `false` otherwise. This can be used to check if another player is currently trading with this merchant.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (merchant.hasCustomer()) {\n    Chat.log(\"Merchant is currently busy with another customer.\");\n    // Wait or try a different merchant\n} else {\n    Chat.log(\"Merchant is available for trading.\");\n    // Proceed with trading logic\n}"
+      ]
+    }
+  ]
+}

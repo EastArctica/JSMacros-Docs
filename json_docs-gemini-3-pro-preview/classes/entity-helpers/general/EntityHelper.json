@@ -1,0 +1,509 @@
+{
+  "name": "EntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.EntityHelper",
+  "extends": "BaseHelper<Entity>",
+  "since": "1.0.0",
+  "description": "The EntityHelper class is a fundamental wrapper for Minecraft entities in JSMacros, providing access to entity properties, behaviors, and interactions.",
+  "overview": "It serves as the base class for all entity-related helpers and offers comprehensive methods for querying entity information, positions, states, and performing various operations on entities.\n\nThis class is typically obtained through events, world queries, or as return values from other helper methods. EntityHelper instances represent specific entity objects in the game world, containing their current state and position.\n\n**Notes and Limitations:**\n- EntityHelper instances become invalid when the entity is removed from the world. Always check `isAlive()` before accessing entity data.\n- The `as*()` casting methods can throw `ClassCastException` if the entity is not of the expected type. Use `is()` to check types first.\n- Position methods return different coordinate systems - `getPos()` returns world coordinates while `getBlockPos()` returns block coordinates.\n- Raytracing methods may return null if no entity or block is found within the specified distance.\n- Distance calculations use different precision levels - `float` for entity-to-entity, `double` for position-based calculations.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getPos",
+      "signature": "public Pos3D getPos()",
+      "returnType": "Pos3D",
+      "description": "Retrieves the entity's position in the world. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Scan for entities in the area\nfunction scanEntities() {\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const playerPos = player.getPos();\n    const entities = World.getEntities();\n\n    Chat.log(\"=== Entity Scan ===\");\n    entities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance <= 50) { // Only nearby entities\n            const name = entity.getName().getString();\n            const type = entity.getType();\n            const pos = entity.getPos();\n\n            Chat.log(`${name} (${type}) - ${distance.toFixed(1)}m at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]`);\n        }\n    });\n}\n\nscanEntities();",
+        "// Track entity states and conditions\nclass EntityTracker {\n    constructor() {\n        this.trackedEntities = new Map();\n    }\n\n    startTracking(entity) {\n        const uuid = entity.getUUID();\n        const name = entity.getName().getString();\n\n        this.trackedEntities.set(uuid, {\n            entity: entity,\n            name: name,\n            lastPos: entity.getPos(),\n            lastHealth: entity.asLiving ? entity.asLiving().getHealth() : null\n        });\n\n        Chat.log(`Started tracking ${name} (${uuid})`);\n    }\n    // ... (rest of tracker code)\n}"
+      ]
+    },
+    {
+      "name": "getBlockPos",
+      "signature": "public BlockPos getBlockPos()",
+      "returnType": "BlockPos",
+      "description": "Retrieves the block coordinates of the entity. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getEyePos",
+      "signature": "public Pos3D getEyePos()",
+      "returnType": "Pos3D",
+      "description": "Retrieves the position of the entity's eyes. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getChunkPos",
+      "signature": "public ChunkPos getChunkPos()",
+      "returnType": "ChunkPos",
+      "description": "Retrieves the chunk coordinates the entity is currently in. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getX",
+      "signature": "public double getX()",
+      "returnType": "double",
+      "description": "Retrieves the X coordinate. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY",
+      "signature": "public double getY()",
+      "returnType": "double",
+      "description": "Retrieves the Y coordinate. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZ",
+      "signature": "public double getZ()",
+      "returnType": "double",
+      "description": "Retrieves the Z coordinate. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getEyeHeight",
+      "signature": "public double getEyeHeight()",
+      "returnType": "double",
+      "description": "Retrieves the height of the entity's eyes from its feet. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getVelocity",
+      "signature": "public Pos3D getVelocity()",
+      "returnType": "Pos3D",
+      "description": "Retrieves the current velocity vector of the entity. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSpeed",
+      "signature": "public double getSpeed()",
+      "returnType": "double",
+      "description": "Retrieves the movement speed of the entity. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFacingDirection",
+      "signature": "public DirectionHelper getFacingDirection()",
+      "returnType": "DirectionHelper",
+      "description": "Retrieves the direction the entity is facing. Part of the Position and Movement category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "public TextHelper getName()",
+      "returnType": "TextHelper",
+      "description": "Retrieves the name of the entity as a text component. Part of the Entity Information category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Scan for entities in the area\n// ...\n            const name = entity.getName().getString();\n            const type = entity.getType();\n            const pos = entity.getPos();\n\n            Chat.log(`${name} (${type}) - ${distance.toFixed(1)}m at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]`);\n// ...",
+        "// Track entity states and conditions\n// ...\n    startTracking(entity) {\n        const uuid = entity.getUUID();\n        const name = entity.getName().getString();\n\n        this.trackedEntities.set(uuid, {\n            entity: entity,\n            name: name,\n// ..."
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "public String getType()",
+      "returnType": "String",
+      "description": "Retrieves the resource identifier string for the entity type (e.g., 'minecraft:zombie'). Part of the Entity Information category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Scan for entities in the area\n// ...\n            const name = entity.getName().getString();\n            const type = entity.getType();\n            const pos = entity.getPos();\n// ...",
+        "// Collect and display entity statistics\nfunction analyzeEntities() {\n    const entities = World.getEntities();\n    // ...\n\n    entities.forEach(entity => {\n        const type = entity.getType();\n\n        // Count by type\n        entitiesByType.set(type, (entitiesByType.get(type) || 0) + 1);\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "is",
+      "signature": "public boolean is(String... types)",
+      "returnType": "boolean",
+      "description": "Checks if the entity ID matches one of the provided types. Added in version 1.9.0. Part of the Entity Information category.",
+      "parameters": [
+        {
+          "name": "types",
+          "type": "String...",
+          "description": "One or more entity identifiers to check against."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Track entities when they spawn\nevents.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n\n    // Track important entities\n    if (entity.is(\"minecraft:creeper\", \"minecraft:zombie\") ||\n        entity.is(\"minecraft:villager\", \"minecraft:wandering_trader\")) {\n        tracker.startTracking(entity);\n    }\n}));",
+        "// Highlight different entity types with different colors\nfunction highlightEntities() {\n    // ...\n            // Apply new highlights based on entity type\n            if (entity.is(\"minecraft:player\")) {\n                if (entity === player) {\n                    entity.setGlowingColor(0x00FF00); // Green for self\n                } else {\n                    entity.setGlowingColor(0x0080FF); // Blue for other players\n                }\n                entity.setGlowing(true);\n            } else if (entity.is(\"minecraft:creeper\")) {\n                entity.setGlowingColor(0xFF00FF); // Magenta for creepers\n                entity.setGlowing(true);\n            } \n    // ...\n}"
+      ]
+    },
+    {
+      "name": "getUUID",
+      "signature": "public String getUUID()",
+      "returnType": "String",
+      "description": "Retrieves the unique identifier (UUID) of the entity. Part of the Entity Information category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Track entity states and conditions\nclass EntityTracker {\n    // ...\n    startTracking(entity) {\n        const uuid = entity.getUUID();\n        const name = entity.getName().getString();\n\n        this.trackedEntities.set(uuid, {\n            entity: entity,\n    // ...\n"
+      ]
+    },
+    {
+      "name": "getBiome",
+      "signature": "public String getBiome()",
+      "returnType": "String",
+      "description": "Retrieves the biome the entity is currently in. Part of the Entity Information category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getChunk",
+      "signature": "public ChunkHelper getChunk()",
+      "returnType": "ChunkHelper",
+      "description": "Retrieves the chunk object the entity is currently in. Part of the Entity Information category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getNBT",
+      "signature": "public NBTElementHelper getNBT()",
+      "returnType": "NBTElementHelper",
+      "description": "Retrieves the NBT data of the entity. Note: Access is read-only for some types. Part of the Entity Information category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAlive",
+      "signature": "public boolean isAlive()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is currently alive and valid in the world. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "    updateTracking() {\n        for (const [uuid, data] of this.trackedEntities) {\n            if (!data.entity.isAlive()) {\n                Chat.log(`${data.name} has died or disappeared`);\n                this.trackedEntities.delete(uuid);\n                continue;\n            }\n            // ...\n        }\n    }"
+      ]
+    },
+    {
+      "name": "isGlowing",
+      "signature": "public boolean isGlowing()",
+      "returnType": "boolean",
+      "description": "Checks if the entity has the glowing effect. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isInLava",
+      "signature": "public boolean isInLava()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is in lava. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOnFire",
+      "signature": "public boolean isOnFire()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is currently burning. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSneaking",
+      "signature": "public boolean isSneaking()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is sneaking/crouching. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSprinting",
+      "signature": "public boolean isSprinting()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is sprinting. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAir",
+      "signature": "public int getAir()",
+      "returnType": "int",
+      "description": "Retrieves the current air/breath level of the entity. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxAir",
+      "signature": "public int getMaxAir()",
+      "returnType": "int",
+      "description": "Retrieves the maximum air capacity of the entity. Part of the State and Conditions category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setCustomName",
+      "signature": "public void setCustomName(String name)",
+      "returnType": "void",
+      "description": "Sets a custom name for the entity. Part of the Appearance and Effects category.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The custom name text."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setCustomNameVisible",
+      "signature": "public void setCustomNameVisible(boolean visible)",
+      "returnType": "void",
+      "description": "Sets whether the custom name is visible. Part of the Appearance and Effects category.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "Visibility state."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setGlowing",
+      "signature": "public void setGlowing(boolean glowing)",
+      "returnType": "void",
+      "description": "Enables or disables the glowing effect on the entity. Part of the Appearance and Effects category.",
+      "parameters": [
+        {
+          "name": "glowing",
+          "type": "boolean",
+          "description": "True to enable glowing, false to disable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Highlight different entity types with different colors\nfunction highlightEntities() {\n    // ...\n            // Apply new highlights based on entity type\n            if (entity.is(\"minecraft:player\")) {\n                // ...\n                entity.setGlowing(true);\n            } else if (entity.is(\"minecraft:creeper\")) {\n                entity.setGlowingColor(0xFF00FF); // Magenta for creepers\n                entity.setGlowing(true);\n            }\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "setGlowingColor",
+      "signature": "public void setGlowingColor(int color)",
+      "returnType": "void",
+      "description": "Sets the color of the glowing effect. Part of the Appearance and Effects category.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "The RGB color integer."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Highlight different entity types with different colors\nfunction highlightEntities() {\n    // ...\n            // Apply new highlights based on entity type\n            if (entity.is(\"minecraft:player\")) {\n                if (entity === player) {\n                    entity.setGlowingColor(0x00FF00); // Green for self\n                } else {\n                    entity.setGlowingColor(0x0080FF); // Blue for other players\n                }\n                entity.setGlowing(true);\n            }\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "getGlowingColor",
+      "signature": "public int getGlowingColor()",
+      "returnType": "int",
+      "description": "Retrieves the current glowing color. Part of the Appearance and Effects category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "resetGlowing",
+      "signature": "public void resetGlowing()",
+      "returnType": "void",
+      "description": "Resets the glowing status to default. Part of the Appearance and Effects category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Highlight different entity types with different colors\nfunction highlightEntities() {\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const entities = World.getEntities();\n    const range = 32;\n\n    entities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n\n        if (distance <= range) {\n            // Reset previous highlights\n            entity.resetGlowing();\n//..."
+      ]
+    },
+    {
+      "name": "resetGlowingColor",
+      "signature": "public void resetGlowingColor()",
+      "returnType": "void",
+      "description": "Resets the glowing color to default. Part of the Appearance and Effects category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getVehicle",
+      "signature": "public EntityHelper getVehicle()",
+      "returnType": "EntityHelper",
+      "description": "Retrieves the vehicle this entity is riding, if any. Part of the Relationships and Passengers category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPassengers",
+      "signature": "public List<EntityHelper> getPassengers()",
+      "returnType": "List<EntityHelper>",
+      "description": "Retrieves a list of entities riding this entity. Part of the Relationships and Passengers category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "rayTraceBlock",
+      "signature": "public RayTraceResult rayTraceBlock(double distance)",
+      "returnType": "RayTraceResult",
+      "description": "Performs a raytrace for blocks in the entity's looking direction. Part of the Interaction and Raytracing category.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "double",
+          "description": "Max distance to trace."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "rayTraceEntity",
+      "signature": "public RayTraceResult rayTraceEntity(double distance)",
+      "returnType": "RayTraceResult",
+      "description": "Performs a raytrace for other entities in the entity's looking direction. Part of the Interaction and Raytracing category.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "double",
+          "description": "Max distance to trace."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "public float distanceTo(EntityHelper other)",
+      "returnType": "float",
+      "description": "Calculates the distance to another entity. Part of the Distance and Comparison category.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "EntityHelper",
+          "description": "The target entity."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scan for entities in the area\nfunction scanEntities() {\n    const player = Player.getPlayer();\n    // ...\n    entities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance <= 50) { // Only nearby entities\n            // ...\n        }\n    });\n}",
+        "// Collect and display entity statistics\nfunction analyzeEntities() {\n    // ...\n    entities.forEach(entity => {\n        // ...\n        // Count by distance\n        const distance = player.distanceTo(entity);\n        if (distance <= 16) entitiesByDistance.near++;\n        else if (distance <= 64) entitiesByDistance.medium++;\n        else entitiesByDistance.far++;\n        // ...\n    });\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "asClientPlayer",
+      "signature": "public ClientPlayerEntityHelper asClientPlayer()",
+      "returnType": "ClientPlayerEntityHelper",
+      "description": "Casts this entity to a ClientPlayerEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asPlayer",
+      "signature": "public PlayerEntityHelper asPlayer()",
+      "returnType": "PlayerEntityHelper",
+      "description": "Casts this entity to a PlayerEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asVillager",
+      "signature": "public VillagerEntityHelper asVillager()",
+      "returnType": "VillagerEntityHelper",
+      "description": "Casts this entity to a VillagerEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asMerchant",
+      "signature": "public MerchantEntityHelper asMerchant()",
+      "returnType": "MerchantEntityHelper",
+      "description": "Casts this entity to a MerchantEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asLiving",
+      "signature": "public LivingEntityHelper asLiving()",
+      "returnType": "LivingEntityHelper",
+      "description": "Casts this entity to a LivingEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "    updateTracking() {\n        for (const [uuid, data] of this.trackedEntities) {\n            // ...\n            // Check health if it's a living entity\n            if (data.entity.asLiving) {\n                const living = data.entity.asLiving();\n                const currentHealth = living.getHealth();\n                if (currentHealth !== data.lastHealth) {\n                    Chat.log(`${data.name} health: ${currentHealth.toFixed(1)}`);\n                    data.lastHealth = currentHealth;\n                }\n            }\n        }\n    }"
+      ]
+    },
+    {
+      "name": "asAnimal",
+      "signature": "public AnimalEntityHelper asAnimal()",
+      "returnType": "AnimalEntityHelper",
+      "description": "Casts this entity to an AnimalEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asItem",
+      "signature": "public ItemEntityHelper asItem()",
+      "returnType": "ItemEntityHelper",
+      "description": "Casts this entity to an ItemEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asServerEntity",
+      "signature": "public Object asServerEntity()",
+      "returnType": "Object",
+      "description": "Casts this entity to a ServerEntityHelper. Throws exception if invalid. Part of the Type Casting category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "public String toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the entity. Part of the Utility Methods category.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

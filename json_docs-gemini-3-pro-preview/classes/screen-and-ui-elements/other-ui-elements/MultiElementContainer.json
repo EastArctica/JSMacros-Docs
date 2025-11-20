@@ -1,0 +1,245 @@
+{
+  "name": "MultiElementContainer",
+  "fullClassName": "xyz.wagyourtail.wagyourgui.containers.MultiElementContainer",
+  "since": "JsMacros 1.8.0",
+  "description": "The `MultiElementContainer` class is an abstract UI container component in JSMacros that provides a foundation for creating containers that can hold and manage multiple UI elements or widgets. It offers core functionality for element management, positioning, visibility control, and parent-child relationships in the UI hierarchy.",
+  "overview": "The `MultiElementContainer` class provides essential container functionality:\n\n- **Element Management:** Add, remove, and organize multiple UI elements within a single container\n- **Positioning Control:** Set and update container position and dimensions\n- **Visibility Management:** Show/hide container and all contained elements\n- **Parent-Child Relationships:** Maintain proper UI hierarchy with parent container delegation\n- **Text Rendering Support:** Built-in text renderer for text-based elements\n- **Abstract Rendering:** Customizable rendering through abstract render method",
+  "constructors": [
+    {
+      "signature": "new MultiElementContainer(x, y, width, height, textRenderer, parent)",
+      "description": "Creates a new MultiElementContainer with specified position, dimensions, and dependencies.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the container's top-left corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the container's top-left corner"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the container in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the container in pixels"
+        },
+        {
+          "name": "textRenderer",
+          "type": "TextRenderer",
+          "description": "Text renderer instance for text rendering"
+        },
+        {
+          "name": "parent",
+          "type": "T",
+          "description": "Parent container that implements IContainerParent"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "init",
+      "signature": "container.init()",
+      "returnType": "void",
+      "description": "Initializes the container by clearing all existing buttons. Should be called when setting up or resetting the container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Initialize or reset the container\ncontainer.init();"
+      ]
+    },
+    {
+      "name": "getVisible",
+      "signature": "container.getVisible()",
+      "returnType": "boolean",
+      "description": "Gets the current visibility state of the container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (container.getVisible()) {\n    Chat.log(\"Container is currently visible\");\n} else {\n    Chat.log(\"Container is currently hidden\");\n}"
+      ]
+    },
+    {
+      "name": "setVisible",
+      "signature": "container.setVisible(visible)",
+      "returnType": "void",
+      "description": "Sets the visibility state of the container and all its child elements.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "Whether the container should be visible"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Hide the container and all its elements\ncontainer.setVisible(false);\n\n// Show the container and all its elements\ncontainer.setVisible(true);"
+      ]
+    },
+    {
+      "name": "addDrawableChild",
+      "signature": "container.addDrawableChild(drawableElement)",
+      "returnType": "T",
+      "description": "Adds a drawable child element to both this container and its parent.",
+      "parameters": [
+        {
+          "name": "drawableElement",
+          "type": "T",
+          "description": "The drawable element to add (must extend Element, Drawable, and Selectable)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Add a button to the container\nconst button = new ButtonWidgetHelper.ButtonBuilder()\n    .pos(10, 10)\n    .size(80, 20)\n    .text(\"Click Me\")\n    .onClick(() => Chat.log(\"Button clicked!\"))\n    .build();\n\ncontainer.addDrawableChild(button);"
+      ]
+    },
+    {
+      "name": "getButtons",
+      "signature": "container.getButtons()",
+      "returnType": "List<ClickableWidget>",
+      "description": "Gets a list of all buttons managed by this container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const buttons = container.getButtons();\nChat.log(`Container has ${buttons.size()} buttons`);\n\n// Iterate through all buttons\nfor (const button of buttons) {\n    if (button.isHovered()) {\n        Chat.log(`Hovering over: ${button.getMessage().getString()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "container.setPos(x, y, width, height)",
+      "returnType": "void",
+      "description": "Updates the position and dimensions of the container.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "New X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "New Y coordinate"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "New width"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "New height"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Resize and reposition the container\ncontainer.setPos(50, 25, 300, 150);"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "container.remove(element)",
+      "returnType": "void",
+      "description": "Removes an element from both this container and its parent.",
+      "parameters": [
+        {
+          "name": "element",
+          "type": "Element",
+          "description": "The element to remove"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Remove a specific button\nconst buttons = container.getButtons();\nif (buttons.size() > 0) {\n    container.remove(buttons.get(0));\n    Chat.log(\"Removed first button from container\");\n}"
+      ]
+    },
+    {
+      "name": "openOverlay",
+      "signature": "container.openOverlay(overlay)",
+      "returnType": "void",
+      "description": "Opens an overlay using the parent container's overlay system.",
+      "parameters": [
+        {
+          "name": "overlay",
+          "type": "OverlayContainer",
+          "description": "The overlay to open"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Open an overlay from within the container\nconst overlay = new OverlayContainer(/* parameters */);\ncontainer.openOverlay(overlay);"
+      ]
+    },
+    {
+      "name": "openOverlay",
+      "signature": "container.openOverlay(overlay, disableButtons)",
+      "returnType": "void",
+      "description": "Opens an overlay with option to disable buttons.",
+      "parameters": [
+        {
+          "name": "overlay",
+          "type": "OverlayContainer",
+          "description": "The overlay to open"
+        },
+        {
+          "name": "disableButtons",
+          "type": "boolean",
+          "description": "Whether to disable buttons while overlay is open"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Open overlay and disable background buttons\nconst overlay = new OverlayContainer(/* parameters */);\ncontainer.openOverlay(overlay, true);"
+      ]
+    },
+    {
+      "name": "getFirstOverlayParent",
+      "signature": "container.getFirstOverlayParent()",
+      "returnType": "IOverlayParent",
+      "description": "Gets the first overlay parent in the hierarchy.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const overlayParent = container.getFirstOverlayParent();\nif (overlayParent) {\n    Chat.log(\"Found overlay parent in hierarchy\");\n}"
+      ]
+    },
+    {
+      "name": "render",
+      "signature": "container.render(drawContext, mouseX, mouseY, delta)",
+      "returnType": "void",
+      "description": "Abstract method that must be implemented by subclasses to handle rendering.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The drawing context for rendering"
+        },
+        {
+          "name": "mouseX",
+          "type": "int",
+          "description": "Current mouse X position"
+        },
+        {
+          "name": "mouseY",
+          "type": "int",
+          "description": "Current mouse Y position"
+        },
+        {
+          "name": "delta",
+          "type": "float",
+          "description": "Delta time for animations"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Implementation in a custom container subclass\n@Override\nrender(drawContext, mouseX, mouseY, delta) {\n    // Custom rendering logic here\n    if (this.visible) {\n        // Draw container background\n        drawContext.fill(this.x, this.y, this.x + this.width, this.y + this.height, 0xFF000000);\n\n        // Draw border\n        drawContext.drawBorder(this.x, this.y, this.width, this.height, 0xFFFFFFFF);\n    }\n}"
+      ]
+    }
+  ]
+}

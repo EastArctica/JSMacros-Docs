@@ -1,0 +1,347 @@
+{
+  "name": "RegistryHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.RegistryHelper",
+  "since": "1.8.4",
+  "description": "Comprehensive utility class for accessing and working with Minecraft's registry system.",
+  "overview": "The RegistryHelper class is a comprehensive utility class for accessing and working with Minecraft's registry system. It provides methods to retrieve items, blocks, enchantments, entities, status effects, and other game objects by their registry IDs, as well as methods to get lists of all registered objects of each type. This class serves as the main interface for script developers to look up and create instances of Minecraft game objects programmatically.\n\nThe RegistryHelper provides type-safe access to Minecraft's registries, allowing scripts to work with game objects using their string identifiers (like \"minecraft:stone\" or \"diamond_sword\") and convert them into appropriate helper objects that can be used in JSMacros scripts.\n\nThe RegistryHelper is typically accessed through a global API method.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getItem",
+      "signature": "getItem(String id)",
+      "returnType": "ItemHelper",
+      "description": "Retrieves an item helper object by its registry ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The registry ID of the item (e.g., 'diamond_sword')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const diamondSword = registry.getItem(\"diamond_sword\");\nChat.log(`Diamond sword max damage: ${diamondSword.getMaxDamage()}`);"
+      ]
+    },
+    {
+      "name": "getItemStack",
+      "signature": "getItemStack(String id, String nbt)",
+      "returnType": "ItemStackHelper",
+      "description": "Creates an item stack helper object from an ID and NBT data.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The registry ID of the item."
+        },
+        {
+          "name": "nbt",
+          "type": "String",
+          "description": "The NBT data string."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const godSword = registry.getItemStack(\"diamond_sword\",\n    '{Enchantments:[' +\n    '{id:\"minecraft:sharpness\",lvl:5},' +\n    '{id:\"minecraft:unbreaking\",lvl:3},' +\n    '{id:\"minecraft:mending\",lvl:1}' +\n    '],' +\n    'display:{Name:\\'' + JSON.stringify({text:\"God Sword\",color:\"gold\",bold:true}).replace(/\"/g, '\\\\\"') + '\\'}' +\n    '}');"
+      ]
+    },
+    {
+      "name": "getItemIds",
+      "signature": "getItemIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered item IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allItems = registry.getItemIds();\nconst toolItems = allItems.filter(id =>\n    [\"sword\", \"pickaxe\", \"axe\", \"shovel\", \"hoe\"].some(tool => id.includes(tool))\n);"
+      ]
+    },
+    {
+      "name": "getBlocks",
+      "signature": "getBlocks()",
+      "returnType": "List<BlockHelper>",
+      "description": "Retrieves a list of all registered block objects.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blocks = registry.getBlocks();\nChat.log(`Total registered blocks: ${blocks.length}`);"
+      ]
+    },
+    {
+      "name": "getBlockIds",
+      "signature": "getBlockIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered block IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "blocks: registry.getBlockIds().length"
+      ]
+    },
+    {
+      "name": "getBlockState",
+      "signature": "getBlockState(String id, String nbt)",
+      "returnType": "BlockStateHelper",
+      "description": "Creates a block state helper from an ID and NBT/Property data.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The registry ID of the block."
+        },
+        {
+          "name": "nbt",
+          "type": "String",
+          "description": "The NBT or property string."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const customChest = registry.getBlockState(\"chest\",\n    '{CustomName:\"Treasure Chest\",Lock:\"secret_key\"}');"
+      ]
+    },
+    {
+      "name": "getEntityTypeIds",
+      "signature": "getEntityTypeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered entity type IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entityTypes = registry.getEntityTypeIds();\nChat.log(`Total entity types: ${entityTypes.length}`);"
+      ]
+    },
+    {
+      "name": "getEntity",
+      "signature": "getEntity(String id)",
+      "returnType": "EntityHelper",
+      "description": "Retrieves an entity helper object by its registry ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The registry ID of the entity."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const zombie = registry.getEntity(\"zombie\");\nChat.log(`Zombie health: ${zombie.getMaxHealth()}`);"
+      ]
+    },
+    {
+      "name": "getEnchantments",
+      "signature": "getEnchantments()",
+      "returnType": "List<EnchantmentHelper>",
+      "description": "Retrieves a list of all registered enchantment objects.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const enchantments = registry.getEnchantments();\nChat.log(`Total enchantments: ${enchantments.length}`);"
+      ]
+    },
+    {
+      "name": "getEnchantmentIds",
+      "signature": "getEnchantmentIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered enchantment IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "enchantments: registry.getEnchantmentIds().length"
+      ]
+    },
+    {
+      "name": "getEnchantment",
+      "signature": "getEnchantment(String id, int level)",
+      "returnType": "EnchantmentHelper",
+      "description": "Retrieves an enchantment helper instance with a specific level.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The registry ID of the enchantment."
+        },
+        {
+          "name": "level",
+          "type": "int",
+          "description": "The level of the enchantment."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const maxSharpness = registry.getEnchantment(\"sharpness\", 5);"
+      ]
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List<StatusEffectHelper>",
+      "description": "Retrieves a list of all registered status effect objects.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const effects = registry.getStatusEffects();\nChat.log(`Total status effects: ${effects.length}`);"
+      ]
+    },
+    {
+      "name": "getStatusEffectIds",
+      "signature": "getStatusEffectIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered status effect IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "statusEffects: registry.getStatusEffectIds().length"
+      ]
+    },
+    {
+      "name": "getStatusEffect",
+      "signature": "getStatusEffect(String id)",
+      "returnType": "StatusEffectHelper",
+      "description": "Retrieves a status effect helper object by its registry ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The registry ID of the status effect."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const poison = registry.getStatusEffect(\"poison\");\nChat.log(`Poison color: 0x${poison.getColor().toString(16).padStart(6, '0')}`);"
+      ]
+    },
+    {
+      "name": "getFeatureIds",
+      "signature": "getFeatureIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered feature IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "features: registry.getFeatureIds().length"
+      ]
+    },
+    {
+      "name": "getStructureFeatureIds",
+      "signature": "getStructureFeatureIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered structure feature IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "structures: registry.getStructureFeatureIds().length"
+      ]
+    },
+    {
+      "name": "getPaintingIds",
+      "signature": "getPaintingIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered painting IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "paintings: registry.getPaintingIds().length"
+      ]
+    },
+    {
+      "name": "getParticleTypeIds",
+      "signature": "getParticleTypeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered particle type IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "particles: registry.getParticleTypeIds().length"
+      ]
+    },
+    {
+      "name": "getGameEventNames",
+      "signature": "getGameEventNames()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered game event names.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "gameEvents: registry.getGameEventNames().length"
+      ]
+    },
+    {
+      "name": "getBlockEntityTypeIds",
+      "signature": "getBlockEntityTypeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered block entity type IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "blockEntities: registry.getBlockEntityTypeIds().length"
+      ]
+    },
+    {
+      "name": "getScreenHandlerIds",
+      "signature": "getScreenHandlerIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered screen handler IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screenHandlers: registry.getScreenHandlerIds().length"
+      ]
+    },
+    {
+      "name": "getRecipeTypeIds",
+      "signature": "getRecipeTypeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered recipe type IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "recipeTypes: registry.getRecipeTypeIds().length"
+      ]
+    },
+    {
+      "name": "getVillagerTypeIds",
+      "signature": "getVillagerTypeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered villager type IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "villagerTypes: registry.getVillagerTypeIds().length"
+      ]
+    },
+    {
+      "name": "getVillagerProfessionIds",
+      "signature": "getVillagerProfessionIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered villager profession IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "villagerProfessions: registry.getVillagerProfessionIds().length"
+      ]
+    },
+    {
+      "name": "getEntityAttributeIds",
+      "signature": "getEntityAttributeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered entity attribute IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "entityAttributes: registry.getEntityAttributeIds().length"
+      ]
+    },
+    {
+      "name": "getPotionTypeIds",
+      "signature": "getPotionTypeIds()",
+      "returnType": "List<String>",
+      "description": "Retrieves a list of all registered potion type IDs.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "potionTypes: registry.getPotionTypeIds().length"
+      ]
+    }
+  ]
+}

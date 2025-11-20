@@ -1,0 +1,163 @@
+[
+  {
+    "name": "SliderWidgetHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.SliderWidgetHelper",
+    "extends": "ClickableWidgetHelper<SliderWidgetHelper, Slider>",
+    "since": "JsMacros 1.8.4",
+    "description": "The SliderWidgetHelper class is a comprehensive helper for creating and managing slider widgets in JSMacros custom screens and UIs.",
+    "overview": "It provides intuitive slider controls with configurable value ranges, step increments, and change event handling. This class serves as a wrapper around Minecraft's native slider widgets, exposing them to JSMacros scripts with additional functionality for tooltips, actions, and screen integration.\n\nThe class provides:\n- Slider Creation: Easy creation of slider widgets with custom ranges and steps\n- Value Management: Get and set slider values with automatic bounds checking\n- Step Control: Configurable step increments for discrete value selection\n- Event Handling: Real-time change events with proper screen context and error handling\n- Tooltips: Multi-line tooltip support with various text formats\n- State Management: Control over active, visible, and focus states\n- Builder Pattern: Fluent API for easy slider construction\n- Z-Index Support: Layering control for complex UI layouts",
+    "constructors": [
+      {
+        "signature": "new SliderWidgetHelper(Slider slider)",
+        "description": "Creates a new SliderWidgetHelper from an existing Slider instance.",
+        "parameters": [
+          {
+            "name": "slider",
+            "type": "Slider",
+            "description": "The underlying Slider to wrap"
+          }
+        ]
+      },
+      {
+        "signature": "new SliderWidgetHelper(Slider slider, int zIndex)",
+        "description": "Creates a new SliderWidgetHelper with a specified z-index.",
+        "parameters": [
+          {
+            "name": "slider",
+            "type": "Slider",
+            "description": "The underlying Slider to wrap"
+          },
+          {
+            "name": "zIndex",
+            "type": "int",
+            "description": "The z-index for rendering order"
+          }
+        ]
+      }
+    ],
+    "methods": [],
+    "examples": [
+      "// Basic Slider Creation\n// Create a simple slider with 5 steps\nconst screen = Hud.createScreen(\"Slider Demo\", true);\nconst slider = new SliderBuilder(screen)\n    .pos(50, 30)\n    .width(150)\n    .message(Chat.createTextHelperFromString(\"Volume\"))\n    .steps(5)\n    .initially(2)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        Chat.log(`Slider value: ${slider.getValue()}`);\n    }))\n    .build();\n\nHud.openScreen(screen);",
+      "// Volume Control Slider\n// Create a volume slider with percentage display\nconst screen = Hud.createScreen(\"Audio Settings\", true);\nlet currentVolume = 50;\n\nconst volumeSlider = new SliderBuilder(screen)\n    .pos(100, 50)\n    .width(200)\n    .message(Chat.createTextHelperFromString(\"Volume\"))\n    .steps(101)  // 0-100 inclusive\n    .initially(50)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        currentVolume = Math.round(slider.getValue());\n        slider.setLabel(`Volume: ${currentVolume}%`);\n        Chat.log(`Volume set to ${currentVolume}%`);\n    }))\n    .setTooltip(\n        \"Adjust the master volume\",\n        \"Range: 0% - 100%\",\n        \"Current: \" + currentVolume + \"%\"\n    )\n    .build();\n\n// Add status display\nconst statusText = Hud.createTextElement()\n    .pos(100, 80)\n    .text(Chat.createTextHelperFromString(`Volume: ${currentVolume}%`))\n    .build();\n\nscreen.addButton(volumeSlider);\nscreen.addText(statusText);\nHud.openScreen(screen);",
+      "// Color Picker Slider\n// Create RGB color sliders\nconst screen = Hud.createScreen(\"Color Picker\", true);\nlet red = 128, green = 128, blue = 128;\n\n// Red slider\nconst redSlider = new SliderBuilder(screen)\n    .pos(50, 40)\n    .width(120)\n    .message(Chat.createTextHelperFromString(\"&cRed\"))\n    .steps(256)\n    .initially(red)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        red = Math.round(slider.getValue());\n        updateColorDisplay();\n    }))\n    .build();\n\n// Green slider\nconst greenSlider = new SliderBuilder(screen)\n    .pos(50, 70)\n    .width(120)\n    .message(Chat.createTextHelperFromString(\"&aGreen\"))\n    .steps(256)\n    .initially(green)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        green = Math.round(slider.getValue());\n        updateColorDisplay();\n    }))\n    .build();\n\n// Blue slider\nconst blueSlider = new SliderBuilder(screen)\n    .pos(50, 100)\n    .width(120)\n    .message(Chat.createTextHelperFromString(\"&9Blue\"))\n    .steps(256)\n    .initially(blue)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        blue = Math.round(slider.getValue());\n        updateColorDisplay();\n    }))\n    .build();\n\n// Color preview text\nfunction updateColorDisplay() {\n    const hexColor = `#${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}`;\n    colorPreview.text(Chat.createTextHelperFromString(`&7Color: &r${hexColor}&r`));\n    Chat.log(`Color updated to RGB(${red}, ${green}, ${blue}) = ${hexColor}`);\n}\n\nconst colorPreview = Hud.createTextElement()\n    .pos(50, 130)\n    .text(Chat.createTextHelperFromString(\"Color: #808080\"))\n    .build();\n\nscreen.addButton(redSlider);\nscreen.addButton(greenSlider);\nscreen.addButton(blueSlider);\nscreen.addText(colorPreview);\nHud.openScreen(screen);",
+      "// Multi-Value Configuration Panel\n// Create a configuration panel with multiple sliders\nconst screen = Hud.createScreen(\"Game Settings\", true);\n\nconst settings = {\n    renderDistance: 8,\n    particles: 50,\n    brightness: 50,\n    mouseSensitivity: 50\n};\n\n// Render distance slider (2-16 chunks)\nconst renderSlider = new SliderBuilder(screen)\n    .pos(80, 40)\n    .width(180)\n    .message(Chat.createTextHelperFromString(\"Render Distance\"))\n    .steps(15)  // 2-16 = 15 steps\n    .initially(settings.renderDistance - 2)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        settings.renderDistance = Math.round(slider.getValue()) + 2;\n        slider.setLabel(`Render Distance: ${settings.renderDistance} chunks`);\n    }))\n    .build();\n\n// Particles slider (0-100%)\nconst particlesSlider = new SliderBuilder(screen)\n    .pos(80, 70)\n    .width(180)\n    .message(Chat.createTextHelperFromString(\"Particles\"))\n    .steps(101)\n    .initially(settings.particles)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        settings.particles = Math.round(slider.getValue());\n        slider.setLabel(`Particles: ${settings.particles}%`);\n    }))\n    .build();\n\n// Brightness slider (0-100%)\nconst brightnessSlider = new SliderBuilder(screen)\n    .pos(80, 100)\n    .width(180)\n    .message(Chat.createTextHelperFromString(\"Brightness\"))\n    .steps(101)\n    .initially(settings.brightness)\n    .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n        settings.brightness = Math.round(slider.getValue());\n        slider.setLabel(`Brightness: ${settings.brightness}%`);\n    }))\n    .build();\n\n// Apply button\nconst applyButton = new ButtonBuilder(screen)\n    .pos(150, 140)\n    .width(80)\n    .message(Chat.createTextHelperFromString(\"Apply\"))\n    .action(JavaWrapper.methodToJavaAsync((button, screen) => {\n        Chat.log(\"Settings applied:\");\n        Chat.log(`  Render Distance: ${settings.renderDistance} chunks`);\n        Chat.log(`  Particles: ${settings.particles}%`);\n        Chat.log(`  Brightness: ${settings.brightness}%`);\n        Chat.log(`  Mouse Sensitivity: ${settings.mouseSensitivity}%`);\n    }))\n    .build();\n\nscreen.addButton(renderSlider);\nscreen.addButton(particlesSlider);\nscreen.addButton(brightnessSlider);\nscreen.addButton(applyButton);\nHud.openScreen(screen);",
+      "// Slider with Dynamic Range\n// Create a slider that changes range based on selection\nconst screen = Hud.createScreen(\"Dynamic Range Demo\", true);\nlet rangeType = \"small\"; // \"small\", \"medium\", \"large\"\nconst ranges = {\n    small: { min: 0, max: 10, initial: 5 },\n    medium: { min: 0, max: 50, initial: 25 },\n    large: { min: 0, max: 100, initial: 50 }\n};\n\nfunction createSlider(rangeType) {\n    const range = ranges[rangeType];\n    return new SliderBuilder(screen)\n        .pos(100, 60)\n        .width(200)\n        .message(Chat.createTextHelperFromString(`Value (${range.min}-${range.max})`))\n        .steps(range.max - range.min + 1)\n        .initially(range.initial)\n        .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n            const value = Math.round(slider.getValue()) + range.min;\n            Chat.log(`Slider value: ${value} (${rangeType} range)`);\n        }));\n}\n\nlet currentSlider = createSlider(rangeType).build();\n\n// Range selector buttons\nconst smallBtn = new ButtonBuilder(screen)\n    .pos(50, 100)\n    .width(80)\n    .message(Chat.createTextHelperFromString(\"0-10\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        rangeType = \"small\";\n        screen.removeButton(currentSlider);\n        currentSlider = createSlider(rangeType).build();\n    }))\n    .build();\n\nconst mediumBtn = new ButtonBuilder(screen)\n    .pos(140, 100)\n    .width(80)\n    .message(Chat.createTextHelperFromString(\"0-50\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        rangeType = \"medium\";\n        screen.removeButton(currentSlider);\n        currentSlider = createSlider(rangeType).build();\n    }))\n    .build();\n\nconst largeBtn = new ButtonBuilder(screen)\n    .pos(230, 100)\n    .width(80)\n    .message(Chat.createTextHelperFromString(\"0-100\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        rangeType = \"large\";\n        screen.removeButton(currentSlider);\n        currentSlider = createSlider(rangeType).build();\n    }))\n    .build();\n\nscreen.addButton(currentSlider);\nscreen.addButton(smallBtn);\nscreen.addButton(mediumBtn);\nscreen.addButton(largeBtn);\nHud.openScreen(screen);",
+      "// Slider Grid Layout\n// Create a grid of sliders for matrix-like input\nconst screen = Hud.createScreen(\"Matrix Input\", true);\nconst rows = 3;\nconst cols = 4;\nconst values = Array(rows).fill().map(() => Array(cols).fill(50));\n\nfunction createMatrixGrid() {\n    const sliders = [];\n\n    for (let row = 0; row < rows; row++) {\n        for (let col = 0; col < cols; col++) {\n            const x = 50 + col * 90;\n            const y = 40 + row * 40;\n\n            const slider = new SliderBuilder(screen)\n                .pos(x, y)\n                .width(80)\n                .message(Chat.createTextHelperFromString(`[${row},${col}]`))\n                .steps(101)  // 0-100\n                .initially(50)\n                .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n                    values[row][col] = Math.round(slider.getValue());\n                    updateMatrixDisplay();\n                }))\n                .build();\n\n            sliders.push(slider);\n            screen.addButton(slider);\n        }\n    }\n\n    return sliders;\n}\n\nfunction updateMatrixDisplay() {\n    let matrixText = \"Matrix Values:\\n\";\n    for (let row = 0; row < rows; row++) {\n        matrixText += \"[ \";\n        for (let col = 0; col < cols; col++) {\n            matrixText += values[row][col].toString().padStart(3, \" \") + \" \";\n        }\n        matrixText += \"]\\n\";\n    }\n    Chat.log(matrixText.trim());\n}\n\n// Add calculate button\nconst calculateBtn = new ButtonBuilder(screen)\n    .pos(50, 160)\n    .width(120)\n    .message(Chat.createTextHelperFromString(\"Calculate\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        updateMatrixDisplay();\n\n        // Calculate sum\n        let sum = 0;\n        for (let row = 0; row < rows; row++) {\n            for (let col = 0; col < cols; col++) {\n                sum += values[row][col];\n            }\n        }\n        Chat.log(`Matrix sum: ${sum}`);\n        Chat.log(`Matrix average: ${(sum / (rows * cols)).toFixed(2)}`);\n    }))\n    .build();\n\n// Reset button\nconst resetBtn = new ButtonBuilder(screen)\n    .pos(180, 160)\n    .width(80)\n    .message(Chat.createTextHelperFromString(\"Reset\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        // Reset all values to 50\n        for (let row = 0; row < rows; row++) {\n            for (let col = 0; col < cols; col++) {\n                values[row][col] = 50;\n            }\n        }\n        // Recreate the grid\n        const sliders = screen.getButtons();\n        for (const slider of sliders) {\n            if (slider.getValue && slider.setValue) {\n                slider.setValue(50);\n            }\n        }\n        Chat.log(\"Matrix reset to default values\");\n    }))\n    .build();\n\ncreateMatrixGrid();\nscreen.addButton(calculateBtn);\nscreen.addButton(resetBtn);\nHud.openScreen(screen);",
+      "// Precision Slider with Decimal Values\n// Create a slider for precise decimal input\nconst screen = Hud.createScreen(\"Precision Input\", true);\nlet precision = 2; // decimal places\nlet value = 3.14159;\n\nfunction createPrecisionSlider(decimalPlaces) {\n    const multiplier = Math.pow(10, decimalPlaces);\n    const maxValue = 10;\n    const steps = Math.round(maxValue * multiplier) + 1;\n    const initialValue = Math.round(value * multiplier);\n\n    return new SliderBuilder(screen)\n        .pos(50, 50)\n        .width(250)\n        .message(Chat.createTextHelperFromString(`Precision: ${decimalPlaces} decimal places`))\n        .steps(steps)\n        .initially(initialValue)\n        .action(JavaWrapper.methodToJavaAsync((slider, screen) => {\n            value = slider.getValue() / multiplier;\n            slider.setLabel(`Value: ${value.toFixed(decimalPlaces)}`);\n            Chat.log(`Slider value: ${value.toFixed(decimalPlaces)}`);\n        }))\n        .setTooltip(\n            \"Adjust the precision using buttons below\",\n            `Range: 0 to ${maxValue}`,\n            `Current precision: ${decimalPlaces} decimal places`\n        );\n}\n\nlet currentSlider = createPrecisionSlider(precision).build();\n\n// Precision selector buttons\nconst precision0Btn = new ButtonBuilder(screen)\n    .pos(50, 100)\n    .width(60)\n    .message(Chat.createTextHelperFromString(\"0 dp\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        updatePrecision(0);\n    }))\n    .build();\n\nconst precision1Btn = new ButtonBuilder(screen)\n    .pos(120, 100)\n    .width(60)\n    .message(Chat.createTextHelperFromString(\"1 dp\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        updatePrecision(1);\n    }))\n    .build();\n\nconst precision2Btn = new ButtonBuilder(screen)\n    .pos(190, 100)\n    .width(60)\n    .message(Chat.createTextHelperFromString(\"2 dp\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        updatePrecision(2);\n    }))\n    .build();\n\nconst precision3Btn = new ButtonBuilder(screen)\n    .pos(260, 100)\n    .width(60)\n    .message(Chat.createTextHelperFromString(\"3 dp\"))\n    .action(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        updatePrecision(3);\n    }))\n    .build();\n\nfunction updatePrecision(newPrecision) {\n    precision = newPrecision;\n    screen.removeButton(currentSlider);\n    currentSlider = createPrecisionSlider(precision).build();\n    Chat.log(`Precision changed to ${precision} decimal places`);\n}\n\nscreen.addButton(currentSlider);\nscreen.addButton(precision0Btn);\nscreen.addButton(precision1Btn);\nscreen.addButton(precision2Btn);\nscreen.addButton(precision3Btn);\nHud.openScreen(screen);"
+    ]
+  },
+  {
+    "name": "SliderBuilder",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.SliderWidgetHelper$SliderBuilder",
+    "extends": "AbstractWidgetBuilder<SliderBuilder, Slider, SliderWidgetHelper>",
+    "since": "JsMacros 1.8.4",
+    "description": "The SliderWidgetHelper.SliderBuilder class is a builder pattern implementation for creating slider widgets with configurable ranges, step sizes, initial values, and event handling.",
+    "overview": "The SliderBuilder class enables the creation of customizable slider widgets with:\n- Configurable step ranges (minimum 2 steps)\n- Initial value positioning\n- Change event callbacks with MethodWrapper\n- Inherited positioning, sizing, and styling from AbstractWidgetBuilder\n- Method chaining for fluent configuration\n- Integration with IScreen rendering system",
+    "constructors": [
+      {
+        "signature": "new SliderBuilder(IScreen screen)",
+        "description": "Creates a new SliderBuilder instance for the specified screen.",
+        "parameters": [
+          {
+            "name": "screen",
+            "type": "IScreen",
+            "description": "The screen to which the slider will be added"
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "steps",
+        "signature": "steps(int steps)",
+        "returnType": "SliderBuilder",
+        "description": "Sets the number of steps for the slider.",
+        "parameters": [
+          {
+            "name": "steps",
+            "type": "int",
+            "description": "The amount of steps for the slider. Must be greater or equal to 2"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const slider = screen.sliderBuilder()\n    .steps(10)  // Slider will have 10 positions (0-9)\n    .build();"
+        ]
+      },
+      {
+        "name": "getSteps",
+        "signature": "getSteps()",
+        "returnType": "int",
+        "description": "Returns the configured number of steps.",
+        "parameters": [],
+        "static": false
+      },
+      {
+        "name": "initially",
+        "signature": "initially(int value)",
+        "returnType": "SliderBuilder",
+        "description": "Sets the initial value of the slider.",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "int",
+            "description": "The initial value of the slider. Must be between 0 and steps - 1"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const slider = screen.sliderBuilder()\n    .steps(100)\n    .initially(25)  // Start at 25% position\n    .build();"
+        ]
+      },
+      {
+        "name": "getValue",
+        "signature": "getValue()",
+        "returnType": "int",
+        "description": "Returns the configured initial value.",
+        "parameters": [],
+        "static": false
+      },
+      {
+        "name": "action",
+        "signature": "action(MethodWrapper<SliderWidgetHelper, IScreen, Object, ?> action)",
+        "returnType": "SliderBuilder",
+        "description": "Sets the change listener callback for the slider.",
+        "parameters": [
+          {
+            "name": "action",
+            "type": "MethodWrapper<SliderWidgetHelper, IScreen, Object, ?>",
+            "description": "The change listener for the slider"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const changeHandler = JavaWrapper.methodToJava((slider, screen) => {\n    Chat.log(`Slider value changed to: ${slider.getValue()}`);\n});\n\nconst slider = screen.sliderBuilder()\n    .steps(50)\n    .action(changeHandler)\n    .build();"
+        ]
+      },
+      {
+        "name": "getAction",
+        "signature": "getAction()",
+        "returnType": "MethodWrapper<SliderWidgetHelper, IScreen, Object, ?>",
+        "description": "Returns the configured change listener.",
+        "parameters": [],
+        "static": false
+      },
+      {
+        "name": "createWidget",
+        "signature": "createWidget()",
+        "returnType": "SliderWidgetHelper",
+        "description": "Creates and returns the actual SliderWidgetHelper instance. Note: This method is called internally by build(). Use build() to add the widget to the screen.",
+        "parameters": [],
+        "static": false
+      }
+    ],
+    "examples": [
+      "// Basic Slider Creation\n// Create a simple slider with 10 steps\nconst screen = Hud.createScreen(\"Slider Demo\", true);\nconst slider = screen.sliderBuilder()\n    .pos(50, 50)\n    .size(200, 20)\n    .steps(10)\n    .message(\"Volume Control\")\n    .initially(5)\n    .build();\n\nscreen.addDraw3D();\nHud.openScreen(screen);",
+      "// Slider with Change Event Handler\n// Create a slider that responds to value changes\nconst screen = Hud.createScreen(\"Interactive Slider\", true);\n\nconst onSliderChange = JavaWrapper.methodToJava((slider, screen) => {\n    const value = slider.getValue();\n    const percentage = (value / slider.getSteps()) * 100;\n\n    // Update slider message to show current value\n    slider.setLabel(`Brightness: ${percentage.toFixed(1)}%`);\n\n    // Apply the brightness setting (example)\n    Chat.log(`Setting brightness to ${percentage.toFixed(1)}%`);\n});\n\nconst brightnessSlider = screen.sliderBuilder()\n    .pos(30, 40)\n    .size(150, 20)\n    .steps(20)\n    .initially(10)\n    .message(\"Brightness: 50.0%\")\n    .action(onSliderChange)\n    .build();\n\nscreen.addDraw3D();\nHud.openScreen(screen);",
+      "// Multiple Sliders for Settings Panel\n// Create a settings panel with multiple sliders\nfunction createSettingsPanel() {\n    const screen = Hud.createScreen(\"Settings\", true);\n\n    // Volume slider\n    const volumeHandler = JavaWrapper.methodToJava((slider, screen) => {\n        const volume = (slider.getValue() / slider.getSteps()) * 100;\n        Chat.log(`Volume set to ${volume.toFixed(0)}%`);\n    });\n\n    const volumeSlider = screen.sliderBuilder()\n        .pos(20, 30)\n        .size(120, 15)\n        .steps(10)\n        .initially(7)\n        .message(\"Master Volume\")\n        .action(volumeHandler)\n        .build();\n\n    // FOV slider\n    const fovHandler = JavaWrapper.methodToJava((slider, screen) => {\n        const fov = 70 + (slider.getValue() * 2); // 70-90 range\n        Chat.log(`FOV set to ${fov}°`);\n    });\n\n    const fovSlider = screen.sliderBuilder()\n        .pos(20, 60)\n        .size(120, 15)\n        .steps(10)\n        .initially(5) // 80 FOV default\n        .message(\"Field of View\")\n        .action(fovHandler)\n        .build();\n\n    // Render distance slider\n    const renderHandler = JavaWrapper.methodToJava((slider, screen) => {\n        const chunks = 2 + slider.getValue() * 2; // 2-22 chunks\n        Chat.log(`Render distance: ${chunks} chunks`);\n    });\n\n    const renderSlider = screen.sliderBuilder()\n        .pos(20, 90)\n        .size(120, 15)\n        .steps(10)\n        .initially(6) // 14 chunks default\n        .message(\"Render Distance\")\n        .action(renderHandler)\n        .build();\n\n    screen.addDraw3D();\n    return screen;\n}\n\nconst settingsScreen = createSettingsPanel();\nHud.openScreen(settingsScreen);",
+      "// Color Picker Slider\n// Create RGB color pickers using sliders\nfunction createColorPicker() {\n    const screen = Hud.createScreen(\"Color Picker\", true);\n\n    // Store current color values\n    let currentColor = { r: 128, g: 128, b: 128 };\n\n    // Red slider\n    const redHandler = JavaWrapper.methodToJava((slider, screen) => {\n        currentColor.r = Math.floor((slider.getValue() / 255) * slider.getSteps());\n        updateColorDisplay();\n    });\n\n    const redSlider = screen.sliderBuilder()\n        .pos(20, 30)\n        .size(100, 15)\n        .steps(255)\n        .initially(128)\n        .message(\"Red\")\n        .action(redHandler)\n        .build();\n\n    // Green slider\n    const greenHandler = JavaWrapper.methodToJava((slider, screen) => {\n        currentColor.g = Math.floor((slider.getValue() / 255) * slider.getSteps());\n        updateColorDisplay();\n    });\n\n    const greenSlider = screen.sliderBuilder()\n        .pos(20, 60)\n        .size(100, 15)\n        .steps(255)\n        .initially(128)\n        .message(\"Green\")\n        .action(greenHandler)\n        .build();\n\n    // Blue slider\n    const blueHandler = JavaWrapper.methodToJava((slider, screen) => {\n        currentColor.b = Math.floor((slider.getValue() / 255) * slider.getSteps());\n        updateColorDisplay();\n    });\n\n    const blueSlider = screen.sliderBuilder()\n        .pos(20, 90)\n        .size(100, 15)\n        .steps(255)\n        .initially(128)\n        .message(\"Blue\")\n        .action(blueHandler)\n        .build();\n\n    function updateColorDisplay() {\n        const hexColor = (currentColor.r << 16) + (currentColor.g << 8) + currentColor.b;\n        Chat.log(`Color updated: RGB(${currentColor.r}, ${currentColor.g}, ${currentColor.b}) = #${hexColor.toString(16).padStart(6, '0').toUpperCase()}`);\n    }\n\n    screen.addDraw3D();\n    return screen;\n}\n\nconst colorScreen = createColorPicker();\nHud.openScreen(colorScreen);",
+      "// Progress Bar Simulation\n// Create a progress bar that updates over time\nfunction createProgressBar() {\n    const screen = Hud.createScreen(\"Progress Demo\", true);\n\n    let progress = 0;\n    const maxProgress = 100;\n\n    const progressBar = screen.sliderBuilder()\n        .pos(30, 50)\n        .size(140, 20)\n        .steps(maxProgress)\n        .initially(0)\n        .message(\"Loading...\")\n        .active(false) // Make it non-interactive\n        .build();\n\n    // Simulate progress\n    const progressInterval = setInterval(() => {\n        if (progress >= maxProgress) {\n            clearInterval(progressInterval);\n            progressBar.setLabel(\"Complete!\");\n            Chat.log(\"Progress complete!\");\n            return;\n        }\n\n        progress += 2;\n        progressBar.setValue(progress);\n        progressBar.setLabel(`Loading... ${progress}%`);\n    }, 100);\n\n    screen.addDraw3D();\nHud.openScreen(screen);\n\n    // Cleanup when screen closes\n    screen.onClose(JavaWrapper.methodToJava(() => {\n        clearInterval(progressInterval);\n    }));\n}\n\ncreateProgressBar();",
+      "// Synchronized Multiple Sliders\n// Create multiple sliders that stay synchronized\nfunction createSynchronizedSliders() {\n    const screen = Hud.createScreen(\"Synchronized Controls\", true);\n\n    const syncHandler = JavaWrapper.methodToJava((changedSlider, screen) => {\n        const newValue = changedSlider.getValue();\n\n        // Update all other sliders to match\n        if (changedSlider !== slider1) slider1.setValue(newValue);\n        if (changedSlider !== slider2) slider2.setValue(newValue);\n        if (changedSlider !== slider3) slider3.setValue(newValue);\n\n        Chat.log(`All sliders synchronized to value: ${newValue}`);\n    });\n\n    const slider1 = screen.sliderBuilder()\n        .pos(20, 30)\n        .size(100, 15)\n        .steps(20)\n        .initially(10)\n        .message(\"Control 1\")\n        .action(syncHandler)\n        .build();\n\n    const slider2 = screen.sliderBuilder()\n        .pos(20, 60)\n        .size(100, 15)\n        .steps(20)\n        .initially(10)\n        .message(\"Control 2\")\n        .action(syncHandler)\n        .build();\n\n    const slider3 = screen.sliderBuilder()\n        .pos(20, 90)\n        .size(100, 15)\n        .steps(20)\n        .initially(10)\n        .message(\"Control 3\")\n        .action(syncHandler)\n        .build();\n\n    screen.addDraw3D();\nHud.openScreen(screen);\n}\n\ncreateSynchronizedSliders();"
+    ]
+  }
+]

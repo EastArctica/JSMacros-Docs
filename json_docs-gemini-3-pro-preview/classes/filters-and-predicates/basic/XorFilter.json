@@ -1,0 +1,67 @@
+{
+  "name": "XorFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.logical.XorFilter",
+  "extends": "BasicFilter<T>",
+  "since": "JSMacros 1.6.5",
+  "description": "The XorFilter class is a logical filter that combines two filters using boolean XOR (exclusive OR) logic. It allows for sophisticated filtering conditions where exactly one of the component filters must return true.",
+  "overview": "The XorFilter implements exclusive OR logic for precise filtering control. It returns true only when exactly one of the filters returns true, making it perfect for scenarios requiring mutual exclusion. It supports any generic type T that the component filters can handle and implements a fluent interface inherited from BasicFilter.",
+  "constructors": [
+    {
+      "signature": "new XorFilter(filterOne, filterTwo)",
+      "description": "Creates a new XorFilter that combines two filters with XOR logic.",
+      "parameters": [
+        {
+          "name": "filterOne",
+          "type": "IFilter<T>",
+          "description": "The first filter to evaluate"
+        },
+        {
+          "name": "filterTwo",
+          "type": "IFilter<T>",
+          "description": "The second filter to evaluate"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "apply",
+      "signature": "apply(obj)",
+      "returnType": "Boolean",
+      "description": "Applies the XOR filter logic to an object. Returns true only when exactly one of the two filters returns true for the given object.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "T",
+          "description": "The object to test against both filters"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const testBlock = World.getBlock(100, 10, 200);\nconst passesFilter = interestingFilter.apply(testBlock);\n\nif (passesFilter) {\n    Chat.log(\"Block is either valuable OR dangerous, but not both!\");\n} else {\n    Chat.log(\"Block is either both valuable and dangerous, or neither\");\n}"
+      ]
+    },
+    {
+      "name": "getFilterOne",
+      "signature": "getFilterOne()",
+      "returnType": "IFilter<T>",
+      "description": "Returns the first filter component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const firstFilter = interestingFilter.getFilterOne();\nChat.log(`First filter: ${firstFilter.toString()}`);"
+      ]
+    },
+    {
+      "name": "getFilterTwo",
+      "signature": "getFilterTwo()",
+      "returnType": "IFilter<T>",
+      "description": "Returns the second filter component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const secondFilter = interestingFilter.getFilterTwo();\nChat.log(`Second filter: ${secondFilter.toString()}`);"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "name": "ConstructorBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.ConstructorBuilder",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "The ClassBuilder.ConstructorBuilder class is a specialized builder for creating and configuring constructors within generated classes.",
+  "overview": "The ClassBuilder.ConstructorBuilder class is a specialized builder for creating and configuring constructors within generated classes. This builder provides a fluent API for defining constructor parameters, method bodies, annotations, and visibility modifiers, allowing you to create comprehensive constructor implementations.\n\nConstructorBuilder instances are obtained through the addConstructor() methods of ClassBuilder and support both simple code-based constructor creation and advanced body building with mixed Java/JavaScript execution.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "body",
+      "signature": "body(String code)",
+      "returnType": "ConstructorBuilder",
+      "description": "Sets the constructor body using complete Java code. Code should include the body only (not method signature). Can access constructor parameters by name, reference instance fields using 'this.', and call super/other constructors.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "String",
+          "description": "Complete Java constructor body code"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "constructorBuilder.body(`\n    this.name = name;\n    this.age = age;\n    this.initialized = true;\n`);",
+        "const SimpleClass = Reflection.createClassBuilder(\"com.example.Simple\", Object)\n    .addField(String, \"name\").makePrivate().end()\n    .addField(int, \"age\").makePrivate().end()\n    .addConstructor()\n    .body(`\n        this.name = \"Unknown\";\n        this.age = 0;\n    `)\n    .finish()\n    .finishBuildAndFreeze();"
+      ]
+    },
+    {
+      "name": "buildBody",
+      "signature": "buildBody()",
+      "returnType": "BodyBuilder<ConstructorBuilder>",
+      "description": "Creates a BodyBuilder for mixed Java/JavaScript constructor implementation. Enables combining Java bytecode with JavaScript execution, useful for complex initialization logic.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bodyBuilder = constructorBuilder.buildBody();",
+        "const MixedConstructorClass = Reflection.createClassBuilder(\"com.example.MixedConstructor\", Object)\n    .addField(String, \"username\").makePrivate().end()\n    .addField(int, \"accessLevel\").makePrivate().end()\n    .addField(boolean, \"initialized\").makePrivate().end()\n    .addConstructor(String, int)\n    .buildBody()\n        .appendJavaCode(\"// Java initialization\")\n        .appendJavaCode(\"this.username = username;\")\n        .appendJavaCode(\"this.accessLevel = accessLevel;\")\n        .appendJavaCode(\"this.initialized = false;\")\n        .appendJavaCode(\"\")\n        .appendJavaCode(\"// JavaScript validation and enhancement\")\n        .appendGuestCode(\n            JavaWrapper.methodToJava((self, args) => {\n                const username = args[0];\n                const accessLevel = args[1];\n\n                // JavaScript validation\n                if (username.length < 3) {\n                    throw new Error(\"Username must be at least 3 characters\");\n                }\n\n                // JavaScript initialization\n                self.initialized = true;\n\n                // Access level based logic\n                if (accessLevel >= 5) {\n                    Chat.log(`Admin user created: ${username}`);\n                } else {\n                    Chat.log(`Regular user created: ${username}`);\n                }\n\n                return null;\n            }),\n            \"new Object[]{username, accessLevel}\",\n            null\n        )\n        .finish()\n    .finish()\n    .finishBuildAndFreeze();"
+      ]
+    },
+    {
+      "name": "guestBody",
+      "signature": "guestBody(MethodWrapper methodWrapper)",
+      "returnType": "ConstructorBuilder",
+      "description": "Sets the constructor body to execute JavaScript (Guest) code. The function receives constructor parameters as arguments and can access/modify instance fields via the 'self' parameter.",
+      "parameters": [
+        {
+          "name": "methodWrapper",
+          "type": "MethodWrapper",
+          "description": "JavaScript function to execute as constructor body"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const wrapper = JavaWrapper.methodToJava((self, args) => {\n    const name = args[0];\n    const age = args[1];\n    Chat.log(`Creating object: ${name}, age ${age}`);\n    return null;\n});\n\nconstructorBuilder.guestBody(wrapper);",
+        "const JsConstructorClass = Reflection.createClassBuilder(\"com.example.JsConstructor\", Object)\n    .addField(String, \"id\").makePrivate().end()\n    .addField(long, \"timestamp\").makePrivate().end()\n    .addConstructor(String)\n    .guestBody(JavaWrapper.methodToJava((self, args) => {\n        const id = args[0];\n        self.id = id;\n        self.timestamp = Date.now();\n\n        Chat.log(`Created instance with ID: ${id} at ${self.timestamp}`);\n\n        // Additional JavaScript initialization logic\n        if (id.startsWith(\"admin\")) {\n            Chat.log(\"Admin instance created\");\n        }\n    }))\n    .finish()\n    .finishBuildAndFreeze();"
+      ]
+    },
+    {
+      "name": "addAnnotation",
+      "signature": "addAnnotation(Class<?> type)",
+      "returnType": "AnnotationBuilder<ConstructorBuilder>",
+      "description": "Adds an annotation to the constructor.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "Class<?>",
+          "description": "The annotation type to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const annotationBuilder = constructorBuilder.addAnnotation(MyConstructorAnnotation.class);",
+        "constructorBuilder\n    .addAnnotation(ConstructorProperties.class)\n        .putArray(\"value\")\n            .putString(\"name\")\n            .putString(\"age\")\n            .finish()\n        .finish()\n    .body(`\n        this.name = name;\n        this.age = age;\n    `);"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "ClassBuilder<T>",
+      "description": "Finalizes the constructor and returns to the parent ClassBuilder. This method must be called to apply the constructor to the class.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = constructorBuilder.finish();"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "SlimeEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.SlimeEntityHelper<T extends SlimeEntity>",
+  "extends": "MobEntityHelper<T>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a slime entity in the world. SlimeEntityHelper provides access to slime-specific properties and behaviors such as size variations and attack capabilities.",
+  "overview": "Represents a slime entity in the world. SlimeEntityHelper provides access to slime-specific properties and behaviors such as size variations and attack capabilities. This class serves as a specialized helper for all slime variants, tracking their dimensional characteristics and combat behaviors.\n\nSlimes are gelatinous, cube-shaped hostile mobs that spawn in specific biomes and chunks. They come in multiple sizes, from tiny (harmless) to large (dangerous), and have the unique ability to split into smaller slimes when defeated, except for the smallest size. This helper provides access to the current size of the slime and determines whether it poses a threat based on its dimensions.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, movement, AI control, and other mob properties, while adding slime-specific functionality for size analysis and threat assessment.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getSize",
+      "signature": "getSize()",
+      "returnType": "int",
+      "description": "Retrieves the current size of the slime. Used to determine health, damage, and splitting behavior.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const size = slime.getSize();"
+      ]
+    },
+    {
+      "name": "isSmall",
+      "signature": "isSmall()",
+      "returnType": "boolean",
+      "description": "Checks if the slime is the smallest size (size 1). Small slimes are typically harmless and do not split when killed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isSmall = slime.isSmall();"
+      ]
+    }
+  ]
+}

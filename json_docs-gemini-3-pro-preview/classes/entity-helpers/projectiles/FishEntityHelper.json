@@ -1,0 +1,22 @@
+{
+  "name": "FishEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.FishEntityHelper",
+  "extends": "MobEntityHelper<FishEntity>",
+  "since": "1.8.4",
+  "description": "The FishEntityHelper class provides specialized access to fish entities in Minecraft, offering methods to monitor and interact with fish-specific behaviors such as bucket origins and aquatic movement patterns.",
+  "overview": "The FishEntityHelper class provides specialized access to fish entities in Minecraft, offering methods to monitor and interact with fish-specific behaviors such as bucket origins and aquatic movement patterns. This class extends MobEntityHelper and inherits all functionality for mob entities including AI states, pathfinding, and combat behaviors.\n\nThis helper is particularly useful for creating scripts that manage aquarium systems, monitor fish populations, track bucket-released fish versus naturally spawned fish, or coordinate with fishing automation systems. It also serves as the base class for more specialized fish helpers like TropicalFishEntityHelper and PufferfishEntityHelper.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isFromBucket",
+      "signature": "isFromBucket()",
+      "returnType": "boolean",
+      "description": "Returns true if this fish was spawned from a water bucket, false if it spawned naturally in the world.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if a fish is from a bucket\nconst fish = entity.asFish();\nif (fish.isFromBucket()) {\n    Chat.log(\"This fish was released from a bucket!\");\n    // Highlight bucket fish differently\n    fish.setGlowingColor(0x00AAFF); // Blue for bucket fish\n} else {\n    Chat.log(\"This fish spawned naturally!\");\n    // Highlight natural fish differently\n    fish.setGlowingColor(0x00FF00); // Green for natural fish\n}"
+      ]
+    }
+  ]
+}

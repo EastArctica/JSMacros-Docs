@@ -1,0 +1,20 @@
+[
+  {
+    "name": "EventEXPChange",
+    "fullClassName": "EventEXPChange",
+    "description": "This event is fired when the player's experience points or level changes. Backed by class `EventEXPChange`.",
+    "overview": "## Behavior\n\n* Fires when experience points or level changes\n* Includes both current and previous values for comparison\n* Progress is a float between 0.0 (inclusive) and 1.0 (exclusive)\n* Not cancellable\n\n## Event payload\n\n* **progress** (float): Current progress towards next level (0-1)\n* **total** (int): Total accumulated experience points\n* **level** (int): Current experience level\n* **prevProgress** (float): Previous progress towards next level\n* **prevTotal** (int): Previous total experience points\n* **prevLevel** (int): Previous experience level\n\n## Minimal example\n\n```js\nJsMacros.on(\"EXPChange\", JavaWrapper.methodToJavaAsync((e) => {\n  if (e.level > e.prevLevel) {\n    Chat.log(`Level up! Now level ${e.level}`);\n  }\n});\n```",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "toString",
+        "signature": "toString()",
+        "returnType": "string",
+        "description": "Returns a string representation of the event object.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

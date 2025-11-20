@@ -1,0 +1,316 @@
+{
+  "name": "Inventory",
+  "fullClassName": "org.spongepowered.api.item.inventory.Inventory",
+  "extends": "Nameable",
+  "description": "Base interface for anything that contains items.",
+  "overview": "Inventory is the superinterface of all inventories in the game. It provides methods to query and modify the contents of the inventory.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "builder",
+      "signature": "public static Builder builder()",
+      "returnType": "Builder",
+      "description": "Creates a new Inventory Builder.",
+      "parameters": [],
+      "static": true,
+      "examples": []
+    },
+    {
+      "name": "poll",
+      "signature": "ItemStack poll()",
+      "returnType": "ItemStack",
+      "description": "Removes and returns the first item in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "poll",
+      "signature": "ItemStack poll(int limit)",
+      "returnType": "ItemStack",
+      "description": "Removes and returns the first item in the inventory, up to the limit.",
+      "parameters": [
+        {
+          "name": "limit",
+          "type": "int",
+          "description": "The limit."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "pop",
+      "signature": "ItemStack pop()",
+      "returnType": "ItemStack",
+      "description": "Removes and returns the last item in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "peek",
+      "signature": "ItemStack peek()",
+      "returnType": "ItemStack",
+      "description": "Returns the first item in the inventory without removing it.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "offer",
+      "signature": "ItemStack offer(ItemStack stack)",
+      "returnType": "ItemStack",
+      "description": "Adds the item to the inventory. Returns the items that were rejected.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item to add."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canFit",
+      "signature": "boolean canFit(ItemStack stack)",
+      "returnType": "boolean",
+      "description": "Checks if the item can fit in the inventory.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "capacity",
+      "signature": "int capacity()",
+      "returnType": "int",
+      "description": "The maximum number of slots in this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "size",
+      "signature": "int size()",
+      "returnType": "int",
+      "description": "The number of slots in this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "totalItems",
+      "signature": "int totalItems()",
+      "returnType": "int",
+      "description": "The total number of items in this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(ItemStack stack)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains the specified item.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "boolean contains(ItemType type)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains the specified item type.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "ItemType",
+          "description": "The type to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "containsAny",
+      "signature": "boolean containsAny(ItemStack stack)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains any of the specified items.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxStackSize",
+      "signature": "int getMaxStackSize()",
+      "returnType": "int",
+      "description": "The maximum stack size for items in this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setMaxStackSize",
+      "signature": "void setMaxStackSize(int size)",
+      "returnType": "void",
+      "description": "Sets the maximum stack size for items in this inventory.",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "description": "The new maximum stack size."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clear",
+      "signature": "void clear()",
+      "returnType": "void",
+      "description": "Clears the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "query",
+      "signature": "<T extends Inventory> T query(Class<T> query)",
+      "returnType": "T",
+      "description": "Query this inventory for inventories matching the query.",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "Class<T>",
+          "description": "The query class."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "query",
+      "signature": "Inventory query(QueryOperation operation)",
+      "returnType": "Inventory",
+      "description": "Query this inventory using the operation.",
+      "parameters": [
+        {
+          "name": "operation",
+          "type": "QueryOperation",
+          "description": "The query operation."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "intersect",
+      "signature": "Inventory intersect(Inventory inventory)",
+      "returnType": "Inventory",
+      "description": "Returns the intersection of this inventory and the specified inventory.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "Inventory",
+          "description": "The other inventory."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "union",
+      "signature": "Inventory union(Inventory inventory)",
+      "returnType": "Inventory",
+      "description": "Returns the union of this inventory and the specified inventory.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "Inventory",
+          "description": "The other inventory."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "containsInventory",
+      "signature": "boolean containsInventory(Inventory inventory)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains the specified inventory.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "Inventory",
+          "description": "The child inventory."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "parent",
+      "signature": "Inventory parent()",
+      "returnType": "Inventory",
+      "description": "Returns the parent inventory, or this inventory if it has no parent.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "root",
+      "signature": "Inventory root()",
+      "returnType": "Inventory",
+      "description": "Returns the root inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "children",
+      "signature": "Iterable<Inventory> children()",
+      "returnType": "Iterable<Inventory>",
+      "description": "Returns the children of this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "slots",
+      "signature": "Iterable<Slot> slots()",
+      "returnType": "Iterable<Slot>",
+      "description": "Returns the slots in this inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasChildren",
+      "signature": "boolean hasChildren()",
+      "returnType": "boolean",
+      "description": "Checks if this inventory has children.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

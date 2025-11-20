@@ -1,0 +1,390 @@
+{
+  "name": "ButtonWidgetHelper$ButtonBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.ButtonWidgetHelper$ButtonBuilder",
+  "extends": "Object",
+  "since": "1.8.4",
+  "description": "A nested builder within ButtonWidgetHelper that provides a fluent API for creating standard button widgets.",
+  "overview": "The ButtonWidgetHelper$ButtonBuilder class is a nested builder within ButtonWidgetHelper that provides a fluent API for creating standard button widgets. This builder implements the builder pattern, allowing you to construct button widgets with all their properties set through a chainable, readable API.\n\nThe builder is specifically designed for creating standard (non-textured) buttons with customizable text, positioning, styling, and behavior. It's typically obtained through the new ButtonBuilder(screen) constructor and provides methods for configuring all button properties before creating the final widget.",
+  "constructors": [
+    {
+      "signature": "new ButtonBuilder(IScreen screen)",
+      "description": "The builder constructor takes a screen context where the button will be added.",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "IScreen",
+          "description": "The screen context for the button"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "x",
+      "signature": "x(int x)",
+      "returnType": "ButtonWidgetHelper$ButtonBuilder",
+      "description": "Sets the x-position of the button.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x-coordinate relative to the screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .x(50); // Position at x=50"
+      ]
+    },
+    {
+      "name": "y",
+      "signature": "y(int y)",
+      "returnType": "ButtonWidgetHelper$ButtonBuilder",
+      "description": "Sets the y-position of the button.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y-coordinate relative to the screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .y(30); // Position at y=30"
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "pos(int x, int y)",
+      "returnType": "ButtonWidgetHelper$ButtonBuilder",
+      "description": "Sets both x and y positions simultaneously.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x-coordinate relative to the screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y-coordinate relative to the screen"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .pos(100, 50); // Position at (100, 50)"
+      ]
+    },
+    {
+      "name": "width",
+      "signature": "width(int width)",
+      "returnType": "ButtonWidgetHelper$ButtonBuilder",
+      "description": "Sets the width of the button. Note that button height is always 20 pixels.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the button in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .width(120); // 120 pixels wide"
+      ]
+    },
+    {
+      "name": "size",
+      "signature": "size(int width)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Alternative method for setting the width.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the button in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .size(100); // 100 pixels wide"
+      ]
+    },
+    {
+      "name": "message",
+      "signature": "message(TextHelper message)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets the button text using a TextHelper object.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "TextHelper",
+          "description": "The button text as a TextHelper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const text = Chat.createTextHelperFromString(\"Click Me!\");\nconst builder = new ButtonBuilder(screen)\n    .message(text);"
+      ]
+    },
+    {
+      "name": "message",
+      "signature": "message(String message)",
+      "returnType": "ButtonWidget$Builder",
+      "description": "Sets the button text using a plain string.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "String",
+          "description": "The button text as a string"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .message(\"Button Label\");"
+      ]
+    },
+    {
+      "name": "label",
+      "signature": "label(TextHelper label)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Alternative method for setting button text using a TextHelper object.",
+      "parameters": [
+        {
+          "name": "label",
+          "type": "TextHelper",
+          "description": "The button text as a TextHelper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const label = Chat.createTextHelperFromString(\"My Button\");\nconst builder = new ButtonBuilder(screen)\n    .label(label);"
+      ]
+    },
+    {
+      "name": "label",
+      "signature": "label(String label)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Alternative method for setting button text using a string.",
+      "parameters": [
+        {
+          "name": "label",
+          "type": "String",
+          "description": "The button text as a string"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .label(\"Submit\");"
+      ]
+    },
+    {
+      "name": "active",
+      "signature": "active(boolean active)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets whether the button is active and can be clicked.",
+      "parameters": [
+        {
+          "name": "active",
+          "type": "boolean",
+          "description": "Whether the button should be active (clickable)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .active(true); // Button is clickable"
+      ]
+    },
+    {
+      "name": "visible",
+      "signature": "visible(boolean visible)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets whether the button should be visible on the screen.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "Whether the button should be visible"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .visible(true); // Button is visible"
+      ]
+    },
+    {
+      "name": "alpha",
+      "signature": "alpha(double alpha)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets the opacity of the button.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "double",
+          "description": "The opacity of the button (0.0-1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .alpha(0.8); // 80% opacity"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(int zIndex)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets the z-index to control rendering order.",
+      "parameters": [
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index for rendering order"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .zIndex(5); // Render above elements with lower z-index"
+      ]
+    },
+    {
+      "name": "setTooltip",
+      "signature": "setTooltip(TextHelper tooltip)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets the tooltip text using a TextHelper object.",
+      "parameters": [
+        {
+          "name": "tooltip",
+          "type": "TextHelper",
+          "description": "The tooltip text as a TextHelper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const tooltip = Chat.createTextHelperFromString(\"Hover help text\");\nconst builder = new ButtonBuilder(screen)\n    .setTooltip(tooltip);"
+      ]
+    },
+    {
+      "name": "setTooltip",
+      "signature": "setTooltip(String tooltip)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets the tooltip text using a plain string.",
+      "parameters": [
+        {
+          "name": "tooltip",
+          "type": "String",
+          "description": "The tooltip text as a string"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .setTooltip(\"Click me for help\");"
+      ]
+    },
+    {
+      "name": "setTooltip",
+      "signature": "setTooltip(TextHelper... tooltips)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets multiple tooltip lines using TextHelper objects.",
+      "parameters": [
+        {
+          "name": "tooltips",
+          "type": "TextHelper...",
+          "description": "Multiple tooltip lines"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .setTooltip(\n        Chat.createTextHelperFromString(\"Line 1\"),\n        Chat.createTextHelperFromString(\"Line 2\"),\n        Chat.createTextHelperFromString(\"Line 3\")\n    );"
+      ]
+    },
+    {
+      "name": "addTooltip",
+      "signature": "addTooltip(TextHelper tooltip)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Adds an additional tooltip line.",
+      "parameters": [
+        {
+          "name": "tooltip",
+          "type": "TextHelper",
+          "description": "Additional tooltip line to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .setTooltip(\"First line\")\n    .addTooltip(\"Second line\")\n    .addTooltip(\"Third line\");"
+      ]
+    },
+    {
+      "name": "setTooltip",
+      "signature": "setTooltip(String... tooltips)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets multiple tooltip lines from strings.",
+      "parameters": [
+        {
+          "name": "tooltips",
+          "type": "String...",
+          "description": "Multiple tooltip strings"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .setTooltip(\"Line 1\", \"Line 2\", \"Line 3\");"
+      ]
+    },
+    {
+      "name": "action",
+      "signature": "action(MethodWrapper action)",
+      "returnType": "ButtonWidgetHelper$Builder$ButtonBuilder",
+      "description": "Sets the click action handler for the button.",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "MethodWrapper",
+          "description": "The action to execute when clicked"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .action(JavaWrapper.methodToJavaAsync((button, screen) => {\n        Chat.log(\"Button clicked!\");\n    }));"
+      ]
+    },
+    {
+      "name": "onClick",
+      "signature": "onClick(MethodWrapper onClick)",
+      "returnType": "ButtonBuilder$Builder$ButtonBuilder",
+      "description": "Alternative method for setting the click action.",
+      "parameters": [
+        {
+          "name": "onClick",
+          "type": "MethodWrapper",
+          "description": "The action to execute when clicked"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = new ButtonBuilder(screen)\n    .onClick(JavaWrapper.methodToJavaAsync((btn, scr) => {\n        Chat.log(\"Button clicked!\");\n    }));"
+      ]
+    },
+    {
+      "name": "createWidget",
+      "signature": "createWidget()",
+      "returnType": "ButtonWidgetHelper",
+      "description": "Creates the button widget with the configured properties and returns it.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const button = new ButtonBuilder(screen)\n    .pos(50, 30)\n    .width(100)\n    .message(\"Click Me\")\n    .action(actionHandler)\n    .createWidget();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "ButtonWidgetHelper",
+      "description": "Alternative method to create the button widget.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const button = new ButtonBuilder(screen)\n    .pos(50, 30)\n    .width(100)\n    .message(\"Click Me\")\n    .action(actionHandler)\n    .build();"
+      ]
+    }
+  ]
+}

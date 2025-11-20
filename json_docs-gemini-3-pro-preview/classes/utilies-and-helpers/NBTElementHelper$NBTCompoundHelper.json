@@ -1,0 +1,107 @@
+{
+  "name": "NBTCompoundHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.NBTElementHelper$NBTCompoundHelper",
+  "extends": "NBTElementHelper<NbtCompound>",
+  "since": "JsMacros 1.5.1",
+  "description": "The NBTCompoundHelper class is a specialized helper for handling NBT compound tags in JSMacros. It provides a dictionary-like interface for accessing, navigating, and manipulating compound NBT data structures.",
+  "overview": "The NBTCompoundHelper class provides:\n\n- Key-based access to NBT values with type information\n- Iteration and enumeration of compound keys\n- Type checking and conversion for nested values\n- Integration with other NBT helper classes\n- Safe access methods that handle missing keys gracefully\n\nNBTCompoundHelper instances are typically obtained by:\n1. Converting from an existing NBTElementHelper using `asCompoundHelper()`\n2. Accessing compound data from items, entities, or other game objects\n3. Using the static `wrapCompound()` method",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "wrapCompound",
+      "signature": "NBTCompoundHelper.wrapCompound(compound)",
+      "returnType": "NBTCompoundHelper",
+      "description": "Wraps a raw NbtCompound object in an NBTCompoundHelper.",
+      "parameters": [
+        {
+          "name": "compound",
+          "type": "NbtCompound",
+          "description": "The raw NbtCompound to wrap"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Usually created through existing helpers\nconst item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n    // Work with compound data\n}"
+      ]
+    },
+    {
+      "name": "getKeys",
+      "signature": "getKeys()",
+      "returnType": "Set<String>",
+      "description": "Returns a set of all keys in this compound tag.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n    const keys = compound.getKeys();\n\n    Chat.log(`Compound keys: ${Array.from(keys).join(', ')}`);\n    Chat.log(`Total keys: ${keys.size}`);\n}"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType(key)",
+      "returnType": "int",
+      "description": "Returns the NBT type ID of the value stored at the specified key. (0=END, 1=BYTE, 2=SHORT, 3=INT, 4=LONG, 5=FLOAT, 6=DOUBLE, 7=BYTE_ARRAY, 8=STRING, 9=LIST, 10=COMPOUND, 11=INT_ARRAY, 12=LONG_ARRAY)",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    for (const key of compound.getKeys()) {\n        const type = compound.getType(key);\n        const typeName = getTypeName(type);\n        Chat.log(`${key}: ${typeName}`);\n    }\n}\n\nfunction getTypeName(typeId) {\n    const types = ['END', 'BYTE', 'SHORT', 'INT', 'LONG', 'FLOAT', 'DOUBLE',\n                   'BYTE_ARRAY', 'STRING', 'LIST', 'COMPOUND', 'INT_ARRAY', 'LONG_ARRAY'];\n    return types[typeId] || 'UNKNOWN';\n}"
+      ]
+    },
+    {
+      "name": "has",
+      "signature": "has(key)",
+      "returnType": "boolean",
+      "description": "Checks if this compound contains a value at the specified key.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key to check for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    if (compound.has(\"display\")) {\n        Chat.log(\"Item has display properties\");\n\n        if (compound.has(\"display.Name\")) {\n            Chat.log(\"Item has custom name\");\n        }\n    }\n\n    if (compound.has(\"Enchantments\")) {\n        Chat.log(\"Item has enchantments\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "get",
+      "signature": "get(key)",
+      "returnType": "NBTElementHelper<?>",
+      "description": "Retrieves the value at the specified key as an NBTElementHelper.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key to retrieve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    // Get display compound if it exists\n    if (compound.has(\"display\")) {\n        const display = compound.get(\"display\");\n        if (display && display.isCompound()) {\n            const displayCompound = display.asCompoundHelper();\n\n            // Get custom name\n            if (displayCompound.has(\"Name\")) {\n                const name = displayCompound.get(\"Name\");\n                Chat.log(`Custom name: ${name ? name.asString() : 'null'}`);\n            }\n\n            // Get lore list\n            if (displayCompound.has(\"Lore\")) {\n                const lore = displayCompound.get(\"Lore\");\n                if (lore && lore.isList()) {\n                    const loreList = lore.asListHelper();\n                    Chat.log(`Item has ${loreList.length()} lore lines`);\n                }\n            }\n        }\n    }\n\n    // Get enchantments list\n    if (compound.has(\"Enchantments\")) {\n        const enchantments = compound.get(\"Enchantments\");\n        if (enchantments && enchantments.isList()) {\n            const enchantList = enchantments.asListHelper();\n            Chat.log(`Item has ${enchantList.length()} enchantments`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "asString",
+      "signature": "asString(key)",
+      "returnType": "String",
+      "description": "Retrieves the string representation of the value at the specified key.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key to retrieve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = Player.getPlayer().getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt && nbt.isCompound()) {\n    const compound = nbt.asCompoundHelper();\n\n    // Get various string representations\n    if (compound.has(\"CustomModelData\")) {\n        const modelData = compound.asString(\"CustomModelData\");\n        Chat.log(`Custom model data: ${modelData}`);\n    }\n\n    if (compound.has(\"HideFlags\")) {\n        const hideFlags = compound.asString(\"HideFlags\");\n        Chat.log(`Hide flags: ${hideFlags}`);\n    }\n}"
+      ]
+    }
+  ]
+}

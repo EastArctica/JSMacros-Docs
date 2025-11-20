@@ -1,0 +1,78 @@
+[
+  {
+    "name": "IAdvancedFilter",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.api.IAdvancedFilter<T>",
+    "extends": "IFilter<T>",
+    "since": "1.6.5",
+    "description": "The IAdvancedFilter interface is a crucial component of JSMacros' WorldScanner system that extends the basic IFilter interface to provide powerful logical operations for combining filters.",
+    "overview": "The IAdvancedFilter interface is a crucial component of JSMacros' WorldScanner system that extends the basic IFilter interface to provide powerful logical operations for combining filters. This interface enables the creation of complex filtering conditions by allowing filters to be combined using boolean logic operations such as AND, OR, XOR, and NOT.\n\nWhile IFilter provides the basic apply(T t) method for testing individual objects, IAdvancedFilter adds methods for logical composition, making it possible to build sophisticated filtering chains for world scanning operations. This interface is primarily used with the WorldScanner system to search for blocks and entities based on multiple criteria.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "and",
+        "signature": "and(IFilter<T> filter)",
+        "returnType": "IAdvancedFilter<T>",
+        "description": "Requires ALL conditions to be true. Evaluation stops at the first false condition (short-circuiting).",
+        "parameters": [
+          {
+            "name": "filter",
+            "type": "IFilter<T>",
+            "description": "The filter to combine with the current filter using AND logic."
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Combine two filters: storage AND accessible\nconst valuableStorage = storageFilter.and(accessibleFilter);",
+          "// Multi-chain example\nconst buildingMaterials = commonMaterials\n    .and(easyToMine)\n    .and(notFluid);"
+        ]
+      },
+      {
+        "name": "or",
+        "signature": "or(IFilter<T> filter)",
+        "returnType": "IAdvancedFilter<T>",
+        "description": "Requires AT LEAST ONE condition to be true. Evaluation stops at the first true condition (short-circuiting).",
+        "parameters": [
+          {
+            "name": "filter",
+            "type": "IFilter<T>",
+            "description": "The filter to combine with the current filter using OR logic."
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Combine filters: diamond OR emerald OR ancient_debris\nconst complexFilter = oreFilter.and(deepFilter.or(rareFilter));",
+          "// Alternative logic\nconst alternative = rareFilter.and(deepFilter).or(accessibleFilter);"
+        ]
+      },
+      {
+        "name": "xor",
+        "signature": "xor(IFilter<T> filter)",
+        "returnType": "IAdvancedFilter<T>",
+        "description": "Requires EXACTLY ONE condition to be true. Both conditions must be evaluated to ensure exclusivity (no short-circuiting).",
+        "parameters": [
+          {
+            "name": "filter",
+            "type": "IFilter<T>",
+            "description": "The filter to combine with the current filter using XOR logic."
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Find blocks that are either light sources OR opaque, but not both\nconst exclusive = lightSources.xor(opaqueBlocks);"
+        ]
+      },
+      {
+        "name": "not",
+        "signature": "not()",
+        "returnType": "IAdvancedFilter<T>",
+        "description": "Inverts the filter logic. Returns the opposite of the original filter result.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "// Find all blocks that are NOT air\nconst notAir = airFilter.not();",
+          "// Find rare ores (all ores AND NOT common ores)\nconst rareOres = allOres.and(commonOres.not());"
+        ]
+      }
+    ]
+  }
+]

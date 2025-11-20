@@ -1,0 +1,20 @@
+{
+  "name": "EventSound",
+  "fullClassName": "EventSound",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a sound is played in the game world.",
+  "overview": "Backed by class `EventSound`.\n\n## Signature\n```js\nJsMacros.on(\"Sound\", JavaWrapper.methodToJavaAsync((event) => {\n  // ...\n}));\n```\n\n## Behavior\n* Fires when any game sound is played\n- The `sound` field contains the sound event ID\n- The `volume` and `pitch` fields control sound properties\n- The `position` field indicates where the sound originated\n- This event is cancellable - preventing the sound from playing\n\n## Fields\n\n### event.sound\nType: `string`\nThe ID of the sound being played.\nNotes: This contains the Minecraft sound event ID, such as `'entity.creeper.primed'` or `'block.stone.break'`.\n\n### event.volume\nType: `float`\nThe volume level of the sound.\nNotes: Ranges from 0.0 (silent) to 1.0 (maximum volume).\n\n### event.pitch\nType: `float`\nThe pitch of the sound.\nNotes: 1.0 is normal pitch, >1.0 is higher, <1.0 is lower.\n\n### event.position\nType: `Pos3D`\nThe world position where the sound originated.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

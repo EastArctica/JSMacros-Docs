@@ -1,0 +1,771 @@
+{
+  "name": "UniversalBlockStateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.UniversalBlockStateHelper",
+  "extends": "BlockStateHelper",
+  "since": "1.8.4",
+  "description": "Extends BlockStateHelper and provides comprehensive access to all block state properties in Minecraft.",
+  "overview": "The UniversalBlockStateHelper class serves as a universal interface for accessing the specific state properties of any block in the world, making it easier to work with block states without needing to know the exact property names or types.\n\nThis class is particularly useful for:\n- Checking block orientations and directions\n- Reading redstone states and power levels\n- Accessing block-specific properties like age, level, or custom states\n- Working with complex blocks like doors, stairs, rails, and redstone components",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getAttachment",
+      "signature": "getAttachment()",
+      "returnType": "String",
+      "description": "Returns the attachment state of certain blocks like tripwire hooks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let attachment = universalState.getAttachment();\nif (attachment === \"wall\") {\n    // Block is attached to a wall\n}"
+      ]
+    },
+    {
+      "name": "getHorizontalFacing",
+      "signature": "getHorizontalFacing()",
+      "returnType": "DirectionHelper",
+      "description": "Gets the horizontal facing direction of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let facing = universalState.getHorizontalFacing();\nlet directionName = facing.getName(); // \"north\", \"south\", \"east\", \"west\"\nlet axis = facing.getAxis(); // \"x\" or \"z\""
+      ]
+    },
+    {
+      "name": "getFacing",
+      "signature": "getFacing()",
+      "returnType": "DirectionHelper",
+      "description": "Gets the primary facing direction of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let facing = universalState.getFacing();\nif (facing.getName() === \"north\") {\n    // Block faces north\n}"
+      ]
+    },
+    {
+      "name": "getHopperFacing",
+      "signature": "getHopperFacing()",
+      "returnType": "DirectionHelper",
+      "description": "Gets the specific facing direction for hoppers.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOrientation",
+      "signature": "getOrientation()",
+      "returnType": "String",
+      "description": "Gets the orientation of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAxis",
+      "signature": "getAxis()",
+      "returnType": "String",
+      "description": "Gets the axis orientation of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let axis = universalState.getAxis();\nif (axis === \"y\") {\n    // Block is vertical\n}"
+      ]
+    },
+    {
+      "name": "getEastWireConnection",
+      "signature": "getEastWireConnection()",
+      "returnType": "String",
+      "description": "Get redstone wire connection state for the east direction.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let eastConnection = universalState.getEastWireConnection();\nlet northConnection = universalState.getNorthWireConnection();\n\nif (eastConnection === \"side\" && northConnection === \"side\") {\n    // Wire connects to sides on east and north\n}"
+      ]
+    },
+    {
+      "name": "getNorthWireConnection",
+      "signature": "getNorthWireConnection()",
+      "returnType": "String",
+      "description": "Get redstone wire connection state for the north direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSouthWireConnection",
+      "signature": "getSouthWireConnection()",
+      "returnType": "String",
+      "description": "Get redstone wire connection state for the south direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWestWireConnection",
+      "signature": "getWestWireConnection()",
+      "returnType": "String",
+      "description": "Get redstone wire connection state for the west direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getEastWallShape",
+      "signature": "getEastWallShape()",
+      "returnType": "String",
+      "description": "Get wall shape properties for the east direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getNorthWallShape",
+      "signature": "getNorthWallShape()",
+      "returnType": "String",
+      "description": "Get wall shape properties for the north direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSouthWallShape",
+      "signature": "getSouthWallShape()",
+      "returnType": "String",
+      "description": "Get wall shape properties for the south direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWestWallShape",
+      "signature": "getWestWallShape()",
+      "returnType": "String",
+      "description": "Get wall shape properties for the west direction.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isUp",
+      "signature": "isUp()",
+      "returnType": "boolean",
+      "description": "Checks if block connects upward.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isDown",
+      "signature": "isDown()",
+      "returnType": "boolean",
+      "description": "Checks if block connects downward.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isNorth",
+      "signature": "isNorth()",
+      "returnType": "boolean",
+      "description": "Checks if block connects to north.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSouth",
+      "signature": "isSouth()",
+      "returnType": "boolean",
+      "description": "Checks if block connects to south.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isEast",
+      "signature": "isEast()",
+      "returnType": "boolean",
+      "description": "Checks if block connects to east.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isWest",
+      "signature": "isWest()",
+      "returnType": "boolean",
+      "description": "Checks if block connects to west.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isPowered",
+      "signature": "isPowered()",
+      "returnType": "boolean",
+      "description": "Checks if block is powered by redstone.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (universalState.isPowered()) {\n    let powerLevel = universalState.getPower();\n    Chat.log(`Block is powered with level: ${powerLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "isLit",
+      "signature": "isLit()",
+      "returnType": "boolean",
+      "description": "Checks if block is lit (torches, furnaces, campfires, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSignalFire",
+      "signature": "isSignalFire()",
+      "returnType": "boolean",
+      "description": "Checks if campfire is a signal fire.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isInverted",
+      "signature": "isInverted()",
+      "returnType": "boolean",
+      "description": "Checks if block is in inverted state (daylight sensors).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPower",
+      "signature": "getPower()",
+      "returnType": "Number",
+      "description": "Gets redstone power level (0-15).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isWaterlogged",
+      "signature": "isWaterlogged()",
+      "returnType": "boolean",
+      "description": "Checks if block contains water.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAttached",
+      "signature": "isAttached()",
+      "returnType": "boolean",
+      "description": "Checks if block is attached (tripwire hooks).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOpen",
+      "signature": "isOpen()",
+      "returnType": "boolean",
+      "description": "Checks if block is open (doors, gates, trapdoors).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isExtended",
+      "signature": "isExtended()",
+      "returnType": "boolean",
+      "description": "Checks if block is extended (pistons).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOccupied",
+      "signature": "isOccupied()",
+      "returnType": "boolean",
+      "description": "Checks if block is occupied (beds).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isPersistent",
+      "signature": "isPersistent()",
+      "returnType": "boolean",
+      "description": "Checks if block is persistent (leaves).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSnowy",
+      "signature": "isSnowy()",
+      "returnType": "boolean",
+      "description": "Checks if block is snowy (dirt blocks).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasEye",
+      "signature": "hasEye()",
+      "returnType": "boolean",
+      "description": "Checks if block has an eye (end portal frames).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasBook",
+      "signature": "hasBook()",
+      "returnType": "boolean",
+      "description": "Checks if block has a book (lecterns).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasRecord",
+      "signature": "hasRecord()",
+      "returnType": "boolean",
+      "description": "Checks if block has a record (jukeboxes).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasBerries",
+      "signature": "hasBerries()",
+      "returnType": "boolean",
+      "description": "Checks if block has berries (cave vines).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasBottle0",
+      "signature": "hasBottle0()",
+      "returnType": "boolean",
+      "description": "Check for bottle in slot 0 of brewing stand.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasBottle1",
+      "signature": "hasBottle1()",
+      "returnType": "boolean",
+      "description": "Check for bottle in slot 1 of brewing stand.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasBottle2",
+      "signature": "hasBottle2()",
+      "returnType": "boolean",
+      "description": "Check for bottle in slot 2 of brewing stand.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isShort",
+      "signature": "isShort()",
+      "returnType": "boolean",
+      "description": "Checks if piston head is short.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPistonType",
+      "signature": "getPistonType()",
+      "returnType": "String",
+      "description": "Returns piston type ('normal' or 'sticky').",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAge",
+      "signature": "getAge()",
+      "returnType": "Number",
+      "description": "Gets the growth age of crops and similar blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let age = universalState.getAge();\nif (age >= 7) {\n    // Wheat is fully grown\n}"
+      ]
+    },
+    {
+      "name": "getMaxAge",
+      "signature": "getMaxAge()",
+      "returnType": "Number",
+      "description": "Gets the maximum possible age for crops.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStage",
+      "signature": "getStage()",
+      "returnType": "Number",
+      "description": "Gets the growth stage of certain plants.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLevel",
+      "signature": "getLevel()",
+      "returnType": "Number",
+      "description": "Gets the level property for fluids and similar blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxLevel",
+      "signature": "getMaxLevel()",
+      "returnType": "Number",
+      "description": "Gets the maximum level for fluids.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinLevel",
+      "signature": "getMinLevel()",
+      "returnType": "Number",
+      "description": "Gets the minimum level for fluids.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getDistance",
+      "signature": "getDistance()",
+      "returnType": "Number",
+      "description": "Gets the distance from logs (for leaves) or other distance-based properties.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxDistance",
+      "signature": "getMaxDistance()",
+      "returnType": "Number",
+      "description": "Gets the maximum distance value.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinDistance",
+      "signature": "getMinDistance()",
+      "returnType": "Number",
+      "description": "Gets the minimum distance value.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBites",
+      "signature": "getBites()",
+      "returnType": "Number",
+      "description": "Gets the number of bites taken from a cake.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let bites = universalState.getBites();\nif (bites >= 6) {\n    Chat.log(\"Cake is completely eaten!\");\n}"
+      ]
+    },
+    {
+      "name": "getHoneyLevel",
+      "signature": "getHoneyLevel()",
+      "returnType": "Number",
+      "description": "Gets the honey level of beehives and bee nests.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPickles",
+      "signature": "getPickles()",
+      "returnType": "Number",
+      "description": "Gets the number of sea pickles in a block.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCandles",
+      "signature": "getCandles()",
+      "returnType": "Number",
+      "description": "Gets the number of candles.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFlowerAmount",
+      "signature": "getFlowerAmount()",
+      "returnType": "Number",
+      "description": "Gets the number of flowers on a block.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBlockHalf",
+      "signature": "getBlockHalf()",
+      "returnType": "String",
+      "description": "Gets the half of a double-height block.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getDoubleBlockHalf",
+      "signature": "getDoubleBlockHalf()",
+      "returnType": "String",
+      "description": "Gets the half of a double-height block specifically.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSlabType",
+      "signature": "getSlabType()",
+      "returnType": "String",
+      "description": "Gets the type of slab.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStairShape",
+      "signature": "getStairShape()",
+      "returnType": "String",
+      "description": "Gets the shape of stairs.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRailShape",
+      "signature": "getRailShape()",
+      "returnType": "String",
+      "description": "Gets the shape of rails.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let railShape = universalState.getRailShape();\nif (railShape === \"north_south\") {\n    // Rail runs north to south\n}"
+      ]
+    },
+    {
+      "name": "getChestType",
+      "signature": "getChestType()",
+      "returnType": "String",
+      "description": "Gets the type of chest.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let chestType = universalState.getChestType();\nif (chestType !== \"single\") {\n    // This is part of a double chest\n}"
+      ]
+    },
+    {
+      "name": "getDoorHinge",
+      "signature": "getDoorHinge()",
+      "returnType": "String",
+      "description": "Gets the hinge side of a door.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMoisture",
+      "signature": "getMoisture()",
+      "returnType": "Number",
+      "description": "Gets the moisture level of farmland.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let moisture = universalState.getMoisture();\nif (moisture < 4) {\n    Chat.log(\"Farmland is dry and needs water nearby\");\n}"
+      ]
+    },
+    {
+      "name": "getDelay",
+      "signature": "getDelay()",
+      "returnType": "Number",
+      "description": "Gets the delay setting of repeaters.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getNote",
+      "signature": "getNote()",
+      "returnType": "Number",
+      "description": "Gets the note value of note blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInstrument",
+      "signature": "getInstrument()",
+      "returnType": "String",
+      "description": "Gets the instrument type of note blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getComparatorMode",
+      "signature": "getComparatorMode()",
+      "returnType": "String",
+      "description": "Gets the mode of a comparator.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isLocked",
+      "signature": "isLocked()",
+      "returnType": "boolean",
+      "description": "Gets the locked state of repeaters and comparators.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSculkSensorPhase",
+      "signature": "getSculkSensorPhase()",
+      "returnType": "String",
+      "description": "Gets the current phase of a sculk sensor.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isShrieking",
+      "signature": "isShrieking()",
+      "returnType": "boolean",
+      "description": "Gets the shrieking state of sculk sensors.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canSummon",
+      "signature": "canSummon()",
+      "returnType": "boolean",
+      "description": "Gets whether a sculk shrieker can summon.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRotation",
+      "signature": "getRotation()",
+      "returnType": "Number",
+      "description": "Gets the rotation value of certain blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCharges",
+      "signature": "getCharges()",
+      "returnType": "Number",
+      "description": "Gets the charge level of respawn anchors.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getEggs",
+      "signature": "getEggs()",
+      "returnType": "Number",
+      "description": "Gets the number of turtle eggs.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHatched",
+      "signature": "getHatched()",
+      "returnType": "Number",
+      "description": "Gets the hatching progress of turtle eggs.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLayers",
+      "signature": "getLayers()",
+      "returnType": "Number",
+      "description": "Gets the number of snow layers.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSlot0Occupied",
+      "signature": "isSlot0Occupied()",
+      "returnType": "boolean",
+      "description": "Check slot 0 occupation state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSlot1Occupied",
+      "signature": "isSlot1Occupied()",
+      "returnType": "boolean",
+      "description": "Check slot 1 occupation state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSlot2Occupied",
+      "signature": "isSlot2Occupied()",
+      "returnType": "boolean",
+      "description": "Check slot 2 occupation state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSlot3Occupied",
+      "signature": "isSlot3Occupied()",
+      "returnType": "boolean",
+      "description": "Check slot 3 occupation state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSlot4Occupied",
+      "signature": "isSlot4Occupied()",
+      "returnType": "boolean",
+      "description": "Check slot 4 occupation state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSlot5Occupied",
+      "signature": "isSlot5Occupied()",
+      "returnType": "boolean",
+      "description": "Check slot 5 occupation state.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

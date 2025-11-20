@@ -1,0 +1,122 @@
+{
+  "name": "HorseInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.HorseInventory",
+  "extends": "Inventory<HorseScreen>",
+  "since": "1.8.4",
+  "description": "The HorseInventory class provides functionality for interacting with horse inventory screens in Minecraft.",
+  "overview": "This includes managing saddles, armor, and chest inventories for horses, donkeys, mules, and similar equine mobs. It extends the base Inventory class and adds horse-specific functionality while inheriting all standard inventory operations.\n\nThis class is automatically created when you open a horse inventory screen and can be accessed through Player.getInventory() or Inventory.create() when a horse inventory is open.\n\nSupported Horse Types:\n- Horses (Saddles, Armor)\n- Donkeys (Saddles, Chests)\n- Mules (Saddles, Chests)\n- Llamas (Chests, Decoration)\n- Other AbstractHorseEntity subclasses",
+  "constructors": [
+    {
+      "signature": "HorseInventory(HorseScreen inventory)",
+      "description": "Creates a new HorseInventory instance for the specified horse inventory screen. This constructor is primarily used internally by JSMacros.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "HorseScreen",
+          "description": "The horse inventory screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "canBeSaddled",
+      "signature": "canBeSaddled()",
+      "returnType": "boolean",
+      "description": "Checks if the current horse entity is capable of being saddled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.canBeSaddled()) {\n    Chat.log(\"This animal accepts saddles.\");\n}"
+      ]
+    },
+    {
+      "name": "isSaddled",
+      "signature": "isSaddled()",
+      "returnType": "boolean",
+      "description": "Checks if the horse currently has a saddle equipped.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nChat.log(`Is Saddled: ${inventory.isSaddled()}`);"
+      ]
+    },
+    {
+      "name": "getSaddle",
+      "signature": "getSaddle()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item stack currently in the saddle slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst saddle = inventory.getSaddle();\nif (!saddle.isEmpty()) {\n    Chat.log(`Saddle: ${saddle.getName().getString()}`);\n}"
+      ]
+    },
+    {
+      "name": "hasArmorSlot",
+      "signature": "hasArmorSlot()",
+      "returnType": "boolean",
+      "description": "Checks if the horse entity has a slot available for horse armor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.hasArmorSlot()) {\n    Chat.log(\"Horse can wear armor\");\n}"
+      ]
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item stack currently in the armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst armor = inventory.getArmor();\nif (!armor.isEmpty()) {\n    Chat.log(`Armor: ${armor.getName().getString()}`);\n}"
+      ]
+    },
+    {
+      "name": "hasChest",
+      "signature": "hasChest()",
+      "returnType": "boolean",
+      "description": "Checks if the horse entity is equipped with a chest (e.g., Donkeys, Mules, Llamas).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.hasChest()) {\n    Chat.log(\"Horse has chest inventory\");\n}"
+      ]
+    },
+    {
+      "name": "getInventorySize",
+      "signature": "getInventorySize()",
+      "returnType": "int",
+      "description": "Gets the total size (number of slots) of the horse's chest inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory.hasChest()) {\n    const size = inventory.getInventorySize();\n    Chat.log(`Chest Size: ${size} slots`);\n}"
+      ]
+    },
+    {
+      "name": "getHorseInventory",
+      "signature": "getHorseInventory()",
+      "returnType": "List<ItemStackHelper>",
+      "description": "Retrieves a list of all items currently stored in the horse's chest inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst chestItems = inventory.getHorseInventory();\nfor (const item of chestItems) {\n    Chat.log(`- ${item.getItemId()} x${item.getCount()}`);\n}"
+      ]
+    },
+    {
+      "name": "getHorse",
+      "signature": "getHorse()",
+      "returnType": "AbstractHorseEntityHelper",
+      "description": "Gets the helper object for the specific horse entity associated with this inventory, providing access to stats like speed and jump strength.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst horse = inventory.getHorse();\nChat.log(`Horse Type: ${horse.getType()}`);\nChat.log(`Jump Strength: ${horse.getJumpStrengthStat().toFixed(3)}`);\nChat.log(`Speed: ${horse.getHorseSpeed().toFixed(2)} blocks/sec`);"
+      ]
+    }
+  ]
+}

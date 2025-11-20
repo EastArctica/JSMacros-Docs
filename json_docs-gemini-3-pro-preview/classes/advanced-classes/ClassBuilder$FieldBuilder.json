@@ -1,0 +1,147 @@
+{
+  "name": "ClassBuilder.FieldBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.FieldBuilder<T>",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "A specialized builder for creating and configuring fields within generated classes.",
+  "overview": "The ClassBuilder.FieldBuilder class is a specialized builder for creating and configuring fields within generated classes. This builder provides a fluent API for setting field visibility, modifiers, initialization values, annotations, and other field properties, allowing you to create comprehensive field definitions. FieldBuilder instances are obtained through the addField() methods of ClassBuilder and support both simple field creation and advanced initialization with complex field initializers.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "makePublic",
+      "signature": "makePublic()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Sets the field visibility to public. Public fields are accessible from any class. This is the default visibility if no other modifier is specified.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makePublic();"
+      ]
+    },
+    {
+      "name": "makePrivate",
+      "signature": "makePrivate()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Sets the field visibility to private. Private fields are only accessible within the declaring class.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makePrivate();"
+      ]
+    },
+    {
+      "name": "makeProtected",
+      "signature": "makeProtected()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Sets the field visibility to protected. Protected fields are accessible within the same package and by subclasses.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makeProtected();"
+      ]
+    },
+    {
+      "name": "makeStatic",
+      "signature": "makeStatic()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Makes the field static (class-level rather than instance-level). All instances share the same static field value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makeStatic();"
+      ]
+    },
+    {
+      "name": "makeFinal",
+      "signature": "makeFinal()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Makes the field final (constant). Final fields can only be assigned once and must be initialized either in declaration or in constructor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makeFinal();"
+      ]
+    },
+    {
+      "name": "makeVolatile",
+      "signature": "makeVolatile()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Makes the field volatile (thread-safe visibility). Volatile fields provide visibility guarantees across threads.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makeVolatile();"
+      ]
+    },
+    {
+      "name": "makeTransient",
+      "signature": "makeTransient()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Makes the field transient (excluded from serialization). Transient fields are ignored during object serialization.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "fieldBuilder.makeTransient();"
+      ]
+    },
+    {
+      "name": "setInitializer",
+      "signature": "setInitializer(value)",
+      "returnType": "FieldBuilder<T>",
+      "description": "Sets a simple initialization value for the field. Value type must match the field type.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "any",
+          "description": "The initialization value (string, number, boolean, null)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "fieldBuilder.setInitializer(\"Default Value\");",
+        "fieldBuilder.setInitializer(42);",
+        "fieldBuilder.setInitializer(true);"
+      ]
+    },
+    {
+      "name": "buildInitializer",
+      "signature": "buildInitializer()",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Creates a FieldInitializerBuilder for complex field initialization expressions (method calls, constructors, computed values).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const initializerBuilder = fieldBuilder.buildInitializer();"
+      ]
+    },
+    {
+      "name": "addAnnotation",
+      "signature": "addAnnotation(type)",
+      "returnType": "AnnotationBuilder<FieldBuilder<T>>",
+      "description": "Adds an annotation to the field.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "Class<?>",
+          "description": "The annotation type to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const annotationBuilder = fieldBuilder.addAnnotation(MyFieldAnnotation.class);",
+        "fieldBuilder\n    .addAnnotation(MyFieldAnnotation.class)\n        .putString(\"description\", \"User's display name\")\n        .putInt(\"maxLength\", 50)\n        .finish()\n    .end();"
+      ]
+    },
+    {
+      "name": "end",
+      "signature": "end()",
+      "returnType": "ClassBuilder<T>",
+      "description": "Finalizes the field and returns to the parent ClassBuilder. This method must be called to apply the field to the class.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = fieldBuilder.end();"
+      ]
+    }
+  ]
+}

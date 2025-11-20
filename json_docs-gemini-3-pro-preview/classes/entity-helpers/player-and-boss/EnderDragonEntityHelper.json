@@ -1,0 +1,72 @@
+{
+  "name": "EnderDragonEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.boss.EnderDragonEntityHelper",
+  "extends": "MobEntityHelper<EnderDragonEntity>",
+  "since": "1.8.4",
+  "description": "Represents an Ender Dragon entity in the world. EnderDragonEntityHelper provides access to dragon-specific behaviors, phases, and body parts that are unique to the Ender Dragon boss mob.",
+  "overview": "This specialized helper allows you to monitor the dragon's combat phase, access individual body parts for targeting or analysis, and track the dragon's complex multi-part structure. Instances are typically obtained from entity events, world entity queries, or by casting existing entity helpers that represent Ender Dragons.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getPhase",
+      "signature": "getPhase()",
+      "returnType": "String",
+      "description": "Returns the current combat phase of the Ender Dragon (e.g., 'ChargingPlayer', 'StrafePlayer', 'Landing', 'SittingFlaming').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const phase = dragon.getPhase();",
+        "Chat.log(`Dragon is currently: ${phase}`);"
+      ]
+    },
+    {
+      "name": "getBodyPart",
+      "signature": "getBodyPart(int index)",
+      "returnType": "EntityHelper",
+      "description": "Retrieves a specific body part entity associated with the dragon by its internal index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The numerical index of the body part."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const part = dragon.getBodyPart(0);"
+      ]
+    },
+    {
+      "name": "getBodyParts",
+      "signature": "getBodyParts()",
+      "returnType": "List<EntityHelper>",
+      "description": "Retrieves all body part entities associated with the dragon.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allParts = dragon.getBodyParts();",
+        "Chat.log(`Dragon has ${allParts.size()} parts.`);"
+      ]
+    },
+    {
+      "name": "getBodyParts",
+      "signature": "getBodyParts(String name)",
+      "returnType": "List<EntityHelper>",
+      "description": "Retrieves a list of body part entities matching a specific type name (e.g., 'head', 'neck', 'body', 'tail', 'wing').",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The type name of the body parts to retrieve."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const heads = dragon.getBodyParts('head');",
+        "for (const part of heads) {",
+        "    Chat.log(`Head position: ${part.getPos()}`);",
+        "}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "FiltererModulus",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.event.impl.FiltererModulus",
+  "extends": null,
+  "since": "1.9.1",
+  "description": "The FiltererModulus class is an event filterer that allows only every nth event to pass through, where n is the specified quotient.",
+  "overview": "The FiltererModulus class is an event filterer that allows only every nth event to pass through, where n is the specified quotient. This is useful for reducing event frequency or sampling events at regular intervals. Instances are typically created through JsMacros.createModulusEventFilterer() or by using the constructor directly.\n\nImportant Notes:\n1. Event Type Agnostic: FiltererModulus can filter any event type.\n2. Counter Reset: The internal counter resets to 0 each time an event passes through.\n3. Positive Quotients: Negative values are automatically converted to positive values.\n4. Thread Safety: Maintains internal state and should not be shared across listeners unintentionally.",
+  "constructors": [
+    {
+      "signature": "new FiltererModulus(quotient)",
+      "description": "Creates a new FiltererModulus instance that allows every nth event to pass through.",
+      "parameters": [
+        {
+          "name": "quotient",
+          "type": "int",
+          "description": "The modulus value - allows every nth event. Negative values are treated as positive."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "test",
+      "signature": "test(event)",
+      "returnType": "boolean",
+      "description": "Tests the event to see if it should pass the filter (matches the modulus counter).",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "Event",
+          "description": "The event to test against the filter."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create a filter that processes every 5th tick event\nconst tickFilter = new FiltererModulus(5);\n\n// Register the filtered event listener\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    if (tickFilter.test(event)) {\n        // This code runs only every 5th tick\n        Chat.log(\"Processing 5th tick\");\n        // Perform expensive operations here\n    }\n}));",
+        "// For high-frequency events like sound events\nconst soundFilter = new FiltererModulus(10);\n\nJsMacros.on(\"Sound\", JavaWrapper.methodToJavaAsync((event) => {\n    if (soundFilter.test(event)) {\n        // Process only every 10th sound event\n        Chat.log(`Filtered sound: ${event.sound}`);\n        // Update UI or perform analysis\n    }\n}));"
+      ]
+    },
+    {
+      "name": "setQuotient",
+      "signature": "setQuotient(quotient)",
+      "returnType": "void",
+      "description": "Dynamically updates the modulus quotient value used for filtering.",
+      "parameters": [
+        {
+          "name": "quotient",
+          "type": "int",
+          "description": "The new modulus value."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create filter that can be adjusted based on conditions\nconst performanceFilter = new FiltererModulus(5);\n\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    // Adjust filter based on game performance\n    const currentFPS = Client.getFPS();\n\n    if (currentFPS < 30) {\n        // Reduce frequency when performance is poor\n        performanceFilter.setQuotient(10);\n    } else if (currentFPS > 50) {\n        // Increase frequency when performance is good\n        performanceFilter.setQuotient(3);\n    } else {\n        // Normal frequency\n        performanceFilter.setQuotient(5);\n    }\n\n    if (performanceFilter.test(event)) {\n        // Process tick with adjusted frequency\n        updateHud();\n    }\n}));"
+      ]
+    }
+  ]
+}

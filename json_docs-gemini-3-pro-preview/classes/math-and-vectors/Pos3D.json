@@ -1,0 +1,463 @@
+{
+  "name": "Pos3D",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.math.Pos3D",
+  "extends": "Pos2D",
+  "since": "JsMacros 1.2.6",
+  "description": "The Pos3D class represents a three-dimensional position with double precision coordinates (x, y, z).",
+  "overview": "The Pos3D class represents a three-dimensional position with double precision coordinates (x, y, z). It provides comprehensive mathematical operations for position manipulation, vector calculations, and coordinate conversions. This class is essential for working with precise 3D positions in Minecraft, particularly for entity positions, ray casting, and spatial calculations.",
+  "constructors": [
+    {
+      "signature": "new Pos3D(x, y, z)",
+      "description": "Creates a new Pos3D with the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "The Z coordinate"
+        }
+      ]
+    },
+    {
+      "signature": "new Pos3D(vec3d)",
+      "description": "Creates a new Pos3D from a Minecraft Vec3d object.",
+      "parameters": [
+        {
+          "name": "vec3d",
+          "type": "Vec3d",
+          "description": "The Minecraft Vec3d to convert"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "double",
+      "description": "Returns the X coordinate of the position.",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "double",
+      "description": "Returns the Y coordinate of the position.",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "getZ",
+      "signature": "getZ()",
+      "returnType": "double",
+      "description": "Returns the Z coordinate of the position.",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "add",
+      "signature": "add(pos)",
+      "returnType": "Pos3D",
+      "description": "Adds another Pos3D to this position and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The position to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos3D(10, 20, 30);\nconst pos2 = new Pos3D(5, 15, 25);\nconst result = pos1.add(pos2); // (15, 35, 55)"
+      ]
+    },
+    {
+      "name": "add",
+      "signature": "add(x, y, z)",
+      "returnType": "Pos3D",
+      "description": "Adds the specified coordinate values to this position and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate to add"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate to add"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos3D(10, 20, 30);\nconst result = pos.add(5, -10, 15); // (15, 10, 45)"
+      ]
+    },
+    {
+      "name": "sub",
+      "signature": "sub(pos)",
+      "returnType": "Pos3D",
+      "description": "Subtracts another Pos3D from this position and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The position to subtract"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos3D(20, 30, 40);\nconst pos2 = new Pos3D(5, 10, 15);\nconst result = pos1.sub(pos2); // (15, 20, 25)"
+      ]
+    },
+    {
+      "name": "sub",
+      "signature": "sub(x, y, z)",
+      "returnType": "Pos3D",
+      "description": "Subtracts the specified coordinate values from this position and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate to subtract"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate to subtract"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate to subtract"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "multiply",
+      "signature": "multiply(pos)",
+      "returnType": "Pos3D",
+      "description": "Multiplies this position by another Pos3D (component-wise) and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The position to multiply by"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos3D(2, 3, 4);\nconst pos2 = new Pos3D(5, 6, 7);\nconst result = pos1.multiply(pos2); // (10, 18, 28)"
+      ]
+    },
+    {
+      "name": "multiply",
+      "signature": "multiply(x, y, z)",
+      "returnType": "Pos3D",
+      "description": "Multiplies this position by the specified coordinate values and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate multiplier"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate multiplier"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate multiplier"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "divide",
+      "signature": "divide(pos)",
+      "returnType": "Pos3D",
+      "description": "Divides this position by another Pos3D (component-wise) and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The position to divide by"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "divide",
+      "signature": "divide(x, y, z)",
+      "returnType": "Pos3D",
+      "description": "Divides this position by the specified coordinate values and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate divisor"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate divisor"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate divisor"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "scale",
+      "signature": "scale(scale)",
+      "returnType": "Pos3D",
+      "description": "Multiplies all coordinates by the specified scale factor and returns a new Pos3D.",
+      "parameters": [
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scale factor"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = new Pos3D(10, 20, 30);\nconst scaled = pos.scale(2.5); // (25, 50, 75)"
+      ]
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector()",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from the origin (0, 0, 0) to this position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos3D(10, 20, 30);\nconst vector = pos.toVector(); // Vector from (0,0,0) to (10,20,30)"
+      ]
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector(startPos)",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from the specified start position to this position. (Pos2D version)",
+      "parameters": [
+        {
+          "name": "startPos",
+          "type": "Pos2D",
+          "description": "The start position (z will be assumed 0)"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector(startPos)",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from the specified start position to this position. (Pos3D version)",
+      "parameters": [
+        {
+          "name": "startPos",
+          "type": "Pos3D",
+          "description": "The start position"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const start = new Pos3D(5, 10, 15);\nconst end = new Pos3D(15, 25, 35);\nconst vector = end.toVector(start); // Vector from start to end"
+      ]
+    },
+    {
+      "name": "toVector",
+      "signature": "toVector(startX, startY, startZ)",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from the specified start coordinates to this position.",
+      "parameters": [
+        {
+          "name": "startX",
+          "type": "double",
+          "description": "Start X coordinate"
+        },
+        {
+          "name": "startY",
+          "type": "double",
+          "description": "Start Y coordinate"
+        },
+        {
+          "name": "startZ",
+          "type": "double",
+          "description": "Start Z coordinate"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector()",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from this position to the origin (0, 0, 0).",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector(endPos)",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from this position to the specified end position. (Pos2D version)",
+      "parameters": [
+        {
+          "name": "endPos",
+          "type": "Pos2D",
+          "description": "The end position (z will be assumed 0)"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector(endPos)",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from this position to the specified end position. (Pos3D version)",
+      "parameters": [
+        {
+          "name": "endPos",
+          "type": "Pos3D",
+          "description": "The end position"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "toReverseVector",
+      "signature": "toReverseVector(endX, endY, endZ)",
+      "returnType": "Vec3D",
+      "description": "Creates a Vec3D vector from this position to the specified end coordinates.",
+      "parameters": [
+        {
+          "name": "endX",
+          "type": "double",
+          "description": "End X coordinate"
+        },
+        {
+          "name": "endY",
+          "type": "double",
+          "description": "End Y coordinate"
+        },
+        {
+          "name": "endZ",
+          "type": "double",
+          "description": "End Z coordinate"
+        }
+      ],
+      "static": false
+    },
+    {
+      "name": "toBlockPos",
+      "signature": "toBlockPos()",
+      "returnType": "BlockPosHelper",
+      "description": "Converts this double-precision position to a BlockPosHelper with floored coordinates.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos3D(10.7, 64.2, -200.8);\nconst blockPos = pos.toBlockPos(); // BlockPosHelper(10, 64, -201)"
+      ]
+    },
+    {
+      "name": "toRawBlockPos",
+      "signature": "toRawBlockPos()",
+      "returnType": "BlockPos",
+      "description": "Converts this double-precision position to a raw Minecraft BlockPos with floored coordinates.",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "toMojangDoubleVector",
+      "signature": "toMojangDoubleVector()",
+      "returnType": "Vec3d",
+      "description": "Converts this position to a Minecraft Vec3d object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos3D(100.5, 64.0, -200.25);\nconst mcVec = pos.toMojangDoubleVector();"
+      ]
+    },
+    {
+      "name": "to3D",
+      "signature": "to3D()",
+      "returnType": "Pos3D",
+      "description": "Converts this Pos2D to a Pos3D with z coordinate set to 0.",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pos = new Pos3D(10.5, 20.25, -30.75);\nChat.log(pos.toString()); // \"10.500000, 20.250000, -30.750000\""
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(obj)",
+      "returnType": "boolean",
+      "description": "Compares this Pos3D with another object for equality.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": "Object to compare with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos1 = new Pos3D(10, 20, 30);\nconst pos2 = new Pos3D(10, 20, 30);\nconst pos3 = new Pos3D(10, 20, 31);\n\nChat.log(pos1.equals(pos2)); // true\nChat.log(pos1.equals(pos3)); // false"
+      ]
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code for this position.",
+      "parameters": [],
+      "static": false
+    },
+    {
+      "name": "compareTo",
+      "signature": "compareTo(other)",
+      "returnType": "int",
+      "description": "Compares this Pos3D with another Pos3D for ordering.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "Pos3D",
+          "description": "Position to compare with"
+        }
+      ],
+      "static": false
+    }
+  ]
+}

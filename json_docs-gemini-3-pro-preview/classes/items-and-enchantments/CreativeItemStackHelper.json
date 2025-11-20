@@ -1,0 +1,281 @@
+{
+  "name": "CreativeItemStackHelper",
+  "fullClassName": "CreativeItemStackHelper",
+  "extends": "ItemStackHelper",
+  "since": "JsMacros 1.8.4",
+  "description": "Extension of ItemStackHelper that provides methods for modifying items as if they were in creative mode.",
+  "overview": "The `CreativeItemStackHelper` class is an extension of `ItemStackHelper` that provides methods for modifying items as if they were in creative mode. This class is specifically designed for manipulating item properties that would typically require creative mode access, such as enchantments, custom names, durability, lore, and other NBT-related modifications.\n\nThis class is ideal for:\n- Creating custom items with specific properties\n- Modifying existing items with creative-like powers\n- Adding enchantments and custom lore\n- Setting item properties not normally editable in survival mode",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "setDamage",
+      "signature": "setDamage(int damage)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Sets the damage value of the item.",
+      "parameters": [
+        {
+          "name": "damage",
+          "type": "int",
+          "description": "The amount of damage to apply to the item"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let item = Registry.createItemStack(\"minecraft:diamond_pickaxe\")\n    .setDamage(100); // Damages the pickaxe"
+      ]
+    },
+    {
+      "name": "setDurability",
+      "signature": "setDurability(int durability)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Sets the current durability of the item.",
+      "parameters": [
+        {
+          "name": "durability",
+          "type": "int",
+          "description": "The current durability value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let item = Registry.createItemStack(\"minecraft:diamond_sword\")\n    .setDurability(1500); // Sets durability to 1500"
+      ]
+    },
+    {
+      "name": "setCount",
+      "signature": "setCount(int count)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Sets the number of items in the stack.",
+      "parameters": [
+        {
+          "name": "count",
+          "type": "int",
+          "description": "The new stack size"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let items = Registry.createItemStack(\"minecraft:diamond\")\n    .setCount(64); // Create a full stack of diamonds"
+      ]
+    },
+    {
+      "name": "setName",
+      "signature": "setName(String or TextHelper name)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Sets the custom display name of the item.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String or TextHelper",
+          "description": "The new display name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Using string\nlet sword = Registry.createItemStack(\"minecraft:iron_sword\")\n    .setName(\"§bExcalibur\");\n\n// Using TextHelper\nlet textName = TextHelper.fromString(\"§c§lDragonslayer\");\nlet axe = Registry.createItemStack(\"minecraft:diamond_axe\")\n    .setName(textName);"
+      ]
+    },
+    {
+      "name": "addEnchantment",
+      "signature": "addEnchantment(String id, int level)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Adds an enchantment to the item.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The enchantment ID (can omit namespace)"
+        },
+        {
+          "name": "level",
+          "type": "int",
+          "description": "The enchantment level"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let enchantedPick = Registry.createItemStack(\"minecraft:diamond_pickaxe\")\n    .addEnchantment(\"efficiency\", 5)\n    .addEnchantment(\"unbreaking\", 3)\n    .addEnchantment(\"fortune\", 3);"
+      ]
+    },
+    {
+      "name": "addEnchantment",
+      "signature": "addEnchantment(EnchantmentHelper enchantment)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Adds an enchantment using an EnchantmentHelper object.",
+      "parameters": [
+        {
+          "name": "enchantment",
+          "type": "EnchantmentHelper",
+          "description": "The enchantment to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let sharpnessEnchant = new EnchantmentHelper(\"minecraft:sharpness\");\nlet sword = Registry.createItemStack(\"minecraft:diamond_sword\")\n    .addEnchantment(sharpnessEnchant);"
+      ]
+    },
+    {
+      "name": "clearEnchantments",
+      "signature": "clearEnchantments()",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Removes all enchantments from the item.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let cleanItem = Player.getMainHand().getCreative()\n    .clearEnchantments(); // Remove all enchantments"
+      ]
+    },
+    {
+      "name": "removeEnchantment",
+      "signature": "removeEnchantment(String id)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Removes a specific enchantment from the item.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The enchantment ID to remove"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let item = Player.getMainHand().getCreative()\n    .removeEnchantment(\"minecraft:sharpness\"); // Remove sharpness"
+      ]
+    },
+    {
+      "name": "removeEnchantment",
+      "signature": "removeEnchantment(EnchantmentHelper enchantment)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Removes a specific enchantment using an EnchantmentHelper object.",
+      "parameters": [
+        {
+          "name": "enchantment",
+          "type": "EnchantmentHelper",
+          "description": "The enchantment to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clearLore",
+      "signature": "clearLore()",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Removes all lore from the item.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let cleanItem = Player.getMainHand().getCreative()\n    .clearLore(); // Clear all description lines"
+      ]
+    },
+    {
+      "name": "setUnbreakable",
+      "signature": "setUnbreakable(boolean unbreakable)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Makes the item unbreakable or removes the unbreakable flag.",
+      "parameters": [
+        {
+          "name": "unbreakable",
+          "type": "boolean",
+          "description": "Whether the item should be unbreakable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let foreverTool = Registry.createItemStack(\"minecraft:diamond_pickaxe\")\n    .setUnbreakable(true); // Make it never break"
+      ]
+    },
+    {
+      "name": "hideEnchantments",
+      "signature": "hideEnchantments(boolean hide)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Controls whether enchantments are shown in the tooltip.",
+      "parameters": [
+        {
+          "name": "hide",
+          "type": "boolean",
+          "description": "Whether to hide enchantments"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hideModifiers",
+      "signature": "hideModifiers(boolean hide)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Controls whether attribute modifiers are shown in the tooltip.",
+      "parameters": [
+        {
+          "name": "hide",
+          "type": "boolean",
+          "description": "Whether to hide modifiers"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hideUnbreakable",
+      "signature": "hideUnbreakable(boolean hide)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Controls whether the unbreakable flag is shown in the tooltip.",
+      "parameters": [
+        {
+          "name": "hide",
+          "type": "boolean",
+          "description": "Whether to hide the unbreakable flag"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hideCanDestroy",
+      "signature": "hideCanDestroy(boolean hide)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Controls whether the \"Can Destroy\" information is shown in the tooltip.",
+      "parameters": [
+        {
+          "name": "hide",
+          "type": "boolean",
+          "description": "Whether to hide can destroy info"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hideCanPlace",
+      "signature": "hideCanPlace(boolean hide)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Controls whether the \"Can Place On\" information is shown in the tooltip.",
+      "parameters": [
+        {
+          "name": "hide",
+          "type": "boolean",
+          "description": "Whether to hide can place on info"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hideDye",
+      "signature": "hideDye(boolean hide)",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Controls whether the dye color of leather armor is shown in the tooltip.",
+      "parameters": [
+        {
+          "name": "hide",
+          "type": "boolean",
+          "description": "Whether to hide dye color"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let mysteriousItem = Registry.createItemStack(\"minecraft:diamond_sword\")\n    .addEnchantment(\"sharpness\", 10)\n    .setUnbreakable(true)\n    .hideEnchantments(true)\n    .hideUnbreakable(true);"
+      ]
+    }
+  ]
+}

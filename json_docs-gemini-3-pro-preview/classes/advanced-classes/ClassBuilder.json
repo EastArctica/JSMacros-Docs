@@ -1,0 +1,124 @@
+{
+  "name": "ClassBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "The ClassBuilder class is an advanced runtime bytecode generation utility that allows you to create entirely new Java classes dynamically within JSMacros scripts.",
+  "overview": "ClassBuilder is the cornerstone of advanced JSMacros scripting, allowing you to create custom data structures, implement interfaces, extend existing classes, and build sophisticated object-oriented solutions entirely within your scripts. The generated classes are fully compatible with Java's type system and can be used anywhere a regular Java class would be expected.\n\nThis class is typically obtained through the `Reflection.createClassBuilder()` method and provides a fluent builder API for constructing classes programmatically.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "addField",
+      "signature": "addField(Class<?> fieldType, String name)",
+      "returnType": "FieldBuilder",
+      "description": "Creates a field builder for adding a field to the class.",
+      "parameters": [
+        {
+          "name": "fieldType",
+          "type": "Class<?>",
+          "description": "The type of the field"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the field"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const fieldBuilder = classBuilder.addField(String, \"username\");"
+      ]
+    },
+    {
+      "name": "addField",
+      "signature": "addField(String code)",
+      "returnType": "ClassBuilder<T>",
+      "description": "Adds a field using complete Java field declaration code. (Since: 1.8.4)",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Complete Java field declaration including visibility, type, name, and optional initialization"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simple field\nclassBuilder.addField(\"private int count;\");\n\n// Field with initialization\nclassBuilder.addField(\"public static final String VERSION = \\\"1.0\\\";\");\n\n// Complex field with custom initialization\nclassBuilder.addField(\"private final Map<String, Object> cache = new ConcurrentHashMap<>();\");"
+      ]
+    },
+    {
+      "name": "addMethod",
+      "signature": "addMethod(String code)",
+      "returnType": "ClassBuilder<T>",
+      "description": "Adds a method using complete Java method declaration code. (Since: 1.8.4)",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Complete Java method declaration including visibility, return type, name, and parameters"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simple method\nclassBuilder.addMethod(\"public void clear() { this.items.clear(); }\");\n\n// Method with parameters\nclassBuilder.addMethod(`\n    public String formatMessage(String prefix, int level) {\n        return \"[\" + level + \"] \" + prefix + \": \" + this.message;\n    }\n`);\n\n// Static method\nclassBuilder.addMethod(`\n    public static MyClass createDefault() {\n        return new MyClass(\"Default\", 0);\n    }\n`);"
+      ]
+    },
+    {
+      "name": "addConstructor",
+      "signature": "addConstructor(String code)",
+      "returnType": "ClassBuilder<T>",
+      "description": "Adds a constructor using complete Java constructor declaration code. (Since: 1.8.4)",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Complete Java constructor declaration"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Default constructor\nclassBuilder.addConstructor(\"public MyClass() { this.name = \\\"Unknown\\\"; }\");\n\n// Parameterized constructor\nclassBuilder.addConstructor(`\n    public MyClass(String name, int value) {\n        this.name = name;\n        this.value = value;\n    }\n`);\n\n// Constructor with super() call\nclassBuilder.addConstructor(`\n    public MyClass(String name, int value, String other) {\n        super(name, value);\n        this.other = other;\n    }\n`);"
+      ]
+    },
+    {
+      "name": "addClinit",
+      "signature": "addClinit()",
+      "returnType": "ConstructorBuilder",
+      "description": "Creates a builder for the static initialization block of the class.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const staticInitializer = classBuilder.addClinit();"
+      ]
+    },
+    {
+      "name": "addAnnotation",
+      "signature": "addAnnotation(Class<?> type)",
+      "returnType": "AnnotationBuilder<ClassBuilder<T>>",
+      "description": "Creates an annotation builder for adding class-level annotations.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "Class<?>",
+          "description": "The annotation type to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const annotationBuilder = classBuilder.addAnnotation(Deprecated.class);",
+        "const Deprecated = Packages.java.lang.Deprecated;\nconst SuppressWarnings = Packages.java.lang.SuppressWarnings;\n\nclassBuilder\n    .addAnnotation(Deprecated.class)\n    .putString(\"since\", \"1.5.0\")\n    .finish()\n    .addAnnotation(SuppressWarnings.class)\n    .putArray(\"value\")\n        .putString(\"unchecked\")\n        .putString(\"rawtypes\")\n        .finish()\n    .finish();"
+      ]
+    },
+    {
+      "name": "finishBuildAndFreeze",
+      "signature": "finishBuildAndFreeze()",
+      "returnType": "Class<? extends T>",
+      "description": "Compiles the class definition and returns the final Class object. After this method is called, the class is frozen and cannot be modified further.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const MyCustomClass = classBuilder.finishBuildAndFreeze();\nconst instance = MyCustomClass.newInstance();"
+      ]
+    }
+  ]
+}

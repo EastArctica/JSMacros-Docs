@@ -1,0 +1,143 @@
+{
+  "name": "AdvancementManagerHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.AdvancementManagerHelper",
+  "since": "1.8.4",
+  "description": "The AdvancementManagerHelper class is a World Interaction helper in JSMacros that provides access to Minecraft's advancement system.",
+  "overview": "It allows you to query, analyze, and manage advancements for the current player, including their progress, completion status, and relationships between different advancements. This class is particularly useful for creating scripts that track player advancement progress, create custom advancement-based triggers, analyze completed and missing advancements, or build advancement statistics or dashboards.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getAdvancementsForIdentifiers",
+      "signature": "getAdvancementsForIdentifiers()",
+      "returnType": "Map<String, AdvancementHelper>",
+      "description": "Returns a map containing all advancement IDs mapped to their corresponding AdvancementHelper objects. The keys are the full advancement identifiers.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allAdvancements = advancementManager.getAdvancementsForIdentifiers();\nfor (const [id, advancement] of Object.entries(allAdvancements)) {\n    Chat.log(`Advancement ID: ${id}, Name: ${advancement.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getAdvancements",
+      "signature": "getAdvancements()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns a list of all available advancements as AdvancementHelper objects.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const advancements = advancementManager.getAdvancements();\nChat.log(`Total advancements: ${advancements.length}`);"
+      ]
+    },
+    {
+      "name": "getStartedAdvancements",
+      "signature": "getStartedAdvancements()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns a list of started advancements - these are advancements where at least one task/criteria has been completed, but the advancement is not fully completed yet.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const started = advancementManager.getStartedAdvancements();\nChat.log(`Started but not completed: ${started.length}`);\nstarted.forEach(adv => {\n    Chat.log(`In progress: ${adv.getName()}`);\n});"
+      ]
+    },
+    {
+      "name": "getMissingAdvancements",
+      "signature": "getMissingAdvancements()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns a list of advancements that the player has not started or completed at all.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const missing = advancementManager.getMissingAdvancements();\nChat.log(`Missing advancements: ${missing.length}`);"
+      ]
+    },
+    {
+      "name": "getCompletedAdvancements",
+      "signature": "getCompletedAdvancements()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns a list of all fully completed advancements.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const completed = advancementManager.getCompletedAdvancements();\nChat.log(`Completed advancements: ${completed.length}`);"
+      ]
+    },
+    {
+      "name": "getRootAdvancements",
+      "signature": "getRootAdvancements()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns a list of all root advancements. Root advancements are the starting points of advancement trees.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const roots = advancementManager.getRootAdvancements();\nroots.forEach(root => {\n    Chat.log(`Root advancement: ${root.getName()}`);\n});"
+      ]
+    },
+    {
+      "name": "getSubAdvancements",
+      "signature": "getSubAdvancements()",
+      "returnType": "List<AdvancementHelper>",
+      "description": "Returns a list of all advancements that are not root advancements - essentially all child advancements in the advancement trees.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const subAdvancements = advancementManager.getSubAdvancements();\nChat.log(`Non-root advancements: ${subAdvancements.length}`);"
+      ]
+    },
+    {
+      "name": "getAdvancement",
+      "signature": "getAdvancement(identifier)",
+      "returnType": "AdvancementHelper",
+      "description": "Returns a specific advancement by its identifier.",
+      "parameters": [
+        {
+          "name": "identifier",
+          "type": "String",
+          "description": "The advancement identifier. Can omit the namespace if using 'minecraft'."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Using full identifier\nconst rootAdvancement = advancementManager.getAdvancement(\"minecraft:story/root\");\n\n// Using shortened identifier (minecraft namespace assumed)\nconst diamondsAdvancement = advancementManager.getAdvancement(\"story/shiny_gear\");\n\nif (diamondsAdvancement) {\n    Chat.log(`Found advancement: ${diamondsAdvancement.getName()}`);\n    Chat.log(`Description: ${diamondsAdvancement.getDescription()}`);\n}"
+      ]
+    },
+    {
+      "name": "getAdvancementsProgress",
+      "signature": "getAdvancementsProgress()",
+      "returnType": "Map<AdvancementHelper, AdvancementProgressHelper>",
+      "description": "Returns a map containing all advancements mapped to their current progress information for the player.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const progressMap = advancementManager.getAdvancementsProgress();\nfor (const [advancement, progress] of Object.entries(progressMap)) {\n    Chat.log(`${advancement.getName()}: ${progress.getPercentage()}% complete`);\n\n    if (progress.isDone()) {\n        Chat.log(`  ✓ Fully completed`);\n    } else if (progress.isAnyObtained()) {\n        Chat.log(`  ⟳ In progress`);\n    } else {\n        Chat.log(`  ○ Not started`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getAdvancementProgress",
+      "signature": "getAdvancementProgress(identifier)",
+      "returnType": "AdvancementProgressHelper",
+      "description": "Returns the progress information for a specific advancement.",
+      "parameters": [
+        {
+          "name": "identifier",
+          "type": "String",
+          "description": "The advancement identifier. Can omit the namespace if using 'minecraft'."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const progress = advancementManager.getAdvancementProgress(\"story/obtain_armor\");\nChat.log(`Progress percentage: ${progress.getPercentage()}%`);\nChat.log(`Criteria completed: ${progress.getCompletedCriteria().length}/${progress.getTotalCriteria()}`);\nChat.log(`Is completed: ${progress.isDone()}`);\n\n// Get individual criteria progress\nconst criteria = progress.getCriteria();\nfor (const [criterionName, completed] of Object.entries(criteria)) {\n    Chat.log(`  ${criterionName}: ${completed ? \"✓\" : \"○\"}`);\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation showing the count of started, missing, and completed advancements.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(advancementManager.toString());\n// Output: AdvancementManagerHelper:{\"started\": 5, \"missing\": 50, \"completed\": 25}"
+      ]
+    }
+  ]
+}

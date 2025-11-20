@@ -1,0 +1,18 @@
+{
+  "name": "EventProfileLoad",
+  "fullClassName": "EventProfileLoad",
+  "description": "This event is fired when a JsMacros profile is loaded.",
+  "overview": "### Event payload\n\n| Field       | Type    | Description                              |\n| ----------- | ------- | ---------------------------------------- |\n| profileName | string  | The name of the loaded profile           |\n\n### Behavior\n\n* Fires when JsMacros loads a profile\n- The `profileName` field contains the name of the loaded profile\n- Occurs during startup or when switching profiles\n- Not cancellable\n- Useful for profile-specific configurations and initialization\n\n### Minimal example\n\n```js\nJsMacros.on(\"ProfileLoad\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Profile loaded: ${e.profileName}`);\n});\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

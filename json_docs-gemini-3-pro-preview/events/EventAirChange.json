@@ -1,0 +1,17 @@
+{
+  "name": "EventAirChange",
+  "fullClassName": "EventAirChange",
+  "description": "This event is fired when the player's air supply changes, such as when diving underwater or resurfacing.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

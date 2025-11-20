@@ -1,0 +1,31 @@
+[
+  {
+    "name": "DrownedEntityHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.DrownedEntityHelper",
+    "extends": "ZombieEntityHelper<DrownedEntity>",
+    "since": "JsMacros 1.8.4",
+    "description": "Represents a drowned entity in the world. DrownedEntityHelper provides access to drowned-specific properties and behaviors, particularly their weapon holding capabilities and equipment states.",
+    "overview": "Drowned are formidable aquatic hostile mobs that result from zombies remaining underwater for extended periods. They have adapted to their underwater environment with enhanced swimming abilities and preferential spawning in water biomes. What makes drowned particularly dangerous is their arsenal - some wield powerful tridents that can be thrown at players from a distance, while others may carry nautilus shells used for conduit activation.\n\nThis class extends `ZombieEntityHelper` and inherits all methods for zombie behaviors, including conversion states, while adding drowned-specific functionality for weapon detection and equipment analysis. This makes it invaluable for assessing combat threats and understanding drowned behavior patterns.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "hasTrident",
+        "signature": "boolean hasTrident()",
+        "returnType": "boolean",
+        "description": "Checks if the drowned entity is holding a trident. This is crucial for threat assessment as trident-wielding drowned are significantly more dangerous and can attack from range.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "hasNautilusShell",
+        "signature": "boolean hasNautilusShell()",
+        "returnType": "boolean",
+        "description": "Checks if the drowned entity is holding a nautilus shell. This helps identify valuable farming targets for conduit crafting.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

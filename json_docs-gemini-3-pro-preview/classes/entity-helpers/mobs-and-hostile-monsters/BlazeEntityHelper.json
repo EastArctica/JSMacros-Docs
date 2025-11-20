@@ -1,0 +1,10 @@
+{
+  "name": "BlazeEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.BlazeEntityHelper<T extends BlazeEntity>",
+  "extends": "MobEntityHelper<T>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a blaze entity in the world. BlazeEntityHelper provides access to blaze-specific properties and behaviors, particularly their fire state which affects their combat abilities. Blazes are hostile mobs from the Nether that shoot fireballs at players and are immune to fire damage.",
+  "overview": "Blaze entities are floating fire-based mobs that can only attack with fireballs when they are actively on fire. They cycle between an \"on fire\" state and a \"cool\" state, making their attack patterns predictable. This helper provides access to their current fire state, which is crucial for understanding their combat behavior and timing attacks or defenses.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, AI control, movement, and other mob properties, while adding blaze-specific functionality for fire state monitoring.\n\nNotes and Limitations:\n- BlazeEntityHelper is specifically designed for the unique fire-based combat mechanics of blazes\n- The `isOnFire()` method indicates attack capability, not fire vulnerability (blazes are immune to fire)\n- Blazes cycle between active (on fire) and cooling states approximately every 3-4 seconds\n- Fire state timing can vary slightly between individual blazes\n- Multiple blazes may have synchronized or desynchronized fire states in groups\n- This helper is essential for effective Nether combat against blazes\n- Blazes can only shoot fireballs when `isOnFire()` returns true\n- The cooling phase provides optimal windows for melee attacks\n- Blazes are commonly found in Nether fortresses and bastion remnants\n- Consider environmental factors like terrain and other mobs when planning blaze combat\n- Fire resistance potions can negate blaze fireball damage completely",
+  "constructors": [],
+  "methods": []
+}

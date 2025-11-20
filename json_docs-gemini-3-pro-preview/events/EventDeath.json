@@ -1,0 +1,32 @@
+{
+  "name": "EventDeath",
+  "fullClassName": "EventDeath",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player dies. It captures the state of the player, including their position and inventory, at the moment of death.",
+  "overview": "Behavior:\n* Fires when the player dies\n* Captures the exact position of death\n* Includes complete inventory snapshot at time of death\n* Provides respawn capability\n* Not cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "respawn",
+      "signature": "respawn()",
+      "returnType": "void",
+      "description": "Requests the player to respawn. It is recommended to call this method with a slight delay (e.g., one tick) after the death event has fired to ensure the game state is ready for a respawn request.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"Death\", JavaWrapper.methodToJavaAsync((e) => {\n  const pos = e.deathPos;\n  Chat.log(`Died at X: ${pos.getX()}, Y: ${pos.getY()}, Z: ${pos.getZ()}`);\n  e.respawn();\n});",
+        "JsMacros.on(\"Death\", JavaWrapper.methodToJavaAsync((e) => {\n  // ... (logging logic)\n  \n  // Respawn after a short delay (e.g., 20 ticks = 1 second)\n  JsMacros.syncContext().wait(20);\n  e.respawn();\n  Chat.log(\"&aAutomatically respawned.\");\n}));"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

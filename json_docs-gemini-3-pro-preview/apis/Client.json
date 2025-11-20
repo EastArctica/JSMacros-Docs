@@ -1,0 +1,395 @@
+{
+  "name": "Client",
+  "fullClassName": "Client",
+  "description": "Functions that interact with Minecraft that don't fit into their own module.",
+  "overview": "Functions that interact with Minecraft that don't fit into their own module. Accessible from scripts via the global `Client` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getMinecraft",
+      "signature": "getMinecraft()",
+      "returnType": "MinecraftClient",
+      "description": "The raw Minecraft client instance. This provides raw access to the MinecraftClient java class. On fabric, methods, fields, and classes can be accessed via their intermediary names (ex. method_29043). If the minecraft version is 1.21.11 or beyond, they can be accessed via their unobfuscated Mojang names.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const mc = Client.getMinecraft();"
+      ]
+    },
+    {
+      "name": "getRegistryManager",
+      "signature": "getRegistryManager()",
+      "returnType": "RegistryHelper",
+      "description": "Returns a helper for interacting with Minecraft's registry.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const registryManager = Client.getRegistryManager();\nconst stoneBlock = registryManager.getBlock(\"minecraft:stone\");"
+      ]
+    },
+    {
+      "name": "createPacketByteBuffer",
+      "signature": "createPacketByteBuffer()",
+      "returnType": "PacketByteBufferHelper",
+      "description": "Returns a helper to create, modify, and send Minecraft packets.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const buffer = Client.createPacketByteBuffer();"
+      ]
+    },
+    {
+      "name": "runOnMainThread",
+      "signature": "runOnMainThread(MethodWrapper runnable, boolean await, long watchdogMaxTime)",
+      "returnType": "void",
+      "description": "Runs a task on the main Minecraft thread.",
+      "parameters": [
+        {
+          "name": "runnable",
+          "type": "MethodWrapper",
+          "description": "The task to run on the main Minecraft thread."
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "If true, blocks the script until the task is completed. Optional."
+        },
+        {
+          "name": "watchdogMaxTime",
+          "type": "long",
+          "description": "The maximum time in milliseconds for the watchdog to wait before killing the script if it becomes unresponsive. Optional."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Client.runOnMainThread(JavaWrapper.methodToJava(() => {\n    Chat.log(\"This runs on the main thread!\");\n}));"
+      ]
+    },
+    {
+      "name": "getGameOptions",
+      "signature": "getGameOptions()",
+      "returnType": "OptionsHelper",
+      "description": "Returns a helper which gives access to all game options.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const options = Client.getGameOptions();\nconst fov = options.getFov();"
+      ]
+    },
+    {
+      "name": "mcVersion",
+      "signature": "mcVersion()",
+      "returnType": "string",
+      "description": "Returns the current Minecraft version.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const version = Client.mcVersion();\nChat.log(`Running on Minecraft ${version}`); // e.g., \"25w06a\""
+      ]
+    },
+    {
+      "name": "getFPS",
+      "signature": "getFPS()",
+      "returnType": "string",
+      "description": "Returns the FPS debug string from Minecraft.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const fps = Client.getFPS();\nChat.log(fps); // e.g., \"120 fps\""
+      ]
+    },
+    {
+      "name": "loadWorld",
+      "signature": "loadWorld(String folderName)",
+      "returnType": "void",
+      "description": "Loads a singleplayer world.",
+      "parameters": [
+        {
+          "name": "folderName",
+          "type": "string",
+          "description": "The folder name of the singleplayer world to join."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Client.loadWorld(\"New World\");"
+      ]
+    },
+    {
+      "name": "connect",
+      "signature": "connect(String ip, int port)",
+      "returnType": "void",
+      "description": "Connects to a multiplayer server.",
+      "parameters": [
+        {
+          "name": "ip",
+          "type": "string",
+          "description": "The IP address of the server."
+        },
+        {
+          "name": "port",
+          "type": "int",
+          "description": "The port of the server. Optional."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Client.connect(\"hypixel.net\");",
+        "Client.connect(\"localhost\", 25565);"
+      ]
+    },
+    {
+      "name": "disconnect",
+      "signature": "disconnect(MethodWrapper callback)",
+      "returnType": "void",
+      "description": "Disconnects from the current server/world.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "A function to call after disconnecting. The function receives a boolean indicating if the disconnection was successful. Optional."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Client.disconnect();",
+        "Client.disconnect(JavaWrapper.methodToJava((success) => {\n    if (success) {\n        Chat.log(\"Successfully disconnected.\");\n    }\n}));"
+      ]
+    },
+    {
+      "name": "shutdown",
+      "signature": "shutdown()",
+      "returnType": "void",
+      "description": "Closes the client (stops the game). This method waits until the game has stopped, meaning no further code in the script is executed. This does not wait on joined threads, so your script may stop at an undefined point.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Client.shutdown();\n// No more code will be executed"
+      ]
+    },
+    {
+      "name": "waitTick",
+      "signature": "waitTick(int ticks)",
+      "returnType": "void",
+      "description": "Waits for a specified number of client ticks. If run from the main thread, this will throw an IllegalThreadStateException.",
+      "parameters": [
+        {
+          "name": "ticks",
+          "type": "int",
+          "description": "The number of client ticks to wait. Default is 1."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.log(\"Waiting one tick...\");\nClient.waitTick();\nChat.log(\"Done waiting!\");",
+        "Chat.log(\"Waiting 20 ticks (1 second)...\");\nClient.waitTick(20);\nChat.log(\"Done waiting!\");"
+      ]
+    },
+    {
+      "name": "ping",
+      "signature": "ping(String ip)",
+      "returnType": "ServerInfoHelper | null",
+      "description": "Pings a server and returns information about it.",
+      "parameters": [
+        {
+          "name": "ip",
+          "type": "string",
+          "description": "The IP address of the server to ping."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const serverInfo = Client.ping(\"mc.hypixel.net\");\nif (serverInfo) {\n    Chat.log(`Players online: ${serverInfo.getPlayerCountLabel().getString()}`);\n}"
+      ]
+    },
+    {
+      "name": "pingAsync",
+      "signature": "pingAsync(String ip, MethodWrapper callback)",
+      "returnType": "void",
+      "description": "Pings a server asynchronously.",
+      "parameters": [
+        {
+          "name": "ip",
+          "type": "string",
+          "description": "The IP address of the server to ping."
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper",
+          "description": "A function to call with the result (serverInfo: ServerInfoHelper, error: IOException)."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Client.pingAsync(\"mc.hypixel.net\", JavaWrapper.methodToJava((serverInfo, error) => {\n    if (error) {\n        Chat.log(`Ping failed: ${error.getMessage()}`);\n        return;\n    }\n    Chat.log(`Players online: ${serverInfo.getPlayerCountLabel().getString()}`);\n}));"
+      ]
+    },
+    {
+      "name": "cancelAllPings",
+      "signature": "cancelAllPings()",
+      "returnType": "void",
+      "description": "Cancels any ongoing pings started with pingAsync or ping if called from another thread.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Client.cancelAllPings();"
+      ]
+    },
+    {
+      "name": "getLoadedMods",
+      "signature": "getLoadedMods()",
+      "returnType": "java.util.List<? extends ModContainerHelper<?>>",
+      "description": "Returns a list of all loaded mods.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const mods = Client.getLoadedMods();\nChat.log(`Loaded ${mods.size()} mods.`);\nif (mods.size() > 0) {\n    Chat.log(`mods[0] has id: ${mods.get(0).getId()}`);\n}"
+      ]
+    },
+    {
+      "name": "isModLoaded",
+      "signature": "isModLoaded(String modId)",
+      "returnType": "boolean",
+      "description": "Checks if a specific mod is loaded.",
+      "parameters": [
+        {
+          "name": "modId",
+          "type": "string",
+          "description": "The ID of the mod to check."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "if (Client.isModLoaded(\"sodium\")) {\n    Chat.log(\"Sodium is loaded!\");\n}"
+      ]
+    },
+    {
+      "name": "getMod",
+      "signature": "getMod(String modId)",
+      "returnType": "ModContainerHelper<?> | null",
+      "description": "Gets the mod container for a specific mod ID.",
+      "parameters": [
+        {
+          "name": "modId",
+          "type": "string",
+          "description": "The ID of the mod to get."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const jsmacrosMod = Client.getMod(\"jsmacros\");\nif (jsmacrosMod) {\n    Chat.log(`JSMacros version: ${jsmacrosMod.getVersion()}`);\n}"
+      ]
+    },
+    {
+      "name": "grabMouse",
+      "signature": "grabMouse()",
+      "returnType": "void",
+      "description": "Makes Minecraft believe that the mouse is currently inside the window. This will also automatically set the \"Pause on Lost Focus\" option to false.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Client.grabMouse();"
+      ]
+    },
+    {
+      "name": "isDevEnv",
+      "signature": "isDevEnv()",
+      "returnType": "boolean",
+      "description": "Checks if the game is running in a development environment.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (Client.isDevEnv()) {\n    Chat.log(\"Running in a development environment.\");\n}"
+      ]
+    },
+    {
+      "name": "getModLoader",
+      "signature": "getModLoader()",
+      "returnType": "string",
+      "description": "Returns the name of the mod loader (e.g., \"Fabric\", \"Forge\").",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const loader = Client.getModLoader();\nChat.log(`Mod loader: ${loader}`); // e.g., \"Fabric\""
+      ]
+    },
+    {
+      "name": "getRegisteredBlocks",
+      "signature": "getRegisteredBlocks()",
+      "returnType": "java.util.List<BlockHelper>",
+      "description": "Returns a list of all registered blocks as BlockHelper objects.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const blocks = Client.getRegisteredBlocks();\nChat.log(`There are ${blocks.size()} registered blocks.`);"
+      ]
+    },
+    {
+      "name": "getRegisteredItems",
+      "signature": "getRegisteredItems()",
+      "returnType": "java.util.List<ItemHelper>",
+      "description": "Returns a list of all registered items as ItemHelper objects.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const items = Client.getRegisteredItems();\nChat.log(`There are ${items.size()} registered items.`);"
+      ]
+    },
+    {
+      "name": "exitGamePeacefully",
+      "signature": "exitGamePeacefully()",
+      "returnType": "void",
+      "description": "Tries to close the game gracefully, as if the player clicked the \"Quit Game\" button.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Client.exitGamePeacefully();"
+      ]
+    },
+    {
+      "name": "exitGameForcefully",
+      "signature": "exitGameForcefully()",
+      "returnType": "void",
+      "description": "Forcefully terminates the game process.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Client.exitGameForcefully();"
+      ]
+    },
+    {
+      "name": "sendPacket",
+      "signature": "sendPacket(Packet<?> packet)",
+      "returnType": "void",
+      "description": "Sends a packet to the server.",
+      "parameters": [
+        {
+          "name": "packet",
+          "type": "Packet<?>",
+          "description": "The packet to send to the server."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const HandSwingC2SPacket = Java.type(\"net.minecraft.class_2879\");\nconst Hand = Java.type(\"net.minecraft.class_1268\");\nconst MainHandSwingPacket = new HandSwingC2SPacket(Hand.MAIN_HAND);\nClient.sendPacket(MainHandSwingPacket);"
+      ]
+    },
+    {
+      "name": "receivePacket",
+      "signature": "receivePacket(Packet<ClientPlayPacketListener> packet)",
+      "returnType": "void",
+      "description": "Simulates receiving a packet from the server.",
+      "parameters": [
+        {
+          "name": "packet",
+          "type": "Packet<ClientPlayPacketListener>",
+          "description": "The packet to be processed by the client."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const KeepAliveS2CPacket = Java.type(\"net.minecraft.class_2670\");\nClient.receivePacket(new KeepAliveS2CPacket(123456789n));"
+      ]
+    }
+  ]
+}

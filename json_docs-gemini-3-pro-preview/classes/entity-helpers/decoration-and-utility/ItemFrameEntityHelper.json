@@ -1,0 +1,46 @@
+{
+  "name": "ItemFrameEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.decoration.ItemFrameEntityHelper",
+  "extends": "EntityHelper<ItemFrameEntity>",
+  "since": "1.8.4",
+  "description": "The ItemFrameEntityHelper class provides specialized access to Minecraft item frame entities, including both regular item frames and glow item frames.",
+  "overview": "The ItemFrameEntityHelper class provides specialized access to Minecraft item frame entities, including both regular item frames and glow item frames. This helper extends the base EntityHelper class and adds specific functionality for interacting with the item displayed in the frame, its rotation, and whether it's a glowing variant. Item frames are decorative entities that can display items on their faces, commonly used for storage, decoration, or redstone contraptions.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isGlowingFrame",
+      "signature": "public boolean isGlowingFrame()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is a glow item frame (minecraft:glow_item_frame) that emits light.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (itemFrame.isGlowingFrame()) {\n    frames.glow.push(frameInfo);\n} else {\n    frames.regular.push(frameInfo);\n}"
+      ]
+    },
+    {
+      "name": "getRotation",
+      "signature": "public int getRotation()",
+      "returnType": "int",
+      "description": "Returns the rotation of the item displayed in the frame. Items can be rotated in 45-degree increments, with 8 possible orientations (0-7).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentRotation = itemFrame.getRotation();\nconst degrees = currentRotation * 45;",
+        "// Monitor changes in item frame rotations\nconst frameRotations = new Map();\n\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const entities = World.getEntities();\n\n    entities.forEach(entity => {\n        if (entity.is(\"minecraft:item_frame\", \"minecraft:glow_item_frame\")) {\n            const uuid = entity.getUUID();\n            const itemFrame = entity;\n            const currentRotation = itemFrame.getRotation();\n            const pos = entity.getPos();\n\n            if (!frameRotations.has(uuid)) {\n                // First time seeing this frame\n                frameRotations.set(uuid, currentRotation);\n            } else {\n                const lastRotation = frameRotations.get(uuid);\n\n                if (lastRotation !== currentRotation) {\n                    const degrees = currentRotation * 45;\n                    const item = itemFrame.getItem();\n                    const itemName = item.isEmpty() ? \"empty\" : item.getName().getString();\n\n                    Chat.log(`&eItem frame rotation changed at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]`);\n                    Chat.log(`  Item: ${itemName}`);\n                    Chat.log(`  Rotation: ${lastRotation} (${lastRotation * 45}°) → ${currentRotation} (${degrees}°)`);\n\n                    frameRotations.set(uuid, currentRotation);\n                }\n            }\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "getItem",
+      "signature": "public ItemStackHelper getItem()",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item currently displayed in the item frame. Returns an empty ItemStackHelper if the frame is empty.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = itemFrame.getItem();\nif (item.isEmpty()) {\n    frames.empty.push(frameInfo);\n} else {\n    const itemName = item.getName().getString().toLowerCase();\n}",
+        "// Create a virtual gallery of items in item frames\nfunction createItemFrameGallery() {\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const entities = World.getEntities();\n    const gallery = [];\n\n    entities.forEach(entity => {\n        if (entity.is(\"minecraft:item_frame\", \"minecraft:glow_item_frame\")) {\n            const itemFrame = entity;\n            const item = itemFrame.getItem();\n\n            if (!item.isEmpty()) {\n                const galleryEntry = {\n                    itemName: item.getName().getString(),\n                    itemCount: item.getCount(),\n                    itemLore: item.getLore(),\n                    enchantments: item.getEnchantments(),\n                    position: entity.getPos(),\n                    isGlowing: itemFrame.isGlowingFrame(),\n                    rotation: itemFrame.getRotation(),\n                    distance: player.distanceTo(entity)\n                };\n\n                gallery.push(galleryEntry);\n            }\n        }\n    });\n    return gallery;\n}"
+      ]
+    }
+  ]
+}

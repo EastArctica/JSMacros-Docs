@@ -1,0 +1,155 @@
+{
+  "name": "AdvancementProgressHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.AdvancementProgressHelper",
+  "extends": "BaseHelper<AdvancementProgress>",
+  "since": "1.8.4",
+  "description": "The AdvancementProgressHelper class is a World Interaction helper class in JSMacros that provides access to Minecraft advancement progress information.",
+  "overview": "The `AdvancementProgressHelper` class is a World Interaction helper class in JSMacros that provides access to Minecraft advancement progress information. This class allows you to track, query, and analyze the completion status of advancements and their specific criteria in your scripts.\n\nSince JSMacros 1.8.4, this class has been available to help scripters monitor advancement progress, check completion status, and retrieve detailed information about advancement criteria.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isDone",
+      "signature": "isDone()",
+      "returnType": "boolean",
+      "description": "Returns true if the advancement is completely finished (all requirements met), false otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (progress.isDone()) {\n    Chat.log(\"Advancement completed!\");\n}"
+      ]
+    },
+    {
+      "name": "isAnyObtained",
+      "signature": "isAnyObtained()",
+      "returnType": "boolean",
+      "description": "Returns true if any criteria has already been met, false if no criteria have been completed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (progress.isAnyObtained()) {\n    Chat.log(\"Progress made on advancement!\");\n}"
+      ]
+    },
+    {
+      "name": "getPercentage",
+      "signature": "getPercentage()",
+      "returnType": "number",
+      "description": "Returns the percentage of finished requirements as a value between 0.0 and 1.0.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const percent = Math.round(progress.getPercentage() * 100);\nChat.log(`Advancement is ${percent}% complete`);"
+      ]
+    },
+    {
+      "name": "getFraction",
+      "signature": "getFraction()",
+      "returnType": "TextHelper",
+      "description": "Returns a TextHelper containing the fraction of finished requirements to total requirements (e.g., \"3/5\").",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const fraction = progress.getFraction();\nChat.log(`Progress: ${fraction.getString()}`);"
+      ]
+    },
+    {
+      "name": "countObtainedRequirements",
+      "signature": "countObtainedRequirements()",
+      "returnType": "number",
+      "description": "Returns the number of requirements criteria that have been obtained.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const completed = progress.countObtainedRequirements();\nChat.log(`Completed ${completed} requirements`);"
+      ]
+    },
+    {
+      "name": "getCriteria",
+      "signature": "getCriteria()",
+      "returnType": "Map<string, number>",
+      "description": "Returns a map containing all criteria names and their completion timestamps (in milliseconds since epoch). Only includes criteria that have been completed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const criteria = progress.getCriteria();\nfor (const [name, timestamp] of criteria) {\n    const date = new Date(timestamp);\n    Chat.log(`Criteria \"${name}\" completed on ${date.toLocaleDateString()}`);\n}"
+      ]
+    },
+    {
+      "name": "getObtainedCriteria",
+      "signature": "getObtainedCriteria()",
+      "returnType": "string[]",
+      "description": "Returns an array of criteria IDs that have been completed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const completed = progress.getObtainedCriteria();\nChat.log(`Completed criteria: ${completed.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getUnobtainedCriteria",
+      "signature": "getUnobtainedCriteria()",
+      "returnType": "string[]",
+      "description": "Returns an array of criteria IDs that have not yet been completed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const remaining = progress.getUnobtainedCriteria();\nChat.log(`Still need: ${remaining.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getRequirements",
+      "signature": "getRequirements()",
+      "returnType": "Array<Array<string>>",
+      "description": "Returns all requirements of this advancement. The structure is a 2D array where each inner array represents a set of criteria where only one needs to be completed (OR logic).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const requirements = progress.getRequirements();\nfor (let i = 0; i < requirements.length; i++) {\n    Chat.log(`Requirement group ${i + 1}: ${requirements[i].join(\" OR \")}`);\n}"
+      ]
+    },
+    {
+      "name": "getCriterionProgress",
+      "signature": "getCriterionProgress(String criteria)",
+      "returnType": "number",
+      "description": "Returns the completion timestamp of the given criteria in milliseconds since epoch, or -1 if the criteria is not met yet.",
+      "parameters": [
+        {
+          "name": "criteria",
+          "type": "string",
+          "description": "The criteria name to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const timestamp = progress.getCriterionProgress(\"minecraft:adventure/adventuring_time\");\nif (timestamp !== -1) {\n    const date = new Date(timestamp);\n    Chat.log(`Adventure time criteria completed on ${date.toLocaleDateString()}`);\n}"
+      ]
+    },
+    {
+      "name": "isCriteriaObtained",
+      "signature": "isCriteriaObtained(String criteria)",
+      "returnType": "boolean",
+      "description": "Returns true if the given criteria is met, false otherwise.",
+      "parameters": [
+        {
+          "name": "criteria",
+          "type": "string",
+          "description": "The criteria name to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (progress.isCriteriaObtained(\"minecraft:adventure/adventuring_time\")) {\n    Chat.log(\"Adventure time criteria completed!\");\n}"
+      ]
+    },
+    {
+      "name": "getEarliestProgressObtainDate",
+      "signature": "getEarliestProgressObtainDate()",
+      "returnType": "number",
+      "description": "Returns the earliest completion date (timestamp in milliseconds since epoch) of all criteria.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const earliestDate = new Date(progress.getEarliestProgressObtainDate());\nChat.log(`First criteria completed on ${earliestDate.toLocaleDateString()}`);"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,367 @@
+{
+  "name": "LivingEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.LivingEntityHelper<T extends LivingEntity>",
+  "extends": "EntityHelper<T>",
+  "description": "Represents a living entity in the world such as mobs, players, and animals.",
+  "overview": "LivingEntityHelper provides access to health, status effects, equipment, and other properties specific to living entities. Instances are typically obtained from entity events, player methods, or by accessing nearby entities.\n\nThis class extends `EntityHelper` and inherits all methods for position, movement, and general entity properties.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List<StatusEffectHelper>",
+      "description": "Returns a list of status effects currently applied to the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Combat Analysis\nconst effects = livingEntity.getStatusEffects();\nif (effects.length > 0) {\n    Chat.log(\"Active effects:\");\n    for (const effect of effects) {\n        Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "canHaveStatusEffect",
+      "signature": "canHaveStatusEffect(StatusEffectHelper effect)",
+      "returnType": "boolean",
+      "description": "Checks if the entity can have the specified status effect applied.",
+      "parameters": [
+        {
+          "name": "effect",
+          "type": "StatusEffectHelper",
+          "description": "The status effect to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(String id)",
+      "returnType": "boolean",
+      "description": "Checks if the entity currently has the status effect with the specified ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The ID of the status effect."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(String item)",
+      "returnType": "boolean",
+      "description": "Checks if the entity is holding the specified item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "String",
+          "description": "The item ID to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMainHand",
+      "signature": "getMainHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently held in the entity's main hand.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Equipment Analysis\nconst mainHand = livingEntity.getMainHand();\nif (mainHand.getId() !== \"minecraft:air\") {\n    Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n}",
+        "// From Combat Analysis\nconst mainHand = livingEntity.getMainHand();\nChat.log(`Weapon: ${mainHand.getName().getString()}`);"
+      ]
+    },
+    {
+      "name": "getOffHand",
+      "signature": "getOffHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently held in the entity's off hand.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Equipment Analysis\nconst offHand = livingEntity.getOffHand();\nif (offHand.getId() !== \"minecraft:air\") {\n    Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n}"
+      ]
+    },
+    {
+      "name": "getHeadArmor",
+      "signature": "getHeadArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently equipped in the head armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Equipment Analysis\nconst armor = [\n    { slot: \"Head\", item: livingEntity.getHeadArmor() },\n    { slot: \"Chest\", item: livingEntity.getChestArmor() },\n    { slot: \"Legs\", item: livingEntity.getLegArmor() },\n    { slot: \"Feet\", item: livingEntity.getFootArmor() }\n];"
+      ]
+    },
+    {
+      "name": "getChestArmor",
+      "signature": "getChestArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently equipped in the chest armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Equipment Analysis\n{ slot: \"Chest\", item: livingEntity.getChestArmor() }"
+      ]
+    },
+    {
+      "name": "getLegArmor",
+      "signature": "getLegArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently equipped in the leg armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Equipment Analysis\n{ slot: \"Legs\", item: livingEntity.getLegArmor() }"
+      ]
+    },
+    {
+      "name": "getFootArmor",
+      "signature": "getFootArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item currently equipped in the foot armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Equipment Analysis\n{ slot: \"Feet\", item: livingEntity.getFootArmor() }"
+      ]
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "float",
+      "description": "Gets the current health of the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Health Monitoring\nconst health = livingEntity.getHealth();\nconst maxHealth = livingEntity.getMaxHealth();\nconst healthPercent = (health / maxHealth) * 100;\nChat.log(`Health: ${health.toFixed(1)}/${maxHealth.toFixed(1)} (${healthPercent.toFixed(1)}%)`);"
+      ]
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "float",
+      "description": "Gets the maximum health of the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Health Monitoring\nconst maxHealth = livingEntity.getMaxHealth();"
+      ]
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "float",
+      "description": "Gets the absorption health (yellow hearts) of the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Health Monitoring\nconst absorption = livingEntity.getAbsorptionHealth();\nif (absorption > 0) {\n    Chat.log(`Absorption: ${absorption.toFixed(1)}`);\n}"
+      ]
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "int",
+      "description": "Gets the total armor value of the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Health Monitoring\nconst armor = livingEntity.getArmor();\nChat.log(`Armor: ${armor} ( ${(armor * 4).toFixed(0)}% damage reduction )`);"
+      ]
+    },
+    {
+      "name": "getDefaultHealth",
+      "signature": "getDefaultHealth()",
+      "returnType": "float",
+      "description": "Gets the default maximum health for this type of entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMobTags",
+      "signature": "getMobTags()",
+      "returnType": "List<String>",
+      "description": "Gets a list of tags associated with the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nconst tags = livingEntity.getMobTags();\nif (tags.includes(\"minecraft:undead\")) {\n    classification.push(\"Undead\");\n}"
+      ]
+    },
+    {
+      "name": "isSleeping",
+      "signature": "isSleeping()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is currently sleeping.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nif (livingEntity.isSleeping()) status.push(\"Sleeping\");"
+      ]
+    },
+    {
+      "name": "isFallFlying",
+      "signature": "isFallFlying()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is flying with Elytra.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nif (livingEntity.isFallFlying()) {\n    classification.push(\"Flying (Elytra)\");\n}"
+      ]
+    },
+    {
+      "name": "isOnGround",
+      "signature": "isOnGround()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is touching the ground.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nif (!livingEntity.isOnGround()) status.push(\"In Air\");"
+      ]
+    },
+    {
+      "name": "canBreatheInWater",
+      "signature": "canBreatheInWater()",
+      "returnType": "boolean",
+      "description": "Checks if the entity can breathe underwater.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nif (livingEntity.canBreatheInWater()) {\n    classification.push(\"Aquatic\");\n}"
+      ]
+    },
+    {
+      "name": "hasNoDrag",
+      "signature": "hasNoDrag()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is unaffected by drag.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasNoGravity",
+      "signature": "hasNoGravity()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is unaffected by gravity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canTarget",
+      "signature": "canTarget(EntityHelper target)",
+      "returnType": "boolean",
+      "description": "Checks if this entity is capable of targeting the specified entity.",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "EntityHelper",
+          "description": "The entity to test targeting against."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canTakeDamage",
+      "signature": "canTakeDamage()",
+      "returnType": "boolean",
+      "description": "Checks if the entity can take damage.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nif (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");"
+      ]
+    },
+    {
+      "name": "isPartOfGame",
+      "signature": "isPartOfGame()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is considered part of the game world logic.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSpectator",
+      "signature": "isSpectator()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is in spectator mode.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isUndead",
+      "signature": "isUndead()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is classified as undead.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Combat Analysis\nif (livingEntity.isUndead()) {\n    Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n}"
+      ]
+    },
+    {
+      "name": "getBowPullProgress",
+      "signature": "getBowPullProgress()",
+      "returnType": "float",
+      "description": "Gets the progress of the entity's bow pull (0.0 to 1.0).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Combat Analysis\nif (livingEntity.getBowPullProgress() > 0) {\n    Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n}"
+      ]
+    },
+    {
+      "name": "getItemUseTimeLeft",
+      "signature": "getItemUseTimeLeft()",
+      "returnType": "int",
+      "description": "Gets the remaining time in ticks for the current item being used.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Checks if the entity is a baby variant.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// From Entity Classification\nif (livingEntity.isBaby()) {\n    classification.push(\"Baby\");\n}"
+      ]
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(EntityHelper entity, boolean simpleCast)",
+      "returnType": "boolean",
+      "description": "Checks if the entity has line of sight to another entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to check visibility for."
+        },
+        {
+          "name": "simpleCast",
+          "type": "boolean",
+          "description": "Optional. Whether to use a simple raycast check (default false)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// From Combat Analysis\nconst canSeePlayer = livingEntity.canSeeEntity(player);\nChat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);"
+      ]
+    }
+  ]
+}

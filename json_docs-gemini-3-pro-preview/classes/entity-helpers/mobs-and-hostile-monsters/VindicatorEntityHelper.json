@@ -1,0 +1,22 @@
+{
+  "name": "VindicatorEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.VindicatorEntityHelper",
+  "extends": "IllagerEntityHelper<VindicatorEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The VindicatorEntityHelper class is a specialized wrapper for vindicator entities in JSMacros, providing access to vindicator-specific behaviors, states, and unique characteristics.",
+  "overview": "This class represents vindicators, the hostile illager mobs armed with iron axes that are commonly found in woodland mansions and during raids. Vindicators are known for their aggressive melee combat behavior and their special \"Johnny\" naming Easter egg that causes them to attack all mobs except other illagers.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isJohnny",
+      "signature": "boolean isJohnny()",
+      "returnType": "boolean",
+      "description": "Checks if the vindicator is the special \"Johnny\" variant (typically named \"Johnny\"). This variant attacks all mobs except other illagers.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entity = event.getEntity();\nif (entity.is(\"minecraft:vindicator\")) {\n    const vindicator = entity;\n    const isJohnny = vindicator.isJohnny();\n    Chat.log(`Vindicator spawned! Johnny: ${isJohnny}`);\n}"
+      ]
+    }
+  ]
+}

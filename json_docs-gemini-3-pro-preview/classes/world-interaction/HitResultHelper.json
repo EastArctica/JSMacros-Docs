@@ -1,0 +1,60 @@
+{
+  "name": "HitResultHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.HitResultHelper",
+  "since": "1.9.1",
+  "description": "The HitResultHelper class is a World Interaction helper in JSMacros that provides access to ray casting and hit detection results in Minecraft.",
+  "overview": "The HitResultHelper class is a World Interaction helper in JSMacros that provides access to ray casting and hit detection results in Minecraft. It represents the result of a ray trace operation, which can hit blocks, entities, or miss entirely. This class is essential for determining what the player is looking at and for implementing targeting systems in scripts.\n\nThe class uses a generic type system and provides specialized subclasses for different types of hit results: blocks and entities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getPos",
+      "signature": "getPos()",
+      "returnType": "Pos3D",
+      "description": "Gets the precise world coordinates where the ray trace made contact.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hitResult = player.getInteractionManager().getTarget();\nif (hitResult) {\n    const hitPos = hitResult.getPos();\n    Chat.log(`Hit position: ${hitPos.x}, ${hitPos.y}, ${hitPos.z}`);\n}"
+      ]
+    },
+    {
+      "name": "asBlock",
+      "signature": "asBlock()",
+      "returnType": "HitResultHelper.Block or null",
+      "description": "Attempts to cast the hit result to a block-specific type. Returns null if the hit result is not a block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hitResult = player.getInteractionManager().getTarget();\nif (hitResult) {\n    const blockHit = hitResult.asBlock();\n    if (blockHit) {\n        Chat.log(\"Hit a block!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "asEntity",
+      "signature": "asEntity()",
+      "returnType": "HitResultHelper.Entity or null",
+      "description": "Attempts to cast the hit result to an entity-specific type. Returns null if the hit result is not an entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hitResult = player.getInteractionManager().getTarget();\nif (hitResult) {\n    const entityHit = hitResult.asEntity();\n    if (entityHit) {\n        const entity = entityHit.getEntity();\n        Chat.log(`Hit entity: ${entity.getType()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "resolve",
+      "signature": "resolve(HitResult hr)",
+      "returnType": "HitResultHelper<?> or null",
+      "description": "This is an internal method that converts the raw Minecraft HitResult into the appropriate HitResultHelper subclass (Block, Entity, or generic).",
+      "parameters": [
+        {
+          "name": "hr",
+          "type": "HitResult",
+          "description": ""
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// This method is typically used internally by JSMacros\n// You would normally use the helper methods provided by other classes"
+      ]
+    }
+  ]
+}

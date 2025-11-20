@@ -1,0 +1,18 @@
+{
+  "name": "EventDamage",
+  "fullClassName": "EventDamage",
+  "description": "This event is fired when the player takes damage from any source.",
+  "overview": "Backed by class `EventDamage`.\n\n### Event Payload Fields\n* **attacker** (`EntityHelper`): The entity that caused the damage. Note: This field is deprecated and may be null on servers.\n* **source** (`string`): The name of the damage source. Note: This field is deprecated and may not be reliable on servers.\n* **health** (`float`): The player's health after damage applied.\n* **change** (`float`): The amount of health change (negative for damage events).\n\n### Behavior\n* Fires when the player takes damage from any source.\n* Not cancellable.\n\n### Examples\n\n**Minimal example**\n```js\nJsMacros.on(\"Damage\", JavaWrapper.methodToJavaAsync((e) => {\n  const damageTaken = -e.change;\n  Chat.log(`Took ${damageTaken.toFixed(2)} damage. Health: ${e.health.toFixed(2)}`);\n});\n```\n\n**Async example**\n```js\nJsMacros.on(\"Damage\", JavaWrapper.methodToJavaAsync((e) => {\n  const damageTaken = -e.change;\n  let message = `Ouch! Took ${damageTaken.toFixed(2)} damage from '${e.source}'.`;\n\n  if (e.attacker) {\n    message += ` Attacker: ${e.attacker.getName().getString()}`;\n  }\n\n  message += ` New health: ${e.health.toFixed(2)}`;\n  Chat.log(message);\n\n  if (e.health <= 4.0) { // 2 hearts\n    Chat.actionbar(\"&cCRITICAL HEALTH!\");\n  }\n}));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

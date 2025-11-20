@@ -1,0 +1,20 @@
+{
+  "name": "EventOpenContainer",
+  "fullClassName": "EventOpenContainer",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a container/inventory is opened.",
+  "overview": "Fires when a container/inventory interface is opened.\n\nBehavior:\n- The `inventory` field provides access to the container contents\n- The `screen` field provides access to the screen interface\n- This event is cancellable - preventing the container from opening\n- Useful for custom container handling or automated sorting\n\nFields:\n- inventory (Inventory): The inventory helper object. This provides access to all slots in the container, allowing you to examine items, count contents, or perform inventory operations.\n- screen (IScreen): The screen helper object. This provides access to screen properties like title, class name, and other UI elements. You can use this to determine what type of container was opened.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

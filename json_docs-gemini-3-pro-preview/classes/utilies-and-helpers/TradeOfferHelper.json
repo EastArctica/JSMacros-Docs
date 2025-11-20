@@ -1,0 +1,231 @@
+{
+  "name": "TradeOfferHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.TradeOfferHelper",
+  "extends": "BaseHelper<TradeOffer>",
+  "since": "1.6.3",
+  "description": "A World Interaction helper that represents a single trade offer from a merchant entity (villager, wandering trader, etc.).",
+  "overview": "The `TradeOfferHelper` class is a World Interaction helper in JSMacros that represents a single trade offer from a merchant entity (villager, wandering trader, etc.). It provides detailed information about trade requirements, pricing adjustments, usage limits, and economic factors that affect the trade's availability and cost.\n\nThis class is particularly useful for creating scripts that:\n- Analyze individual trade opportunities\n- Monitor price changes and market dynamics\n- Create automated trading decision systems\n- Track merchant reputation and demand mechanics\n- Calculate trade profitability and value",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInput",
+      "signature": "getInput()",
+      "returnType": "List<ItemStackHelper>",
+      "description": "Returns a list of all input items required for this trade. This includes both the primary input item and any secondary input item (for 2-for-1 trades). Empty slots are automatically filtered out.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inputs = trade.getInput();\nChat.log(`This trade requires ${inputs.length} input items:`);\n\nfor (let i = 0; i < inputs.length; i++) {\n    const input = inputs[i];\n    Chat.log(`  ${i + 1}. ${input.getCount()}x ${input.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getLeftInput",
+      "signature": "getLeftInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the primary (left) input item required for this trade. This uses the adjusted price with any demand bonuses or discounts applied. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const leftInput = trade.getLeftInput();\nChat.log(`Primary input: ${leftInput.getCount()}x ${leftInput.getName()}`);\nChat.log(`Stack empty: ${leftInput.isEmpty()}`);\n\n// The count reflects current price adjustments\nconst adjustedCount = leftInput.getCount();\nChat.log(`Adjusted price: ${adjustedCount} items`);"
+      ]
+    },
+    {
+      "name": "getRightInput",
+      "signature": "getRightInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the secondary (right) input item required for this trade. If this is a simple 1-for-1 trade, this will return an empty ItemStack. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rightInput = trade.getRightInput();\nif (!rightInput.isEmpty()) {\n    Chat.log(`Secondary input: ${rightInput.getCount()}x ${rightInput.getName()}`);\n} else {\n    Chat.log(\"This is a simple 1-for-1 trade\");\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item that will be received when this trade is successfully executed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const output = trade.getOutput();\nChat.log(`You will receive: ${output.getCount()}x ${output.getName()}`);\n\n// Get detailed information about the output\nconst outputId = output.getItemId();\nconst outputNBT = output.getNBT();\nChat.log(`Output item ID: ${outputId}`);\nChat.log(`Output NBT: ${outputNBT}`);"
+      ]
+    },
+    {
+      "name": "getIndex",
+      "signature": "getIndex()",
+      "returnType": "int",
+      "description": "Returns the index position of this trade in the merchant's trade list. This is useful for selecting trades programmatically. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tradeIndex = trade.getIndex();\nChat.log(`This is trade #${tradeIndex} in the merchant's list`);\n\n// Use the index to select this trade\ntrade.select(); // Will select this specific trade in the UI"
+      ]
+    },
+    {
+      "name": "select",
+      "signature": "select()",
+      "returnType": "TradeOfferHelper",
+      "description": "Selects this trade offer in the merchant trading interface. This method will only work if the villager inventory screen is currently open and the trade index is valid. Returns `this` for chaining.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Select the trade programmatically\nconst selectedTrade = trade.select();\nChat.log(\"Trade selected successfully\");\n\n// Method chaining example\ntrade.select()\n    .getInput()\n    .forEach(item => Chat.log(`Input: ${item.getName()}`));\n\n// Important: Only works when merchant screen is open\nif (Client.getMinecraft().currentScreen instanceof VillagerInventory) {\n    trade.select();\n} else {\n    Chat.log(\"Error: Merchant screen must be open to select trades\");\n}"
+      ]
+    },
+    {
+      "name": "isAvailable",
+      "signature": "isAvailable()",
+      "returnType": "boolean",
+      "description": "Returns `true` if this trade is currently available, `false` if it's disabled or locked. Trades become unavailable when max usage is reached or stock runs out.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (trade.isAvailable()) {\n    Chat.log(\"This trade is available for execution\");\n    // Check usage limits\n    const uses = trade.getUses();\n    const maxUses = trade.getMaxUses();\n    const remainingUses = maxUses - uses;\n    Chat.log(`Remaining uses: ${remainingUses}`);\n} else {\n    Chat.log(\"This trade is currently unavailable\");\n}"
+      ]
+    },
+    {
+      "name": "getNBT",
+      "signature": "getNBT()",
+      "returnType": "NBTElementHelper$NBTCompoundHelper",
+      "description": "Returns the complete NBT data for this trade offer as a compound tag. This includes all trade properties, pricing data, and merchant-specific information.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tradeNBT = trade.getNBT();\nChat.log(`Trade NBT: ${tradeNBT}`);\n\n// Access specific NBT properties\nconst buyNBT = tradeNBT.get(\"buy\");\nconst sellNBT = tradeNBT.get(\"sell\");\nconst usesNBT = tradeNBT.get(\"uses\");\n\nChat.log(`Uses from NBT: ${usesNBT.asString()}`);"
+      ]
+    },
+    {
+      "name": "getUses",
+      "signature": "getUses()",
+      "returnType": "int",
+      "description": "Returns the number of times this trade has been used. When this reaches `getMaxUses()`, the trade becomes disabled until the merchant restocks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const uses = trade.getUses();\nconst maxUses = trade.getMaxUses();\nconst usagePercentage = (uses / maxUses) * 100;\n\nChat.log(`Trade usage: ${uses}/${maxUses} (${usagePercentage.toFixed(1)}%)`);"
+      ]
+    },
+    {
+      "name": "getMaxUses",
+      "signature": "getMaxUses()",
+      "returnType": "int",
+      "description": "Returns the maximum number of times this trade can be used before it becomes disabled. This value varies by trade type and merchant characteristics.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxUses = trade.getMaxUses();\nChat.log(`Maximum uses: ${maxUses}`);\n\n// Calculate remaining value\nconst remainingUses = maxUses - trade.getUses();\nif (remainingUses > 0) {\n    Chat.log(`✓ ${remainingUses} uses remaining`);\n}"
+      ]
+    },
+    {
+      "name": "shouldRewardPlayerExperience",
+      "signature": "shouldRewardPlayerExperience()",
+      "returnType": "boolean",
+      "description": "Returns `true` if this trade will award experience points to the player upon successful completion. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const givesXP = trade.shouldRewardPlayerExperience();\nif (givesXP) {\n    const xpAmount = trade.getExperience();\n    Chat.log(`This trade rewards ${xpAmount} experience points`);\n} else {\n    Chat.log(\"This trade does not provide experience rewards\");\n}"
+      ]
+    },
+    {
+      "name": "getExperience",
+      "signature": "getExperience()",
+      "returnType": "int",
+      "description": "Returns the amount of experience points awarded when this trade is successfully completed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const xpReward = trade.getExperience();\nChat.log(`XP reward: ${xpReward} points`);\n\nif (xpReward > 0) {\n    Chat.log(\"✓ This trade provides experience\");\n}"
+      ]
+    },
+    {
+      "name": "getCurrentPriceAdjustment",
+      "signature": "getCurrentPriceAdjustment()",
+      "returnType": "int",
+      "description": "Returns the current price adjustment compared to the original price. Positive values indicate price increases (high demand), negative values indicate discounts.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const priceAdjustment = trade.getCurrentPriceAdjustment();\nconst adjustedPrice = trade.getAdjustedPrice();\nconst originalPrice = trade.getOriginalPrice();\n\nChat.log(`Price adjustment: ${priceAdjustment > 0 ? '+' : ''}${priceAdjustment}`);\nChat.log(`Original price: ${originalPrice}`);\nChat.log(`Current price: ${adjustedPrice}`);"
+      ]
+    },
+    {
+      "name": "getOriginalFirstInput",
+      "signature": "getOriginalFirstInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the original (unadjusted) primary input item before any price modifications due to demand, reputation, or special effects. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const originalInput = trade.getOriginalFirstInput();\nconst currentInput = trade.getLeftInput();\n\nChat.log(`Original input: ${originalInput.getCount()}x ${originalInput.getName()}`);\nChat.log(`Current input: ${currentInput.getCount()}x ${currentInput.getName()}`);"
+      ]
+    },
+    {
+      "name": "getOriginalPrice",
+      "signature": "getOriginalPrice()",
+      "returnType": "int",
+      "description": "Returns the original price (stack count) of the primary input item without any adjustments. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const originalPrice = trade.getOriginalPrice();\nconst adjustedPrice = trade.getAdjustedPrice();\n\n// Calculate total adjustment\nconst totalAdjustment = adjustedPrice - originalPrice;\nChat.log(`Total price change: ${totalAdjustment > 0 ? '+' : ''}${totalAdjustment}`);"
+      ]
+    },
+    {
+      "name": "getAdjustedPrice",
+      "signature": "getAdjustedPrice()",
+      "returnType": "int",
+      "description": "Returns the current adjusted price (stack count) of the primary input item after all modifications (demand, special price, reputation) are applied. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const adjustedPrice = trade.getAdjustedPrice();\nChat.log(`Current adjusted price: ${adjustedPrice}`);"
+      ]
+    },
+    {
+      "name": "getSpecialPrice",
+      "signature": "getSpecialPrice()",
+      "returnType": "int",
+      "description": "Returns the special price multiplier affecting pricing based on reputation. Negative values indicate discounts, positive values indicate premiums. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const specialPrice = trade.getSpecialPrice();\nChat.log(`Special price adjustment: ${specialPrice}`);\n\nif (specialPrice < 0) {\n    Chat.log(`🎉 Reputation discount: ${Math.abs(specialPrice)} items`);\n} else if (specialPrice > 0) {\n    Chat.log(`⚠️ Reputation penalty: ${specialPrice} items`);\n}"
+      ]
+    },
+    {
+      "name": "getPriceMultiplier",
+      "signature": "getPriceMultiplier()",
+      "returnType": "float",
+      "description": "Returns the price multiplier for this trade type, determining how much prices fluctuate due to demand. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const priceMultiplier = trade.getPriceMultiplier();\nChat.log(`Price multiplier: ${priceMultiplier}`);"
+      ]
+    },
+    {
+      "name": "getDemandBonus",
+      "signature": "getDemandBonus()",
+      "returnType": "int",
+      "description": "Returns the demand bonus applied to this trade. Demand increases when players frequently trade the same items. (Since 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const demandBonus = trade.getDemandBonus();\nChat.log(`Demand bonus: ${demandBonus}`);\n\nif (demandBonus > 0) {\n    Chat.log(`📈 High demand increases price by ${demandBonus} items`);\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this trade offer, including input and output items.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tradeString = trade.toString();\nChat.log(`Trade info: ${tradeString}`);"
+      ]
+    }
+  ]
+}

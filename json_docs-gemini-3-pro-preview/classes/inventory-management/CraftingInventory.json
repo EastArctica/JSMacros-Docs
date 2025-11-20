@@ -1,0 +1,42 @@
+{
+  "name": "CraftingInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CraftingInventory",
+  "extends": "RecipeInventory<CraftingScreen>",
+  "since": "1.8.4",
+  "description": "The CraftingInventory class provides specialized access to Minecraft's crafting table interface, allowing scripts to interact with crafting operations, manage the 3×3 crafting grid, and work with recipes.",
+  "overview": "This class extends the RecipeInventory class and adds crafting table-specific functionality for accessing input slots, managing recipes, and controlling the recipe book.\n\nCrafting tables in Minecraft have the following main components:\n- 3×3 Crafting Grid (Slots 1-9): Input slots for crafting materials\n- Output Slot (Slot 0): The resulting crafted item\n- Recipe Book: Toggleable interface for browsing and selecting recipes",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInput",
+      "signature": "getInput(int x, int y)",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the input item from the specific coordinates in the 3x3 crafting grid.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The X coordinate of the grid (0-2)."
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The Y coordinate of the grid (0-2)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput()",
+      "returnType": "ItemStackHelper[][]",
+      "description": "Retrieves the entire 3x3 crafting grid as a 2D array of items.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inv = Inventory.create();\nif (inv && inv.getType() === \"Crafting Table\") {\n    const grid = inv.getInput();\n    for (let x = 0; x < 3; x++) {\n        for (let y = 0; y < 3; y++) {\n            const item = grid[x][y];\n            if (!item.isEmpty()) {\n                Chat.log(`Item at ${x},${y}: ${item.getName()}`);\n            }\n        }\n    }\n}"
+      ]
+    }
+  ]
+}
