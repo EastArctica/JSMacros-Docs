@@ -45,7 +45,7 @@ export default function MethodEditor({ index, control, register, remove, isConst
             />
           </div>
         )}
-        <div className={isConstructor ? "col-span-8" : "col-span-5"}>
+        <div className={isConstructor ? "col-span-8" : "col-span-6"}>
           <label className="block text-xs font-medium text-text-secondary mb-1">
             Signature
             {dirtyFields?.signature && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
@@ -75,6 +75,15 @@ export default function MethodEditor({ index, control, register, remove, isConst
               <input type="checkbox" {...register(`${basePath}.static`)} className="accent-primary" />
               Static
               {dirtyFields?.static && <span className="ml-1 text-yellow-500 text-xs" title="Changed">●</span>}
+            </label>
+          </div>
+        )}
+        {!isConstructor && (
+          <div className="col-span-1 flex items-end pb-2">
+            <label className="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-text-primary transition-colors">
+              <input type="checkbox" {...register(`${basePath}.deprecated`)} className="accent-primary" />
+              Deprecated
+              {dirtyFields?.deprecated && <span className="ml-1 text-yellow-500 text-xs" title="Changed">●</span>}
             </label>
           </div>
         )}

@@ -68,6 +68,10 @@ async function processJsonFile(jsonPath, outputPath) {
       for (const method of doc.methods) {
         md += `### \`${method.name}\`\n\n`
         
+        if (method.deprecated) {
+          md += `::: warning\nThis method is deprecated.\n:::\n\n`
+        }
+
         if (method.static) {
           md += `::: info\nThis method is static.\n:::\n\n`
         }

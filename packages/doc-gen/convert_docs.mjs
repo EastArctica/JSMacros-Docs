@@ -68,6 +68,7 @@ The JSON should follow this schema:
   - description: Description of what the method does
   - parameters: Array of parameters (name, type, description)
   - static: Whether the method is static (boolean)
+  - deprecated: Whether the method is deprecated (boolean)
   - examples: Code examples for this method (array of strings)
 
 Markdown Content:
