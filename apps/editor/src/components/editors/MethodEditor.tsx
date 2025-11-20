@@ -1,7 +1,7 @@
 'use client';
 
 import { Control, UseFormRegister, useFieldArray, Controller } from 'react-hook-form';
-import { Trash2, Plus, Code } from 'lucide-react';
+import { Trash2, Code } from 'lucide-react';
 import MonacoWrapper from '../MonacoWrapper';
 
 interface MethodEditorProps {
@@ -10,9 +10,10 @@ interface MethodEditorProps {
   register: UseFormRegister<any>;
   remove: () => void;
   isConstructor?: boolean;
+  dirtyFields?: any;
 }
 
-export default function MethodEditor({ index, control, register, remove, isConstructor = false }: MethodEditorProps) {
+export default function MethodEditor({ index, control, register, remove, isConstructor = false, dirtyFields }: MethodEditorProps) {
   const basePath = isConstructor ? `constructors.${index}` : `methods.${index}`;
 
   const { fields: parameters, append: appendParam, remove: removeParam } = useFieldArray({
@@ -33,7 +34,10 @@ export default function MethodEditor({ index, control, register, remove, isConst
       <div className="grid grid-cols-12 gap-4 mb-4">
         {!isConstructor && (
           <div className="col-span-3">
-            <label className="block text-xs font-medium text-text-secondary mb-1">Name</label>
+            <label className="block text-xs font-medium text-text-secondary mb-1">
+              Name
+              {dirtyFields?.name && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+            </label>
             <input
               {...register(`${basePath}.name`)}
               className="w-full bg-bg-app border border-border-base rounded px-2 py-1 text-sm text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
@@ -42,7 +46,10 @@ export default function MethodEditor({ index, control, register, remove, isConst
           </div>
         )}
         <div className={isConstructor ? "col-span-8" : "col-span-5"}>
-          <label className="block text-xs font-medium text-text-secondary mb-1">Signature</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">
+            Signature
+            {dirtyFields?.signature && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+          </label>
           <input
             {...register(`${basePath}.signature`)}
             className="w-full bg-bg-app border border-border-base rounded px-2 py-1 text-sm font-mono text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
@@ -51,7 +58,10 @@ export default function MethodEditor({ index, control, register, remove, isConst
         </div>
         {!isConstructor && (
           <div className="col-span-3">
-            <label className="block text-xs font-medium text-text-secondary mb-1">Return Type</label>
+            <label className="block text-xs font-medium text-text-secondary mb-1">
+              Return Type
+              {dirtyFields?.returnType && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+            </label>
             <input
               {...register(`${basePath}.returnType`)}
               className="w-full bg-bg-app border border-border-base rounded px-2 py-1 text-sm font-mono text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
@@ -64,13 +74,17 @@ export default function MethodEditor({ index, control, register, remove, isConst
             <label className="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-text-primary transition-colors">
               <input type="checkbox" {...register(`${basePath}.static`)} className="accent-primary" />
               Static
+              {dirtyFields?.static && <span className="ml-1 text-yellow-500 text-xs" title="Changed">●</span>}
             </label>
           </div>
         )}
       </div>
 
       <div className="mb-4">
-        <label className="block text-xs font-medium text-text-secondary mb-1">Description</label>
+        <label className="block text-xs font-medium text-text-secondary mb-1">
+          Description
+          {dirtyFields?.description && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+        </label>
         <textarea
           {...register(`${basePath}.description`)}
           rows={2}
@@ -99,16 +113,19 @@ export default function MethodEditor({ index, control, register, remove, isConst
                 className="w-24 bg-bg-app border border-border-base rounded px-2 py-1 text-xs text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
                 placeholder="Name"
               />
+              {dirtyFields?.parameters?.[pIndex]?.name && <span className="text-yellow-500 text-xs self-center" title="Changed">●</span>}
               <input
                 {...register(`${basePath}.parameters.${pIndex}.type`)}
                 className="w-32 bg-bg-app border border-border-base rounded px-2 py-1 text-xs font-mono text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
                 placeholder="Type"
               />
+              {dirtyFields?.parameters?.[pIndex]?.type && <span className="text-yellow-500 text-xs self-center" title="Changed">●</span>}
               <input
                 {...register(`${basePath}.parameters.${pIndex}.description`)}
                 className="flex-1 bg-bg-app border border-border-base rounded px-2 py-1 text-xs text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
                 placeholder="Description"
               />
+              {dirtyFields?.parameters?.[pIndex]?.description && <span className="text-yellow-500 text-xs self-center" title="Changed">●</span>}
               <button
                 type="button"
                 onClick={() => removeParam(pIndex)}
@@ -126,7 +143,10 @@ export default function MethodEditor({ index, control, register, remove, isConst
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Code size={14} className="text-text-secondary" />
-          <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">Examples</span>
+          <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">
+            Examples
+            {dirtyFields?.examples && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+          </span>
         </div>
         <Controller
           control={control}

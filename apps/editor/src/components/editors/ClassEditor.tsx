@@ -27,7 +27,7 @@ interface ClassEditorProps {
 
 export default function ClassEditor({ initialData, filePath }: ClassEditorProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'constructors' | 'methods' | 'fields'>('overview');
-  const { register, control, handleSubmit, reset, watch } = useForm<ClassData>({
+  const { register, control, handleSubmit, reset, watch, formState: { dirtyFields } } = useForm<ClassData>({
     defaultValues: initialData,
   });
 
@@ -35,6 +35,16 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
   useEffect(() => {
     reset(initialData);
   }, [initialData, reset]);
+
+  const countChanges = (obj: any): number => {
+    if (!obj) return 0;
+    if (typeof obj === 'boolean') return obj ? 1 : 0;
+    if (Array.isArray(obj)) return obj.reduce((acc, item) => acc + countChanges(item), 0);
+    if (typeof obj === 'object') return Object.values(obj).reduce((acc: number, val) => acc + countChanges(val), 0);
+    return 0;
+  };
+
+  const changeCount = countChanges(dirtyFields);
 
   const onSubmit = async (data: ClassData) => {
     try {
@@ -80,7 +90,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
           className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition-colors"
         >
           <Save size={18} />
-          Save Changes
+          {changeCount > 0 ? `Save ${changeCount} Changes` : 'Save Changes'}
         </button>
       </div>
 
@@ -111,28 +121,40 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-1">Class Name</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    Class Name
+                    {dirtyFields.name && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+                  </label>
                   <input
                     {...register('name')}
                     className="w-full bg-bg-app border border-border-base rounded px-3 py-2 text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-1">Since</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    Since
+                    {dirtyFields.since && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+                  </label>
                   <input
                     {...register('since')}
                     className="w-full bg-bg-app border border-border-base rounded px-3 py-2 text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium text-text-secondary mb-1">Full Class Name</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    Full Class Name
+                    {dirtyFields.fullClassName && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+                  </label>
                   <input
                     {...register('fullClassName')}
                     className="w-full bg-bg-app border border-border-base rounded px-3 py-2 text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium text-text-secondary mb-1">Extends</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">
+                    Extends
+                    {dirtyFields.extends && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+                  </label>
                   <input
                     {...register('extends')}
                     className="w-full bg-bg-app border border-border-base rounded px-3 py-2 text-text-primary focus:ring-2 focus:ring-primary outline-none transition-all"
@@ -141,7 +163,10 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">Description (Markdown)</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">
+                  Description (Markdown)
+                  {dirtyFields.description && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+                </label>
                 <textarea
                   {...register('description')}
                   rows={5}
@@ -150,7 +175,10 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">Overview (Markdown)</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">
+                  Overview (Markdown)
+                  {dirtyFields.overview && <span className="ml-2 text-yellow-500 text-xs" title="Changed">●</span>}
+                </label>
                 <textarea
                   {...register('overview')}
                   rows={8}
@@ -181,6 +209,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
                     control={control}
                     register={register}
                     remove={() => removeMethod(index)}
+                    dirtyFields={dirtyFields.methods?.[index]}
                   />
                 ))}
               </div>
@@ -209,6 +238,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
                     register={register}
                     remove={() => removeConstructor(index)}
                     isConstructor
+                    dirtyFields={dirtyFields.constructors?.[index]}
                   />
                 ))}
               </div>
@@ -235,6 +265,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
                     index={index}
                     register={register}
                     remove={() => removeField(index)}
+                    dirtyFields={dirtyFields.fields?.[index]}
                   />
                 ))}
               </div>
