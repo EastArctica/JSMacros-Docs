@@ -1,0 +1,4 @@
+{
+  "name": "Gemini API Log Visualizer",
+  "description": "A dashboard to visualize cost, token usage, and latency metrics from Gemini API log files."
+}
