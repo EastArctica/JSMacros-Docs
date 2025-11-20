@@ -1,0 +1,20 @@
+{
+  "name": "@doc-gen/docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "node build-docs.mjs && node generate-sidebar.mjs",
+    "build": "npm run prebuild && vitepress build",
+    "dev": "npm run prebuild && vitepress dev",
+    "preview": "vitepress preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.24"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "gemini-api-log-visualizer",
+  "name": "@doc-gen/cost-visualizer",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -1,3 +1,10 @@
 node_modules/
 /docs/
+/clean_docs/
 .env
+
+# VitePress site
+/site/dist/
+/site/docs/
+/site/.vitepress/cache/
+/site/.vitepress/sidebar-config.json
