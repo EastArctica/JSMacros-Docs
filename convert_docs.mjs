@@ -9,6 +9,20 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 const modelName = process.env.MODEL_NAME || 'gemini-2.0-flash-thinking-exp-01-21';
 
+let writeQueue = Promise.resolve();
+async function safeAppendFile(filePath, data) {
+  const currentPromise = writeQueue;
+  let resolve;
+  const nextPromise = new Promise(r => resolve = r);
+  writeQueue = nextPromise;
+  await currentPromise;
+  try {
+    await fs.appendFile(filePath, data);
+  } finally {
+    resolve();
+  }
+}
+
 async function processFile(filePath, outputDir) {
   try {
     const content = await fs.readFile(filePath, 'utf-8');
@@ -103,35 +117,62 @@ Return ONLY valid JSON matching the schema above.`);
     };
 
     const logLine = `${relativePath.replace(/\.md$/, '.json')}: ${JSON.stringify(costEntry)}\n`;
-    await fs.appendFile('costs.txt', logLine);
+    await safeAppendFile('costs.txt', logLine);
 
   } catch (error) {
     console.error(`Error processing ${filePath}:`, error);
   }
 }
 
-async function walkDir(dir, callback) {
-  const files = await fs.readdir(dir);
-  for (const file of files) {
+async function getAllFiles(dir) {
+  let results = [];
+  const list = await fs.readdir(dir);
+  for (const file of list) {
     const filePath = path.join(dir, file);
     const stat = await fs.stat(filePath);
     if (stat.isDirectory()) {
-      await walkDir(filePath, callback);
+      results = results.concat(await getAllFiles(filePath));
     } else if (file.endsWith('.md')) {
-      await callback(filePath);
+      results.push(filePath);
     }
   }
+  return results;
+}
+
+function getThreadCount() {
+  const args = process.argv.slice(2);
+  const threadIndex = args.indexOf('--threads');
+  if (threadIndex !== -1 && args[threadIndex + 1]) {
+    const val = parseInt(args[threadIndex + 1], 10);
+    if (!isNaN(val) && val > 0) return val;
+  }
+  return 1;
 }
 
 async function main() {
   const inputDir = path.resolve('./docs');
   const outputDir = path.resolve('./json_docs');
+  const concurrency = getThreadCount();
 
   console.log(`Starting conversion from ${inputDir} to ${outputDir} using model ${modelName}`);
+  console.log(`Concurrency set to ${concurrency} threads.`);
 
-  await walkDir(inputDir, async (filePath) => {
-    await processFile(filePath, outputDir);
-  });
+  const files = await getAllFiles(inputDir);
+  console.log(`Found ${files.length} files to process.`);
+
+  const queue = [...files];
+  const workers = [];
+
+  for (let i = 0; i < Math.min(concurrency, files.length); i++) {
+    workers.push((async () => {
+      while (queue.length > 0) {
+        const filePath = queue.shift();
+        await processFile(filePath, outputDir);
+      }
+    })());
+  }
+
+  await Promise.all(workers);
 
   console.log('Conversion complete!');
 }
