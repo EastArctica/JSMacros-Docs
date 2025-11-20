@@ -1,0 +1,148 @@
+{
+  "name": "RenderElement",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.RenderElement",
+  "extends": "Drawable",
+  "since": "JsMacros 1.0.5",
+  "description": "The `RenderElement` is the base interface for all 2D rendering components in JsMacros. It defines the fundamental functionality for rendering visual elements on the screen, providing a standardized framework for 2D graphics such as text, images, rectangles, lines, and other UI components. This interface is implemented by various rendering components that can be added to a `Draw2D` context for screen-space visualization.",
+  "overview": "The `RenderElement` interface serves as the foundation for 2D rendering in JsMacros, providing:\n\n- Standardized rendering method that integrates with Minecraft's GUI rendering system\n- Z-index support for controlling element rendering order\n- Matrix transformation utilities for positioning, scaling, and rotation\n- Integration with the `Draw2D` rendering system for screen-space visualization\n- Compatibility with Minecraft's `Drawable` interface for seamless integration\n\n### Interface Definition\n```java\npublic interface RenderElement extends Drawable\n```\nThis interface extends Minecraft's `Drawable` interface, allowing RenderElement instances to be used anywhere a standard Minecraft drawable is expected.\n\n### Implementing Classes\nThe following classes implement the `RenderElement` interface:\n\n- `Draw2DElement` - Wrapper class for Draw2D components with positioning support\n- `Text` - Text rendering with customizable fonts, colors, and styling\n- `Image` - Image rendering with scaling, rotation, and transformation support\n- `Rect` - Rectangle rendering with fill, outline, and corner radius options\n- `Line` - Line rendering with customizable thickness, colors, and endpoints\n- `Item` - Minecraft item rendering for displaying items as UI elements\n\n### Integration with Draw2D\n`RenderElement` objects are designed to work seamlessly with the `Draw2D` system:\n\nThe rendering system will automatically:\n1. Sort elements by z-index each frame\n2. Call render() on each element with appropriate parameters\n3. Handle matrix transformations and coordinate systems\n4. Integrate with Minecraft's GUI rendering pipeline\n\n### Rendering Pipeline\n`RenderElement` elements follow this rendering pipeline:\n\n1. **Creation**: Elements are created through constructors or builders\n2. **Registration**: Elements are added to a `Draw2D` context using appropriate add methods\n3. **Sorting**: Elements are sorted by z-index for proper layering\n4. **Rendering**: Each frame, `render()` is called on all elements with current mouse position and tick delta\n5. **Transformation**: Elements use matrix utilities for positioning, scaling, and rotation\n6. **Cleanup**: Elements are automatically managed by the `Draw2D` context\n\n### Matrix Transformation Guide\nThe `setupMatrix` methods provide convenient ways to handle common transformations.\n\n#### Transformation Order\nThe matrix operations are applied in this specific order:\n1. Translate to position (x, y)\n2. Apply scale\n3. If center rotation: translate to center point\n4. Apply rotation\n5. If center rotation: translate back from center\n6. Translate back to origin\n\nThis ensures predictable transformation behavior for all elements.\n\n### Performance Considerations\n\n- **Z-Index Sorting**: Elements are sorted by z-index each frame, so avoid unnecessarily high z-index values\n- **Matrix Operations**: The built-in matrix utilities are optimized for common use cases\n- **Batching**: Similar elements should be grouped when possible for better GPU performance\n- **State Changes**: Minimize OpenGL state changes between elements for better performance\n\n### Related Classes\n\n- `Draw2D` - Main 2D drawing context that manages RenderElement instances\n- `Drawable` - Minecraft interface that RenderElement extends\n- `DrawContext` - Minecraft's drawing context for rendering operations\n- `MatrixStack` - Minecraft's matrix transformation system\n- `Draw2DElement` - Wrapper class for Draw2D components\n- `Text`, `Image`, `Rect`, `Line`, `Item` - Concrete RenderElement implementations\n\n### Implementation Guidelines\nWhen creating custom elements that implement `RenderElement`:\n\n1. **Required Methods**:\n   - Implement `getZIndex()` to return the element's layer order\n   - Implement `render(DrawContext, int, int, float)` for actual rendering\n\n2. **Matrix Transformations**:\n   - Use the provided `setupMatrix()` methods for positioning and transformations\n   - These methods handle the complex matrix math for common operations\n\n3. **Rendering Integration**:\n   - Add elements to `Draw2D` using the appropriate methods\n   - Use Minecraft's rendering system within the `render()` method\n   - Access `RenderElement.mc` for the Minecraft client instance when needed\n\n4. **Z-Index Management**:\n   - Use appropriate z-index values for proper layering\n   - Consider the rendering order when designing UI layouts",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getZIndex",
+      "signature": "getZIndex()",
+      "returnType": "int",
+      "description": "Returns the element's layer order (z-index).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check their z-index values\nChat.log(`Text z-index: ${text.getZIndex()}`);    // 0\nChat.log(`Rect z-index: ${rect.getZIndex()}`);    // 0\nChat.log(`Image z-index: ${image.getZIndex()}`);  // 0",
+        "// Create elements with specific rendering order\nconst background = new Rect(0, 0, 300, 200, 0xFF333333, 0, 0xFF333333, true, 0);   // Background layer\nconst middleLayer = new Text(\"Middle Layer\", 50, 50, 0xFFFFFF, 10, false, 1.0, 0); // z-index: 10\nconst foreground = new Rect(100, 100, 80, 30, 0xFFFF0000, 20, 0xFFFF0000, true, 0); // Foreground layer\n\nconst draw2D = Hud.createDraw2D();\n\n// Add in any order - they will render by z-index\ndraw2D.addRect(foreground);  // z-index: 20 (renders last/on top)\ndraw2D.addRect(background);  // z-index: 0  (renders first/bottom)\ndraw2D.addText(middleLayer); // z-index: 10 (renders in middle)\n\n// Rendering order: background (0) -> middleLayer (10) -> foreground (20)\nHud.registerDraw2D(draw2D);",
+        "// Example of implementing a custom RenderElement\nclass CustomCircle implements RenderElement {\n    constructor(x, y, radius, color, zIndex) {\n        this.x = x;\n        this.y = y;\n        this.radius = radius;\n        this.color = color;\n        this.zIndex = zIndex || 0;\n    }\n\n    // Required: Implement getZIndex\n    getZIndex() {\n        return this.zIndex;\n    }\n\n    // Required: Implement render (inherited from Drawable)\n    render(drawContext, mouseX, mouseY, tickDelta) {\n        const matrices = drawContext.getMatrices();\n\n        // Use the built-in matrix setup utility\n        this.setupMatrix(matrices, this.x, this.y, 1.0, 0);\n\n        // Custom circle rendering logic would go here\n        // This is simplified - actual implementation would use vertex buffers\n        this.drawCircle(drawContext, this.radius, this.color);\n    }\n\n    drawCircle(drawContext, radius, color) {\n        // Implementation would use Tessellator and BufferBuilder\n        // to draw a filled circle at the current matrix position\n        // This is just a placeholder for the actual rendering code\n    }\n}\n\n// Usage\nconst circle = new CustomCircle(150, 150, 25, 0xFF00FF00, 5);\nconst draw2D = Hud.createDraw2D();\ndraw2D.addCustom(circle); // Assuming Draw2D has a method to add custom elements",
+        "// Animated element using matrix transformations\nclass AnimatedText implements RenderElement {\n    constructor(text, x, y, color, zIndex) {\n        this.text = text;\n        this.baseX = x;\n        this.baseY = y;\n        this.color = color;\n        this.zIndex = zIndex || 0;\n        this.animationTime = 0;\n    }\n\n    getZIndex() {\n        return this.zIndex;\n    } \n\n    render(drawContext, mouseX, mouseY, tickDelta) {\n        this.animationTime += tickDelta;\n\n        // Calculate animated values\n        const scale = 1.0 + Math.sin(this.animationTime * 2) * 0.2; // Pulsing scale\n        const rotation = Math.sin(this.animationTime) * 10; // Gentle rotation\n\n        const matrices = drawContext.getMatrices();\n\n        // Apply transformations using the utility method\n        const textWidth = 100; // Approximate text width\n        const textHeight = 20; // Approximate text height\n        this.setupMatrix(matrices, this.baseX, this.baseY, scale, rotation, textWidth, textHeight, true);\n\n        // Render the text at the transformed position\n        drawContext.drawText(RenderElement.mc.textRenderer, this.text, 0, 0, this.color);\n    }\n}\n\n// Create and use the animated text\nconst animatedText = new AnimatedText(\"Pulsing Text\", 200, 100, 0xFFFFFF00, 15);\nconst draw2D = Hud.createDraw2D();\ndraw2D.addCustom(animatedText);\nHud.registerDraw2D(draw2D);",
+        "// Access elements (all implement RenderElement)\nconst texts = draw2D.getTexts();       // List<Text>\nconst rects = draw2D.getRects();       // List<Rect>\nconst images = draw2D.getImages();     // List<Image>\n\n// All can be treated as RenderElement\nconst allElements = [];\nallElements.push(...texts);\nallElements.push(...rects);\nallElements.push(...images);\n\n// Sort by z-index\nallElements.sort((a, b) => a.getZIndex() - b.getZIndex());\n\n// Log z-index information\nallElements.forEach(element => {\n    Chat.log(`Element z-index: ${element.getZIndex()}`);\n});"
+      ]
+    },
+    {
+      "name": "render",
+      "signature": "render(drawContext, mouseX, mouseY, tickDelta)",
+      "returnType": "void",
+      "description": "Performs the actual rendering of the element on the screen. This method is called each frame by the rendering system.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The Minecraft drawing context for rendering operations."
+        },
+        {
+          "name": "mouseX",
+          "type": "int",
+          "description": "The current X-coordinate of the mouse."
+        },
+        {
+          "name": "mouseY",
+          "type": "int",
+          "description": "The current Y-coordinate of the mouse."
+        },
+        {
+          "name": "tickDelta",
+          "type": "float",
+          "description": "The partial tick delta for smooth animations."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Example of implementing a custom RenderElement\nclass CustomCircle implements RenderElement {\n    constructor(x, y, radius, color, zIndex) {\n        this.x = x;\n        this.y = y;\n        this.radius = radius;\n        this.color = color;\n        this.zIndex = zIndex || 0;\n    }\n\n    // Required: Implement getZIndex\n    getZIndex() {\n        return this.zIndex;\n    }\n\n    // Required: Implement render (inherited from Drawable)\n    render(drawContext, mouseX, mouseY, tickDelta) {\n        const matrices = drawContext.getMatrices();\n\n        // Use the built-in matrix setup utility\n        this.setupMatrix(matrices, this.x, this.y, 1.0, 0);\n\n        // Custom circle rendering logic would go here\n        // This is simplified - actual implementation would use vertex buffers\n        this.drawCircle(drawContext, this.radius, this.color);\n    }\n\n    drawCircle(drawContext, radius, color) {\n        // Implementation would use Tessellator and BufferBuilder\n        // to draw a filled circle at the current matrix position\n        // This is just a placeholder for the actual rendering code\n    }\n}\n\n// Usage\nconst circle = new CustomCircle(150, 150, 25, 0xFF00FF00, 5);\nconst draw2D = Hud.createDraw2D();\ndraw2D.addCustom(circle); // Assuming Draw2D has a method to add custom elements",
+        "// Animated element using matrix transformations\nclass AnimatedText implements RenderElement {\n    constructor(text, x, y, color, zIndex) {\n        this.text = text;\n        this.baseX = x;\n        this.baseY = y;\n        this.color = color;\n        this.zIndex = zIndex || 0;\n        this.animationTime = 0;\n    }\n\n    getZIndex() {\n        return this.zIndex;\n    } \n\n    render(drawContext, mouseX, mouseY, tickDelta) {\n        this.animationTime += tickDelta;\n\n        // Calculate animated values\n        const scale = 1.0 + Math.sin(this.animationTime * 2) * 0.2; // Pulsing scale\n        const rotation = Math.sin(this.animationTime) * 10; // Gentle rotation\n\n        const matrices = drawContext.getMatrices();\n\n        // Apply transformations using the utility method\n        const textWidth = 100; // Approximate text width\n        const textHeight = 20; // Approximate text height\n        this.setupMatrix(matrices, this.baseX, this.baseY, scale, rotation, textWidth, textHeight, true);\n\n        // Render the text at the transformed position\n        drawContext.drawText(RenderElement.mc.textRenderer, this.text, 0, 0, this.color);\n    }\n}\n\n// Create and use the animated text\nconst animatedText = new AnimatedText(\"Pulsing Text\", 200, 100, 0xFFFFFF00, 15);\nconst draw2D = Hud.createDraw2D();\ndraw2D.addCustom(animatedText);\nHud.registerDraw2D(draw2D);"
+      ]
+    },
+    {
+      "name": "setupMatrix",
+      "signature": "setupMatrix(matrices, x, y, scale, rotation)",
+      "returnType": "void",
+      "description": "Applies basic transformations (position, scale, rotation) to the given matrix stack using the element's top-left as the origin for rotation.",
+      "parameters": [
+        {
+          "name": "matrices",
+          "type": "MatrixStack",
+          "description": "The matrix stack to apply transformations to."
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X-coordinate for positioning."
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y-coordinate for positioning."
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scaling factor."
+        },
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "The rotation angle in degrees."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simple positioning and scaling\nsetupMatrix(matrices, x, y, scale, rotation);\n\n// Position at (100, 50), 2x larger, rotated 30 degrees\nsetupMatrix(matrices, 100, 50, 2.0, 30);"
+      ]
+    },
+    {
+      "name": "setupMatrix",
+      "signature": "setupMatrix(matrices, x, y, scale, rotation, width, height, centerRotation)",
+      "returnType": "void",
+      "description": "Applies transformations, optionally rotating around the element's center point, with defined width and height for calculation.",
+      "parameters": [
+        {
+          "name": "matrices",
+          "type": "MatrixStack",
+          "description": "The matrix stack to apply transformations to."
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The X-coordinate for positioning."
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The Y-coordinate for positioning."
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scaling factor."
+        },
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "The rotation angle in degrees."
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": "The width of the element, used for center calculation."
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": "The height of the element, used for center calculation."
+        },
+        {
+          "name": "centerRotation",
+          "type": "boolean",
+          "description": "If true, rotation will be applied around the element's center."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Rotate around element center\nsetupMatrix(matrices, x, y, scale, rotation, width, height, true);\n\n// 100x50 rectangle rotated around its center\nsetupMatrix(matrices, 200, 150, 1.0, 45, 100, 50, true);"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "CustomImage",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.CustomImage",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The CustomImage class provides a powerful way to create and manipulate custom images for use in JSMacros. It allows users to create dynamic images with drawing capabilities, load external images, and use them in HUD elements and other graphical components. The class integrates with Minecraft's texture system and provides both low-level pixel manipulation and high-level drawing operations.",
+  "overview": "The CustomImage class offers comprehensive image manipulation capabilities: Create new images from scratch or load existing image files Draw shapes, text, and other images onto the canvas Manipulate individual pixels with ARGB color format Save created images to files Integration with Minecraft's rendering system for use in HUD elements Extensive drawing operations including lines, rectangles, polygons, and text",
+  "constructors": [
+    {
+      "signature": "new CustomImage(image)",
+      "description": "Creates a new CustomImage from a BufferedImage.",
+      "parameters": [
+        {
+          "name": "image",
+          "type": "BufferedImage",
+          "description": "The BufferedImage to wrap"
+        }
+      ],
+      "examples": [
+        "const bufferedImage = new java.awt.image.BufferedImage(256, 256, java.awt.image.BufferedImage.TYPE_INT_ARGB);\nconst customImage = new CustomImage(bufferedImage);"
+      ]
+    },
+    {
+      "signature": "new CustomImage(image, name)",
+      "description": "Creates a new CustomImage from a BufferedImage with a custom name.",
+      "parameters": [
+        {
+          "name": "image",
+          "type": "BufferedImage",
+          "description": "The BufferedImage to wrap"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Custom name for the image"
+        }
+      ],
+      "examples": [
+        "const bufferedImage = new java.awt.image.BufferedImage(128, 128, java.awt.image.BufferedImage.TYPE_INT_ARGB);\nconst customImage = new CustomImage(bufferedImage, \"myCustomImage\");"
+      ]
+    }
+  ],
+  "methods": []
+}

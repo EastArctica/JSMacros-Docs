@@ -1,0 +1,31 @@
+{
+  "name": "NumberCompareFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.compare.NumberCompareFilter",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "A powerful filter class used to compare numeric values during world scanning operations.",
+  "overview": "This filter supports various comparison operations (greater than, less than, equal to, etc.) and can handle all Java numeric types including integers, longs, floats, doubles, bytes, and shorts. It's commonly used in conjunction with the WorldScanner to filter blocks or entities based on numeric properties like coordinates, hardness, light levels, and other measured values.\n\nThe filter automatically detects the numeric type of the comparison value and uses the appropriate comparison method for optimal performance and accuracy. For floating-point comparisons, it uses fuzzy equality to handle precision issues.",
+  "constructors": [
+    {
+      "signature": "new NumberCompareFilter(operation, compareTo)",
+      "description": "Creates a new NumberCompareFilter with the specified comparison operation and target value.",
+      "parameters": [
+        {
+          "name": "operation",
+          "type": "String",
+          "description": "The comparison operation to perform (\">\", \">=\", \"<\", \"<=\", \"==\", \"!=\")"
+        },
+        {
+          "name": "compareTo",
+          "type": "Object",
+          "description": "The numeric value to compare input values against"
+        }
+      ],
+      "examples": [
+        "const filter = new NumberCompareFilter(\">\", 10);",
+        "// Create a filter that matches numbers greater than 10\nconst greaterThan10 = new NumberCompareFilter(\">\", 10);\n\n// Create a filter that matches numbers less than or equal to 5\nconst lessOrEqual5 = new NumberCompareFilter(\"<=\", 5);\n\n// Create a filter that matches numbers equal to 3.14\nconst equalsPi = new NumberCompareFilter(\"==\", 3.14);\n\n// Create a filter that matches numbers not equal to 0\nconst notZero = new NumberCompareFilter(\"!=\", 0);"
+      ]
+    }
+  ],
+  "methods": []
+}

@@ -1,0 +1,318 @@
+{
+  "name": "Draw2DElement$Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Draw2DElement$Builder",
+  "extends": "RenderElementBuilder<Draw2DElement>",
+  "since": "1.8.4",
+  "description": "The `Draw2DElement$Builder` class is a nested builder within `Draw2DElement` that provides a fluent API for creating and configuring `Draw2DElement` instances.",
+  "overview": "The `Draw2DElement$Builder` class is a nested builder within `Draw2DElement` that provides a fluent API for creating and configuring `Draw2DElement` instances. This builder implements the builder pattern, allowing you to construct complex `Draw2DElement` objects with all their properties set through a chainable, readable API.\n\nThe builder is the recommended way to create `Draw2DElement` instances, as it provides type safety, method chaining, and validation during the construction process. It's typically accessed through parent container methods like `draw2DBuilder()`.",
+  "constructors": [
+    {
+      "signature": "Builder(IDraw2D<?> parent, Draw2D draw2D)",
+      "description": "The builder constructor takes a parent container and a `Draw2D` instance to wrap. In most cases, you won't call this constructor directly - instead, you'll obtain a builder through the parent container's `draw2DBuilder()` method.",
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "IDraw2D<?>",
+          "description": "The parent container that will contain the element"
+        },
+        {
+          "name": "draw2D",
+          "type": "Draw2D",
+          "description": "The `Draw2D` instance to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "x",
+      "signature": "x(int x)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the x-position of the element.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x-coordinate relative to the parent"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .x(100); // Position at x=100"
+      ]
+    },
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "int",
+      "description": "Gets the currently set x-coordinate.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentX = builder.getX();"
+      ]
+    },
+    {
+      "name": "y",
+      "signature": "y(int y)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the y-position of the element.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y-coordinate relative to the parent"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .y(50); // Position at y=50"
+      ]
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "int",
+      "description": "Gets the currently set y-coordinate.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentY = builder.getY();"
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "pos(int x, int y)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets both x and y positions simultaneously.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x-coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y-coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .pos(100, 50); // Position at (100, 50)"
+      ]
+    },
+    {
+      "name": "width",
+      "signature": "width(int width)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the width of the element and creates a fixed-size supplier. Throws `IllegalArgumentException` if width is negative",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the element (must be non-negative)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .width(200); // Set width to 200 pixels"
+      ]
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "int",
+      "description": "Gets the currently set width.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentWidth = builder.getWidth();"
+      ]
+    },
+    {
+      "name": "height",
+      "signature": "height(int height)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the height of the element and creates a fixed-size supplier. Throws `IllegalArgumentException` if height is negative",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The height of the element (must be non-negative)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .height(150); // Set height to 150 pixels"
+      ]
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "int",
+      "description": "Gets the currently set height.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentHeight = builder.getHeight();"
+      ]
+    },
+    {
+      "name": "size",
+      "signature": "size(int width, int height)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Convenience method to set both width and height simultaneously.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The height"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .size(300, 200); // Set size to 300x200 pixels"
+      ]
+    },
+    {
+      "name": "scale",
+      "signature": "scale(double scale)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the scale factor for the element. Scale affects both size and visual appearance. Throws `IllegalArgumentException` if scale is not positive",
+      "parameters": [
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "The scale factor (must be greater than 0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .scale(1.5); // Make element 50% larger"
+      ]
+    },
+    {
+      "name": "getScale",
+      "signature": "getScale()",
+      "returnType": "float",
+      "description": "Gets the currently set scale factor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentScale = builder.getScale();"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(double rotation)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the rotation angle for the element. Positive values rotate clockwise.",
+      "parameters": [
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "The rotation angle in degrees (clockwise)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .rotation(45); // Rotate 45 degrees clockwise"
+      ]
+    },
+    {
+      "name": "getRotation",
+      "signature": "getRotation()",
+      "returnType": "float",
+      "description": "Gets the currently set rotation angle.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentRotation = builder.getRotation();"
+      ]
+    },
+    {
+      "name": "rotateCenter",
+      "signature": "rotateCenter(boolean rotateCenter)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets whether rotation should occur around the element's center point or its origin.",
+      "parameters": [
+        {
+          "name": "rotateCenter",
+          "type": "boolean",
+          "description": "Whether to rotate around the center"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .rotateCenter(true); // Rotate around center"
+      ]
+    },
+    {
+      "name": "isRotatingCenter",
+      "signature": "isRotatingCenter()",
+      "returnType": "boolean",
+      "description": "Gets the current center rotation setting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst centerRotation = builder.isRotatingCenter();"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(int zIndex)",
+      "returnType": "Draw2DElement$Builder",
+      "description": "Sets the z-index for render ordering. Higher values appear on top.",
+      "parameters": [
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "The z-index value for render ordering"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D())\n    .zIndex(5); // Render above elements with lower z-index"
+      ]
+    },
+    {
+      "name": "getZIndex",
+      "signature": "getZIndex()",
+      "returnType": "int",
+      "description": "Gets the currently set z-index.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const builder = hud.draw2DBuilder(Hud.createDraw2D());\nconst currentZIndex = builder.getZIndex();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Draw2DElement",
+      "description": "Creates the `Draw2DElement` with the configured properties but does not add it to the parent container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = hud.draw2DBuilder(Hud.createDraw2D())\n    .x(100)\n    .y(50)\n    .width(200)\n    .height(100)\n    .build(); // Element is created but not added"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Draw2DElement",
+      "description": "Creates the `Draw2DElement` with the configured properties and automatically adds it to the parent container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const element = hud.draw2DBuilder(Hud.createDraw2D())\n    .x(100)\n    .y(50)\n    .width(200)\n    .height(100)\n    .buildAndAdd(); // Element is created and added to parent"
+      ]
+    }
+  ]
+}

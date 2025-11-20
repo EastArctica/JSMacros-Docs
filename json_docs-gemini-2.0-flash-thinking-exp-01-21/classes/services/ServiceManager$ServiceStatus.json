@@ -1,0 +1,10 @@
+{
+  "name": "ServiceStatus",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.service.ServiceManager$ServiceStatus",
+  "extends": null,
+  "since": "JsMacros 1.6.3",
+  "description": "The `ServiceStatus` enum represents the possible states of a service within the JsMacros ServiceManager system. Each status value provides information about both the enabled state and running state of a service, allowing for comprehensive service monitoring and management.",
+  "overview": "The ServiceStatus enum provides a standardized way to track and query the state of services. Services can be independently enabled/disabled (which determines if they should run) and running/stopped (which indicates if they are currently executing). This dual-state system allows for services to be temporarily stopped without being disabled, or to be enabled but not currently running due to errors or manual intervention.",
+  "constructors": [],
+  "methods": []
+}

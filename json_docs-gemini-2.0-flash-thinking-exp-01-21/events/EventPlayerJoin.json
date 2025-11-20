@@ -1,0 +1,20 @@
+{
+  "name": "PlayerJoin",
+  "fullClassName": "EventPlayerJoin",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a player joins the server.",
+  "overview": "Fires when any player joins the server (including yourself on some servers). The UUID field contains the player's unique identifier. The player field provides access to player information. Not cancellable. Useful for welcome messages, player tracking, and moderation.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

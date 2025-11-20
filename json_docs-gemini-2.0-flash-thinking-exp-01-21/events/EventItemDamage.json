@@ -1,0 +1,20 @@
+{
+  "name": "ItemDamage",
+  "fullClassName": "EventItemDamage",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when an item takes damage.",
+  "overview": "This event fires when items with durability take damage, which is common for tools, weapons, and armor. The `damage` field indicates how much durability was lost. It occurs from mining, attacking, taking damage, and similar actions. This event is not cancellable.\n\nThe event payload includes the following properties:\n- `item`: An `ItemStackHelper` object for the item that took damage. This provides access to all item properties like name, damage, durability, enchantments, etc. You can check if it's a tool, weapon, or armor and examine its current state.\n- `damage`: An `int` representing the amount of damage the item took. This represents the durability loss from this specific action. The total damage can be obtained from `event.item.getDamage()`.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

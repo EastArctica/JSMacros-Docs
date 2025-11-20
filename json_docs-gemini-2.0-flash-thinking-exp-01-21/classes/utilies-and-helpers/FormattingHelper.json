@@ -1,0 +1,114 @@
+{
+  "name": "FormattingHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.FormattingHelper",
+  "extends": "BaseHelper<Formatting>",
+  "since": "1.8.4",
+  "description": "The `FormattingHelper` class is a utility wrapper around Minecraft's `Formatting` enum that provides access to text formatting codes for colors and text modifiers. It represents standard Minecraft formatting options like colors (red, blue, green), styles (bold, italic, underline), and special effects (obfuscated, strikethrough) that can be applied to text in chat, HUD elements, and other text displays.",
+  "overview": "This class is typically used with text builders and styling operations to apply consistent formatting to text elements in JSMacros scripts.\n\n## Accessing FormattingHelper\nYou typically get `FormattingHelper` instances from:\n- `StyleHelper.getFormatting()` method\n- Text styling operations\n- Converting raw Minecraft Formatting objects\n\n```javascript\n// Example: Getting formatting from a text style\nconst text = Chat.createTextHelperFromString(\"§cHello World\");\nconst style = text.getStyle();\nconst formatting = style.getFormatting(); // Returns FormattingHelper or null\n\n// Example: Using with TextBuilder\nconst builder = Chat.createTextBuilder();\n// FormattingHelper instances are passed to withFormatting()\n```\n\n## Integration with Other Classes\nThe `FormattingHelper` class is often used in conjunction with:\n\n- **StyleHelper:** For accessing text formatting from styled text\n- **TextHelper:** For working with formatted text content\n- **TextBuilder:** For applying formatting to new text content\n- **Chat:** For logging and displaying formatted text\n\n```javascript\n// Example integration\nconst text = Chat.createTextHelperFromString(\"§4§nUnderlined Dark Red\");\nconst style = text.getStyle();\nconst formatting = style.getFormatting();\n\nif (formatting) {\n    Chat.log(`Text uses ${formatting.getName()} formatting`);\n    Chat.log(`Format code: §${formatting.getCode()}`);\n\n    if (formatting.isModifier()) {\n        Chat.log(\"This is a style modifier\");\n    }\n}\n```\n\n## Important Notes\n\n1. **Color vs Modifier:** Use `isColor()` and `isModifier()` to distinguish between color formatting and text style modifiers.\n\n2. **Code Usage:** The `getCode()` method returns the character used with the paragraph symbol (§) for in-game text formatting.\n\n3. **Color Values:** For color formatting, `getColorValue()` returns the RGB integer value, which can be converted to hex format for display.\n\n4. **Null Checks:** Always check if a `FormattingHelper` instance is `null` before calling methods, as not all text has formatting applied.\n\n5. **Compatibility:** This class is available since JsMacros 1.8.4 for consistent text formatting operations.\n\n6. **Standard Format:** The formatting system follows Minecraft's standard text formatting conventions, ensuring compatibility with vanilla text display.",
+  "constructors": [
+    {
+      "signature": "new FormattingHelper(base)",
+      "description": "Constructs a new FormattingHelper instance wrapping a base Minecraft Formatting object.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "Formatting",
+          "description": "The underlying Minecraft Formatting object."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getColorValue",
+      "signature": "getColorValue()",
+      "returnType": "number",
+      "description": "Returns the RGB integer value of the color if this formatting is a color, otherwise returns 0.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Color Value: 0x${formatting.getColorValue().toString(16)}`);",
+        "const color = formatting.getColorValue();\n        info.push(`RGB: #${color.toString(16).padStart(6, '0').toUpperCase()}`);",
+        "summary += `[RGB: #${formatting.getColorValue().toString(16).padStart(6, '0')}]`;",
+        "return format1.getColorValue() === format2.getColorValue();"
+      ]
+    },
+    {
+      "name": "getColorIndex",
+      "signature": "getColorIndex()",
+      "returnType": "number",
+      "description": "Returns the index of the color (0-15) if this formatting is a color, otherwise returns -1.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "info.push(`Index: ${formatting.getColorIndex()}`);"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "string",
+      "description": "Returns the name of the formatting code (e.g., 'red', 'bold').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Name: ${formatting.getName()}`);",
+        "info.push(`Name: ${formatting.getName()}`);",
+        "if (format1.getName() === format2.getName()) {",
+        "summary += `Color: ${formatting.getName()} `;",
+        "summary += `Modifier: ${formatting.getName()} `;",
+        "Chat.log(`${colorText} - ${formatting.getName()} formatting`);",
+        "Chat.log(`Text uses ${formatting.getName()} formatting`);"
+      ]
+    },
+    {
+      "name": "getCode",
+      "signature": "getCode()",
+      "returnType": "string",
+      "description": "Returns the single-character formatting code (e.g., 'c' for red, 'l' for bold).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Code: §${formatting.getCode()}`);",
+        "info.push(`Code: §${formatting.getCode()}`);",
+        "if (format1.getCode() === format2.getCode()) {",
+        "summary += `(§${formatting.getCode()}) `;",
+        "Chat.log(`Format code: §${formatting.getCode()}`);"
+      ]
+    },
+    {
+      "name": "isColor",
+      "signature": "isColor()",
+      "returnType": "boolean",
+      "description": "Checks if this formatting represents a color code.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Is Color: ${formatting.isColor()}`);",
+        "if (formatting.isColor()) {",
+        "if (format1.isColor() && format2.isColor()) {",
+        "if (formatting && formatting.isColor()) {"
+      ]
+    },
+    {
+      "name": "isModifier",
+      "signature": "isModifier()",
+      "returnType": "boolean",
+      "description": "Checks if this formatting represents a text style modifier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (formatting.isModifier()) {\n        Chat.log(\"This is a style modifier\");\n    }"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of this formatting object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

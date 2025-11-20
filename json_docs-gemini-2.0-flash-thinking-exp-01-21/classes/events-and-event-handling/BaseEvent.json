@@ -1,0 +1,77 @@
+{
+  "name": "BaseEvent",
+  "fullClassName": "BaseEvent",
+  "extends": null,
+  "since": null,
+  "description": "The `BaseEvent` class is the foundational class for all events in JSMacros. Every event that can be listened to or triggered in JSMacros extends this class, providing common functionality for event handling, cancellation, and metadata access.",
+  "overview": "BaseEvent serves as the parent class for all JSMacros events, including game events like `EventTick`, `EventSound`, `EventPlayerJoin`, and many others. It provides essential methods for event management that are available across all event types.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "cancellable",
+      "signature": "cancellable()",
+      "returnType": "boolean",
+      "description": "Determines if the current event can be cancelled",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check if an event is cancellable\nif (event.cancellable()) {\n    Chat.log(\"This event can be cancelled\");\n} else {\n    Chat.log(\"This event cannot be cancelled\");\n}"
+      ]
+    },
+    {
+      "name": "joinable",
+      "signature": "joinable()",
+      "returnType": "boolean",
+      "description": "Determines if the current event is joinable (can be combined with other events)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check if an event is joinable\nif (event.joinable()) {\n    Chat.log(\"This event can be joined with other events\");\n}"
+      ]
+    },
+    {
+      "name": "cancel",
+      "signature": "cancel()",
+      "returnType": "void",
+      "description": "Attempts to cancel the current event",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Cancel a cancellable event\nif (event.cancellable()) {\n    event.cancel();\n    Chat.log(\"Event cancelled successfully\");\n} else {\n    Chat.log(\"Cannot cancel this event\");\n}"
+      ]
+    },
+    {
+      "name": "isCanceled",
+      "signature": "isCanceled()",
+      "returnType": "boolean",
+      "description": "Checks if the current event has been cancelled",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check if event is already cancelled\nif (event.isCanceled()) {\n    Chat.log(\"Event was already cancelled\");\n    return; // Exit early\n}"
+      ]
+    },
+    {
+      "name": "getEventName",
+      "signature": "getEventName()",
+      "returnType": "String",
+      "description": "Returns the name of the event as defined in the `@Event` annotation",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get and use the event name\nconst eventName = event.getEventName();\nChat.log(`Handling event: ${eventName}`);\n\n// Example: Dynamic event handling\nswitch (event.getEventName()) {\n    case \"Sound\":\n        handleSoundEvent(event);\n        break;\n    case \"Tick\":\n        handleTickEvent(event);\n        break;\n    default:\n        Chat.log(`Unknown event: ${eventName}`);\n}"
+      ]
+    },
+    {
+      "name": "trigger",
+      "signature": "trigger()",
+      "returnType": "void",
+      "description": "Manually triggers the event through the current profile",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Manually trigger an event\nevent.trigger();\nChat.log(\"Event triggered manually\");"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,387 @@
+{
+  "name": "LivingEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.LivingEntityHelper<T extends LivingEntity>",
+  "extends": "EntityHelper<T>",
+  "since": null,
+  "description": "Represents a living entity in the world such as mobs, players, and animals. LivingEntityHelper provides access to health, status effects, equipment, and other properties specific to living entities.",
+  "overview": "Instances are typically obtained from entity events, player methods, or by accessing nearby entities. This class extends `EntityHelper` and inherits all methods for position, movement, and general entity properties.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "StatusEffectHelper[]",
+      "description": "Gets a list of active status effects currently applied to the living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "canHaveStatusEffect",
+      "signature": "canHaveStatusEffect(effect: StatusEffectHelper)",
+      "returnType": "boolean",
+      "description": "Checks if the living entity can have the given status effect applied.",
+      "parameters": [
+        {
+          "name": "effect",
+          "type": "StatusEffectHelper",
+          "description": "The status effect to check."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(id: string)",
+      "returnType": "boolean",
+      "description": "Checks if the living entity has a status effect with the specified ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The ID of the status effect to check (e.g., 'minecraft:regeneration')."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(item: ItemStackHelper)",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is holding the specified item in either hand.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStackHelper",
+          "description": "The item stack to check for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMainHand",
+      "signature": "getMainHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack held in the main hand of the living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityEquipment(livingEntity) {\n    Chat.log(`=== Equipment Analysis ===`);\n\n    // Main hand and off hand\n    const mainHand = livingEntity.getMainHand();\n    const offHand = livingEntity.getOffHand();\n\n    if (mainHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n    }\n\n    if (offHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n    }\n\n    // Armor pieces\n    const armor = [\n        { slot: \"Head\", item: livingEntity.getHeadArmor() },\n        { slot: \"Chest\", item: livingEntity.getChestArmor() },\n        { slot: \"Legs\", item: livingEntity.getLegArmor() },\n        { slot: \"Feet\", item: livingEntity.getFootArmor() }\n    ];\n\n    let totalArmorValue = 0;\n    for (const piece of armor) {\n        if (piece.item.getId() !== \"minecraft:air\") {\n            Chat.log(`${piece.slot}: ${piece.item.getName().getString()}`);\n            // Calculate armor value (approximate)\n            if (piece.item.getArmorMaterial()) {\n                totalArmorValue += piece.item.getArmorMaterial().getProtectionAmount(EquipmentSlot.valueOf(piece.item.getType().getEquipmentSlot().toUpperCase()));\n            }\n        }\n    }\n\n    Chat.log(`Total armor protection: ${totalArmorValue}`);\n}",
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "getOffHand",
+      "signature": "getOffHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack held in the off-hand of the living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityEquipment(livingEntity) {\n    Chat.log(`=== Equipment Analysis ===`);\n\n    // Main hand and off hand\n    const mainHand = livingEntity.getMainHand();\n    const offHand = livingEntity.getOffHand();\n\n    if (mainHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n    }\n\n    if (offHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n    }\n\n    // Armor pieces\n    const armor = [\n        { slot: \"Head\", item: livingEntity.getHeadArmor() },\n        { slot: \"Chest\", item: livingEntity.getChestArmor() },\n        { slot: \"Legs\", item: livingEntity.getLegArmor() },\n        { slot: \"Feet\", item: livingEntity.getFootArmor() }\n    ];\n\n    let totalArmorValue = 0;\n    for (const piece of armor) {\n        if (piece.item.getId() !== \"minecraft:air\") {\n            Chat.log(`${piece.slot}: ${piece.item.getName().getString()}`);\n            // Calculate armor value (approximate)\n            if (piece.item.getArmorMaterial()) {\n                totalArmorValue += piece.item.getArmorMaterial().getProtectionAmount(EquipmentSlot.valueOf(piece.item.getType().getEquipmentSlot().toUpperCase()));\n            }\n        }\n    }\n\n    Chat.log(`Total armor protection: ${totalArmorValue}`);\n}"
+      ]
+    },
+    {
+      "name": "getHeadArmor",
+      "signature": "getHeadArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack equipped in the head armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityEquipment(livingEntity) {\n    Chat.log(`=== Equipment Analysis ===`);\n\n    // Main hand and off hand\n    const mainHand = livingEntity.getMainHand();\n    const offHand = livingEntity.getOffHand();\n\n    if (mainHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n    }\n\n    if (offHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n    }\n\n    // Armor pieces\n    const armor = [\n        { slot: \"Head\", item: livingEntity.getHeadArmor() },\n        { slot: \"Chest\", item: livingEntity.getChestArmor() },\n        { slot: \"Legs\", item: livingEntity.getLegArmor() },\n        { slot: \"Feet\", item: livingEntity.getFootArmor() }\n    ];\n\n    let totalArmorValue = 0;\n    for (const piece of armor) {\n        if (piece.item.getId() !== \"minecraft:air\") {\n            Chat.log(`${piece.slot}: ${piece.item.getName().getString()}`);\n            // Calculate armor value (approximate)\n            if (piece.item.getArmorMaterial()) {\n                totalArmorValue += piece.item.getArmorMaterial().getProtectionAmount(EquipmentSlot.valueOf(piece.item.getType().getEquipmentSlot().toUpperCase()));\n            }\n        }\n    }\n\n    Chat.log(`Total armor protection: ${totalArmorValue}`);\n}"
+      ]
+    },
+    {
+      "name": "getChestArmor",
+      "signature": "getChestArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack equipped in the chest armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityEquipment(livingEntity) {\n    Chat.log(`=== Equipment Analysis ===`);\n\n    // Main hand and off hand\n    const mainHand = livingEntity.getMainHand();\n    const offHand = livingEntity.getOffHand();\n\n    if (mainHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n    }\n\n    if (offHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n    }\n\n    // Armor pieces\n    const armor = [\n        { slot: \"Head\", item: livingEntity.getHeadArmor() },\n        { slot: \"Chest\", item: livingEntity.getChestArmor() },\n        { slot: \"Legs\", item: livingEntity.getLegArmor() },\n        { slot: \"Feet\", item: livingEntity.getFootArmor() }\n    ];\n\n    let totalArmorValue = 0;\n    for (const piece of armor) {\n        if (piece.item.getId() !== \"minecraft:air\") {\n            Chat.log(`${piece.slot}: ${piece.item.getName().getString()}`);\n            // Calculate armor value (approximate)\n            if (piece.item.getArmorMaterial()) {\n                totalArmorValue += piece.item.getArmorMaterial().getProtectionAmount(EquipmentSlot.valueOf(piece.item.getType().getEquipmentSlot().toUpperCase()));\n            }\n        }\n    }\n\n    Chat.log(`Total armor protection: ${totalArmorValue}`);\n}"
+      ]
+    },
+    {
+      "name": "getLegArmor",
+      "signature": "getLegArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack equipped in the legs armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityEquipment(livingEntity) {\n    Chat.log(`=== Equipment Analysis ===`);\n\n    // Main hand and off hand\n    const mainHand = livingEntity.getMainHand();\n    const offHand = livingEntity.getOffHand();\n\n    if (mainHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n    }\n\n    if (offHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n    }\n\n    // Armor pieces\n    const armor = [\n        { slot: \"Head\", item: livingEntity.getHeadArmor() },\n        { slot: \"Chest\", item: livingEntity.getChestArmor() },\n        { slot: \"Legs\", item: livingEntity.getLegArmor() },\n        { slot: \"Feet\", item: livingEntity.getFootArmor() }\n    ];\n\n    let totalArmorValue = 0;\n    for (const piece of armor) {\n        if (piece.item.getId() !== \"minecraft:air\") {\n            Chat.log(`${piece.slot}: ${piece.item.getName().getString()}`);\n            // Calculate armor value (approximate)\n            if (piece.item.getArmorMaterial()) {\n                totalArmorValue += piece.item.getArmorMaterial().getProtectionAmount(EquipmentSlot.valueOf(piece.item.getType().getEquipmentSlot().toUpperCase()));\n            }\n        }\n    }\n\n    Chat.log(`Total armor protection: ${totalArmorValue}`);\n}"
+      ]
+    },
+    {
+      "name": "getFootArmor",
+      "signature": "getFootArmor()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack equipped in the feet armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeEntityEquipment(livingEntity) {\n    Chat.log(`=== Equipment Analysis ===`);\n\n    // Main hand and off hand\n    const mainHand = livingEntity.getMainHand();\n    const offHand = livingEntity.getOffHand();\n\n    if (mainHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Main Hand: ${mainHand.getName().getString()} x${mainHand.getCount()}`);\n    }\n\n    if (offHand.getId() !== \"minecraft:air\") {\n        Chat.log(`Off Hand: ${offHand.getName().getString()} x${offHand.getCount()}`);\n    }\n\n    // Armor pieces\n    const armor = [\n        { slot: \"Head\", item: livingEntity.getHeadArmor() },\n        { slot: \"Chest\", item: livingEntity.getChestArmor() },\n        { slot: \"Legs\", item: livingEntity.getLegArmor() },\n        { slot: \"Feet\", item: livingEntity.getFootArmor() }\n    ];\n\n    let totalArmorValue = 0;\n    for (const piece of armor) {\n        if (piece.item.getId() !== \"minecraft:air\") {\n            Chat.log(`${piece.slot}: ${piece.item.getName().getString()}`);\n            // Calculate armor value (approximate)\n            if (piece.item.getArmorMaterial()) {\n                totalArmorValue += piece.item.getArmorMaterial().getProtectionAmount(EquipmentSlot.valueOf(piece.item.getType().getEquipmentSlot().toUpperCase()));\n            }\n        }\n    }\n\n    Chat.log(`Total armor protection: ${totalArmorValue}`);\n}"
+      ]
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "number",
+      "description": "Gets the current health value of the living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function monitorEntityHealth(livingEntity) {\n    const health = livingEntity.getHealth();\n    const maxHealth = livingEntity.getMaxHealth();\n    const absorption = livingEntity.getAbsorptionHealth();\n    const armor = livingEntity.getArmor();\n\n    const healthPercent = (health / maxHealth) * 100;\n    const totalHealth = health + absorption;\n\n    Chat.log(`=== Entity Health Status ===`);\n    Chat.log(`Health: ${health.toFixed(1)}/${maxHealth.toFixed(1)} (${healthPercent.toFixed(1)}%)`);\n    if (absorption > 0) {\n        Chat.log(`Absorption: ${absorption.toFixed(1)}`);\n    }\n    Chat.log(`Total Effective Health: ${totalHealth.toFixed(1)}`);\n    Chat.log(`Armor: ${armor} ( ${(armor * 4).toFixed(0)}% damage reduction )`);\n}",
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "number",
+      "description": "Gets the maximum health value of the living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function monitorEntityHealth(livingEntity) {\n    const health = livingEntity.getHealth();\n    const maxHealth = livingEntity.getMaxHealth();\n    const absorption = livingEntity.getAbsorptionHealth();\n    const armor = livingEntity.getArmor();\n\n    const healthPercent = (health / maxHealth) * 100;\n    const totalHealth = health + absorption;\n\n    Chat.log(`=== Entity Health Status ===`);\n    Chat.log(`Health: ${health.toFixed(1)}/${maxHealth.toFixed(1)} (${healthPercent.toFixed(1)}%)`);\n    if (absorption > 0) {\n        Chat.log(`Absorption: ${absorption.toFixed(1)}`);\n    }\n    Chat.log(`Total Effective Health: ${totalHealth.toFixed(1)}`);\n    Chat.log(`Armor: ${armor} ( ${(armor * 4).toFixed(0)}% damage reduction )`);\n}",
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "number",
+      "description": "Gets the current absorption health value of the living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function monitorEntityHealth(livingEntity) {\n    const health = livingEntity.getHealth();\n    const maxHealth = livingEntity.getMaxHealth();\n    const absorption = livingEntity.getAbsorptionHealth();\n    const armor = livingEntity.getArmor();\n\n    const healthPercent = (health / maxHealth) * 100;\n    const totalHealth = health + absorption;\n\n    Chat.log(`=== Entity Health Status ===`);\n    Chat.log(`Health: ${health.toFixed(1)}/${maxHealth.toFixed(1)} (${healthPercent.toFixed(1)}%)`);\n    if (absorption > 0) {\n        Chat.log(`Absorption: ${absorption.toFixed(1)}`);\n    }\n    Chat.log(`Total Effective Health: ${totalHealth.toFixed(1)}`);\n    Chat.log(`Armor: ${armor} ( ${(armor * 4).toFixed(0)}% damage reduction )`);\n}"
+      ]
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "number",
+      "description": "Gets the total armor points of the living entity from equipped armor.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function monitorEntityHealth(livingEntity) {\n    const health = livingEntity.getHealth();\n    const maxHealth = livingEntity.getMaxHealth();\n    const absorption = livingEntity.getAbsorptionHealth();\n    const armor = livingEntity.getArmor();\n\n    const healthPercent = (health / maxHealth) * 100;\n    const totalHealth = health + absorption;\n\n    Chat.log(`=== Entity Health Status ===`);\n    Chat.log(`Health: ${health.toFixed(1)}/${maxHealth.toFixed(1)} (${healthPercent.toFixed(1)}%)`);\n    if (absorption > 0) {\n        Chat.log(`Absorption: ${absorption.toFixed(1)}`);\n    }\n    Chat.log(`Total Effective Health: ${totalHealth.toFixed(1)}`);\n    Chat.log(`Armor: ${armor} ( ${(armor * 4).toFixed(0)}% damage reduction )`);\n}",
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "getDefaultHealth",
+      "signature": "getDefaultHealth()",
+      "returnType": "number",
+      "description": "Gets the default health value for this type of living entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMobTags",
+      "signature": "getMobTags()",
+      "returnType": "string[]",
+      "description": "Gets a list of data tags associated with the mob, such as 'minecraft:undead'.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isSleeping",
+      "signature": "isSleeping()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is currently sleeping.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isFallFlying",
+      "signature": "isFallFlying()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is currently fall flying (e.g., with an elytra).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isOnGround",
+      "signature": "isOnGround()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is currently on the ground.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "canBreatheInWater",
+      "signature": "canBreatheInWater()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity can breathe underwater.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "hasNoDrag",
+      "signature": "hasNoDrag()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity has no drag applied (e.g., Spectators).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasNoGravity",
+      "signature": "hasNoGravity()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is unaffected by gravity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canTarget",
+      "signature": "canTarget(target: LivingEntityHelper)",
+      "returnType": "boolean",
+      "description": "Checks if this living entity can target another specified living entity.",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "LivingEntityHelper",
+          "description": "The target entity to check against."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canTakeDamage",
+      "signature": "canTakeDamage()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity can currently take damage.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isPartOfGame",
+      "signature": "isPartOfGame()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is part of the game world (not a spectator or debug entity).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSpectator",
+      "signature": "isSpectator()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is currently in spectator mode.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isUndead",
+      "signature": "isUndead()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is of the undead type (e.g., Zombie, Skeleton).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}",
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getBowPullProgress",
+      "signature": "getBowPullProgress()",
+      "returnType": "number",
+      "description": "Gets the progress of bow pulling (0.0 to 1.0) if an item with bow mechanics is being used.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "getItemUseTimeLeft",
+      "signature": "getItemUseTimeLeft()",
+      "returnType": "number",
+      "description": "Gets the remaining use time for the item currently being used.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Checks if the living entity is a baby or juvenile.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function classifyLivingEntity(livingEntity) {\n    const tags = livingEntity.getMobTags();\n    const classification = [];\n\n    // Check various tags to classify the entity\n    if (tags.includes(\"minecraft:undead\")) {\n        classification.push(\"Undead\");\n    }\n    if (tags.includes(\"minecraft:arthropod\")) {\n        classification.push(\"Arthropod\");\n    }\n    if (tags.includes(\"minecraft:illager\")) {\n        classification.push(\"Illager\");\n    }\n    if (livingEntity.isBaby()) {\n        classification.push(\"Baby\");\n    }\n\n    // Environmental abilities\n    if (livingEntity.canBreatheInWater()) {\n        classification.push(\"Aquatic\");\n    }\n    if (livingEntity.isFallFlying()) {\n        classification.push(\"Flying (Elytra)\");\n    }\n\n    // Status\n    const status = [];\n    if (livingEntity.isSleeping()) status.push(\"Sleeping\");\n    if (livingEntity.isOnFire()) status.push(\"On Fire\");\n    if (!livingEntity.isOnGround()) status.push(\"In Air\");\n    if (!livingEntity.canTakeDamage()) status.push(\"Invulnerable\");\n\n    Chat.log(`Entity: ${livingEntity.getName().getString()}`);\n    Chat.log(`Type: ${livingEntity.getType()}`);\n\n    if (classification.length > 0) {\n        Chat.log(`Classification: ${classification.join(\", \")}`);\n    }\n\n    if (status.length > 0) {\n        Chat.log(`Status: ${status.join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(entity: EntityHelper)",
+      "returnType": "boolean",
+      "description": "Checks if the living entity has a direct line of sight to another entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to check visibility against."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "function analyzeCombatThreat(livingEntity) {\n    const player = Player.getPlayer();\n\n    Chat.log(`=== Combat Threat Analysis ===`);\n\n    // Health and armor assessment\n    const healthPercent = (livingEntity.getHealth() / livingEntity.getMaxHealth()) * 100;\n    const armor = livingEntity.getArmor();\n\n    Chat.log(`Health: ${healthPercent.toFixed(1)}%`);\n    Chat.log(`Armor: ${armor} (${(armor * 4).toFixed(0)}% reduction)`);\n\n    // Weapon assessment\n    const mainHand = livingEntity.getMainHand();\n    Chat.log(`Weapon: ${mainHand.getName().getString()}`);\n\n    // Status effects\n    const effects = livingEntity.getStatusEffects();\n    if (effects.length > 0) {\n        Chat.log(\"Active effects:\");\n        for (const effect of effects) {\n            Chat.log(`- ${effect.getEffectId()} ${effect.getAmplifier() > 0 ? `(${effect.getAmplifier()})` : \"\"} for ${effect.getDuration()} ticks`);\n        }\n    }\n\n    // Special characteristics\n    if (livingEntity.isUndead()) {\n        Chat.log(\"⚠️ Undead entity - vulnerable to smite\");\n    }\n\n    // Combat state\n    if (livingEntity.getBowPullProgress() > 0) {\n        Chat.log(`⚠️ Drawing bow: ${(livingEntity.getBowPullProgress() * 100).toFixed(1)}% charged`);\n    }\n\n    // Visibility check\n    const canSeePlayer = livingEntity.canSeeEntity(player);\n    const distance = livingEntity.distanceTo(player);\n\n    Chat.log(`Distance: ${distance.toFixed(1)} blocks`);\n    Chat.log(`Line of sight to player: ${canSeePlayer ? \"Yes\" : \"No\"}`);\n\n    // Threat assessment\n    let threatLevel = \"Low\";\n    if (healthPercent > 80 && armor >= 10) threatLevel = \"High\";\n    else if (healthPercent > 50 && armor >= 5) threatLevel = \"Medium\";\n\n    Chat.log(`Overall threat level: ${threatLevel}`);\n}"
+      ]
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(entity: EntityHelper, simpleCast: boolean)",
+      "returnType": "boolean",
+      "description": "Checks if the living entity has a direct line of sight to another entity, with an option for simplified raycasting.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to check visibility against."
+        },
+        {
+          "name": "simpleCast",
+          "type": "boolean",
+          "description": "If true, uses a simplified raycast for performance."
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

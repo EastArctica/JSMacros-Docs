@@ -1,0 +1,193 @@
+{
+  "name": "FluidStateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.FluidStateHelper",
+  "extends": "StateHelper<FluidState>",
+  "since": "1.8.4",
+  "description": "The `FluidStateHelper` class provides a comprehensive interface for working with fluid states in Minecraft through JSMacros scripts.",
+  "overview": "This class allows you to inspect and manipulate fluid properties, check fluid behavior, and retrieve various attributes about fluid states in the world.\n\nFluid states represent different fluids (water, lava, etc.) and their properties at specific block positions. This helper class extends `StateHelper` and provides access to all fluid-specific functionality.\n\nHow to Access\n\nYou typically obtain `FluidStateHelper` instances from:\n\n1. Block states: Getting fluid information from blocks that contain fluids\n2. World interactions: Querying fluid states at specific positions\n3. Block helper methods: Converting block helpers to their fluid state\n\n```javascript\n// Example: Getting fluid state from a block at player position\nlet playerPos = player.getBlockPos();\nlet block = World.getBlock(playerPos);\nlet fluidState = block.getFluidState();\n\n// Example: From a world position\nlet fluidState = World.getFluidState(x, y, z);\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Returns the unique identifier of the fluid in the format `minecraft:fluid_name`.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let fluidId = fluidState.getId();\nif (fluidId === \"minecraft:water\") {\n    Chat.log(\"This is water!\");\n} else if (fluidId === \"minecraft:lava\") {\n    Chat.log(\"This is lava!\");\n}"
+      ]
+    },
+    {
+      "name": "isStill",
+      "signature": "isStill()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the fluid is in a still state, `false` if it's flowing.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (fluidState.isStill()) {\n    Chat.log(\"Fluid is still - no current\");\n} else {\n    Chat.log(\"Fluid is flowing - be careful!\");\n}"
+      ]
+    },
+    {
+      "name": "isEmpty",
+      "signature": "isEmpty()",
+      "returnType": "boolean",
+      "description": "Returns `true` if this fluid state is empty (represents the default fluid state for non-fluid blocks), `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (fluidState.isEmpty()) {\n    Chat.log(\"No fluid here\");\n} else {\n    Chat.log(\"Fluid present!\");\n}"
+      ]
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "float",
+      "description": "Returns the height of this fluid state. This is useful for determining the fluid level in a block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let height = fluidState.getHeight();\nChat.log(`Fluid height: ${height}`);\nif (height > 0.8) {\n    Chat.log(\"Nearly full block of fluid\");\n}"
+      ]
+    },
+    {
+      "name": "getLevel",
+      "signature": "getLevel()",
+      "returnType": "int",
+      "description": "Returns the fluid level as an integer value. Higher values typically mean more fluid.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let level = fluidState.getLevel();\nChat.log(`Fluid level: ${level}`);\nif (level >= 8) {\n    Chat.log(\"Full fluid source block\");\n} else {\n    Chat.log(`Flowing fluid with level ${level}`);\n}"
+      ]
+    },
+    {
+      "name": "hasRandomTicks",
+      "signature": "hasRandomTicks()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the fluid has random tick logic (currently only used by lava for fire spreading), `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (fluidState.hasRandomTicks()) {\n    Chat.log(\"This fluid has random tick behavior\");\n} else {\n    Chat.log(\"No random ticks for this fluid\");\n}"
+      ]
+    },
+    {
+      "name": "getVelocity",
+      "signature": "getVelocity(BlockPosHelper pos)",
+      "returnType": "Pos3D",
+      "description": "Returns the velocity vector that will be applied to entities at the given position due to fluid flow.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper",
+          "description": "The position in the world to calculate velocity for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "let pos = player.getBlockPos();\nlet velocity = fluidState.getVelocity(pos);\nChat.log(`Fluid velocity: x=${velocity.x}, y=${velocity.y}, z=${velocity.z}`);\n\n// Check if entity will be pushed significantly\nlet speed = Math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2);\nif (speed > 0.1) {\n    Chat.log(\"Strong current detected!\");\n}"
+      ]
+    },
+    {
+      "name": "getBlockState",
+      "signature": "getBlockState()",
+      "returnType": "BlockStateHelper",
+      "description": "Returns the block state associated with this fluid state.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let blockState = fluidState.getBlockState();\nChat.log(`Block ID: ${blockState.getId()}`);\nlet isSolid = blockState.isSolid();"
+      ]
+    },
+    {
+      "name": "getBlastResistance",
+      "signature": "getBlastResistance()",
+      "returnType": "float",
+      "description": "Returns the blast resistance value of this fluid.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let resistance = fluidState.getBlastResistance();\nChat.log(`Blast resistance: ${resistance}`);\nif (resistance > 100) {\n    Chat.log(\"This fluid is highly resistant to explosions\");\n}"
+      ]
+    },
+    {
+      "name": "toMap",
+      "signature": "toMap()",
+      "returnType": "Map<String, String>",
+      "description": "Returns a map of all state properties with their identifiers and values.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let properties = fluidState.toMap();\nfor (let [key, value] of properties) {\n    Chat.log(`Property ${key}: ${value}`);\n}"
+      ]
+    },
+    {
+      "name": "with",
+      "signature": "with(String property, String value)",
+      "returnType": "FluidStateHelper",
+      "description": "Creates a new fluid state with the specified property modified. Note that this returns a new instance and doesn't modify the original.",
+      "parameters": [
+        {
+          "name": "property",
+          "type": "String",
+          "description": "The name of the property to modify"
+        },
+        {
+          "name": "value",
+          "type": "String",
+          "description": "The new value for the property"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "try {\n    // Note: This depends on available properties for the specific fluid\n    let newState = fluidState.with(\"level\", \"8\");\n    Chat.log(\"Created new fluid state with full level\");\n} catch (e) {\n    Chat.log(`Error modifying property: ${e.message}`);\n}"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "FluidState",
+      "description": "Returns the underlying Minecraft FluidState object for advanced usage.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "equals",
+      "signature": "equals(Object obj)",
+      "returnType": "boolean",
+      "description": "Compares this fluid state helper with another object for equality.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code for this fluid state helper.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the fluid state in JSON format showing the fluid ID and properties.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let representation = fluidState.toString();\nChat.log(`Fluid state: ${representation}`);\n// Output might look like: FluidStateHelper:{\"id\": \"minecraft:water\", \"properties\": {\"level\": \"1\"}}"
+      ]
+    }
+  ]
+}

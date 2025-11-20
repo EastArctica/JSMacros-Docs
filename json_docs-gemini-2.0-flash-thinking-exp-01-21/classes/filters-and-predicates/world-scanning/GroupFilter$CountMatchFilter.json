@@ -1,0 +1,121 @@
+{
+  "name": "CountMatchFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.GroupFilter.CountMatchFilter",
+  "extends": "GroupFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `CountMatchFilter` class is a concrete implementation of `GroupFilter` that returns `true` when the number of child filters that match the given object satisfies a numeric comparison condition. This filter provides sophisticated counting logic that goes beyond simple AND/OR operations, allowing you to match based on how many filters pass.\n\nCountMatchFilter is extremely versatile and can be used to find objects that match at least a certain number of criteria, exactly a specific number of criteria, or even objects that are \"similar\" to a target by matching a threshold of characteristics.",
+  "overview": "The CountMatchFilter class provides:\n\n- **Count-based matching**: Matches based on how many child filters return true\n- **Numeric comparison**: Supports all comparison operators (>, <, >=, <=, ==, !=)\n- **Flexible threshold**: Can match based on any count condition\n- **Similarity detection**: Excellent for finding objects that are \"close enough\" to a target\n- **Fluent interface**: Methods return the CountMatchFilter instance for method chaining",
+  "constructors": [
+    {
+      "signature": "new CountMatchFilter(operator, targetCount)",
+      "description": "Creates a new CountMatchFilter with the specified comparison operator and target count.",
+      "parameters": [
+        {
+          "name": "operator",
+          "type": "String",
+          "description": "The comparison operator (\"=\", \"==\", \"!=\", \">\", \">=\", \"<\", \"<=\")"
+        },
+        {
+          "name": "targetCount",
+          "type": "Number",
+          "description": "The target number of matching filters"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "add",
+      "signature": "add(filter)",
+      "returnType": "CountMatchFilter",
+      "description": "Adds a child filter to the group.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to add"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "remove",
+      "signature": "remove(filter)",
+      "returnType": "CountMatchFilter",
+      "description": "Removes a child filter from the group.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFilters",
+      "signature": "getFilters()",
+      "returnType": "ImmutableList<IFilter<T>>",
+      "description": "Returns an immutable list of all child filters.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "test",
+      "signature": "test(object)",
+      "returnType": "boolean",
+      "description": "Tests whether the number of matching child filters satisfies the comparison condition.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to test"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "and",
+      "signature": "and(other)",
+      "returnType": "AndFilter<T>",
+      "description": "Combines this filter with another using AND logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "or",
+      "signature": "or(other)",
+      "returnType": "OrFilter<T>",
+      "description": "Combines this filter with another using OR logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "NotFilter<T>",
+      "description": "Creates a negated version of this filter.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

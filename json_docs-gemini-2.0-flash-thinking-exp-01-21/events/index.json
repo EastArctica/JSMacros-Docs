@@ -1,0 +1,40 @@
+{
+  "name": "Event",
+  "fullClassName": "JsMacros.Event",
+  "extends": null,
+  "since": null,
+  "description": "Base class for all events in JsMacros, providing common properties and methods for event handling.",
+  "overview": "Events in JsMacros enable scripts to react to various game actions and state changes. They are broadly categorized into Player, World, Inventory, Status Effects, Network, and System Events, each encompassing specific game occurrences. Scripts register event handlers using `JsMacros.on(\"EventName\", JavaWrapper.methodToJavaAsync((event) => { /* handle event */ }));`. Event handlers can incorporate filtering logic based on event-specific properties, allowing for targeted responses. Furthermore, certain events support cancellation via `event.cancel()`, which prevents the default game action associated with the event. Individual event documentation provides details on specific properties available for each event type.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getEventName",
+      "signature": "getEventName()",
+      "returnType": "String",
+      "description": "Returns the name of the specific event instance (e.g., 'AttackEntity', 'BlockUpdate').",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "cancel",
+      "signature": "cancel()",
+      "returnType": "void",
+      "description": "Cancels the event, preventing its default action. This method is only effective for events that explicitly support cancellation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"SendMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    JsMacros.assertEvent(event, 'SendMessage');\n\n    // Prevent sending messages with bad words\n    if (event.msg.includes(\"badword\")) {\n        event.cancel();\n        Chat.log(\"Message blocked due to inappropriate content\");\n    }\n}));"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the event object, often useful for debugging.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

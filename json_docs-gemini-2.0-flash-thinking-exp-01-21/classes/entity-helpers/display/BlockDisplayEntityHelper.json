@@ -1,0 +1,22 @@
+{
+  "name": "BlockDisplayEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.display.BlockDisplayEntityHelper",
+  "extends": "DisplayEntityHelper<DisplayEntity.BlockDisplayEntity>",
+  "since": "JSMacros 1.9.1",
+  "description": "The `BlockDisplayEntityHelper` class is a specialized wrapper for Minecraft block display entities (introduced in 1.19.4), providing access to block-specific display properties and functionality. Block display entities are special entities that can display any block state in the world with advanced customization options for positioning, rotation, scaling, and visual effects.",
+  "overview": "This class extends the base `DisplayEntityHelper` with block-specific functionality, allowing scripters to query and interact with blocks being displayed by these entities. Block display entities are commonly used for decorative purposes, custom block models, floating blocks, architectural previews, and dynamic block visualizations.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getBlockState",
+      "signature": "getBlockState()",
+      "returnType": "BlockStateHelper | null",
+      "description": "Returns the current block state that this display entity is showing. The block state contains all information about the block including its type, properties, and variants. Use the returned `BlockStateHelper` to access detailed block information such as the block type, properties, and metadata.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blockState = blockDisplay.getBlockState();\nif (blockState) {\n    const blockName = blockState.getBlock().getName().getString();\n    Chat.log(`Displaying block: ${blockName}`);\n}"
+      ]
+    }
+  ]
+}

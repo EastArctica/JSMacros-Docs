@@ -1,0 +1,96 @@
+{
+  "name": "IAdvancedFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.api.IAdvancedFilter<T>",
+  "extends": [
+    "IFilter<T>",
+    "Function<T, Boolean>"
+  ],
+  "since": "1.6.5",
+  "description": "The `IAdvancedFilter` interface is a crucial component of JSMacros' WorldScanner system that extends the basic `IFilter` interface to provide powerful logical operations for combining filters. This interface enables the creation of complex filtering conditions by allowing filters to be combined using boolean logic operations such as AND, OR, XOR, and NOT.",
+  "overview": "While `IFilter` provides the basic `apply(T t)` method for testing individual objects, `IAdvancedFilter` adds methods for logical composition, making it possible to build sophisticated filtering chains for world scanning operations. This interface is primarily used with the `WorldScanner` system to search for blocks and entities based on multiple criteria.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "apply",
+      "signature": "apply(item: T): boolean",
+      "returnType": "boolean",
+      "description": "Applies the filter logic to a single item and returns `true` if the item matches the filter, `false` otherwise. This method is inherited from the `IFilter<T>` interface.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "T",
+          "description": "The item to be tested against the filter."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const customFilter = {\n    apply: function(item) {\n        // Your custom filtering logic here\n        return someCondition(item);\n    }\n};"
+      ]
+    },
+    {
+      "name": "and",
+      "signature": "and(otherFilter: IAdvancedFilter<T>): IAdvancedFilter<T>",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Combines this filter with another filter using logical AND. Purpose: Requires ALL conditions to be true. Use Case: When you need multiple criteria simultaneously. Evaluation stops at the first false condition (short-circuiting).",
+      "parameters": [
+        {
+          "name": "otherFilter",
+          "type": "IAdvancedFilter<T>",
+          "description": "Another filter to combine with using AND logic."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scannerBuilder = World.getWorldScanner();\nconst storageFilter = scannerBuilder\n    .withStringBlockFilter()\n    .contains(\"chest\", \"barrel\", \"shulker_box\");\nconst accessibleFilter = scannerBuilder\n    .withStateFilter(\"isToolRequired\")\n    .is(false);\nconst valuableStorage = storageFilter.and(accessibleFilter);",
+        "const commonMaterials = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"stone\", \"cobblestone\", \"wood\", \"dirt\");\nconst easyToMine = World.getWorldScanner()\n    .withBlockFilter(\"getHardness\")\n    .is(\"<=\", 2);\nconst notFluid = World.getWorldScanner()\n    .withStateFilter(\"isFluid\")\n    .is(false);\nconst buildingMaterials = commonMaterials\n    .and(easyToMine)\n    .and(notFluid);"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(otherFilter: IAdvancedFilter<T>): IAdvancedFilter<T>",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Combines this filter with another filter using logical OR. Purpose: Requires AT LEAST ONE condition to be true. Use Case: When you want to match multiple types or conditions. Evaluation stops at the first true condition (short-circuiting).",
+      "parameters": [
+        {
+          "name": "otherFilter",
+          "type": "IAdvancedFilter<T>",
+          "description": "Another filter to combine with using OR logic."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const oreFilter = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"diamond_ore\", \"emerald_ore\", \"ancient_debris\");\nconst deepFilter = World.getWorldScanner()\n    .withStateFilter(\"y\")\n    .is(\"<\", 15);\nconst rareFilter = World.getWorldScanner()\n    .withBlockFilter(\"getHardness\")\n    .is(\">\", 20);\nconst complexFilter = oreFilter.and(deepFilter.or(rareFilter));",
+        "const valuableOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"diamond_ore\", \"emerald_ore\");\nconst deep = World.getWorldScanner()\n    .withStateFilter(\"y\")\n    .is(\"<\", 15);\nconst commonOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"gold_ore\", \"iron_ore\");\nconst surface = World.getWorldScanner()\n    .withStateFilter(\"y\")\n    .is(\">=\", 15);\nconst complexFilter = valuableOres.and(deep).or(commonOres.and(surface));"
+      ]
+    },
+    {
+      "name": "xor",
+      "signature": "xor(otherFilter: IAdvancedFilter<T>): IAdvancedFilter<T>",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Combines this filter with another filter using logical XOR. Purpose: Requires EXACTLY ONE condition to be true. Use Case: When you want mutually exclusive conditions. Both conditions must be evaluated to ensure exclusivity (no short-circuiting).",
+      "parameters": [
+        {
+          "name": "otherFilter",
+          "type": "IAdvancedFilter<T>",
+          "description": "Another filter to combine with using XOR logic."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const lightSources = World.getWorldScanner()\n    .withBlockFilter(\"getLuminance\")\n    .is(\">\", 0);\nconst opaqueBlocks = World.getWorldScanner()\n    .withBlockFilter(\"getOpacity\")\n    .is(\">\", 0);\nconst exclusive = lightSources.xor(opaqueBlocks);"
+      ]
+    },
+    {
+      "name": "not",
+      "signature": "not(): IAdvancedFilter<T>",
+      "returnType": "IAdvancedFilter<T>",
+      "description": "Inverts the logic of this filter. Purpose: Inverts the filter logic. Use Case: When you want to exclude certain blocks or conditions. Returns the opposite of the original filter result.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"_ore\");\nconst commonOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"coal_ore\", \"iron_ore\", \"copper_ore\");\nconst rareOres = allOres.and(commonOres.not());",
+        "const deepslateOres = World.getWorldScanner()\n    .withStringBlockFilter()\n    .contains(\"deepslate\");\nconst finalRareOres = rareOres.and(deepslateOres.not());"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "name": "AllMatchFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.GroupFilter.AllMatchFilter",
+  "extends": "GroupFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `AllMatchFilter` class is a concrete implementation of `GroupFilter` that returns `true` only when **all** child filters return `true` for the given object. This filter is essentially a more flexible version of the `AndFilter` that can work with any number of child filters rather than being limited to just two.\n\nAllMatchFilter is perfect for situations where you need to ensure that an object meets multiple criteria simultaneously. Unlike `AndFilter` which short-circuits (stops evaluating as soon as one filter returns false), AllMatchFilter evaluates all child filters to determine the final result.",
+  "overview": "The AllMatchFilter class provides:\n\n- **Multi-condition AND logic**: Requires all filters to return true for a match\n- **Flexible filter count**: Can handle any number of child filters\n- **Fluent interface**: Methods return the AllMatchFilter instance for method chaining\n- **Complete evaluation**: Evaluates all filters even if early ones return false (useful for side effects or debugging)",
+  "constructors": [
+    {
+      "signature": "new AllMatchFilter()",
+      "description": "Creates a new AllMatchFilter with no child filters. Use the `add()` method to add filters to the group.",
+      "parameters": [],
+      "examples": [
+        "const allMatchFilter = new GroupFilter.AllMatchFilter();"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "add",
+      "signature": "add(filter)",
+      "returnType": "AllMatchFilter",
+      "description": "Adds a child filter to the group.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create individual filters\nconst diamondOreFilter = World.getStringBlockFilter().contains(\"diamond_ore\");\nconst deepLevelFilter = World.getBlockFilter(\"getY\").is(\"<\", 16);\nconst exposedFilter = World.getStateFilter(\"isAir\").is(false);\n\n// Create AllMatchFilter and add conditions\nconst perfectDiamondFilter = new GroupFilter.AllMatchFilter();\nperfectDiamondFilter\n    .add(diamondOreFilter)\n    .add(deepLevelFilter)\n    .add(exposedFilter);",
+        "// Create base filter\nconst versatileFilter = new GroupFilter.AllMatchFilter();\n\n// Always add basic condition\nversatileFilter.add(World.getStringBlockFilter().contains(\"ore\"));\n\n// Add conditions based on player level\nconst player = Player.getPlayer();\nif (player && player.experienceLevel > 15) {\n    versatileFilter.add(World.getBlockFilter(\"getY\").is(\"<\", 20));\n}\n\nif (player && player.experienceLevel > 30) {\n    versatileFilter.add(World.getStateFilter(\"exposed\").equals(true));\n}"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "remove(filter)",
+      "returnType": "AllMatchFilter",
+      "description": "Removes a child filter from the group.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to remove"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFilters",
+      "signature": "getFilters()",
+      "returnType": "ImmutableList<IFilter<T>>",
+      "description": "Returns an immutable list of all child filters.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "test",
+      "signature": "test(object)",
+      "returnType": "boolean",
+      "description": "Tests whether the given object matches ALL child filters.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to test"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create individual filters\nconst diamondOreFilter = World.getStringBlockFilter().contains(\"diamond_ore\");\nconst deepLevelFilter = World.getBlockFilter(\"getY\").is(\"<\", 16);\nconst exposedFilter = World.getStateFilter(\"isAir\").is(false);\n\n// Create AllMatchFilter and add conditions\nconst perfectDiamondFilter = new GroupFilter.AllMatchFilter();\nperfectDiamondFilter\n    .add(diamondOreFilter)\n    .add(deepLevelFilter)\n    .add(exposedFilter);\n\n// Use with WorldScanner\nconst scanner = World.getWorldScanner(perfectDiamondFilter);\nconst results = scanner.scanAroundPlayer(3);\n\nChat.log(`Found ${results.length} perfect diamond locations`);"
+      ]
+    },
+    {
+      "name": "and",
+      "signature": "and(other)",
+      "returnType": "AndFilter<T>",
+      "description": "Combines this filter with another using AND logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const andFilter = cheapFilter.and(expensiveFilter); // expensiveFilter never called if cheapFilter returns false"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(other)",
+      "returnType": "OrFilter<T>",
+      "description": "Combines this filter with another using OR logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create sub-filters\nconst metalOres = new GroupFilter.AllMatchFilter();\nmetalOres\n    .add(World.getStringBlockFilter().contains(\"ore\"))\n    .add(World.getStringBlockFilter().contains(\"iron\", \"gold\", \"copper\"));\n\nconst valuableBlocks = new GroupFilter.AllMatchFilter();\nvaluableBlocks\n    .add(World.getStringBlockFilter().contains(\"diamond\", \"emerald\", \"ancient_debris\"))\n    .add(World.getBlockFilter(\"getY\").is(\"<\", 15));\n\n// Combine with other logic\nconst miningTargets = metalOres.or(valuableBlocks);\n\nconst scanner = World.getWorldScanner(miningTargets);\nconst targets = scanner.scanAroundPlayer(5);"
+      ]
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "NotFilter<T>",
+      "description": "Creates a negated version of this filter.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

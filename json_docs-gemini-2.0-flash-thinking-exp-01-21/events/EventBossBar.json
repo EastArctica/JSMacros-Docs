@@ -1,0 +1,18 @@
+{
+  "name": "EventBossbar",
+  "fullClassName": "EventBossbar",
+  "description": "This event is fired when boss bar information is updated.",
+  "overview": "Fires when a boss bar is added, removed, or updated\nThe `bossBar` field will be `null` for \"REMOVE\" events\nThe `type` field indicates what specifically changed about the boss bar\nNot cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ContainerInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.ContainerInventory",
+  "extends": "Inventory<T>",
+  "since": "1.8.4",
+  "description": "The `ContainerInventory` class provides functionality for interacting with general container screens in Minecraft. This includes chests, shulker boxes, hoppers, and other generic storage containers. It extends the base `Inventory` class and adds container-specific functionality while inheriting all standard inventory operations.",
+  "overview": "This class is automatically created when you open a container screen and can be accessed through `Player.getInventory()` or `Inventory.create()` when a container is open.\n\n## Supported Container Types\n\nThe `ContainerInventory` class handles various container types, including:\n- **Chests** (1-9 rows)\n- **Shulker Boxes**\n- **Hoppers**\n- **Generic 3x3 Containers**\n- **Barrels**\n- **Other generic storage containers**",
+  "constructors": [
+    {
+      "signature": "ContainerInventory()",
+      "description": "Creates a new `ContainerInventory` instance for the specified container screen.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "`HandledScreen<T>`",
+          "description": "The container screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

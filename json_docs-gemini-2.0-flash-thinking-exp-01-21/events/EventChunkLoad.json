@@ -1,0 +1,20 @@
+{
+  "name": "EventChunkLoad",
+  "fullClassName": "EventChunkLoad",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a chunk is loaded into the world.",
+  "overview": "Fires when a chunk is loaded by the client. Chunk coordinates are in chunk units (not block coordinates). The `isFull` field indicates if this is a complete chunk load. Not cancellable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

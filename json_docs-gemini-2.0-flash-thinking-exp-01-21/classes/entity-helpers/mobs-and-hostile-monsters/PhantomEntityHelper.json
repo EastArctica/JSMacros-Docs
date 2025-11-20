@@ -1,0 +1,32 @@
+{
+  "name": "PhantomEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.PhantomEntityHelper",
+  "extends": "MobEntityHelper<PhantomEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a phantom entity in the world. PhantomEntityHelper provides access to phantom-specific properties and behaviors such as size variations and attack patterns.",
+  "overview": "Phantom entities are flying hostile mobs that appear in the Overworld after the player hasn't slept for at least three in-game days. They have unique behaviors like circling players, dive-bombing attacks, and varying sizes that affect their health and attack damage. This helper provides access to the specific phantom functionality beyond the general mob behaviors.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, movement, AI control, and other mob properties, while adding phantom-specific functionality for size management and behavior tracking.",
+  "constructors": [
+    {
+      "signature": "PhantomEntityHelper()",
+      "description": "PhantomEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through: Entity-related events (e.g., `EntityDeath`, `EntityInteract`, `EntitySpawn`), World entity queries and type casting, Methods that return phantom entities, Type casting from EntityHelper using `entity.is(\"minecraft:phantom\")` and appropriate casting methods.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getSize",
+      "signature": "getSize(): number",
+      "returnType": "number",
+      "description": "Returns the size of the phantom. The size directly affects the phantom's health, attack damage, and collision box. Size 0 phantoms are the smallest and fastest, while size 4 phantoms are the largest and most dangerous. The phantom's size is determined at creation time and cannot be changed after spawning.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const size = phantom.getSize();",
+        "if (size <= 1) { this.sizeDistribution.small++; } else if (size === 2) { this.sizeDistribution.medium++; } else { this.sizeDistribution.large++; }",
+        "Chat.log(`Size: ${size} (${this.getSizeDescription(size)})`);",
+        "entity.setGlowingColor(colors[entity.asLiving().getSize()]);",
+        "if (spawnData.size <= 1) biomeSizes.small++; else if (spawnData.size === 2) biomeSizes.medium++; else biomeSizes.large++;"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "name": "StyleHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StyleHelper",
+  "extends": "BaseHelper<Style>",
+  "since": "JSMacros 1.6.5",
+  "description": "The `StyleHelper` class is a wrapper for Minecraft's text styling system, providing access to text formatting properties including colors, font styles, click events, and hover effects. It serves as a bridge between JSMacros scripts and Minecraft's internal text styling capabilities.",
+  "overview": "This class is typically obtained from text components through methods like `TextHelper.visit()` or used with `TextBuilder.withStyle()` to apply styling to text elements. StyleHelper instances contain the complete styling information for a text segment, allowing for detailed inspection and manipulation of text appearance.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "hasColor",
+      "signature": "hasColor()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getColorIndex",
+      "signature": "getColorIndex()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getColorValue",
+      "signature": "getColorValue()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getColorName",
+      "signature": "getColorName()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasCustomColor",
+      "signature": "hasCustomColor()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCustomColor",
+      "signature": "getCustomColor()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFormatting",
+      "signature": "getFormatting()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "bold",
+      "signature": "bold()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "italic",
+      "signature": "italic()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "underlined",
+      "signature": "underlined()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "strikethrough",
+      "signature": "strikethrough()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "obfuscated",
+      "signature": "obfuscated()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getClickAction",
+      "signature": "getClickAction()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getClickValue",
+      "signature": "getClickValue()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCustomClickValue",
+      "signature": "getCustomClickValue()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHoverAction",
+      "signature": "getHoverAction()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHoverValue",
+      "signature": "getHoverValue()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInsertion",
+      "signature": "getInsertion()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "OrFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.logical.OrFilter",
+  "extends": "BasicFilter<T>",
+  "since": "JSMacros 1.6.5",
+  "description": "The `OrFilter` class is a logical filter that combines two filters using boolean OR logic. It's part of the WorldScanner filtering system and allows you to create sophisticated filtering conditions where either of the component filters can return `true` for the OrFilter to return `true`. This class is particularly useful when you need to filter blocks or entities based on multiple criteria where any one of the criteria being satisfied is sufficient. For example, finding blocks that are either of a certain type OR have specific properties.",
+  "overview": "The OrFilter implements short-circuit evaluation for performance optimization:\n\n- **Short-circuit OR**: If the first filter returns `true`, the second filter is not evaluated\n- **Generic type support**: Can work with any type `T` that the component filters can handle\n- **Fluent interface**: Inherits `and()`, `or()`, `xor()`, and `not()` methods from BasicFilter for chaining",
+  "constructors": [
+    {
+      "signature": "new OrFilter(filterOne, filterTwo)",
+      "description": "Creates a new OrFilter that combines two filters with OR logic.",
+      "parameters": [
+        {
+          "name": "filterOne",
+          "type": "IFilter<T>",
+          "description": "The first filter to evaluate"
+        },
+        {
+          "name": "filterTwo",
+          "type": "IFilter<T>",
+          "description": "The second filter to evaluate"
+        }
+      ],
+      "examples": [
+        "// Create filters for different ore types\nconst diamondFilter = World.getStringBlockFilter().contains(\"diamond_ore\");\nconst emeraldFilter = World.getStringBlockFilter().contains(\"emerald_ore\");\n\n// Combine with OR logic\nconst valuableOreFilter = new OrFilter(diamondFilter, emeraldFilter);"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "apply",
+      "signature": "apply(obj)",
+      "returnType": "Boolean",
+      "description": "Applies the OR filter logic to an object. Returns `true` if either filter returns `true` for the given object. Note: This method implements short-circuit evaluation - if `filterOne.apply(obj)` returns `true`, `filterTwo.apply(obj)` is never called.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "T",
+          "description": "The object to test against both filters"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const testBlock = World.getBlock(100, 10, 200);\nconst passesFilter = valuableOreFilter.apply(testBlock);\n\nif (passesFilter) {\n    Chat.log(\"Block is either diamond ore OR emerald ore!\");\n}"
+      ]
+    },
+    {
+      "name": "getFilterOne",
+      "signature": "getFilterOne()",
+      "returnType": "IFilter<T>",
+      "description": "Returns the first filter component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const firstFilter = valuableOreFilter.getFilterOne();\nChat.log(`First filter: ${firstFilter.toString()}`);"
+      ]
+    },
+    {
+      "name": "getFilterTwo",
+      "signature": "getFilterTwo()",
+      "returnType": "IFilter<T>",
+      "description": "Returns the second filter component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const secondFilter = valuableOreFilter.getFilterTwo();\nChat.log(`Second filter: ${secondFilter.toString()}`);"
+      ]
+    }
+  ]
+}

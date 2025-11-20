@@ -1,0 +1,213 @@
+{
+  "name": "FiltererBlockUpdate",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.event.filterer.FiltererBlockUpdate",
+  "extends": "EventFilterer",
+  "since": "1.9.1",
+  "description": "The `FiltererBlockUpdate` class is an event filterer specifically designed for filtering `BlockUpdate` events in JSMacros. It allows you to create sophisticated filtering conditions based on block position, type, state, and update type, enabling precise control over when your block update event handlers should execute.",
+  "overview": "FiltererBlockUpdate implements the `EventFilterer` interface and provides a fluent API for building complex filters for block-related events. This filterer is automatically associated with the `BlockUpdate` event through the `@Event` annotation on `EventBlockUpdate`.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "setPos",
+      "signature": "setPos(x, y, z)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets a single block position to filter for.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate",
+          "nullable": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate",
+          "nullable": false
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z coordinate",
+          "nullable": false
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter for updates at a specific block position\nconst filter = new FiltererBlockUpdate()\n    .setPos(100, 64, 200);"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(pos)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets a single block position to filter for using a BlockPosHelper.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "BlockPosHelper | null",
+          "description": "Block position object, or null to clear position filter",
+          "nullable": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Using BlockPosHelper\nconst position = new BlockPosHelper(50, 70, -30);\nconst filter = new FiltererBlockUpdate()\n    .setPos(position);",
+        "// Clear position filter\nconst clearedFilter = new FiltererBlockUpdate()\n    .setPos(null);"
+      ]
+    },
+    {
+      "name": "setArea",
+      "signature": "setArea(x1, y1, z1, x2, y2, z2)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets a cuboid area to filter for using coordinates. The method automatically normalizes coordinates, so corner order doesn't matter.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X coordinate of first corner",
+          "nullable": false
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y coordinate of first corner",
+          "nullable": false
+        },
+        {
+          "name": "z1",
+          "type": "int",
+          "description": "Z coordinate of first corner",
+          "nullable": false
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X coordinate of second corner",
+          "nullable": false
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y coordinate of second corner",
+          "nullable": false
+        },
+        {
+          "name": "z2",
+          "type": "int",
+          "description": "Z coordinate of second corner",
+          "nullable": false
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter for updates within a 10x10x10 area\nconst filter = new FiltererBlockUpdate()\n    .setArea(95, 60, 195, 105, 70, 205);"
+      ]
+    },
+    {
+      "name": "setArea",
+      "signature": "setArea(pos1, pos2)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets a cuboid area to filter for using BlockPosHelper objects.",
+      "parameters": [
+        {
+          "name": "pos1",
+          "type": "BlockPosHelper",
+          "description": "First corner position",
+          "nullable": false
+        },
+        {
+          "name": "pos2",
+          "type": "BlockPosHelper",
+          "description": "Second corner position",
+          "nullable": false
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const corner1 = new BlockPosHelper(0, 0, 0);\nconst corner2 = new BlockPosHelper(16, 256, 16);\nconst filter = new FiltererBlockUpdate()\n    .setArea(corner1, corner2);"
+      ]
+    },
+    {
+      "name": "setBlockId",
+      "signature": "setBlockId(id)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets the block ID to filter for.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String | null",
+          "description": "Block ID in namespace format (e.g., \"minecraft:stone\"), or null to clear",
+          "nullable": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter for stone block updates\nconst filter = new FiltererBlockUpdate()\n    .setBlockId(\"minecraft:stone\");",
+        "// Alternative: omit namespace\nconst filter2 = new FiltererBlockUpdate()\n    .setBlockId(\"stone\");"
+      ]
+    },
+    {
+      "name": "setUpdateType",
+      "signature": "setUpdateType(type)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets the block update type to filter for.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "String | null",
+          "description": "Update type: \"STATE\" for block state changes, \"ENTITY\" for block entity changes, or null to clear",
+          "nullable": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter only for state changes\nconst stateFilter = new FiltererBlockUpdate()\n    .setUpdateType(\"STATE\");",
+        "// Filter only for block entity changes\nconst entityFilter = new FiltererBlockUpdate()\n    .setUpdateType(\"ENTITY\");"
+      ]
+    },
+    {
+      "name": "setBlockStates",
+      "signature": "setBlockStates(states)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets multiple block state properties to filter for.",
+      "parameters": [
+        {
+          "name": "states",
+          "type": "Map<String, String> | null",
+          "description": "Map of property names to values, or null to clear",
+          "nullable": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter for specific chest properties\nconst chestStates = new Map([\n    [\"facing\", \"north\"],\n    [\"type\", \"single\"]\n]);\nconst filter = new FiltererBlockUpdate()\n    .setBlockId(\"minecraft:chest\")\n    .setBlockStates(chestStates);"
+      ]
+    },
+    {
+      "name": "setBlockState",
+      "signature": "setBlockState(property, value)",
+      "returnType": "FiltererBlockUpdate",
+      "description": "Sets a single block state property to filter for.",
+      "parameters": [
+        {
+          "name": "property",
+          "type": "String",
+          "description": "The property name (e.g., \"facing\", \"waterlogged\")",
+          "nullable": false
+        },
+        {
+          "name": "value",
+          "type": "String | null",
+          "description": "The property value, or null to ensure the block doesn't have this property",
+          "nullable": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Filter for doors facing north\nconst filter = new FiltererBlockUpdate()\n    .setBlockId(\"minecraft:oak_door\")\n    .setBlockState(\"facing\", \"north\");",
+        "// Filter for non-waterlogged blocks\nconst dryFilter = new FiltererBlockUpdate()\n    .setBlockState(\"waterlogged\", null);"
+      ]
+    }
+  ]
+}

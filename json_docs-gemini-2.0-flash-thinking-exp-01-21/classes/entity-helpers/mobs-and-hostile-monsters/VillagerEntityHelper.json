@@ -1,0 +1,38 @@
+{
+  "name": "VillagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.VillagerEntityHelper",
+  "extends": "MerchantEntityHelper<VillagerEntity>",
+  "since": "JsMacros 1.6.3",
+  "description": "The `VillagerEntityHelper` class provides specialized access to villager entities in Minecraft, offering methods to interact with villager-specific properties such as profession, level, and style. This class extends `MerchantEntityHelper` and inherits all trading functionality including trade offers, merchant experience, and customer status.",
+  "overview": "This helper is particularly useful for creating scripts that:\n- Analyze villager professions and trading capabilities\n- Monitor villager levels and experience\n- Create automated trading systems based on profession\n- Track village economics and specialized trades\n- Find specific types of villagers for particular trades\n\nYou typically get `VillagerEntityHelper` instances from:\n- Entity events involving villagers\n- World entity searches filtered for villager types\n- Casting from generic EntityHelper instances using type checking",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getProfession",
+      "signature": "getProfession()",
+      "returnType": "String",
+      "description": "Returns the profession of the villager entity, typically as a namespaced ID (e.g., 'minecraft:farmer').",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStyle",
+      "signature": "getStyle()",
+      "returnType": "String",
+      "description": "Returns the style variant of the villager entity, which is biome-specific (e.g., 'desert', 'plains'). This primarily affects visual appearance.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLevel",
+      "signature": "getLevel()",
+      "returnType": "Number",
+      "description": "Returns the current trading level of the villager entity (1-5). Higher levels unlock more and better trades.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

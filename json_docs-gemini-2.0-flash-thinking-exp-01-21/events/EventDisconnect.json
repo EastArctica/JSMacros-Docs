@@ -1,0 +1,20 @@
+{
+  "name": "EventDisconnect",
+  "fullClassName": "EventDisconnect",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player disconnects from a server.",
+  "overview": "- Fires when the player disconnects from any server\n- The `reason` field contains the disconnect message\n- This event fires before returning to the main menu\n- Can be used for cleanup or logging server sessions\n- Not cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "TntEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.TntEntityHelper",
+  "extends": "EntityHelper<TntEntity>",
+  "since": "1.2.0",
+  "description": "The `TntEntityHelper` class is a specialized wrapper for Minecraft TNT entities, providing access to TNT-specific properties and behaviors such as fuse time, explosion power, and priming state.",
+  "overview": "The `TntEntityHelper` class is a specialized wrapper for Minecraft TNT entities, providing access to TNT-specific properties and behaviors such as fuse time, explosion power, and priming state. TNT entities are explosive blocks that can be primed to explode after a countdown period, and this helper class allows scripts to monitor, predict, and interact with TNT explosions for various purposes including building, demolition, mining, and explosive automation.\n\nTNT entities are created when TNT blocks are activated (through fire, redstone, or other means) and exist in the world for a short duration before exploding. This helper provides access to the current fuse time, allowing scripts to predict explosion timing, calculate safe distances, and implement various TNT-related mechanics.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getFuse",
+      "signature": "getFuse()",
+      "returnType": "int",
+      "description": "Gets the remaining time before the TNT explodes, measured in Minecraft ticks (20 ticks = 1 second). When this reaches 0, the TNT will explode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Find nearby TNT and check fuse times\nconst player = Player.getPlayer();\nconst tntEntities = World.getEntities().filter(entity => entity.is(\"minecraft:tnt\"));\n\ntntEntities.forEach(entity => {\n    const distance = player.distanceTo(entity);\n    if (distance <= 50) {\n        const tnt = entity.asTnt();\n        const fuse = tnt.getFuse();\n        const secondsUntilExplosion = fuse / 20;\n\n        Chat.log(`TNT at ${distance.toFixed(1)} blocks - explodes in ${secondsUntilExplosion}s`);\n    }\n});"
+      ]
+    },
+    {
+      "name": "setFuse",
+      "signature": "setFuse(fuse)",
+      "returnType": "void",
+      "description": "Sets the remaining fuse time for the TNT. Can be used to extend or reduce the time until explosion.",
+      "parameters": [
+        {
+          "name": "fuse",
+          "type": "int",
+          "description": "New fuse time in ticks"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Extend fuse time of nearby TNT for safety\nconst player = Player.getPlayer();\nconst tntEntities = World.getEntities().filter(entity => entity.is(\"minecraft:tnt\"));\n\ntntEntities.forEach(entity => {\n    const distance = player.distanceTo(entity);\n    if (distance <= 10) {\n        const tnt = entity.asTnt();\n        const currentFuse = tnt.getFuse();\n\n        if (currentFuse < 40) { // Less than 2 seconds\n            tnt.setFuse(60); // Extend to 3 seconds\n            Chat.log(`Extended TNT fuse to 3 seconds for safety`);\n        }\n    }\n});"
+      ]
+    },
+    {
+      "name": "getPrimed",
+      "signature": "getPrimed()",
+      "returnType": "boolean",
+      "description": "Checks if the TNT entity is currently primed and will explode when the fuse reaches zero.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor primed TNT\nconst tnt = entity.asTnt();\nif (tnt.getPrimed()) {\n    const fuse = tnt.getFuse();\n    Chat.log(`Primed TNT with ${fuse} ticks remaining`);\n} else {\n    Chat.log(\"TNT is not primed\");\n}"
+      ]
+    }
+  ]
+}

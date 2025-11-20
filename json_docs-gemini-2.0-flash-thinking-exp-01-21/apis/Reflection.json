@@ -1,0 +1,464 @@
+[
+  {
+    "name": "Reflection",
+    "fullClassName": "Reflection",
+    "extends": null,
+    "since": null,
+    "description": "Advanced functions for interacting with raw Java classes, methods, and fields. This is a powerful library for deep integration with Minecraft and Java. Accessible from scripts via the global `Reflection` variable.",
+    "overview": "Warning: This is an advanced library. Misuse can easily lead to script errors or game crashes. A basic understanding of Java Reflection is recommended.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "getClass",
+        "signature": "Reflection.getClass(name: string, name2?: string)",
+        "returnType": "java.lang.Class<T>",
+        "description": "Gets a `java.lang.Class` object from its fully qualified name. This is the starting point for most reflection operations.",
+        "parameters": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The fully qualified name of the class (e.g., \"java.util.ArrayList\"). This can be an intermediary name for Minecraft classes."
+          },
+          {
+            "name": "name2",
+            "type": "string",
+            "description": "An alternative (e.g., Yarn mapped) name for the class. JsMacros will try `name` first, then `name2`."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "// Get a standard Java class\nconst StringClass = Reflection.getClass(\"java.lang.String\");",
+          "// Get a Minecraft class using mappings for cross-version compatibility\n// On 1.16.5, this will resolve \"net.minecraft.class_2248\"\n// On 1.17+, this will resolve \"net.minecraft.block.Block\"\nconst BlockClass = Reflection.getClass(\"net.minecraft.class_2248\", \"net.minecraft.block.Block\");",
+          "// Get a primitive type class\nconst intClass = Reflection.getClass(\"int\");"
+        ]
+      },
+      {
+        "name": "getDeclaredMethod",
+        "signature": "Reflection.getDeclaredMethod(c: java.lang.Class<?>, name: string, name2?: string, parameterTypes: java.lang.Class<?>[])",
+        "returnType": "java.lang.reflect.Method",
+        "description": "Gets a `java.lang.reflect.Method` object from a class, including private, protected, and package-private methods. This does **not** search superclasses.",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "java.lang.Class<?>",
+            "description": "The class to search within."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name of the method (can be intermediary)."
+          },
+          {
+            "name": "name2",
+            "type": "string",
+            "description": "An alternative (Yarn) name for the method."
+          },
+          {
+            "name": "parameterTypes",
+            "type": "java.lang.Class<?>[]",
+            "description": "An array of class objects representing the method's parameter types."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const StringClass = Reflection.getClass(\"java.lang.String\");\nconst intClass = Reflection.getClass(\"int\");\n// Get the method: public String substring(int beginIndex)\nconst substringMethod = Reflection.getDeclaredMethod(StringClass, \"substring\", [intClass]);"
+        ]
+      },
+      {
+        "name": "getMethod",
+        "signature": "Reflection.getMethod(c: java.lang.Class<?>, name: string, name2?: string, parameterTypes: java.lang.Class<?>[])",
+        "returnType": "java.lang.reflect.Method",
+        "description": "Gets a `public` `java.lang.reflect.Method` object from a class. This **does** search superclasses and interfaces.",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "java.lang.Class<?>",
+            "description": "The class to search within."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name of the method (can be intermediary)."
+          },
+          {
+            "name": "name2",
+            "type": "string",
+            "description": "An alternative (Yarn) name for the method."
+          },
+          {
+            "name": "parameterTypes",
+            "type": "java.lang.Class<?>[]",
+            "description": "An array of class objects representing the method's parameter types."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "getDeclaredField",
+        "signature": "Reflection.getDeclaredField(c: java.lang.Class<?>, name: string, name2?: string)",
+        "returnType": "java.lang.reflect.Field",
+        "description": "Gets a `java.lang.reflect.Field` object from a class, including private fields. This does **not** search superclasses.",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "java.lang.Class<?>",
+            "description": "The class to search within."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name of the field (can be intermediary)."
+          },
+          {
+            "name": "name2",
+            "type": "string",
+            "description": "An alternative (Yarn) name for the field."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const mc = Client.getMinecraft();\nconst MinecraftClientClass = mc.getClass();\n// Get the \"player\" field from the MinecraftClient instance\nconst playerField = Reflection.getDeclaredField(MinecraftClientClass, \"field_1724\", \"player\");\nplayerField.setAccessible(true); // Make private fields accessible\nconst player = playerField.get(mc);"
+        ]
+      },
+      {
+        "name": "getField",
+        "signature": "Reflection.getField(c: java.lang.Class<?>, name: string, name2?: string)",
+        "returnType": "java.lang.reflect.Field",
+        "description": "Gets a `public` `java.lang.reflect.Field` object from a class. This **does** search superclasses.",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "java.lang.Class<?>",
+            "description": "The class to search within."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name of the field (can be intermediary)."
+          },
+          {
+            "name": "name2",
+            "type": "string",
+            "description": "An alternative (Yarn) name for the field."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "invokeMethod",
+        "signature": "Reflection.invokeMethod(m: java.lang.reflect.Method, c: any, objects: any[])",
+        "returnType": "any",
+        "description": "Invokes a method on an object with the given parameters.",
+        "parameters": [
+          {
+            "name": "m",
+            "type": "java.lang.reflect.Method",
+            "description": "The method to invoke."
+          },
+          {
+            "name": "c",
+            "type": "any",
+            "description": "The object instance to invoke the method on. Use `null` for static methods."
+          },
+          {
+            "name": "objects",
+            "type": "any[]",
+            "description": "An array of arguments to pass to the method."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const substringMethod = Reflection.getDeclaredMethod(Reflection.getClass(\"java.lang.String\"), \"substring\", [Reflection.getClass(\"int\")]);\nconst result = Reflection.invokeMethod(substringMethod, \"Hello World\", [6]);\nChat.log(result); // \"World\""
+        ]
+      },
+      {
+        "name": "newInstance",
+        "signature": "Reflection.newInstance(c: java.lang.Class<T>, objects: any[])",
+        "returnType": "T",
+        "description": "Creates a new instance of a class by calling its constructor.",
+        "parameters": [
+          {
+            "name": "c",
+            "type": "java.lang.Class<T>",
+            "description": "The class to instantiate."
+          },
+          {
+            "name": "objects",
+            "type": "any[]",
+            "description": "An array of arguments to pass to the constructor."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const FileClass = Reflection.getClass(\"java.io.File\");\nconst file = Reflection.newInstance(FileClass, [\"my_file.txt\"]);\nChat.log(`File exists: ${file.exists()}`);"
+        ]
+      },
+      {
+        "name": "createClassProxyBuilder",
+        "signature": "Reflection.createClassProxyBuilder(clazz: java.lang.Class<T>, interfaces: java.lang.Class<?>[])",
+        "returnType": "ProxyBuilder<T>",
+        "description": "Creates a builder to proxy or extend a Java class or interface from within the script. This allows you to implement Java interfaces or override class methods using script functions.",
+        "parameters": [
+          {
+            "name": "clazz",
+            "type": "java.lang.Class<T>",
+            "description": "The class to extend. Use `null` if you are only implementing interfaces."
+          },
+          {
+            "name": "interfaces",
+            "type": "java.lang.Class<?>[]",
+            "description": "An array of interfaces to implement."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const Runnable = Reflection.getClass(\"java.lang.Runnable\");\nconst builder = Reflection.createClassProxyBuilder(null, [Runnable]);\n\nbuilder.addMethod(\"run\", JavaWrapper.methodToJava(() => {\n    Chat.log(\"Hello from a proxied Runnable!\");\n}));\n\nconst runnableInstance = builder.build();\nconst Thread = Reflection.getClass(\"java.lang.Thread\");\nconst thread = new Thread(runnableInstance);\nthread.start();"
+        ]
+      },
+      {
+        "name": "createClassBuilder",
+        "signature": "Reflection.createClassBuilder(cName: string, clazz: java.lang.Class<T>, interfaces: java.lang.Class<?>[])",
+        "returnType": "ClassBuilder<T>",
+        "description": "A more advanced version of the proxy builder that uses bytecode generation to create an entirely new Java class at runtime.",
+        "parameters": [
+          {
+            "name": "cName",
+            "type": "string",
+            "description": "The fully qualified name for the new class."
+          },
+          {
+            "name": "clazz",
+            "type": "java.lang.Class<T>",
+            "description": "The class to extend."
+          },
+          {
+            "name": "interfaces",
+            "type": "java.lang.Class<?>[]",
+            "description": "An array of interfaces to implement."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "getClassFromClassBuilderResult",
+        "signature": "Reflection.getClassFromClassBuilderResult(cName: string)",
+        "returnType": "java.lang.Class<?>",
+        "description": "Retrieves the `Class` object for a class previously created with `createClassBuilder`.",
+        "parameters": [
+          {
+            "name": "cName",
+            "type": "string",
+            "description": "The name of the class that was built."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "createLibraryBuilder",
+        "signature": "Reflection.createLibraryBuilder(name: string, perExec: boolean, acceptedLangs: string[])",
+        "returnType": "LibraryBuilder",
+        "description": "Creates a builder for defining a new custom library that can be accessed by scripts.",
+        "parameters": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name scripts will use to access the library (e.g., `MyLib`)."
+          },
+          {
+            "name": "perExec",
+            "type": "boolean",
+            "description": "Whether the library instance is shared or unique to each script execution."
+          },
+          {
+            "name": "acceptedLangs",
+            "type": "string[]",
+            "description": "An array of language names that can use this library."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "createLibrary",
+        "signature": "Reflection.createLibrary(className: string, javaCode: string)",
+        "returnType": "void",
+        "description": "Compiles and registers a custom library from a string of Java code. The class must extend a `BaseLibrary` type and have a `@Library` annotation.",
+        "parameters": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "The fully qualified name of the class."
+          },
+          {
+            "name": "javaCode",
+            "type": "string",
+            "description": "The Java source code for the library."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "compileJavaClass",
+        "signature": "Reflection.compileJavaClass(className: string, code: string)",
+        "returnType": "java.lang.Class<?>",
+        "description": "Compiles a string of Java code into a `Class` object at runtime.",
+        "parameters": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "The fully qualified name of the class being compiled."
+          },
+          {
+            "name": "code",
+            "type": "string",
+            "description": "The Java source code."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const code = `\n    package custom;\n    public class Greeter {\n        public String getGreeting() {\n            return \"Hello from a runtime-compiled class!\";\n        }\n    }\n`;\nconst GreeterClass = Reflection.compileJavaClass(\"custom.Greeter\", code);\nconst greeter = GreeterClass.newInstance();\nChat.log(greeter.getGreeting());"
+        ]
+      },
+      {
+        "name": "getCompiledJavaClass",
+        "signature": "Reflection.getCompiledJavaClass(className: string)",
+        "returnType": "java.lang.Class<?> | null",
+        "description": "Retrieves the most recently compiled version of a class by its name.",
+        "parameters": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "The fully qualified name of the class."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "getAllCompiledJavaClassVersions",
+        "signature": "Reflection.getAllCompiledJavaClassVersions(className: string)",
+        "returnType": "java.util.List<java.lang.Class<?>>",
+        "description": "Retrieves all compiled versions of a class, in the order they were compiled.",
+        "parameters": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "The fully qualified name of the class."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "getReflect",
+        "signature": "Reflection.getReflect(obj: any)",
+        "returnType": "org.jooq.lambda.Reflect",
+        "description": "Wraps an object in a jOOR `Reflect` object, which provides a fluent API for reflection.",
+        "parameters": [
+          {
+            "name": "obj",
+            "type": "any",
+            "description": "The object to wrap."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const text = \"hello world\";\nconst reflected = Reflection.getReflect(text)\n    .call(\"substring\", 6)\n    .call(\"toUpperCase\")\n    .get();\nChat.log(reflected); // \"WORLD\""
+        ]
+      },
+      {
+        "name": "loadJarFile",
+        "signature": "Reflection.loadJarFile(file: string)",
+        "returnType": "boolean",
+        "description": "Loads a `.jar` file into the script's classpath, making its classes available to `Reflection.getClass()`.",
+        "parameters": [
+          {
+            "name": "file",
+            "type": "string",
+            "description": "The path to the jar file, relative to the script's folder."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const success = Reflection.loadJarFile(\"libs/my-java-library.jar\");\nif (success) {\n    const MyClass = Reflection.getClass(\"com.example.MyClass\");\n}"
+        ]
+      },
+      {
+        "name": "loadCurrentMappingHelper",
+        "signature": "Reflection.loadCurrentMappingHelper()",
+        "returnType": "Mappings",
+        "description": "Gets the currently loaded mapping helper, if any.",
+        "parameters": [],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "getClassName",
+        "signature": "Reflection.getClassName(o: any)",
+        "returnType": "string",
+        "description": "Gets the fully qualified name of an object's class.",
+        "parameters": [
+          {
+            "name": "o",
+            "type": "any",
+            "description": "The object to inspect."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const mc = Client.getMinecraft();\nconst className = Reflection.getClassName(mc);\nChat.log(className); // e.g., \"net.minecraft.class_310\""
+        ]
+      },
+      {
+        "name": "loadMappingHelper",
+        "signature": "Reflection.loadMappingHelper(urlorfile: string)",
+        "returnType": "Mappings",
+        "description": "Loads a Yarn mapping file (from a URL or local file) to enable the use of official class/method/field names instead of intermediary names.",
+        "parameters": [
+          {
+            "name": "urlorfile",
+            "type": "string",
+            "description": "A URL or file path to a Yarn mappings JAR or `.tiny` file."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "wrapInstace",
+        "signature": "Reflection.wrapInstace(instance: T)",
+        "returnType": "WrappedClassInstance<T>",
+        "description": "Wraps a Java instance for use with proxy/builder classes. An advanced feature.",
+        "parameters": [
+          {
+            "name": "instance",
+            "type": "T",
+            "description": "The instance to wrap."
+          }
+        ],
+        "static": true,
+        "examples": []
+      },
+      {
+        "name": "getWrappedClass",
+        "signature": "Reflection.getWrappedClass(className: string)",
+        "returnType": "WrappedClassInstance<?>",
+        "description": "Gets a wrapped class by its name. An advanced feature.",
+        "parameters": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "The name of the class."
+          }
+        ],
+        "static": true,
+        "examples": []
+      }
+    ]
+  }
+]

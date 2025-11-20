@@ -1,0 +1,117 @@
+{
+  "name": "PerExecLanguageLibrary",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.PerExecLanguageLibrary",
+  "extends": "BaseLibrary",
+  "since": "1.0.0",
+  "description": "A base abstract class for per-execution, per-language libraries in JsMacros. This class serves as the foundation for creating library implementations that are specific to both a particular script execution context and a particular language implementation.",
+  "overview": "The `PerExecLanguageLibrary` combines the characteristics of both per-execution and per-language libraries, meaning that a new instance is created for each script execution and each language type that supports it. This provides maximum isolation and language-specific functionality while still being tied to individual script contexts.\n\nThis class is part of JsMacros' library system architecture, which includes four main library types:\n- `BaseLibrary` - Base class for all libraries\n- `PerExecLibrary` - Libraries with one instance per script execution\n- `PerLanguageLibrary` - Libraries with one instance per language type\n- `PerExecLanguageLibrary` - Libraries with one instance per execution AND per language\n\n## Class Purpose\n\nThe `PerExecLanguageLibrary` is designed for libraries that need:\n\n1. **Execution Context Access**: Access to the specific script context (`T`) in which they are running\n2. **Language Integration**: Knowledge of the specific language implementation (`Class<? extends BaseLanguage<U, T>>`) being used\n3. **Instance Isolation**: A fresh instance for each script execution to prevent state contamination\n4. **Language-Specific Behavior**: Different implementations or behavior based on the language being used\n\n## Library System Architecture\n\n### Library Types Comparison\n\n| Library Type | Instance Scope | Use Cases | Examples |\n| ------------ | -------------- | --------- | --------- |\n| `BaseLibrary` | Global (single instance) | Stateless utilities, constant data | - |\n| `PerExecLibrary` | Per script execution | Script-specific state, context-bound operations | - |\n| `PerLanguageLibrary` | Per language type | Language-specific optimizations, language bindings | - |\n| `PerExecLanguageLibrary` | Per execution + per language | Maximum isolation, language-specific behavior per execution | `JavaWrapper/FWrapper` |\n\n### Registration and Instantiation\n\nLibraries extending `PerExecLanguageLibrary` are automatically discovered and registered through the `@Library` annotation:\n\n```java\n@Library(value = \"MyLibrary\", languages = GraalLanguageDefinition.class)\npublic class MyPerExecLanguageLibrary extends PerExecLanguageLibrary<Context, GraalScriptContext> {\n    public MyPerExecLanguageLibrary(GraalScriptContext context, Class<? extends BaseLanguage<Context, GraalScriptContext>> language) {\n        super(context, language);\n    }\n\n    // Library methods...\n}\n```\n\nThe library system automatically:\n1. Discovers classes with the `@Library` annotation\n2. Identifies them as `PerExecLanguageLibrary` implementations\n3. Maps them to the specified language types\n4. Creates new instances for each script execution using those languages",
+  "constructors": [
+    {
+      "signature": "PerExecLanguageLibrary(context, language)",
+      "description": "This constructor is used internally by JsMacros' library system and should not be called directly from scripts. Instances of `PerExecLanguageLibrary` subclasses are automatically created by the `LibraryRegistry` when a script requires them.",
+      "parameters": [
+        {
+          "name": "context",
+          "type": "`T extends BaseScriptContext<U>`",
+          "description": "The script execution context this library belongs to"
+        },
+        {
+          "name": "language",
+          "type": "`Class<? extends BaseLanguage<U, T>>`",
+          "description": "The language class this library is associated with"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "languageSpecificOperation",
+      "signature": "public void languageSpecificOperation()",
+      "returnType": "void",
+      "description": "Performs language-specific operations by accessing both the script execution context and the language class. It logs information about the running language operation from the script file.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public void languageSpecificOperation() {\n        // Access context for script-specific data\n        BaseEvent triggeringEvent = ctx.triggeringEvent;\n        File scriptFile = ctx.mainFile;\n\n        // Access language class for language-specific behavior\n        String languageName = language.getSimpleName();\n\n        // Perform operations that require both context and language knowledge\n        Chat.log(`Running ${languageName} operation from script: ${scriptFile.getName()}`);\n    }"
+      ]
+    },
+    {
+      "name": "storeScriptData",
+      "signature": "public void storeScriptData(String key, Object value)",
+      "returnType": "void",
+      "description": "Stores data in the script context for the current execution, allowing for script-specific state management.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key under which to store the value."
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "description": "The value to be stored."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void storeScriptData(String key, Object value) {\n        // Store data in the script context for this execution\n        ctx.context.getBindings(\"js\").putMember(key, value);\n    }"
+      ]
+    },
+    {
+      "name": "processData",
+      "signature": "public Object processData(Object data)",
+      "returnType": "Object",
+      "description": "Processes data, applying different handling or optimizations based on the specific language implementation associated with this library instance.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "Object",
+          "description": "The data to be processed."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public Object processData(Object data) {\n    // Different handling based on language\n    if (language == GraalLanguageDefinition.class) {\n        // GraalJS-specific optimization\n        return graalOptimization(data);\n    } else if (language == JythonLanguageDefinition.class) {\n        // Python-specific optimization\n        return pythonOptimization(data);\n    } else {\n        // Generic handling\n        return genericOptimization(data);\n    }\n}"
+      ]
+    },
+    {
+      "name": "methodToJava",
+      "signature": "<A, B, R> MethodWrapper<A, B, R, GraalScriptContext> methodToJava(Value c)",
+      "returnType": "<A, B, R> MethodWrapper<A, B, R, GraalScriptContext>",
+      "description": "Provides language-specific method wrapping for GraalJS Value objects, converting them into a `MethodWrapper` suitable for Java interaction.",
+      "parameters": [
+        {
+          "name": "c",
+          "type": "Value",
+          "description": "The GraalJS `Value` object to be wrapped."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "@Override\n    public <A, B, R> MethodWrapper<A, B, R, GraalScriptContext> methodToJava(Value c) {\n        // Language-specific method wrapping for GraalJS Value objects\n        return new JSMethodWrapper<>(c, true, 5);\n    }"
+      ]
+    },
+    {
+      "name": "deferCurrentTask",
+      "signature": "public void deferCurrentTask() throws InterruptedException",
+      "returnType": "void",
+      "description": "Defers the current script task using the context-specific task deferring mechanism, potentially blocking the current thread.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "@Override\n    public void deferCurrentTask() throws InterruptedException {\n        // Context-specific task deferring\n        ctx.wrapSleep(() -> {});\n    }"
+      ]
+    },
+    {
+      "name": "stop",
+      "signature": "public void stop()",
+      "returnType": "void",
+      "description": "Performs context-specific cleanup operations when the script execution is stopped, such as closing the script context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "@Override\n    public void stop() {\n        // Context-specific cleanup\n        ctx.closeContext();\n    }"
+      ]
+    }
+  ]
+}

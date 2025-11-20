@@ -1,0 +1,287 @@
+{
+  "name": "EnchantmentHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.EnchantmentHelper",
+  "since": "1.8.4",
+  "description": "The EnchantmentHelper class provides a comprehensive interface for working with Minecraft enchantments in JSMacros scripts.",
+  "overview": "It allows you to access enchantment properties, check compatibility, generate formatted names, and interact with the enchantment system. This class is essential for any script that needs to work with enchanted items, enchantment tables, or custom enchantment logic.",
+  "constructors": [
+    {
+      "signature": "EnchantmentHelper(String id)",
+      "description": "Creates an EnchantmentHelper instance from an enchantment ID. The `minecraft:` namespace is optional.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The enchantment ID (e.g., 'sharpness' or 'minecraft:sharpness')"
+        }
+      ]
+    },
+    {
+      "signature": "EnchantmentHelper(String id, int level)",
+      "description": "Creates an EnchantmentHelper instance from an enchantment ID and a specific level. This level will be returned by getLevel().",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The enchantment ID"
+        },
+        {
+          "name": "level",
+          "type": "int",
+          "description": "The level of the enchantment"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getLevel",
+      "signature": "getLevel()",
+      "returnType": "int",
+      "description": "Gets the level value stored in this EnchantmentHelper instance. Note that this may be 0 if the helper was created without specifying a level.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\", 3);\nChat.log(`Level: ${sharpness.getLevel()}`); // Output: Level: 3"
+      ]
+    },
+    {
+      "name": "getMinLevel",
+      "signature": "getMinLevel()",
+      "returnType": "int",
+      "description": "Gets the lowest level that this enchantment can have in normal gameplay.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nChat.log(`Min level: ${sharpness.getMinLevel()}`); // Output: Min level: 1"
+      ]
+    },
+    {
+      "name": "getMaxLevel",
+      "signature": "getMaxLevel()",
+      "returnType": "int",
+      "description": "Gets the highest level that this enchantment can have in normal gameplay.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nChat.log(`Max level: ${sharpness.getMaxLevel()}`); // Output: Max level: 5"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Gets the localized name of the enchantment in the current language.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nChat.log(`Name: ${sharpness.getName()}`); // Output: Name: Sharpness"
+      ]
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Gets the unique identifier for this enchantment.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nChat.log(`ID: ${sharpness.getId()}`); // Output: ID: minecraft:sharpness"
+      ]
+    },
+    {
+      "name": "getWeight",
+      "signature": "getWeight()",
+      "returnType": "int",
+      "description": "Gets the weight value that determines how likely this enchantment is to be selected in enchanting tables and loot tables. Higher values mean more common.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst curse = new EnchantmentHelper(\"minecraft:vanishing_curse\");\n\nChat.log(`Sharpness weight: ${sharpness.getWeight()}`);\nChat.log(`Curse weight: ${curse.getWeight()}`);"
+      ]
+    },
+    {
+      "name": "isCursed",
+      "signature": "isCursed()",
+      "returnType": "boolean",
+      "description": "Curses are special enchantments that cannot be removed from items and typically cannot be obtained through enchanting tables.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const curse = new EnchantmentHelper(\"minecraft:vanishing_curse\");\nconst sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\n\nChat.log(`Is curse: ${curse.isCursed()}`); // Output: Is curse: true\nChat.log(`Is curse: ${sharpness.isCursed()}`); // Output: Is curse: false"
+      ]
+    },
+    {
+      "name": "isTreasure",
+      "signature": "isTreasure()",
+      "returnType": "boolean",
+      "description": "Treasure enchantments cannot be obtained through enchanting tables but can be found in loot chests, fishing, or villager trading.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mending = new EnchantmentHelper(\"minecraft:mending\");\nconst sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\n\nChat.log(`Is treasure: ${mending.isTreasure()}`); // Output: Is treasure: true\nChat.log(`Is treasure: ${sharpness.isTreasure()}`); // Output: Is treasure: false"
+      ]
+    },
+    {
+      "name": "getLevelName",
+      "signature": "getLevelName(level)",
+      "returnType": "String",
+      "description": "Gets the formatted name for a specific level of this enchantment.",
+      "parameters": [
+        {
+          "name": "level",
+          "type": "int",
+          "description": "The level to generate a name for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nChat.log(sharpness.getLevelName(1)); // Output: Sharpness I\nChat.log(sharpness.getLevelName(3)); // Output: Sharpness III\nChat.log(sharpness.getLevelName(5)); // Output: Sharpness V"
+      ]
+    },
+    {
+      "name": "getRomanLevelName",
+      "signature": "getRomanLevelName()",
+      "returnType": "TextHelper",
+      "description": "Gets the enchantment name with the level displayed as a Roman numeral. Uses the instance's current level.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\", 3);\nChat.log(sharpness.getRomanLevelName().getString()); // Output: Sharpness III"
+      ]
+    },
+    {
+      "name": "getRomanLevelName",
+      "signature": "getRomanLevelName(level)",
+      "returnType": "TextHelper",
+      "description": "Gets the enchantment name with the level displayed as a Roman numeral. Automatically uses Arabic numerals for levels outside the range 1-3999.",
+      "parameters": [
+        {
+          "name": "level",
+          "type": "int",
+          "description": "The level to generate a name for"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nChat.log(sharpness.getRomanLevelName(3).getString()); // Output: Sharpness III\nChat.log(sharpness.getRomanLevelName(5000).getString()); // Output: Sharpness 5000"
+      ]
+    },
+    {
+      "name": "isCompatible",
+      "signature": "isCompatible(enchantment)",
+      "returnType": "boolean",
+      "description": "Checks if this enchantment can be combined with the specified enchantment.",
+      "parameters": [
+        {
+          "name": "enchantment",
+          "type": "String|EnchantmentHelper",
+          "description": "The enchantment to check compatibility with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst smite = new EnchantmentHelper(\"minecraft:smite\");\nconst knockback = new EnchantmentHelper(\"minecraft:knockback\");\n\nChat.log(sharpness.isCompatible(smite)); // Output: false (conflict)\nChat.log(sharpness.isCompatible(knockback)); // Output: true (compatible)\n\n// Using string ID\nChat.log(sharpness.isCompatible(\"minecraft:protection\")); // Output: true (compatible)"
+      ]
+    },
+    {
+      "name": "conflictsWith",
+      "signature": "conflictsWith(enchantment)",
+      "returnType": "boolean",
+      "description": "The opposite of isCompatible(). Returns true if the enchantments cannot be combined.",
+      "parameters": [
+        {
+          "name": "enchantment",
+          "type": "String|EnchantmentHelper",
+          "description": "The enchantment to check for conflicts"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst smite = new EnchantmentHelper(\"minecraft:smite\");\n\nChat.log(sharpness.conflictsWith(smite)); // Output: true (conflict)\nChat.log(sharpness.conflictsWith(\"minecraft:protection\")); // Output: false (compatible)"
+      ]
+    },
+    {
+      "name": "getCompatibleEnchantments",
+      "signature": "getCompatibleEnchantments()",
+      "returnType": "List<EnchantmentHelper>",
+      "description": "Gets a list of all enchantments that can be combined with this one. Only considers enchantments that can be applied to the same item types.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst compatible = sharpness.getCompatibleEnchantments();\n\nChat.log(\"Compatible enchantments:\");\nfor (const enchant of compatible) {\n    Chat.log(`- ${enchant.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getCompatibleEnchantments",
+      "signature": "getCompatibleEnchantments(ignoreType)",
+      "returnType": "List<EnchantmentHelper>",
+      "description": "Gets compatible enchantments, optionally ignoring item type restrictions.",
+      "parameters": [
+        {
+          "name": "ignoreType",
+          "type": "boolean",
+          "description": "Whether to ignore item type restrictions"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst allCompatible = sharpness.getCompatibleEnchantments(true); // Ignore type restrictions\nconst typeCompatible = sharpness.getCompatibleEnchantments(false); // Respect type restrictions"
+      ]
+    },
+    {
+      "name": "getConflictingEnchantments",
+      "signature": "getConflictingEnchantments()",
+      "returnType": "List<EnchantmentHelper>",
+      "description": "Gets a list of all enchantments that conflict with this one. Only considers enchantments that apply to the same item types.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst conflicting = sharpness.getConflictingEnchantments();\n\nChat.log(\"Conflicting enchantments:\");\nfor (const enchant of conflicting) {\n    Chat.log(`- ${enchant.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "getConflictingEnchantments",
+      "signature": "getConflictingEnchantments(ignoreType)",
+      "returnType": "List<EnchantmentHelper>",
+      "description": "Gets conflicting enchantments, optionally ignoring item type restrictions.",
+      "parameters": [
+        {
+          "name": "ignoreType",
+          "type": "boolean",
+          "description": "Whether to ignore item type restrictions"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBeApplied",
+      "signature": "canBeApplied(item)",
+      "returnType": "boolean",
+      "description": "Checks if this enchantment is valid for the specified item type and doesn't conflict with existing enchantments.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper|ItemStackHelper",
+          "description": "The item to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst sword = player.getMainHand();\n\nif (sharpness.canBeApplied(sword)) {\n    Chat.log(\"Sharpness can be applied to this item\");\n} else {\n    Chat.log(\"Sharpness cannot be applied to this item\");\n}"
+      ]
+    },
+    {
+      "name": "getAcceptableItems",
+      "signature": "getAcceptableItems()",
+      "returnType": "List<ItemHelper>",
+      "description": "Gets a list of all item types that this enchantment can be applied to.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sharpness = new EnchantmentHelper(\"minecraft:sharpness\");\nconst acceptableItems = sharpness.getAcceptableItems();\n\nChat.log(\"Items that can have Sharpness:\");\nfor (const item of acceptableItems) {\n    Chat.log(`- ${item.getId()}`);\n}"
+      ]
+    }
+  ]
+}

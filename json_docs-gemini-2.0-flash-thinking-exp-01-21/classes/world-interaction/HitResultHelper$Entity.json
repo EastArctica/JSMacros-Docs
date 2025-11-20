@@ -1,0 +1,80 @@
+{
+  "name": "HitResultHelper$Entity",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.HitResultHelper$Entity",
+  "extends": "HitResultHelper",
+  "since": "1.9.1",
+  "description": "The `HitResultHelper$Entity` class is a specialized nested class within `HitResultHelper` that represents ray casting results specifically for entity intersections.",
+  "overview": "This class provides entity-specific information and methods for working with entity hit detection in Minecraft, including entity access, hit position analysis, and entity interaction functionality.\n\nWhen a ray trace operation hits an entity, the result is automatically cast to this specialized type, providing access to entity-specific properties and methods that are not available in the generic hit result.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getEntity",
+      "signature": "getEntity()",
+      "returnType": "EntityHelper",
+      "description": "Gets the EntityHelper instance for the entity that was hit by the ray trace. This provides access to all entity methods and properties.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hitResult = player.getInteractionManager().getTarget();\nif (hitResult) {\n    const entityHit = hitResult.asEntity();\n    if (entityHit) {\n        const entity = entityHit.getEntity();\n        Chat.log(`Hit entity: ${entity.getType()}`);\n        Chat.log(`Entity name: ${entity.getName()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getDistance",
+      "signature": "getDistance()",
+      "returnType": "double",
+      "description": "Gets the exact distance from where the ray trace originated to where it intersected with the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hitResult = player.getInteractionManager().getTarget();\nif (hitResult) {\n    const entityHit = hitResult.asEntity();\n    if (entityHit) {\n        const distance = entityHit.getDistance();\n        Chat.log(`Hit entity at distance: ${distance} blocks`);\n\n        if (distance < 3.0) {\n            Chat.log(\"Entity is very close!\");\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getHitPosition",
+      "signature": "getHitPosition()",
+      "returnType": "Pos3D",
+      "description": "Gets the exact world coordinates where the ray trace intersected with the entity's hitbox.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hitResult = player.getInteractionManager().getTarget();\nif (hitResult) {\n    const entityHit = hitResult.asEntity();\n    if (entityHit) {\n        const hitPos = entityHit.getHitPosition();\n        Chat.log(`Hit position: ${hitPos.x.toFixed(2)}, ${hitPos.y.toFixed(2)}, ${hitPos.z.toFixed(2)}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getPos",
+      "signature": "getPos()",
+      "returnType": "Pos3D",
+      "description": "Gets the precise world coordinates where the ray trace made contact with the entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isMissed",
+      "signature": "isMissed()",
+      "returnType": "boolean",
+      "description": "Always returns `false` for Entity instances since they represent successful hits.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asBlock",
+      "signature": "asBlock()",
+      "returnType": "HitResultHelper$Block or null",
+      "description": "Always returns `null` for Entity instances",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asEntity",
+      "signature": "asEntity()",
+      "returnType": "HitResultHelper$Entity or null",
+      "description": "Returns `this` for Entity instances",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

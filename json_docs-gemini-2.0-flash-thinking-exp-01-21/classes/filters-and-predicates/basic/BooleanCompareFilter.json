@@ -1,0 +1,20 @@
+{
+  "name": "BooleanCompareFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.compare.BooleanCompareFilter",
+  "since": "1.6.5",
+  "description": "A simple filter class used to compare boolean values during world scanning operations. This filter checks whether a given boolean value matches a specified comparison value and is commonly used in conjunction with the WorldScanner to filter blocks or entities based on boolean properties.",
+  "constructors": [
+    {
+      "signature": "new BooleanCompareFilter(compareTo)",
+      "description": "Creates a new BooleanCompareFilter with the specified boolean value to compare against.",
+      "parameters": [
+        {
+          "name": "compareTo",
+          "type": "boolean",
+          "description": "The boolean value to compare input values against"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

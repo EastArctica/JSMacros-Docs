@@ -1,0 +1,20 @@
+{
+  "name": "LaunchGame",
+  "fullClassName": "EventLaunchGame",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the game is launched.",
+  "overview": "Fires when Minecraft starts up\nOccurs during the initial loading process\nNot cancellable\nUseful for initialization and setup",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

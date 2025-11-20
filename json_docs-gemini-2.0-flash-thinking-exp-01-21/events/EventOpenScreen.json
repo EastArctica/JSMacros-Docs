@@ -1,0 +1,20 @@
+{
+  "name": "OpenScreenEvent",
+  "fullClassName": "EventOpenScreen",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when any screen is opened, including menus and non-container interfaces.",
+  "overview": "The event payload provides the following fields:\n- `screen`: (Type: `IScreen` | `null`) The screen helper object (can be null)\n- `screenName`: (Type: `string`) The name of the screen that opened\n\nBehavior:\n- Fires when any screen interface is opened\n- The `screen` field provides access to the screen object (can be null)\n- The `screenName` field contains the readable screen name\n- Includes menus, containers, chat, options, etc.\n- Useful for screen-specific macros or UI automation\n\nNotes for `event.screen`:\nThis provides access to screen methods and properties. Can be `null` for some screens. You can get the class name, title, and other screen-specific information.\n\nNotes for `event.screenName`:\nThis contains a user-friendly name for the screen, such as \"Chat Screen\", \"Inventory Screen\", \"Options Screen\", etc. This is useful for identifying what type of interface was opened.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

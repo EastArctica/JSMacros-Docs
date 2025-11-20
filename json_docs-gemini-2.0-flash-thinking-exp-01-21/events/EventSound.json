@@ -1,0 +1,20 @@
+{
+  "name": "EventSound",
+  "fullClassName": "EventSound",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a sound is played in the game world.",
+  "overview": "- Fires when any game sound is played\n- The `sound` field contains the sound event ID\n- The `volume` and `pitch` fields control sound properties\n- The `position` field indicates where the sound originated\n- This event is cancellable - preventing the sound from playing",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

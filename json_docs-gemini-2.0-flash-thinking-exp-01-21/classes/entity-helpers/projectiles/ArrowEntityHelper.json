@@ -1,0 +1,67 @@
+{
+  "name": "ArrowEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.projectile.ArrowEntityHelper",
+  "extends": "EntityHelper<PersistentProjectileEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "Represents arrow entities and other persistent projectiles in the world such as arrows, spectral arrows, and crossbow bolts. ArrowEntityHelper provides access to arrow-specific properties like critical hits, piercing level, color effects, and weapon source. Instances are typically obtained from entity events, world queries, or by accessing nearby projectile entities.",
+  "overview": "This class extends `EntityHelper` and inherits all methods for position, movement, and general entity properties, while adding specialized functionality for arrows and projectiles.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "int",
+      "description": "Returns the color of the arrow. This can represent the custom color of a tipped arrow or a special color for spectral arrows. Returns -1 if no specific color is set (e.g., for regular arrows).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = arrow.getColor();\nif (color === 0xF8FFFE) {\n    parts.push(\"Spectral\");\n} else if (color !== -1) {\n    parts.push(\"Tipped\");\n}",
+        "if (arrow.getColor() === 0xF8FFFE) return \"Spectral\";\nif (arrow.getColor() !== -1) return \"Tipped\";",
+        "const arrowData = {\n    // ... other properties\n    color: arrow.getColor(),\n    // ...\n};"
+      ]
+    },
+    {
+      "name": "isCritical",
+      "signature": "isCritical()",
+      "returnType": "boolean",
+      "description": "Checks if the arrow is a critical hit. This status is determined at the time of firing and affects damage calculation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (arrow.isCritical()) {\n    this.arrowStats.criticalHits++;\n}",
+        "if (arrow.isCritical()) {\n    parts.push(\"Critical\");\n}",
+        "if (arrow.isCritical()) threatLevel = \"HIGH\";",
+        "critical: arrow.isCritical(),"
+      ]
+    },
+    {
+      "name": "getPiercingLevel",
+      "signature": "getPiercingLevel()",
+      "returnType": "int",
+      "description": "Returns the piercing level of the arrow. A value greater than 0 indicates the arrow can pierce multiple entities, typically from the Piercing enchantment on a crossbow.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (arrow.getPiercingLevel() > 0) {\n    this.arrowStats.piercingHits++;\n}",
+        "const piercing = arrow.getPiercingLevel();\nif (piercing > 0) {\n    parts.push(`Piercing ${piercing}`);\n}",
+        "if (arrow.getPiercingLevel() > 2) threatLevel = \"CRITICAL\";",
+        "piercing: arrow.getPiercingLevel(),",
+        "if (arrow.getPiercingLevel() > 0) return \"Piercing\";"
+      ]
+    },
+    {
+      "name": "isShotFromCrossbow",
+      "signature": "isShotFromCrossbow()",
+      "returnType": "boolean",
+      "description": "Checks if the arrow was shot from a crossbow, which can affect damage and available enchantments compared to bows.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (arrow.isShotFromCrossbow()) {\n    this.arrowStats.crossbowBolts++;\n} else {\n    this.arrowStats.bowArrows++;\n}",
+        "if (arrow.isShotFromCrossbow()) {\n    parts.push(\"Crossbow\");\n} else {\n    parts.push(\"Bow\");\n}",
+        "fromCrossbow: arrow.isShotFromCrossbow(),",
+        "if (arrow.isShotFromCrossbow()) return \"Crossbow Bolt\";"
+      ]
+    }
+  ]
+}

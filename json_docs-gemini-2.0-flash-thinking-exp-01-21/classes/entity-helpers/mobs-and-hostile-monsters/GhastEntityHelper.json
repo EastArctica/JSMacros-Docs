@@ -1,0 +1,24 @@
+{
+  "name": "GhastEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.GhastEntityHelper",
+  "extends": "MobEntityHelper<GhastEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "Represents a ghast entity in the world. GhastEntityHelper provides access to ghast-specific behaviors, particularly their shooting state which determines when they are about to fire explosive fireballs at players. Ghasts are large, floating, white-colored hostile mobs found exclusively in the Nether that are known for their distinctive crying sounds and devastating fireball attacks.",
+  "overview": "Ghasts are one of the most dangerous Nether mobs due to their ability to shoot explosive fireballs from a distance. They float through the air and will attack players on sight, opening their eyes and mouths to charge up before firing a fireball. This helper provides access to their current shooting state, which is crucial for predicting attacks and timing defensive maneuvers or counter-attacks.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, AI control, movement, and other mob properties, while adding ghast-specific functionality for attack state monitoring.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isShooting",
+      "signature": "isShooting()",
+      "returnType": "boolean",
+      "description": "Checks if the ghast is currently in its 'shooting' state, indicating it is charging up or about to fire an explosive fireball. This method provides crucial warning time for incoming ghast attacks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Method 1: From entity events, check ghast shooting state upon spawn\nJsMacros.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:ghast\")) {\n        const ghast = entity; // Already properly typed\n        Chat.log(`Ghast spawned! Shooting state: ${ghast.isShooting()}`);\n    }\n}));",
+        "// Method 2: From world queries, find ghasts and check their shooting state\nconst entities = World.getEntities();\nfor (const entity of entities) {\n    if (entity.is(\"minecraft:ghast\")) {\n        const ghast = entity;\n        const isAttacking = ghast.isShooting();\n        if (isAttacking) {\n            Chat.log(`Found a ghast that is currently shooting!`);\n        }\n    }\n}",
+        "// Example 3: Monitor ghast's shooting state changes in a real-time system\n// ghastData.entity is an EntityHelper which has been confirmed as a ghast\nconst ghast = ghastData.entity.as(\"minecraft:ghast\");\nconst isShooting = ghast.isShooting();\n\nif (ghastData.lastShootState !== isShooting) {\n    ghastData.stateChanges++;\n    ghastData.lastShootState = isShooting;\n\n    const stateText = isShooting ? \"SHOOTING\" : \"CALM\";\n    Chat.log(`&6👻 ${ghastData.name} state changed to: ${stateText}`);\n\n    if (isShooting && Player.getPlayer().distanceTo(ghastData.entity) <= 20) {\n        this.sendAlert(\"Ghast ATTACKING - Take cover!\", \"danger\");\n    }\n}"
+      ]
+    }
+  ]
+}

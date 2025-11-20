@@ -1,0 +1,9 @@
+{
+  "name": "FJsMacros$EventAndContext",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.FJsMacros$EventAndContext",
+  "since": "1.5.0",
+  "description": "The `EventAndContext<E>` class is a nested class within FJsMacros that encapsulates both an event and its associated script context. This class is returned by the `JsMacros.waitForEvent()` method and provides access to both the triggered event and the script context that was waiting for it.",
+  "overview": "This class is primarily used for advanced event waiting scenarios where you need access to the script context for early exit functionality or additional context information about the event wait operation.",
+  "constructors": [],
+  "methods": []
+}

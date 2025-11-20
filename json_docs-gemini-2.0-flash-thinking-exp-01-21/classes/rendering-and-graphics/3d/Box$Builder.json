@@ -1,0 +1,465 @@
+{
+  "name": "Box.Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.Box$Builder",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The `Box.Builder` class provides a fluent interface for creating `Box` instances with method chaining. It's the recommended way to create boxes with complex configurations or when you need to set multiple properties in a readable manner.",
+  "overview": "The `Box.Builder` class allows you to construct `Box` objects through a chain of method calls, making the configuration process more readable and maintainable. Instead of passing multiple parameters to constructors, you can set properties individually using descriptive method names.\n\nThe builder is typically obtained through the `Draw3D.box()` method and provides two final operations:\n- `build()` - Creates the Box instance\n- `buildAndAdd()` - Creates the Box instance and automatically adds it to the Draw3D context\n\nCreating a Builder\n```javascript\n// Obtain a builder from Draw3D context\nconst draw3D = Hud.createDraw3D();\nconst builder = draw3D.box();\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(x1, y1, z1, x2, y2, z2)",
+      "returnType": "Box.Builder",
+      "description": "Sets the box position using two opposite corners in 3D space.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "X coordinate of first corner"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Y coordinate of first corner"
+        },
+        {
+          "name": "z1",
+          "type": "double",
+          "description": "Z coordinate of first corner"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "X coordinate of second corner"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "Y coordinate of second corner"
+        },
+        {
+          "name": "z2",
+          "type": "double",
+          "description": "Z coordinate of second corner"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const box = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .build();"
+      ]
+    },
+    {
+      "name": "forBlock",
+      "signature": "forBlock(x, y, z)",
+      "returnType": "Box.Builder",
+      "description": "Sets the box position to highlight a specific block at the given coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "Block X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Block Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Block Z coordinate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockHighlight = draw3D.box()\n    .forBlock(100, 65, -50)\n    .color(0xFFFF00)\n    .build();"
+      ]
+    },
+    {
+      "name": "fromPoint",
+      "signature": "fromPoint(x, y, z)",
+      "returnType": "Box.Builder",
+      "description": "Sets the starting position of the box to a specific point.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate of start point"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate of start point"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate of start point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toPoint",
+      "signature": "toPoint(x, y, z)",
+      "returnType": "Box.Builder",
+      "description": "Sets the ending position of the box to a specific point.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate of end point"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate of end point"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate of end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "color",
+      "signature": "color(color)",
+      "returnType": "Box.Builder",
+      "description": "Sets both outline and fill color using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const redBox = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(color, alpha)",
+      "returnType": "Box.Builder",
+      "description": "Sets both outline and fill color using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const semiTransparentBlueBox = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .color(0x0000FF, 128)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b)",
+      "returnType": "Box.Builder",
+      "description": "Sets both outline and fill color using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const greenBox = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .color(0, 255, 0)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b, a)",
+      "returnType": "Box.Builder",
+      "description": "Sets both outline and fill color using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const purpleBox = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .color(128, 0, 128, 200)\n    .build();"
+      ]
+    },
+    {
+      "name": "outlineColor",
+      "signature": "outlineColor(color)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the outline color using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value for outline (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "outlineColor",
+      "signature": "outlineColor(color, alpha)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the outline color using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value for outline (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "outlineColor",
+      "signature": "outlineColor(r, g, b)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the outline color using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "outlineColor",
+      "signature": "outlineColor(r, g, b, a)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the outline color using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "fillColor",
+      "signature": "fillColor(color)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the fill color using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value for fill (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "fillColor",
+      "signature": "fillColor(color, alpha)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the fill color using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value for fill (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "fillColor",
+      "signature": "fillColor(r, g, b)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the fill color using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "fillColor",
+      "signature": "fillColor(r, g, b, a)",
+      "returnType": "Box.Builder",
+      "description": "Sets only the fill color using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "fill",
+      "signature": "fill(fillEnabled)",
+      "returnType": "Box.Builder",
+      "description": "Sets whether the box should be filled or just outlined.",
+      "parameters": [
+        {
+          "name": "fillEnabled",
+          "type": "boolean",
+          "description": "true to fill the box, false for outline only"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const outlineBox = draw3D.box()\n    .forBlock(0, 64, 0)\n    .color(0xFF0000)\n    .fill(false)\n    .build();"
+      ]
+    },
+    {
+      "name": "cull",
+      "signature": "cull(cullEnabled)",
+      "returnType": "Box.Builder",
+      "description": "Sets whether back faces should be culled (not rendered).",
+      "parameters": [
+        {
+          "name": "cullEnabled",
+          "type": "boolean",
+          "description": "true to cull back faces, false to render all faces"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const seeThroughBox = draw3D.box()\n    .pos(-5, 64, -5, 5, 74, 5)\n    .color(0x00FF00, 100)\n    .fill(true)\n    .cull(false)\n    .build();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Box",
+      "description": "Creates the configured `Box` instance without adding it to the Draw3D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const box = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .color(0xFF0000)\n    .fill(true)\n    .build();",
+        "// Add to context manually later\ndraw3D.addBox(box);"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Box",
+      "description": "Creates the configured `Box` instance and automatically adds it to the Draw3D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const box = draw3D.box()\n    .pos(0, 64, 0, 10, 74, 10)\n    .color(0x00FF00)\n    .fill(true)\n    .buildAndAdd(); // Automatically added to Draw3D context"
+      ]
+    }
+  ]
+}

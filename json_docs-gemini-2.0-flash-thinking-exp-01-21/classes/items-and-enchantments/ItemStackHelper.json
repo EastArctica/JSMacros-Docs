@@ -1,0 +1,714 @@
+{
+  "name": "ItemStackHelper",
+  "fullClassName": "ItemStackHelper",
+  "description": "The `ItemStackHelper` class is a fundamental helper class in JSMacros that represents item stacks in Minecraft. It provides access to all item properties including enchantments, NBT data, durability, and various metadata fields. This class is essential for any script that needs to work with items, whether in inventory management, item filtering, or custom item processing.",
+  "overview": "`ItemStackHelper` wraps Minecraft's internal `ItemStack` class and exposes its functionality to JSMacros scripts in a user-friendly way. It can represent any item stack - from simple dirt blocks to complex enchanted diamond swords with custom NBT data.",
+  "constructors": [
+    {
+      "signature": "new ItemStackHelper(itemId: string, count: number)",
+      "description": "Creates a new ItemStackHelper instance from an item ID and count.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The registry ID of the item (e.g., \"minecraft:diamond\" or \"diamond\")."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "description": "The number of items in the stack."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getItemId",
+      "signature": "getItemId(): string",
+      "returnType": "string",
+      "description": "Returns the item's registry ID (e.g., \"minecraft:diamond_sword\")",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "getName(): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Returns the display name as TextHelper",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getDefaultName",
+      "signature": "getDefaultName(): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Returns the default item name as TextHelper",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCount",
+      "signature": "getCount(): number",
+      "returnType": "number",
+      "description": "Returns the number of items in the stack",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxCount",
+      "signature": "getMaxCount(): number",
+      "returnType": "number",
+      "description": "Returns the maximum stack size",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isEmpty",
+      "signature": "isEmpty(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the stack is empty",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTags",
+      "signature": "getTags(): string[]",
+      "returnType": "string[]",
+      "description": "Returns list of item tags (e.g., [\"minecraft:logs\", \"minecraft:planks\"])",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nif (item.isTool()) {\n    Chat.log(\"Holding a tool!\");\n}\n\nif (item.isFood()) {\n    Chat.log(`This is food: ${item.getName()}`);\n}\n\n// Get all tags\nconst tags = item.getTags();\nChat.log(`Item tags: ${tags.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "isFood",
+      "signature": "isFood(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the item is edible",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nif (item.isTool()) {\n    Chat.log(\"Holding a tool!\");\n}\n\nif (item.isFood()) {\n    Chat.log(`This is food: ${item.getName()}`);\n}\n\n// Get all tags\nconst tags = item.getTags();\nChat.log(`Item tags: ${tags.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "isTool",
+      "signature": "isTool(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the item is a tool",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nif (item.isTool()) {\n    Chat.log(\"Holding a tool!\");\n}\n\nif (item.isFood()) {\n    Chat.log(`This is food: ${item.getName()}`);\n}\n\n// Get all tags\nconst tags = item.getTags();\nChat.log(`Item tags: ${tags.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "isWearable",
+      "signature": "isWearable(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the item can be worn as armor",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nif (item.isTool()) {\n    Chat.log(\"Holding a tool!\");\n}\n\nif (item.isFood()) {\n    Chat.log(`This is food: ${item.getName()}`);\n}\n\n// Get all tags\nconst tags = item.getTags();\nChat.log(`Item tags: ${tags.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getCreativeTab",
+      "signature": "getCreativeTab(): string",
+      "returnType": "string",
+      "description": "Returns the creative tabs this item appears in",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nif (item.isTool()) {\n    Chat.log(\"Holding a tool!\");\n}\n\nif (item.isFood()) {\n    Chat.log(`This is food: ${item.getName()}`);\n}\n\n// Get all tags\nconst tags = item.getTags();\nChat.log(`Item tags: ${tags.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getMaxDurability",
+      "signature": "getMaxDurability(): number",
+      "returnType": "number",
+      "description": "Returns maximum durability (returns 0 for non-damageable items)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sword = Player.getMainHand();\nif (sword.isDamageable()) {\n    const currentDurability = sword.getDurability();\n    const maxDurability = sword.getMaxDurability();\n    const durabilityPercent = (currentDurability / maxDurability) * 100;\n\n    Chat.log(`Sword durability: ${Math.round(durabilityPercent)}%`);\n\n    if (durabilityPercent < 10) {\n        Chat.log(\"Warning: Sword almost broken!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getDurability",
+      "signature": "getDurability(): number",
+      "returnType": "number",
+      "description": "Returns current remaining durability",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sword = Player.getMainHand();\nif (sword.isDamageable()) {\n    const currentDurability = sword.getDurability();\n    const maxDurability = sword.getMaxDurability();\n    const durabilityPercent = (currentDurability / maxDurability) * 100;\n\n    Chat.log(`Sword durability: ${Math.round(durabilityPercent)}%`);\n\n    if (durabilityPercent < 10) {\n        Chat.log(\"Warning: Sword almost broken!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getDamage",
+      "signature": "getDamage(): number",
+      "returnType": "number",
+      "description": "Returns damage taken",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sword = Player.getMainHand();\nif (sword.isDamageable()) {\n    const currentDurability = sword.getDurability();\n    const maxDurability = sword.getMaxDurability();\n    const durabilityPercent = (currentDurability / maxDurability) * 100;\n\n    Chat.log(`Sword durability: ${Math.round(durabilityPercent)}%`);\n\n    if (durabilityPercent < 10) {\n        Chat.log(\"Warning: Sword almost broken!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getMaxDamage",
+      "signature": "getMaxDamage(): number",
+      "returnType": "number",
+      "description": "Returns maximum damage (same as getMaxDurability())",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sword = Player.getMainHand();\nif (sword.isDamageable()) {\n    const currentDurability = sword.getDurability();\n    const maxDurability = sword.getMaxDurability();\n    const durabilityPercent = (currentDurability / maxDurability) * 100;\n\n    Chat.log(`Sword durability: ${Math.round(durabilityPercent)}%`);\n\n    if (durabilityPercent < 10) {\n        Chat.log(\"Warning: Sword almost broken!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isDamageable",
+      "signature": "isDamageable(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item can be damaged",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sword = Player.getMainHand();\nif (sword.isDamageable()) {\n    const currentDurability = sword.getDurability();\n    const maxDurability = sword.getMaxDurability();\n    const durabilityPercent = (currentDurability / maxDurability) * 100;\n\n    Chat.log(`Sword durability: ${Math.round(durabilityPercent)}%`);\n\n    if (durabilityPercent < 10) {\n        Chat.log(\"Warning: Sword almost broken!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isUnbreakable",
+      "signature": "isUnbreakable(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item has unbreakable flag",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sword = Player.getMainHand();\nif (sword.isDamageable()) {\n    const currentDurability = sword.getDurability();\n    const maxDurability = sword.getMaxDurability();\n    const durabilityPercent = (currentDurability / maxDurability) * 100;\n\n    Chat.log(`Sword durability: ${Math.round(durabilityPercent)}%`);\n\n    if (durabilityPercent < 10) {\n        Chat.log(\"Warning: Sword almost broken!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getEnchantments",
+      "signature": "getEnchantments(): EnchantmentHelper[]",
+      "returnType": "EnchantmentHelper[]",
+      "description": "Returns list of all enchantments as EnchantmentHelper objects",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getEnchantment",
+      "signature": "getEnchantment(id: string): EnchantmentHelper | null",
+      "returnType": "EnchantmentHelper | null",
+      "description": "Returns specific enchantment by ID or null if not present",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Enchantment ID"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "hasEnchantment",
+      "signature": "hasEnchantment(id: string): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item has specific enchantment",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Enchantment ID"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "hasEnchantment",
+      "signature": "hasEnchantment(enchantmentHelper: EnchantmentHelper): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item has specific enchantment",
+      "parameters": [
+        {
+          "name": "enchantmentHelper",
+          "type": "EnchantmentHelper",
+          "description": "Enchantment helper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "isEnchanted",
+      "signature": "isEnchanted(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item has any enchantments",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "isEnchantable",
+      "signature": "isEnchantable(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item can be enchanted",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getPossibleEnchantments",
+      "signature": "getPossibleEnchantments(): EnchantmentHelper[]",
+      "returnType": "EnchantmentHelper[]",
+      "description": "Returns all enchantments that can be applied to this item",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getPossibleEnchantmentsFromTable",
+      "signature": "getPossibleEnchantmentsFromTable(): EnchantmentHelper[]",
+      "returnType": "EnchantmentHelper[]",
+      "description": "Returns enchantments available from enchanting table",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "canBeApplied",
+      "signature": "canBeApplied(enchantment: EnchantmentHelper): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if enchantment can be applied to this item",
+      "parameters": [
+        {
+          "name": "enchantment",
+          "type": "EnchantmentHelper",
+          "description": "Enchantment helper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickaxe = Player.getMainHand();\n\n// Check if pickaxe is enchanted\nif (pickaxe.isEnchanted()) {\n    const enchantments = pickaxe.getEnchantments();\n\n    for (const enchantment of enchantments) {\n        Chat.log(`Enchantment: ${enchantment.getName()} Level: ${enchantment.getLevel()}`);\n    }\n}\n\n// Check for specific enchantments\nif (pickaxe.hasEnchantment(\"minecraft:efficiency\")) {\n    const efficiency = pickaxe.getEnchantment(\"minecraft:efficiency\");\n    Chat.log(`Efficiency level: ${efficiency.getLevel()}`);\n}\n\n// Get possible enchantments for this item\nconst possible = pickaxe.getPossibleEnchantments();\nChat.log(`Possible enchantments: ${possible.map(e => e.getName()).join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getNBT",
+      "signature": "getNBT(): NBTElementHelper | null",
+      "returnType": "NBTElementHelper | null",
+      "description": "Returns NBT data as NBTElementHelper or null if no NBT",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt) {\n    Chat.log(`Item has NBT data: ${nbt.toString()}`);\n\n    // Access specific NBT values\n    if (nbt.has(\"display\")) {\n        const display = nbt.get(\"display\");\n        Chat.log(`Display NBT: ${display}`);\n    }\n}\n\n// Compare NBT with another item\nconst offhand = Player.getOffHand();\nif (item.isNBTEqual(offhand)) {\n    Chat.log(\"Main hand and off hand items have identical NBT\");\n}"
+      ]
+    },
+    {
+      "name": "isNBTEqual",
+      "signature": "isNBTEqual(itemStackHelper: ItemStackHelper): boolean",
+      "returnType": "boolean",
+      "description": "Compare NBT data with another stack",
+      "parameters": [
+        {
+          "name": "itemStackHelper",
+          "type": "ItemStackHelper",
+          "description": "Another ItemStackHelper"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt) {\n    Chat.log(`Item has NBT data: ${nbt.toString()}`);\n\n    // Access specific NBT values\n    if (nbt.has(\"display\")) {\n        const display = nbt.get(\"display\");\n        Chat.log(`Display NBT: ${display}`);\n    }\n}\n\n// Compare NBT with another item\nconst offhand = Player.getOffHand();\nif (item.isNBTEqual(offhand)) {\n    Chat.log(\"Main hand and off hand items have identical NBT\");\n}"
+      ]
+    },
+    {
+      "name": "isNBTEqual",
+      "signature": "isNBTEqual(itemStack: any): boolean",
+      "returnType": "boolean",
+      "description": "Compare NBT data with vanilla ItemStack",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "any",
+          "description": "Vanilla ItemStack"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nconst nbt = item.getNBT();\n\nif (nbt) {\n    Chat.log(`Item has NBT data: ${nbt.toString()}`);\n\n    // Access specific NBT values\n    if (nbt.has(\"display\")) {\n        const display = nbt.get(\"display\");\n        Chat.log(`Display NBT: ${display}`);\n    }\n}\n\n// Compare NBT with another item\nconst offhand = Player.getOffHand();\nif (item.isNBTEqual(offhand)) {\n    Chat.log(\"Main hand and off hand items have identical NBT\");\n}"
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(itemStackHelper: ItemStackHelper): boolean",
+      "returnType": "boolean",
+      "description": "Full equality (item, components, NBT)",
+      "parameters": [
+        {
+          "name": "itemStackHelper",
+          "type": "ItemStackHelper",
+          "description": "Another ItemStackHelper"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainHand = Player.getMainHand();\nconst offhand = Player.getOffHand();\n\n// Check if items are exactly the same (including damage and NBT)\nif (mainHand.equals(offhand)) {\n    Chat.log(\"Items are identical\");\n}\n\n// Check if items are the same type and damage\nif (mainHand.isItemEqual(offhand)) {\n    Chat.log(\"Items are the same type and damage\");\n}\n\n// Check if items are the same type, ignoring damage\nif (mainHand.isItemEqualIgnoreDamage(offhand)) {\n    Chat.log(\"Items are the same type\");\n}"
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(itemStack: any): boolean",
+      "returnType": "boolean",
+      "description": "Full equality with vanilla ItemStack",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "any",
+          "description": "Vanilla ItemStack"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainHand = Player.getMainHand();\nconst offhand = Player.getOffHand();\n\n// Check if items are exactly the same (including damage and NBT)\nif (mainHand.equals(offhand)) {\n    Chat.log(\"Items are identical\");\n}\n\n// Check if items are the same type and damage\nif (mainHand.isItemEqual(offhand)) {\n    Chat.log(\"Items are the same type and damage\");\n}\n\n// Check if items are the same type, ignoring damage\nif (mainHand.isItemEqualIgnoreDamage(offhand)) {\n    Chat.log(\"Items are the same type\");\n}"
+      ]
+    },
+    {
+      "name": "isItemEqual",
+      "signature": "isItemEqual(itemStackHelper: ItemStackHelper): boolean",
+      "returnType": "boolean",
+      "description": "Item equality including damage",
+      "parameters": [
+        {
+          "name": "itemStackHelper",
+          "type": "ItemStackHelper",
+          "description": "Another ItemStackHelper"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainHand = Player.getMainHand();\nconst offhand = Player.getOffHand();\n\n// Check if items are exactly the same (including damage and NBT)\nif (mainHand.equals(offhand)) {\n    Chat.log(\"Items are identical\");\n}\n\n// Check if items are the same type and damage\nif (mainHand.isItemEqual(offhand)) {\n    Chat.log(\"Items are the same type and damage\");\n}\n\n// Check if items are the same type, ignoring damage\nif (mainHand.isItemEqualIgnoreDamage(offhand)) {\n    Chat.log(\"Items are the same type\");\n}"
+      ]
+    },
+    {
+      "name": "isItemEqual",
+      "signature": "isItemEqual(itemStack: any): boolean",
+      "returnType": "boolean",
+      "description": "Item equality including damage with vanilla ItemStack",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "any",
+          "description": "Vanilla ItemStack"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainHand = Player.getMainHand();\nconst offhand = Player.getOffHand();\n\n// Check if items are exactly the same (including damage and NBT)\nif (mainHand.equals(offhand)) {\n    Chat.log(\"Items are identical\");\n}\n\n// Check if items are the same type and damage\nif (mainHand.isItemEqual(offhand)) {\n    Chat.log(\"Items are the same type and damage\");\n}\n\n// Check if items are the same type, ignoring damage\nif (mainHand.isItemEqualIgnoreDamage(offhand)) {\n    Chat.log(\"Items are the same type\");\n}"
+      ]
+    },
+    {
+      "name": "isItemEqualIgnoreDamage",
+      "signature": "isItemEqualIgnoreDamage(itemStackHelper: ItemStackHelper): boolean",
+      "returnType": "boolean",
+      "description": "Item equality ignoring damage",
+      "parameters": [
+        {
+          "name": "itemStackHelper",
+          "type": "ItemStackHelper",
+          "description": "Another ItemStackHelper"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainHand = Player.getMainHand();\nconst offhand = Player.getOffHand();\n\n// Check if items are exactly the same (including damage and NBT)\nif (mainHand.equals(offhand)) {\n    Chat.log(\"Items are identical\");\n}\n\n// Check if items are the same type and damage\nif (mainHand.isItemEqual(offhand)) {\n    Chat.log(\"Items are the same type and damage\");\n}\n\n// Check if items are the same type, ignoring damage\nif (mainHand.isItemEqualIgnoreDamage(offhand)) {\n    Chat.log(\"Items are the same type\");\n}"
+      ]
+    },
+    {
+      "name": "isItemEqualIgnoreDamage",
+      "signature": "isItemEqualIgnoreDamage(itemStack: any): boolean",
+      "returnType": "boolean",
+      "description": "Item equality ignoring damage with vanilla ItemStack",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "any",
+          "description": "Vanilla ItemStack"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mainHand = Player.getMainHand();\nconst offhand = Player.getOffHand();\n\n// Check if items are exactly the same (including damage and NBT)\nif (mainHand.equals(offhand)) {\n    Chat.log(\"Items are identical\");\n}\n\n// Check if items are the same type and damage\nif (mainHand.isItemEqual(offhand)) {\n    Chat.log(\"Items are the same type and damage\");\n}\n\n// Check if items are the same type, ignoring damage\nif (mainHand.isItemEqualIgnoreDamage(offhand)) {\n    Chat.log(\"Items are the same type\");\n}"
+      ]
+    },
+    {
+      "name": "getAttackDamage",
+      "signature": "getAttackDamage(): number",
+      "returnType": "number",
+      "description": "Returns attack damage value",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tool = Player.getMainHand();\n\n// Get attack damage\nconst damage = tool.getAttackDamage();\nChat.log(`Attack damage: ${damage}`);\n\n// Check if tool is suitable for mining block at cursor\nconst block = Player.getTargetedBlock();\nif (block && tool.isSuitableFor(block)) {\n    Chat.log(\"This tool is suitable for mining the targeted block\");\n}"
+      ]
+    },
+    {
+      "name": "isSuitableFor",
+      "signature": "isSuitableFor(blockHelper: BlockHelper): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if tool can mine block",
+      "parameters": [
+        {
+          "name": "blockHelper",
+          "type": "BlockHelper",
+          "description": "A BlockHelper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const tool = Player.getMainHand();\n\n// Get attack damage\nconst damage = tool.getAttackDamage();\nChat.log(`Attack damage: ${damage}`);\n\n// Check if tool is suitable for mining block at cursor\nconst block = Player.getTargetedBlock();\nif (block && tool.isSuitableFor(block)) {\n    Chat.log(\"This tool is suitable for mining the targeted block\");\n}"
+      ]
+    },
+    {
+      "name": "isSuitableFor",
+      "signature": "isSuitableFor(blockStateHelper: BlockStateHelper): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if tool can mine block state",
+      "parameters": [
+        {
+          "name": "blockStateHelper",
+          "type": "BlockStateHelper",
+          "description": "A BlockStateHelper object"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const tool = Player.getMainHand();\n\n// Get attack damage\nconst damage = tool.getAttackDamage();\nChat.log(`Attack damage: ${damage}`);\n\n// Check if tool is suitable for mining block at cursor\nconst block = Player.getTargetedBlock();\nif (block && tool.isSuitableFor(block)) {\n    Chat.log(\"This tool is suitable for mining the targeted block\");\n}"
+      ]
+    },
+    {
+      "name": "getLore",
+      "signature": "getLore(): TextHelper[]",
+      "returnType": "TextHelper[]",
+      "description": "Returns list of lore lines as TextHelper objects",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\nconst lore = item.getLore();\n\nif (lore.length > 0) {\n    Chat.log(\"Item lore:\");\n    for (let i = 0; i < lore.length; i++) {\n        Chat.log(`${i + 1}: ${lore[i]}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "hasDestroyRestrictions",
+      "signature": "hasDestroyRestrictions(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item has can_destroy restrictions",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "hasPlaceRestrictions",
+      "signature": "hasPlaceRestrictions(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item has can_place_on restrictions",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "getDestroyRestrictions",
+      "signature": "getDestroyRestrictions(): BlockPredicateHelper[]",
+      "returnType": "BlockPredicateHelper[]",
+      "description": "Returns list of block predicates for destroy restrictions",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "getPlaceRestrictions",
+      "signature": "getPlaceRestrictions(): BlockPredicateHelper[]",
+      "returnType": "BlockPredicateHelper[]",
+      "description": "Returns list of block predicates for place restrictions",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "areEnchantmentsHidden",
+      "signature": "areEnchantmentsHidden(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if enchantments are hidden in tooltip",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "areModifiersHidden",
+      "signature": "areModifiersHidden(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if attribute modifiers are hidden",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "isUnbreakableHidden",
+      "signature": "isUnbreakableHidden(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if unbreakable flag is hidden",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "isCanDestroyHidden",
+      "signature": "isCanDestroyHidden(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if can_destroy flag is hidden",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "isCanPlaceHidden",
+      "signature": "isCanPlaceHidden(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if can_place_on flag is hidden",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "isDyeHidden",
+      "signature": "isDyeHidden(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if armor dye color is hidden",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "getRepairCost",
+      "signature": "getRepairCost(): number",
+      "returnType": "number",
+      "description": "Returns repair cost in experience levels",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "isOnCooldown",
+      "signature": "isOnCooldown(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if item is on cooldown",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "getCooldownProgress",
+      "signature": "getCooldownProgress(): number",
+      "returnType": "number",
+      "description": "Returns cooldown progress (0.0 to 1.0)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Check adventure mode restrictions\nif (item.hasDestroyRestrictions()) {\n    const restrictions = item.getDestroyRestrictions();\n    Chat.log(`Can destroy ${restrictions.length} types of blocks`);\n}\n\n// Check tooltip visibility\nif (item.areEnchantmentsHidden()) {\n    Chat.log(\"Enchantments are hidden in tooltip\");\n}\n\n// Check cooldown\nif (item.isOnCooldown()) {\n    const progress = item.getCooldownProgress();\n    Chat.log(`Cooldown: ${Math.round(progress * 100)}%`);\n}"
+      ]
+    },
+    {
+      "name": "copy",
+      "signature": "copy(): ItemStackHelper",
+      "returnType": "ItemStackHelper",
+      "description": "Creates a copy of this item stack",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Create a copy\nconst itemCopy = item.copy();\n\n// Get creative helper for modification\nconst creative = item.getCreative();\n// Note: This provides access to creative-mode modification methods\n\n// Get base item\nconst baseItem = item.getItem();\nChat.log(`Base item ID: ${baseItem.getItemId()}`);\n\n// String representation\nChat.log(item.toString());"
+      ]
+    },
+    {
+      "name": "getCreative",
+      "signature": "getCreative(): CreativeItemStackHelper",
+      "returnType": "CreativeItemStackHelper",
+      "description": "Returns CreativeItemStackHelper for modification",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Create a copy\nconst itemCopy = item.copy();\n\n// Get creative helper for modification\nconst creative = item.getCreative();\n// Note: This provides access to creative-mode modification methods\n\n// Get base item\nconst baseItem = item.getItem();\nChat.log(`Base item ID: ${baseItem.getItemId()}`);\n\n// String representation\nChat.log(item.toString());"
+      ]
+    },
+    {
+      "name": "getItem",
+      "signature": "getItem(): ItemHelper",
+      "returnType": "ItemHelper",
+      "description": "Returns ItemHelper representing the base item",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Create a copy\nconst itemCopy = item.copy();\n\n// Get creative helper for modification\nconst creative = item.getCreative();\n// Note: This provides access to creative-mode modification methods\n\n// Get base item\nconst baseItem = item.getItem();\nChat.log(`Base item ID: ${baseItem.getItemId()}`);\n\n// String representation\nChat.log(item.toString());"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString(): string",
+      "returnType": "string",
+      "description": "Returns string representation",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = Player.getMainHand();\n\n// Create a copy\nconst itemCopy = item.copy();\n\n// Get creative helper for modification\nconst creative = item.getCreative();\n// Note: This provides access to creative-mode modification methods\n\n// Get base item\nconst baseItem = item.getItem();\nChat.log(`Base item ID: ${baseItem.getItemId()}`);\n\n// String representation\nChat.log(item.toString());"
+      ]
+    }
+  ]
+}

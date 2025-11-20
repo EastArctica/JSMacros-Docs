@@ -1,0 +1,419 @@
+{
+  "name": "MusicOptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper$MusicOptionsHelper",
+  "extends": "Object",
+  "since": "JsMacros 1.8.4",
+  "description": "The MusicOptionsHelper class provides comprehensive control over all audio and sound settings in Minecraft. This helper allows scripters to manage volume levels for different sound categories, control audio devices, and configure subtitle settings. It's accessed through the Client.getGameOptions().music property and provides methods to query and modify every aspect of Minecraft's audio configuration.",
+  "overview": "The MusicOptionsHelper class manages all audio-related settings including:\n- Volume control for different sound categories (master, music, blocks, mobs, etc.)\n- Audio device selection and management\n- Subtitle display configuration\n- Sound category-specific volume adjustments\n- Real-time audio settings modification",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getParent",
+      "signature": "instance.getParent()",
+      "returnType": "OptionsHelper",
+      "description": "Returns the parent OptionsHelper instance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst parentOptions = musicOptions.getParent();\nChat.log(`Parent helper: ${parentOptions}`);"
+      ]
+    },
+    {
+      "name": "getMasterVolume",
+      "signature": "instance.getMasterVolume()",
+      "returnType": "float",
+      "description": "Returns the current master volume level.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst masterVolume = musicOptions.getMasterVolume();\nChat.log(`Master volume: ${(masterVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setMasterVolume",
+      "signature": "instance.setMasterVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the master volume level.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new master volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setMasterVolume(0.75); // Set to 75%\nChat.log(\"Master volume set to 75%\");"
+      ]
+    },
+    {
+      "name": "getMusicVolume",
+      "signature": "instance.getMusicVolume()",
+      "returnType": "float",
+      "description": "Returns the current music volume level.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst musicVolume = musicOptions.getMusicVolume();\nChat.log(`Music volume: ${(musicVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setMusicVolume",
+      "signature": "instance.setMusicVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the music volume level.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new music volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setMusicVolume(0.5); // Set music to 50%"
+      ]
+    },
+    {
+      "name": "getRecordsVolume",
+      "signature": "instance.getRecordsVolume()",
+      "returnType": "float",
+      "description": "Returns the current volume for playing records (jukebox music).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst recordsVolume = musicOptions.getRecordsVolume();\nChat.log(`Records volume: ${(recordsVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setRecordsVolume",
+      "signature": "instance.setRecordsVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the volume for playing records.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new records volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setRecordsVolume(0.8); // Set records to 80%"
+      ]
+    },
+    {
+      "name": "getWeatherVolume",
+      "signature": "instance.getWeatherVolume()",
+      "returnType": "float",
+      "description": "Returns the current volume for weather sounds (rain, thunder).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst weatherVolume = musicOptions.getWeatherVolume();\nChat.log(`Weather volume: ${(weatherVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setWeatherVolume",
+      "signature": "instance.setWeatherVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the volume for weather sounds.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new weather volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setWeatherVolume(0.6); // Set weather to 60%"
+      ]
+    },
+    {
+      "name": "getBlocksVolume",
+      "signature": "instance.getBlocksVolume()",
+      "returnType": "float",
+      "description": "Returns the current volume for block-related sounds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst blocksVolume = musicOptions.getBlocksVolume();\nChat.log(`Blocks volume: ${(blocksVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setBlocksVolume",
+      "signature": "instance.setBlocksVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the volume for block sounds.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new blocks volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setBlocksVolume(0.7); // Set blocks to 70%"
+      ]
+    },
+    {
+      "name": "getHostileVolume",
+      "signature": "instance.getHostileVolume()",
+      "returnType": "float",
+      "description": "Returns the current volume for hostile mob sounds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst hostileVolume = musicOptions.getHostileVolume();\nChat.log(`Hostile mobs volume: ${(hostileVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setHostileVolume",
+      "signature": "instance.setHostileVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the volume for hostile mob sounds.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new hostile mobs volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setHostileVolume(0.9); // Set hostile mobs to 90%"
+      ]
+    },
+    {
+      "name": "getNeutralVolume",
+      "signature": "instance.getNeutralVolume()",
+      "returnType": "float",
+      "description": "Returns the current volume for neutral mob sounds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst neutralVolume = musicOptions.getNeutralVolume();\nChat.log(`Neutral mobs volume: ${(neutralVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setNeutralVolume",
+      "signature": "instance.setNeutralVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the volume for neutral mob sounds.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new neutral mobs volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setNeutralVolume(0.8); // Set neutral mobs to 80%"
+      ]
+    },
+    {
+      "name": "getPlayerVolume",
+      "signature": "instance.getPlayerVolume()",
+      "returnType": "float",
+      "description": "Returns the current player volume (footsteps, eating, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst playerVolume = musicOptions.getPlayerVolume();\nChat.log(`Player volume: ${(playerVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setPlayerVolume",
+      "signature": "instance.setPlayerVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the player volume.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new player volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setPlayerVolume(0.85); // Set player sounds to 85%"
+      ]
+    },
+    {
+      "name": "getAmbientVolume",
+      "signature": "instance.getAmbientVolume()",
+      "returnType": "float",
+      "description": "Returns the current ambient volume.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst ambientVolume = musicOptions.getAmbientVolume();\nChat.log(`Ambient volume: ${(ambientVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setAmbientVolume",
+      "signature": "instance.setAmbientVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the ambient volume.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new ambient volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setAmbientVolume(0.4); // Set ambient to 40%"
+      ]
+    },
+    {
+      "name": "getVoiceVolume",
+      "signature": "instance.getVoiceVolume()",
+      "returnType": "float",
+      "description": "Returns the current voice volume.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst voiceVolume = musicOptions.getVoiceVolume();\nChat.log(`Voice volume: ${(voiceVolume * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setVoiceVolume",
+      "signature": "instance.setVoiceVolume(volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the voice volume.",
+      "parameters": [
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new voice volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setVoiceVolume(0.7); // Set voice to 70%"
+      ]
+    },
+    {
+      "name": "getVolume",
+      "signature": "instance.getVolume(category)",
+      "returnType": "float",
+      "description": "Gets the volume for a specific sound category.",
+      "parameters": [
+        {
+          "name": "category",
+          "type": "string",
+          "description": "The sound category name (see Sound Categories Reference)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst masterVolume = musicOptions.getVolume(\"master\");\nconst musicVolume = musicOptions.getVolume(\"music\");\nChat.log(`Master: ${masterVolume}, Music: ${musicVolume}`);"
+      ]
+    },
+    {
+      "name": "getVolumes",
+      "signature": "instance.getVolumes()",
+      "returnType": "Map<string, float>",
+      "description": "Returns a map of all sound categories and their volumes.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst allVolumes = musicOptions.getVolumes();\nfor (const [category, volume] of Object.entries(allVolumes)) {\n    Chat.log(`${category}: ${(volume * 100).toFixed(0)}%`);\n}"
+      ]
+    },
+    {
+      "name": "setVolume",
+      "signature": "instance.setVolume(category, volume)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the volume for a specific sound category.",
+      "parameters": [
+        {
+          "name": "category",
+          "type": "string",
+          "description": "The sound category name (see Sound Categories Reference)"
+        },
+        {
+          "name": "volume",
+          "type": "double",
+          "description": "The new volume value (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.setVolume(\"weather\", 0.3); // Reduce weather sounds\nmusicOptions.setVolume(\"music\", 0.9);   // Increase music volume"
+      ]
+    },
+    {
+      "name": "getSoundDevice",
+      "signature": "instance.getSoundDevice()",
+      "returnType": "string",
+      "description": "Returns the currently selected audio device.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst currentDevice = musicOptions.getSoundDevice();\nChat.log(`Current audio device: ${currentDevice || \"Default\"}`);"
+      ]
+    },
+    {
+      "name": "setSoundDevice",
+      "signature": "instance.setSoundDevice(audioDevice)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Sets the audio device to use.",
+      "parameters": [
+        {
+          "name": "audioDevice",
+          "type": "string",
+          "description": "The audio device name to use"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst devices = musicOptions.getAudioDevices();\nif (devices.length > 1) {\n    musicOptions.setSoundDevice(devices[1]); // Use second available device\n    Chat.log(\"Switched to audio device: \" + devices[1]);\n}"
+      ]
+    },
+    {
+      "name": "getAudioDevices",
+      "signature": "instance.getAudioDevices()",
+      "returnType": "List<string>",
+      "description": "Returns a list of all connected audio devices.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst audioDevices = musicOptions.getAudioDevices();\nChat.log(\"Available audio devices:\");\naudioDevices.forEach((device, index) => {\n    const name = device || \"Default Device\";\n    Chat.log(`${index}: ${name}`);\n});"
+      ]
+    },
+    {
+      "name": "areSubtitlesShown",
+      "signature": "instance.areSubtitlesShown()",
+      "returnType": "boolean",
+      "description": "Checks if subtitles are enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nconst subtitlesEnabled = musicOptions.areSubtitlesShown();\nChat.log(`Subtitles are ${subtitlesEnabled ? \"enabled\" : \"disabled\"}`);"
+      ]
+    },
+    {
+      "name": "showSubtitles",
+      "signature": "instance.showSubtitles(val)",
+      "returnType": "MusicOptionsHelper",
+      "description": "Enables or disables subtitles.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to show subtitles or not"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const musicOptions = Client.getGameOptions().music;\nmusicOptions.showSubtitles(true);  // Enable subtitles\nChat.log(\"Subtitles enabled\");\n\n// Later...\nmusicOptions.showSubtitles(false); // Disable subtitles\nChat.log(\"Subtitles disabled\");"
+      ]
+    }
+  ]
+}

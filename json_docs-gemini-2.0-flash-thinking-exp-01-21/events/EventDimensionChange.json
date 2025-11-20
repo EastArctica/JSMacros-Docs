@@ -1,0 +1,20 @@
+{
+  "name": "EventDimensionChange",
+  "fullClassName": "EventDimensionChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player changes dimensions (e.g., from overworld to nether).",
+  "overview": "Fires when the player travels between different dimensions\nCommon dimension transitions include Overworld ↔ Nether, Overworld ↔ End\nThe `dimension` field contains the new dimension the player is entering\nThe `from` field contains the dimension the player is leaving\nNot cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

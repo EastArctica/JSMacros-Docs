@@ -1,0 +1,20 @@
+{
+  "name": "SendMessage",
+  "fullClassName": "EventSendMessage",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a message is about to be sent to the server.",
+  "overview": "This event fires when a message is about to be sent to the server. The `text` field contains the message that will be sent, and can be modified before the message is sent; changes will be reflected in the message that actually gets sent. This event is cancellable, preventing the message from being sent entirely. It is useful for message filtering, auto-correction, and command validation.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

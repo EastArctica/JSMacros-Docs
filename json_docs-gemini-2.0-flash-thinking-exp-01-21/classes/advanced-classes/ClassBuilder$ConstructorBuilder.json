@@ -1,0 +1,85 @@
+{
+  "name": "ClassBuilder.ConstructorBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.ConstructorBuilder",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "The `ClassBuilder.ConstructorBuilder` class is a specialized builder for creating and configuring constructors within generated classes. This builder provides a fluent API for defining constructor parameters, method bodies, annotations, and visibility modifiers, allowing you to create comprehensive constructor implementations.\n\nConstructorBuilder instances are obtained through the `addConstructor()` methods of ClassBuilder and support both simple code-based constructor creation and advanced body building with mixed Java/JavaScript execution.",
+  "overview": null,
+  "constructors": [],
+  "methods": [
+    {
+      "name": "body",
+      "signature": "body(code)",
+      "returnType": "ConstructorBuilder",
+      "description": "Sets the constructor body using complete Java code.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Complete Java constructor body code"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "constructorBuilder.body(`\n    this.name = name;\n    this.age = age;\n    this.initialized = true;\n`);"
+      ]
+    },
+    {
+      "name": "buildBody",
+      "signature": "buildBody()",
+      "returnType": "BodyBuilder<ConstructorBuilder>",
+      "description": "Creates a BodyBuilder for mixed Java/JavaScript constructor implementation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bodyBuilder = constructorBuilder.buildBody();"
+      ]
+    },
+    {
+      "name": "guestBody",
+      "signature": "guestBody(methodWrapper)",
+      "returnType": "ConstructorBuilder",
+      "description": "Sets the constructor body to execute JavaScript (Guest) code.",
+      "parameters": [
+        {
+          "name": "methodWrapper",
+          "type": "MethodWrapper",
+          "description": "JavaScript function to execute as constructor body"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const wrapper = JavaWrapper.methodToJava((self, args) => {\n    const name = args[0];\n    const age = args[1];\n    Chat.log(`Creating object: ${name}, age ${age}`);\n    return null;\n});\n\nconstructorBuilder.guestBody(wrapper);"
+      ]
+    },
+    {
+      "name": "addAnnotation",
+      "signature": "addAnnotation(type)",
+      "returnType": "AnnotationBuilder<ConstructorBuilder>",
+      "description": "Adds an annotation to the constructor.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "Class<?>",
+          "description": "The annotation type to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const annotationBuilder = constructorBuilder.addAnnotation(MyConstructorAnnotation.class);",
+        "constructorBuilder\n    .addAnnotation(ConstructorProperties.class)\n        .putArray(\"value\")\n            .putString(\"name\")\n            .putString(\"age\")\n            .finish()\n        .finish()\n    .body(`\n        this.name = name;\n        this.age = age;\n    `);"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "ClassBuilder<T>",
+      "description": "Finalizes the constructor and returns to the parent ClassBuilder.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = constructorBuilder.finish();"
+      ]
+    }
+  ]
+}

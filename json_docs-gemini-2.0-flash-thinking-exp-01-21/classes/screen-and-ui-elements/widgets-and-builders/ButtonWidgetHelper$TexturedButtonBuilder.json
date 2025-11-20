@@ -1,0 +1,74 @@
+{
+  "name": "TexturedButtonBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.ButtonWidgetHelper.TexturedButtonBuilder",
+  "extends": "AbstractWidgetBuilder<TexturedButtonBuilder, ?, ?>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `TexturedButtonBuilder` class provides a fluent builder API for creating textured buttons with custom textures for different button states. This builder extends the standard button functionality to support texture-based buttons with custom visual appearances for normal, disabled, and focused states.",
+  "overview": "The `TexturedButtonBuilder` class enables creation of sophisticated textured buttons with:\n\n- **Texture Management**: Support for custom textures in different button states\n- **State-Based Textures**: Separate textures for enabled, disabled, and focused states\n- **Builder Pattern**: Fluent API for readable and maintainable button creation\n- **Complete Widget Control**: Full control over positioning, sizing, appearance, and behavior\n- **Screen Integration**: Automatic integration with JSMacros custom screens\n- **Error Handling**: Built-in error handling for button actions",
+  "constructors": [
+    {
+      "signature": "new TexturedButtonBuilder(screen)",
+      "description": "Creates a new TexturedButtonBuilder for the specified screen.",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "IScreen",
+          "description": "The screen to add the textured button to"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "enabledTexture",
+      "signature": "enabledTexture(texture)",
+      "returnType": "TexturedButtonBuilder",
+      "description": "Sets the texture to display when the button is enabled and not focused.",
+      "parameters": [
+        {
+          "name": "texture",
+          "type": "String | Identifier",
+          "description": "The texture resource for enabled state"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.enabledTexture(\"minecraft:textures/gui/widgets.png:0:46:200:20\");"
+      ]
+    },
+    {
+      "name": "disabledTexture",
+      "signature": "disabledTexture(texture)",
+      "returnType": "TexturedButtonBuilder",
+      "description": "Sets the texture to display when the button is disabled.",
+      "parameters": [
+        {
+          "name": "texture",
+          "type": "String | Identifier",
+          "description": "The texture resource for disabled state"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.disabledTexture(\"minecraft:textures/gui/widgets.png:0:66:200:20\");"
+      ]
+    },
+    {
+      "name": "enabledFocusedTexture",
+      "signature": "enabledFocusedTexture(texture)",
+      "returnType": "TexturedButtonBuilder",
+      "description": "Sets the texture to display when the button is enabled and focused.",
+      "parameters": [
+        {
+          "name": "texture",
+          "type": "String | Identifier",
+          "description": "The texture resource for focused enabled state"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "builder.enabledFocusedTexture(\"minecraft:textures/gui/widgets.png:0:86:200:20\");"
+      ]
+    }
+  ]
+}

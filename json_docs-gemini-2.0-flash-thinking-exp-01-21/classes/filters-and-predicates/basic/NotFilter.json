@@ -1,0 +1,51 @@
+{
+  "name": "NotFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.logical.NotFilter",
+  "extends": "BasicFilter<T>",
+  "since": "JSMacros 1.6.5",
+  "description": "The `NotFilter` class is a logical filter that inverts the result of another filter using boolean NOT logic. It's part of the WorldScanner filtering system and allows you to create filtering conditions where the wrapped filter must return `false` for the NotFilter to return `true`. This class is particularly useful when you need to exclude certain blocks, entities, or conditions from your search results. For example, finding all blocks that are NOT air, or excluding specific types of blocks from a search.",
+  "overview": "The NotFilter provides a simple but powerful way to invert filter logic:\n\n- **Logical inversion**: Returns the opposite of what the wrapped filter would return\n- **Generic type support**: Can work with any type `T` that the wrapped filter can handle\n- **Fluent interface**: Inherits `and()`, `or()`, `xor()`, and `not()` methods from BasicFilter for chaining\n- **Performance**: Efficient single filter evaluation with simple boolean negation",
+  "constructors": [
+    {
+      "signature": "new NotFilter(filter)",
+      "description": "Creates a new NotFilter that inverts the result of the provided filter.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter whose logic will be inverted"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "apply",
+      "signature": "apply(obj)",
+      "returnType": "Boolean",
+      "description": "Applies the NOT filter logic to an object. Returns `true` when the wrapped filter returns `false`, and `false` when the wrapped filter returns `true`.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "T",
+          "description": "The object to test against the inverted filter logic"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const testBlock = World.getBlock(100, 64, 200); // Some block\nconst passesFilter = notAirFilter.apply(testBlock);\n\nif (passesFilter) {\n    Chat.log(\"Block is NOT air!\");\n}"
+      ]
+    },
+    {
+      "name": "getFilter",
+      "signature": "getFilter()",
+      "returnType": "IFilter<T>",
+      "description": "Returns the wrapped filter component.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const wrappedFilter = notAirFilter.getFilter();\nChat.log(`Wrapped filter: ${wrappedFilter.toString()}`);"
+      ]
+    }
+  ]
+}

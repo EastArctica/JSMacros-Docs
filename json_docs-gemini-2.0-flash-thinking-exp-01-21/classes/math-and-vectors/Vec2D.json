@@ -1,0 +1,53 @@
+{
+  "name": "Vec2D",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.math.Vec2D",
+  "extends": "Object",
+  "since": "JsMacros 1.2.6",
+  "description": "The `Vec2D` class represents a 2D vector defined by two points in 2D space - a start point (x1, y1) and an end point (x2, y2). This class provides comprehensive mathematical operations for vector manipulation, including addition, multiplication, scaling, dot product calculation, magnitude computation, and normalization. It's commonly used for 2D mathematical calculations, physics simulations, direction calculations, and spatial reasoning in scripts.",
+  "overview": "The `Vec2D` class provides essential 2D vector mathematics functionality:\n\n- **Vector Representation:** Defined by start and end points for precise spatial relationships\n- **Mathematical Operations:** Addition, multiplication, scaling, and dot product calculations\n- **Magnitude Operations:** Calculate vector length and squared magnitude for performance\n- **Direction Operations:** Reverse vectors and normalize to unit vectors\n- **Conversion Support:** Convert to 3D vectors and string representations\n- **Comparison Support:** Full equality, hashing, and comparison capabilities",
+  "constructors": [
+    {
+      "signature": "new Vec2D(x1, y1, x2, y2)",
+      "description": "Creates a new Vec2D with specified start and end coordinates.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": "X coordinate of the start point"
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": "Y coordinate of the start point"
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": "X coordinate of the end point"
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": "Y coordinate of the end point"
+        }
+      ]
+    },
+    {
+      "signature": "new Vec2D(start, end)",
+      "description": "Creates a new Vec2D from two Pos2D points.",
+      "parameters": [
+        {
+          "name": "start",
+          "type": "Pos2D",
+          "description": "Starting position of the vector"
+        },
+        {
+          "name": "end",
+          "type": "Pos2D",
+          "description": "Ending position of the vector"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

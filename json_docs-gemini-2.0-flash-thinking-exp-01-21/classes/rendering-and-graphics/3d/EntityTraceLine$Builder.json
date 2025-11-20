@@ -1,0 +1,193 @@
+[
+  {
+    "name": "EntityTraceLine.Builder",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.EntityTraceLine$Builder",
+    "extends": null,
+    "since": "JsMacros 1.9.0",
+    "description": "The `EntityTraceLine.Builder` class provides a fluent interface for creating `EntityTraceLine` instances with method chaining. It's the recommended way to create entity trace lines that automatically track and follow entity positions in 3D space.",
+    "overview": "The `EntityTraceLine.Builder` class allows you to construct `EntityTraceLine` objects through a chain of method calls, making the configuration process more readable and maintainable. Instead of passing multiple parameters to constructors, you can set properties individually using descriptive method names.\n\nThe builder is typically obtained through the `Draw3D.entityTraceLine()` method and provides two final operations:\n- `build()` - Creates the EntityTraceLine instance\n- `buildAndAdd()` - Creates the EntityTraceLine instance and automatically adds it to the Draw3D context\n\n## Creating a Builder\n```javascript\n// Obtain a builder from Draw3D context\nconst draw3D = Hud.createDraw3D();\nconst builder = draw3D.entityTraceLine();\n```",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "entity",
+        "signature": "entity(entity)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets the target entity to track with this trace line.",
+        "parameters": [
+          {
+            "name": "entity",
+            "type": "EntityHelper<?>",
+            "description": "The target entity to track (can be null)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const targetEntity = World.getEntities()[0]; // Get first entity\nconst entityTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0xFF0000)\n    .build();"
+        ]
+      },
+      {
+        "name": "entity",
+        "signature": "entity(entityType, worldPosition)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Note: This method may not be available in all versions. Use with caution.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "yOffset",
+        "signature": "yOffset(offset)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets the vertical offset from the entity's base position where the line should end.",
+        "parameters": [
+          {
+            "name": "offset",
+            "type": "double",
+            "description": "Vertical offset from entity base position (positive = upward)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const headLevelTrace = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .yOffset(1.6)  // Head level for most entities\n    .color(0x00FF00)\n    .build();"
+        ]
+      },
+      {
+        "name": "color",
+        "signature": "color(color)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets the trace line color using RGB format with full alpha.",
+        "parameters": [
+          {
+            "name": "color",
+            "type": "int",
+            "description": "RGB color value (0xRRGGBB)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const redTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0xFF0000)\n    .build();"
+        ]
+      },
+      {
+        "name": "color",
+        "signature": "color(color, alpha)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets the trace line color using RGB format with custom alpha.",
+        "parameters": [
+          {
+            "name": "color",
+            "type": "int",
+            "description": "RGB color value (0xRRGGBB)"
+          },
+          {
+            "name": "alpha",
+            "type": "int",
+            "description": "Alpha transparency value (0-255)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const semiTransparentBlue = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0x0000FF, 128)\n    .build();"
+        ]
+      },
+      {
+        "name": "color",
+        "signature": "color(r, g, b)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets the trace line color using separate RGB values with full alpha.",
+        "parameters": [
+          {
+            "name": "r",
+            "type": "int",
+            "description": "Red component (0-255)"
+          },
+          {
+            "name": "g",
+            "type": "int",
+            "description": "Green component (0-255)"
+          },
+          {
+            "name": "b",
+            "type": "int",
+            "description": "Blue component (0-255)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const greenTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0, 255, 0)\n    .build();"
+        ]
+      },
+      {
+        "name": "color",
+        "signature": "color(r, g, b, a)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets the trace line color using separate RGBA values.",
+        "parameters": [
+          {
+            "name": "r",
+            "type": "int",
+            "description": "Red component (0-255)"
+          },
+          {
+            "name": "g",
+            "type": "int",
+            "description": "Green component (0-255)"
+          },
+          {
+            "name": "b",
+            "type": "int",
+            "description": "Blue component (0-255)"
+          },
+          {
+            "name": "a",
+            "type": "int",
+            "description": "Alpha component (0-255)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const purpleTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(128, 0, 128, 200)\n    .build();"
+        ]
+      },
+      {
+        "name": "alpha",
+        "signature": "alpha(alpha)",
+        "returnType": "EntityTraceLine.Builder",
+        "description": "Sets only the alpha transparency value while preserving RGB color.",
+        "parameters": [
+          {
+            "name": "alpha",
+            "type": "int",
+            "description": "Alpha transparency value (0-255)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const fadedTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0xFF0000)\n    .alpha(100)\n    .build();"
+        ]
+      },
+      {
+        "name": "build",
+        "signature": "build()",
+        "returnType": "EntityTraceLine",
+        "description": "Creates the configured `EntityTraceLine` instance without adding it to the Draw3D context.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const entityTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0xFF0000)\n    .yOffset(1.0)\n    .build();\n\n// Add to context manually later\ndraw3D.addEntityTraceLine(entityTraceLine);"
+        ]
+      },
+      {
+        "name": "buildAndAdd",
+        "signature": "buildAndAdd()",
+        "returnType": "EntityTraceLine",
+        "description": "Creates the configured `EntityTraceLine` instance and automatically adds it to the Draw3D context.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const entityTraceLine = draw3D.entityTraceLine()\n    .entity(targetEntity)\n    .color(0x00FF00)\n    .yOffset(1.6)\n    .buildAndAdd(); // Automatically added to Draw3D context"
+        ]
+      }
+    ]
+  }
+]

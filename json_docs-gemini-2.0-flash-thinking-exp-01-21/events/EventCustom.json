@@ -1,0 +1,278 @@
+{
+  "name": "EventCustom",
+  "fullClassName": "EventCustom",
+  "extends": null,
+  "since": null,
+  "description": "This event allows you to create and trigger your own custom events with custom data.",
+  "overview": "Allows creation of user-defined events with custom data. Can store various data types (int, string, double, boolean, objects). Events can be triggered manually using `trigger()` or `triggerAsync()`. Custom events can be registered to appear in the GUI. Supports both synchronous and asynchronous triggering.",
+  "constructors": [
+    {
+      "signature": "new EventCustom(eventName)",
+      "description": "Creates a new custom event with a specified name.",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "string",
+          "description": "The name of the custom event."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "trigger",
+      "signature": "trigger()",
+      "returnType": "void",
+      "description": "Triggers the event and executes all registered listeners.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a custom event\nconst customEvent = new EventCustom(\"MyCustomEvent\");\ncustomEvent.putString(\"message\", \"Hello from custom event!\");\ncustomEvent.putInt(\"value\", 42);\n\n// Register the event (optional, makes it visible in GUI)\ncustomEvent.registerEvent();\n\n// Trigger the event\ncustomEvent.trigger();"
+      ]
+    },
+    {
+      "name": "triggerAsync",
+      "signature": "triggerAsync(callback)",
+      "returnType": "void",
+      "description": "Triggers the event asynchronously and runs a callback after completion.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "Function to run after all listeners finish"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Create and trigger a custom event with async callback\nconst event = new EventCustom(\"AsyncCustomEvent\");\nevent.putString(\"task\", \"Process data\");\nevent.putInt(\"amount\", 100);\n\n// Trigger with callback that runs after listeners finish\nevent.triggerAsync(JavaWrapper.methodToJava(() => {\n  Chat.log(\"&aCustom event processing completed!\");\n}));\n\n// Listen for the event\nJsMacros.on(\"Custom\", JavaWrapper.methodToJavaAsync((e) => {\n  if (e.eventName === \"AsyncCustomEvent\") {\n    const task = e.getString(\"task\");\n    const amount = e.getInt(\"amount\");\n\n    Chat.log(`&eProcessing task: &f${task} &7(amount: ${amount})`);\n\n    // Simulate some processing\n    Time.sleep(1000);\n    Chat.log(`&7Task completed: &f${task}`);\n  }\n}));"
+      ]
+    },
+    {
+      "name": "putInt",
+      "signature": "putInt(name, value)",
+      "returnType": "int",
+      "description": "Stores an integer value in the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name for the data"
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "description": "Integer value to store"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const customEvent = new EventCustom(\"MyCustomEvent\");\ncustomEvent.putInt(\"value\", 42);"
+      ]
+    },
+    {
+      "name": "putString",
+      "signature": "putString(name, value)",
+      "returnType": "string",
+      "description": "Stores a string value in the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name for the data"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "String value to store"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const customEvent = new EventCustom(\"MyCustomEvent\");\ncustomEvent.putString(\"message\", \"Hello from custom event!\");"
+      ]
+    },
+    {
+      "name": "putDouble",
+      "signature": "putDouble(name, value)",
+      "returnType": "double",
+      "description": "Stores a double value in the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name for the data"
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "description": "Double value to store"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "putBoolean",
+      "signature": "putBoolean(name, value)",
+      "returnType": "boolean",
+      "description": "Stores a boolean value in the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name for the data"
+        },
+        {
+          "name": "value",
+          "type": "boolean",
+          "description": "Boolean value to store"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "putObject",
+      "signature": "putObject(name, value)",
+      "returnType": "Object",
+      "description": "Stores any object value in the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name for the data"
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "description": "Object value to store"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "getType(name)",
+      "returnType": "string",
+      "description": "Returns the type of data stored under the given name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name to check"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInt",
+      "signature": "getInt(name)",
+      "returnType": "int | null",
+      "description": "Retrieves an integer value from the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name of the data"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"Custom\", JavaWrapper.methodToJavaAsync((e) => {\n  if (e.eventName === \"MyCustomEvent\") {\n    const value = e.getInt(\"value\");\n    Chat.log(`Custom event received: ${message} - ${value}`);\n  }\n}));"
+      ]
+    },
+    {
+      "name": "getString",
+      "signature": "getString(name)",
+      "returnType": "string | null",
+      "description": "Retrieves a string value from the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name of the data"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"Custom\", JavaWrapper.methodToJavaAsync((e) => {\n  if (e.eventName === \"MyCustomEvent\") {\n    const message = e.getString(\"message\");\n    Chat.log(`Custom event received: ${message} - ${value}`);\n  }\n}));"
+      ]
+    },
+    {
+      "name": "getDouble",
+      "signature": "getDouble(name)",
+      "returnType": "double | null",
+      "description": "Retrieves a double value from the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name of the data"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBoolean",
+      "signature": "getBoolean(name)",
+      "returnType": "boolean | null",
+      "description": "Retrieves a boolean value from the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name of the data"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getObject",
+      "signature": "getObject(name)",
+      "returnType": "Object | null",
+      "description": "Retrieves an object value from the event data.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Key name of the data"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getUnderlyingMap",
+      "signature": "getUnderlyingMap()",
+      "returnType": "Map<string, Object>",
+      "description": "Returns the underlying map that stores the event data.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "registerEvent",
+      "signature": "registerEvent()",
+      "returnType": "void",
+      "description": "Registers this custom event so it appears in the GUI.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a custom event\nconst customEvent = new EventCustom(\"MyCustomEvent\");\ncustomEvent.putString(\"message\", \"Hello from custom event!\");\ncustomEvent.putInt(\"value\", 42);\n\n// Register the event (optional, makes it visible in GUI)\ncustomEvent.registerEvent();"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

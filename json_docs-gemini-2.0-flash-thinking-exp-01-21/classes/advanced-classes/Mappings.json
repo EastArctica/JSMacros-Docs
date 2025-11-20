@@ -1,0 +1,84 @@
+{
+  "name": "Mappings",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings",
+  "since": "1.3.1",
+  "description": "The `Mappings` class is an advanced utility in JSMacros that provides comprehensive support for handling Minecraft obfuscation mappings and reflection operations. It enables scripts to work with both named and obfuscated (intermediary) class, method, and field names, making it possible to create scripts that work across different Minecraft versions and modding environments.\n\nThis class is particularly useful for:\n- Working with Minecraft internals that are obfuscated\n- Creating version-compatible scripts\n- Advanced reflection operations with mapping support\n- Accessing private/internal Minecraft APIs\n- Development of complex modding utilities\n\n**Key Features:**\n- Load mappings from Tiny mapping files or Fabric Yarn JARs\n- Bidirectional mapping between named and intermediary representations\n- Automatic field and method name resolution\n- Support for both local files and remote URLs\n- Cached mapping loading for performance\n- Integration with JSMacros reflection system",
+  "overview": "The `Mappings` system works by maintaining two mapping directions:\n- **Forward Mappings:** Intermediary (obfuscated) → Named (deobfuscated)\n- **Reverse Mappings:** Named (deobfuscated) → Intermediary (obfuscated)\n\nThis allows scripts to use human-readable names while still being able to interact with the actual obfuscated Minecraft code at runtime.",
+  "constructors": [
+    {
+      "signature": "new Mappings(mappingsource)",
+      "description": "Creates a new Mappings instance with the specified mapping source.",
+      "parameters": [
+        {
+          "name": "mappingsource",
+          "type": "String",
+          "description": "Path or URL to the mapping file (`.tiny`) or Yarn mappings JAR"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getMappings",
+      "signature": "getMappings()",
+      "returnType": "Map<String, ClassData>",
+      "description": "Retrieves the forward mappings (Intermediary → Named).\n\nThrows: `IOException` - If the mapping source is malformed or cannot be accessed",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst forwardMappings = mappings.getMappings();\n\n// Access a specific class's mappings\nconst playerClass = forwardMappings.get(\"net/minecraft/class_1657\");\nif (playerClass) {\n    Chat.log(\"Found player class mapping: \" + playerClass.name);\n}",
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n    try {\n        const forwardMappings = mappings.getMappings();\n        const reverseMappings = mappings.getReversedMappings();\n\n        Chat.log(\"=== Analysis for: \" + className + \" ===\");\n\n        // Check forward mappings\n        const forwardData = forwardMappings.get(className.replace(\".\", \"/\"));\n        if (forwardData) {\n            Chat.log(\"Forward mapping found:\");\n            Chat.log(\"  Named class: \" + forwardData.name);\n            Chat.log(\"  Methods: \" + forwardData.methods.size());\n            Chat.log(\"  Fields: \" + forwardData.fields.size());\n        }\n\n        // Check reverse mappings\n        const reverseData = reverseMappings.get(className);\n        if (reverseData) {\n            Chat.log(\"Reverse mapping found:\");\n            Chat.log(\"  Intermediary class: \" + reverseData.name);\n            Chat.log(\"  Methods: \" + reverseData.methods.size());\n            Chat.log(\"  Fields: \" + reverseData.fields.size());\n        }\n\n        // List some methods if available\n        if (forwardData) {\n            Chat.log(\"\\nMethods:\");\n            let count = 0;\n            for (const [sig, method] of forwardData.methods) {\n                if (count < 10) { // Limit output\n                    Chat.log(\"  \" + method.name + method.sig.get());\n                    count++;\n                }\n            }\n            if (forwardData.methods.size() > 10) {\n                Chat.log(\"  ... and \" + (forwardData.methods.size() - 10) + \" more\");\n            }\n        }\n\n    } catch (e) {\n        Chat.log(\"Error analyzing mappings: \" + e.message);\n    }"
+      ]
+    },
+    {
+      "name": "getReversedMappings",
+      "signature": "getReversedMappings()",
+      "returnType": "Map<String, ClassData>",
+      "description": "Retrieves the reverse mappings (Named → Intermediary).\n\nThrows: `IOException` - If the mapping source is malformed or cannot be accessed",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst reversedMappings = mappings.getReversedMappings();\n\n// Get the intermediary name for a class\nconst playerClass = reversedMappings.get(\"net.minecraft.entity.player.PlayerEntity\");\nif (playerClass) {\n    Chat.log(\"Player entity intermediary name: \" + playerClass.name);\n}",
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n    try {\n        const forwardMappings = mappings.getMappings();\n        const reverseMappings = mappings.getReversedMappings();\n\n        Chat.log(\"=== Analysis for: \" + className + \" ===\");\n\n        // Check forward mappings\n        const forwardData = forwardMappings.get(className.replace(\".\", \"/\"));\n        if (forwardData) {\n            Chat.log(\"Forward mapping found:\");\n            Chat.log(\"  Named class: \" + forwardData.name);\n            Chat.log(\"  Methods: \" + forwardData.methods.size());\n            Chat.log(\"  Fields: \" + forwardData.fields.size());\n        }\n\n        // Check reverse mappings\n        const reverseData = reverseMappings.get(className);\n        if (reverseData) {\n            Chat.log(\"Reverse mapping found:\");\n            Chat.log(\"  Intermediary class: \" + reverseData.name);\n            Chat.log(\"  Methods: \" + reverseData.methods.size());\n            Chat.log(\"  Fields: \" + reverseData.fields.size());\n        }\n\n        // List some methods if available\n        if (forwardData) {\n            Chat.log(\"\\nMethods:\");\n            let count = 0;\n            for (const [sig, method] of forwardData.methods) {\n                if (count < 10) { // Limit output\n                    Chat.log(\"  \" + method.name + method.sig.get());\n                    count++;\n                }\n            }\n            if (forwardData.methods.size() > 10) {\n                Chat.log(\"  ... and \" + (forwardData.methods.size() - 10) + \" more\");\n            }\n        }\n\n    } catch (e) {\n        Chat.log(\"Error analyzing mappings: \" + e.message);\n    }"
+      ]
+    },
+    {
+      "name": "remapClass",
+      "signature": "remapClass(instance)",
+      "returnType": "MappedClass<T>",
+      "description": "Creates a MappedClass wrapper for an object instance that uses mappings for reflection operations.\n\nThrows: `IOException` - If mappings cannot be loaded",
+      "parameters": [
+        {
+          "name": "instance",
+          "type": "T",
+          "description": "The object instance to wrap with mapping support"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\nconst player = Player.getPlayer();\n\n// Create a mapping-aware wrapper for the player\nconst mappedPlayer = mappings.remapClass(player.getRaw());\n\n// Now you can access fields/methods using named versions\n// The wrapper will automatically translate to obfuscated names\n",
+        "function createVersionIndependentTool() {\n    // Load mappings that work across different Minecraft versions\n    const mappings = Reflection.loadMappingHelper(\"mappings/current.tiny\");\n    const player = Player.getPlayer();\n    const mappedPlayer = mappings.remapClass(player.getRaw());\n\n    try {\n        // Use named method that should work across versions\n        // The mappings will translate to the correct obfuscated method name\n        const inventory = mappedPlayer.invokeMethod(\"getInventory\");\n        const selectedSlot = inventory.invokeMethod(\"getSelectedSlot\");\n\n        Chat.log(\"Selected hotbar slot: \" + selectedSlot);\n\n        // Access fields using named versions\n        const hotbarSize = inventory.getField(\"hotbarSize\");\n        Chat.log(\"Hotbar size: \" + hotbarSize);\n\n    } catch (e) {\n        Chat.log(\"Error in version-independent tool: \" + e.message);\n    }\n}",
+        "function createDynamicAPIAccessor() {\n    const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n    try {\n        // Access the Minecraft client dynamically\n        const minecraftClass = mappings.getClass(\"net.minecraft.client.MinecraftClient\");\n        const minecraftInstance = minecraftClass.getField(\"instance\");\n\n        Chat.log(\"Minecraft client: \" + minecraftInstance);\n\n        // Access player through the client\n        const player = minecraftInstance.invokeMethod(\"getPlayer\");\n        if (player) {\n            const mappedPlayer = mappings.remapClass(player);\n\n            // Now we can use named field access\n            const age = mappedPlayer.getField(\"age\");\n            const uuid = mappedPlayer.invokeMethod(\"getUuidAsString\");\n\n            Chat.log(\"Player age: \" + age);\n            Chat.log(\"Player UUID: \" + uuid);\n        }\n\n    } catch (e) {\n        Chat.log(\"Error in dynamic API access: \" + e.message);\n    }\n}",
+        "function compareWithAndWithoutMappings() {\n    const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n    const player = Player.getPlayer();\n\n    try {\n        Chat.log(\"=== Comparison: With vs Without Mappings ===\");\n\n        // Without mappings (direct reflection)\n        const rawPlayer = player.getRaw();\n        Chat.log(\"Raw player class: \" + rawPlayer.getClass().getName());\n\n        // With mappings\n        const mappedPlayer = mappings.remapClass(rawPlayer);\n\n        // Try to access a field - this might fail without mappings\n        try {\n            // This would likely fail without proper field name\n            const directHealth = rawPlayer.getClass().getField(\"health\").get(rawPlayer);\n            Chat.log(\"Direct health access: \" + directHealth);\n        } catch (e) {\n            Chat.log(\"Direct access failed: \" + e.message);\n        }\n\n        // With mappings, this should work\n        try {\n            const mappedHealth = mappedPlayer.getField(\"health\");\n            Chat.log(\"Mapped health access: \" + mappedHealth);\n        } catch (e) {\n            Chat.log(\"Mapped access failed: \" + e.message);\n        }\n\n    } catch (e) {\n        Chat.log(\"Error in comparison: \" + e.message);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getClass",
+      "signature": "getClass(className)",
+      "returnType": "MappedClass<?>",
+      "description": "Gets a MappedClass for a class name without requiring an instance (for accessing static members).\n\nThrows:\n- `IOException` - If mappings cannot be loaded\n- `ClassNotFoundException` - If the class cannot be found",
+      "parameters": [
+        {
+          "name": "className",
+          "type": "String",
+          "description": "The class name (can be either named or intermediary format)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n// Get class using named format\nconst playerClass = mappings.getClass(\"net.minecraft.entity.player.PlayerEntity\");\n\n// Get class using intermediary format\nconst playerClassIntermediary = mappings.getClass(\"net/minecraft/class_1657\");\n\n// Access static methods/fields through the mapped class\n",
+        "function createDynamicAPIAccessor() {\n    const mappings = Reflection.loadMappingHelper(\"mappings/minecraft-1.20.1.tiny\");\n\n    try {\n        // Access the Minecraft client dynamically\n        const minecraftClass = mappings.getClass(\"net.minecraft.client.MinecraftClient\");\n        const minecraftInstance = minecraftClass.getField(\"instance\");\n\n        Chat.log(\"Minecraft client: \" + minecraftInstance);\n\n        // Access player through the client\n        const player = minecraftInstance.invokeMethod(\"getPlayer\");\n        if (player) {\n            const mappedPlayer = mappings.remapClass(player);\n\n            // Now we can use named field access\n            const age = mappedPlayer.getField(\"age\");\n            const uuid = mappedPlayer.invokeMethod(\"getUuidAsString\");\n\n            Chat.log(\"Player age: \" + age);\n            Chat.log(\"Player UUID: \" + uuid);\n        }\n\n    } catch (e) {\n        Chat.log(\"Error in dynamic API access: \" + e.message);\n    }\n}"
+      ]
+    }
+  ]
+}

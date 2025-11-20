@@ -1,0 +1,117 @@
+{
+  "name": "MappedClass",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings$MappedClass",
+  "extends": "WrappedClassInstance<T>",
+  "since": "JSMacros 1.6.0",
+  "description": "The `MappedClass` class is a powerful reflection wrapper that extends `WrappedClassInstance` with mapping-aware capabilities. It provides dynamic access to Java class instances and their members while automatically translating between human-readable names and obfuscated Minecraft internals using mapping data.\n\nThis class serves as a bridge between JSMacros scripts and Minecraft's internal APIs, enabling version-compatible scripting by automatically handling the translation between named method/field identifiers and their obfuscated counterparts.",
+  "overview": "The `MappedClass` wrapper combines the reflection capabilities of `WrappedClassInstance` with mapping translation from the `Mappings` system. This enables:\n\n- Automatic translation between named and obfuscated member names\n- Version-compatible method invocation and field access\n- Fallback to direct reflection when mappings are unavailable\n- Seamless integration with existing reflection-based code\n- Support for both instance and static member access",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getField",
+      "signature": "getField(String name)",
+      "returnType": "Object",
+      "description": "Retrieves the value of a field by its human-readable (named) identifier, automatically applying mapping translation. This method can be used to access both instance fields on a `MappedClass` representing an object, and static fields on a `MappedClass` instance representing a class.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The human-readable name of the field to retrieve."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const health = mappedPlayer.getField(\"health\");",
+        "const hunger = mappedPlayer.getField(\"foodLevel\");",
+        "const experience = mappedPlayer.getField(\"experienceLevel\");",
+        "const diamondItem = itemClass.getField(\"DIAMOND\");",
+        "const swordItem = itemClass.getField(\"DIAMOND_SWORD\");",
+        "const allowFlight = abilities.getField(\"allowFlying\");",
+        "const flying = abilities.getField(\"flying\");",
+        "const walkSpeed = abilities.getField(\"walkSpeed\");",
+        "const pitch = lookDirection.getField(\"x\");",
+        "const yaw = lookDirection.getField(\"y\");",
+        "const health = mappedPlayer.getField(\"health\");",
+        "const maxHealth = mappedPlayer.getField(\"maxHealth\");",
+        "const health = safeMappedAccess(player.getRaw(), \"health\");"
+      ]
+    },
+    {
+      "name": "setFieldValue",
+      "signature": "setFieldValue(String name, Object value)",
+      "returnType": "void",
+      "description": "Sets the value of a field by its human-readable (named) identifier, automatically applying mapping translation. This method can be used to modify both instance and static fields.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The human-readable name of the field to set."
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "description": "The new value to assign to the field."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "mappedPlayer.setFieldValue(\"experienceLevel\", experience + 1);",
+        "abilities.setFieldValue(\"allowFlying\", true);"
+      ]
+    },
+    {
+      "name": "getFieldAsClass",
+      "signature": "getFieldAsClass(Class<?> type, String name)",
+      "returnType": "MappedClass<?>",
+      "description": "Retrieves the value of a field, attempting to cast it to a specified Java `Class` type, and returns it wrapped as a `MappedClass` instance. Useful for ensuring type safety and continuing mapped reflection on nested objects.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "Class<?>",
+          "description": "The target Java `Class` type to which the field value should be cast."
+        },
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The human-readable name of the field to retrieve."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const level = mappedPlayer.getFieldAsClass(Integer.class, \"experienceLevel\");"
+      ]
+    },
+    {
+      "name": "invokeMethod",
+      "signature": "invokeMethod(String nameOrSignature, Object... args)",
+      "returnType": "Object",
+      "description": "Invokes a method on the wrapped instance (or class for static methods), using either its human-readable name or its full method signature. Mapping translation is applied automatically to resolve the correct method. This method can be used for both instance and static method calls.",
+      "parameters": [
+        {
+          "name": "nameOrSignature",
+          "type": "String",
+          "description": "The human-readable name or full Java signature (e.g., `\"method(Ljava/lang/String;)V\"`) of the method to invoke."
+        },
+        {
+          "name": "args",
+          "type": "Object...",
+          "description": "Optional arguments to pass to the method."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const sub1 = mappedPlayer.invokeMethod(\"substring(II)Ljava/lang/String;\", 3, 8);",
+        "const sub2 = mappedPlayer.invokeMethod(\"substring\", 3);",
+        "const world = mappedPlayer.invokeMethod(\"getWorld\");",
+        "const pos = mappedPlayer.invokeMethod(\"getBlockPos\");",
+        "const block = world.invokeMethod(\"getBlockState\", pos);",
+        "const selectedSlot = inventory.invokeMethod(\"getSelectedSlot\");",
+        "const stack = inventory.invokeMethod(\"getStack\", selectedSlot);",
+        "const itemName = stack.invokeMethod(\"getName\");",
+        "const abilities = mappedPlayer.invokeMethod(\"getAbilities\");",
+        "const lookDirection = mappedPlayer.invokeMethod(\"getRotationVector\");",
+        "const world = safeMappedAccess(player.getRaw(), \"getWorld\", true);"
+      ]
+    }
+  ]
+}

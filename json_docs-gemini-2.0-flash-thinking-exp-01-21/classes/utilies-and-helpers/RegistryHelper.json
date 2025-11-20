@@ -1,0 +1,9 @@
+{
+  "name": "RegistryHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.RegistryHelper",
+  "since": "1.8.4",
+  "description": "The `RegistryHelper` class is a comprehensive utility class for accessing and working with Minecraft's registry system.",
+  "overview": "It provides methods to retrieve items, blocks, enchantments, entities, status effects, and other game objects by their registry IDs, as well as methods to get lists of all registered objects of each type. This class serves as the main interface for script developers to look up and create instances of Minecraft game objects programmatically.\n\nThe RegistryHelper provides type-safe access to Minecraft's registries, allowing scripts to work with game objects using their string identifiers (like `\"minecraft:stone\"` or `\"diamond_sword\"`) and convert them into appropriate helper objects that can be used in JSMacros scripts.",
+  "constructors": [],
+  "methods": []
+}

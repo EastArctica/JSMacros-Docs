@@ -1,0 +1,308 @@
+{
+  "name": "ClassBuilder.AnnotationBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.AnnotationBuilder<T>",
+  "extends": "None",
+  "since": "1.6.5",
+  "description": "The `ClassBuilder.AnnotationBuilder` class is a fluent builder for adding and configuring annotations on classes, methods, fields, and constructors within the ClassBuilder system. This builder provides a convenient API for setting annotation properties, including primitive values, strings, enums, arrays, and nested annotations.",
+  "overview": "AnnotationBuilder instances are obtained through various annotation-related methods in the ClassBuilder system and allow you to construct complex annotation structures with multiple properties and nested annotations.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "putString",
+      "signature": "putString(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a string property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The string value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putString(\"since\", \"1.5.0\");"
+      ]
+    },
+    {
+      "name": "putInt",
+      "signature": "putInt(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets an integer property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The integer value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putInt(\"priority\", 1);"
+      ]
+    },
+    {
+      "name": "putLong",
+      "signature": "putLong(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a long property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The long value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putLong(\"timeout\", 5000);"
+      ]
+    },
+    {
+      "name": "putDouble",
+      "signature": "putDouble(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a double property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The double value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putDouble(\"version\", 2.5);"
+      ]
+    },
+    {
+      "name": "putFloat",
+      "signature": "putFloat(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a float property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The float value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putFloat(\"ratio\", 0.75);"
+      ]
+    },
+    {
+      "name": "putBoolean",
+      "signature": "putBoolean(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a boolean property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "boolean",
+          "description": "The boolean value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putBoolean(\"enabled\", true);"
+      ]
+    },
+    {
+      "name": "putByte",
+      "signature": "putByte(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a byte property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The byte value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putByte(\"code\", 10);"
+      ]
+    },
+    {
+      "name": "putShort",
+      "signature": "putShort(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a short property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The short value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putShort(\"port\", 8080);"
+      ]
+    },
+    {
+      "name": "putChar",
+      "signature": "putChar(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a char property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The char value to set (single character string)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putChar(\"separator\", ',');"
+      ]
+    },
+    {
+      "name": "putClass",
+      "signature": "putClass(name, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets a Class property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "value",
+          "type": "Class<?>",
+          "description": "The Class object to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putClass(\"target\", String.class);"
+      ]
+    },
+    {
+      "name": "putEnum",
+      "signature": "putEnum(name, enumClass, value)",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Sets an enum property value on the annotation.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the annotation property"
+        },
+        {
+          "name": "enumClass",
+          "type": "Class<?>",
+          "description": "The enum class"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The enum constant name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "annotationBuilder.putEnum(\"status\", Thread.State.class, \"RUNNABLE\");"
+      ]
+    },
+    {
+      "name": "putArray",
+      "signature": "putArray(name)",
+      "returnType": "AnnotationArrayBuilder",
+      "description": "Creates an array property builder for the specified property name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the array property"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const arrayBuilder = annotationBuilder.putArray(\"value\");"
+      ]
+    },
+    {
+      "name": "putNested",
+      "signature": "putNested(name, annotationType)",
+      "returnType": "AnnotationBuilder<?>",
+      "description": "Creates a nested annotation builder for the specified property.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the nested annotation property"
+        },
+        {
+          "name": "annotationType",
+          "type": "Class<?>",
+          "description": "The annotation type"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const nestedAnnotation = annotationBuilder.putNested(\"constraint\", MyConstraint.class);"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "T",
+      "description": "Finalizes the annotation and returns to the parent builder. This method must be called to apply the annotation to the target element. After calling finish(), the annotation is applied and the builder returns to the parent context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = annotationBuilder.finish();"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+{
+  "name": "HorseEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.HorseEntityHelper",
+  "extends": "AbstractHorseEntityHelper<HorseEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `HorseEntityHelper` class provides specialized functionality for interacting with horse entities in Minecraft. This helper offers access to horse-specific properties including variant information, taming status, equipment, and performance statistics like speed and jump height. It extends `AbstractHorseEntityHelper` and inherits comprehensive methods for managing horse ownership, breeding, and combat attributes.",
+  "overview": "Horses are tamable passive mobs that can be ridden by players after taming and equipping with a saddle. They come in different color variants with marking patterns, and each horse has randomized stats for health, speed, and jump strength that determine their overall quality for riding and transportation.\n\nThis class is typically obtained through entity events, world queries, or by casting from `EntityHelper` using the `asAnimal()` method when dealing with horse entities.",
+  "constructors": [
+    {
+      "signature": "HorseEntityHelper()",
+      "description": "HorseEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through entity-related events (e.g., `EntityInteract`, `EntitySpawn`), world entity queries and filtering for horse entities, type casting from `EntityHelper` using `asAnimal()` when appropriate, or methods that return horse entities from other helpers.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getVariant",
+      "signature": "getVariant()",
+      "returnType": "int",
+      "description": "Returns the raw integer value representing the horse's variant (color and markings). This value needs to be decoded to understand the horse's appearance.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOwner",
+      "signature": "getOwner()",
+      "returnType": "String",
+      "description": "Get the UUID of the horse's owner, or null if unowned",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Track and manage horses in the area\nclass HorseManager {\n    constructor() {\n        this.trackedHorses = new Map();\n        this.myHorses = new Set(); // Horses you own\n        this.playerUuid = Player.getPlayer().getUUID();\n    }\n\n    scanHorses() {\n        const entities = World.getEntities();\n        const horses = entities.filter(entity => entity.is(\"minecraft:horse\"));\n\n        horses.forEach(entity => {\n            const uuid = entity.getUUID();\n            const horse = entity.asAnimal();\n            if (!horse) return;\n\n            if (!this.trackedHorses.has(uuid)) {\n                this.trackedHorses.set(uuid, {\n                    entity: entity,\n                    horse: horse,\n                    name: this.generateHorseName(horse),\n                    firstSeen: Client.getTime(),\n                    lastChecked: Client.getTime()\n                });\n\n                Chat.log(`&aNew horse detected: ${this.trackedHorses.get(uuid).name}`);\n            } else {\n                this.trackedHorses.get(uuid).lastChecked = Client.getTime();\n            }\n        });\n\n        // Clean up removed horses\n        for (const [uuid, data] of this.trackedHorses) {\n            if (!data.entity.isAlive()) {\n                Chat.log(`&cHorse ${data.name} has been removed`);\n                this.trackedHorses.delete(uuid);\n                this.myHorses.delete(uuid);\n            }\n        }\n    }\n\n    generateHorseName(horse) {\n        const variant = horse.getVariant();\n        const colors = [\"White\", \"Creamy\", \"Chestnut\", \"Brown\", \"Black\", \"Gray\", \"Dark Brown\"];\n        const colorIndex = variant & 0x7;\n        const color = colors[Math.min(colorIndex, colors.length - 1)];\n\n        return `${color} Horse ${Math.floor(Math.random() * 1000)}`;\n    }\n\n    claimHorse(entity) {\n        const uuid = entity.getUUID();\n        const horse = entity.asAnimal();\n        if (!horse || !horse.isTame()) {\n            Chat.log(\"&cCannot claim an untamed horse\");\n            return false;\n        }\n\n        const owner = horse.getOwner();\n        if (owner && owner !== this.playerUuid) {\n            Chat.log(\"&cThis horse already belongs to someone else\");\n            return false;\n        }\n\n        this.myHorses.add(uuid);\n        const horseData = this.trackedHorses.get(uuid);\n        Chat.log(`&aClaimed horse: ${horseData ? horseData.name : 'Unknown Horse'}`);\n        return true;\n    }\n\n    listMyHorses() {\n        Chat.log(\"=== My Horses ===\");\n        if (this.myHorses.size === 0) {\n            Chat.log(\"You don't own any horses yet\");\n            return;\n        }\n\n        this.myHorses.forEach(uuid => {\n            const data = this.trackedHorses.get(uuid);\n            if (!data) return;\n\n            const horse = data.horse;\n            const assessment = assessHorseQuality(horse);\n            const pos = data.entity.getPos();\n\n            Chat.log(`&e${data.name}:`);\n            Chat.log(`  Quality: ${assessment.quality} (${assessment.score}/100)`);\n            Chat.log(`  Speed: ${assessment.speed} b/s, Jump: ${assessment.jumpHeight}m`);\n            Chat.log(`  Location: [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]`);\n            Chat.log(`  Saddled: ${horse.isSaddled()}`);\n        });\n    }\n\n    findNearestMyHorse() {\n        const player = Player.getPlayer();\n        let nearestHorse = null;\n        let nearestDistance = Infinity;\n\n        this.myHorses.forEach(uuid => {\n            const data = this.trackedHorses.get(uuid);\n            if (!data) return;\n\n            const distance = player.distanceTo(data.entity);\n            if (distance < nearestDistance) {\n                nearestDistance = distance;\n                nearestHorse = data;\n            }\n        });\n\n        return nearestHorse ? { ...nearestHorse, distance: nearestDistance } : null;\n    }\n}\n\nconst horseManager = new HorseManager();\n\n// Scan for horses every 5 seconds\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    if (Client.getTime() % 100 === 0) {\n        horseManager.scanHorses();\n    }\n}));\n\n// Command to claim nearest tamed horse\nChat.createCommandBuilder(\"claimhorse\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const player = Player.getPlayer();\n        const entities = World.getEntities();\n        let nearestTamedHorse = null;\n        let nearestDistance = Infinity;\n\n        entities.forEach(entity => {\n            if (entity.is(\"minecraft:horse\")) {\n                const horse = entity.asAnimal();\n                if (horse && horse.isTame()) {\n                    const distance = player.distanceTo(entity);\n                    if (distance < nearestDistance && distance <= 10) {\n                        nearestDistance = distance;\n                        nearestTamedHorse = entity;\n                    }\n                }\n            }\n        });\n\n        if (nearestTamedHorse) {\n            horseManager.claimHorse(nearestTamedHorse);\n        } else {\n            Chat.log(\"&cNo tamed horses nearby within 10 blocks\");\n        }\n    }))\n    .register();\n\n// Command to list owned horses\nChat.createCommandBuilder(\"myhorses\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        horseManager.listMyHorses();\n    }))\n    .register();\n\n// Command to find nearest owned horse\nChat.createCommandBuilder(\"nearesthorse\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const nearest = horseManager.findNearestMyHorse();\n        if (nearest) {\n            Chat.log(`&aNearest horse: ${nearest.name} (${nearest.distance.toFixed(1)}m away)`);\n            Chat.log(`Speed: ${horseManager.trackedHorses.get(nearest.entity.getUUID()).horse.getHorseSpeed().toFixed(2)} b/s`);\n        } else {\n            Chat.log(\"&cYou don't own any horses or they're too far away\");\n        }\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "isTame",
+      "signature": "isTame()",
+      "returnType": "boolean",
+      "description": "Check if the horse is tamed",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAngry",
+      "signature": "isAngry()",
+      "returnType": "boolean",
+      "description": "Check if the horse is angry (will not accept taming attempts)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBred",
+      "signature": "isBred()",
+      "returnType": "boolean",
+      "description": "Check if the horse was bred by players",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSaddled",
+      "signature": "isSaddled()",
+      "returnType": "boolean",
+      "description": "Check if the horse has a saddle equipped",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canWearArmor",
+      "signature": "canWearArmor()",
+      "returnType": "boolean",
+      "description": "Check if the horse can wear horse armor",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBeSaddled",
+      "signature": "canBeSaddled()",
+      "returnType": "boolean",
+      "description": "Check if the horse can be saddled",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInventorySize",
+      "signature": "getInventorySize()",
+      "returnType": "int",
+      "description": "Get the size of the horse's inventory",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSpeedStat",
+      "signature": "getSpeedStat()",
+      "returnType": "float",
+      "description": "Get the horse's movement speed attribute value",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHorseSpeed",
+      "signature": "getHorseSpeed()",
+      "returnType": "float",
+      "description": "Get the horse's speed in blocks per second",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Evaluate horses for riding quality\nfunction assessHorseQuality(horse) {\n    const speed = horse.getHorseSpeed();\n    const jumpHeight = horse.getHorseJumpHeight();\n    const health = horse.getHealthStat();\n    const isTame = horse.isTame();\n    const isSaddled = horse.isSaddled();\n\n    let quality = \"Poor\";\n    let score = 0;\n\n    // Score based on stats (max possible score: 100)\n    if (speed >= 13.5) score += 35; // Excellent speed\n    else if (speed >= 12.0) score += 28; // Good speed\n    else if (speed >= 10.0) score += 20; // Average speed\n    else score += 10; // Below average speed\n\n    if (jumpHeight >= 5.0) score += 35; // Excellent jump\n    else if (jumpHeight >= 4.0) score += 28; // Good jump\n    else if (jumpHeight >= 3.0) score += 20; // Average jump\n    else score += 10; // Below average jump\n\n    if (health >= 25) score += 30; // Excellent health\n    else if (health >= 20) score += 24; // Good health\n    else if (health >= 15) score += 18; // Average health\n    else score += 12; // Below average health\n\n    // Determine quality rating\n    if (score >= 85) quality = \"Excellent\";\n    else if (score >= 70) quality = \"Very Good\";\n    else if (score >= 55) quality = \"Good\";\n    else if (score >= 40) quality = \"Average\";\n    else if (score >= 25) quality = \"Fair\";\n\n    return {\n        quality,\n        score,\n        speed: speed.toFixed(2),\n        jumpHeight: jumpHeight.toFixed(2),\n        health,\n        isTame,\n        isSaddled,\n        stats: {\n            speedStat: horse.getSpeedStat().toFixed(4),\n            jumpStrengthStat: horse.getJumpStrengthStat().toFixed(4),\n            maxHealth: horse.getMaxHealth()\n        }\n    };\n}\n\n// Find and evaluate the best horses\nfunction findBestHorses() {\n    const entities = World.getEntities();\n    const horses = entities.filter(entity => entity.is(\"minecraft:horse\"));\n    const horseData = [];\n\n    horses.forEach(entity => {\n        const horse = entity.asAnimal();\n        if (!horse) return;\n\n        const assessment = assessHorseQuality(horse);\n        const variant = horse.getVariant();\n        const pos = entity.getPos();\n\n        horseData.push({\n            entity,\n            assessment,\n            variant,\n            distance: Player.getPlayer().distanceTo(entity),\n            position: pos\n        });\n    });\n\n    // Sort by quality score\n    horseData.sort((a, b) => b.assessment.score - a.assessment.score);\n\n    Chat.log(\"=== Top 5 Horses by Quality ===\");\n    horseData.slice(0, 5).forEach((data, index) => {\n        const { assessment, variant, distance } = data;\n        Chat.log(`${index + 1}. ${assessment.quality} (${assessment.score}/100)`);\n        Chat.log(`   Speed: ${assessment.speed} b/s, Jump: ${assessment.jumpHeight}m, Health: ${assessment.health}`);\n        Chat.log(`   Tamed: ${assessment.isTame}, Saddled: ${assessment.isSaddled}`);\n        Chat.log(`   Distance: ${distance.toFixed(1)}m, Variant: ${variant}`);\n    });\n}\n\nfindBestHorses();"
+      ]
+    },
+    {
+      "name": "getJumpStrengthStat",
+      "signature": "getJumpStrengthStat()",
+      "returnType": "float",
+      "description": "Get the horse's jump strength attribute value",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHorseJumpHeight",
+      "signature": "getHorseJumpHeight()",
+      "returnType": "float",
+      "description": "Get the horse's maximum jump height",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor horse performance while riding\nclass HorsePerformanceTracker {\n    constructor() {\n        this.currentHorse = null;\n        this.performanceData = {\n            startTime: 0,\n            totalDistance: 0,\n            lastPos: null,\n            maxSpeed: 0,\n            jumpCount: 0,\n            jumpHeights: []\n        };\n    }\n\n    startTracking(horse) {\n        this.currentHorse = horse;\n        this.performanceData = {\n            startTime: Client.getTime(),\n            totalDistance: 0,\n            lastPos: horse.getEntity().getPos(),\n            maxSpeed: 0,\n            jumpCount: 0,\n            jumpHeights: []\n        };\n\n        Chat.log(`&aStarted tracking horse performance`);\n        Chat.log(`  Base speed: ${horse.getHorseSpeed().toFixed(2)} b/s`);\n        Chat.log(`  Jump height: ${horse.getHorseJumpHeight().toFixed(2)}m`);\n        Chat.log(`  Health: ${horse.getHealthStat()}`);\n    }\n\n    stopTracking() {\n        if (!this.currentHorse) return;\n\n        const duration = (Client.getTime() - this.performanceData.startTime) / 20; // Convert to seconds\n        const avgSpeed = this.performanceData.totalDistance / duration;\n        const avgJumpHeight = this.performanceData.jumpHeights.length > 0\n            ? this.performanceData.jumpHeights.reduce((a, b) => a + b, 0) / this.performanceData.jumpHeights.length\n            : 0;\n\n        Chat.log(\"=== Horse Performance Report ===\");\n        Chat.log(`Riding duration: ${duration.toFixed(1)} seconds`);\n        Chat.log(`Total distance: ${this.performanceData.totalDistance.toFixed(1)} blocks`);\n        Chat.log(`Average speed: ${avgSpeed.toFixed(2)} b/s`);\n        Chat.log(`Maximum speed: ${this.performanceData.maxSpeed.toFixed(2)} b/s`);\n        Chat.log(`Total jumps: ${this.performanceData.jumpCount}`);\n        Chat.log(`Average jump height: ${avgJumpHeight.toFixed(2)}m`);\n        Chat.log(`Best jump: ${Math.max(...this.performanceData.jumpHeights, 0).toFixed(2)}m`);\n\n        // Compare to base stats\n        const baseSpeed = this.currentHorse.getHorseSpeed();\n        const speedEfficiency = (avgSpeed / baseSpeed) * 100;\n        Chat.log(`Speed efficiency: ${speedEfficiency.toFixed(1)}% of base speed`);\n\n        this.currentHorse = null;\n    }\n\n    updateTracking() {\n        if (!this.currentHorse) return;\n\n        const player = Player.getPlayer();\n        const vehicle = player.getVehicle();\n\n        if (!vehicle || !vehicle.is(\"minecraft:horse\")) {\n            Chat.log(\"&cNo longer riding a horse\");\n            this.stopTracking();\n            return;\n        }\n\n        const currentPos = player.getPos();\n        const lastPos = this.performanceData.lastPos;\n\n        if (lastPos) {\n            const distance = currentPos.distanceTo(lastPos);\n            this.performanceData.totalDistance += distance;\n\n            // Calculate current speed (blocks per tick, then convert to per second)\n            const currentSpeed = distance * 20; // 20 ticks per second\n            if (currentSpeed > this.performanceData.maxSpeed) {\n                this.performanceData.maxSpeed = currentSpeed;\n            }\n        }\n\n        this.performanceData.lastPos = currentPos;\n\n        // Detect jumps\n        const velY = player.getVelocity().y;\n        if (velY > 0.4 && this.performanceData.lastVelY <= 0.4) {\n            this.performanceData.jumpCount++;\n            // Estimate jump height from velocity\n            const jumpHeight = (velY * velY) / (2 * 0.08); // Assuming gravity ~0.08\n            this.performanceData.jumpHeights.push(jumpHeight);\n        }\n\n        this.performanceData.lastVelY = velY;\n    }\n}\n\nconst performanceTracker = new HorsePerformanceTracker();\n\n// Track performance when riding horses\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const vehicle = player.getVehicle();\n\n    if (vehicle && vehicle.is(\"minecraft:horse\")) {\n        const horse = vehicle.asAnimal();\n        if (!performanceTracker.currentHorse) {\n            performanceTracker.startTracking(horse);\n        }\n        performanceTracker.updateTracking();\n    } else if (performanceTracker.currentHorse) {\n        performanceTracker.stopTracking();\n    }\n}));\n\n// Command to manually start/stop tracking\nChat.createCommandBuilder(\"horsetrack\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        if (performanceTracker.currentHorse) {\n            performanceTracker.stopTracking();\n        } else {\n            Chat.log(\"&cYou must be riding a horse to start tracking\");\n        }\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "getHealthStat",
+      "signature": "getHealthStat()",
+      "returnType": "float",
+      "description": "Get the horse's maximum health value",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxSpeedStat",
+      "signature": "getMaxSpeedStat()",
+      "returnType": "float",
+      "description": "Get possible speed stat range",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinSpeedStat",
+      "signature": "getMinSpeedStat()",
+      "returnType": "float",
+      "description": "Get possible speed stat range",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxJumpStrengthStat",
+      "signature": "getMaxJumpStrengthStat()",
+      "returnType": "float",
+      "description": "Get possible jump strength range",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinJumpStrengthStat",
+      "signature": "getMinJumpStrengthStat()",
+      "returnType": "float",
+      "description": "Get possible jump strength range",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealthStat",
+      "signature": "getMaxHealthStat()",
+      "returnType": "float",
+      "description": "Get possible health stat range",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMinHealthStat",
+      "signature": "getMinHealthStat()",
+      "returnType": "float",
+      "description": "Get possible health stat range",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isFood",
+      "signature": "isFood(item: ItemHelper)",
+      "returnType": "boolean",
+      "description": "Check if an item can be used to feed/breed the horse",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper",
+          "description": "The item to check"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreedWith",
+      "signature": "canBreedWith(other: AnimalEntityHelper)",
+      "returnType": "boolean",
+      "description": "Check if two horses can breed together",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "AnimalEntityHelper",
+          "description": "The other animal to check for breeding compatibility"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Analyze horses for breeding potential\nfunction analyzeBreedingPair(horse1, horse2) {\n    const canBreed = horse1.canBreedWith(horse2);\n    const stats1 = assessHorseQuality(horse1);\n    const stats2 = assessHorseQuality(horse2);\n\n    if (!canBreed) {\n        return {\n            canBreed: false,\n            reason: \"Horses cannot breed together (wrong type, same gender, or not in love mode)\"\n        };\n    }\n\n    // Calculate potential offspring stats (simplified genetic simulation)\n    const avgSpeed = (parseFloat(stats1.speed) + parseFloat(stats2.speed)) / 2;\n    const avgJump = (parseFloat(stats1.jumpHeight) + parseFloat(stats2.jumpHeight)) / 2;\n    const avgHealth = (stats1.health + stats2.health) / 2;\n\n    // Add some variation (+/- 10%)\n    const variation = 0.1;\n    const potentialSpeed = avgSpeed * (1 + (Math.random() - 0.5) * variation * 2);\n    const potentialJump = avgJump * (1 + (Math.random() - 0.5) * variation * 2);\n    const potentialHealth = avgHealth * (1 + (Math.random() - 0.5) * variation * 2);\n\n    return {\n        canBreed: true,\n        parent1: { name: \"Parent 1\", ...stats1 },\n        parent2: { name: \"Parent 2\", ...stats2 },\n        potentialOffspring: {\n            speed: potentialSpeed.toFixed(2),\n            jump: potentialJump.toFixed(2),\n            health: Math.round(potentialHealth),\n            quality: assessHorseQuality({\n                getHorseSpeed: () => potentialSpeed,\n                getHorseJumpHeight: () => potentialJump,\n                getHealthStat: () => potentialHealth,\n                isTame: () => true,\n                isSaddled: () => false\n            }).quality\n        }\n    };\n}\n\n// Find best breeding pairs\nfunction findBreedingPairs() {\n    const entities = World.getEntities();\n    const horses = entities.filter(entity => {\n        const horse = entity.asAnimal();\n        return horse && horse.is(\"minecraft:horse\") && horse.isTame();\n    });\n\n    Chat.log(\"=== Horse Breeding Analysis ===\");\n\n    for (let i = 0; i < horses.length; i++) {\n        for (let j = i + 1; j < horses.length; j++) {\n            const horse1 = horses[i].asAnimal();\n            const horse2 = horses[j].asAnimal();\n\n            if (!horse1 || !horse2) continue;\n\n            const analysis = analyzeBreedingPair(horse1, horse2);\n\n            if (analysis.canBreed) {\n                const distance = horses[i].distanceTo(horses[j]);\n                Chat.log(`&aBreeding Pair Found (${distance.toFixed(1)}m apart):`);\n                Chat.log(`  Parent 1: ${analysis.parent1.quality} (${analysis.parent1.score}/100)`);\n                Chat.log(`  Parent 2: ${analysis.parent2.quality} (${analysis.parent2.score}/100)`);\n                Chat.log(`  Potential offspring: ${analysis.potentialOffspring.quality} quality`);\n                Chat.log(`  Potential stats: Speed ${analysis.potentialOffspring.speed} b/s, Jump ${analysis.potentialOffspring.jump}m`);\n            }\n        }\n    }\n}\n\nfindBreedingPairs();"
+      ]
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "float",
+      "description": "Current health",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "float",
+      "description": "Maximum health",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMainHand",
+      "signature": "getMainHand()",
+      "returnType": "ItemHelper",
+      "description": "Equipment (though horses typically don't use these)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOffHand",
+      "signature": "getOffHand()",
+      "returnType": "ItemHelper",
+      "description": "Equipment (though horses typically don't use these)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List<StatusEffectInstanceHelper>",
+      "description": "Active status effects",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Check if the horse is a foal",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "int",
+      "description": "Current armor value",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPos",
+      "signature": "getPos()",
+      "returnType": "Vec3dHelper",
+      "description": "Position information",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "double",
+      "description": "X coordinate of the entity's position",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "double",
+      "description": "Y coordinate of the entity's position",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZ",
+      "signature": "getZ()",
+      "returnType": "double",
+      "description": "Z coordinate of the entity's position",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Entity identification (e.g., display name)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "String",
+      "description": "Entity identification (e.g., entity registry ID)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAlive",
+      "signature": "isAlive()",
+      "returnType": "boolean",
+      "description": "Check if the entity is alive",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(other: EntityHelper)",
+      "returnType": "double",
+      "description": "Distance to another entity",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "EntityHelper",
+          "description": "The other entity"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFacingDirection",
+      "signature": "getFacingDirection()",
+      "returnType": "DirectionHelper",
+      "description": "Movement direction",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getVehicle",
+      "signature": "getVehicle()",
+      "returnType": "EntityHelper",
+      "description": "The entity this entity is riding, or null",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPassengers",
+      "signature": "getPassengers()",
+      "returnType": "List<EntityHelper>",
+      "description": "List of entities riding this entity",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getUUID",
+      "signature": "getUUID()",
+      "returnType": "String",
+      "description": "Unique identifier",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asAnimal",
+      "signature": "asAnimal()",
+      "returnType": "AnimalEntityHelper",
+      "description": "Casts this EntityHelper to an AnimalEntityHelper if it represents an animal.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

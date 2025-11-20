@@ -1,0 +1,108 @@
+{
+  "name": "StringifyFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.StringifyFilter<T>",
+  "extends": "BasicFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `StringifyFilter` class is a versatile filter that converts any object to its string representation and then applies string comparison operations against a set of predefined values. This filter is particularly useful when you need to search for objects based on their string properties, such as item names, block identifiers, or any other textual representation of game objects.",
+  "overview": "As part of JSMacros' WorldScanner filtering system, `StringifyFilter` inherits powerful logical operations from `BasicFilter`, allowing you to combine it with other filters using AND, OR, XOR, and NOT operations to create complex search criteria.",
+  "constructors": [
+    {
+      "signature": "new StringifyFilter(operation)",
+      "description": "Creates a new `StringifyFilter` with the specified string comparison operation.",
+      "parameters": [
+        {
+          "name": "operation",
+          "type": "String",
+          "description": "The string comparison operation to use (\"CONTAINS\", \"EQUALS\", \"STARTS_WITH\", \"ENDS_WITH\", \"MATCHES\")"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "CONTAINS",
+      "signature": "apply(T object)",
+      "returnType": "boolean",
+      "description": "Checks if the object's string representation contains any of the filter options as substrings.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to be filtered."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const toolFilter = new StringifyFilter(\"CONTAINS\")\n    .addOption(\"pickaxe\", \"axe\", \"shovel\", \"hoe\");\n\n// Matches: \"diamond_pickaxe\", \"iron_axe\", \"wooden_shovel\", etc.\n// Does not match: \"sword\", \"bow\", \"helmet\""
+      ]
+    },
+    {
+      "name": "EQUALS",
+      "signature": "apply(T object)",
+      "returnType": "boolean",
+      "description": "Checks if the object's string representation exactly matches any of the filter options.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to be filtered."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const exactFilter = new StringifyFilter(\"EQUALS\")\n    .addOption(\"minecraft:diamond\", \"minecraft:emerald\");\n\n// Matches: \"minecraft:diamond\", \"minecraft:emerald\" exactly\n// Does not match: \"minecraft:diamond_ore\", \"minecraft:emerald_block\""
+      ]
+    },
+    {
+      "name": "STARTS_WITH",
+      "signature": "apply(T object)",
+      "returnType": "boolean",
+      "description": "Checks if the object's string representation starts with any of the filter options.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to be filtered."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const modFilter = new StringifyFilter(\"STARTS_WITH\")\n    .addOption(\"minecraft:\", \"thermal:\", \"mekanism:\");\n\n// Matches: \"minecraft:stone\", \"thermal:iron_ore\", \"mekanism:copper_block\"\n// Does not match: \"custommod:item\""
+      ]
+    },
+    {
+      "name": "ENDS_WITH",
+      "signature": "apply(T object)",
+      "returnType": "boolean",
+      "description": "Checks if the object's string representation ends with any of the filter options.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to be filtered."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const blockTypeFilter = new StringifyFilter(\"ENDS_WITH\")\n    .addOption(\"_ore\", \"_log\", \"_planks\");\n\n// Matches: \"minecraft:diamond_ore\", \"minecraft:oak_log\", \"minecraft:birch_planks\"\n// Does not match: \"minecraft:stone\", \"minecraft:dirt\""
+      ]
+    },
+    {
+      "name": "MATCHES",
+      "signature": "apply(T object)",
+      "returnType": "boolean",
+      "description": "Checks if the object's string representation matches any of the filter options using regular expressions.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to be filtered."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const regexFilter = new StringifyFilter(\"MATCHES\")\n    .addOption(\".*_ore$\", \".*diamond.*\", \".*emerald.*\");\n\n// Matches: \"diamond_ore\", \"deepslate_diamond_ore\", \"emerald_ore\", \"diamond_block\"\n// Uses Java regex patterns"
+      ]
+    }
+  ]
+}

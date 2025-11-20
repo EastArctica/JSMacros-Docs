@@ -1,0 +1,32 @@
+{
+  "name": "EventEntityLoad",
+  "fullClassName": "EventEntityLoad",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when an entity loads into the world.",
+  "overview": "Fires when any entity loads into render distance. Includes mobs, animals, players, item entities, etc. Occurs when entities come into range or newly spawn. Not cancellable. Can be used for entity tracking or detection systems.",
+  "constructors": [
+    {
+      "signature": "EventEntityLoad(entity: EntityHelper)",
+      "description": "Constructs an EventEntityLoad object, typically provided by the JsMacros event system when an entity loads.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity that loaded. A helper object for the entity that loaded. This provides access to all entity properties like name, type, position, health, etc. You can check the entity type, get its position, and determine if it's a player, mob, animal, item, etc."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "name": "BeaconInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.BeaconInventory",
+  "extends": "Inventory<BeaconScreen>",
+  "since": "1.5.1",
+  "description": "The `BeaconInventory` class is a specialized inventory helper that provides access to Minecraft beacon screen functionality. It wraps Minecraft's beacon GUI and allows scripters to programmatically interact with beacon effects, select status effects, and apply beacon powers. This class is specifically designed for managing beacon operations when a beacon interface is open.\n\nThis class provides methods for examining beacon level, selecting primary and secondary effects, and applying chosen effects to players within the beacon's range.",
+  "overview": "The `BeaconInventory` represents the interface to a Minecraft beacon block when its GUI is open. It provides access to beacon-specific operations such as:\n\n- Checking the current beacon level\n- Selecting primary and secondary status effects based on beacon level\n- Applying chosen effects to nearby players\n- Access to standard inventory operations through inheritance\n\n**Key Features:**\n- Beacon level detection (levels 1-4)\n- Primary effect selection for all levels\n- Secondary effect selection for level 3+ beacons\n- Effect application with payment validation\n- Integration with standard inventory operations",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getLevel",
+      "signature": "getLevel()",
+      "returnType": "int",
+      "description": "Returns the current level of the beacon (1-4). Beacon level determines which effects are available and the range of effect application.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const beacon = Inventory.create();\nif (beacon && beacon.getType() === \"Beacon\") {\n    const level = beacon.getLevel();\n    Chat.log(`Beacon level: ${level}`);\n\n    if (level >= 4) {\n        Chat.log(\"All effects available including regeneration!\");\n    } else if (level >= 3) {\n        Chat.log(\"Primary and some secondary effects available\");\n    } else if (level >= 2) {\n        Chat.log(\"Primary effects available\");\n    } else {\n        Chat.log(\"Level 1 beacon - basic primary effects\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFirstEffect",
+      "signature": "getFirstEffect()",
+      "returnType": "String | null",
+      "description": "Returns the ID of the currently selected primary effect, or `null` if no primary effect has been selected.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const beacon = Inventory.create();\nif (beacon && beacon.getType() === \"Beacon\") {\n    const primaryEffect = beacon.getFirstEffect();\n    if (primaryEffect) {\n        Chat.log(`Primary effect: ${primaryEffect}`);\n    } else {\n        Chat.log(\"No primary effect selected\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getSecondEffect",
+      "signature": "getSecondEffect()",
+      "returnType": "String | null",
+      "description": "Returns the ID of the currently selected secondary effect, or `null` if no secondary effect has been selected.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const beacon = Inventory.create();\nif (beacon && beacon.getType() === \"Beacon\") {\n    const secondaryEffect = beacon.getSecondEffect();\n    if (secondaryEffect) {\n        Chat.log(`Secondary effect: ${secondaryEffect}`);\n    } else {\n        Chat.log(\"No secondary effect selected\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "selectFirstEffect",
+      "signature": "selectFirstEffect(id)",
+      "returnType": "boolean",
+      "description": "Attempts to select the specified effect as the primary beacon effect. Returns `true` if successful, `false` if the effect is not available at the current beacon level.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The beacon effect ID to select as primary effect"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const beacon = Inventory.create();\nif (beacon && beacon.getType() === \"Beacon\") {\n    // Try to select speed as primary effect\n    const success = beacon.selectFirstEffect(\"minecraft:speed\");\n    if (success) {\n        Chat.log(\"Successfully selected Speed as primary effect\");\n    } else {\n        Chat.log(\"Failed to select Speed - may not be available at this beacon level\");\n    }\n\n    // Try different effects\n    const effects = [\"minecraft:haste\", \"minecraft:resistance\", \"minecraft:jump_boost\", \"minecraft:strength\"];\n    for (const effect of effects) {\n        if (beacon.selectFirstEffect(effect)) {\n            Chat.log(`Selected ${effect} as primary effect`);\n            break;\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "selectSecondEffect",
+      "signature": "selectSecondEffect(id)",
+      "returnType": "boolean",
+      "description": "Attempts to select the specified effect as the secondary beacon effect. Secondary effects are only available at beacon level 3+. Returns `true` if successful, `false` if the effect is not available.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The beacon effect ID to select as secondary effect"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const beacon = Inventory.create();\nif (beacon && beacon.getType() === \"Beacon\") {\n    const level = beacon.getLevel();\n\n    if (level >= 3) {\n        // For level 3+, can select regeneration as secondary\n        if (beacon.selectSecondEffect(\"minecraft:regeneration\")) {\n            Chat.log(\"Successfully selected Regeneration as secondary effect\");\n        }\n\n        // Or select the same as primary (if not regeneration)\n        const primaryEffect = beacon.getFirstEffect();\n        if (primaryEffect && primaryEffect !== \"minecraft:regeneration\") {\n            beacon.selectSecondEffect(primaryEffect);\n            Chat.log(`Extended ${primaryEffect} effect to secondary slot`);\n        }\n    } else {\n        Chat.log(`Beacon level ${level} is too low for secondary effects`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "applyEffects",
+      "signature": "applyEffects()",
+      "returnType": "boolean",
+      "description": "Applies the selected primary and secondary effects to players within the beacon's range. This requires payment (placing an item in the payment slot) and will close the beacon screen upon success. Returns `true` if effects were successfully applied, `false` if payment is not available.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const beacon = Inventory.create();\nif (beacon && beacon.getType() === \"Beacon\") {\n    // First select effects\n    beacon.selectFirstEffect(\"minecraft:strength\");\n\n    const level = beacon.getLevel();\n    if (level >= 4) {\n        beacon.selectSecondEffect(\"minecraft:regeneration\");\n    }\n\n    // Try to apply effects\n    const applied = beacon.applyEffects();\n    if (applied) {\n        Chat.log(\"Beacon effects applied successfully!\");\n    } else {\n        Chat.log(\"Failed to apply effects - make sure payment is available\");\n        Chat.log(\"Place an item (iron, gold, diamond, emerald, or netherite) in the payment slot\");\n    }\n}"
+      ]
+    }
+  ]
+}

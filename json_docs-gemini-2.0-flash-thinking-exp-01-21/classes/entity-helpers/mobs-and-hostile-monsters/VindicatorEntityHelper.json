@@ -1,0 +1,351 @@
+{
+  "name": "VindicatorEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.VindicatorEntityHelper",
+  "extends": "IllagerEntityHelper<VindicatorEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `VindicatorEntityHelper` class is a specialized wrapper for vindicator entities in JSMacros, providing access to vindicator-specific behaviors, states, and unique characteristics. This class extends `IllagerEntityHelper` and inherits all illager entity methods while adding vindicator-specific functionality, most notably the ability to detect the special \"Johnny\" variant.",
+  "overview": "This class represents vindicators, the hostile illager mobs armed with iron axes that are commonly found in woodland mansions and during raids. Vindicators are known for their aggressive melee combat behavior and their special \"Johnny\" naming Easter egg that causes them to attack all mobs except other illagers.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isJohnny",
+      "signature": "isJohnny()",
+      "returnType": "boolean",
+      "description": "Checks if the vindicator is the special \"Johnny\" variant. This method specifically checks for the exact name \"Johnny\" (case-sensitive) which causes it to attack all mobs except other illagers.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isJohnny = vindicator.isJohnny();",
+        "Chat.log(`Vindicator spawned! Johnny: ${isJohnny}`);",
+        "if (isJohnny) { Chat.log(`&cJohnny vindicator! State: ${state}, HP: ${health}`); }",
+        "data.isJohnny = vindicator.isJohnny();",
+        "if (data.isJohnny) { Chat.log(\"&c&lJOHNNY IS FIGHTING EVERYONE!\"); }",
+        "Chat.log(`  Johnny: ${isJohnny}`);",
+        "if (isJohnny) { Chat.log(\"&c&lIT'S JOHNNY! RUN!\"); }",
+        "if (data.isJohnny) { Chat.log(`  &c&lJOHNNY VARIANT - EXTREMELY DANGEROUS!`); }"
+      ]
+    },
+    {
+      "name": "isCelebrating",
+      "signature": "isCelebrating()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator is celebrating (e.g., after raids).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getState",
+      "signature": "getState()",
+      "returnType": "string",
+      "description": "Get current activity state of the vindicator. Possible values include: `CROSSED`, `ATTACKING`, `SPELLCASTING` (not applicable), `BOW_AND_ARROW` (not applicable), `CROSSBOW_HOLD` (not applicable), `CROSSBOW_CHARGE` (not applicable), `CELEBRATING` (same as `isCelebrating()`), `NEUTRAL`.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const state = vindicator.getState();",
+        "Chat.log(`&cJohnny vindicator! State: ${state}, HP: ${health}`);",
+        "Chat.log(`  State: ${state}`);"
+      ]
+    },
+    {
+      "name": "isAttacking",
+      "signature": "isAttacking()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator is currently attacking.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAiDisabled",
+      "signature": "isAiDisabled()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator's AI is disabled.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "number",
+      "description": "Get the vindicator's current health points.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const health = Math.floor(vindicator.getHealth());",
+        "Chat.log(`&cJohnny vindicator! State: ${state}, HP: ${health}`);",
+        "Chat.log(`    Health: ${Math.floor(data.entity.getHealth())}/${data.entity.getMaxHealth()}`);",
+        "Chat.log(`  Health: ${health}/${vindicator.getMaxHealth()}`);",
+        "const currentHealth = vindicator.getHealth();"
+      ]
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "number",
+      "description": "Get the vindicator's maximum health points.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`    Health: ${Math.floor(data.entity.getHealth())}/${data.entity.getMaxHealth()}`);",
+        "Chat.log(`  Health: ${health}/${vindicator.getMaxHealth()}`);"
+      ]
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "number",
+      "description": "Get the vindicator's absorption hearts.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "number",
+      "description": "Get the vindicator's current armor value.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "Array<StatusEffectInstance>",
+      "description": "Get a list of the vindicator's active status effects.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(id)",
+      "returnType": "boolean",
+      "description": "Check if the vindicator has a specific status effect.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The resource ID of the status effect."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOnGround",
+      "signature": "isOnGround()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator is currently on the ground.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreatheInWater",
+      "signature": "canBreatheInWater()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator can breathe underwater.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isFallFlying",
+      "signature": "isFallFlying()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator is fall flying (e.g., with elytra).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Check if the vindicator is a baby variant (vindicators do not have baby variants).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(item)",
+      "returnType": "boolean",
+      "description": "Check if the vindicator is holding a specific item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper",
+          "description": "The item to check for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(entity)",
+      "returnType": "boolean",
+      "description": "Check if the vindicator has line of sight to another entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The target entity to check line of sight against."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBowPullProgress",
+      "signature": "getBowPullProgress()",
+      "returnType": "number",
+      "description": "Get the bow pull progress (not applicable to vindicators).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItemUseTimeLeft",
+      "signature": "getItemUseTimeLeft()",
+      "returnType": "number",
+      "description": "Get the remaining item use time.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "Text",
+      "description": "Get the entity's display name.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Vindicator name: ${vindicator.getName().getString()}`);",
+        "const name = vindicator.getName().getString();",
+        "const name = entity.getName().getString();"
+      ]
+    },
+    {
+      "name": "getPos",
+      "signature": "getPos()",
+      "returnType": "Vec3d",
+      "description": "Get the entity's position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Found vindicator at: ${vindicator.getPos()}`);",
+        "Chat.log(`  Location: (${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)})`);",
+        "Chat.log(`&ePosition: ${vindicator.getPos()}`);"
+      ]
+    },
+    {
+      "name": "getUUID",
+      "signature": "getUUID()",
+      "returnType": "UUID",
+      "description": "Get the entity's unique identifier.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const uuid = entity.getUUID();"
+      ]
+    },
+    {
+      "name": "hasCustomName",
+      "signature": "hasCustomName()",
+      "returnType": "boolean",
+      "description": "Check if the entity has a custom name.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hasCustomName = entity.hasCustomName();",
+        "if (entity.is(\"minecraft:vindicator\") && entity.hasCustomName()) { ... }"
+      ]
+    },
+    {
+      "name": "isAlive",
+      "signature": "isAlive()",
+      "returnType": "boolean",
+      "description": "Check if the entity is currently alive.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (!data.entity.isAlive()) { ... }"
+      ]
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(entity)",
+      "returnType": "number",
+      "description": "Calculates the distance to another entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The target entity."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "player.distanceTo(entity)",
+        "const distance = player.distanceTo(vindicator);"
+      ]
+    },
+    {
+      "name": "is",
+      "signature": "is(id)",
+      "returnType": "boolean",
+      "description": "Checks if the entity is of a specific type by its resource ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The resource ID of the entity type (e.g., 'minecraft:vindicator')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (entity.is(\"minecraft:vindicator\")) { ... }"
+      ]
+    },
+    {
+      "name": "setGlowing",
+      "signature": "setGlowing(glowing)",
+      "returnType": "void",
+      "description": "Sets whether the entity is glowing.",
+      "parameters": [
+        {
+          "name": "glowing",
+          "type": "boolean",
+          "description": "True to make the entity glow, false otherwise."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "vindicator.setGlowing(true);"
+      ]
+    },
+    {
+      "name": "setGlowingColor",
+      "signature": "setGlowingColor(color)",
+      "returnType": "void",
+      "description": "Sets the color of the entity's glow effect.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "number",
+          "description": "The integer color value (e.g., 0xFF0000 for red)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "vindicator.setGlowingColor(0xFF0000);"
+      ]
+    }
+  ]
+}

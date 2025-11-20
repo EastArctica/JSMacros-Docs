@@ -1,0 +1,104 @@
+{
+  "name": "CombinedVariableClassLoader",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.FReflection$CombinedVariableClassLoader",
+  "extends": "java.lang.ClassLoader",
+  "since": "1.2.8",
+  "description": "A specialized class loader that combines multiple class loaders into a single unified loader for dynamic JAR file loading.",
+  "overview": "This class is used internally by the JsMacros Reflection library to manage runtime loading of external JAR files and their classes, enabling advanced reflection operations and dynamic code execution.\n\nThe `CombinedVariableClassLoader` extends Java's standard `ClassLoader` and maintains a collection of delegated class loaders, each typically created from dynamically loaded JAR files. This allows scripts to access classes and resources from multiple external libraries simultaneously without conflicts.\n\nThis class is primarily used internally by the Reflection library but can be accessed through `FReflection.classLoader` for advanced use cases involving custom class loading and resource management.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "addClassLoader",
+      "signature": "loader.addClassLoader(jarPath, classLoader)",
+      "returnType": "void",
+      "description": "Adds a class loader for a specific JAR path. This is typically managed internally by the Reflection library.",
+      "parameters": [
+        {
+          "name": "jarPath",
+          "type": "java.lang.String",
+          "description": "The path to the JAR file."
+        },
+        {
+          "name": "classLoader",
+          "type": "java.lang.ClassLoader",
+          "description": "The ClassLoader instance to add."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Load a JAR file - this internally adds it to the CombinedVariableClassLoader\nReflection.loadJarFile(\"libs/my-external-library.jar\");",
+        "try {\n    Reflection.loadJarFile(jar);\n    Chat.log(`  → Loaded ${jar} successfully`);\n} catch (e) {\n    Chat.log(`  → Failed to load ${jar}: ${e.message}`);\n}",
+        "// Load a utility library JAR\nReflection.loadJarFile(\"libs/script-utils.jar\");",
+        "const success = Reflection.loadJarFile(jarPath);"
+      ]
+    },
+    {
+      "name": "hasJar",
+      "signature": "loader.hasJar(path)",
+      "returnType": "boolean",
+      "description": "Checks if a specific JAR file (or its path) has already been loaded by this class loader.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "java.io.File",
+          "description": "The file object representing the JAR to check."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const jarFile = new java.io.File(jar);\nif (Reflection.classLoader.hasJar(jarFile)) {\n    Chat.log(`✓ ${jar} is loaded`);\n}",
+        "if (Reflection.classLoader.hasJar(file)) {\n    Chat.log(`&7JAR already loaded: ${jarPath}`);\n    return true;\n}"
+      ]
+    },
+    {
+      "name": "findClass",
+      "signature": "loader.findClass(name)",
+      "returnType": "java.lang.Class",
+      "description": "Finds the class with the specified binary name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "java.lang.String",
+          "description": "The binary name of the class."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "findResource",
+      "signature": "loader.findResource(name)",
+      "returnType": "java.net.URL",
+      "description": "Finds the resource with the given name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "java.lang.String",
+          "description": "The name of the resource."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Access resources from the JAR\nconst configUrl = Reflection.classLoader.findResource(\"config.properties\");",
+        "const url = Reflection.classLoader.findResource(path);\nif (url) {\n    // Pre-load the resource content\n    try {\n        new java.util.Scanner(url.openStream()).useDelimiter(\"\\\\A\").next();\n        loadedCount++;\n    } catch (e) {\n        Chat.log(`&cFailed to preload resource ${path}: ${e.message}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "findResources",
+      "signature": "loader.findResources(name)",
+      "returnType": "java.util.Enumeration<java.net.URL>",
+      "description": "Finds all resources with the given name.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "java.lang.String",
+          "description": "The name of the resource."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "try {\n    const foundResources = Reflection.classLoader.findResources(path);\n    while (foundResources.hasMoreElements()) {\n        resources.push(foundResources.nextElement());\n    }\n} catch (e) {\n    // Resource not found, continue searching\n}"
+      ]
+    }
+  ]
+}

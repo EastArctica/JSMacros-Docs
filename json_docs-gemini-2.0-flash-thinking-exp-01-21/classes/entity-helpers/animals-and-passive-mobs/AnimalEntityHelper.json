@@ -1,0 +1,46 @@
+{
+  "name": "AnimalEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.AnimalEntityHelper",
+  "extends": "MobEntityHelper<AnimalEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The AnimalEntityHelper class provides specialized access to animal entities in Minecraft, offering methods for breeding mechanics, food preferences, and animal compatibility checking.",
+  "overview": "This class serves as the base class for all passive animal helpers and extends MobEntityHelper, inheriting comprehensive functionality for mob behaviors, living entity properties, and basic entity operations. This helper is essential for scripts that manage animal breeding, farm automation, animal feeding systems, or any functionality that requires interaction with Minecraft's animal ecosystem.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isFood",
+      "signature": "isFood(item: ItemHelper | ItemStackHelper): boolean",
+      "returnType": "boolean",
+      "description": "Checks if a given item or item stack is a valid breeding food for this animal, respecting its specific dietary preferences.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper | ItemStackHelper",
+          "description": "The item or item stack to check for food compatibility."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "    checkFeedingStatus(animals) {\n        const player = Player.getPlayer();\n        if (!player) return;\n\n        const mainHand = player.getMainHand();\n        const offHand = player.getOffHand();\n\n        if (!mainHand && !offHand) return;\n\n        let feedableAnimals = 0;\n        animals.forEach(animalData => {\n            let canFeed = false;\n            if (mainHand && animalData.animal.isFood(mainHand)) canFeed = true;\n            if (offHand && animalData.animal.isFood(offHand)) canFeed = true;\n\n            if (canFeed) {\n                feedableAnimals++;\n                animalData.entity.setGlowing(true);\n                animalData.entity.setGlowingColor(0x00FF00);\n            } else {\n                animalData.entity.resetGlowing();\n            }\n        });\n\n        if (feedableAnimals > 0) {\n            Chat.actionbar(`&a${feedableAnimals} animal${feedableAnimals > 1 ? 's' : ''} can be fed with your item`);\n        }\n    }",
+        "    highlightBreedingOpportunities() {\n        const player = Player.getPlayer();\n        if (!player) return;\n\n        const mainHand = player.getMainHand();\n        if (!mainHand) return;\n\n        // Clear previous highlights\n        for (const [uuid, animalData] of this.farmAnimals) {\n            animalData.entity.resetGlowing();\n        }\n\n        let highlightedCount = 0;\n        for (const [uuid, animalData] of this.farmAnimals) {\n            if (animalData.animal.isFood(mainHand)) {\n                animalData.entity.setGlowing(true);\n                animalData.entity.setGlowingColor(0x00FF00); // Green for feedable\n                highlightedCount++;\n            }\n        }\n\n        if (highlightedCount > 0) {\n            Chat.actionbar(`&a${highlightedCount} animal${highlightedCount > 1 ? 's' : ''} will eat your ${mainHand.getName()}`);\n        }\n    }"
+      ]
+    },
+    {
+      "name": "canBreedWith",
+      "signature": "canBreedWith(otherAnimal: AnimalEntityHelper): boolean",
+      "returnType": "boolean",
+      "description": "Checks if this animal entity is compatible for breeding with another AnimalEntityHelper instance, respecting Minecraft's internal breeding logic including species compatibility and readiness.",
+      "parameters": [
+        {
+          "name": "otherAnimal",
+          "type": "AnimalEntityHelper",
+          "description": "The other animal entity to check for breeding compatibility."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "    findBreedingPairs(animalType) {\n        const animals = Array.from(this.farmAnimals.values())\n            .filter(animal => animal.type === animalType);\n\n        const compatiblePairs = [];\n        for (let i = 0; i < animals.length; i++) {\n            for (let j = i + 1; j < animals.length; j++) {\n                if (animals[i].animal.canBreedWith(animals[j].animal)) {\n                    const distance = animals[i].position.distanceTo(animals[j].position);\n                    compatiblePairs.push({\n                        animal1: animals[i],\n                        animal2: animals[j],\n                        distance: distance\n                    });\n                }\n            }\n        }\n\n        return compatiblePairs.sort((a, b) => a.distance - b.distance);\n    }"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "name": "SkinOptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper$SkinOptionsHelper",
+  "since": "JsMacros 1.8.4",
+  "description": "The SkinOptionsHelper class provides access to Minecraft's skin and player model customization options. This helper allows scripts to read and modify various appearance settings including cape visibility, hand preference, and individual model parts (hat, jacket, sleeves, pants). It's accessed through the OptionsHelper.getSkinOptions() method or directly via the skin field.",
+  "overview": "The SkinOptionsHelper class manages player appearance and model customization: - Cape visibility - Show or hide the player's cape - Hand preference - Switch between right-handed and left-handed - Model parts - Control visibility of individual character model components - Character customization - Fine-tuned control over player appearance elements",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isCapeActivated",
+      "signature": "isCapeActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's cape is currently visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nif (skin.isCapeActivated()) {\n    Chat.log(\"Cape is currently visible\");\n} else {\n    Chat.log(\"Cape is hidden\");\n}"
+      ]
+    },
+    {
+      "name": "toggleCape",
+      "signature": "toggleCape(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's cape should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show cape, `false` to hide cape"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\n\n// Hide cape for stealth\nskin.toggleCape(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Cape hidden\");\n\n// Show cape again\nskin.toggleCape(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Cape visible\");"
+      ]
+    },
+    {
+      "name": "isRightHanded",
+      "signature": "isRightHanded()",
+      "returnType": "boolean",
+      "description": "Checks if the player is configured as right-handed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nChat.log(`Player is ${skin.isRightHanded() ? 'right-handed' : 'left-handed'}`);"
+      ]
+    },
+    {
+      "name": "isLeftHanded",
+      "signature": "isLeftHanded()",
+      "returnType": "boolean",
+      "description": "Checks if the player is configured as left-handed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nif (skin.isLeftHanded()) {\n    Chat.log(\"Player uses left hand preference\");\n}"
+      ]
+    },
+    {
+      "name": "toggleMainHand",
+      "signature": "toggleMainHand(String hand)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets the player's main hand preference.",
+      "parameters": [
+        {
+          "name": "hand",
+          "type": "String",
+          "description": "`\"left\"` or `\"right\"` - which hand to use as main hand"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\n\n// Switch to left-handed\nskin.toggleMainHand(\"left\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Switched to left-handed\");\n\n// Switch back to right-handed\nskin.toggleMainHand(\"right\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Switched to right-handed\");"
+      ]
+    },
+    {
+      "name": "isHatActivated",
+      "signature": "isHatActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's hat layer is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nif (skin.isHatActivated()) {\n    Chat.log(\"Hat layer is visible\");\n} else {\n    Chat.log(\"Hat layer is hidden\");\n}"
+      ]
+    },
+    {
+      "name": "toggleHat",
+      "signature": "toggleHat(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's hat layer should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show hat layer, `false` to hide hat layer"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\n\n// Hide hat for minimalist look\nskin.toggleHat(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Hat layer hidden\");"
+      ]
+    },
+    {
+      "name": "isJacketActivated",
+      "signature": "isJacketActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's jacket layer is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nChat.log(`Jacket layer: ${skin.isJacketActivated() ? 'visible' : 'hidden'}`);"
+      ]
+    },
+    {
+      "name": "toggleJacket",
+      "signature": "toggleJacket(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's jacket layer should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show jacket layer, `false` to hide jacket layer"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\n\n// Toggle jacket visibility\nskin.toggleJacket(true);\nJsMacros.getOptions().saveOptions();"
+      ]
+    },
+    {
+      "name": "isLeftSleeveActivated",
+      "signature": "isLeftSleeveActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's left sleeve layer is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nif (skin.isLeftSleeveActivated()) {\n    Chat.log(\"Left sleeve is visible\");\n}"
+      ]
+    },
+    {
+      "name": "toggleLeftSleeve",
+      "signature": "toggleLeftSleeve(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's left sleeve layer should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show left sleeve, `false` to hide left sleeve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nskin.toggleLeftSleeve(true);\nJsMacros.getOptions().saveOptions();"
+      ]
+    },
+    {
+      "name": "isRightSleeveActivated",
+      "signature": "isRightSleeveActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's right sleeve layer is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nChat.log(`Right sleeve: ${skin.isRightSleeveActivated() ? 'visible' : 'hidden'}`);"
+      ]
+    },
+    {
+      "name": "toggleRightSleeve",
+      "signature": "toggleRightSleeve(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's right sleeve layer should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show right sleeve, `false` to hide right sleeve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nskin.toggleRightSleeve(true);\nJsMacros.getOptions().saveOptions();"
+      ]
+    },
+    {
+      "name": "isLeftPantsActivated",
+      "signature": "isLeftPantsActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's left pants layer is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nif (skin.isLeftPantsActivated()) {\n    Chat.log(\"Left pants layer is visible\");\n}"
+      ]
+    },
+    {
+      "name": "toggleLeftPants",
+      "signature": "toggleLeftPants(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's left pants layer should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show left pants, `false` to hide left pants"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nskin.toggleLeftPants(true);\nJsMacros.getOptions().saveOptions();"
+      ]
+    },
+    {
+      "name": "isRightPantsActivated",
+      "signature": "isRightPantsActivated()",
+      "returnType": "boolean",
+      "description": "Checks if the player's right pants layer is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nChat.log(`Right pants: ${skin.isRightPantsActivated() ? 'visible' : 'hidden'}`);"
+      ]
+    },
+    {
+      "name": "toggleRightPants",
+      "signature": "toggleRightPants(boolean visible)",
+      "returnType": "SkinOptionsHelper",
+      "description": "Sets whether the player's right pants layer should be visible.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "`true` to show right pants, `false` to hide right pants"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const skin = JsMacros.getOptions().getSkinOptions();\nskin.toggleRightPants(true);\nJsMacros.getOptions().saveOptions();"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ProfileLoad",
+  "fullClassName": "EventProfileLoad",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a JsMacros profile is loaded.",
+  "overview": "* Fires when JsMacros loads a profile\n- The `profileName` field contains the name of the loaded profile\n- Occurs during startup or when switching profiles\n- Not cancellable\n- Useful for profile-specific configurations and initialization",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

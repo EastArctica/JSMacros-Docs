@@ -1,0 +1,83 @@
+{
+  "name": "Profile",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.config.Profile",
+  "extends": "BaseProfile",
+  "since": "JsMacros 1.0.3",
+  "description": "The `Profile` class is the client-side implementation of JsMacros profile management for Minecraft. It extends `BaseProfile` with Minecraft-specific functionality including in-game error display, chat integration, client event registration, and thread management for the Minecraft client environment. This class serves as the main interface for managing macro profiles in the JsMacros client, handling everything from script execution to error reporting within the Minecraft interface.",
+  "overview": "The `Profile` class provides client-specific profile management capabilities including:\n\n- **Minecraft Integration:** Error reporting and logging through the Minecraft chat interface\n- **Client Event Registration:** Registers all client-specific events like player actions, world events, and UI interactions\n- **Thread Safety:** Manages thread checking for Minecraft's main game thread vs script execution threads\n- **Error Formatting:** Converts script errors into clickable, readable messages in the chat\n- **Profile Reload Coordination:** Handles UI updates when profiles are switched\n- **Library Registration:** Sets up client-specific libraries like Chat, HUD, Player, World, etc.\n\n## Accessing Profile\n\n`Profile` instances are typically accessed through JsMacros APIs and event contexts:\n\n```javascript\n// Access through profile load events\nJsMacros.on(\"ProfileLoad\", JavaWrapper.methodToJavaAsync((event) => {\n    const profile = event.profile;\n    Chat.log(`Loaded profile: ${profile.getCurrentProfileName()}`);\n}));\n\n// Access through the main JsMacros instance\nconst jsMacros = JsMacros.getInstance();\nconst currentProfile = jsMacros.getProfile();\n```",
+  "constructors": [
+    {
+      "signature": "Profile(Core runner, Logger logger)",
+      "description": "Internal constructor used by JsMacros to create the client profile instance. This constructor is not typically called directly by script writers, but is used internally by the JsMacros system during startup.",
+      "parameters": [
+        {
+          "name": "runner",
+          "type": "Core",
+          "description": "The JsMacros core instance"
+        },
+        {
+          "name": "logger",
+          "type": "Logger",
+          "description": "Logger instance for profile operations"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "loadProfile",
+      "signature": "loadProfile(String profileName)",
+      "returnType": "boolean",
+      "description": "Loads a profile by name, clearing the current event registry and loading all script triggers from the specified profile. This method extends the base implementation to also refresh the Macro Screen UI if it's currently open.",
+      "parameters": [
+        {
+          "name": "profileName",
+          "type": "String",
+          "description": "The name of the profile to load"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Note: This would typically be called through JsMacros APIs\n// Profile reloading is usually handled automatically\n\n// Conceptual usage:\n// const profile = jsMacros.getProfile();\n// const success = profile.loadProfile(\"myCustomProfile\");\n// Chat.log(`Profile load ${success ? 'succeeded' : 'failed'}`);"
+      ]
+    },
+    {
+      "name": "logError",
+      "signature": "logError(Throwable ex)",
+      "returnType": "void",
+      "description": "Handles error logging and display in the Minecraft client environment. This method formats exceptions into user-friendly chat messages with clickable links to open the problematic script files in the editor.",
+      "parameters": [
+        {
+          "name": "ex",
+          "type": "Throwable",
+          "description": "The error/exception to log and display"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This method is called internally by JsMacros when errors occur\n// Script writers typically don't call this directly\n\n// Error handling demonstration:\nJsMacros.on(\"Error\", JavaWrapper.methodToJavaAsync((event) => {\n    Chat.log(\"An error occurred - check chat for details\");\n    // The profile.logError() method would be called internally\n}));"
+      ]
+    },
+    {
+      "name": "checkJoinedThreadStack",
+      "signature": "checkJoinedThreadStack()",
+      "returnType": "boolean",
+      "description": "Checks if the current thread is either the main Minecraft thread or in the joined thread stack. This is used to determine if the current execution context can safely join with other script contexts.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    const jsMacros = JsMacros.getInstance();\n    const profile = jsMacros.getProfile();\n\n    if (profile) {\n        // This will be true since tick events run on the main thread\n        const isJoined = profile.checkJoinedThreadStack();\n\n        if (isJoined) {\n            // Safe to perform operations that require thread safety\n            // For example, accessing Minecraft client components\n        }\n    }\n}));",
+        "// Async operation example\nJsMacros.on(\"SendMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    const profile = jsMacros.getProfile();\n\n    // This will likely be false since message events run on different threads\n    const isJoined = profile ? profile.checkJoinedThreadStack() : false;\n\n    Chat.log(`Message event thread joined: ${isJoined}`);\n}));"
+      ]
+    },
+    {
+      "name": "initRegistries",
+      "signature": "initRegistries()",
+      "returnType": "void",
+      "description": "Initializes all client-specific events and libraries. This method extends the base implementation to register Minecraft-client-specific functionality.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,429 @@
+{
+  "name": "AccessibilityOptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper$AccessibilityOptionsHelper",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The `AccessibilityOptionsHelper` class provides access to Minecraft's accessibility options, allowing scripts to read and modify various accessibility settings that improve gameplay for users with different needs. This includes settings for visual effects, chat display, audio narration, and control toggles.\n\nAccess this helper through `OptionsHelper.getAccessibilityOptions()` or directly via `Client.options.accessibility`.",
+  "overview": "The `AccessibilityOptionsHelper` class manages various accessibility features in Minecraft:\n- **Visual settings:** Text background opacity, chat transparency, visual effects\n- **Audio settings:** Narrator modes and subtitle display\n- **Control settings:** Toggle functionality for sneaking and sprinting\n- **Display settings:** Distortion effects, FOV effects, and visual modifications",
+  "constructors": [
+    {
+      "signature": "new AccessibilityOptionsHelper(optionsHelper)",
+      "description": "Internal constructor used by OptionsHelper to create the accessibility helper instance.",
+      "parameters": [
+        {
+          "name": "optionsHelper",
+          "type": "OptionsHelper",
+          "description": "The parent OptionsHelper instance"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getParent",
+      "signature": "instance.getParent()",
+      "returnType": "OptionsHelper",
+      "description": "Returns the parent OptionsHelper instance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parent = accessibility.getParent();\nChat.log(`Parent helper: ${parent.toString()}`);"
+      ]
+    },
+    {
+      "name": "getNarratorMode",
+      "signature": "instance.getNarratorMode()",
+      "returnType": "string",
+      "description": "Returns the current narrator mode setting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const narratorMode = Client.options.accessibility.getNarratorMode();\nChat.log(`Current narrator mode: ${narratorMode}`);"
+      ]
+    },
+    {
+      "name": "setNarratorMode",
+      "signature": "instance.setNarratorMode(mode)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the narrator mode to the specified value.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "string",
+          "description": "The narrator mode to set. Must be one of:\n- \"OFF\" - Disable narrator completely\n- \"ALL\" - Narrate all game elements\n- \"CHAT\" - Narrate only chat messages\n- \"SYSTEM\" - Narrate only system messages"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable narrator for all game elements\nClient.options.accessibility.setNarratorMode(\"ALL\");",
+        "// Enable narrator only for chat\nClient.options.accessibility.setNarratorMode(\"CHAT\");",
+        "// Turn off narrator\nClient.options.accessibility.setNarratorMode(\"OFF\");"
+      ]
+    },
+    {
+      "name": "areSubtitlesShown",
+      "signature": "instance.areSubtitlesShown()",
+      "returnType": "boolean",
+      "description": "Returns whether subtitles are currently enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const subtitlesEnabled = Client.options.accessibility.areSubtitlesShown();\nChat.log(`Subtitles are ${subtitlesEnabled ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "showSubtitles",
+      "signature": "instance.showSubtitles(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets whether subtitles should be displayed.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "true to enable subtitles, false to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable subtitles\nClient.options.accessibility.showSubtitles(true);",
+        "// Disable subtitles\nClient.options.accessibility.showSubtitles(false);"
+      ]
+    },
+    {
+      "name": "getTextBackgroundOpacity",
+      "signature": "instance.getTextBackgroundOpacity()",
+      "returnType": "double",
+      "description": "Returns the current opacity of text backgrounds in the UI.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const opacity = Client.options.accessibility.getTextBackgroundOpacity();\nChat.log(`Text background opacity: ${opacity}`);"
+      ]
+    },
+    {
+      "name": "setTextBackgroundOpacity",
+      "signature": "instance.setTextBackgroundOpacity(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the opacity of text backgrounds in the UI.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The opacity value to set (0.0 = fully transparent, 1.0 = fully opaque)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Make text backgrounds more transparent\nClient.options.accessibility.setTextBackgroundOpacity(0.3);",
+        "// Make text backgrounds fully opaque\nClient.options.accessibility.setTextBackgroundOpacity(1.0);",
+        "// Remove text backgrounds completely\nClient.options.accessibility.setTextBackgroundOpacity(0.0);"
+      ]
+    },
+    {
+      "name": "isBackgroundForChatOnly",
+      "signature": "instance.isBackgroundForChatOnly()",
+      "returnType": "boolean",
+      "description": "Returns whether text backgrounds are applied only to chat messages.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chatOnly = Client.options.accessibility.isBackgroundForChatOnly();\nChat.log(`Background for chat only: ${chatOnly}`);"
+      ]
+    },
+    {
+      "name": "enableBackgroundForChatOnly",
+      "signature": "instance.enableBackgroundForChatOnly(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets whether text backgrounds should only apply to chat messages.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "true to apply backgrounds only to chat, false for all text"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable backgrounds only for chat\nClient.options.accessibility.enableBackgroundForChatOnly(true);",
+        "// Apply backgrounds to all text elements\nClient.options.accessibility.enableBackgroundForChatOnly(false);"
+      ]
+    },
+    {
+      "name": "getChatOpacity",
+      "signature": "instance.getChatOpacity()",
+      "returnType": "double",
+      "description": "Returns the current opacity level of the chat window.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chatOpacity = Client.options.accessibility.getChatOpacity();\nChat.log(`Chat opacity: ${chatOpacity}`);"
+      ]
+    },
+    {
+      "name": "setChatOpacity",
+      "signature": "instance.setChatOpacity(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the opacity level of the chat window.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The opacity value to set (0.0 = fully transparent, 1.0 = fully opaque)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Make chat more transparent\nClient.options.accessibility.setChatOpacity(0.5);",
+        "// Make chat fully opaque\nClient.options.accessibility.setChatOpacity(1.0);",
+        "// Make chat very transparent\nClient.options.accessibility.setChatOpacity(0.2);"
+      ]
+    },
+    {
+      "name": "getChatLineSpacing",
+      "signature": "instance.getChatLineSpacing()",
+      "returnType": "double",
+      "description": "Returns the current line spacing in the chat window.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const spacing = Client.options.accessibility.getChatLineSpacing();\nChat.log(`Chat line spacing: ${spacing}`);"
+      ]
+    },
+    {
+      "name": "setChatLineSpacing",
+      "signature": "instance.setChatLineSpacing(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the line spacing in the chat window.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The line spacing value to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Increase line spacing for better readability\nClient.options.accessibility.setChatLineSpacing(1.5);",
+        "// Use default line spacing\nClient.options.accessibility.setChatLineSpacing(1.0);",
+        "// Decrease line spacing\nClient.options.accessibility.setChatLineSpacing(0.8);"
+      ]
+    },
+    {
+      "name": "getChatDelay",
+      "signature": "instance.getChatDelay()",
+      "returnType": "double",
+      "description": "Returns the current chat message display delay in seconds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const delay = Client.options.accessibility.getChatDelay();\nChat.log(`Chat delay: ${delay} seconds`);"
+      ]
+    },
+    {
+      "name": "setChatDelay",
+      "signature": "instance.setChatDelay(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the delay for chat message display in seconds.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The delay in seconds to set"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Increase chat delay for slower readers\nClient.options.accessibility.setChatDelay(2.0);",
+        "// Remove chat delay\nClient.options.accessibility.setChatDelay(0.0);",
+        "// Set moderate delay\nClient.options.accessibility.setChatDelay(0.5);"
+      ]
+    },
+    {
+      "name": "isAutoJumpEnabled",
+      "signature": "instance.isAutoJumpEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether the auto-jump feature is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const autoJump = Client.options.accessibility.isAutoJumpEnabled();\nChat.log(`Auto jump is ${autoJump ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableAutoJump",
+      "signature": "instance.enableAutoJump(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets whether the auto-jump feature should be enabled.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "true to enable auto-jump, false to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable auto-jump for easier movement\nClient.options.accessibility.enableAutoJump(true);",
+        "// Disable auto-jump for manual control\nClient.options.accessibility.enableAutoJump(false);"
+      ]
+    },
+    {
+      "name": "isSneakTogglingEnabled",
+      "signature": "instance.isSneakTogglingEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether the toggle functionality for sneaking is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sneakToggle = Client.options.accessibility.isSneakTogglingEnabled();\nChat.log(`Sneak toggle is ${sneakToggle ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "toggleSneak",
+      "signature": "instance.toggleSneak(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets whether the toggle functionality for sneaking should be enabled.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "true to enable sneak toggling, false to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable sneak toggling for accessibility\nClient.options.accessibility.toggleSneak(true);",
+        "// Disable sneak toggling (require holding key)\nClient.options.accessibility.toggleSneak(false);"
+      ]
+    },
+    {
+      "name": "isSprintTogglingEnabled",
+      "signature": "instance.isSprintTogglingEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether the toggle functionality for sprinting is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sprintToggle = Client.options.accessibility.isSprintTogglingEnabled();\nChat.log(`Sprint toggle is ${sprintToggle ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "toggleSprint",
+      "signature": "instance.toggleSprint(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets whether the toggle functionality for sprinting should be enabled.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "true to enable sprint toggling, false to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable sprint toggling for accessibility\nClient.options.accessibility.toggleSprint(true);",
+        "// Disable sprint toggling (require holding key)\nClient.options.accessibility.toggleSprint(false);"
+      ]
+    },
+    {
+      "name": "getDistortionEffect",
+      "signature": "instance.getDistortionEffect()",
+      "returnType": "double",
+      "description": "Returns the current distortion effect scale.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const distortion = Client.options.accessibility.getDistortionEffect();\nChat.log(`Distortion effect scale: ${distortion}`);"
+      ]
+    },
+    {
+      "name": "setDistortionEffect",
+      "signature": "instance.setDistortionEffect(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the distortion effect scale for nausea and other distortion effects.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The distortion effect scale to set (0.0 = no distortion, 1.0 = normal)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Reduce distortion effects for motion sensitivity\nClient.options.accessibility.setDistortionEffect(0.5);",
+        "// Disable distortion effects completely\nClient.options.accessibility.setDistortionEffect(0.0);",
+        "// Use normal distortion effects\nClient.options.accessibility.setDistortionEffect(1.0);"
+      ]
+    },
+    {
+      "name": "getFovEffect",
+      "signature": "instance.getFovEffect()",
+      "returnType": "double",
+      "description": "Returns the current field of view (FOV) effect scale.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const fovEffect = Client.options.accessibility.getFovEffect();\nChat.log(`FOV effect scale: ${fovEffect}`);"
+      ]
+    },
+    {
+      "name": "setFovEffect",
+      "signature": "instance.setFovEffect(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets the field of view (FOV) effect scale for speed-based FOV changes.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "double",
+          "description": "The FOV effect scale to set (0.0 = no FOV changes, 1.0 = normal)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Reduce FOV effects for motion sickness prevention\nClient.options.accessibility.setFovEffect(0.5);",
+        "// Disable FOV effects completely\nClient.options.accessibility.setFovEffect(0.0);",
+        "// Use normal FOV effects\nClient.options.accessibility.setFovEffect(1.0);"
+      ]
+    },
+    {
+      "name": "isMonochromeLogoEnabled",
+      "signature": "instance.isMonochromeLogoEnabled()",
+      "returnType": "boolean",
+      "description": "Returns whether the monochrome logo is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const monochromeLogo = Client.options.accessibility.isMonochromeLogoEnabled();\nChat.log(`Monochrome logo is ${monochromeLogo ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableMonochromeLogo",
+      "signature": "instance.enableMonochromeLogo(val)",
+      "returnType": "AccessibilityOptionsHelper",
+      "description": "Sets whether the monochrome logo should be enabled.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "true to enable monochrome logo, false for normal logo"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Enable monochrome logo for reduced visual stimulation\nClient.options.accessibility.enableMonochromeLogo(true);",
+        "// Use normal colorful logo\nClient.options.accessibility.enableMonochromeLogo(false);"
+      ]
+    },
+    {
+      "name": "areLightningFlashesHidden",
+      "signature": "instance.areLightningFlashesHidden()",
+      "returnType": "boolean",
+      "description": "Returns whether lightning flashes are hidden.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const lightningHidden = Client.options.accessibility.areLightningFlashesHidden();\nChat.log(`Lightning flashes are ${lightningHidden ? 'hidden' : 'visible'}`);"
+      ]
+    }
+  ]
+}

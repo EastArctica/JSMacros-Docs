@@ -1,0 +1,76 @@
+{
+  "name": "FiltererInverted",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.event.impl.FiltererInverted",
+  "extends": "Object",
+  "since": "JsMacros 1.9.1",
+  "description": "The `FiltererInverted` class is an event filter that inverts the logic of another event filter. It wraps a base filter and returns the opposite result when testing events, making it useful for creating \"NOT\" conditions in event filtering logic.",
+  "overview": "`FiltererInverted` is a specialized event filterer that takes another `EventFilterer` as its base and inverts its filtering logic. When the base filter would return `true` (allowing the event to pass), the inverted filter returns `false` (blocking the event), and vice versa.\n\nThis class is part of the Event Filterers system and implements the `EventFilterer.Compound` interface, which means it can be used in composed filter combinations. The main use case is creating negative filtering conditions - for example, listening to all damage events EXCEPT fall damage.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "invert",
+      "signature": "invert(base)",
+      "returnType": "EventFilterer",
+      "description": "This is a smart factory method that automatically handles double inversions. If you pass a `FiltererInverted` instance as the base, it will return the original inner filter (effectively canceling the inversion).\n- This method is preferred over direct construction and is exposed in the JsMacros API as `JsMacros.invertEventFilterer()`.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer",
+          "description": "The base filter to invert. Cannot be null."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const notFallDamageFilter = JsMacros.invertEventFilterer(fallDamageFilter);",
+        "// The factory method automatically handles double inversions\nconst originalFilter = JsMacros.createEventFilterer('Damage');\nconst invertedFilter = JsMacros.invertEventFilterer(originalFilter);\nconst doubleInvertedFilter = JsMacros.invertEventFilterer(invertedFilter);\n\n// doubleInvertedFilter will be the same as originalFilter\n// (not (not original)) == original\nChat.log(doubleInvertedFilter === originalFilter); // true"
+      ]
+    },
+    {
+      "name": "canFilter",
+      "signature": "canFilter(event)",
+      "returnType": "boolean",
+      "description": "Determines whether this filter can handle the specified event type.\n\n**Behavior**\n- Delegates to the base filter's `canFilter()` method.\n- The inverted filter can filter the same events as its base filter.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "string",
+          "description": "The name of the event to check."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const damageFilter = JsMacros.createEventFilterer('Damage');\nconst notDamageFilter = JsMacros.invertEventFilterer(damageFilter);\n\nChat.log(notDamageFilter.canFilter('Damage'));     // true\nChat.log(notDamageFilter.canFilter('RecvMessage')); // false"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(event)",
+      "returnType": "boolean",
+      "description": "Tests whether an event should pass through the filter.\n\n**Behavior**\n- Returns `!base.test(event)` - the logical negation of the base filter's result.\n- If the base filter would allow the event, this filter blocks it.\n- If the base filter would block the event, this filter allows it.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event to test."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "checkCyclicRef",
+      "signature": "checkCyclicRef(base)",
+      "returnType": "void",
+      "description": "Checks for cyclic references in compound filter chains.\n\n**Behavior**\n- Implements the `EventFilterer.Compound` interface requirement.\n- Prevents infinite loops by detecting when a filter references itself in a compound chain.\n- Also checks the inner base filter if it's also a compound filter.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer.Compound",
+          "description": "The base compound filter to check against."
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

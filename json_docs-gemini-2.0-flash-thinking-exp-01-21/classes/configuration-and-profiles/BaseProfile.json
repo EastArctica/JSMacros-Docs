@@ -1,0 +1,157 @@
+{
+  "name": "BaseProfile",
+  "fullClassName": "xyz.wagyourhour.jsmacros.core.config.BaseProfile",
+  "since": "JsMacros 1.0.3",
+  "description": "The `BaseProfile` class serves as the foundational abstract class for managing JsMacros configuration profiles. It handles the core functionality of profile management including loading and saving profiles, managing event registries, triggering events, and coordinating script execution contexts. This class provides the essential infrastructure that allows JsMacros to maintain different sets of macros and event listeners that can be switched between as needed.",
+  "overview": "The `BaseProfile` class is a central component in JsMacros's architecture that manages:\n\n- **Profile Management:** Loading, creating, and switching between different macro profiles\n- **Event Registry Coordination:** Managing event listeners and script triggers\n- **Event Triggering:** Coordinating the execution of event handlers\n- **Script Context Management:** Handling joined thread stacks and script execution contexts\n- **Library Registration:** Initializing core libraries and event registries\n\nThis class is designed to be extended by platform-specific implementations (like `Profile` in the client module) that provide additional functionality specific to the execution environment.\n\n## Accessing BaseProfile\n\n`BaseProfile` instances are typically accessed through:\n\n- **JsMacros API:** Through methods that expose the current profile\n- **Event Handling:** Events provide access to the profile context\n- **Profile Management:** Through profile switching and management operations\n\n```javascript\n// Example: Access through event context\nJsMacros.on(\"ProfileLoad\", JavaWrapper.methodToJava((event) => {\n    const profile = event.profileName;\n    Chat.log(`Loaded profile: ${profile}`);\n}));\n\n// Example: Profile operations (when available through JsMacros API)\n// Note: Direct BaseProfile access is typically through other JsMacros APIs\n```",
+  "constructors": [
+    {
+      "signature": "BaseProfile(Core runner, Logger logger)",
+      "description": "Internal constructor used by JsMacros to create profile instances. This constructor is not typically called directly by script writers, but rather used internally by the JsMacros system.",
+      "parameters": [
+        {
+          "name": "runner",
+          "type": "Core",
+          "description": "The JsMacros core instance"
+        },
+        {
+          "name": "logger",
+          "type": "Logger",
+          "description": "Logger instance for profile operations"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "logError",
+      "signature": "logError(Throwable ex)",
+      "returnType": "void",
+      "description": "Abstract method that must be implemented by subclasses to handle error logging. This method defines how errors are displayed or logged in the specific execution environment.",
+      "parameters": [
+        {
+          "name": "ex",
+          "type": "Throwable",
+          "description": "The error/exception to log"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "```java\n@Override\npublic void logError(Throwable ex) {\n    // Implementation logs errors to chat and handles error formatting\n}\n```"
+      ]
+    },
+    {
+      "name": "checkJoinedThreadStack",
+      "signature": "checkJoinedThreadStack()",
+      "returnType": "boolean",
+      "description": "Abstract method that must be implemented to check if the current thread is in the joined thread stack. This is used to determine if the current execution context can safely join with other script contexts.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "loadOrCreateProfile",
+      "signature": "loadOrCreateProfile(String profileName)",
+      "returnType": "void",
+      "description": "Loads an existing profile or creates a new one if it doesn't exist. This method clears the current event registry, loads the specified profile's scripts, or creates a new empty profile if none exists.",
+      "parameters": [
+        {
+          "name": "profileName",
+          "type": "String",
+          "description": "The name of the profile to load or create"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "```javascript\nJsMacros.getProfile().loadOrCreateProfile(\"myCustomProfile\");\n```"
+      ]
+    },
+    {
+      "name": "saveProfile",
+      "signature": "saveProfile()",
+      "returnType": "void",
+      "description": "Saves the current profile's state to the configuration. This stores all current script triggers and event listeners to the persistent configuration file.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "```javascript\nJsMacros.getProfile().saveProfile();\n```"
+      ]
+    },
+    {
+      "name": "getCurrentProfileName",
+      "signature": "getCurrentProfileName()",
+      "returnType": "String",
+      "description": "Returns the name of the currently active profile.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "```javascript\nconst currentProfile = JsMacros.getProfile().getCurrentProfileName();\nChat.log(`Current profile: ${currentProfile}`);\n```"
+      ]
+    },
+    {
+      "name": "renameCurrentProfile",
+      "signature": "renameCurrentProfile(String profile)",
+      "returnType": "void",
+      "description": "Renames the current profile to the specified name.",
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "String",
+          "description": "The new name for the current profile"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "triggerEvent",
+      "signature": "triggerEvent(BaseEvent event)",
+      "returnType": "void",
+      "description": "Triggers an event and coordinates the execution of all registered event listeners. This method handles both custom events and built-in events, managing the execution flow for joined and non-joined event listeners.\n\n**Behavior:**\n- Retrieves all appropriate event listeners for the event type\n- Handles joined event listeners with proper thread management\n- Manages the \"ANYTHING\" event listeners for events not in the ignore list\n- Coordinates execution timing and thread safety",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event to trigger"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "```javascript\nconst customEvent = JsMacros.createCustomEvent(\"MyCustomEvent\");\ncustomEvent.putString(\"message\", \"Hello from custom event!\");\nJsMacros.getProfile().triggerEvent(customEvent);\n```"
+      ]
+    },
+    {
+      "name": "getRegistry",
+      "signature": "getRegistry() (deprecated)",
+      "returnType": "BaseEventRegistry",
+      "description": "**Deprecated:** Since 1.6.0\n\nReturns the event registry. This method is deprecated and should be avoided in favor of newer event management approaches.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "init",
+      "signature": "init(String defaultProfile)",
+      "returnType": "void",
+      "description": "Initializes the profile by setting up registries and loading the default profile. This method coordinates the complete initialization process.\n\n**Process:**\n1. Initializes event registries\n2. Loads or creates the specified default profile",
+      "parameters": [
+        {
+          "name": "defaultProfile",
+          "type": "String",
+          "description": "The name of the default profile to load"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "initRegistries",
+      "signature": "initRegistries() (protected)",
+      "returnType": "void",
+      "description": "Protected method that initializes the core registries and libraries. This method sets up the fundamental event types and registers the core JsMacros libraries.\n\n**Default Implementation Includes:**\n- Registers \"ANYTHING\" and \"EventProfileLoad\" events\n- Registers core libraries: FJsMacros, FFS, FGlobalVars, FReflection, FRequest, FTime\n\n**Note:** Subclasses should override this method to add platform-specific events and libraries, then call `super.initRegistries()`.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

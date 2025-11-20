@@ -1,0 +1,366 @@
+{
+  "name": "ClientPlayerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.ClientPlayerEntityHelper",
+  "extends": "PlayerEntityHelper<ClientPlayerEntity>",
+  "since": "JSMacros 1.0.3",
+  "description": "The `ClientPlayerEntityHelper` class is a specialized wrapper for the client-side player entity in JSMacros, providing access to player-specific functionality, movement controls, interaction methods, and client-side operations.",
+  "overview": "This class extends `PlayerEntityHelper` and inherits all player and living entity methods while adding client-specific functionality like camera control, movement manipulation, and client-side interactions. This class is typically obtained through the `Player.getPlayer()` method and represents the local client player. It provides comprehensive methods for controlling player movement, camera direction, item cooldowns, food management, and various client-side player operations that are specific to the local player experience.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getPlayerName",
+      "signature": "getPlayerName()",
+      "returnType": "String",
+      "description": "Gets the player's actual name (not display name).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAbilities",
+      "signature": "getAbilities()",
+      "returnType": "PlayerAbilitiesHelper",
+      "description": "Gets the player's abilities object, providing access to properties like gamemode, flying status, etc.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getXP",
+      "signature": "getXP()",
+      "returnType": "int",
+      "description": "Gets the player's total experience points.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getXPLevel",
+      "signature": "getXPLevel()",
+      "returnType": "int",
+      "description": "Gets the player's current experience level.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getXPProgress",
+      "signature": "getXPProgress()",
+      "returnType": "float",
+      "description": "Gets the player's progress towards the next experience level (0.0 to 1.0).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getXPToLevelUp",
+      "signature": "getXPToLevelUp()",
+      "returnType": "int",
+      "description": "Gets the experience points needed for the player to reach the next level.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "float",
+      "description": "Gets the player's current health.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "float",
+      "description": "Gets the player's maximum health.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMainHand",
+      "signature": "getMainHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack held in the player's main hand.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mainHand = player.getMainHand();"
+      ]
+    },
+    {
+      "name": "getOffHand",
+      "signature": "getOffHand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack held in the player's off hand.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSleepingLongEnough",
+      "signature": "isSleepingLongEnough()",
+      "returnType": "boolean",
+      "description": "Checks if the player has been sleeping long enough to skip the night.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFishingBobber",
+      "signature": "getFishingBobber()",
+      "returnType": "EntityHelper",
+      "description": "Gets the fishing bobber entity if the player is currently fishing.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAttackCooldownProgress",
+      "signature": "getAttackCooldownProgress()",
+      "returnType": "float",
+      "description": "Gets the player's attack cooldown progress (0.0 to 1.0, where 1.0 means ready to attack).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const cooldownProgress = player.getAttackCooldownProgress();",
+        "const progress = player.getAttackCooldownProgress();"
+      ]
+    },
+    {
+      "name": "getScore",
+      "signature": "getScore()",
+      "returnType": "int",
+      "description": "Gets the player's current score.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List<StatusEffectInstanceHelper>",
+      "description": "Gets a list of all active status effects on the player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(id: String)",
+      "returnType": "boolean",
+      "description": "Checks if the player has a specific status effect identified by its ID.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The ID of the status effect to check for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(item: String | ItemStackHelper)",
+      "returnType": "boolean",
+      "description": "Checks if the player is holding a specific item in either hand.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "String | ItemStackHelper",
+          "description": "The item ID (e.g., 'minecraft:diamond_pickaxe') or ItemStackHelper to check for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "float",
+      "description": "Gets the player's current absorption health.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "int",
+      "description": "Gets the player's total armor protection value.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "lookAt",
+      "signature": "lookAt(x: number, y: number, z: number)",
+      "returnType": "void",
+      "description": "Orients the player's camera to look towards a specific 3D target position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate of the target."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate of the target."
+        },
+        {
+          "name": "z",
+          "type": "number",
+          "description": "The Z coordinate of the target."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "player.lookAt(x, y + player.getEyeHeight(), z);",
+        "player.lookAt(pos.x, pos.y + nearestHostile.getEyeHeight(), pos.z);"
+      ]
+    },
+    {
+      "name": "getPos",
+      "signature": "getPos()",
+      "returnType": "Pos3D",
+      "description": "Gets the player's current 3D position as a `Pos3D` object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentPos = player.getPos();"
+      ]
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(entity: EntityHelper)",
+      "returnType": "number",
+      "description": "Calculates the Euclidean distance between the player and another `EntityHelper`.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to measure the distance to."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const distance = player.distanceTo(entity);"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(x: number, y: number, z: number, onGround: boolean)",
+      "returnType": "Promise<void>",
+      "description": "Sets the player's position to the specified coordinates. This method is asynchronous and returns a Promise.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The target X coordinate."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The target Y coordinate."
+        },
+        {
+          "name": "z",
+          "type": "number",
+          "description": "The target Z coordinate."
+        },
+        {
+          "name": "onGround",
+          "type": "boolean",
+          "description": "Whether the player should be considered on the ground after setting position."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "await player.setPos(x, y, z, true);",
+        "await player.setPos(newX, newY, newZ, true);"
+      ]
+    },
+    {
+      "name": "getAttackCooldownProgressPerTick",
+      "signature": "getAttackCooldownProgressPerTick()",
+      "returnType": "float",
+      "description": "Gets the fraction of attack cooldown progress that is gained each game tick.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const progressPerTick = player.getAttackCooldownProgressPerTick();"
+      ]
+    },
+    {
+      "name": "getItemCooldownsRemainingTicks",
+      "signature": "getItemCooldownsRemainingTicks()",
+      "returnType": "Map<String, int>",
+      "description": "Returns a map of items (by their string ID) and the number of ticks remaining on their cooldown.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const cooldowns = player.getItemCooldownsRemainingTicks();"
+      ]
+    },
+    {
+      "name": "calculateMiningSpeed",
+      "signature": "calculateMiningSpeed(toolStack: ItemStackHelper, blockState: BlockStateHelper)",
+      "returnType": "int",
+      "description": "Calculates the number of game ticks required for the player to mine a specific `blockState` using the provided `toolStack`.",
+      "parameters": [
+        {
+          "name": "toolStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack representing the tool being used for mining."
+        },
+        {
+          "name": "blockState",
+          "type": "BlockStateHelper",
+          "description": "The block state of the block to calculate mining speed against."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const miningTime = player.calculateMiningSpeed(mainHand, blockState);"
+      ]
+    },
+    {
+      "name": "getFoodLevel",
+      "signature": "getFoodLevel()",
+      "returnType": "int",
+      "description": "Gets the player's current food (hunger) level (0-20).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const food = player.getFoodLevel();"
+      ]
+    },
+    {
+      "name": "getSaturation",
+      "signature": "getSaturation()",
+      "returnType": "float",
+      "description": "Gets the player's current food saturation level.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const saturation = player.getSaturation();"
+      ]
+    },
+    {
+      "name": "getEyeHeight",
+      "signature": "getEyeHeight()",
+      "returnType": "float",
+      "description": "Gets the player's eye height relative to their position.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "player.lookAt(x, y + player.getEyeHeight(), z);",
+        "player.lookAt(pos.x, pos.y + nearestHostile.getEyeHeight(), pos.z);"
+      ]
+    }
+  ]
+}

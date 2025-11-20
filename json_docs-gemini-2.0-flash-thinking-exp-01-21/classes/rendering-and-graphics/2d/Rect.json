@@ -1,0 +1,598 @@
+{
+  "name": "Rect",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Rect",
+  "extends": "Object",
+  "since": "JsMacros 1.0.5",
+  "description": "The `Rect` class is a rendering component in JSMacros that represents a colored rectangle that can be drawn on the screen. It supports positioning, sizing, coloring, rotation, and alignment operations. This class is commonly used for creating UI overlays, visual indicators, backgrounds, and custom HUD elements in scripts.",
+  "overview": "The `Rect` class provides a flexible way to draw rectangles with various properties:\n- Customizable position and dimensions\n- Full color support with alpha transparency\n- Rotation capabilities with center-point or origin rotation\n- Z-index layering for proper depth ordering\n- Parent-child relationships for hierarchical rendering\n- Alignment utilities for positioning relative to other elements",
+  "constructors": [
+    {
+      "signature": "new Rect(x1, y1, x2, y2, color, rotation, zIndex)",
+      "description": "Creates a new Rect with specified coordinates, color, rotation, and z-index.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X coordinate of the first corner"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y coordinate of the first corner"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X coordinate of the second corner"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y coordinate of the second corner"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color in RGB format (alpha will be set to 0xFF)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order (higher values render on top)"
+        }
+      ],
+      "examples": [
+        "// Create a red rectangle at position (10, 10) to (110, 60)\nconst rect = new Rect(10, 10, 110, 60, 0xFF0000, 0, 0);"
+      ]
+    },
+    {
+      "signature": "new Rect(x1, y1, x2, y2, color, alpha, rotation, zIndex)",
+      "description": "Creates a new Rect with specified coordinates, color, alpha, rotation, and z-index.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X coordinate of the first corner"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y coordinate of the first corner"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X coordinate of the second corner"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y coordinate of the second corner"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color in RGB format"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        }
+      ],
+      "examples": [
+        "// Create a semi-transparent blue rectangle\nconst rect = new Rect(50, 50, 150, 100, 0x0000FF, 128, 1);"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "setX1",
+      "signature": "setX1(x1)",
+      "returnType": "Rect",
+      "description": "Sets the X coordinate of the first corner.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "The new X coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getX1",
+      "signature": "getX1()",
+      "returnType": "int",
+      "description": "Returns the X coordinate of the first corner.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setY1",
+      "signature": "setY1(y1)",
+      "returnType": "Rect",
+      "description": "Sets the Y coordinate of the first corner.",
+      "parameters": [
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "The new Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY1",
+      "signature": "getY1()",
+      "returnType": "int",
+      "description": "Returns the Y coordinate of the first corner.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setPos1",
+      "signature": "setPos1(x1, y1)",
+      "returnType": "Rect",
+      "description": "Sets both coordinates of the first corner.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "The new X coordinate"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "The new Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setX2",
+      "signature": "setX2(x2)",
+      "returnType": "Rect",
+      "description": "Sets the X coordinate of the second corner.",
+      "parameters": [
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "The new X coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getX2",
+      "signature": "getX2()",
+      "returnType": "int",
+      "description": "Returns the X coordinate of the second corner.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setY2",
+      "signature": "setY2(y2)",
+      "returnType": "Rect",
+      "description": "Sets the Y coordinate of the second corner.",
+      "parameters": [
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "The new Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY2",
+      "signature": "getY2()",
+      "returnType": "int",
+      "description": "Returns the Y coordinate of the second corner.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setPos2",
+      "signature": "setPos2(x2, y2)",
+      "returnType": "Rect",
+      "description": "Sets both coordinates of the second corner.",
+      "parameters": [
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "The new X coordinate"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "The new Y coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(x1, y1, x2, y2)",
+      "returnType": "Rect",
+      "description": "Sets all rectangle coordinates at once.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X coordinate of the first corner"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y coordinate of the first corner"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X coordinate of the second corner"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y coordinate of the second corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setWidth",
+      "signature": "setWidth(width)",
+      "returnType": "Rect",
+      "description": "Sets the width of the rectangle. Preserves the position of the corner with the smaller X coordinate.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The new width in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "int",
+      "description": "Returns the current width of the rectangle.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setHeight",
+      "signature": "setHeight(height)",
+      "returnType": "Rect",
+      "description": "Sets the height of the rectangle. Preserves the position of the corner with the smaller Y coordinate.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The new height in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "int",
+      "description": "Returns the current height of the rectangle.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setSize",
+      "signature": "setSize(width, height)",
+      "returnType": "Rect",
+      "description": "Sets both width and height at once.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The new width in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The new height in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setColor",
+      "signature": "setColor(color)",
+      "returnType": "Rect",
+      "description": "Sets the color with full alpha (0xFF).",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color in RGB format (e.g., 0xFF0000 for red)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setColor",
+      "signature": "setColor(color, alpha)",
+      "returnType": "Rect",
+      "description": "Sets both color and alpha values.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Color in RGB format"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setAlpha",
+      "signature": "setAlpha(alpha)",
+      "returnType": "Rect",
+      "description": "Sets only the alpha transparency value.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "int",
+      "description": "Returns the current color value (including alpha).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAlpha",
+      "signature": "getAlpha()",
+      "returnType": "int",
+      "description": "Returns only the alpha component of the color.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setRotation",
+      "signature": "setRotation(rotation)",
+      "returnType": "Rect",
+      "description": "Sets the rotation angle of the rectangle.",
+      "parameters": [
+        {
+          "name": "rotation",
+          "type": "double",
+          "description": "Rotation angle in degrees (clockwise, will be wrapped to 0-360)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRotation",
+      "signature": "getRotation()",
+      "returnType": "float",
+      "description": "Returns the current rotation angle.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setRotateCenter",
+      "signature": "setRotateCenter(rotateCenter)",
+      "returnType": "Rect",
+      "description": "Sets whether the rectangle should rotate around its center point.",
+      "parameters": [
+        {
+          "name": "rotateCenter",
+          "type": "boolean",
+          "description": "true to rotate around center, false to rotate around origin"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isRotatingCenter",
+      "signature": "isRotatingCenter()",
+      "returnType": "boolean",
+      "description": "Returns whether the rectangle is set to rotate around its center.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setZIndex",
+      "signature": "setZIndex(zIndex)",
+      "returnType": "Rect",
+      "description": "Sets the z-index for rendering order.",
+      "parameters": [
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index value (higher values render on top)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZIndex",
+      "signature": "getZIndex()",
+      "returnType": "int",
+      "description": "Returns the current z-index.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "render",
+      "signature": "render(drawContext, mouseX, mouseY, delta)",
+      "returnType": null,
+      "description": "Renders the rectangle. This method is called automatically when the rectangle is added to a 2D drawing surface.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "Minecraft's draw context"
+        },
+        {
+          "name": "mouseX",
+          "type": "int",
+          "description": "Current mouse X position"
+        },
+        {
+          "name": "mouseY",
+          "type": "int",
+          "description": "Current mouse Y position"
+        },
+        {
+          "name": "delta",
+          "type": "float",
+          "description": "Frame delta time"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setParent",
+      "signature": "setParent(parent)",
+      "returnType": "Rect",
+      "description": "Sets the parent drawing surface for this rectangle.",
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "IDraw2D",
+          "description": "The parent drawing surface"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScaledWidth",
+      "signature": "getScaledWidth()",
+      "returnType": "int",
+      "description": "Returns the scaled width of the rectangle.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getParentWidth",
+      "signature": "getParentWidth()",
+      "returnType": "int",
+      "description": "Returns the width of the parent drawing surface.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScaledHeight",
+      "signature": "getScaledHeight()",
+      "returnType": "int",
+      "description": "Returns the scaled height of the rectangle.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getParentHeight",
+      "signature": "getParentHeight()",
+      "returnType": "int",
+      "description": "Returns the height of the parent drawing surface.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScaledLeft",
+      "signature": "getScaledLeft()",
+      "returnType": "int",
+      "description": "Returns the left edge position (minimum X coordinate).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScaledTop",
+      "signature": "getScaledTop()",
+      "returnType": "int",
+      "description": "Returns the top edge position (minimum Y coordinate).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "moveTo",
+      "signature": "moveTo(x, y)",
+      "returnType": "Rect",
+      "description": "Moves the rectangle to the specified position while maintaining its size.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "New X position"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "New Y position"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

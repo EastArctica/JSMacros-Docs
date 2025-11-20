@@ -1,0 +1,490 @@
+{
+  "name": "PerExecLibrary",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.PerExecLibrary",
+  "extends": "BaseLibrary",
+  "since": "1.0.0",
+  "description": "An abstract base class for libraries that are instantiated per script execution in JsMacros. This class serves as the foundation for creating library implementations that maintain isolated state for each script execution while having access to the current script context.",
+  "overview": "PerExecLibrary instances are created fresh for each script execution and destroyed when the script finishes. This makes them ideal for libraries that need to maintain script-specific state, access script context information, or provide isolated functionality that shouldn't be shared between different script executions.",
+  "constructors": [
+    {
+      "signature": "PerExecLibrary(BaseScriptContext<?> context)",
+      "description": "Creates a new PerExecLibrary instance with the specified script context. This constructor is protected, indicating it's intended for subclass initialization.",
+      "parameters": [
+        {
+          "name": "context",
+          "type": "BaseScriptContext<?>",
+          "description": "The script context for this library instance"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getScriptName",
+      "signature": "public String getScriptName()",
+      "returnType": "String",
+      "description": "Retrieves the name of the current script from its context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public String getScriptName() {\n        return ctx.getTriggerName();\n    }"
+      ]
+    },
+    {
+      "name": "getScriptPath",
+      "signature": "public String getScriptPath()",
+      "returnType": "String",
+      "description": "Returns the absolute path of the directory containing the current script.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public String getScriptPath() {\n        return ctx.getContainedFolder().getAbsolutePath();\n    }"
+      ]
+    },
+    {
+      "name": "getEventType",
+      "signature": "public String getEventType()",
+      "returnType": "String",
+      "description": "Gets the simple class name of the event that triggered the script.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public String getEventType() {\n        return ctx.getTriggeringEvent().getClass().getSimpleName();\n    }"
+      ]
+    },
+    {
+      "name": "getExecutionTime",
+      "signature": "public long getExecutionTime()",
+      "returnType": "long",
+      "description": "Returns the execution time of the current script in milliseconds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public long getExecutionTime() {\n        return ctx.getExecTime();\n    }"
+      ]
+    },
+    {
+      "name": "set",
+      "signature": "public void set(String key, Object value)",
+      "returnType": "void",
+      "description": "Sets a script-specific state value associated with a given key.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key for the state value."
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "description": "The value to store."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void set(String key, Object value) {\n        state.put(key, value);\n    }"
+      ]
+    },
+    {
+      "name": "get",
+      "signature": "public Object get(String key)",
+      "returnType": "Object",
+      "description": "Retrieves a script-specific state value by its key.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The key of the state value to retrieve."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public Object get(String key) {\n        return state.get(key);\n    }"
+      ]
+    },
+    {
+      "name": "getUptime",
+      "signature": "public long getUptime()",
+      "returnType": "long",
+      "description": "Returns the duration, in milliseconds, since the current script started execution.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public long getUptime() {\n        return System.currentTimeMillis() - startTime;\n    }"
+      ]
+    },
+    {
+      "name": "getAllState",
+      "signature": "public Map<String, Object> getAllState()",
+      "returnType": "Map<String, Object>",
+      "description": "Returns a new map containing all script-specific state variables.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public Map<String, Object> getAllState() {\n        return new HashMap<>(state);\n    }"
+      ]
+    },
+    {
+      "name": "listFiles",
+      "signature": "public String[] listFiles()",
+      "returnType": "String[]",
+      "description": "Lists the names of files and directories in the script's containing folder.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public String[] listFiles() {\n        return ctx.getContainedFolder().list();\n    }"
+      ]
+    },
+    {
+      "name": "exists",
+      "signature": "public boolean exists(String relativePath)",
+      "returnType": "boolean",
+      "description": "Checks if a file or directory exists relative to the script's folder.",
+      "parameters": [
+        {
+          "name": "relativePath",
+          "type": "String",
+          "description": "The path relative to the script's folder."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public boolean exists(String relativePath) {\n        return ctx.getContainedFolder().toPath()\n                .resolve(relativePath).toFile().exists();\n    }"
+      ]
+    },
+    {
+      "name": "readConfig",
+      "signature": "public String readConfig(String fileName) throws IOException",
+      "returnType": "String",
+      "description": "Reads the content of a configuration file located relative to the script's folder.",
+      "parameters": [
+        {
+          "name": "fileName",
+          "type": "String",
+          "description": "The name of the configuration file."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public String readConfig(String fileName) throws IOException {\n        File configFile = ctx.getContainedFolder().toPath()\n                .resolve(fileName).toFile();\n        return Files.readString(configFile.toPath());\n    }"
+      ]
+    },
+    {
+      "name": "writeLog",
+      "signature": "public void writeLog(String message) throws IOException",
+      "returnType": "void",
+      "description": "Appends a timestamped message to a 'script.log' file in the script's folder.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "String",
+          "description": "The message to write to the log file."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void writeLog(String message) throws IOException {\n        File logFile = ctx.getContainedFolder().toPath()\n                .resolve(\"script.log\").toFile();\n        String timestamp = new Date().toString();\n        Files.writeString(logFile.toPath(),\n            String.format(\"[%s] %s%n\", timestamp, message),\n            StandardOpenOption.CREATE, StandardOpenOption.APPEND);\n    }"
+      ]
+    },
+    {
+      "name": "getEventSource",
+      "signature": "public String getEventSource()",
+      "returnType": "String",
+      "description": "Identifies and returns a descriptive string for the source of the triggering event.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public String getEventSource() {\n        BaseEvent event = ctx.getTriggeringEvent();\n        if (event instanceof EventKey) {\n            return \"Key Press\";\n        } else if (event instanceof EventTick) {\n            return \"Game Tick\";\n        } else if (event instanceof EventDamage) {\n            return \"Damage Event\";\n        }\n        return \"Unknown Event\";\n    }"
+      ]
+    },
+    {
+      "name": "isPlayerEvent",
+      "signature": "public boolean isPlayerEvent()",
+      "returnType": "boolean",
+      "description": "Checks if the current triggering event is related to a player action (join, leave, respawn).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public boolean isPlayerEvent() {\n        BaseEvent event = ctx.getTriggeringEvent();\n        return event instanceof EventPlayerJoin ||\n               event instanceof EventPlayerLeave ||\n               event instanceof EventPlayerRespawn;\n    }"
+      ]
+    },
+    {
+      "name": "getEventData",
+      "signature": "public Object getEventData(String fieldName)",
+      "returnType": "Object",
+      "description": "Attempts to retrieve data from the triggering event by field name using reflection.",
+      "parameters": [
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to retrieve from the event object."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public Object getEventData(String fieldName) {\n        try {\n            BaseEvent event = ctx.getTriggeringEvent();\n            Field field = event.getClass().getDeclaredField(fieldName);\n            field.setAccessible(true);\n            return field.get(event);\n        } catch (Exception e) {\n            return null;\n        }\n    }"
+      ]
+    },
+    {
+      "name": "add",
+      "signature": "public double add(double a, double b)",
+      "returnType": "double",
+      "description": "Adds two double numbers and records the operation in the script's calculation history.",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "double",
+          "description": "The first number."
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "description": "The second number."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public double add(double a, double b) {\n        double result = a + b;\n        calculationHistory.add(String.format(\"%.2f + %.2f = %.2f\", a, b, result));\n        return result;\n    }"
+      ]
+    },
+    {
+      "name": "multiply",
+      "signature": "public double multiply(double a, double b)",
+      "returnType": "double",
+      "description": "Multiplies two double numbers and records the operation in the script's calculation history.",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "double",
+          "description": "The first number."
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "description": "The second number."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public double multiply(double a, double b) {\n        double result = a * b;\n        calculationHistory.add(String.format(\"%.2f × %.2f = %.2f\", a, b, result));\n        return result;\n    }"
+      ]
+    },
+    {
+      "name": "getHistory",
+      "signature": "public List<String> getHistory()",
+      "returnType": "List<String>",
+      "description": "Returns a copy of the calculation history for the current script.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public List<String> getHistory() {\n        return new ArrayList<>(calculationHistory);\n    }"
+      ]
+    },
+    {
+      "name": "clearHistory",
+      "signature": "public void clearHistory()",
+      "returnType": "void",
+      "description": "Clears the calculation history maintained for the current script.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public void clearHistory() {\n        calculationHistory.clear();\n    }"
+      ]
+    },
+    {
+      "name": "printContextInfo",
+      "signature": "public void printContextInfo()",
+      "returnType": "void",
+      "description": "Logs various pieces of information about the current script context to the chat.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public void printContextInfo() {\n        Chat.log(\"=== Script Context Information ===\");\n        Chat.log(\"Trigger Name: \" + ctx.getTriggerName());\n        Chat.log(\"Script File: \" + ctx.getContainedFolder().getAbsolutePath());\n        Chat.log(\"Execution Time: \" + ctx.getExecTime() + \"ms\");\n\n        if (ctx.getTriggeringEvent() != null) {\n            Chat.log(\"Triggering Event: \" + ctx.getTriggeringEvent().getClass().getSimpleName());\n        }\n\n        Chat.log(\"Context Thread: \" + ctx.getBoundThread().getName());\n        Chat.log(\"================================\");\n    }"
+      ]
+    },
+    {
+      "name": "getDetailedInfo",
+      "signature": "public String getDetailedInfo()",
+      "returnType": "String",
+      "description": "Returns a detailed string summary of the current script context information.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public String getDetailedInfo() {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"Script Context Details:\\n\");\n        sb.append(\"- Trigger: \").append(ctx.getTriggerName()).append(\"\\n\");\n        sb.append(\"- File: \").append(ctx.getContainedFolder().getAbsolutePath()).append(\"\\n\");\n        sb.append(\"- Execution Time: \").append(ctx.getExecTime()).append(\"ms\\n\");\n        sb.append(\"- Event: \").append(ctx.getTriggeringEvent().getClass().getSimpleName()).append(\"\\n\");\n\n        if (ctx instanceof JavaScriptContext) {\n            sb.append(\"- Language: JavaScript\\n\");\n        }\n\n        return sb.toString();\n    }"
+      ]
+    },
+    {
+      "name": "hasEventListeners",
+      "signature": "public boolean hasEventListeners()",
+      "returnType": "boolean",
+      "description": "Checks if the current script has any active event listeners.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public boolean hasEventListeners() {\n        return !ctx.eventListeners.isEmpty();\n    }"
+      ]
+    },
+    {
+      "name": "getEventListenerCount",
+      "signature": "public int getEventListenerCount()",
+      "returnType": "int",
+      "description": "Returns the total number of event listeners registered for the current script.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public int getEventListenerCount() {\n        return ctx.eventListeners.size();\n    }"
+      ]
+    },
+    {
+      "name": "info",
+      "signature": "public void info(String message)",
+      "returnType": "void",
+      "description": "Logs an informational message to both the script's internal log and the chat.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "String",
+          "description": "The informational message to log."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void info(String message) {\n        String logEntry = String.format(\"[%s] [INFO] %s\",\n            new SimpleDateFormat(\"HH:mm:ss\").format(new Date()), message);\n        logEntries.add(logEntry);\n        Chat.log(logEntry);\n    }"
+      ]
+    },
+    {
+      "name": "error",
+      "signature": "public void error(String message, Throwable error)",
+      "returnType": "void",
+      "description": "Logs an error message along with an exception to the script's internal log, chat, and JsMacros error system.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "String",
+          "description": "A descriptive error message."
+        },
+        {
+          "name": "error",
+          "type": "Throwable",
+          "description": "The exception that occurred."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void error(String message, Throwable error) {\n        String logEntry = String.format(\"[%s] [ERROR] %s: %s\",\n            new SimpleDateFormat(\"HH:mm:ss\").format(new Date()),\n            message, error.getMessage());\n        logEntries.add(logEntry);\n        Chat.log(logEntry);\n\n        // Also log to JsMacros error system\n        ctx.getProfile().logError(error);\n    }"
+      ]
+    },
+    {
+      "name": "debug",
+      "signature": "public void debug(String message)",
+      "returnType": "void",
+      "description": "Logs a debug message to the script's internal log and optionally to chat if debug mode is enabled.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "String",
+          "description": "The debug message to log."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void debug(String message) {\n        String logEntry = String.format(\"[%s] [DEBUG] %s\",\n            new SimpleDateFormat(\"HH:mm:ss\").format(new Date()), message);\n        logEntries.add(logEntry);\n\n        // Only show debug if debug mode is enabled\n        if (Boolean.parseBoolean(System.getProperty(\"jsmacros.debug\", \"false\"))) {\n            Chat.log(logEntry);\n        }\n    }"
+      ]
+    },
+    {
+      "name": "getLogs",
+      "signature": "public List<String> getLogs()",
+      "returnType": "List<String>",
+      "description": "Returns a copy of all log entries collected by the script logger.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public List<String> getLogs() {\n        return new ArrayList<>(logEntries);\n    }"
+      ]
+    },
+    {
+      "name": "saveLogsToFile",
+      "signature": "public void saveLogsToFile() throws IOException",
+      "returnType": "void",
+      "description": "Saves all collected log entries to a text file named after the script in its containing folder.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public void saveLogsToFile() throws IOException {\n        File logFile = ctx.getContainedFolder().toPath()\n                .resolve(scriptName + \"_logs.txt\").toFile();\n\n        try (FileWriter writer = new FileWriter(logFile)) {\n            for (String entry : logEntries) {\n                writer.write(entry + System.lineSeparator());\n            }\n        }\n\n        info(\"Logs saved to: \" + logFile.getAbsolutePath());\n    }"
+      ]
+    },
+    {
+      "name": "time",
+      "signature": "public long time()",
+      "returnType": "long",
+      "description": "Returns the current system time in milliseconds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "public long time() {\n        return System.currentTimeMillis();\n    }"
+      ]
+    },
+    {
+      "name": "sleep",
+      "signature": "public void sleep(long millis) throws InterruptedException",
+      "returnType": "void",
+      "description": "Pauses the script execution for a specified duration in milliseconds, safely wrapping Thread.sleep.",
+      "parameters": [
+        {
+          "name": "millis",
+          "type": "long",
+          "description": "The number of milliseconds to sleep."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public void sleep(long millis) throws InterruptedException {\n        ctx.wrapSleep(() -> Thread.sleep(millis));\n    }"
+      ]
+    },
+    {
+      "name": "list",
+      "signature": "public String[] list(String path)",
+      "returnType": "String[]",
+      "description": "Lists the names of files and directories within a given path, resolved relative to the script's folder.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "String",
+          "description": "The path to list, relative to the script's folder."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public String[] list(String path) {\n        return ctx.getContainedFolder().toPath()\n                .resolve(path).toFile().list();\n    }"
+      ]
+    },
+    {
+      "name": "runScript",
+      "signature": "public EventContainer<?> runScript(String file)",
+      "returnType": "EventContainer<?>",
+      "description": "Executes another script, with the file path resolved using the current script's context.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "String",
+          "description": "The filename of the script to run, relative to the macros folder."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "public EventContainer<?> runScript(String file) {\n        // Uses context for file resolution\n        return Core.getInstance().exec(\n            new ScriptTrigger(ScriptTrigger.TriggerType.EVENT, \"\",\n                Core.getInstance().config.macroFolder.getAbsoluteFile()\n                    .toPath().resolve(file).toFile(), true, false),\n            null, null, null);\n    }"
+      ]
+    },
+    {
+      "name": "initializeResources",
+      "signature": "private void initializeResources()",
+      "returnType": "void",
+      "description": "Initializes and caches script-specific resources once per execution.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "private void initializeResources() {\n        // Load script-specific resources once per execution\n        cache.put(\"scriptPath\", ctx.getContainedFolder().getAbsolutePath());\n        cache.put(\"startTime\", System.currentTimeMillis());\n    }"
+      ]
+    }
+  ]
+}

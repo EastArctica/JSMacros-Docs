@@ -1,0 +1,28 @@
+{
+  "name": "WitherSkullEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.projectile.WitherSkullEntityHelper",
+  "extends": "EntityHelper<WitherSkullEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `WitherSkullEntityHelper` class provides specialized access to wither skull entities in Minecraft, offering methods to monitor and interact with wither skull-specific behaviors such as charged state detection. This class extends `EntityHelper` and inherits all functionality for entities including position tracking, movement monitoring, and world interaction.",
+  "overview": "This helper is particularly useful for creating scripts that detect wither skull projectiles, monitor their behavior patterns, track dangerous skulls, or analyze combat scenarios involving withers or wither skull dispensers.",
+  "constructors": [
+    {
+      "signature": "WitherSkullEntityHelper()",
+      "description": "WitherSkullEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through:\n- Entity-related events (e.g., `EntitySpawn`, `ProjectileHit`, `EntityHurt`)\n- World entity queries using type filtering for \"minecraft:wither_skull\"\n- Casting from generic EntityHelper instances when dealing with wither skull entities",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "isCharged",
+      "signature": "isCharged()",
+      "returnType": "boolean",
+      "description": "Returns true if this wither skull is charged (blue variant), which deals more damage and has different behavior than regular wither skulls.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if a wither skull is charged and handle accordingly\nconst witherSkull = entity;\nif (witherSkull.isCharged()) {\n    Chat.log(\"Danger: This is a charged blue wither skull - extra damage!\");\n\n    // Highlight charged skulls with special effects\n    witherSkull.setGlowing(true);\n    witherSkull.setGlowingColor(0x0080FF); // Blue glow for charged skulls\n\n    // Trigger high-priority warnings\n    Chat.actionbar(\"&c&lCHARGED WITHER SKULL - TAKE COVER!\");\n} else {\n    Chat.log(\"Regular wither skull detected - still dangerous but less damage\");\n    witherSkull.setGlowing(true);\n    witherSkull.setGlowingColor(0x8B0000); // Dark red for regular skulls\n}"
+      ]
+    }
+  ]
+}

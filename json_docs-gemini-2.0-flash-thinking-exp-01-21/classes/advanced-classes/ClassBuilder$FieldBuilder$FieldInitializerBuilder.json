@@ -1,0 +1,65 @@
+{
+  "name": "FieldInitializerBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.FieldBuilder.FieldInitializerBuilder",
+  "extends": null,
+  "since": "JSMacros 1.8.4",
+  "description": "The `ClassBuilder.FieldBuilder.FieldInitializerBuilder` class is a specialized builder for creating complex field initialization expressions.",
+  "overview": "This builder allows you to construct sophisticated initialization logic that goes beyond simple constant values, enabling method calls, constructor invocations, arithmetic operations, and other complex expressions.\n\nFieldInitializerBuilder instances are obtained through the `buildInitializer()` method of FieldBuilder and provide a fluent API for building initialization expressions that will be executed when the field is initialized.\n\nThe FieldInitializerBuilder provides a powerful and flexible way to create complex field initialization expressions, enabling sophisticated object construction and configuration beyond simple constant values.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "appendJavaCode",
+      "signature": "initializerBuilder.appendJavaCode(code)",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Appends Java code to the initialization expression.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "The Java code to append"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "appendLine",
+      "signature": "initializerBuilder.appendLine(code)",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Appends a single line of Java code with automatic newline.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "The Java code line to append"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "returnExpression",
+      "signature": "initializerBuilder.returnExpression(expression)",
+      "returnType": "FieldInitializerBuilder",
+      "description": "Specifies the return expression for the field initialization.",
+      "parameters": [
+        {
+          "name": "expression",
+          "type": "string",
+          "description": "The Java expression that returns the field value"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "finish",
+      "signature": "initializerBuilder.finish()",
+      "returnType": "FieldBuilder<T>",
+      "description": "Finalizes the initializer and returns to the parent FieldBuilder.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

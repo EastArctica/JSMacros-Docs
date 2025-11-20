@@ -1,0 +1,64 @@
+{
+  "name": "WitherEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.boss.WitherEntityHelper",
+  "extends": "MobEntityHelper<WitherEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "Represents a Wither boss entity in the world. WitherEntityHelper provides access to wither-specific behaviors, phases, and invulnerability states that are unique to the Wither boss mob. This specialized helper allows you to monitor the wither's combat phases, track its invulnerability periods, and understand its two-phase attack pattern.",
+  "overview": "The Wither is a three-headed boss mob that goes through distinct phases: an initial invulnerable summoning phase and a second combat phase where it becomes immune to projectiles and aggressively pursues players. This class provides methods to track these states and respond appropriately during wither encounters.\n\nInstances are typically obtained from entity events, world entity queries, or by casting existing entity helpers that represent Withers.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getRemainingInvulnerableTime",
+      "signature": "getRemainingInvulnerableTime()",
+      "returnType": "number",
+      "description": "Returns the number of ticks the Wither remains invulnerable during its summoning phase.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entities = World.getEntities();\nfor (const entity of entities) {\n    if (entity.is(\"minecraft:wither\")) {\n        const wither = entity; // Already properly typed\n        const invulnerableTime = wither.getRemainingInvulnerableTime();\n        Chat.log(`Found wither with ${invulnerableTime} ticks of invulnerability remaining`);\n    }\n}",
+        "if (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    Chat.log(\"&c⚡ Wither is invulnerable for \" + Math.ceil(invulnerableTime / 20) + \" seconds\");\n    this.addLogEntry(\"Wither spawned with \" + invulnerableTime + \" ticks invulnerability\");\n}",
+        "let phaseRating = \"\";\nif (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    phaseRating = \"&7Safe for \" + Math.ceil(invulnerableTime / 20) + \"s (Invulnerable)\";\n} else if (wither.isFirstPhase()) {\n    phaseRating = \"&9MODERATE - Phase 1 (Vulnerable to projectiles)\";\n} else {\n    phaseRating = \"&4EXTREME - Phase 2 (Immune to projectiles, aggressive)\";\n}"
+      ]
+    },
+    {
+      "name": "isInvulnerable",
+      "signature": "isInvulnerable()",
+      "returnType": "boolean",
+      "description": "Checks if the Wither is currently in its invulnerable summoning phase.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    Chat.log(\"&c⚡ Wither is invulnerable for \" + Math.ceil(invulnerableTime / 20) + \" seconds\");\n    this.addLogEntry(\"Wither spawned with \" + invulnerableTime + \" ticks invulnerability\");\n}",
+        "let phaseInfo = \"\";\nif (wither.isInvulnerable()) {\n    phaseInfo = \"&cInvulnerable\";\n} else if (wither.isFirstPhase()) {\n    phaseInfo = \"&9Phase 1 (Ranged)\";\n} else {\n    phaseInfo = \"&6Phase 2 (Melee)\";\n}",
+        "let phaseRating = \"\";\nif (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    phaseRating = \"&7Safe for \" + Math.ceil(invulnerableTime / 20) + \"s (Invulnerable)\";\n} else if (wither.isFirstPhase()) {\n    phaseRating = \"&9MODERATE - Phase 1 (Vulnerable to projectiles)\";\n} else {\n    phaseRating = \"&4EXTREME - Phase 2 (Immune to projectiles, aggressive)\";\n}"
+      ]
+    },
+    {
+      "name": "isFirstPhase",
+      "signature": "isFirstPhase()",
+      "returnType": "boolean",
+      "description": "Checks if the Wither is currently in its first combat phase (vulnerable to projectiles).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "let phaseInfo = \"\";\nif (wither.isInvulnerable()) {\n    phaseInfo = \"&cInvulnerable\";\n} else if (wither.isFirstPhase()) {\n    phaseInfo = \"&9Phase 1 (Ranged)\";\n} else {\n    phaseInfo = \"&6Phase 2 (Melee)\";\n}",
+        "let phaseRating = \"\";\nif (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    phaseRating = \"&7Safe for \" + Math.ceil(invulnerableTime / 20) + \"s (Invulnerable)\";\n} else if (wither.isFirstPhase()) {\n    phaseRating = \"&9MODERATE - Phase 1 (Vulnerable to projectiles)\";\n} else {\n    phaseRating = \"&4EXTREME - Phase 2 (Immune to projectiles, aggressive)\";\n}",
+        "// Equipment recommendations\nChat.log(\"\\n&6Recommended Equipment:\");\nif (wither.isFirstPhase()) {\n    Chat.log(\"  🏹 Bow with Power V or Infinity\");\n    Chat.log(\"  🛡️ Shield to block explosions\");\n    Chat.log(\"  🏺 Arrows (lots of them)\");\n} else {\n    Chat.log(\"  ⚔️ Diamond/Netherite sword with Sharpness\");\n    Chat.log(\"  🛡️ Shield for emergency blocking\");\n    Chat.log(\"  🧪 Splash potions of Healing\");\n}"
+      ]
+    },
+    {
+      "name": "isSecondPhase",
+      "signature": "isSecondPhase()",
+      "returnType": "boolean",
+      "description": "Checks if the Wither is currently in its second combat phase (immune to projectiles and aggressive).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"EntityDeath\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:wither\")) {\n        const wither = entity; // Already properly typed\n        Chat.log(`Wither died! Was in second phase: ${wither.isSecondPhase()}`);\n    }\n}));",
+        "let phaseInfo = \"\";\nif (wither.isInvulnerable()) {\n    phaseInfo = \"&cInvulnerable\";\n} else if (wither.isFirstPhase()) {\n    phaseInfo = \"&9Phase 1 (Ranged)\";\n} else {\n    phaseInfo = \"&6Phase 2 (Melee)\";\n}",
+        "let phaseRating = \"\";\nif (wither.isInvulnerable()) {\n    const invulnerableTime = wither.getRemainingInvulnerableTime();\n    phaseRating = \"&7Safe for \" + Math.ceil(invulnerableTime / 20) + \"s (Invulnerable)\";\n} else if (wither.isFirstPhase()) {\n    phaseRating = \"&9MODERATE - Phase 1 (Vulnerable to projectiles)\";\n} else {\n    phaseRating = \"&4EXTREME - Phase 2 (Immune to projectiles, aggressive)\";\n}",
+        "// Equipment recommendations\nChat.log(\"\\n&6Recommended Equipment:\");\nif (wither.isFirstPhase()) {\n    Chat.log(\"  🏹 Bow with Power V or Infinity\");\n    Chat.log(\"  🛡️ Shield to block explosions\");\n    Chat.log(\"  🏺 Arrows (lots of them)\");\n} else {\n    Chat.log(\"  ⚔️ Diamond/Netherite sword with Sharpness\");\n    Chat.log(\"  🛡️ Shield for emergency blocking\");\n    Chat.log(\"  🧪 Splash potions of Healing\");\n}"
+      ]
+    }
+  ]
+}

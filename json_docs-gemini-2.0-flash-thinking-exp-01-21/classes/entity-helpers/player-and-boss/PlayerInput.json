@@ -1,0 +1,141 @@
+{
+  "name": "PlayerInput",
+  "fullClassName": "xyz.wagyourly.jsmacros.client.api.classes.PlayerInput",
+  "extends": null,
+  "since": "JsMacros 1.4.0",
+  "description": "The `PlayerInput` class represents all possible player inputs in Minecraft, combining movement, rotation, and action states into a single object. This class is particularly useful for recording, replicating, and analyzing player movement patterns, creating automated movement sequences, and managing complex input states for bot development and movement automation.\n\nPlayerInput objects are commonly used in conjunction with input recording systems, bot movement, animation playback, and movement prediction. They provide a standardized way to represent the complete input state of a player at any given moment, making it possible to save, replay, and analyze player behavior.",
+  "overview": "The `PlayerInput` class provides comprehensive input management capabilities:\n\n- **Movement Control**: Forward/backward and sideways movement inputs\n- **Camera Control**: Yaw and pitch rotation for player camera\n- **Action States**: Jumping, sneaking, and sprinting states\n- **Serialization**: CSV and JSON format support for saving and loading\n- **Cloning**: Safe object duplication for state management\n- **Integration**: Works with Player library methods for execution",
+  "constructors": [
+    {
+      "signature": "new PlayerInput()",
+      "description": "Creates a new PlayerInput object with all values set to their default states (0 for movement/rotation, false for actions).",
+      "parameters": []
+    },
+    {
+      "signature": "new PlayerInput(movementForward, movementSideways, yaw, pitch, jumping, sneaking, sprinting)",
+      "description": "Creates a new PlayerInput object with all parameters specified.",
+      "parameters": [
+        {
+          "name": "movementForward",
+          "type": "float",
+          "description": "Forward movement input: 1 = forward (W), 0 = no input, -1 = backward (S)"
+        },
+        {
+          "name": "movementSideways",
+          "type": "float",
+          "description": "Sideways movement input: 1 = left (A), 0 = no input, -1 = right (D)"
+        },
+        {
+          "name": "yaw",
+          "type": "float",
+          "description": "Player's yaw rotation (horizontal rotation, 0-360°)"
+        },
+        {
+          "name": "pitch",
+          "type": "float",
+          "description": "Player's pitch rotation (vertical rotation, -90 to 90°)"
+        },
+        {
+          "name": "jumping",
+          "type": "boolean",
+          "description": "Jump input state (spacebar)"
+        },
+        {
+          "name": "sneaking",
+          "type": "boolean",
+          "description": "Sneak input state (shift)"
+        },
+        {
+          "name": "sprinting",
+          "type": "boolean",
+          "description": "Sprint input state (Ctrl/Cmd)"
+        }
+      ]
+    },
+    {
+      "signature": "new PlayerInput(movementForward, movementSideways, yaw)",
+      "description": "Creates a new PlayerInput object with movement and rotation specified, other inputs default to false.",
+      "parameters": [
+        {
+          "name": "movementForward",
+          "type": "float",
+          "description": "Forward movement input: 1 = forward (W), 0 = no input, -1 = backward (S)"
+        },
+        {
+          "name": "movementSideways",
+          "type": "float",
+          "description": "Sideways movement input: 1 = left (A), 0 = no input, -1 = right (D)"
+        },
+        {
+          "name": "yaw",
+          "type": "float",
+          "description": "Player's yaw rotation (horizontal rotation)"
+        }
+      ]
+    },
+    {
+      "signature": "new PlayerInput(movementForward, yaw, jumping, sprinting)",
+      "description": "Creates a new PlayerInput object with simplified parameters for common movement scenarios.",
+      "parameters": [
+        {
+          "name": "movementForward",
+          "type": "float",
+          "description": "Forward movement input: 1 = forward (W), 0 = no input, -1 = backward (S)"
+        },
+        {
+          "name": "yaw",
+          "type": "float",
+          "description": "Player's yaw rotation (horizontal rotation)"
+        },
+        {
+          "name": "jumping",
+          "type": "boolean",
+          "description": "Jump input state"
+        },
+        {
+          "name": "sprinting",
+          "type": "boolean",
+          "description": "Sprint input state"
+        }
+      ]
+    },
+    {
+      "signature": "new PlayerInput(input, yaw, pitch, sprinting)",
+      "description": "Creates a new PlayerInput object from a Minecraft Input object with additional parameters.",
+      "parameters": [
+        {
+          "name": "input",
+          "type": "Input",
+          "description": "Minecraft Input object to convert"
+        },
+        {
+          "name": "yaw",
+          "type": "float",
+          "description": "Player's yaw rotation"
+        },
+        {
+          "name": "pitch",
+          "type": "float",
+          "description": "Player's pitch rotation"
+        },
+        {
+          "name": "sprinting",
+          "type": "boolean",
+          "description": "Sprint input state"
+        }
+      ]
+    },
+    {
+      "signature": "new PlayerInput(input)",
+      "description": "Creates a clone of an existing PlayerInput object.",
+      "parameters": [
+        {
+          "name": "input",
+          "type": "PlayerInput",
+          "description": "The PlayerInput object to clone"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

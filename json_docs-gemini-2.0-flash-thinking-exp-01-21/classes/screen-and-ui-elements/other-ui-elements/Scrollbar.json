@@ -1,0 +1,141 @@
+{
+  "name": "Scrollbar",
+  "fullClassName": "xyz.wagyourtail.wagyourgui.elements.Scrollbar",
+  "extends": "net.minecraft.client.gui.widget.ClickableWidget",
+  "since": "JsMacros 1.0.0",
+  "description": "The `Scrollbar` class is a custom UI widget that provides vertical scrolling functionality for JSMacros custom screens and interfaces. It offers smooth scrolling mechanics with customizable appearance, range configuration, and event handling for scroll position changes. The scrollbar automatically calculates its thumb size based on the content size and provides both click-to-scroll and drag-to-scroll interactions.",
+  "overview": "The `Scrollbar` class provides comprehensive scrolling functionality:\n\n- **Dynamic Range Configuration**: Supports custom scroll ranges with automatic thumb sizing\n- **Visual Customization**: Customizable colors for the thumb, background, and hover states\n- **Interactive Controls**: Click-to-position and drag-to-scroll functionality\n- **Event Handling**: Callback system for scroll position changes with proper value calculation\n- **Auto-Visibility**: Automatically hides when content fits within view\n- **Smooth Scrolling**: Natural scrolling behavior with proper position calculation",
+  "constructors": [
+    {
+      "signature": "new Scrollbar(x, y, width, height, color, borderColor, highlightColor, scrollPages, onChange)",
+      "description": "Creates a new Scrollbar with specified position, size, colors, scroll range, and change callback.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position of the scrollbar on the screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position of the scrollbar on the screen"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the scrollbar (typically 8-12 pixels)"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the scrollbar"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "Background color of the scrollbar track"
+        },
+        {
+          "name": "borderColor",
+          "type": "int",
+          "description": "Color of the scrollbar borders"
+        },
+        {
+          "name": "highlightColor",
+          "type": "int",
+          "description": "Color of the scrollbar thumb (draggable part)"
+        },
+        {
+          "name": "scrollPages",
+          "type": "double",
+          "description": "Total number of scroll pages/content units"
+        },
+        {
+          "name": "onChange",
+          "type": "Consumer<Double>",
+          "description": "Callback function triggered on scroll position changes"
+        }
+      ],
+      "examples": [
+        "// Create a scrollbar for scrolling through 100 items\nconst scrollbar = new Scrollbar(\n    200, 20,      // Position (x, y)\n    10, 100,      // Size (width, height)\n    0xFF404040,   // Dark gray background\n    0xFF202020,   // Darker gray borders\n    0xFF808080,   // Light gray thumb\n    100,          // 100 scrollable pages/items\n    JavaWrapper.methodToJava((position) => {\n        Chat.log(`Scrolled to position: ${position.toFixed(2)}`);\n    })\n);"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "setPos",
+      "signature": "scrollbar.setPos(x, y, width, height)",
+      "returnType": "Scrollbar",
+      "description": "Updates the position and dimensions of the scrollbar, recalculating scroll distances and maintaining relative scroll position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "New X position of the scrollbar"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "New Y position of the scrollbar"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "New width of the scrollbar"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "New height of the scrollbar"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Reposition the scrollbar when the screen resizes\nscrollbar.setPos(180, 20, 10, 120);"
+      ]
+    },
+    {
+      "name": "setScrollPages",
+      "signature": "scrollbar.setScrollPages(scrollPages)",
+      "returnType": null,
+      "description": "Updates the total number of scrollable pages or content units, automatically adjusting thumb size and visibility.\n\n**Behavior:**\n- If `scrollPages < 1`, the scrollbar becomes inactive and hidden\n- Thumb size is calculated proportionally to the content ratio\n- Maintains relative scroll position when possible",
+      "parameters": [
+        {
+          "name": "scrollPages",
+          "type": "double",
+          "description": "Total number of scroll pages/content units"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Update scrollbar when content size changes\nscrollbar.setScrollPages(contentItems.length);\n\n// Hide scrollbar when content fits\nif (contentItems.length <= visibleItems) {\n    scrollbar.setScrollPages(0.5); // Less than 1 hides it\n}"
+      ]
+    },
+    {
+      "name": "scrollToPercent",
+      "signature": "scrollbar.scrollToPercent(percent)",
+      "returnType": null,
+      "description": "Scrolls to a specific percentage of the total scroll range.",
+      "parameters": [
+        {
+          "name": "percent",
+          "type": "double",
+          "description": "Percentage to scroll to (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scroll to the top\nscrollbar.scrollToPercent(0.0);\n\n// Scroll to the middle\nscrollbar.scrollToPercent(0.5);\n\n// Scroll to the bottom\nscrollbar.scrollToPercent(1.0);"
+      ]
+    },
+    {
+      "name": "onChange",
+      "signature": "scrollbar.onChange()",
+      "returnType": null,
+      "description": "Internal method that triggers the change callback with the current scroll position calculated as a percentage of the total scrollable range.\n\n**Note:** This method is called automatically by other scrollbar methods and user interactions. You typically don't need to call this directly.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

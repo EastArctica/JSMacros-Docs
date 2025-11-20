@@ -1,0 +1,233 @@
+{
+  "name": "IllagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.IllagerEntityHelper",
+  "extends": "MobEntityHelper<IllagerEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `IllagerEntityHelper` class is a specialized wrapper for illager entities in JSMacros, providing access to illager-specific behaviors, states, and combat mechanics. This class extends `MobEntityHelper` and inherits all mob entity methods while adding illager-specific functionality like state tracking, celebration behavior, and combat pattern detection.",
+  "overview": "This class represents various illager types including vindicators, pillagers, evokers, and illusioners, providing comprehensive methods for accessing their current states, detecting combat behaviors, and monitoring their special abilities and raid-related activities.\n\n### Notes and Limitations\n- **Type Safety:** IllagerEntityHelper instances can be null if the entity is removed. Always check for validity before accessing methods.\n- **State Transitions:** Illager states may change rapidly during combat. Frequent state checking may be needed for accurate monitoring.\n- **Inherited Functionality:** This class inherits comprehensive methods from MobEntityHelper, LivingEntityHelper, and EntityHelper for complete entity management.\n- **Server-Side Variations:** Some illager behaviors and states may vary based on server-side implementations and Minecraft versions.\n- **Celebration Behavior:** The celebrating state typically occurs during raids but may also appear in other contexts.\n- **Performance Considerations:** Monitoring many illagers with frequent state checks can impact performance. Use appropriate update intervals.\n\n### Version Information\n- Available since JSMacros 1.8.4\n- Extends MobEntityHelper with illager-specific state and behavior tracking\n- State enumeration matches Minecraft illager states for accurate behavior detection\n- Celebration detection added for raid-related monitoring",
+  "constructors": [
+    {
+      "signature": "IllagerEntityHelper()",
+      "description": "IllagerEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through entity-related events where the entity is an illager type, world entity queries that return illager entities, or by type casting from EntityHelper or MobEntityHelper using specific illager type checks.",
+      "parameters": [],
+      "examples": [
+        "// Getting IllagerEntityHelper from events\nJsMacros.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:vindicator\", \"minecraft:pillager\", \"minecraft:evoker\", \"minecraft:illusioner\")) {\n        const illager = entity; // Already typed as appropriate helper\n        const state = illager.getState();\n        Chat.log(`Illager spawned with state: ${state}`);\n    }\n}));\n\n// Type casting from EntityHelper\nconst entity = event.getEntity();\nif (entity.is(\"minecraft:vindicator\")) {\n    const vindicator = entity; // Will be VindicatorEntityHelper (extends IllagerEntityHelper)\n    Chat.log(`Vindicator state: ${vindicator.getState()}`);\n}"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "isAttacking",
+      "signature": "isAttacking()",
+      "returnType": "boolean",
+      "description": "Check if the illager is currently attacking.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAiDisabled",
+      "signature": "isAiDisabled()",
+      "returnType": "boolean",
+      "description": "Check if the illager's AI is disabled.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "number",
+      "description": "Get the current health of the illager.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "number",
+      "description": "Get the maximum health of the illager.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "number",
+      "description": "Get the current absorption hearts value.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "number",
+      "description": "Get the current armor value of the illager.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List<Object>",
+      "description": "Get a list of active status effects on the illager.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(id)",
+      "returnType": "boolean",
+      "description": "Check if the illager has a specific status effect.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "The identifier of the status effect (e.g., 'minecraft:poison')."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOnGround",
+      "signature": "isOnGround()",
+      "returnType": "boolean",
+      "description": "Check if the illager is currently on the ground.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreatheInWater",
+      "signature": "canBreatheInWater()",
+      "returnType": "boolean",
+      "description": "Check if the illager can breathe underwater.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isFallFlying",
+      "signature": "isFallFlying()",
+      "returnType": "boolean",
+      "description": "Check if the illager is currently fall flying (e.g., with elytra).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Check if the illager is a baby variant.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(item)",
+      "returnType": "boolean",
+      "description": "Check if the illager is holding a specific item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "string",
+          "description": "The item ID to check (e.g., 'minecraft:iron_axe')."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(entity)",
+      "returnType": "boolean",
+      "description": "Check if the illager has a line of sight to a target entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The target entity to check visibility against."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBowPullProgress",
+      "signature": "getBowPullProgress()",
+      "returnType": "number",
+      "description": "Get the current bow pull progress (0.0 to 1.0) if the illager is using a bow.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItemUseTimeLeft",
+      "signature": "getItemUseTimeLeft()",
+      "returnType": "number",
+      "description": "Get the remaining item use time for the item the illager is currently using.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getState",
+      "signature": "getState()",
+      "returnType": "string",
+      "description": "Gets the current state of the illager (e.g., ATTACKING, SPELLCASTING, CELEBRATING).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Analyze illager combat patterns\nclass IllagerCombatAnalyzer {\n    constructor() {\n        this.combatEvents = [];\n        this.illagerWeapons = new Map();\n    }\n\n    analyzeIllagerCombat() {\n        const entities = World.getEntities();\n        const player = Player.getPlayer();\n        if (!player) return;\n\n        entities.forEach(entity => {\n            if (entity.is(\"minecraft:vindicator\", \"minecraft:pillager\", \"minecraft:evoker\", \"minecraft:illusioner\")) {\n                const illager = entity;\n                const name = entity.getName().getString();\n                const state = illager.getState();\n                const distance = player.distanceTo(illager);\n\n                if (distance <= 50) { // Only analyze nearby illagers\n                    this.analyzeIllagerEquipment(illager, name);\n                    this.analyzeCombatBehavior(illager, name, state);\n                }\n            }\n        });\n    }\n\n    analyzeIllagerEquipment(illager, name) {\n        // Note: This would work with server-side access\n        const mainHand = illager.getMainHand();\n        if (!mainHand.isEmpty()) {\n            const weaponName = mainHand.getName();\n            const weaponType = this.getWeaponType(weaponName);\n\n            if (!this.illagerWeapons.has(name)) {\n                this.illagerWeapons.set(name, {\n                    weapon: weaponName,\n                    type: weaponType,\n                    enchantments: mainHand.hasEnchantments() ? mainHand.getEnchantments().map(e => e.getName()) : []\n                });\n\n                Chat.log(`&6${name} equipped: ${weaponName} (${weaponType})`);\n            }\n        }\n    }\n\n    analyzeCombatBehavior(illager, name, state) {\n        const timestamp = Client.getTime();\n\n        if (state === \"ATTACKING\" || state === \"SPELLCASTING\" ||\n            state === \"BOW_AND_ARROW\" || state === \"CROSSBOW_CHARGE\") {\n\n            this.combatEvents.push({\n                illager: name,\n                state: state,\n                timestamp: timestamp,\n                position: illager.getPos()\n            });\n\n            // Keep only recent events\n            if (this.combatEvents.length > 50) {\n                this.combatEvents.shift();\n            }\n\n            Chat.log(`&c${name} combat action: ${state}`);\n        }\n    }\n\n    getWeaponType(weaponName) {\n        if (weaponName.includes(\"axe\")) return \"Melee (Axe)\";\n        if (weaponName.includes(\"bow\")) return \"Ranged (Bow)\";\n        if (weaponName.includes(\"crossbow\")) return \"Ranged (Crossbow)\";\n        if (weaponName.includes(\"sword\")) return \"Melee (Sword)\";\n        if (weaponName.includes(\"trident\")) return \"Melee/Ranged (Trident)\";\n        return \"Unknown\";\n    }\n\n    getCombatReport() {\n        if (this.combatEvents.length === 0) {\n            Chat.log(\"No combat events recorded recently\");\n            return;\n        }\n\n        Chat.log(\"=== Illager Combat Report ===\");\n        Chat.log(`Recent combat events: ${this.combatEvents.length}`);\n\n        // Analyze combat patterns\n        const stateCounts = {};\n        const illagerCounts = {};\n\n        this.combatEvents.forEach(event => {\n            stateCounts[event.state] = (stateCounts[event.state] || 0) + 1;\n            illagerCounts[event.illager] = (illagerCounts[event.illager] || 0) + 1;\n        });\n\n        Chat.log(\"\\nCombat Actions:\");\n        for (const [state, count] of Object.entries(stateCounts)) {\n            Chat.log(`  ${state}: ${count} times`);\n        }\n\n        Chat.log(\"\\nMost Active Combatants:\");\n        const sortedIllagers = Object.entries(illagerCounts)\n            .sort((a, b) => b[1] - a[1])\n            .slice(0, 5);\n\n        sortedIllagers.forEach(([name, count]) => {\n            Chat.log(`  ${name}: ${count} actions`);\n        });\n\n        // Equipment summary\n        Chat.log(\"\\nEquipment Summary:\");\n        for (const [name, data] of this.illagerWeapons) {\n            Chat.log(`  ${name}: ${data.weapon}`);\n            if (data.enchantments.length > 0) {\n                Chat.log(`    Enchantments: ${data.enchantments.join(\", \")}`);\n            }\n        });\n    }\n}\n\nconst combatAnalyzer = new IllagerCombatAnalyzer();\n\n// Analyze combat every 2 seconds\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    if (Client.getTime() % 40 === 0) {\n        combatAnalyzer.analyzeIllagerCombat();\n    }\n}));\n\n// Combat report keybind\nevents.on(\"Key\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.key === \"key.keyboard.c\") {\n        combatAnalyzer.getCombatReport();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "isCelebrating",
+      "signature": "isCelebrating()",
+      "returnType": "boolean",
+      "description": "Checks if the illager is currently celebrating (e.g., after a raid victory).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive raid detection system\nclass RaidMonitor {\n    constructor() {\n        this.raidActive = false;\n        this.raidStartTime = null;\n        this.illagerCounts = new Map();\n        this.raidCenter = null;\n    }\n\n    checkForRaid() {\n        const player = Player.getPlayer();\n        if (!player) return;\n\n        const entities = World.getEntities();\n        const nearbyIllagers = [];\n        const illagerTypes = [\"minecraft:vindicator\", \"minecraft:pillager\", \"minecraft:evoker\", \"minecraft:illusioner\"];\n\n        // Count nearby illagers\n        entities.forEach(entity => {\n            if (entity.is(...illagerTypes)) {\n                const distance = player.distanceTo(entity);\n                if (distance <= 100) { // Within 100 blocks\n                    nearbyIllagers.push(entity);\n                    const type = entity.getType();\n                    this.illagerCounts.set(type, (this.illagerCounts.get(type) || 0) + 1);\n                }\n            }\n        });\n\n        // Check for raid conditions\n        if (nearbyIllagers.length >= 3 && !this.raidActive) {\n            this.startRaid(nearbyIllagers);\n        } else if (nearbyIllagers.length === 0 && this.raidActive) {\n            this.endRaid();\n        } else if (this.raidActive) {\n            this.updateRaidStatus(nearbyIllagers);\n        }\n    }\n\n    startRaid(illagers) {\n        this.raidActive = true;\n        this.raidStartTime = Client.getTime();\n\n        Chat.log(\"&c&l=== RAID DETECTED ===\");\n        Chat.log(`&cRaid started with ${illagers.length} illagers nearby!`);\n\n        // Count by type\n        const typeCounts = {};\n        illagers.forEach(illager => {\n            const type = illager.getType();\n            typeCounts[type] = (typeCounts[type] || 0) + 1;\n        });\n\n        for (const [type, count] of Object.entries(typeCounts)) {\n            Chat.log(`&c  ${type}: ${count}`);\n        }\n\n        // Calculate approximate raid center\n        let totalX = 0, totalZ = 0;\n        illagers.forEach(illager => {\n            const pos = illager.getPos();\n            totalX += pos.x;\n            totalZ += pos.z;\n        });\n        this.raidCenter = { x: totalX / illagers.length, z: totalZ / illagers.length };\n\n        Chat.log(`&cRaid center estimated at: ${this.raidCenter.x.toFixed(0)}, ${this.raidCenter.z.toFixed(0)}`);\n    }\n\n    updateRaidStatus(illagers) {\n        const raidDuration = Math.floor((Client.getTime() - this.raidStartTime) / 20);\n\n        // Count celebrating vs fighting illagers\n        let celebratingCount = 0;\n        let attackingCount = 0;\n        let spellcastingCount = 0;\n\n        illagers.forEach(illager => {\n            if (illager.isCelebrating()) {\n                celebratingCount++;\n            }\n            const state = illager.getState();\n            if (state === \"ATTACKING\") attackingCount++;\n            if (state === \"SPELLCASTING\") spellcastingCount++;\n        });\n\n        Chat.actionbar(`&cRaid Active: ${raidDuration}s | Fighting: ${attackingCount} | Spellcasters: ${spellcastingCount} | Celebrating: ${celebratingCount}`);\n\n        // Check if raid is ending (many celebrating)\n        if (celebratingCount > illagers.length * 0.7) {\n            Chat.log(\"&6Raid appears to be ending - illagers are celebrating!\");\n        }\n    }\n\n    endRaid() {\n        this.raidActive = false;\n        const raidDuration = Math.floor((Client.getTime() - this.raidStartTime) / 20);\n\n        Chat.log(\"&a&l=== RAID ENDED ===\");\n        Chat.log(`&aRaid lasted ${raidDuration} seconds`);\n\n        // Reset counts\n        this.illagerCounts.clear();\n        this.raidCenter = null;\n    }\n}\n\nconst raidMonitor = new RaidMonitor();\n\n// Check for raids every 5 seconds\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    if (Client.getTime() % 100 === 0) {\n        raidMonitor.checkForRaid();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "isJohnny",
+      "signature": "isJohnny()",
+      "returnType": "boolean",
+      "description": "Checks if the vindicator (if it's a VindicatorEntityHelper) is the special 'Johnny' variant.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Handle different illager types appropriately\nfunction handleIllagerByType(entity) {\n    const type = entity.getType();\n    const name = entity.getName().getString();\n    const state = entity.getState();\n\n    switch (type) {\n        case \"minecraft:vindicator\":\n            handleVindicator(entity, name, state);\n            break;\n        case \"minecraft:pillager\":\n            handlePillager(entity, name, state);\n            break;\n        case \"minecraft:evoker\":\n            handleEvoker(entity, name, state);\n            break;\n        case \"minecraft:illusioner\":\n            handleIllusioner(entity, name, state);\n            break;\n        default:\n            Chat.log(`&eUnknown illager type: ${type}`);\n    }\n}\n\nfunction handleVindicator(vindicator, name, state) {\n    // Check if it's a \"Johnny\" vindicator (special case)\n    if (vindicator.isJohnny && vindicator.isJohnny()) {\n        Chat.log(`&c&lJOHNNY VINDICATOR DETECTED: ${name}!`);\n        vindicator.setGlowingColor(0xFF0000); // Bright red\n    } else {\n        Chat.log(`&6Vindicator ${name}: ${state}`);\n        vindicator.setGlowingColor(0xCC6600); // Orange\n    }\n\n    if (state === \"ATTACKING\") {\n        Chat.actionbar(\"&cVindicator is charging with axe!\");\n    }\n}\n\nfunction handlePillager(pillager, name, state) {\n    Chat.log(`&6Pillager ${name}: ${state}`);\n    pillager.setGlowingColor(0x00AA00); // Green\n\n    if (state === \"CROSSBOW_CHARGE\") {\n        Chat.actionbar(\"&2Pillager charging crossbow - take cover!\");\n    } else if (state === \"BOW_AND_ARROW\") {\n        Chat.actionbar(\"&2Pillager drawing bow!\");\n    }\n}\n\nfunction handleEvoker(evoker, name, state) {\n    Chat.log(`&5Evoker ${name}: ${state}`);\n    evoker.setGlowingColor(0x9933CC); // Purple\n\n    if (state === \"SPELLCASTING\") {\n        Chat.actionbar(\"&5Evoker casting spell - be careful!\");\n\n        // Check if it has spellcasting-specific methods\n        if (evoker.isCastingSpell && evoker.getCastedSpell) {\n            const spell = evoker.getCastedSpell();\n            Chat.log(`&5Evoker casting: ${spell}`);\n\n            // Special warnings for dangerous spells\n            if (spell === \"SUMMON_VEX\") {\n                Chat.log(\"&c&lWARNING: Evoker summoning Vexes!\");\n            } else if (spell === \"FANGS\") {\n                Chat.log(\"&c&lWARNING: Evoker casting Evoker Fangs!\");\n            }\n        }\n    }\n}\n\nfunction handleIllusioner(illusioner, name, state) {\n    Chat.log(`&bIllusioner ${name}: ${state}`);\n    illusioner.setGlowingColor(0x0099CC); // Cyan\n\n    if (state === \"SPELLCASTING\") {\n        Chat.actionbar(\"&bIllusioner casting illusion spell!\");\n        Chat.log(\"&bIllusioners can create duplicates and blind players!\");\n    }\n}\n\n// Monitor all illager types\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const entities = World.getEntities();\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    entities.forEach(entity => {\n        if (entity.is(\"minecraft:vindicator\", \"minecraft:pillager\", \"minecraft:evoker\", \"minecraft:illusioner\")) {\n            const distance = player.distanceTo(entity);\n\n            if (distance <= 64) { // Only process nearby illagers\n                handleIllagerByType(entity);\n            }\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "isCastingSpell",
+      "signature": "isCastingSpell()",
+      "returnType": "boolean",
+      "description": "Checks if the illager (specifically spellcasters like Evokers) is currently casting a spell.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCastedSpell",
+      "signature": "getCastedSpell()",
+      "returnType": "string",
+      "description": "Gets the name of the spell the illager (specifically spellcasters like Evokers) is currently casting.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

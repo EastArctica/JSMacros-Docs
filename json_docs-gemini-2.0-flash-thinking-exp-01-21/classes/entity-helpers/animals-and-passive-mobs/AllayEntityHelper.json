@@ -1,0 +1,44 @@
+{
+  "name": "AllayEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.AllayEntityHelper",
+  "extends": "MobEntityHelper<AllayEntity>",
+  "since": "1.8.4",
+  "description": "The `AllayEntityHelper` class provides specialized methods for interacting with Allay entities in Minecraft. Allays are flying passive mobs introduced in Minecraft 1.19 that are attracted to music and will collect and deliver items to players. These peaceful, ghost-like creatures spawn in pillager outposts and woodland mansions, and they form strong bonds with players who interact with them.",
+  "overview": "Allays are unique among Minecraft mobs for their item collection behavior - they will fly around and pick up items within a 32-block radius, then deliver them to the player who gave them an item or played music nearby. They can also be duplicated using amethyst shards when dancing. This helper provides access to key Allay behaviors including their dancing state, duplication availability, and current item carrying status.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, AI control, movement, and other mob properties, while adding Allay-specific functionality.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isDancing",
+      "signature": "isDancing()",
+      "returnType": "boolean",
+      "description": "Returns whether the allay is currently dancing. Allays dance when they hear a note block playing within a 16-block radius. Dancing allays can also be duplicated using amethyst shards.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if allays in the area are dancing to nearby music\nconst allays = World.getEntities(\"minecraft:allay\");\nlet dancingCount = 0;\n\nallays.forEach(entity => {\n    const allay = entity.as(\"minecraft:allay\");\n    if (allay && allay.isDancing()) {\n        dancingCount++;\n        const pos = entity.getPos();\n        Chat.log(`Allay dancing at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n    }\n});\n\nChat.log(`Found ${dancingCount} dancing allays out of ${allays.length} total`);"
+      ]
+    },
+    {
+      "name": "canDuplicate",
+      "signature": "canDuplicate()",
+      "returnType": "boolean",
+      "description": "Returns whether this allay can be duplicated. Allays can be duplicated when they are dancing and the player uses an amethyst shard on them. This method checks if the duplication conditions are met.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Find allays that are ready for duplication\nfunction findDuplicateableAllays() {\n    const allays = World.getEntities(\"minecraft:allay\");\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    Chat.log(\"=== Allay Duplication Check ===\");\n\n    allays.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance <= 8) { // Only check nearby allays\n            const allay = entity.as(\"minecraft:allay\");\n            if (allay && allay.canDuplicate()) {\n                const pos = entity.getPos();\n                const isDancing = allay.isDancing();\n                Chat.log(`Duplicateable allay at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}] (${distance.toFixed(1)}m away)`);\n                Chat.log(`  Dancing: ${isDancing ? \"Yes\" : \"No\"}`);\n                Chat.log(`  Ready for duplication with amethyst shard!`);\n            }\n        }\n    });\n}\n\nfindDuplicateableAllays();"
+      ]
+    },
+    {
+      "name": "isHoldingItem",
+      "signature": "isHoldingItem()",
+      "returnType": "boolean",
+      "description": "Returns whether this allay is currently holding an item. Allays pick up items within their detection range and hold them while flying to deliver them to players.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor allay item collection activity\nclass AllayActivityMonitor {\n    constructor() {\n        this.allayStates = new Map();\n        this.itemsDelivered = 0;\n        this.itemsCollected = 0;\n    }\n\n    updateAllayActivity() {\n        const allays = World.getEntities(\"minecraft:allay\");\n\n        allays.forEach(entity => {\n            const uuid = entity.getUUID();\n            const allay = entity.as(\"minecraft:allay\");\n            if (!allay) return;\n\n            const isHolding = allay.isHoldingItem();\n            const isDancing = allay.isDancing();\n            const pos = entity.getPos();\n\n            if (!this.allayStates.has(uuid)) {\n                // New allay detected\n                this.allayStates.set(uuid, {\n                    entity: entity,\n                    lastHoldingState: isHolding,\n                    pickupsDetected: 0,\n                    deliveriesDetected: 0,\n                    firstSeen: Client.getTime(),\n                    position: { x: pos.x, y: pos.y, z: pos.z }\n                });\n                Chat.log(`🧚 New allay detected: [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n            } else {\n                // Update existing allay\n                const allayData = this.allayStates.get(uuid);\n\n                // Detect state changes\n                if (allayData.lastHoldingState !== isHolding) {\n                    if (isHolding) {\n                        // Allay just picked up an item\n                        allayData.pickupsDetected++;\n                        this.itemsCollected++;\n                        Chat.log(`🧚 Allay picked up item #${this.itemsCollected} at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n                    } else {\n                        // Allay just delivered an item\n                        allayData.deliveriesDetected++;\n                        this.itemsDelivered++;\n                        Chat.log(`🧚 Allay delivered item #${this.itemsDelivered}!`);\n                    }\n                    allayData.lastHoldingState = isHolding;\n                }\n\n                // Update position\n                allayData.position = { x: pos.x, y: pos.y, z: pos.z };\n            }\n        });\n    }\n\n    generateReport() {\n        if (this.allayStates.size === 0) {\n            Chat.log(\"No allays currently being tracked\");\n            return;\n        }\n\n        Chat.log(`🧚=== Allay Activity Report ===`);\n        Chat.log(`Allays tracked: ${this.allayStates.size}`);\n        Chat.log(`Total items collected: ${this.itemsCollected}`);\n        Chat.log(`Total items delivered: ${this.itemsDelivered}`);\n        Chat.log(`Efficiency rate: ${this.itemsCollected > 0 ? (this.itemsDelivered / this.itemsCollected * 100).toFixed(1) : 0}%`);\n\n        let dancingCount = 0;\n        let holdingCount = 0;\n\n        for (const [uuid, allayData] of this.allayStates) {\n            const allay = allayData.entity.as(\"minecraft:allay\");\n            if (allay) {\n                if (allay.isDancing()) dancingCount++;\n                if (allay.isHoldingItem()) holdingCount++;\n            }\n        }\n\n        Chat.log(`Currently dancing: ${dancingCount}`);\n        Chat.log(`Currently holding items: ${holdingCount}`);\n\n        if (dancingCount > 0) {\n            Chat.log(\"💎 Some allays are dancing - good opportunity for duplication!\");\n        }\n    }\n}\n\nconst allayMonitor = new AllayActivityMonitor();\n\n// Monitor allay activity every second\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    if (Client.getTime() % 20 === 0) { // Every 20 ticks = 1 second\n        allayMonitor.updateAllayActivity();\n    }\n}));\n\n// Report command\nevents.on(\"Key\", JavaWrapper.methodToJavaAsync((e) => {\n    if (e.key === \"key.keyboard.a\" && e.action === 1) { // A key\n        allayMonitor.generateReport();\n    }\n}));"
+      ]
+    }
+  ]
+}

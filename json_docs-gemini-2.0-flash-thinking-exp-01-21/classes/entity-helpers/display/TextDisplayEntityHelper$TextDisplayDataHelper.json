@@ -1,0 +1,98 @@
+{
+  "name": "TextDisplayDataHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.display.TextDisplayEntityHelper$TextDisplayDataHelper",
+  "since": "1.9.1",
+  "description": "The `TextDisplayDataHelper` class is a nested helper within `TextDisplayEntityHelper` that provides access to all text-specific properties and display settings for text display entities.",
+  "overview": "This class encapsulates the complete data model for text display entities, including text content, visual styling, alignment, colors, background, and various display flags.\n\nText display entities use this data structure to store and manage their appearance and behavior. The helper provides methods to access and modify all aspects of text display configuration, making it easy to create sophisticated text displays with custom formatting, colors, backgrounds, and visual effects.\n\nThis helper contains properties for:\n- Text content and formatting\n- Alignment and layout settings\n- Visual effects (shadow, see-through)\n- Background colors and styling\n- Opacity and transparency settings\n- Line width and text wrapping",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getText",
+      "signature": "getText()",
+      "returnType": "TextHelper",
+      "description": "Gets the text content of the display entity as a `TextHelper` object, allowing access to formatted text, colors, styles, and translation capabilities.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const textDisplay = entity.asTextDisplay();\nconst data = textDisplay.getData();\n\nif (data) {\n    const text = data.getText();\n    const plainText = text.getString();\n    const formattedText = text.getAsFormattedString();\n\n    Chat.log(`Display text: \"${plainText}\"`);\n    Chat.log(`Formatted text: \"${formattedText}\"`);\n}"
+      ]
+    },
+    {
+      "name": "getAlignment",
+      "signature": "getAlignment()",
+      "returnType": "String",
+      "description": "Gets the horizontal alignment of the text. Possible values:\n- `\"center\"` - Text is centered horizontally\n- `\"left\"` - Text is aligned to the left\n- `\"right\"` - Text is aligned to the right",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const alignment = data.getAlignment();\nChat.log(`Text alignment: ${alignment}`);\n\nswitch (alignment) {\n    case \"center\":\n        Chat.log(\"Text is center-aligned\");\n        break;\n    case \"left\":\n        Chat.log(\"Text is left-aligned\");\n        break;\n    case \"right\":\n        Chat.log(\"Text is right-aligned\");\n        break;\n}"
+      ]
+    },
+    {
+      "name": "getLineWidth",
+      "signature": "getLineWidth()",
+      "returnType": "int",
+      "description": "Gets the maximum line width for text wrapping. A value of 0 or less typically indicates unlimited line width.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const lineWidth = data.getLineWidth();\nif (lineWidth <= 0) {\n    Chat.log(\"Unlimited line width\");\n} else {\n    Chat.log(`Line width: ${lineWidth} pixels`);\n}"
+      ]
+    },
+    {
+      "name": "getTextOpacity",
+      "signature": "getTextOpacity()",
+      "returnType": "int",
+      "description": "Gets the opacity of the text, where 0 is completely transparent and 255 is fully opaque.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const opacity = data.getTextOpacity();\nconst opacityPercent = (opacity / 255 * 100).toFixed(1);\nChat.log(`Text opacity: ${opacity}/255 (${opacityPercent}%)`);\n\nif (opacity < 128) {\n    Chat.log(\"Text is semi-transparent\");\n}"
+      ]
+    },
+    {
+      "name": "getBackgroundColor",
+      "signature": "getBackgroundColor()",
+      "returnType": "int",
+      "description": "Gets the background color of the text display. The color is in ARGB format (0xAARRGGBB), where the alpha channel controls opacity. A value of 0 indicates no background color.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bgColor = data.getBackgroundColor();\n\nif (bgColor === 0) {\n    Chat.log(\"No background color set\");\n} else {\n    const alpha = (bgColor >> 24) & 0xFF;\n    const red = (bgColor >> 16) & 0xFF;\n    const green = (bgColor >> 8) & 0xFF;\n    const blue = bgColor & 0xFF;\n\n    Chat.log(`Background color: RGBA(${red}, ${green}, ${blue}, ${alpha})`);\n    Chat.log(`Background opacity: ${alpha/255*100}%`);\n\n    // Convert to hex format\n    const hexColor = ((1<<24)+(red<<16)+(green<<8)+blue).toString(16).slice(1).toUpperCase();\n    Chat.log(`Background hex: #${hexColor}`);\n}"
+      ]
+    },
+    {
+      "name": "hasShadowFlag",
+      "signature": "hasShadowFlag()",
+      "returnType": "boolean",
+      "description": "Checks if the text display has a shadow effect enabled, which improves readability against various backgrounds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hasShadow = data.hasShadowFlag();\nif (hasShadow) {\n    Chat.log(\"Text has shadow effect\");\n} else {\n    Chat.log(\"Text has no shadow\");\n}"
+      ]
+    },
+    {
+      "name": "hasSeeThroughFlag",
+      "signature": "hasSeeThroughFlag()",
+      "returnType": "boolean",
+      "description": "Checks if the text display has the see-through flag enabled, allowing text to be visible through blocks when appropriate.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isSeeThrough = data.hasSeeThroughFlag();\nif (isSeeThrough) {\n    Chat.log(\"Text is see-through\");\n} else {\n    Chat.log(\"Text is not see-through\");\n}"
+      ]
+    },
+    {
+      "name": "hasDefaultBackgroundFlag",
+      "signature": "hasDefaultBackgroundFlag()",
+      "returnType": "boolean",
+      "description": "Checks if the text display uses the default dark background style instead of a custom background color.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hasDefaultBg = data.hasDefaultBackgroundFlag();\nif (hasDefaultBg) {\n    Chat.log(\"Text uses default background\");\n} else {\n    Chat.log(\"Text does not use default background\");\n}"
+      ]
+    }
+  ]
+}

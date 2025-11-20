@@ -1,0 +1,252 @@
+{
+  "name": "StatsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StatsHelper",
+  "extends": "BaseHelper",
+  "since": "1.8.4",
+  "description": "The `StatsHelper` class provides access to player statistics and achievements in Minecraft. It allows you to retrieve various statistical data about the player's gameplay, including blocks mined, items crafted, entities killed, custom stats, and more. This helper is typically accessed through `Player.getStatistics()` and provides methods to query both raw numerical values and formatted display strings for different types of statistics.",
+  "overview": "The `StatsHelper` class interfaces with Minecraft's native stat tracking system to provide comprehensive access to player statistics. It supports:\n\n- **Entity Statistics:** Track kills and deaths by/with specific entities\n- **Block Statistics:** Monitor blocks mined and broken\n- **Item Statistics:** Track item usage, crafting, breaking, pickups, and drops\n- **Custom Statistics:** Access custom-defined statistics\n- **Formatted Display:** Get human-readable formatted values for statistics\n- **Bulk Operations:** Retrieve all statistics as maps for efficient processing\n- **Server Sync:** Request statistic updates from multiplayer servers",
+  "constructors": [
+    {
+      "signature": "new StatsHelper(statHandler: StatHandler)",
+      "description": "This constructor is primarily for internal use. Use `Player.getStatistics()` instead.",
+      "parameters": [
+        {
+          "name": "statHandler",
+          "type": "StatHandler",
+          "description": "The underlying Minecraft stat handler object"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getRawStatValue",
+      "signature": "getRawStatValue(key: string): number",
+      "returnType": "number",
+      "description": "Retrieves the raw numerical value of a custom statistic using its identifier (e.g., \"stat.minecraft.playOneMinute\").",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The identifier of the statistic (e.g., \"stat.minecraft.playOneMinute\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const minutesPlayed = stats.getRawStatValue(\"stat.minecraft.playOneMinute\");",
+        "const jumps = stats.getRawStatValue(\"stat.minecraft.jump\");",
+        "const currentDistance = stats.getRawStatValue(\"stat.minecraft.walk_one_cm\");"
+      ]
+    },
+    {
+      "name": "getFormattedStatValue",
+      "signature": "getFormattedStatValue(key: string): string",
+      "returnType": "string",
+      "description": "Retrieves the formatted, human-readable string value of a custom statistic using its identifier (e.g., \"stat.minecraft.walkOneCm\").",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The identifier of the statistic (e.g., \"stat.minecraft.walkOneCm\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const distanceWalked = stats.getFormattedStatValue(\"stat.minecraft.walkOneCm\");",
+        "const distanceSprinted = stats.getFormattedStatValue(\"stat.minecraft.sprintOneCm\");"
+      ]
+    },
+    {
+      "name": "getEntityKilled",
+      "signature": "getEntityKilled(entityId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times a specific entity type has been killed by the player. Use full Minecraft identifier like \"minecraft:zombie\".",
+      "parameters": [
+        {
+          "name": "entityId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the entity (e.g., \"minecraft:zombie\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const zombieKills = stats.getEntityKilled(\"minecraft:zombie\");",
+        "const currentKills = stats.getEntityKilled(\"minecraft:zombie\") +\n                            stats.getEntityKilled(\"minecraft:skeleton\") +\n                            stats.getEntityKilled(\"minecraft:creeper\");"
+      ]
+    },
+    {
+      "name": "getKilledByEntity",
+      "signature": "getKilledByEntity(entityId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times the player has been killed by a specific entity type. Use full Minecraft identifier like \"minecraft:zombie\".",
+      "parameters": [
+        {
+          "name": "entityId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the entity (e.g., \"minecraft:zombie\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const deathsByCreeper = stats.getKilledByEntity(\"minecraft:creeper\");",
+        "const currentDeaths = stats.getKilledByEntity(\"minecraft:zombie\") +\n                             stats.getKilledByEntity(\"minecraft:skeleton\") +\n                             stats.getKilledByEntity(\"minecraft:creeper\");"
+      ]
+    },
+    {
+      "name": "getBlockMined",
+      "signature": "getBlockMined(blockId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times a specific block type has been mined. Use full Minecraft identifier like \"minecraft:diamond_ore\".",
+      "parameters": [
+        {
+          "name": "blockId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the block (e.g., \"minecraft:diamond_ore\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const diamondOreMined = stats.getBlockMined(\"minecraft:diamond_ore\");",
+        "const stoneMined = stats.getBlockMined(\"minecraft:stone\");"
+      ]
+    },
+    {
+      "name": "getItemPickedUp",
+      "signature": "getItemPickedUp(itemId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times a specific item type has been picked up. Use full Minecraft identifier like \"minecraft:diamond\".",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the item (e.g., \"minecraft:diamond\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const diamondsPickedUp = stats.getItemPickedUp(\"minecraft:diamond\");",
+        "const ironIngotsPickedUp = stats.getItemPickedUp(\"minecraft:iron_ingot\");",
+        "const currentDiamonds = stats.getItemPickedUp(\"minecraft:diamond\");"
+      ]
+    },
+    {
+      "name": "getItemUsed",
+      "signature": "getItemUsed(itemId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times a specific item type has been used. Use full Minecraft identifier like \"minecraft:diamond_pickaxe\".",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the item (e.g., \"minecraft:diamond_pickaxe\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickaxeUsed = stats.getItemUsed(\"minecraft:diamond_pickaxe\");",
+        "const breadEaten = stats.getItemUsed(\"minecraft:bread\");"
+      ]
+    },
+    {
+      "name": "getItemBroken",
+      "signature": "getItemBroken(itemId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times a specific item type has been broken. Use full Minecraft identifier like \"minecraft:diamond_pickaxe\".",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the item (e.g., \"minecraft:diamond_pickaxe\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pickaxesBroken = stats.getItemBroken(\"minecraft:diamond_pickaxe\");"
+      ]
+    },
+    {
+      "name": "getItemCrafted",
+      "signature": "getItemCrafted(itemId: string): number",
+      "returnType": "number",
+      "description": "Gets the number of times a specific item type has been crafted. Use full Minecraft identifier like \"minecraft:bread\".",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The full Minecraft identifier of the item (e.g., \"minecraft:bread\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const breadCrafted = stats.getItemCrafted(\"minecraft:bread\");"
+      ]
+    },
+    {
+      "name": "getRawStatMap",
+      "signature": "getRawStatMap(): Map<string, number>",
+      "returnType": "Map<string, number>",
+      "description": "Retrieves a map of all raw statistic keys and their numerical values. Useful for iterating or backing up all stats.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawStats = stats.getRawStatMap();",
+        "// Iterate through raw stats to find most crafted item\nlet mostCrafted = { item: \"None\", count: 0 };\nfor (const [key, value] of rawStats) {\n    if (key.includes(\"stat.minecraft.craftItem\") && value > mostCrafted.count) {\n        mostCrafted = {\n            item: key.replace(\"stat.minecraft.craftItem.\", \"\"),\n            count: value\n        };\n    }\n}",
+        "// Backup all stats\nconst backup = {};\nfor (const [key, value] of rawStats) {\n    backup[key] = value;\n}"
+      ]
+    },
+    {
+      "name": "getCustomFormattedStat",
+      "signature": "getCustomFormattedStat(key: string): string",
+      "returnType": "string",
+      "description": "Retrieves the formatted string value for a custom statistic key (e.g., \"minecraft.walk_one_cm\"). This is similar to `getFormattedStatValue` but often used for custom-defined stats.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The custom statistic key (e.g., \"minecraft.aviate_one_cm\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const elytraDistance = stats.getCustomFormattedStat(\"minecraft.aviate_one_cm\");",
+        "const boatDistance = stats.getCustomFormattedStat(\"minecraft.boat_one_cm\");"
+      ]
+    },
+    {
+      "name": "getCustomStat",
+      "signature": "getCustomStat(key: string): number",
+      "returnType": "number",
+      "description": "Retrieves the raw numerical value for a custom statistic key (e.g., \"minecraft.sneak_time\"). This is similar to `getRawStatValue` but often used for custom-defined stats.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The custom statistic key (e.g., \"minecraft.sneak_time\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const sneakTime = stats.getCustomStat(\"minecraft.sneak_time\");",
+        "const timeSinceRest = stats.getCustomStat(\"minecraft.time_since_rest\");"
+      ]
+    },
+    {
+      "name": "updateStatistics",
+      "signature": "updateStatistics(): void",
+      "returnType": "void",
+      "description": "Requests an update of player statistics from the server. This can help retrieve more current data in multiplayer environments.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFormattedStatMap",
+      "signature": "getFormattedStatMap(): Map<string, string>",
+      "returnType": "Map<string, string>",
+      "description": "Retrieves a map of all statistic keys and their formatted, human-readable string values.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

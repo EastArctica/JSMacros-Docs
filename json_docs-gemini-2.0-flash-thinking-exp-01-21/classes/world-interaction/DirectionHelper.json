@@ -1,0 +1,180 @@
+{
+  "name": "DirectionHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world",
+  "extends": "BaseHelper<Direction>",
+  "since": "1.8.4",
+  "description": "The DirectionHelper class provides a wrapper around Minecraft's Direction enum, offering various methods to work with cardinal directions and orientations in the game world. This class is commonly used when working with player movement, block interactions, and spatial calculations.",
+  "overview": "DirectionHelper represents one of the six possible directions in Minecraft: North, South, East, West, Up, and Down. It provides utilities for direction manipulation, rotation, and conversion between different coordinate systems.\n\n## How to Obtain DirectionHelper\n\nDirectionHelper instances are typically obtained through various methods in JSMacros:\n\n```javascript\n// From player entity\nconst facing = player.getFacingDirection(); // Returns DirectionHelper\n\n// From block state properties\nconst blockState = world.getBlock(x, y, z).getBlockState();\nconst horizontalFacing = blockState.getHorizontalFacing(); // Returns DirectionHelper\n\n// From hit result (when looking at blocks)\nconst hitResult = player.getHitResult();\nconst side = hitResult.getSide(); // Returns DirectionHelper\n```\n\n## Available Directions\n\nThe six cardinal directions in Minecraft:\n- **NORTH** (-Z direction)\n- **SOUTH** (+Z direction)\n- **EAST** (+X direction)\n- **WEST** (-X direction)\n- **UP** (+Y direction)\n- **DOWN** (-Y direction)",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Gets the textual name of the direction (e.g., \"north\", \"south\", \"east\", \"west\", \"up\", \"down\").",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst name = direction.getName(); // \"north\", \"south\", etc."
+      ]
+    },
+    {
+      "name": "getAxis",
+      "signature": "getAxis()",
+      "returnType": "String",
+      "description": "Returns \"x\", \"y\", or \"z\" depending on which axis the direction operates on.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst axis = direction.getAxis(); // \"x\", \"y\", or \"z\""
+      ]
+    },
+    {
+      "name": "isVertical",
+      "signature": "isVertical()",
+      "returnType": "boolean",
+      "description": "Checks if the direction is pointing up or down.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nif (direction.isVertical()) {\n    // Direction is UP or DOWN\n}"
+      ]
+    },
+    {
+      "name": "isHorizontal",
+      "signature": "isHorizontal()",
+      "returnType": "boolean",
+      "description": "Checks if the direction is pointing north, south, east, or west.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nif (direction.isHorizontal()) {\n    // Direction is NORTH, SOUTH, EAST, or WEST\n}"
+      ]
+    },
+    {
+      "name": "isTowardsPositive",
+      "signature": "isTowardsPositive()",
+      "returnType": "boolean",
+      "description": "Positive directions are: EAST (+X), UP (+Y), SOUTH (+Z).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nif (direction.isTowardsPositive()) {\n    // Direction is EAST, UP, or SOUTH\n}"
+      ]
+    },
+    {
+      "name": "getYaw",
+      "signature": "getYaw()",
+      "returnType": "float",
+      "description": "Returns the horizontal rotation angle corresponding to this direction:\n- SOUTH: 0°\n- WEST: 90°\n- NORTH: 180°\n- EAST: 270°\n- UP/DOWN: 0°",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst yaw = direction.getYaw(); // 0, 90, 180, or 270"
+      ]
+    },
+    {
+      "name": "getPitch",
+      "signature": "getPitch()",
+      "returnType": "float",
+      "description": "Returns the vertical rotation angle:\n- Horizontal directions: 0°\n- UP: -90°\n- DOWN: 90°",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst pitch = direction.getPitch(); // 0, 90, or -90"
+      ]
+    },
+    {
+      "name": "getOpposite",
+      "signature": "getOpposite()",
+      "returnType": "DirectionHelper",
+      "description": "Returns a new DirectionHelper instance pointing in the opposite direction:\n- NORTH ↔ SOUTH\n- EAST ↔ WEST\n- UP ↔ DOWN",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst opposite = direction.getOpposite();\n\n// Examples:\n// NORTH becomes SOUTH\n// EAST becomes WEST\n// UP becomes DOWN"
+      ]
+    },
+    {
+      "name": "getLeft",
+      "signature": "getLeft()",
+      "returnType": "DirectionHelper",
+      "description": "Returns a new DirectionHelper instance pointing 90° counter-clockwise from the current direction (when viewed from above).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst left = direction.getLeft();\n\n// Examples:\n// NORTH → WEST\n// WEST → SOUTH\n// SOUTH → EAST\n// EAST → NORTH"
+      ]
+    },
+    {
+      "name": "getRight",
+      "signature": "getRight()",
+      "returnType": "DirectionHelper",
+      "description": "Returns a new DirectionHelper instance pointing 90° clockwise from the current direction (when viewed from above).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst right = direction.getRight();\n\n// Examples:\n// NORTH → EAST\n// EAST → SOUTH\n// SOUTH → WEST\n// WEST → NORTH"
+      ]
+    },
+    {
+      "name": "getVector",
+      "signature": "getVector()",
+      "returnType": "Pos3D",
+      "description": "Returns a Pos3D object representing the direction as a unit vector with values of -1, 0, or 1 for each axis.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst vector = direction.getVector();\n\n// Examples:\n// NORTH: Pos3D(0, 0, -1)\n// SOUTH: Pos3D(0, 0, 1)\n// EAST: Pos3D(1, 0, 0)\n// WEST: Pos3D(-1, 0, 0)\n// UP: Pos3D(0, 1, 0)\n// DOWN: Pos3D(0, -1, 0)"
+      ]
+    },
+    {
+      "name": "pointsTo",
+      "signature": "pointsTo(yaw)",
+      "returnType": "boolean",
+      "description": "Determines if a given yaw angle is closest to this direction.",
+      "parameters": [
+        {
+          "name": "yaw",
+          "type": "number",
+          "description": "The yaw angle in degrees to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst isFacingNorth = direction.pointsTo(180); // Check if yaw 180° points to this direction\nconst isFacingEast = direction.pointsTo(270); // Check if yaw 270° points to this direction"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a formatted string containing the direction's name, yaw, and pitch.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst info = direction.toString(); // e.g., 'DirectionHelper:{\"name\": \"north\", \"yaw\": 180.000000, \"pitch\": 0.000000}'"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "Direction",
+      "description": "Provides access to the raw Minecraft Direction object if needed for advanced use cases.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const direction = player.getFacingDirection();\nconst rawDirection = direction.getRaw(); // Access to the raw Direction enum"
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(obj)",
+      "returnType": "boolean",
+      "description": "Compares this DirectionHelper with another object for equality.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

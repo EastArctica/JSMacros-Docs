@@ -1,0 +1,63 @@
+{
+  "name": "RenderElement3D",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.RenderElement3D<T>",
+  "extends": "Comparable<RenderElement3D<?>>",
+  "since": "JsMacros 1.0.5",
+  "description": "The `RenderElement3D` is a generic interface that defines the base functionality for all 3D rendering elements in JsMacros. It provides a common framework for rendering 3D objects in the world such as boxes, lines, and trace lines. This interface is implemented by various 3D rendering components that can be added to a `Draw3D` context for visualization in the Minecraft world.",
+  "overview": "The `RenderElement3D` interface serves as the foundation for 3D rendering in JsMacros, providing:\n\n- Standardized rendering method that integrates with Minecraft's rendering system\n- Comparable interface for sorting and ordering 3D elements\n- Generic type parameter `T` that allows implementing classes to specify their own type for method chaining\n- Integration with the `Draw3D` rendering system for world-space visualization",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "render",
+      "signature": "render(DrawContext context, float tickDelta)",
+      "returnType": "void",
+      "description": "Implements the actual rendering logic for the 3D element. This method is called by the rendering system each frame to draw the element in the Minecraft world.",
+      "parameters": [
+        {
+          "name": "context",
+          "type": "DrawContext",
+          "description": "The Minecraft drawing context used for rendering operations."
+        },
+        {
+          "name": "tickDelta",
+          "type": "float",
+          "description": "The partial tick delta, used for smooth animations between frames."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "compareToSame",
+      "signature": "compareToSame(T other)",
+      "returnType": "int",
+      "description": "Compares this 3D rendering element with another element of the same specific type `T` for sorting purposes, typically based on rendering depth or priority.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "T",
+          "description": "The other `RenderElement3D` instance of the same type to compare with."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "compareTo",
+      "signature": "compareTo(RenderElement3D<?> other)",
+      "returnType": "int",
+      "description": "Compares this 3D rendering element with another `RenderElement3D` instance for sorting purposes, implementing the `Comparable` interface to define a consistent rendering order.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "RenderElement3D<?>",
+          "description": "The other `RenderElement3D` instance to compare with."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "elements.sort((a, b) => a.compareTo(b));"
+      ]
+    }
+  ]
+}

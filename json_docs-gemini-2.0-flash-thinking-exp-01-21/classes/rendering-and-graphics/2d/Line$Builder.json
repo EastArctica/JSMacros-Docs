@@ -1,0 +1,350 @@
+{
+  "name": "Line.Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Line$Builder",
+  "extends": "RenderElementBuilder",
+  "since": "JsMacros 1.8.4",
+  "description": "The `Line.Builder` class provides a fluent interface for creating `Line` instances with method chaining. It's the recommended way to create lines with complex configurations or when you need to set multiple properties in a readable manner.",
+  "overview": "The `Line.Builder` class allows you to construct `Line` objects through a chain of method calls, making the configuration process more readable and maintainable. Instead of passing multiple parameters to constructors, you can set properties individually using descriptive method names.\n\nThe builder is typically obtained through the `Draw2D.line()` method and provides two final operations:\n- `build()` - Creates the Line instance\n- `buildAndAdd()` - Creates the Line instance and automatically adds it to the Draw2D context",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(x1, y1, x2, y2)",
+      "returnType": "Line.Builder",
+      "description": "Sets the start and end positions of the line in a single call.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X coordinate of the line start point"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y coordinate of the line start point"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X coordinate of the line end point"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y coordinate of the line end point"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const line = draw2D.line()\n    .pos(10, 10, 100, 50)\n    .build();"
+      ]
+    },
+    {
+      "name": "pos1",
+      "signature": "pos1(x, y)",
+      "returnType": "Line.Builder",
+      "description": "Sets the start position of the line.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the line start point"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the line start point"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const line = draw2D.line()\n    .pos1(0, 0)\n    .pos2(200, 100)\n    .build();"
+      ]
+    },
+    {
+      "name": "pos2",
+      "signature": "pos2(x, y)",
+      "returnType": "Line.Builder",
+      "description": "Sets the end position of the line.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the line end point"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the line end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "x1",
+      "signature": "x1(x)",
+      "returnType": "Line.Builder",
+      "description": "Sets only the X coordinate of the line start point.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the line start point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "y1",
+      "signature": "y1(y)",
+      "returnType": "Line.Builder",
+      "description": "Sets only the Y coordinate of the line start point.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the line start point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "x2",
+      "signature": "x2(x)",
+      "returnType": "Line.Builder",
+      "description": "Sets only the X coordinate of the line end point.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the line end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "y2",
+      "signature": "y2(y)",
+      "returnType": "Line.Builder",
+      "description": "Sets only the Y coordinate of the line end point.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the line end point"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "color",
+      "signature": "color(color)",
+      "returnType": "Line.Builder",
+      "description": "Sets the line color using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const redLine = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(color, alpha)",
+      "returnType": "Line.Builder",
+      "description": "Sets the line color using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const semiTransparentBlue = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(0x0000FF, 128)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b)",
+      "returnType": "Line.Builder",
+      "description": "Sets the line color using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const greenLine = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(0, 255, 0)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b, a)",
+      "returnType": "Line.Builder",
+      "description": "Sets the line color using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const purpleLine = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(128, 0, 128, 200)\n    .build();"
+      ]
+    },
+    {
+      "name": "alpha",
+      "signature": "alpha(alpha)",
+      "returnType": "Line.Builder",
+      "description": "Sets only the alpha transparency value while preserving RGB color.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const fadedLine = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(0xFF0000)\n    .alpha(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(degrees)",
+      "returnType": "Line.Builder",
+      "description": "Sets the rotation angle of the line (clockwise).",
+      "parameters": [
+        {
+          "name": "degrees",
+          "type": "float",
+          "description": "Rotation angle in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const rotatedLine = draw2D.line()\n    .pos(100, 50, 200, 50)  // Horizontal line\n    .rotation(45)            // Rotate 45 degrees\n    .build();"
+      ]
+    },
+    {
+      "name": "rotateCenter",
+      "signature": "rotateCenter(centerEnabled)",
+      "returnType": "Line.Builder",
+      "description": "Sets whether the line should rotate around its center point.",
+      "parameters": [
+        {
+          "name": "centerEnabled",
+          "type": "boolean",
+          "description": "true to rotate around center, false to rotate around origin"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const centeredRotation = draw2D.line()\n    .pos(50, 50, 150, 100)\n    .rotation(45)\n    .rotateCenter(true)\n    .build();"
+      ]
+    },
+    {
+      "name": "width",
+      "signature": "width(width)",
+      "returnType": "Line.Builder",
+      "description": "Sets the width (thickness) of the line.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "double",
+          "description": "Line width in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const thickLine = draw2D.line()\n    .pos(0, 0, 200, 0)\n    .width(5.0)\n    .color(0x000000)\n    .build();"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(index)",
+      "returnType": "Line.Builder",
+      "description": "Sets the z-index for rendering order. Higher values render on top.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "Z-index value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const topLine = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .zIndex(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Line",
+      "description": "Creates the configured `Line` instance without adding it to the Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const line = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(0xFF0000)\n    .width(2)\n    .build();\n\n// Add to context manually later\ndraw2D.addChild(line);"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Line",
+      "description": "Creates the configured `Line` instance and automatically adds it to the Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const line = draw2D.line()\n    .pos(0, 0, 100, 100)\n    .color(0x00FF00)\n    .width(3)\n    .buildAndAdd(); // Automatically added to Draw2D context"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "RenderElementBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.RenderElementBuilder",
+  "since": "JsMacros 1.8.4",
+  "description": "An abstract base class that provides the foundation for the builder pattern implementation in JSMacros' rendering system, serving as the parent for all specific render element builders.",
+  "overview": "The `RenderElementBuilder` is an abstract base class that provides the foundation for the builder pattern implementation in JSMacros' rendering system. It serves as the parent class for all specific render element builders (such as `Rect.Builder`, `Text.Builder`, `Line.Builder`, etc.) and provides common functionality for creating and adding render elements to 2D drawing contexts.\n\nThis class implements the builder pattern to allow for fluent, method-chaining configuration of render elements before their creation. It manages the relationship between the builder and its parent `IDraw2D` context, enabling both standalone element creation and automatic addition to the drawing context.\n\nThe `RenderElementBuilder` class exists to:\n\n1. **Standardize Builder Pattern**: Provide a consistent interface for all render element builders\n2. **Context Management**: Maintain the relationship between builders and their drawing contexts\n3. **Element Creation**: Handle the final creation of configured render elements\n4. **Automatic Integration**: Support both standalone element creation and automatic addition to drawing contexts\n\nThis abstract class is extended by concrete builder implementations including:\n\n- `Rect.Builder` - For creating rectangle elements\n- `Text.Builder` - For creating text elements\n- `Line.Builder` - For creating line elements\n- `Image.Builder` - For creating image elements\n- `Item.Builder` - For creating item render elements\n- `Draw2DElement.Builder` - For creating custom 2D elements",
+  "constructors": [
+    {
+      "signature": "protected RenderElementBuilder(IDraw2D<?> parent)",
+      "description": "The `RenderElementBuilder` class has a protected constructor that is used by subclasses. This constructor is only accessible to subclasses and is not meant to be instantiated directly by user code.",
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "IDraw2D<?>",
+          "description": "The drawing context this builder is associated with"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "createElement",
+      "signature": "protected abstract T createElement()",
+      "returnType": "T",
+      "description": "Abstract method that must be implemented by subclasses to create the specific render element type.\n\nThis method is protected and abstract - it must be implemented by each concrete subclass. The implementation should create a render element using the builder's current configuration. This method is called internally by `build()` and `buildAndAdd()`. User code typically doesn't call this method directly.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

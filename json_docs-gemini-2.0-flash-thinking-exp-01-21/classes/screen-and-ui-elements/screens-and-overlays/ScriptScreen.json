@@ -1,0 +1,524 @@
+{
+  "name": "ScriptScreen",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.ScriptScreen",
+  "extends": "BaseScreen",
+  "since": "JSMacros 1.0.5",
+  "description": "The `ScriptScreen` class is a powerful custom screen implementation for JSMacros that allows scripters to create custom user interfaces with buttons, text fields, sliders, checkboxes, and other UI elements.",
+  "overview": "This class provides a foundation for building interactive GUIs, configuration screens, custom menus, and complex user interfaces within Minecraft.\n\nScriptScreen extends BaseScreen and implements the IScreen interface, giving it access to comprehensive screen management capabilities including widget creation, event handling, rendering control, and user input processing. The class supports both dark and transparent backgrounds, custom rendering hooks, and flexible screen behavior configuration.",
+  "constructors": [
+    {
+      "signature": "new ScriptScreen(title: string, dirt: boolean)",
+      "description": "Creates a new ScriptScreen with the specified title and background style.",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "description": "The title text displayed at the top of the screen"
+        },
+        {
+          "name": "dirt",
+          "type": "boolean",
+          "description": "Background style - `true` for dark dirt background, `false` for standard transparent background"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addButton",
+      "signature": "addButton(x: number, y: number, width: number, height: number, text: string, callback: Function)\naddButton(x: number, y: number, width: number, height: number, zIndex: number, text: string, callback: Function)",
+      "returnType": "ButtonWidget",
+      "description": "Creates a button widget on the screen. It can be a simple button or one with a specified z-index for layering.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate of the button."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate of the button."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the button."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the button."
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "description": "Optional. The z-index for layering the button. If provided, this is the 5th argument, and 'text' becomes the 6th."
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "description": "The text displayed on the button. If 'zIndex' is provided, this is the 6th argument; otherwise, it's the 5th."
+        },
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the button is clicked. Receives the button widget as an argument."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simple button\nconst myButton = screen.addButton(10, 50, 100, 20, \"Click Me\",\n    JavaWrapper.methodToJavaAsync((btn) => {\n        Chat.log(\"Button clicked!\");\n    })\n);",
+        "// Button with z-index (layering)\nconst layeredButton = screen.addButton(10, 80, 100, 20, 5, \"Layered\",\n    JavaWrapper.methodToJavaAsync((btn) => {\n        Chat.log(\"Layered button clicked!\");\n    })\n);"
+      ]
+    },
+    {
+      "name": "addTextInput",
+      "signature": "addTextInput(x: number, y: number, width: number, height: number, placeholder: string, callback: Function)\naddTextInput(x: number, y: number, width: number, height: number, zIndex: number, placeholder: string, callback: Function)",
+      "returnType": "TextInputWidget",
+      "description": "Creates a text input field widget on the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate of the text input."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate of the text input."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the text input."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the text input."
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "description": "Optional. The z-index for layering the text input. If provided, this is the 5th argument, and 'placeholder' becomes the 6th."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "description": "The placeholder text displayed when the input is empty. If 'zIndex' is provided, this is the 6th argument; otherwise, it's the 5th."
+        },
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the text in the input field changes. Receives the current text as an argument."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const textField = screen.addTextInput(10, 120, 200, 20, \"Enter text...\",\n    JavaWrapper.methodToJavaAsync((text) => {\n        Chat.log(`Text changed: ${text}`);\n    })\n);",
+        "// Text input with z-index\nconst layeredField = screen.addTextInput(10, 150, 200, 20, 10, \"Layered input\",\n    JavaWrapper.methodToJavaAsync((text) => {\n        Chat.log(`Layered text: ${text}`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "addCheckbox",
+      "signature": "addCheckbox(x: number, y: number, width: number, height: number, message: string, initialValue: boolean, callback: Function)\naddCheckbox(x: number, y: number, width: number, height: number, message: string, initialValue: boolean, showMessage: boolean, callback: Function)",
+      "returnType": "CheckboxWidget",
+      "description": "Creates a checkbox widget on the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate of the checkbox."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate of the checkbox."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the checkbox area."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the checkbox area."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message displayed next to the checkbox."
+        },
+        {
+          "name": "initialValue",
+          "type": "boolean",
+          "description": "The initial checked state of the checkbox."
+        },
+        {
+          "name": "showMessage",
+          "type": "boolean",
+          "description": "Optional. Whether to display the message next to the checkbox. If provided, this is the 7th argument."
+        },
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the checkbox state changes. Receives the checkbox widget as an argument."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const checkbox = screen.addCheckbox(10, 180, 200, 20, \"Enable feature\", false,\n    JavaWrapper.methodToJavaAsync((cb) => {\n        Chat.log(`Checkbox state: ${cb.isChecked()}`);\n    })\n);",
+        "// Checkbox with message\nconst messageCheckbox = screen.addCheckbox(10, 210, 200, 20, \"Show notifications\", true, true,\n    JavaWrapper.methodToJavaAsync((cb) => {\n        Chat.log(`Notifications: ${cb.isChecked()}`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "addSlider",
+      "signature": "addSlider(x: number, y: number, width: number, height: number, message: string, initialValue: number, callback: Function)\naddSlider(x: number, y: number, width: number, height: number, message: string, initialValue: number, maxValue: number, callback: Function)",
+      "returnType": "SliderWidget",
+      "description": "Creates a slider widget on the screen.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate of the slider."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate of the slider."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the slider."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the slider."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message/label for the slider."
+        },
+        {
+          "name": "initialValue",
+          "type": "number",
+          "description": "The initial value of the slider (typically normalized 0.0-1.0 or actual value)."
+        },
+        {
+          "name": "maxValue",
+          "type": "number",
+          "description": "Optional. The maximum value for the slider. If provided, this is the 7th argument."
+        },
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the slider value changes. Receives the slider widget as an argument."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const slider = screen.addSlider(10, 240, 200, 20, \"Volume\", 50.0, 100,\n    JavaWrapper.methodToJavaAsync((slider) => {\n        Chat.log(`Slider value: ${slider.getValue()}`);\n    })\n);",
+        "// Continuous slider (without steps)\nconst continuousSlider = screen.addSlider(10, 270, 200, 20, \"Brightness\", 0.5,\n    JavaWrapper.methodToJavaAsync((slider) => {\n        Chat.log(`Brightness: ${(slider.getValue() * 100).toFixed(0)}%`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "addCyclingButton",
+      "signature": "addCyclingButton(x: number, y: number, width: number, height: number, zIndex: number, options: string[], initialValue: string, callback: Function)",
+      "returnType": "CyclingButtonWidget",
+      "description": "Creates a button that cycles through a list of options when clicked.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate of the cycling button."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate of the cycling button."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the cycling button."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the cycling button."
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "description": "The z-index for layering the button."
+        },
+        {
+          "name": "options",
+          "type": "string[]",
+          "description": "An array of strings representing the available options to cycle through."
+        },
+        {
+          "name": "initialValue",
+          "type": "string",
+          "description": "The initial value/text displayed on the button."
+        },
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the button's value changes. Receives the button widget as an argument."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.addCyclingButton(20, 90, 200, 20, 1, blockNames, \"Diamond Ore\",\n    JavaWrapper.methodToJavaAsync((btn) => {\n        const index = blockNames.indexOf(btn.getValue());\n        settings.targetBlock = blockTypes[index];\n        Chat.log(`Target block: ${settings.targetBlock}`);\n    })\n);"
+      ]
+    },
+    {
+      "name": "setOnMouseDown",
+      "signature": "setOnMouseDown(callback: (pos: Object, button: number) => void)",
+      "returnType": "void",
+      "description": "Sets a callback for mouse press events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when a mouse button is pressed. Receives `pos` (an object with x, y) and `button` (mouse button ID)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnMouseDown(JavaWrapper.methodToJavaAsync((pos, button) => {\n        mouseX = pos.x;\n        mouseY = pos.y;\n\n        // Add explosion effect at click position\n        for (let i = 0; i < 10; i++) {\n            particles.push({\n                x: mouseX,\n                y: mouseY,\n                vx: (Math.random() - 0.5) * 10,\n                vy: (Math.random() - 0.5) * 10,\n                size: Math.random() * 8 + 1,\n                color: Math.floor(Math.random() * 0xFFFFFF)\n            });\n        }\n\n        // Remove oldest particles if too many\n        if (particles.length > particleCount + 50) {\n            particles = particles.slice(-particleCount);\n        }\n    }));"
+      ]
+    },
+    {
+      "name": "setOnMouseDrag",
+      "signature": "setOnMouseDrag(callback: (mouseX: number, mouseY: number, button: number, deltaX: number, deltaY: number) => void)",
+      "returnType": "void",
+      "description": "Sets a callback for mouse drag events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the mouse is dragged. Receives `mouseX`, `mouseY` (current position), `button` (mouse button ID), `deltaX`, `deltaY` (change in position)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnMouseUp",
+      "signature": "setOnMouseUp(callback: (pos: Object, button: number) => void)",
+      "returnType": "void",
+      "description": "Sets a callback for mouse release events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when a mouse button is released. Receives `pos` (an object with x, y) and `button` (mouse button ID)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnScroll",
+      "signature": "setOnScroll(callback: (mouseX: number, mouseY: number, amount: number) => void)",
+      "returnType": "void",
+      "description": "Sets a callback for mouse wheel scroll events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the mouse wheel is scrolled. Receives `mouseX`, `mouseY` (current mouse position) and `amount` (scroll delta)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnKeyPressed",
+      "signature": "setOnKeyPressed(callback: (key: number, scanCode: number) => void)",
+      "returnType": "void",
+      "description": "Sets a callback for keyboard key press events.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when a keyboard key is pressed. Receives `key` (keycode) and `scanCode`."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnKeyPressed(JavaWrapper.methodToJavaAsync((key, scanCode) => {\n        if (key === 256) { // Escape key\n            screen.close();\n        } else if (key === 282) { // F1 key\n            Chat.log(\"Help: Configure settings and click 'Start Scan'\");\n        }\n    }));"
+      ]
+    },
+    {
+      "name": "setOnCharTyped",
+      "signature": "setOnCharTyped(callback: (char: string, keyCode: number) => void)",
+      "returnType": "void",
+      "description": "Sets a callback for character input events (e.g., typing letters).",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when a character is typed. Receives `char` (the typed character) and `keyCode`."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnRender",
+      "signature": "setOnRender(callback: (pos: Object, drawContext: Object) => void)",
+      "returnType": "void",
+      "description": "Sets a custom rendering callback that is executed every frame after standard screen elements are rendered. Use for custom drawing.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute during rendering. Receives `pos` (mouse position, object with x, y) and `drawContext` (Minecraft's drawing context)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnRender(JavaWrapper.methodToJavaAsync((pos, drawContext) => {\n        // Draw info box\n        const infoY = 120 + (items.length * 25) + 20;\n        Hud.drawRect(20, infoY, 200, 80, 0x40000000);\n        Hud.drawString(`Selected Index: ${selectedItem}`, 25, infoY + 5, 0xFFFFFF);\n        Hud.drawString(`Total Items: ${items.length}`, 25, infoY + 20, 0xFFFFFF);\n        Hud.drawString(`Counter Value: ${counter}`, 25, infoY + 35, 0xFFFFFF);\n\n        if (selectedItem < items.length) {\n            Hud.drawString(`Selected: ${items[selectedItem]}`, 25, infoY + 50, 0x00FF00);\n        }\n    }));",
+        "screen.setOnRender(JavaWrapper.methodToJavaAsync((pos, drawContext) => {\n        // Draw radius indicator\n        const centerX = screen.getWidth() - 60;\n        const centerY = 100;\n        const radius = settings.scanRadius;\n\n        // Draw preview circle\n        Hud.drawCircle(centerX, centerY, radius, 0x40FF0000);\n        Hud.drawString(`${radius}m`, centerX - 15, centerY - 5, 0xFFFFFF);\n\n        // Draw target block info\n        Hud.drawString(\"Target:\", centerX - 50, centerY + 30, 0xFFFFFF);\n        const blockIndex = blockTypes.indexOf(settings.targetBlock);\n        if (blockIndex !== -1) {\n            Hud.drawString(blockNames[blockIndex], centerX - 50, centerY + 45, 0x00FF00);\n        }\n\n        // Draw settings summary\n        Hud.drawString(\"Settings:\", 20, 230, 0xFFFFFF);\n        Hud.drawString(`• Radius: ${settings.scanRadius}m`, 25, 245, 0xAAAAAA);\n        Hud.drawString(`• Coords: ${settings.showCoordinates ? \"ON\" : \"OFF\"}`, 25, 260, 0xAAAAAA);\n        Hud.drawString(`• Auto-save: ${settings.autoSave ? \"ON\" : \"OFF\"}`, 25, 275, 0xAAAAAA);\n    }));",
+        "screen.setOnRender(JavaWrapper.methodToJavaAsync((pos, drawContext) => {\n        animationTime++;\n        mouseX = pos.x;\n        mouseY = pos.y;\n\n        // Clear background with subtle fade\n        Hud.fillRect(0, 0, screen.getWidth(), screen.getHeight(), 0x10000000);\n\n        // Update and draw particles\n        particles.forEach((particle, index) => {\n            // Update position\n            particle.x += particle.vx;\n            particle.y += particle.vy;\n\n            // Apply gravity\n            particle.vy += 0.1;\n\n            // Bounce off walls\n            if (particle.x <= 0 || particle.x >= screen.getWidth()) {\n                particle.vx *= -0.8;\n                particle.x = Math.max(0, Math.min(screen.getWidth(), particle.x));\n            }\n            if (particle.y <= 0 || particle.y >= screen.getHeight()) {\n                particle.vy *= -0.8;\n                particle.y = Math.max(0, Math.min(screen.getHeight(), particle.y));\n            }\n\n            // Apply friction\n            particle.vx *= 0.99;\n            particle.vy *= 0.99;\n\n            // Draw particle\n            const alpha = Math.max(0, 255 - index * 2);\n            Hud.drawCircle(particle.x, particle.y, particle.size, particle.color | (alpha << 24));\n        });\n\n        // Draw animated sine waves\n        for (let wave = 0; wave < 3; wave++) {\n            const waveOffset = wave * 20;\n            const amplitude = 30 + wave * 10;\n            const frequency = 0.02 + wave * 0.005;\n            const color = [0xFF0000, 0x00FF00, 0x0000FF][wave];\n\n            Hud.beginPath();\n            for (let x = 0; x < screen.getWidth(); x += 5) {\n                const y = screen.getHeight() / 2 + waveOffset +\n                         Math.sin((x + animationTime * 2) * frequency) * amplitude;\n\n                if (x === 0) {\n                    Hud.moveTo(x, y);\n                } else {\n                    Hud.lineTo(x, y);\n                }\n            }\n            Hud.stroke(color, 2);\n            Hud.endPath();\n        }\n\n        // Draw mouse follower\n        const followRadius = 30 + Math.sin(animationTime * 0.1) * 10;\n        Hud.drawCircle(mouseX, mouseY, followRadius, 0x40FFFFFF);\n        Hud.drawCircle(mouseX, mouseY, followRadius, 0xFFFFFFFF, 2);\n\n        // Draw rotating shapes\n        const centerX = screen.getWidth() / 2;\n        const centerY = screen.getHeight() / 2;\n        const rotation = animationTime * 0.02;\n\n        for (let i = 0; i < 6; i++) {\n            const angle = rotation + (i * Math.PI * 2 / 6);\n            const x = centerX + Math.cos(angle) * 80;\n            const y = centerY + Math.sin(angle) * 80;\n\n            Hud.drawRotatedRect(x - 15, y - 15, 30, 30, angle, 0x80FFD700, 2);\n        }\n\n        // Draw status text\n        Hud.drawString(`Particles: ${particles.length}`, 10, 10, 0xFFFFFF);\n        Hud.drawString(`FPS: ${Math.floor(1000 / 16.67)}`, 10, 25, 0xFFFFFF);\n        Hud.drawString(`Mouse: (${mouseX}, ${mouseY})`, 10, 40, 0xFFFFFF);\n        Hud.drawString(\"Click to add particle explosion!\", 10, 55, 0xAAAAAA);\n    }));"
+      ]
+    },
+    {
+      "name": "setOnClose",
+      "signature": "setOnClose(callback: (closedScreen: Object) => void)",
+      "returnType": "void",
+      "description": "Sets a callback to be executed when the screen is closed.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "Function",
+          "description": "The callback function to execute when the screen is closed. Receives the `closedScreen` instance as an argument."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "screen.setOnClose(JavaWrapper.methodToJavaAsync((closedScreen) => {\n        Chat.log(\"Dynamic screen closed\");\n        Chat.log(`Final state: Counter=${counter}, Items=${items.length}`);\n    }));"
+      ]
+    },
+    {
+      "name": "getButtonWidgets",
+      "signature": "getButtonWidgets(): ButtonWidget[]",
+      "returnType": "ButtonWidget[]",
+      "description": "Retrieves a list of all button widgets currently on the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTextFields",
+      "signature": "getTextFields(): TextInputWidget[]",
+      "returnType": "TextInputWidget[]",
+      "description": "Retrieves a list of all text input field widgets currently on the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "buttonBuilder",
+      "signature": "buttonBuilder(): Object",
+      "returnType": "Object",
+      "description": "Provides a builder pattern for creating button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "checkBoxBuilder",
+      "signature": "checkBoxBuilder(): Object",
+      "returnType": "Object",
+      "description": "Provides a builder pattern for creating checkbox widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textFieldBuilder",
+      "signature": "textFieldBuilder(): Object",
+      "returnType": "Object",
+      "description": "Provides a builder pattern for creating text input field widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTitleText",
+      "signature": "getTitleText(): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Retrieves the screen's title as a TextHelper object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getScreenClassName",
+      "signature": "getScreenClassName(): string",
+      "returnType": "string",
+      "description": "Retrieves the fully qualified class name of the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isShiftDown",
+      "signature": "isShiftDown(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the Shift key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isCtrlDown",
+      "signature": "isCtrlDown(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the Control key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAltDown",
+      "signature": "isAltDown(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the Alt key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "close(): void",
+      "returnType": "void",
+      "description": "Closes the current screen.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screen.close();"
+      ]
+    },
+    {
+      "name": "reloadScreen",
+      "signature": "reloadScreen(): void",
+      "returnType": "void",
+      "description": "Reloads the screen to update its content, typically used for dynamic UI updates.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "screen.reloadScreen();"
+      ]
+    }
+  ]
+}

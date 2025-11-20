@@ -1,0 +1,43 @@
+{
+  "name": "CraftingInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CraftingInventory",
+  "extends": "RecipeInventory<CraftingScreen>",
+  "since": "1.8.4",
+  "description": "The `CraftingInventory` class provides specialized access to Minecraft's crafting table interface, allowing scripts to interact with crafting operations, manage the 3×3 crafting grid, and work with recipes.",
+  "overview": "Crafting tables in Minecraft have the following main components:\n- **3×3 Crafting Grid (Slots 1-9):** Input slots for crafting materials\n- **Output Slot (Slot 0):** The resulting crafted item\n- **Recipe Book:** Toggleable interface for browsing and selecting recipes\n\nYou typically get `CraftingInventory` instances when the player has a crafting table screen open:\n\n```javascript\n// Check if current screen is a crafting table\nconst inv = Inventory.create();\nif (inv && inv.getType() === \"Crafting Table\") {\n    const crafting = inv; // Already typed as CraftingInventory\n    Chat.log(\"Crafting table inventory detected!\");\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInput",
+      "signature": "getInput(x: number, y: number)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item stack at the specified coordinates within the 3x3 crafting grid.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X-coordinate of the slot (0-2, where 0 is the leftmost column)."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y-coordinate of the slot (0-2, where 0 is the topmost row)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput()",
+      "returnType": "ItemStackHelper[][]",
+      "description": "Retrieves the entire 3x3 crafting grid as a 2D array of ItemStackHelper objects, representing the input slots.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const grid = inv.getInput();",
+        "for (let x = 0; x < 3; x++) {\n    for (let y = 0; y < 3; y++) {\n        const item = grid[x][y];\n        if (!item.isEmpty()) {\n            // ... process item\n        }\n    }\n}"
+      ]
+    }
+  ]
+}

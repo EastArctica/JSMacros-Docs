@@ -1,0 +1,677 @@
+{
+  "name": "PlayerInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.PlayerInventory",
+  "extends": "RecipeInventory<InventoryScreen>",
+  "since": "1.8.4",
+  "description": "The `PlayerInventory` class provides comprehensive functionality for interacting with the player's survival inventory screen in Minecraft. This includes accessing the main inventory, hotbar, armor slots, offhand, crafting grid, and recipe book functionality. It extends the `RecipeInventory` class and inherits all standard inventory operations while adding player-specific inventory management features.",
+  "overview": "This class is automatically created when you open your inventory screen (typically with 'E' key) and can be accessed through `Player.getInventory()` or `Inventory.create()` when the survival inventory is open.\n\nThe `PlayerInventory` class manages the following inventory sections:\n\n- **Hotbar**: Slots 0-8 (9 slots) - Bottom row for quick access\n- **Main Inventory**: Slots 9-35 (27 slots) - Main storage area\n- **Armor**: Slots 5-8 (4 slots) - Helmet, chestplate, leggings, boots\n- **Offhand**: Slot 45 - Shield or other offhand item\n- **Crafting Grid**: Slots 1-4 (2x2) - Personal crafting area\n- **Crafting Output**: Slot 0 - Result of crafting\n- **Crafting Book**: Recipe book interface",
+  "constructors": [
+    {
+      "signature": "PlayerInventory()",
+      "description": "Creates a new `PlayerInventory` instance for the player inventory screen.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "`InventoryScreen`",
+          "description": "The player inventory screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getHelmet",
+      "signature": "getHelmet()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item in the player's helmet (armor) slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function checkEquipment() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"=== Equipment Status ===\");\n\n    // Check armor\n    const helmet = inventory.getHelmet();\n    const chestplate = inventory.getChestplate();\n    const leggings = inventory.getLeggings();\n    const boots = inventory.getBoots();\n\n    let totalArmor = 0;\n\n    if (!helmet.isEmpty()) {\n        const durability = helmet.getMaxDamage() - helmet.getDamage();\n        const maxDurability = helmet.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Helmet: ${helmet.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(helmet);\n    } else {\n        Chat.log(\"Helmet: None\");\n    }\n\n    if (!chestplate.isEmpty()) {\n        const durability = chestplate.getMaxDamage() - chestplate.getDamage();\n        const maxDurability = chestplate.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Chestplate: ${chestplate.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(chestplate);\n    } else {\n        Chat.log(\"Chestplate: None\");\n    }\n\n    if (!leggings.isEmpty()) {\n        const durability = leggings.getMaxDamage() - leggings.getDamage();\n        const maxDurability = leggings.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Leggings: ${leggings.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(leggings);\n    } else {\n        Chat.log(\"Leggings: None\");\n    }\n\n    if (!boots.isEmpty()) {\n        const durability = boots.getMaxDamage() - boots.getDamage();\n        const maxDurability = boots.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Boots: ${boots.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(boots);\n    } else {\n        Chat.log(\"Boots: None\");\n    }\n\n    // Check offhand\n    const offhand = inventory.getOffhand();\n    if (!offhand.isEmpty()) {\n        Chat.log(`Offhand: ${offhand.getName().getString()} x${offhand.getCount()}`);\n    } else {\n        Chat.log(\"Offhand: Empty\");\n    }\n\n    Chat.log(`Total Armor Value: ${totalArmor}`);\n\n    // Check for low durability items\n    const lowDurabilityItems = [];\n    const allEquipment = [helmet, chestplate, leggings, boots];\n\n    for (const item of allEquipment) {\n        if (!item.isEmpty()) {\n            const durability = item.getMaxDamage() - item.getDamage();\n            const maxDurability = item.getMaxDamage();\n            if (maxDurability > 0 && (durability / maxDurability) < 0.2) {\n                lowDurabilityItems.push(item.getName().getString());\n            }\n        }\n    }\n\n    if (lowDurabilityItems.length > 0) {\n        Chat.actionbar(\"&cWarning: Low durability on \" + lowDurabilityItems.join(\", \"));\n    }\n}\n\nfunction getArmorValue(item) {\n    // This is a simplified armor value calculation\n    const itemId = item.getItemId();\n    if (itemId.includes(\"diamond\")) return 8;\n    if (itemId.includes(\"iron\")) return 6;\n    if (itemId.includes(\"chain\")) return 5;\n    if (itemId.includes(\"golden\")) return 5;\n    if (itemId.includes(\"leather\")) return 3;\n    if (itemId.includes(\"netherite\")) return 8;\n    return 0;\n}\n\n// Run every 5 seconds\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check every 100 ticks (5 seconds at 20 TPS)\n    if (event.tick % 100 === 0) {\n        checkEquipment();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getChestplate",
+      "signature": "getChestplate()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item in the player's chestplate (armor) slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function checkEquipment() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"=== Equipment Status ===\");\n\n    // Check armor\n    const helmet = inventory.getHelmet();\n    const chestplate = inventory.getChestplate();\n    const leggings = inventory.getLeggings();\n    const boots = inventory.getBoots();\n\n    let totalArmor = 0;\n\n    if (!helmet.isEmpty()) {\n        const durability = helmet.getMaxDamage() - helmet.getDamage();\n        const maxDurability = helmet.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Helmet: ${helmet.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(helmet);\n    } else {\n        Chat.log(\"Helmet: None\");\n    }\n\n    if (!chestplate.isEmpty()) {\n        const durability = chestplate.getMaxDamage() - chestplate.getDamage();\n        const maxDurability = chestplate.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Chestplate: ${chestplate.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(chestplate);\n    } else {\n        Chat.log(\"Chestplate: None\");\n    }\n\n    if (!leggings.isEmpty()) {\n        const durability = leggings.getMaxDamage() - leggings.getDamage();\n        const maxDurability = leggings.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Leggings: ${leggings.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(leggings);\n    } else {\n        Chat.log(\"Leggings: None\");\n    }\n\n    if (!boots.isEmpty()) {\n        const durability = boots.getMaxDamage() - boots.getDamage();\n        const maxDurability = boots.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Boots: ${boots.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(boots);\n    } else {\n        Chat.log(\"Boots: None\");\n    }\n\n    // Check offhand\n    const offhand = inventory.getOffhand();\n    if (!offhand.isEmpty()) {\n        Chat.log(`Offhand: ${offhand.getName().getString()} x${offhand.getCount()}`);\n    } else {\n        Chat.log(\"Offhand: Empty\");\n    }\n\n    Chat.log(`Total Armor Value: ${totalArmor}`);\n\n    // Check for low durability items\n    const lowDurabilityItems = [];\n    const allEquipment = [helmet, chestplate, leggings, boots];\n\n    for (const item of allEquipment) {\n        if (!item.isEmpty()) {\n            const durability = item.getMaxDamage() - item.getDamage();\n            const maxDurability = item.getMaxDamage();\n            if (maxDurability > 0 && (durability / maxDurability) < 0.2) {\n                lowDurabilityItems.push(item.getName().getString());\n            }\n        }\n    }\n\n    if (lowDurabilityItems.length > 0) {\n        Chat.actionbar(\"&cWarning: Low durability on \" + lowDurabilityItems.join(\", \"));\n    }\n}\n\nfunction getArmorValue(item) {\n    // This is a simplified armor value calculation\n    const itemId = item.getItemId();\n    if (itemId.includes(\"diamond\")) return 8;\n    if (itemId.includes(\"iron\")) return 6;\n    if (itemId.includes(\"chain\")) return 5;\n    if (itemId.includes(\"golden\")) return 5;\n    if (itemId.includes(\"leather\")) return 3;\n    if (itemId.includes(\"netherite\")) return 8;\n    return 0;\n}\n\n// Run every 5 seconds\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check every 100 ticks (5 seconds at 20 TPS)\n    if (event.tick % 100 === 0) {\n        checkEquipment();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getLeggings",
+      "signature": "getLeggings()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item in the player's leggings (armor) slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function checkEquipment() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"=== Equipment Status ===\");\n\n    // Check armor\n    const helmet = inventory.getHelmet();\n    const chestplate = inventory.getChestplate();\n    const leggings = inventory.getLeggings();\n    const boots = inventory.getBoots();\n\n    let totalArmor = 0;\n\n    if (!helmet.isEmpty()) {\n        const durability = helmet.getMaxDamage() - helmet.getDamage();\n        const maxDurability = helmet.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Helmet: ${helmet.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(helmet);\n    } else {\n        Chat.log(\"Helmet: None\");\n    }\n\n    if (!chestplate.isEmpty()) {\n        const durability = chestplate.getMaxDamage() - chestplate.getDamage();\n        const maxDurability = chestplate.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Chestplate: ${chestplate.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(chestplate);\n    } else {\n        Chat.log(\"Chestplate: None\");\n    }\n\n    if (!leggings.isEmpty()) {\n        const durability = leggings.getMaxDamage() - leggings.getDamage();\n        const maxDurability = leggings.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Leggings: ${leggings.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(leggings);\n    } else {\n        Chat.log(\"Leggings: None\");\n    }\n\n    if (!boots.isEmpty()) {\n        const durability = boots.getMaxDamage() - boots.getDamage();\n        const maxDurability = boots.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Boots: ${boots.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(boots);\n    } else {\n        Chat.log(\"Boots: None\");\n    }\n\n    // Check offhand\n    const offhand = inventory.getOffhand();\n    if (!offhand.isEmpty()) {\n        Chat.log(`Offhand: ${offhand.getName().getString()} x${offhand.getCount()}`);\n    } else {\n        Chat.log(\"Offhand: Empty\");\n    }\n\n    Chat.log(`Total Armor Value: ${totalArmor}`);\n\n    // Check for low durability items\n    const lowDurabilityItems = [];\n    const allEquipment = [helmet, chestplate, leggings, boots];\n\n    for (const item of allEquipment) {\n        if (!item.isEmpty()) {\n            const durability = item.getMaxDamage() - item.getDamage();\n            const maxDurability = item.getMaxDamage();\n            if (maxDurability > 0 && (durability / maxDurability) < 0.2) {\n                lowDurabilityItems.push(item.getName().getString());\n            }\n        }\n    }\n\n    if (lowDurabilityItems.length > 0) {\n        Chat.actionbar(\"&cWarning: Low durability on \" + lowDurabilityItems.join(\", \"));\n    }\n}\n\nfunction getArmorValue(item) {\n    // This is a simplified armor value calculation\n    const itemId = item.getItemId();\n    if (itemId.includes(\"diamond\")) return 8;\n    if (itemId.includes(\"iron\")) return 6;\n    if (itemId.includes(\"chain\")) return 5;\n    if (itemId.includes(\"golden\")) return 5;\n    if (itemId.includes(\"leather\")) return 3;\n    if (itemId.includes(\"netherite\")) return 8;\n    return 0;\n}\n\n// Run every 5 seconds\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check every 100 ticks (5 seconds at 20 TPS)\n    if (event.tick % 100 === 0) {\n        checkEquipment();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getBoots",
+      "signature": "getBoots()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item in the player's boots (armor) slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function checkEquipment() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"=== Equipment Status ===\");\n\n    // Check armor\n    const helmet = inventory.getHelmet();\n    const chestplate = inventory.getChestplate();\n    const leggings = inventory.getLeggings();\n    const boots = inventory.getBoots();\n\n    let totalArmor = 0;\n\n    if (!helmet.isEmpty()) {\n        const durability = helmet.getMaxDamage() - helmet.getDamage();\n        const maxDurability = helmet.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Helmet: ${helmet.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(helmet);\n    } else {\n        Chat.log(\"Helmet: None\");\n    }\n\n    if (!chestplate.isEmpty()) {\n        const durability = chestplate.getMaxDamage() - chestplate.getDamage();\n        const maxDurability = chestplate.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Chestplate: ${chestplate.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(chestplate);\n    } else {\n        Chat.log(\"Chestplate: None\");\n    }\n\n    if (!leggings.isEmpty()) {\n        const durability = leggings.getMaxDamage() - leggings.getDamage();\n        const maxDurability = leggings.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Leggings: ${leggings.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(leggings);\n    } else {\n        Chat.log(\"Leggings: None\");\n    }\n\n    if (!boots.isEmpty()) {\n        const durability = boots.getMaxDamage() - boots.getDamage();\n        const maxDurability = boots.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Boots: ${boots.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(boots);\n    } else {\n        Chat.log(\"Boots: None\");\n    }\n\n    // Check offhand\n    const offhand = inventory.getOffhand();\n    if (!offhand.isEmpty()) {\n        Chat.log(`Offhand: ${offhand.getName().getString()} x${offhand.getCount()}`);\n    } else {\n        Chat.log(\"Offhand: Empty\");\n    }\n\n    Chat.log(`Total Armor Value: ${totalArmor}`);\n\n    // Check for low durability items\n    const lowDurabilityItems = [];\n    const allEquipment = [helmet, chestplate, leggings, boots];\n\n    for (const item of allEquipment) {\n        if (!item.isEmpty()) {\n            const durability = item.getMaxDamage() - item.getDamage();\n            const maxDurability = item.getMaxDamage();\n            if (maxDurability > 0 && (durability / maxDurability) < 0.2) {\n                lowDurabilityItems.push(item.getName().getString());\n            }\n        }\n    }\n\n    if (lowDurabilityItems.length > 0) {\n        Chat.actionbar(\"&cWarning: Low durability on \" + lowDurabilityItems.join(\", \"));\n    }\n}\n\nfunction getArmorValue(item) {\n    // This is a simplified armor value calculation\n    const itemId = item.getItemId();\n    if (itemId.includes(\"diamond\")) return 8;\n    if (itemId.includes(\"iron\")) return 6;\n    if (itemId.includes(\"chain\")) return 5;\n    if (itemId.includes(\"golden\")) return 5;\n    if (itemId.includes(\"leather\")) return 3;\n    if (itemId.includes(\"netherite\")) return 8;\n    return 0;\n}\n\n// Run every 5 seconds\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check every 100 ticks (5 seconds at 20 TPS)\n    if (event.tick % 100 === 0) {\n        checkEquipment();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getOffhand",
+      "signature": "getOffhand()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item in the player's offhand slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function checkEquipment() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"=== Equipment Status ===\");\n\n    // Check armor\n    const helmet = inventory.getHelmet();\n    const chestplate = inventory.getChestplate();\n    const leggings = inventory.getLeggings();\n    const boots = inventory.getBoots();\n\n    let totalArmor = 0;\n\n    if (!helmet.isEmpty()) {\n        const durability = helmet.getMaxDamage() - helmet.getDamage();\n        const maxDurability = helmet.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Helmet: ${helmet.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(helmet);\n    } else {\n        Chat.log(\"Helmet: None\");\n    }\n\n    if (!chestplate.isEmpty()) {\n        const durability = chestplate.getMaxDamage() - chestplate.getDamage();\n        const maxDurability = chestplate.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Chestplate: ${chestplate.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(chestplate);\n    } else {\n        Chat.log(\"Chestplate: None\");\n    }\n\n    if (!leggings.isEmpty()) {\n        const durability = leggings.getMaxDamage() - leggings.getDamage();\n        const maxDurability = leggings.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Leggings: ${leggings.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(leggings);\n    } else {\n        Chat.log(\"Leggings: None\");\n    }\n\n    if (!boots.isEmpty()) {\n        const durability = boots.getMaxDamage() - boots.getDamage();\n        const maxDurability = boots.getMaxDamage();\n        const durabilityPercent = maxDurability > 0 ? (durability / maxDurability * 100).toFixed(1) : 100;\n\n        Chat.log(`Boots: ${boots.getName().getString()} (${durabilityPercent}% durability)`);\n        totalArmor += getArmorValue(boots);\n    } else {\n        Chat.log(\"Boots: None\");\n    }\n\n    // Check offhand\n    const offhand = inventory.getOffhand();\n    if (!offhand.isEmpty()) {\n        Chat.log(`Offhand: ${offhand.getName().getString()} x${offhand.getCount()}`);\n    } else {\n        Chat.log(\"Offhand: Empty\");\n    }\n\n    Chat.log(`Total Armor Value: ${totalArmor}`);\n\n    // Check for low durability items\n    const lowDurabilityItems = [];\n    const allEquipment = [helmet, chestplate, leggings, boots];\n\n    for (const item of allEquipment) {\n        if (!item.isEmpty()) {\n            const durability = item.getMaxDamage() - item.getDamage();\n            const maxDurability = item.getMaxDamage();\n            if (maxDurability > 0 && (durability / maxDurability) < 0.2) {\n                lowDurabilityItems.push(item.getName().getString());\n            }\n        }\n    }\n\n    if (lowDurabilityItems.length > 0) {\n        Chat.actionbar(\"&cWarning: Low durability on \" + lowDurabilityItems.join(\", \"));\n    }\n}\n\nfunction getArmorValue(item) {\n    // This is a simplified armor value calculation\n    const itemId = item.getItemId();\n    if (itemId.includes(\"diamond\")) return 8;\n    if (itemId.includes(\"iron\")) return 6;\n    if (itemId.includes(\"chain\")) return 5;\n    if (itemId.includes(\"golden\")) return 5;\n    if (itemId.includes(\"leather\")) return 3;\n    if (itemId.includes(\"netherite\")) return 8;\n    return 0;\n}\n\n// Run every 5 seconds\nJsMacros.on(\"Tick\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check every 100 ticks (5 seconds at 20 TPS)\n    if (event.tick % 100 === 0) {\n        checkEquipment();\n    }\n}));",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get slot under mouse\n    const slotUnderMouse = inventory.getSlotUnderMouse();\n    if (slotUnderMouse >= 0) {\n        const item = inventory.getSlot(slotUnderMouse);\n        if (!item.isEmpty()) {\n            Chat.log(`Mouse over: ${item.getName().getString()} x${item.getCount()}`);\n        }\n\n        // Get location information\n        const location = inventory.getLocation(slotUnderMouse);\n        Chat.log(`Slot location: ${location}`);\n\n        // Check if it's equipment\n        if ([\"helmet\", \"chestplate\", \"leggings\", \"boots\", \"offhand\"].includes(location)) {\n            Chat.log(\"This is an equipment slot\");\n        }\n    }\n\n    // Get held item (on cursor)\n    const heldItem = inventory.getHeld();\n    if (!heldItem.isEmpty()) {\n        Chat.log(`Holding: ${heldItem.getName().getString()} x${heldItem.getCount()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isInHotbar",
+      "signature": "isInHotbar(slotIndex: number)",
+      "returnType": "boolean",
+      "description": "Checks if a given slot index is part of the player's hotbar.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The index of the slot."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst slotUnderMouse = inventory.getSlotUnderMouse();\nif (slotUnderMouse >= 0) {\n    const location = inventory.getLocation(slotUnderMouse);\n    const item = inventory.getSlot(slotUnderMouse);\n\n    Chat.log(`Slot ${slotUnderMouse} (${location}): ${item.getName().getString()}`);\n\n    // Check if it's a hotbar slot\n    if (inventory.isInHotbar(slotUnderMouse)) {\n        const hotbarPos = slotUnderMouse >= 36 ? slotUnderMouse - 36 : slotUnderMouse;\n        Chat.log(`This is hotbar slot ${hotbarPos + 1}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput(x: number, y: number)",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack in the crafting grid at the specified (x, y) coordinates. (2x2 grid for player inventory)",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The X coordinate in the 2x2 crafting grid (0 or 1)."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The Y coordinate in the 2x2 crafting grid (0 or 1)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "function showCraftingPossibilities() {\n    const inventory = Player.getInventory();\n    if (!inventory) {\n        Chat.log(\"No inventory open!\");\n        return;\n    }\n\n    Chat.log(\"=== Crafting Assistant ===\");\n\n    // Check current crafting grid\n    const craftingGrid = inventory.getInput();\n    const output = inventory.getOutput();\n\n    Chat.log(\"Current Crafting Grid:\");\n    let hasItems = false;\n\n    for (let x = 0; x < craftingGrid.length; x++) {\n        for (let y = 0; y < craftingGrid[x].length; y++) {\n            const item = craftingGrid[x][y];\n            if (!item.isEmpty()) {\n                Chat.log(`  [${x},${y}]: ${item.getItemId()} x${item.getCount()}`);\n                hasItems = true;\n            }\n        }\n    }\n\n    if (!hasItems) {\n        Chat.log(\"  (empty)\");\n    }\n\n    if (!output.isEmpty()) {\n        Chat.log(`Can craft: ${output.getName().getString()} x${output.getCount()}`);\n    } else {\n        Chat.log(\"No valid recipe\");\n    }\n\n    // Show craftable recipes\n    try {\n        const craftableRecipes = inventory.getCraftableRecipes();\n        if (craftableRecipes.length > 0) {\n            Chat.log(`\\nYou can craft ${craftableRecipes.length} items:`);\n\n            for (let i = 0; i < Math.min(craftableRecipes.length, 10); i++) {\n                const recipe = craftableRecipes[i];\n                const recipeOutput = recipe.getOutput();\n                Chat.log(`- ${recipeOutput.getName().getString()} x${recipeOutput.getCount()}`);\n            }r\n\n            if (craftableRecipes.length > 10) {\n                Chat.log(`... and ${craftableRecipes.length - 10} more`);\n            }\n        } else {\n            Chat.log(\"No craftable recipes with current materials\");\n        }\n    } catch (e) {\n        Chat.log(`Error getting recipes: ${e.message}`);\n    }\n}\n\n// Quick craft function\nfunction quickCraft(itemId) {\n    const inventory = Player.getInventory();\n    if (!inventory) return false;\n\n    try {\n        const recipes = inventory.getCraftableRecipes();\n        for (const recipe of recipes) {\n            const output = recipe.getOutput();\n            if (output.getItemId() === itemId) {\n                // This is a simplified crafting approach\n                // In practice, you'd need to properly arrange the crafting grid\n                Chat.log(`Found recipe for ${output.getName().getString()}`);\n                return true;\n            }\n        }\n    } catch (e) {\n        Chat.log(`Error crafting: ${e.message}`);\n    }\n\n    return false;\n}\n\n// Example usage\nJsMacros.on(\"Key\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.key === \"key.keyboard.e\" && event.action === 1) {\n        // Wait for inventory to open\n        JsMacros.waitForEvent(\"ScreenOpen\");\n        JsMacros.waitForEvent(\"Tick\");\n        showCraftingPossibilities();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack in the crafting output slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function showCraftingPossibilities() {\n    const inventory = Player.getInventory();\n    if (!inventory) {\n        Chat.log(\"No inventory open!\");\n        return;\n    }\n\n    Chat.log(\"=== Crafting Assistant ===\");\n\n    // Check current crafting grid\n    const craftingGrid = inventory.getInput();\n    const output = inventory.getOutput();\n\n    Chat.log(\"Current Crafting Grid:\");\n    let hasItems = false;\n\n    for (let x = 0; x < craftingGrid.length; x++) {\n        for (let y = 0; y < craftingGrid[x].length; y++) {\n            const item = craftingGrid[x][y];\n            if (!item.isEmpty()) {\n                Chat.log(`  [${x},${y}]: ${item.getItemId()} x${item.getCount()}`);\n                hasItems = true;\n            }\n        }\n    }\n\n    if (!hasItems) {\n        Chat.log(\"  (empty)\");\n    }\n\n    if (!output.isEmpty()) {\n        Chat.log(`Can craft: ${output.getName().getString()} x${output.getCount()}`);\n    } else {\n        Chat.log(\"No valid recipe\");\n    }\n\n    // Show craftable recipes\n    try {\n        const craftableRecipes = inventory.getCraftableRecipes();\n        if (craftableRecipes.length > 0) {\n            Chat.log(`\\nYou can craft ${craftableRecipes.length} items:`);\n\n            for (let i = 0; i < Math.min(craftableRecipes.length, 10); i++) {\n                const recipe = craftableRecipes[i];\n                const recipeOutput = recipe.getOutput();\n                Chat.log(`- ${recipeOutput.getName().getString()} x${recipeOutput.getCount()}`);\n            }\n\n            if (craftableRecipes.length > 10) {\n                Chat.log(`... and ${craftableRecipes.length - 10} more`);\n            }\n        } else {\n            Chat.log(\"No craftable recipes with current materials\");\n        }\n    } catch (e) {\n        Chat.log(`Error getting recipes: ${e.message}`);\n    }\n}\n\n// Quick craft function\nfunction quickCraft(itemId) {\n    const inventory = Player.getInventory();\n    if (!inventory) return false;\n\n    try {\n        const recipes = inventory.getCraftableRecipes();\n        for (const recipe of recipes) {\n            const output = recipe.getOutput();\n            if (output.getItemId() === itemId) {\n                // This is a simplified crafting approach\n                // In practice, you'd need to properly arrange the crafting grid\n                Chat.log(`Found recipe for ${output.getName().getString()}`);\n                return true;\n            }\n        }\n    } catch (e) {\n        Chat.log(`Error crafting: ${e.message}`);\n    }\n\n    return false;\n}\n\n// Example usage\nJsMacros.on(\"Key\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.key === \"key.keyboard.e\" && event.action === 1) {\n        // Wait for inventory to open\n        JsMacros.waitForEvent(\"ScreenOpen\");\n        JsMacros.waitForEvent(\"Tick\");\n        showCraftingPossibilities();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput()",
+      "returnType": "ItemStackHelper[][]",
+      "description": "Gets the entire 2x2 crafting grid as a 2D array of item stacks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function showCraftingPossibilities() {\n    const inventory = Player.getInventory();\n    if (!inventory) {\n        Chat.log(\"No inventory open!\");\n        return;\n    }\n\n    Chat.log(\"=== Crafting Assistant ===\");\n\n    // Check current crafting grid\n    const craftingGrid = inventory.getInput();\n    const output = inventory.getOutput();\n\n    Chat.log(\"Current Crafting Grid:\");\n    let hasItems = false;\n\n    for (let x = 0; x < craftingGrid.length; x++) {\n        for (let y = 0; y < craftingGrid[x].length; y++) {\n            const item = craftingGrid[x][y];\n            if (!item.isEmpty()) {\n                Chat.log(`  [${x},${y}]: ${item.getItemId()} x${item.getCount()}`);\n                hasItems = true;\n            }\n        }\n    }\n\n    if (!hasItems) {\n        Chat.log(\"  (empty)\");\n    }\n\n    if (!output.isEmpty()) {\n        Chat.log(`Can craft: ${output.getName().getString()} x${output.getCount()}`);\n    } else {\n        Chat.log(\"No valid recipe\");\n    }\n\n    // Show craftable recipes\n    try {\n        const craftableRecipes = inventory.getCraftableRecipes();\n        if (craftableRecipes.length > 0) {\n            Chat.log(`\\nYou can craft ${craftableRecipes.length} items:`);\n\n            for (let i = 0; i < Math.min(craftableRecipes.length, 10); i++) {\n                const recipe = craftableRecipes[i];\n                const recipeOutput = recipe.getOutput();\n                Chat.log(`- ${recipeOutput.getName().getString()} x${recipeOutput.getCount()}`);\n            }\n\n            if (craftableRecipes.length > 10) {\n                Chat.log(`... and ${craftableRecipes.length - 10} more`);\n            }\n        } else {\n            Chat.log(\"No craftable recipes with current materials\");\n        }\n    } catch (e) {\n        Chat.log(`Error getting recipes: ${e.message}`);\n    }\n}\n\n// Quick craft function\nfunction quickCraft(itemId) {\n    const inventory = Player.getInventory();\n    if (!inventory) return false;\n\n    try {\n        const recipes = inventory.getCraftableRecipes();\n        for (const recipe of recipes) {\n            const output = recipe.getOutput();\n            if (output.getItemId() === itemId) {\n                // This is a simplified crafting approach\n                // In practice, you'd need to properly arrange the crafting grid\n                Chat.log(`Found recipe for ${output.getName().getString()}`);\n                return true;\n            }\n        }\n    } catch (e) {\n        Chat.log(`Error crafting: ${e.message}`);\n    }\n\n    return false;\n}\n\n// Example usage\nJsMacros.on(\"Key\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.key === \"key.keyboard.e\" && event.action === 1) {\n        // Wait for inventory to open\n        JsMacros.waitForEvent(\"ScreenOpen\");\n        JsMacros.waitForEvent(\"Tick\");\n        showCraftingPossibilities();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getCraftingWidth",
+      "signature": "getCraftingWidth()",
+      "returnType": "number",
+      "description": "Returns the width of the crafting grid (2 for player inventory).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCraftingHeight",
+      "signature": "getCraftingHeight()",
+      "returnType": "number",
+      "description": "Returns the height of the crafting grid (2 for player inventory).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCraftingSlotCount",
+      "signature": "getCraftingSlotCount()",
+      "returnType": "number",
+      "description": "Returns the total number of input slots in the crafting grid (4 for player inventory).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getInputSize",
+      "signature": "getInputSize()",
+      "returnType": "number",
+      "description": "Returns the total number of input slots in the crafting grid (4 for player inventory). Alias for getCraftingSlotCount().",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCategory",
+      "signature": "getCategory()",
+      "returnType": "string",
+      "description": "Gets the category of recipes currently displayed in the recipe book. Inherited from RecipeInventory.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCraftableRecipes",
+      "signature": "getCraftableRecipes()",
+      "returnType": "RecipeHelper[]",
+      "description": "Returns a list of `RecipeHelper` objects for recipes that can currently be crafted with items in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function showCraftingPossibilities() {\n    const inventory = Player.getInventory();\n    if (!inventory) {\n        Chat.log(\"No inventory open!\");\n        return;\n    }\n\n    Chat.log(\"=== Crafting Assistant ===\");\n\n    // Check current crafting grid\n    const craftingGrid = inventory.getInput();\n    const output = inventory.getOutput();\n\n    Chat.log(\"Current Crafting Grid:\");\n    let hasItems = false;\n\n    for (let x = 0; x < craftingGrid.length; x++) {\n        for (let y = 0; y < craftingGrid[x].length; y++) {\n            const item = craftingGrid[x][y];\n            if (!item.isEmpty()) {\n                Chat.log(`  [${x},${y}]: ${item.getItemId()} x${item.getCount()}`);\n                hasItems = true;\n            }\n        }\n    }\n\n    if (!hasItems) {\n        Chat.log(\"  (empty)\");\n    }\n\n    if (!output.isEmpty()) {\n        Chat.log(`Can craft: ${output.getName().getString()} x${output.getCount()}`);\n    } else {\n        Chat.log(\"No valid recipe\");\n    }\n\n    // Show craftable recipes\n    try {\n        const craftableRecipes = inventory.getCraftableRecipes();\n        if (craftableRecipes.length > 0) {\n            Chat.log(`\\nYou can craft ${craftableRecipes.length} items:`);\n\n            for (let i = 0; i < Math.min(craftableRecipes.length, 10); i++) {\n                const recipe = craftableRecipes[i];\n                const recipeOutput = recipe.getOutput();\n                Chat.log(`- ${recipeOutput.getName().getString()} x${recipeOutput.getCount()}`);\n            }\n\n            if (craftableRecipes.length > 10) {\n                Chat.log(`... and ${craftableRecipes.length - 10} more`);\n            }\n        } else {\n            Chat.log(\"No craftable recipes with current materials\");\n        }\n    } catch (e) {\n        Chat.log(`Error getting recipes: ${e.message}`);\n    }\n}\n\n// Quick craft function\nfunction quickCraft(itemId) {\n    const inventory = Player.getInventory();\n    if (!inventory) return false;\n\n    try {\n        const recipes = inventory.getCraftableRecipes();\n        for (const recipe of recipes) {\n            const output = recipe.getOutput();\n            if (output.getItemId() === itemId) {\n                // This is a simplified crafting approach\n                // In practice, you'd need to properly arrange the crafting grid\n                Chat.log(`Found recipe for ${output.getName().getString()}`);\n                return true;\n            }\n        }\n    } catch (e) {\n        Chat.log(`Error crafting: ${e.message}`);\n    }\n\n    return false;\n}\n\n// Example usage\nJsMacros.on(\"Key\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.key === \"key.keyboard.e\" && event.action === 1) {\n        // Wait for inventory to open\n        JsMacros.waitForEvent(\"ScreenOpen\");\n        JsMacros.waitForEvent(\"Tick\");\n        showCraftingPossibilities();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getRecipes",
+      "signature": "getRecipes(craftable?: boolean)",
+      "returnType": "RecipeHelper[]",
+      "description": "Returns a list of all known recipes, optionally filtered to only show craftable ones. Inherited from RecipeInventory.",
+      "parameters": [
+        {
+          "name": "craftable",
+          "type": "boolean",
+          "description": "If true, only returns recipes that can be crafted with current inventory items.",
+          "optional": true
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isRecipeBookOpened",
+      "signature": "isRecipeBookOpened()",
+      "returnType": "boolean",
+      "description": "Checks if the recipe book is currently open within the inventory screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toggleRecipeBook",
+      "signature": "toggleRecipeBook()",
+      "returnType": "void",
+      "description": "Toggles the visibility of the recipe book.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setRecipeBook",
+      "signature": "setRecipeBook(open: boolean)",
+      "returnType": "void",
+      "description": "Sets the visibility of the recipe book.",
+      "parameters": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "description": "True to open the recipe book, false to close it."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "is",
+      "signature": "is(type: string)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory is of a specific type (e.g., 'Survival Inventory'). Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "string",
+          "description": "The type string to check against."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory && inventory.is(\"Survival Inventory\")) {\n    Chat.log(\"Player inventory is open\");\n\n    // Alternative check\n    const type = inventory.getType();\n    Chat.log(`Inventory type: ${type}`);\n}"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "string",
+      "description": "Returns the string identifier for the inventory's type. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory && inventory.is(\"Survival Inventory\")) {\n    Chat.log(\"Player inventory is open\");\n\n    // Alternative check\n    const type = inventory.getType();\n    Chat.log(`Inventory type: ${type}`);\n}",
+        "function organizePlayerInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Survival Inventory\") {\n        Chat.log(\"Please open your inventory first!\");\n        return;\n    }\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Define item categories\n    const categories = {\n        tools: [\"sword\", \"pickaxe\", \"axe\", \"shovel\", \"hoe\"],\n        weapons: [\"bow\", \"crossbow\", \"trident\", \"spear\"],\n        armor: [\"helmet\", \"chestplate\", \"leggings\", \"boots\"],\n        food: [\"bread\", \"apple\", \"carrot\", \"potato\", \"beef\", \"pork\", \"chicken\", \"fish\"],\n        blocks: [\"planks\", \"stone\", \"dirt\", \"cobblestone\", \"wood\", \"log\"],\n        materials: [\"ingot\", \"nugget\", \"gem\", \"crystal\", \"dust\"],\n        redstone: [\"redstone\", \"repeater\", \"comparator\", \"piston\", \"observer\", \"torch\"],\n        misc: []\n    };\n\n    // Get all items and categorize them\n    const items = [];\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (!item.isEmpty()) {\n            const itemId = item.getItemId();\n            let category = \"misc\";\n\n            for (const [cat, keywords] of Object.entries(categories)) {\n                if (cat === \"misc\") continue;\n\n                for (const keyword of keywords) {\n                    if (itemId.includes(keyword)) {\n                        category = cat;\n                        break;\n                    }\n                }\n                if (category !== \"misc\") break;\n            }\n\n            items.push({ slot, item, category, count: item.getCount() });\n        }\n    }\n\n    Chat.log(`Found ${items.length} item stacks to organize`);\n\n    // Report current organization\n    const categoryCount = {};\n    for (const item of items) {\n        categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;\n    }\n\n    Chat.log(\"Current inventory composition:\");\n    for (const [category, count] of Object.entries(categoryCount)) {\n        Chat.log(`- ${category}: ${count} stacks`);\n    }\n\n    // Find best tools and move to hotbar\n    organizeHotbar(inventory, items);\n\n    // Suggest organization\n    suggestOrganization(items);\n}\n\nfunction organizeHotbar(inventory, items) {\n    Chat.log(\"Organizing hotbar...\");\n\n    const toolPriority = {\n        \"diamond\": 3,\n        \"iron\": 2,\n        \"stone\": 1,\n        \"wood\": 0\n    };\n\n    const bestTools = {};\n\n    // Find best tools\n    for (const item of items) {\n        const itemId = item.item.getItemId();\n\n        let toolType = null;\n        let priority = 0;\n\n        if (itemId.includes(\"pickaxe\")) {\n            toolType = \"pickaxe\";\n        } else if (itemId.includes(\"axe\")) {\n            toolType = \"axe\";\n        } else if (itemId.includes(\"shovel\")) {\n            toolType = \"shovel\";\n        } else if (itemId.includes(\"sword\")) {\n            toolType = \"sword\";\n        }\n\n        if (toolType) {\n            for (const [material, prio] of Object.entries(toolPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (!bestTools[toolType] || bestTools[toolType].priority < priority) {\n                bestTools[toolType] = { ...item, priority };\n            }\n        }\n    }\n\n    // Move best tools to hotbar\n    const hotbarSlots = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Hotbar slots\n    const toolOrder = [\"pickaxe\", \"axe\", \"shovel\", \"sword\"];\n\n    let slotIndex = 0;\n    for (const toolType of toolOrder) {\n        if (bestTools[toolType] && slotIndex < hotbarSlots.length) {\n            const targetSlot = hotbarSlots[slotIndex];\n            if (bestTools[toolType].slot !== targetSlot) {\n                // Swap to hotbar\n                inventory.swapHotbar(bestTools[toolType].slot, slotIndex);\n                Chat.log(`Moved ${bestTools[toolType].item.getName().getString()} to hotbar slot ${slotIndex + 1}`);\n            }\n            slotIndex++;\n        }\n    }\n}\n\nfunction suggestOrganization(items) {\n    Chat.log(\"\\nSuggested organization:\");\n\n    // Group by category\n    const grouped = {};\n    for (const item of items) {\n        if (!grouped[item.category]) {\n            grouped[item.category] = [];\n        }\n        grouped[item.category].push(item);\n    }\n\n    for (const [category, categoryItems] of Object.entries(grouped)) {\n        if (categoryItems.length > 0) {\n            Chat.log(`\\n${category.toUpperCase()}:`);\n\n            // Sort by count (descending)\n            categoryItems.sort((a, b) => b.count - a.count);\n\n            for (const item of categoryItems.slice(0, 5)) {\n                Chat.log(`- ${item.item.getName().getString()} x${item.count} (slot ${item.slot})`);\n            }\n\n            if (categoryItems.length > 5) {\n                Chat.log(`... and ${categoryItems.length - 5} more`);\n            }\n        }\n    }\n}\n\n// Auto-organize when inventory opens\nJsMacros.on(\"ScreenOpen\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.screenName === \"Survival Inventory\") {\n        // Wait for inventory to fully load\n        JsMacros.waitForEvent(\"Tick\");\n        organizePlayerInventory();\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getTotalSlots",
+      "signature": "getTotalSlots()",
+      "returnType": "number",
+      "description": "Returns the total number of slots in the inventory, including player inventory slots, armor, and offhand. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    const totalSlots = inventory.getTotalSlots();\n    Chat.log(`Total slots: ${totalSlots}`);\n\n    // Get slot mappings\n    const slotMap = inventory.getMap();\n    Chat.log(\"Slot sections:\");\n    for (const [section, slots] of Object.entries(slotMap)) {\n        Chat.log(`- ${section}: ${slots.length} slots (${slots.join(\", \")})`);\n    }\n\n    // Get container title\n    const title = inventory.getContainerTitle();\n    Chat.log(`Inventory title: ${title}`);\n}"
+      ]
+    },
+    {
+      "name": "getMap",
+      "signature": "getMap()",
+      "returnType": "Map<string, number[]>",
+      "description": "Returns a map detailing the slot indices for different sections of the inventory (e.g., 'hotbar', 'main', 'armor'). Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    const totalSlots = inventory.getTotalSlots();\n    Chat.log(`Total slots: ${totalSlots}`);\n\n    // Get slot mappings\n    const slotMap = inventory.getMap();\n    Chat.log(\"Slot sections:\");\n    for (const [section, slots] of Object.entries(slotMap)) {\n        Chat.log(`- ${section}: ${slots.length} slots (${slots.join(\", \")})`);\n    }\n\n    // Get container title\n    const title = inventory.getContainerTitle();\n    Chat.log(`Inventory title: ${title}`);\n}"
+      ]
+    },
+    {
+      "name": "getContainerTitle",
+      "signature": "getContainerTitle()",
+      "returnType": "string",
+      "description": "Returns the localized title of the inventory container (e.g., 'Inventory'). Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    const totalSlots = inventory.getTotalSlots();\n    Chat.log(`Total slots: ${totalSlots}`);\n\n    // Get slot mappings\n    const slotMap = inventory.getMap();\n    Chat.log(\"Slot sections:\");\n    for (const [section, slots] of Object.entries(slotMap)) {\n        Chat.log(`- ${section}: ${slots.length} slots (${slots.join(\", \")})`);\n    }\n\n    // Get container title\n    const title = inventory.getContainerTitle();\n    Chat.log(`Inventory title: ${title}`);\n}"
+      ]
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(index: number)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the `ItemStackHelper` for a specific slot by its global index. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "number",
+          "description": "The global index of the slot."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Access hotbar slots (0-8 or 36-44)\n    for (let i = 0; i < 9; i++) {\n        const hotbarSlot = inventory.getSlot(i);\n        if (!hotbarSlot.isEmpty()) {\n            Chat.log(`Hotbar ${i}: ${hotbarSlot.getName().getString()}`);\n        }\n    }\n\n    // Access main inventory slots (9-35)\n    const mainSlots = inventory.getSlots(\"main\");\n    Chat.log(`Main inventory has ${mainSlots.length} slots`);\n\n    // Access armor slots\n    const armorSlots = inventory.getSlots(\"helmet\", \"chestplate\", \"leggings\", \"boots\");\n    for (const slot of armorSlots) {\n        const item = inventory.getSlot(slot);\n        const location = inventory.getLocation(slot);\n        if (!item.isEmpty()) {\n            Chat.log(`${location}: ${item.getName().getString()}`);\n        }\n    }\n}",
+        "const inventory = Player.getInventory();\nconst slotUnderMouse = inventory.getSlotUnderMouse();\nif (slotUnderMouse >= 0) {\n    const location = inventory.getLocation(slotUnderMouse);\n    const item = inventory.getSlot(slotUnderMouse);\n\n    Chat.log(`Slot ${slotUnderMouse} (${location}): ${item.getName().getString()}`);\n\n    // Check if it's a hotbar slot\n    if (inventory.isInHotbar(slotUnderMouse)) {\n        const hotbarPos = slotUnderMouse >= 36 ? slotUnderMouse - 36 : slotUnderMouse;\n        Chat.log(`This is hotbar slot ${hotbarPos + 1}`);\n    }\n}",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Find all diamond locations\n    const diamondSlots = inventory.findItem(\"minecraft:diamond\");\n    if (diamondSlots.length > 0) {\n        Chat.log(`Found diamonds in slots: ${diamondSlots.join(\", \")}`);\n\n        // Get total diamond count\n        let totalDiamonds = 0;\n        for (const slot of diamondSlots) {\n            totalDiamonds += inventory.getSlot(slot).getCount();\n        }\n        Chat.log(`Total diamonds: ${totalDiamonds}`);\n    }\n\n    // Get item counts for all items\n    const itemCounts = inventory.getItemCount();\n    Chat.log(\"Item summary:\");\n    for (const [itemId, count] of Object.entries(itemCounts)) {\n        if (count > 0) {\n            Chat.log(`- ${itemId}: ${count}`);\n        }\n    }\n}",
+        "function organizeInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Move items to appropriate sections\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (item.isEmpty()) continue;\n\n        const itemId = item.getItemId();\n\n        // Move tools to hotbar\n        if (isTool(itemId)) {\n            const freeHotbar = inventory.findFreeHotbarSlot();\n            if (freeHotbar !== -1 && !inventory.isInHotbar(slot)) {\n                inventory.swapHotbar(slot, freeHotbar);\n                Chat.log(`Moved ${item.getName().getString()} to hotbar`);\n            }\n        }\n\n        // Small delay to prevent overwhelming\n        JsMacros.waitForEvent(\"Tick\");\n    }\n\n    Chat.log(\"Organization complete!\");\n}\n\nfunction isTool(itemId) {\n    return itemId.includes(\"sword\") ||\n           itemId.includes(\"pickaxe\") ||\n           itemId.includes(\"axe\") ||\n           itemId.includes(\"shovel\") ||\n           itemId.includes(\"hoe\");\n}",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get currently selected hotbar slot\n    const currentSlot = inventory.getSelectedHotbarSlotIndex();\n    Chat.log(`Selected hotbar slot: ${currentSlot + 1}`);\n\n    // Change selected hotbar slot\n    inventory.setSelectedHotbarSlotIndex(2); // Select slot 3\n    Chat.log(\"Switched to hotbar slot 3\");\n\n    // Quick select based on item type\n    selectBestTool();\n}\n\nfunction selectBestTool() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const player = Player.getPlayer();\n    const lookingAt = player.rayTraceBlock(5);\n\n    if (!lookingAt || !lookingAt.block) return;\n\n    const blockId = lookingAt.block.getBlockState().getBlock().getTranslationKey();\n\n    let toolType = null;\n    if (blockId.includes(\"stone\") || blockId.includes(\"ore\")) {\n        toolType = \"pickaxe\";\n    } else if (blockId.includes(\"wood\") || blockId.includes(\"log\")) {\n        toolType = \"axe\";\n    } else if (blockId.includes(\"dirt\") || blockId.includes(\"grass\") || blockId.includes(\"sand\")) {\n        toolType = \"shovel\";\n    }\n\n    if (toolType) {\n        const hotbarSlots = inventory.getSlots(\"hotbar\");\n        for (let i = 0; i < hotbarSlots.length; i++) {\n            const item = inventory.getSlot(hotbarSlots[i]);\n            if (!item.isEmpty() && item.getItemId().includes(toolType)) {\n                inventory.setSelectedHotbarSlotIndex(i);\n                Chat.log(`Selected ${item.getName().getString()}`);\n                break;\n            }\n        }\n    }\n}",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get slot under mouse\n    const slotUnderMouse = inventory.getSlotUnderMouse();\n    if (slotUnderMouse >= 0) {\n        const item = inventory.getSlot(slotUnderMouse);\n        if (!item.isEmpty()) {\n            Chat.log(`Mouse over: ${item.getName().getString()} x${item.getCount()}`);\n        }\n\n        // Get location information\n        const location = inventory.getLocation(slotUnderMouse);\n        Chat.log(`Slot location: ${location}`);\n\n        // Check if it's equipment\n        if ([\"helmet\", \"chestplate\", \"leggings\", \"boots\", \"offhand\"].includes(location)) {\n            Chat.log(\"This is an equipment slot\");\n        }\n    }\n\n    // Get held item (on cursor)\n    const heldItem = inventory.getHeld();\n    if (!heldItem.isEmpty()) {\n        Chat.log(`Holding: ${heldItem.getName().getString()} x${heldItem.getCount()}`);\n    }\n}",
+        "function organizePlayerInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Survival Inventory\") {\n        Chat.log(\"Please open your inventory first!\");\n        return;\n    }\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Define item categories\n    const categories = {\n        tools: [\"sword\", \"pickaxe\", \"axe\", \"shovel\", \"hoe\"],\n        weapons: [\"bow\", \"crossbow\", \"trident\", \"spear\"],\n        armor: [\"helmet\", \"chestplate\", \"leggings\", \"boots\"],\n        food: [\"bread\", \"apple\", \"carrot\", \"potato\", \"beef\", \"pork\", \"chicken\", \"fish\"],\n        blocks: [\"planks\", \"stone\", \"dirt\", \"cobblestone\", \"wood\", \"log\"],\n        materials: [\"ingot\", \"nugget\", \"gem\", \"crystal\", \"dust\"],\n        redstone: [\"redstone\", \"repeater\", \"comparator\", \"piston\", \"observer\", \"torch\"],\n        misc: []\n    };\n\n    // Get all items and categorize them\n    const items = [];\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (!item.isEmpty()) {\n            const itemId = item.getItemId();\n            let category = \"misc\";\n\n            for (const [cat, keywords] of Object.entries(categories)) {\n                if (cat === \"misc\") continue;\n\n                for (const keyword of keywords) {\n                    if (itemId.includes(keyword)) {\n                        category = cat;\n                        break;\n                    }\n                }\n                if (category !== \"misc\") break;\n            }\n\n            items.push({ slot, item, category, count: item.getCount() });\n        }\n    }\n\n    Chat.log(`Found ${items.length} item stacks to organize`);\n\n    // Report current organization\n    const categoryCount = {};\n    for (const item of items) {\n        categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;\n    }\n\n    Chat.log(\"Current inventory composition:\");\n    for (const [category, count] of Object.entries(categoryCount)) {\n        Chat.log(`- ${category}: ${count} stacks`);\n    }\n\n    // Find best tools and move to hotbar\n    organizeHotbar(inventory, items);\n\n    // Suggest organization\n    suggestOrganization(items);\n}\n\nfunction organizeHotbar(inventory, items) {\n    Chat.log(\"Organizing hotbar...\");\n\n    const toolPriority = {\n        \"diamond\": 3,\n        \"iron\": 2,\n        \"stone\": 1,\n        \"wood\": 0\n    };\n\n    const bestTools = {};\n\n    // Find best tools\n    for (const item of items) {\n        const itemId = item.item.getItemId();\n\n        let toolType = null;\n        let priority = 0;\n\n        if (itemId.includes(\"pickaxe\")) {\n            toolType = \"pickaxe\";\n        } else if (itemId.includes(\"axe\")) {\n            toolType = \"axe\";\n        } else if (itemId.includes(\"shovel\")) {\n            toolType = \"shovel\";\n        } else if (itemId.includes(\"sword\")) {\n            toolType = \"sword\";\n        }\n\n        if (toolType) {\n            for (const [material, prio] of Object.entries(toolPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (!bestTools[toolType] || bestTools[toolType].priority < priority) {\n                bestTools[toolType] = { ...item, priority };\n            }\n        }\n    }\n\n    // Move best tools to hotbar\n    const hotbarSlots = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Hotbar slots\n    const toolOrder = [\"pickaxe\", \"axe\", \"shovel\", \"sword\"];\n\n    let slotIndex = 0;\n    for (const toolType of toolOrder) {\n        if (bestTools[toolType] && slotIndex < hotbarSlots.length) {\n            const targetSlot = hotbarSlots[slotIndex];\n            if (bestTools[toolType].slot !== targetSlot) {\n                // Swap to hotbar\n                inventory.swapHotbar(bestTools[toolType].slot, slotIndex);\n                Chat.log(`Moved ${bestTools[toolType].item.getName().getString()} to hotbar slot ${slotIndex + 1}`);\n            }\n            slotIndex++;\n        }\n    }\n}\n\nfunction suggestOrganization(items) {\n    Chat.log(\"\\nSuggested organization:\");\n\n    // Group by category\n    const grouped = {};\n    for (const item of items) {\n        if (!grouped[item.category]) {\n            grouped[item.category] = [];\n        }\n        grouped[item.category].push(item);\n    }\n\n    for (const [category, categoryItems] of Object.entries(grouped)) {\n        if (categoryItems.length > 0) {\n            Chat.log(`\\n${category.toUpperCase()}:`);\n\n            // Sort by count (descending)\n            categoryItems.sort((a, b) => b.count - a.count);\n\n            for (const item of categoryItems.slice(0, 5)) {\n                Chat.log(`- ${item.item.getName().getString()} x${item.count} (slot ${item.slot})`);\n            }\n\n            if (categoryItems.length > 5) {\n                Chat.log(`... and ${categoryItems.length - 5} more`);\n            }\n        }\n    }\n}\n\n// Auto-organize when inventory opens\nJsMacros.on(\"ScreenOpen\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.screenName === \"Survival Inventory\") {\n        // Wait for inventory to fully load\n        JsMacros.waitForEvent(\"Tick\");\n        organizePlayerInventory();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getSlots",
+      "signature": "getSlots(...sections: string[])",
+      "returnType": "number[]",
+      "description": "Returns an array of global slot indices belonging to the specified inventory sections. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "sections",
+          "type": "string",
+          "description": "One or more inventory section names (e.g., 'main', 'hotbar', 'helmet')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Access hotbar slots (0-8 or 36-44)\n    for (let i = 0; i < 9; i++) {\n        const hotbarSlot = inventory.getSlot(i);\n        if (!hotbarSlot.isEmpty()) {\n            Chat.log(`Hotbar ${i}: ${hotbarSlot.getName().getString()}`);\n        }\n    }\n\n    // Access main inventory slots (9-35)\n    const mainSlots = inventory.getSlots(\"main\");\n    Chat.log(`Main inventory has ${mainSlots.length} slots`);\n\n    // Access armor slots\n    const armorSlots = inventory.getSlots(\"helmet\", \"chestplate\", \"leggings\", \"boots\");\n    for (const slot of armorSlots) {\n        const item = inventory.getSlot(slot);\n        const location = inventory.getLocation(slot);\n        if (!item.isEmpty()) {\n            Chat.log(`${location}: ${item.getName().getString()}`);\n        }\n    }\n}",
+        "function organizeInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Move items to appropriate sections\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (item.isEmpty()) continue;\n\n        const itemId = item.getItemId();\n\n        // Move tools to hotbar\n        if (isTool(itemId)) {\n            const freeHotbar = inventory.findFreeHotbarSlot();\n            if (freeHotbar !== -1 && !inventory.isInHotbar(slot)) {\n                inventory.swapHotbar(slot, freeHotbar);\n                Chat.log(`Moved ${item.getName().getString()} to hotbar`);\n            }\n        }\n\n        // Small delay to prevent overwhelming\n        JsMacros.waitForEvent(\"Tick\");\n    }\n\n    Chat.log(\"Organization complete!\");\n}\n\nfunction isTool(itemId) {\n    return itemId.includes(\"sword\") ||\n           itemId.includes(\"pickaxe\") ||\n           itemId.includes(\"axe\") ||\n           itemId.includes(\"shovel\") ||\n           itemId.includes(\"hoe\");\n}",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get currently selected hotbar slot\n    const currentSlot = inventory.getSelectedHotbarSlotIndex();\n    Chat.log(`Selected hotbar slot: ${currentSlot + 1}`);\n\n    // Change selected hotbar slot\n    inventory.setSelectedHotbarSlotIndex(2); // Select slot 3\n    Chat.log(\"Switched to hotbar slot 3\");\n\n    // Quick select based on item type\n    selectBestTool();\n}\n\nfunction selectBestTool() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const player = Player.getPlayer();\n    const lookingAt = player.rayTraceBlock(5);\n\n    if (!lookingAt || !lookingAt.block) return;\n\n    const blockId = lookingAt.block.getBlockState().getBlock().getTranslationKey();\n\n    let toolType = null;\n    if (blockId.includes(\"stone\") || blockId.includes(\"ore\")) {\n        toolType = \"pickaxe\";\n    } else if (blockId.includes(\"wood\") || blockId.includes(\"log\")) {\n        toolType = \"axe\";\n    } else if (blockId.includes(\"dirt\") || blockId.includes(\"grass\") || blockId.includes(\"sand\")) {\n        toolType = \"shovel\";\n    }\n\n    if (toolType) {\n        const hotbarSlots = inventory.getSlots(\"hotbar\");\n        for (let i = 0; i < hotbarSlots.length; i++) {\n            const item = inventory.getSlot(hotbarSlots[i]);\n            if (!item.isEmpty() && item.getItemId().includes(toolType)) {\n                inventory.setSelectedHotbarSlotIndex(i);\n                Chat.log(`Selected ${item.getName().getString()}`);\n                break;\n            }\n        }\n    }\n}",
+        "function organizePlayerInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Survival Inventory\") {\n        Chat.log(\"Please open your inventory first!\");\n        return;\n    }\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Define item categories\n    const categories = {\n        tools: [\"sword\", \"pickaxe\", \"axe\", \"shovel\", \"hoe\"],\n        weapons: [\"bow\", \"crossbow\", \"trident\", \"spear\"],\n        armor: [\"helmet\", \"chestplate\", \"leggings\", \"boots\"],\n        food: [\"bread\", \"apple\", \"carrot\", \"potato\", \"beef\", \"pork\", \"chicken\", \"fish\"],\n        blocks: [\"planks\", \"stone\", \"dirt\", \"cobblestone\", \"wood\", \"log\"],\n        materials: [\"ingot\", \"nugget\", \"gem\", \"crystal\", \"dust\"],\n        redstone: [\"redstone\", \"repeater\", \"comparator\", \"piston\", \"observer\", \"torch\"],\n        misc: []\n    };\n\n    // Get all items and categorize them\n    const items = [];\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (!item.isEmpty()) {\n            const itemId = item.getItemId();\n            let category = \"misc\";\n\n            for (const [cat, keywords] of Object.entries(categories)) {\n                if (cat === \"misc\") continue;\n\n                for (const keyword of keywords) {\n                    if (itemId.includes(keyword)) {\n                        category = cat;\n                        break;\n                    }\n                }\n                if (category !== \"misc\") break;\n            }\n\n            items.push({ slot, item, category, count: item.getCount() });\n        }\n    }\n\n    Chat.log(`Found ${items.length} item stacks to organize`);\n\n    // Report current organization\n    const categoryCount = {};\n    for (const item of items) {\n        categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;\n    }\n\n    Chat.log(\"Current inventory composition:\");\n    for (const [category, count] of Object.entries(categoryCount)) {\n        Chat.log(`- ${category}: ${count} stacks`);\n    }\n\n    // Find best tools and move to hotbar\n    organizeHotbar(inventory, items);\n\n    // Suggest organization\n    suggestOrganization(items);\n}\n\nfunction organizeHotbar(inventory, items) {\n    Chat.log(\"Organizing hotbar...\");\n\n    const toolPriority = {\n        \"diamond\": 3,\n        \"iron\": 2,\n        \"stone\": 1,\n        \"wood\": 0\n    };\n\n    const bestTools = {};\n\n    // Find best tools\n    for (const item of items) {\n        const itemId = item.item.getItemId();\n\n        let toolType = null;\n        let priority = 0;\n\n        if (itemId.includes(\"pickaxe\")) {\n            toolType = \"pickaxe\";\n        } else if (itemId.includes(\"axe\")) {\n            toolType = \"axe\";\n        } else if (itemId.includes(\"shovel\")) {\n            toolType = \"shovel\";\n        } else if (itemId.includes(\"sword\")) {\n            toolType = \"sword\";\n        }\n\n        if (toolType) {\n            for (const [material, prio] of Object.entries(toolPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (!bestTools[toolType] || bestTools[toolType].priority < priority) {\n                bestTools[toolType] = { ...item, priority };\n            }\n        }\n    }\n\n    // Move best tools to hotbar\n    const hotbarSlots = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Hotbar slots\n    const toolOrder = [\"pickaxe\", \"axe\", \"shovel\", \"sword\"];\n\n    let slotIndex = 0;\n    for (const toolType of toolOrder) {\n        if (bestTools[toolType] && slotIndex < hotbarSlots.length) {\n            const targetSlot = hotbarSlots[slotIndex];\n            if (bestTools[toolType].slot !== targetSlot) {\n                // Swap to hotbar\n                inventory.swapHotbar(bestTools[toolType].slot, slotIndex);\n                Chat.log(`Moved ${bestTools[toolType].item.getName().getString()} to hotbar slot ${slotIndex + 1}`);\n            }\n            slotIndex++;\n        }\n    }\n}\n\nfunction suggestOrganization(items) {\n    Chat.log(\"\\nSuggested organization:\");\n\n    // Group by category\n    const grouped = {};\n    for (const item of items) {\n        if (!grouped[item.category]) {\n            grouped[item.category] = [];\n        }\n        grouped[item.category].push(item);\n    }\n\n    for (const [category, categoryItems] of Object.entries(grouped)) {\n        if (categoryItems.length > 0) {\n            Chat.log(`\\n${category.toUpperCase()}:`);\n\n            // Sort by count (descending)\n            categoryItems.sort((a, b) => b.count - a.count);\n\n            for (const item of categoryItems.slice(0, 5)) {\n                Chat.log(`- ${item.item.getName().getString()} x${item.count} (slot ${item.slot})`);\n            }\n\n            if (categoryItems.length > 5) {\n                Chat.log(`... and ${categoryItems.length - 5} more`);\n            }\n        }\n    }\n}\n\n// Auto-organize when inventory opens\nJsMacros.on(\"ScreenOpen\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.screenName === \"Survival Inventory\") {\n        // Wait for inventory to fully load\n        JsMacros.waitForEvent(\"Tick\");\n        organizePlayerInventory();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "getLocation",
+      "signature": "getLocation(slotIndex: number)",
+      "returnType": "string",
+      "description": "Returns the descriptive location string for a given slot index (e.g., 'hotbar', 'main', 'helmet'). Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The global index of the slot."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Access hotbar slots (0-8 or 36-44)\n    for (let i = 0; i < 9; i++) {\n        const hotbarSlot = inventory.getSlot(i);\n        if (!hotbarSlot.isEmpty()) {\n            Chat.log(`Hotbar ${i}: ${hotbarSlot.getName().getString()}`);\n        }\n    }\n\n    // Access main inventory slots (9-35)\n    const mainSlots = inventory.getSlots(\"main\");\n    Chat.log(`Main inventory has ${mainSlots.length} slots`);\n\n    // Access armor slots\n    const armorSlots = inventory.getSlots(\"helmet\", \"chestplate\", \"leggings\", \"boots\");\n    for (const slot of armorSlots) {\n        const item = inventory.getSlot(slot);\n        const location = inventory.getLocation(slot);\n        if (!item.isEmpty()) {\n            Chat.log(`${location}: ${item.getName().getString()}`);\n        }\n    }\n}",
+        "const inventory = Player.getInventory();\nconst slotUnderMouse = inventory.getSlotUnderMouse();\nif (slotUnderMouse >= 0) {\n    const location = inventory.getLocation(slotUnderMouse);\n    const item = inventory.getSlot(slotUnderMouse);\n\n    Chat.log(`Slot ${slotUnderMouse} (${location}): ${item.getName().getString()}`);\n\n    // Check if it's a hotbar slot\n    if (inventory.isInHotbar(slotUnderMouse)) {\n        const hotbarPos = slotUnderMouse >= 36 ? slotUnderMouse - 36 : slotUnderMouse;\n        Chat.log(`This is hotbar slot ${hotbarPos + 1}`);\n    }\n}",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get slot under mouse\n    const slotUnderMouse = inventory.getSlotUnderMouse();\n    if (slotUnderMouse >= 0) {\n        const item = inventory.getSlot(slotUnderMouse);\n        if (!item.isEmpty()) {\n            Chat.log(`Mouse over: ${item.getName().getString()} x${item.getCount()}`);\n        }\n\n        // Get location information\n        const location = inventory.getLocation(slotUnderMouse);\n        Chat.log(`Slot location: ${location}`);\n\n        // Check if it's equipment\n        if ([\"helmet\", \"chestplate\", \"leggings\", \"boots\", \"offhand\"].includes(location)) {\n            Chat.log(\"This is an equipment slot\");\n        }\n    }\n\n    // Get held item (on cursor)\n    const heldItem = inventory.getHeld();\n    if (!heldItem.isEmpty()) {\n        Chat.log(`Holding: ${heldItem.getName().getString()} x${heldItem.getCount()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "findFreeHotbarSlot",
+      "signature": "findFreeHotbarSlot()",
+      "returnType": "number",
+      "description": "Finds and returns the global index of the first empty slot in the player's hotbar. Returns -1 if no free slot. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Find free slots in different sections\n    const freeHotbar = inventory.findFreeHotbarSlot();\n    const freeInventory = inventory.findFreeInventorySlot();\n    const freeMain = inventory.findFreeSlot(\"main\");\n\n    Chat.log(`Free hotbar slot: ${freeHotbar}`);\n    Chat.log(`Free inventory slot: ${freeInventory}`);\n    Chat.log(`Free main inventory slot: ${freeMain}`);\n\n    if (freeHotbar !== -1) {\n        Chat.log(`Space available in hotbar at position ${freeHotbar}`);\n    }\n}",
+        "function organizeInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Move items to appropriate sections\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (item.isEmpty()) continue;\n\n        const itemId = item.getItemId();\n\n        // Move tools to hotbar\n        if (isTool(itemId)) {\n            const freeHotbar = inventory.findFreeHotbarSlot();\n            if (freeHotbar !== -1 && !inventory.isInHotbar(slot)) {\n                inventory.swapHotbar(slot, freeHotbar);\n                Chat.log(`Moved ${item.getName().getString()} to hotbar`);\n            }\n        }\n\n        // Small delay to prevent overwhelming\n        JsMacros.waitForEvent(\"Tick\");\n    }\n\n    Chat.log(\"Organization complete!\");\n}\n\nfunction isTool(itemId) {\n    return itemId.includes(\"sword\") ||\n           itemId.includes(\"pickaxe\") ||\n           itemId.includes(\"axe\") ||\n           itemId.includes(\"shovel\") ||\n           itemId.includes(\"hoe\");\n}"
+      ]
+    },
+    {
+      "name": "findFreeInventorySlot",
+      "signature": "findFreeInventorySlot()",
+      "returnType": "number",
+      "description": "Finds and returns the global index of the first empty slot in the main inventory area. Returns -1 if no free slot. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Find free slots in different sections\n    const freeHotbar = inventory.findFreeHotbarSlot();\n    const freeInventory = inventory.findFreeInventorySlot();\n    const freeMain = inventory.findFreeSlot(\"main\");\n\n    Chat.log(`Free hotbar slot: ${freeHotbar}`);\n    Chat.log(`Free inventory slot: ${freeInventory}`);\n    Chat.log(`Free main inventory slot: ${freeMain}`);\n\n    if (freeHotbar !== -1) {\n        Chat.log(`Space available in hotbar at position ${freeHotbar}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "findFreeSlot",
+      "signature": "findFreeSlot(section: string)",
+      "returnType": "number",
+      "description": "Finds and returns the global index of the first empty slot in the specified inventory section. Returns -1 if no free slot. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "section",
+          "type": "string",
+          "description": "The name of the inventory section (e.g., 'main', 'hotbar')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Find free slots in different sections\n    const freeHotbar = inventory.findFreeHotbarSlot();\n    const freeInventory = inventory.findFreeInventorySlot();\n    const freeMain = inventory.findFreeSlot(\"main\");\n\n    Chat.log(`Free hotbar slot: ${freeHotbar}`);\n    Chat.log(`Free inventory slot: ${freeInventory}`);\n    Chat.log(`Free main inventory slot: ${freeMain}`);\n\n    if (freeHotbar !== -1) {\n        Chat.log(`Space available in hotbar at position ${freeHotbar}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "contains",
+      "signature": "contains(itemIdentifier: string | ItemStackHelper)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains an item matching the given ID or `ItemStackHelper`. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "itemIdentifier",
+          "type": "string | ItemStackHelper",
+          "description": "The item ID (e.g., 'minecraft:diamond') or an `ItemStackHelper` to search for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Check for specific items\n    const hasDiamonds = inventory.contains(\"minecraft:diamond\");\n    const hasIron = inventory.contains(\"minecraft:iron_ingot\");\n\n    Chat.log(`Has diamonds: ${hasDiamonds}`);\n    Chat.log(`Has iron: ${hasIron}`);\n\n    // Check using ItemStackHelper\n    const mainHandItem = Player.getPlayer().getMainHand();\n    if (!mainHandItem.isEmpty()) {\n        const hasSameItem = inventory.contains(mainHandItem);\n        Chat.log(`Inventory has ${mainHandItem.getName().getString()}: ${hasSameItem}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "findItem",
+      "signature": "findItem(itemIdentifier: string)",
+      "returnType": "number[]",
+      "description": "Finds all slots containing an item matching the given item ID. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "itemIdentifier",
+          "type": "string",
+          "description": "The item ID to search for (e.g., 'minecraft:diamond')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Find all diamond locations\n    const diamondSlots = inventory.findItem(\"minecraft:diamond\");\n    if (diamondSlots.length > 0) {\n        Chat.log(`Found diamonds in slots: ${diamondSlots.join(\", \")}`);\n\n        // Get total diamond count\n        let totalDiamonds = 0;\n        for (const slot of diamondSlots) {\n            totalDiamonds += inventory.getSlot(slot).getCount();\n        }\n        Chat.log(`Total diamonds: ${totalDiamonds}`);\n    }\n\n    // Get item counts for all items\n    const itemCounts = inventory.getItemCount();\n    Chat.log(\"Item summary:\");\n    for (const [itemId, count] of Object.entries(itemCounts)) {\n        if (count > 0) {\n            Chat.log(`- ${itemId}: ${count}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getItemCount",
+      "signature": "getItemCount()",
+      "returnType": "Map<string, number>",
+      "description": "Returns a map of item IDs to their total counts across the entire inventory. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Find all diamond locations\n    const diamondSlots = inventory.findItem(\"minecraft:diamond\");\n    if (diamondSlots.length > 0) {\n        Chat.log(`Found diamonds in slots: ${diamondSlots.join(\", \")}`);\n\n        // Get total diamond count\n        let totalDiamonds = 0;\n        for (const slot of diamondSlots) {\n            totalDiamonds += inventory.getSlot(slot).getCount();\n        }\n        Chat.log(`Total diamonds: ${totalDiamonds}`);\n    }\n\n    // Get item counts for all items\n    const itemCounts = inventory.getItemCount();\n    Chat.log(\"Item summary:\");\n    for (const [itemId, count] of Object.entries(itemCounts)) {\n        if (count > 0) {\n            Chat.log(`- ${itemId}: ${count}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getItems",
+      "signature": "getItems(...sections: string[])",
+      "returnType": "ItemStackHelper[]",
+      "description": "Returns an array of unique `ItemStackHelper` objects representing items found in the specified inventory sections. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "sections",
+          "type": "string",
+          "description": "One or more inventory section names."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get armor items\n    const armorItems = inventory.getItems(\"helmet\", \"chestplate\", \"leggings\", \"boots\");\n    Chat.log(\"Currently wearing:\");\n    for (const item of armorItems) {\n        Chat.log(`- ${item.getName().getString()}`);\n    }\n\n    // Get hotbar items\n    const hotbarItems = inventory.getItems(\"hotbar\");\n    Chat.log(`Hotbar has ${hotbarItems.length} item types`);\n\n    // Get main inventory items\n    const mainItems = inventory.getItems(\"main\");\n    Chat.log(`Main inventory has ${mainItems.length} item types`);\n}"
+      ]
+    },
+    {
+      "name": "click",
+      "signature": "click(slotIndex: number, mouseButton?: number)",
+      "returnType": "void",
+      "description": "Simulates a click on a specified slot. `mouseButton` 0 for left-click, 1 for right-click. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The global index of the slot to click."
+        },
+        {
+          "name": "mouseButton",
+          "type": "number",
+          "description": "The mouse button to use (0: left, 1: right). Defaults to 0.",
+          "optional": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Click specific slots\n    inventory.click(36); // Click first hotbar slot\n    inventory.click(9, 1); // Right-click main inventory slot\n\n    // Quick move (shift-click) operations\n    inventory.quick(10); // Shift-click to move between inventory sections\n\n    // Drop items\n    inventory.dropSlot(36); // Drop one item from hotbar\n    inventory.dropSlot(9, true); // Drop entire stack\n\n    // Swap with hotbar\n    inventory.swapHotbar(9, 0); // Swap slot 9 with hotbar slot 1\n    inventory.swapHotbar(45, 40); // Swap offhand\n}"
+      ]
+    },
+    {
+      "name": "quick",
+      "signature": "quick(slotIndex: number)",
+      "returnType": "void",
+      "description": "Performs a 'quick move' (shift-click) operation on a slot, moving the item between inventory sections. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The global index of the slot to quick-move."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Click specific slots\n    inventory.click(36); // Click first hotbar slot\n    inventory.click(9, 1); // Right-click main inventory slot\n\n    // Quick move (shift-click) operations\n    inventory.quick(10); // Shift-click to move between inventory sections\n\n    // Drop items\n    inventory.dropSlot(36); // Drop one item from hotbar\n    inventory.dropSlot(9, true); // Drop entire stack\n\n    // Swap with hotbar\n    inventory.swapHotbar(9, 0); // Swap slot 9 with hotbar slot 1\n    inventory.swapHotbar(45, 40); // Swap offhand\n}"
+      ]
+    },
+    {
+      "name": "dropSlot",
+      "signature": "dropSlot(slotIndex: number, dropStack?: boolean)",
+      "returnType": "void",
+      "description": "Drops the item from the specified slot. If `dropStack` is true, drops the entire stack. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The global index of the slot to drop from."
+        },
+        {
+          "name": "dropStack",
+          "type": "boolean",
+          "description": "If true, drops the entire stack; otherwise, drops one item. Defaults to false.",
+          "optional": true
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Click specific slots\n    inventory.click(36); // Click first hotbar slot\n    inventory.click(9, 1); // Right-click main inventory slot\n\n    // Quick move (shift-click) operations\n    inventory.quick(10); // Shift-click to move between inventory sections\n\n    // Drop items\n    inventory.dropSlot(36); // Drop one item from hotbar\n    inventory.dropSlot(9, true); // Drop entire stack\n\n    // Swap with hotbar\n    inventory.swapHotbar(9, 0); // Swap slot 9 with hotbar slot 1\n    inventory.swapHotbar(45, 40); // Swap offhand\n}"
+      ]
+    },
+    {
+      "name": "swapHotbar",
+      "signature": "swapHotbar(fromSlot: number, hotbarIndex: number)",
+      "returnType": "void",
+      "description": "Swaps the item in `fromSlot` with the item in the specified hotbar slot index (0-8). Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "fromSlot",
+          "type": "number",
+          "description": "The global index of the slot to swap from."
+        },
+        {
+          "name": "hotbarIndex",
+          "type": "number",
+          "description": "The target hotbar index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Click specific slots\n    inventory.click(36); // Click first hotbar slot\n    inventory.click(9, 1); // Right-click main inventory slot\n\n    // Quick move (shift-click) operations\n    inventory.quick(10); // Shift-click to move between inventory sections\n\n    // Drop items\n    inventory.dropSlot(36); // Drop one item from hotbar\n    inventory.dropSlot(9, true); // Drop entire stack\n\n    // Swap with hotbar\n    inventory.swapHotbar(9, 0); // Swap slot 9 with hotbar slot 1\n    inventory.swapHotbar(45, 40); // Swap offhand\n}",
+        "function organizeInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Move items to appropriate sections\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (item.isEmpty()) continue;\n\n        const itemId = item.getItemId();\n\n        // Move tools to hotbar\n        if (isTool(itemId)) {\n            const freeHotbar = inventory.findFreeHotbarSlot();\n            if (freeHotbar !== -1 && !inventory.isInHotbar(slot)) {\n                inventory.swapHotbar(slot, freeHotbar);\n                Chat.log(`Moved ${item.getName().getString()} to hotbar`);\n            }\n        }\n\n        // Small delay to prevent overwhelming\n        JsMacros.waitForEvent(\"Tick\");\n    }\n\n    Chat.log(\"Organization complete!\");\n}\n\nfunction isTool(itemId) {\n    return itemId.includes(\"sword\") ||\n           itemId.includes(\"pickaxe\") ||\n           itemId.includes(\"axe\") ||\n           itemId.includes(\"shovel\") ||\n           itemId.includes(\"hoe\");\n}",
+        "function organizePlayerInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Survival Inventory\") {\n        Chat.log(\"Please open your inventory first!\");\n        return;\n    }\n\n    Chat.log(\"Organizing inventory...\");\n\n    // Define item categories\n    const categories = {\n        tools: [\"sword\", \"pickaxe\", \"axe\", \"shovel\", \"hoe\"],\n        weapons: [\"bow\", \"crossbow\", \"trident\", \"spear\"],\n        armor: [\"helmet\", \"chestplate\", \"leggings\", \"boots\"],\n        food: [\"bread\", \"apple\", \"carrot\", \"potato\", \"beef\", \"pork\", \"chicken\", \"fish\"],\n        blocks: [\"planks\", \"stone\", \"dirt\", \"cobblestone\", \"wood\", \"log\"],\n        materials: [\"ingot\", \"nugget\", \"gem\", \"crystal\", \"dust\"],\n        redstone: [\"redstone\", \"repeater\", \"comparator\", \"piston\", \"observer\", \"torch\"],\n        misc: []\n    };\n\n    // Get all items and categorize them\n    const items = [];\n    const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n\n    for (const slot of allSlots) {\n        const item = inventory.getSlot(slot);\n        if (!item.isEmpty()) {\n            const itemId = item.getItemId();\n            let category = \"misc\";\n\n            for (const [cat, keywords] of Object.entries(categories)) {\n                if (cat === \"misc\") continue;\n\n                for (const keyword of keywords) {\n                    if (itemId.includes(keyword)) {\n                        category = cat;\n                        break;\n                    }\n                }\n                if (category !== \"misc\") break;\n            }\n\n            items.push({ slot, item, category, count: item.getCount() });\n        }\n    }\n\n    Chat.log(`Found ${items.length} item stacks to organize`);\n\n    // Report current organization\n    const categoryCount = {};\n    for (const item of items) {\n        categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;\n    }\n\n    Chat.log(\"Current inventory composition:\");\n    for (const [category, count] of Object.entries(categoryCount)) {\n        Chat.log(`- ${category}: ${count} stacks`);\n    }\n\n    // Find best tools and move to hotbar\n    organizeHotbar(inventory, items);\n\n    // Suggest organization\n    suggestOrganization(items);\n}\n\nfunction organizeHotbar(inventory, items) {\n    Chat.log(\"Organizing hotbar...\");\n\n    const toolPriority = {\n        \"diamond\": 3,\n        \"iron\": 2,\n        \"stone\": 1,\n        \"wood\": 0\n    };\n\n    const bestTools = {};\n\n    // Find best tools\n    for (const item of items) {\n        const itemId = item.item.getItemId();\n\n        let toolType = null;\n        let priority = 0;\n\n        if (itemId.includes(\"pickaxe\")) {\n            toolType = \"pickaxe\";\n        } else if (itemId.includes(\"axe\")) {\n            toolType = \"axe\";\n        } else if (itemId.includes(\"shovel\")) {\n            toolType = \"shovel\";\n        } else if (itemId.includes(\"sword\")) {\n            toolType = \"sword\";\n        }\n\n        if (toolType) {\n            for (const [material, prio] of Object.entries(toolPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (!bestTools[toolType] || bestTools[toolType].priority < priority) {\n                bestTools[toolType] = { ...item, priority };\n            }\n        }\n    }\n\n    // Move best tools to hotbar\n    const hotbarSlots = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Hotbar slots\n    const toolOrder = [\"pickaxe\", \"axe\", \"shovel\", \"sword\"];\n\n    let slotIndex = 0;\n    for (const toolType of toolOrder) {\n        if (bestTools[toolType] && slotIndex < hotbarSlots.length) {\n            const targetSlot = hotbarSlots[slotIndex];\n            if (bestTools[toolType].slot !== targetSlot) {\n                // Swap to hotbar\n                inventory.swapHotbar(bestTools[toolType].slot, slotIndex);\n                Chat.log(`Moved ${bestTools[toolType].item.getName().getString()} to hotbar slot ${slotIndex + 1}`);\n            }\n            slotIndex++;\n        }\n    }\n}\n\nfunction suggestOrganization(items) {\n    Chat.log(\"\\nSuggested organization:\");\n\n    // Group by category\n    const grouped = {};\n    for (const item of items) {\n        if (!grouped[item.category]) {\n            grouped[item.category] = [];\n        }\n        grouped[item.category].push(item);\n    }\n\n    for (const [category, categoryItems] of Object.entries(grouped)) {\n        if (categoryItems.length > 0) {\n            Chat.log(`\\n${category.toUpperCase()}:`);\n\n            // Sort by count (descending)\n            categoryItems.sort((a, b) => b.count - a.count);\n\n            for (const item of categoryItems.slice(0, 5)) {\n                Chat.log(`- ${item.item.getName().getString()} x${item.count} (slot ${item.slot})`);\n            }\n\n            if (categoryItems.length > 5) {\n                Chat.log(`... and ${categoryItems.length - 5} more`);\n            }\n        }\n    }\n}\n\n// Auto-organize when inventory opens\nJsMacros.on(\"ScreenOpen\", JavaWrapper.methodToJavaAsync((event) => {\n    if (event.screenName === \"Survival Inventory\") {\n        // Wait for inventory to fully load\n        JsMacros.waitForEvent(\"Tick\");\n        organizePlayerInventory();\n    }\n}));",
+        "function autoEquipBestArmor() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const armorSlots = [\n        { slot: \"helmet\", type: \"helmet\", current: inventory.getHelmet() },\n        { slot: \"chestplate\", type: \"chestplate\", current: inventory.getChestplate() },\n        { slot: \"leggings\", type: \"leggings\", current: inventory.getLeggings() },\n        { slot: \"boots\", type: \"boots\", current: inventory.getBoots() }\n    ];\n\n    const armorPriority = {\n        \"netherite\": 5,\n        \"diamond\": 4,\n        \"iron\": 3,\n        \"chain\": 2,\n        \"golden\": 1,\n        \"leather\": 0\n    };\n\n    let madeChanges = false;\n\n    for (const armorPiece of armorSlots) {\n        const current = armorPiece.current;\n        let currentPriority = -1;\n\n        if (!current.isEmpty()) {\n            const currentId = current.getItemId();\n            for (const [material, priority] of Object.entries(armorPriority)) {\n                if (currentId.includes(material)) {\n                    currentPriority = priority;\n                    break;\n                }\n            }\n        }\n\n        // Find best armor piece of this type in inventory\n        const allSlots = inventory.getSlots(\"main\", \"hotbar\");\n        let bestPiece = null;\n        let bestPriority = currentPriority;\n        let bestSlot = -1;\n\n        for (const slot of allSlots) {\n            const item = inventory.getSlot(slot);\n            if (item.isEmpty()) continue;\n\n            const itemId = item.getItemId();\n\n            // Check if this is the right armor type\n            if (!itemId.includes(armorPiece.type)) continue;\n\n            // Check priority\n            let priority = -1;\n            for (const [material, prio] of Object.entries(armorPriority)) {\n                if (itemId.includes(material)) {\n                    priority = prio;\n                    break;\n                }\n            }\n\n            if (priority > bestPriority) {\n                bestPriority = priority;\n                bestPiece = item;\n                bestSlot = slot;\n            }\n        }\n\n        // Equip if better piece found\n        if (bestPiece && bestSlot !== -1) {\n            // Swap the armor piece\n            const armorSlotNum = inventory.getSlots(armorPiece.slot)[0];\n            inventory.swapHotbar(bestSlot, armorSlotNum);\n\n            Chat.log(`Equipped better ${armorPiece.type}: ${bestPiece.getName().getString()}`);\n            madeChanges = true;\n\n            // Small delay to prevent issues\n            JsMacros.waitForEvent(\"Tick\");\n        }\n    }\n\n    if (madeChanges) {\n        Chat.actionbar(\"&aAuto-equipped better armor!\");\n    }\n}\n\n// Auto-equip when picking up new armor\nJsMacros.on(\"RecvMessage\", JavaWrapper.methodToJavaAsync((event) => {\n    // Check for armor pickup messages (this may vary by server)\n    const message = event.message.getString().toLowerCase();\n    if (message.includes(\"pick\") || message.includes(\"obtained\")) {\n        // Wait a bit for inventory to update\n        setTimeout(() => {\n            autoEquipBestArmor();\n        }, 500);\n    }\n}));"
+      ]
+    },
+    {
+      "name": "split",
+      "signature": "split(fromSlot: number, toSlot: number)",
+      "returnType": "void",
+      "description": "Splits an item stack from `fromSlot` and moves half of it to `toSlot`. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "fromSlot",
+          "type": "number",
+          "description": "The source slot index."
+        },
+        {
+          "name": "toSlot",
+          "type": "number",
+          "description": "The target slot index (must be empty or contain the same item)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Split a stack between two empty slots\n    try {\n        inventory.split(10, 11); // Split from slot 10 to 11\n    } catch (e) {\n        Chat.log(`Split failed: ${e.message}`);\n    }\n\n    // Grab all matching items\n    inventory.grabAll(9); // Pick up all items matching slot 9\n\n    // Drag-click to distribute items\n    const slots = [36, 37, 38, 39];\n    inventory.dragClick(slots, 0); // Left-click drag\n}"
+      ]
+    },
+    {
+      "name": "grabAll",
+      "signature": "grabAll(slotIndex: number)",
+      "returnType": "void",
+      "description": "Collects all matching items in the inventory into the stack on the cursor, or if the cursor is empty, picks up all matching items into the cursor. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The slot index whose item type should be grabbed."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Split a stack between two empty slots\n    try {\n        inventory.split(10, 11); // Split from slot 10 to 11\n    } catch (e) {\n        Chat.log(`Split failed: ${e.message}`);\n    }\n\n    // Grab all matching items\n    inventory.grabAll(9); // Pick up all items matching slot 9\n\n    // Drag-click to distribute items\n    const slots = [36, 37, 38, 39];\n    inventory.dragClick(slots, 0); // Left-click drag\n}"
+      ]
+    },
+    {
+      "name": "dragClick",
+      "signature": "dragClick(slots: number[], mouseButton: number)",
+      "returnType": "void",
+      "description": "Performs a drag-click operation across multiple slots, distributing the held item. `mouseButton` 0 for left-click drag, 1 for right-click drag. Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "slots",
+          "type": "number[]",
+          "description": "An array of global slot indices to drag across."
+        },
+        {
+          "name": "mouseButton",
+          "type": "number",
+          "description": "The mouse button to use (0: left, 1: right)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Split a stack between two empty slots\n    try {\n        inventory.split(10, 11); // Split from slot 10 to 11\n    } catch (e) {\n        Chat.log(`Split failed: ${e.message}`);\n    }\n\n    // Grab all matching items\n    inventory.grabAll(9); // Pick up all items matching slot 9\n\n    // Drag-click to distribute items\n    const slots = [36, 37, 38, 39];\n    inventory.dragClick(slots, 0); // Left-click drag\n}"
+      ]
+    },
+    {
+      "name": "getSelectedHotbarSlotIndex",
+      "signature": "getSelectedHotbarSlotIndex()",
+      "returnType": "number",
+      "description": "Returns the index (0-8) of the currently selected hotbar slot. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get currently selected hotbar slot\n    const currentSlot = inventory.getSelectedHotbarSlotIndex();\n    Chat.log(`Selected hotbar slot: ${currentSlot + 1}`);\n\n    // Change selected hotbar slot\n    inventory.setSelectedHotbarSlotIndex(2); // Select slot 3\n    Chat.log(\"Switched to hotbar slot 3\");\n\n    // Quick select based on item type\n    selectBestTool();\n}\n\nfunction selectBestTool() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const player = Player.getPlayer();\n    const lookingAt = player.rayTraceBlock(5);\n\n    if (!lookingAt || !lookingAt.block) return;\n\n    const blockId = lookingAt.block.getBlockState().getBlock().getTranslationKey();\n\n    let toolType = null;\n    if (blockId.includes(\"stone\") || blockId.includes(\"ore\")) {\n        toolType = \"pickaxe\";\n    } else if (blockId.includes(\"wood\") || blockId.includes(\"log\")) {\n        toolType = \"axe\";\n    } else if (blockId.includes(\"dirt\") || blockId.includes(\"grass\") || blockId.includes(\"sand\")) {\n        toolType = \"shovel\";\n    }\n\n    if (toolType) {\n        const hotbarSlots = inventory.getSlots(\"hotbar\");\n        for (let i = 0; i < hotbarSlots.length; i++) {\n            const item = inventory.getSlot(hotbarSlots[i]);\n            if (!item.isEmpty() && item.getItemId().includes(toolType)) {\n                inventory.setSelectedHotbarSlotIndex(i);\n                Chat.log(`Selected ${item.getName().getString()}`);\n                break;\n            }\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "setSelectedHotbarSlotIndex",
+      "signature": "setSelectedHotbarSlotIndex(index: number)",
+      "returnType": "void",
+      "description": "Sets the currently selected hotbar slot to the given index (0-8). Inherited from Inventory.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "number",
+          "description": "The target hotbar index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get currently selected hotbar slot\n    const currentSlot = inventory.getSelectedHotbarSlotIndex();\n    Chat.log(`Selected hotbar slot: ${currentSlot + 1}`);\n\n    // Change selected hotbar slot\n    inventory.setSelectedHotbarSlotIndex(2); // Select slot 3\n    Chat.log(\"Switched to hotbar slot 3\");\n\n    // Quick select based on item type\n    selectBestTool();\n}\n\nfunction selectBestTool() {\n    const inventory = Player.getInventory();\n    if (!inventory) return;\n\n    const player = Player.getPlayer();\n    const lookingAt = player.rayTraceBlock(5);\n\n    if (!lookingAt || !lookingAt.block) return;\n\n    const blockId = lookingAt.block.getBlockState().getBlock().getTranslationKey();\n\n    let toolType = null;\n    if (blockId.includes(\"stone\") || blockId.includes(\"ore\")) {\n        toolType = \"pickaxe\";\n    } else if (blockId.includes(\"wood\") || blockId.includes(\"log\")) {\n        toolType = \"axe\";\n    } else if (blockId.includes(\"dirt\") || blockId.includes(\"grass\") || blockId.includes(\"sand\")) {\n        toolType = \"shovel\";\n    }\n\n    if (toolType) {\n        const hotbarSlots = inventory.getSlots(\"hotbar\");\n        for (let i = 0; i < hotbarSlots.length; i++) {\n            const item = inventory.getSlot(hotbarSlots[i]);\n            if (!item.isEmpty() && item.getItemId().includes(toolType)) {\n                inventory.setSelectedHotbarSlotIndex(i);\n                Chat.log(`Selected ${item.getName().getString()}`);\n                break;\n            }\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getSlotUnderMouse",
+      "signature": "getSlotUnderMouse()",
+      "returnType": "number",
+      "description": "Returns the global index of the slot currently under the mouse cursor, or -1 if none. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst slotUnderMouse = inventory.getSlotUnderMouse();\nif (slotUnderMouse >= 0) {\n    const location = inventory.getLocation(slotUnderMouse);\n    const item = inventory.getSlot(slotUnderMouse);\n\n    Chat.log(`Slot ${slotUnderMouse} (${location}): ${item.getName().getString()}`);\n\n    // Check if it's a hotbar slot\n    if (inventory.isInHotbar(slotUnderMouse)) {\n        const hotbarPos = slotUnderMouse >= 36 ? slotUnderMouse - 36 : slotUnderMouse;\n        Chat.log(`This is hotbar slot ${hotbarPos + 1}`);\n    }\n}",
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get slot under mouse\n    const slotUnderMouse = inventory.getSlotUnderMouse();\n    if (slotUnderMouse >= 0) {\n        const item = inventory.getSlot(slotUnderMouse);\n        if (!item.isEmpty()) {\n            Chat.log(`Mouse over: ${item.getName().getString()} x${item.getCount()}`);\n        }\n\n        // Get location information\n        const location = inventory.getLocation(slotUnderMouse);\n        Chat.log(`Slot location: ${location}`);\n\n        // Check if it's equipment\n        if ([\"helmet\", \"chestplate\", \"leggings\", \"boots\", \"offhand\"].includes(location)) {\n            Chat.log(\"This is an equipment slot\");\n        }\n    }\n\n    // Get held item (on cursor)\n    const heldItem = inventory.getHeld();\n    if (!heldItem.isEmpty()) {\n        Chat.log(`Holding: ${heldItem.getName().getString()} x${heldItem.getCount()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getHeld",
+      "signature": "getHeld()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the `ItemStackHelper` for the item currently being held by the mouse cursor. Inherited from Inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory) {\n    // Get slot under mouse\n    const slotUnderMouse = inventory.getSlotUnderMouse();\n    if (slotUnderMouse >= 0) {\n        const item = inventory.getSlot(slotUnderMouse);\n        if (!item.isEmpty()) {\n            Chat.log(`Mouse over: ${item.getName().getString()} x${item.getCount()}`);\n        }\n\n        // Get location information\n        const location = inventory.getLocation(slotUnderMouse);\n        Chat.log(`Slot location: ${location}`);\n\n        // Check if it's equipment\n        if ([\"helmet\", \"chestplate\", \"leggings\", \"boots\", \"offhand\"].includes(location)) {\n            Chat.log(\"This is an equipment slot\");\n        }\n    }\n\n    // Get held item (on cursor)\n    const heldItem = inventory.getHeld();\n    if (!heldItem.isEmpty()) {\n        Chat.log(`Holding: ${heldItem.getName().getString()} x${heldItem.getCount()}`);\n    }\n}"
+      ]
+    }
+  ]
+}

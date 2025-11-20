@@ -1,0 +1,10 @@
+{
+  "name": "ChatHistoryManager",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.ChatHistoryManager",
+  "extends": null,
+  "since": "JsMacros 1.6.0",
+  "description": "The `ChatHistoryManager` class provides comprehensive control over the Minecraft chat history system in JSMacros. It allows script writers to read, modify, insert, and remove chat messages from both the received message history and sent message history. This class is particularly useful for creating chat filtering systems, message logging, automated chat responses, and custom chat UI modifications.",
+  "overview": "The `ChatHistoryManager` manages two types of chat history:\n\n- **Received Messages:** Messages that appear in the chat HUD (from server, system messages, etc.)\n- **Sent Messages:** Messages that the player has typed and sent (accessed via up/down arrows in chat)\n\nThe manager provides thread-safe operations for accessing and modifying the chat history, with proper handling of Minecraft's client thread execution requirements.",
+  "constructors": [],
+  "methods": []
+}

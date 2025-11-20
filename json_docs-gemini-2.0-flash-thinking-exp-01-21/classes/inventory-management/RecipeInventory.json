@@ -1,0 +1,10 @@
+{
+  "name": "RecipeInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.RecipeInventory",
+  "extends": "Inventory<T extends HandledScreen<? extends AbstractRecipeScreenHandler<?, ?>>>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `RecipeInventory` class is an abstract base class for inventory management screens that support crafting, such as crafting tables, furnaces, and the player inventory crafting grid. It provides access to crafting-related functionality including recipe book management, recipe discovery, and crafting grid interaction. This class extends the base `Inventory` class with specialized methods for recipe-based crafting interfaces.",
+  "overview": "The `RecipeInventory` class provides comprehensive access to crafting inventory features:\n\n- Access to crafting grid dimensions and slot contents\n- Recipe book integration and management\n- Recipe discovery and filtering capabilities\n- Input/output slot interaction\n- Support for both craftable and all available recipes\n- Integration with crafting tables, furnaces, and player inventory",
+  "constructors": [],
+  "methods": []
+}

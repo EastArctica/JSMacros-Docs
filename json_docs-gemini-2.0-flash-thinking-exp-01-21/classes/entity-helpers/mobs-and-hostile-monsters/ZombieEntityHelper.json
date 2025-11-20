@@ -1,0 +1,10 @@
+{
+  "name": "ZombieEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.ZombieEntityHelper<T extends ZombieEntity>",
+  "extends": "MobEntityHelper<T>",
+  "since": "JSMacros 1.8.4",
+  "description": "Represents a zombie entity in the world. ZombieEntityHelper provides access to zombie-specific properties and behaviors such as drowned conversion states. This class serves as a specialized helper for all zombie variants including regular zombies, husks, and other zombie types.",
+  "overview": "Zombie entities are hostile mobs that attack players and villagers on sight. They have unique behaviors like burning in sunlight, converting to drowned when underwater, and being able to break down wooden doors. This helper provides access to the specific zombie functionality beyond the general mob behaviors.\n\nThis class extends `MobEntityHelper` and inherits all methods for health, movement, AI control, and other mob properties, while adding zombie-specific functionality.",
+  "constructors": [],
+  "methods": []
+}

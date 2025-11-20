@@ -1,0 +1,72 @@
+{
+  "name": "EnderDragonEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.boss.EnderDragonEntityHelper",
+  "extends": "MobEntityHelper<EnderDragonEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "Represents an Ender Dragon entity in the world. EnderDragonEntityHelper provides access to dragon-specific behaviors, phases, and body parts that are unique to the Ender Dragon boss mob. This specialized helper allows you to monitor the dragon's combat phase, access individual body parts for targeting or analysis, and track the dragon's complex multi-part structure.",
+  "overview": "Instances are typically obtained from entity events, world entity queries, or by casting existing entity helpers that represent Ender Dragons.",
+  "constructors": [
+    {
+      "signature": "N/A (Instances are obtained, not constructed directly)",
+      "description": "EnderDragonEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through:\n\n- Entity-related events (e.g., `EntityDeath`, `EntityInteract`)\n- World entity queries and filters\n- Type casting from generic `EntityHelper` instances",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getPhase",
+      "signature": "getPhase(): string",
+      "returnType": "string",
+      "description": "Returns the current combat phase of the Ender Dragon. Possible phases include 'HoldingPattern', 'Landing', 'ChargingPlayer', 'StrafePlayer', 'SittingFlaming', 'Dying', etc.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(`Dragon died in phase: ${dragon.getPhase()}`);",
+        "const phase = dragon.getPhase();\nChat.log(`Found dragon in phase: ${phase}`);",
+        "switch (phase) {\n    case \"ChargingPlayer\":\n        Chat.log(\"&c⚠️ DRAGON CHARGING! Move sideways quickly!\");\n        break;\n    case \"Landing\":\n        Chat.log(\"&a🎯 Dragon landing! Attack opportunity!\");\n        break;\n}"
+      ]
+    },
+    {
+      "name": "getBodyPart",
+      "signature": "getBodyPart(index: number): EntityHelper | null",
+      "returnType": "EntityHelper | null",
+      "description": "Retrieves a specific body part of the Ender Dragon by its numerical index. This index typically corresponds to internal Minecraft entity part IDs. Returns `null` if the index is invalid.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "number",
+          "description": "The numerical index of the body part."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBodyParts",
+      "signature": "getBodyParts(): Array<EntityHelper>",
+      "returnType": "Array<EntityHelper>",
+      "description": "Returns an array containing all individual body parts of the Ender Dragon. Each body part is represented as an `EntityHelper`.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBodyParts",
+      "signature": "getBodyParts(name: string): Array<EntityHelper>",
+      "returnType": "Array<EntityHelper>",
+      "description": "Returns an array of specific body parts of the Ender Dragon matching the given name (e.g., 'head', 'neck', 'body', 'tail', 'wing'). Returns an empty array if no parts match.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name or type of the body part (e.g., 'head', 'body', 'wing')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const parts = dragon.getBodyParts(partType);",
+        "for (const partType of this.targetPriority) {\n    const parts = dragon.getBodyParts(partType);\n    for (const part of parts) {\n        // Process individual body part\n    }\n}"
+      ]
+    }
+  ]
+}

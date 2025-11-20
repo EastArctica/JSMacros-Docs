@@ -1,0 +1,10 @@
+{
+  "name": "WrappedScript",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.WrappedScript<T, U, V>",
+  "extends": "MethodWrapper<T, U, V, BaseScriptContext<?>>",
+  "since": "1.7.0",
+  "description": "A wrapper class that allows scripts to be executed as functional interfaces (Consumer, Function, Predicate, etc.). This class enables JavaScript code to be treated as a first-class function that can be passed to Java APIs expecting functional interfaces, with proper thread management and execution context handling.",
+  "overview": "WrappedScript objects are typically created using the `JsMacros.wrapScriptRun()` and `JsMacros.wrapScriptRunAsync()` methods, which wrap existing script files or inline script code into executable function objects that can be used with event listeners, collections operations, or any Java API that accepts functional interfaces.",
+  "constructors": [],
+  "methods": []
+}

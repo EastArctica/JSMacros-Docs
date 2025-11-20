@@ -1,0 +1,22 @@
+{
+  "name": "MethodWrapper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.MethodWrapper<T, U, R, C extends BaseScriptContext<?>>",
+  "extends": null,
+  "since": "JSMacros 1.0.0",
+  "description": "The `MethodWrapper` class is an advanced reflection and method manipulation utility that serves as the bridge between Java code and script functions in JSMacros. It wraps script functions to make them compatible with Java's functional interfaces, enabling seamless integration between Java callbacks and script execution.",
+  "overview": "This class is fundamental to JSMacros' event system and allows scripts to handle Java events, GUI interactions, and other callbacks. MethodWrapper instances are typically created through the `JavaWrapper` library rather than instantiated directly.\n\nThe class handles complex threading and execution context management, ensuring script functions execute safely within their proper context while maintaining compatibility with Java's functional interface requirements.",
+  "constructors": [
+    {
+      "signature": "new MethodWrapper(scriptContext)",
+      "description": "This constructor is used internally by language implementations",
+      "parameters": [
+        {
+          "name": "scriptContext",
+          "type": "BaseScriptContext",
+          "description": "The script context this wrapper belongs to"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

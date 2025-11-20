@@ -1,0 +1,31 @@
+{
+  "name": "EventTitle",
+  "fullClassName": "EventTitle",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a title is displayed on screen.",
+  "overview": "Fires when any title is displayed. The `text` field contains the title content. Includes server titles and game notifications. Not cancellable. Useful for tracking important announcements.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "text",
+      "signature": "text",
+      "returnType": "string",
+      "description": "The title text that was displayed. This contains the title text as it appeared on screen, including any Minecraft formatting codes.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"Title\", JavaWrapper.methodToJavaAsync((e) => {\n  const titleText = removeFormatting(e.text);\n\n  Chat.log(`&dTitle Displayed: ${titleText}`);\n\n  // Handle special titles\n  if (titleText.toLowerCase().includes(\"welcome\")) {\n    Chat.log(`&aWelcome message received!`);\n  } else if (titleText.toLowerCase().includes(\"warning\")) {\n    Chat.log(`&cWarning received: ${titleText}`);\n    Chat.actionbar(`&c⚠ ${titleText}`);\n  } else if (titleText.toLowerCase().includes(\"congratulations\")) {\n    Chat.log(`&6Achievement: ${titleText}`);\n    Chat.actionbar(`&a🎉 ${titleText}`);\n  }\n}));\n\nfunction removeFormatting(text) {\n  return text.replace(/§[0-9a-fk-or]/g, '');\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

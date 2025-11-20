@@ -1,0 +1,19 @@
+{
+  "name": "FiltererSendPacket",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.event.filterer.FiltererSendPacket",
+  "extends": null,
+  "since": "1.9.1",
+  "description": "An event filterer that selectively filters `SendPacket` events based on packet type. This class allows you to create event listeners that only trigger for specific types of outgoing packets, reducing unnecessary event processing and improving performance.",
+  "overview": "Filterers are used with event listeners to control which events trigger your handler functions. The `FiltererSendPacket` specifically works with the `SendPacket` event to filter based on the packet type name.",
+  "constructors": [
+    {
+      "signature": "new FiltererSendPacket()",
+      "description": "Creates a new `FiltererSendPacket` instance with no type filter set. By default, this filterer will match all `SendPacket` events.",
+      "parameters": [],
+      "examples": [
+        "// Create a filterer that matches all packet types\nconst allPacketsFilter = new FiltererSendPacket();\nallPacketsFilter.setType(null); // Match all packets\n\n// Use with event listener\nJsMacros.on(\"SendPacket\", JavaWrapper.methodToJavaAsync((event) => {\n    Chat.log(`Packet detected: ${event.type}`);\n}), allPacketsFilter);"
+      ]
+    }
+  ],
+  "methods": []
+}

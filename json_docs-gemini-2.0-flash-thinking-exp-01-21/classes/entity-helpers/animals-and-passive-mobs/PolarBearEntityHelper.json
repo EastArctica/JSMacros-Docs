@@ -1,0 +1,23 @@
+{
+  "name": "PolarBearEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.PolarBearEntityHelper",
+  "extends": "AnimalEntityHelper<PolarBearEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `PolarBearEntityHelper` class provides specialized access to polar bear entities in Minecraft. It offers methods to monitor polar‑bear‑specific behaviors such as the bear’s aggressive stance (standing up to attack). This helper is a thin wrapper around the underlying `PolarBearEntity` Minecraft class and inherits all functionality from `AnimalEntityHelper`, `MobEntityHelper`, `LivingEntityHelper`, and `EntityHelper`.",
+  "overview": "This helper is useful for scripts that need to react to polar bears, for example warning the player when a bear is about to charge, or integrating polar‑bear‑related mechanics into custom automation.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isAttacking",
+      "signature": "polarBear.isAttacking()",
+      "returnType": "boolean",
+      "description": "Delegates to `PolarBearEntity.isWarning()` in Minecraft, which is true when the bear adopts its aggressive, upright stance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Continuously monitor nearby polar bears and warn the player when one is about to attack.\nclass PolarBearWatcher {\n    constructor() {\n        this.scanRadius = 20; // blocks\n    }\n\n    checkBears() {\n        const player = Player.getPlayer();\n        if (!player) return;\n        const entities = World.getEntities(this.scanRadius);\n        entities.forEach(e => {\n            if (e.is(\"minecraft:polar_bear\")) {\n                const bear = e.asPolarBear();\n                if (bear.isAttacking()) {\n                    // Highlight the bear and send a warning\n                    e.setGlowing(true);\n                    e.setGlowingColor(0xFF0000); // red\n                    Chat.actionbar(\"&cWarning: Polar bear is charging!\");\n                } else {\n                    e.resetGlowing();\n                }\n            }\n        });\n    }\n}\n\nconst watcher = new PolarBearWatcher();\n\n// Run every tick for real‑time monitoring\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync(() => {\n    watcher.checkBears();\n}));",
+        "// Example of adding polar‑bear danger levels to a broader mob‑danger monitoring script\nfunction evaluateDanger(entityHelper) {\n    if (entityHelper instanceof PolarBearEntityHelper && entityHelper.isAttacking()) {\n        return { level: \"high\", reason: \"Polar bear charging\" };\n    }\n    // other entity checks …\n    return { level: \"low\", reason: \"No immediate threat\" };\n}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "name": "BlockPredicateHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.BlockPredicateHelper",
+  "extends": "BaseHelper<BlockPredicate>",
+  "since": "1.9.1",
+  "description": "The `BlockPredicateHelper` class is a wrapper around Minecraft's `BlockPredicate` that provides JavaScript functionality for testing and evaluating block conditions in JsMacros scripts.",
+  "overview": "This helper allows you to create complex block matching conditions that can check block types, states, and NBT data.\n\nBlockPredicateHelper is primarily used in World Interaction contexts where you need to:\n- Test if a block at a specific position matches certain criteria\n- Check block types, states, and NBT data conditions\n- Create complex block matching logic for automation scripts\n\nThis class is typically obtained from:\n- Command arguments (minecraft:block_predicate)\n- Block predicate builders and utilities\n- Events that provide block predicates",
+  "constructors": [
+    {
+      "signature": "// Typically obtained from commands or other APIs\n// Not directly instantiated by script writers",
+      "description": "BlockPredicateHelper instances are created internally by JsMacros and typically obtained from other APIs rather than constructed directly.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getBlocks",
+      "signature": "getBlocks()",
+      "returnType": "List<BlockHelper> | null",
+      "description": "Gets the list of blocks that this predicate matches against.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const blocks = blockPredicate.getBlocks();\nif (blocks) {\n    for (const block of blocks) {\n        Chat.log(\"Matches block:\", block.getId());\n    }\n}"
+      ]
+    },
+    {
+      "name": "getStatePredicate",
+      "signature": "getStatePredicate()",
+      "returnType": "StatePredicateHelper | null",
+      "description": "Gets the state predicate for checking block states (properties like facing, powered state, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const statePredicate = blockPredicate.getStatePredicate();\nif (statePredicate) {\n    // Can test block states\n    const matches = statePredicate.test(blockState);\n}"
+      ]
+    },
+    {
+      "name": "getNbtPredicate",
+      "signature": "getNbtPredicate()",
+      "returnType": "NbtPredicateHelper | null",
+      "description": "Gets the NBT predicate for checking block entity data.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const nbtPredicate = blockPredicate.getNbtPredicate();\nif (nbtPredicate) {\n    // Can test NBT data\n    const matches = nbtPredicate.test(entity);\n}"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(position)",
+      "returnType": "boolean",
+      "description": "Tests whether the block at the specified position matches this predicate.",
+      "parameters": [
+        {
+          "name": "position",
+          "type": "BlockPosHelper",
+          "description": "The block position to test against this predicate"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const position = new BlockPosHelper(x, y, z);\nconst matches = blockPredicate.test(position);\nif (matches) {\n    Chat.log(\"Block at position matches the predicate!\");\n}"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "BlockPredicate",
+      "description": "Returns the underlying Minecraft `BlockPredicate` object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawPredicate = blockPredicate.getRaw();"
+      ]
+    }
+  ]
+}

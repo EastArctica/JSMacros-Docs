@@ -1,0 +1,61 @@
+{
+  "name": "BaseHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.helpers.BaseHelper",
+  "since": "JsMacros 1.0.0",
+  "description": "The `BaseHelper` class is a fundamental abstract base class that serves as the foundation for most helper classes in JSMacros. It provides a standardized wrapper interface around Minecraft's native objects, allowing consistent access to underlying game objects while maintaining proper object equality and behavior within the JavaScript environment.",
+  "overview": "The `BaseHelper` class implements a wrapper pattern that encapsulates Minecraft's internal objects (like entities, blocks, items, text components, etc.) and provides a consistent API for JavaScript scripts. Almost all JSMacros helper classes extend `BaseHelper`, including:\n\n- `EntityHelper` - Wraps Minecraft entities\n- `BlockHelper` - Wraps Minecraft blocks\n- `ItemHelper` - Wraps Minecraft items\n- `TextHelper` - Wraps Minecraft text components\n- `BlockPosHelper` - Wraps block positions\n- And many more...\n\nThe generic type parameter `<T>` represents the type of the wrapped Minecraft object.",
+  "constructors": [
+    {
+      "signature": "BaseHelper(T base)",
+      "description": "Protected constructor used by extending classes to initialize the helper with a base Minecraft object.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "T",
+          "description": "The underlying Minecraft object to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "T",
+      "description": "Returns the raw underlying Minecraft object wrapped by this helper.\n\n**Use Cases:**\n- Advanced debugging and introspection\n- Interfacing with other mods or APIs that expect raw Minecraft objects\n- Accessing Minecraft-specific methods not exposed through the helper API",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get the raw Minecraft entity from an EntityHelper\nconst entityHelper = World.getEntities()[0];\nconst rawEntity = entityHelper.getRaw();\n// rawEntity is now the native Minecraft Entity object"
+      ]
+    },
+    {
+      "name": "equals",
+      "signature": "equals(obj)",
+      "returnType": "boolean",
+      "description": "Compares this helper to another object for equality. Two `BaseHelper` instances are considered equal if they wrap the same underlying Minecraft object.\n\n**Behavior:**\n- If comparing with another `BaseHelper`, compares the underlying wrapped objects\n- If comparing with a raw object, compares with this helper's wrapped object\n- Maintains proper equality semantics regardless of wrapper type",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": "The object to compare against"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const entity1 = World.getEntities()[0];\nconst entity2 = World.getEntities()[0];\n\n// These should be equal as they reference the same entity\nif (entity1.equals(entity2)) {\n    Chat.log(\"Both helpers reference the same entity\");\n}\n\n// Also works with raw objects\nconst rawEntity = entity1.getRaw();\nif (entity1.equals(rawEntity)) {\n    Chat.log(\"Helper equals its raw object\");\n}"
+      ]
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code of the underlying Minecraft object, ensuring consistent hashing behavior between helper instances and raw objects.\n\n**Behavior:**\n- Delegates to the wrapped object's `hashCode()` method\n- Ensures helper instances and raw objects have identical hash codes\n- Maintains proper behavior in hash-based collections (Maps, Sets, etc.)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const entityHelper = World.getEntities()[0];\nconst rawEntity = entityHelper.getRaw();\n\n// These hash codes should be identical\nconst helperHash = entityHelper.hashCode();\nconst rawHash = rawEntity.hashCode();\n\nChat.log(`Helper hash: ${helperHash}, Raw hash: ${rawHash}`);"
+      ]
+    }
+  ]
+}

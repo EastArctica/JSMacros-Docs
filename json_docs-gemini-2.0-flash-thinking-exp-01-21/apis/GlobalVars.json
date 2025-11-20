@@ -1,0 +1,336 @@
+{
+  "name": "GlobalVars",
+  "fullClassName": "GlobalVars",
+  "extends": null,
+  "since": null,
+  "description": "Provides a way to store and share variables between different scripts and contexts (e.g., from a script to a custom GUI). Accessible from scripts via the global `GlobalVars` variable.",
+  "overview": null,
+  "constructors": [],
+  "methods": [
+    {
+      "name": "putInt",
+      "signature": "putInt(name: string, i: int)",
+      "returnType": "int | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "i",
+          "type": "int",
+          "description": "The integer value to store."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putInt(\"player_deaths\", 5);"
+      ]
+    },
+    {
+      "name": "putString",
+      "signature": "putString(name: string, str: string)",
+      "returnType": "string | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "description": "The string value to store."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putString(\"player_name\", \"Steve\");"
+      ]
+    },
+    {
+      "name": "putDouble",
+      "signature": "putDouble(name: string, d: double)",
+      "returnType": "double | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "d",
+          "type": "double",
+          "description": "The double value to store."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putDouble(\"player_health\", 19.5);"
+      ]
+    },
+    {
+      "name": "putBoolean",
+      "signature": "putBoolean(name: string, b: boolean)",
+      "returnType": "boolean | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "b",
+          "type": "boolean",
+          "description": "The boolean value to store."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putBoolean(\"is_afk\", true);"
+      ]
+    },
+    {
+      "name": "putObject",
+      "signature": "putObject(name: string, o: any)",
+      "returnType": "any | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        },
+        {
+          "name": "o",
+          "type": "any",
+          "description": "The object to store."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const playerPos = { x: 10, y: 64, z: -20 };\nGlobalVars.putObject(\"last_pos\", playerPos);"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType(name: string)",
+      "returnType": "string | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable to check."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putInt(\"my_var\", 10);\nconst type = GlobalVars.getType(\"my_var\");\nChat.log(type); // \"java.lang.Integer\""
+      ]
+    },
+    {
+      "name": "getInt",
+      "signature": "getInt(name: string)",
+      "returnType": "int | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const deaths = GlobalVars.getInt(\"player_deaths\");\nif (deaths !== null) {\n    Chat.log(`Player has died ${deaths} times.`);\n}"
+      ]
+    },
+    {
+      "name": "getAndIncrementInt",
+      "signature": "getAndIncrementInt(name: string)",
+      "returnType": "int | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 0);\nconst value = GlobalVars.getAndIncrementInt(\"counter\");\n// value is 0, stored value is now 1"
+      ]
+    },
+    {
+      "name": "getAndDecrementInt",
+      "signature": "getAndDecrementInt(name: string)",
+      "returnType": "int | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 10);\nconst value = GlobalVars.getAndDecrementInt(\"counter\");\n// value is 10, stored value is now 9"
+      ]
+    },
+    {
+      "name": "incrementAndGetInt",
+      "signature": "incrementAndGetInt(name: string)",
+      "returnType": "int | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 0);\nconst value = GlobalVars.incrementAndGetInt(\"counter\");\n// value is 1, stored value is now 1"
+      ]
+    },
+    {
+      "name": "decrementAndGetInt",
+      "signature": "decrementAndGetInt(name: string)",
+      "returnType": "int | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the integer variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putInt(\"counter\", 10);\nconst value = GlobalVars.decrementAndGetInt(\"counter\");\n// value is 9, stored value is now 9"
+      ]
+    },
+    {
+      "name": "getString",
+      "signature": "getString(name: string)",
+      "returnType": "string | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const name = GlobalVars.getString(\"player_name\");"
+      ]
+    },
+    {
+      "name": "getDouble",
+      "signature": "getDouble(name: string)",
+      "returnType": "double | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const health = GlobalVars.getDouble(\"player_health\");"
+      ]
+    },
+    {
+      "name": "getBoolean",
+      "signature": "getBoolean(name: string)",
+      "returnType": "boolean | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const afk = GlobalVars.getBoolean(\"is_afk\");"
+      ]
+    },
+    {
+      "name": "toggleBoolean",
+      "signature": "toggleBoolean(name: string)",
+      "returnType": "boolean | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the boolean variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.putBoolean(\"is_running\", false);\nconst newState = GlobalVars.toggleBoolean(\"is_running\");\nChat.log(`New state: ${newState}`); // \"New state: true\""
+      ]
+    },
+    {
+      "name": "getObject",
+      "signature": "getObject(name: string)",
+      "returnType": "any | null",
+      "description": "",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the variable."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const pos = GlobalVars.getObject(\"last_pos\");\nif (pos) {\n    Chat.log(`Last X position: ${pos.x}`);\n}"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "remove(key: string)",
+      "returnType": "void",
+      "description": "",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The name of the variable to remove."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "GlobalVars.remove(\"player_name\");"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "java.util.Map<string, any>",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rawMap = GlobalVars.getRaw();\nrawMap.put(\"new_key\", \"new_value\");"
+      ]
+    }
+  ]
+}

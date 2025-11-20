@@ -1,0 +1,150 @@
+[
+  {
+    "name": "SliderWidgetHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.SliderWidgetHelper",
+    "extends": "ClickableWidgetHelper<SliderWidgetHelper, Slider>",
+    "since": "1.8.4",
+    "description": "The `SliderWidgetHelper` class is a comprehensive helper for creating and managing slider widgets in JSMacros custom screens and UIs. It provides intuitive slider controls with configurable value ranges, step increments, and change event handling. This class serves as a wrapper around Minecraft's native slider widgets, exposing them to JSMacros scripts with additional functionality for tooltips, actions, and screen integration.",
+    "overview": "The `SliderWidgetHelper` class provides:\n- **Slider Creation**: Easy creation of slider widgets with custom ranges and steps\n- **Value Management**: Get and set slider values with automatic bounds checking\n- **Step Control**: Configurable step increments for discrete value selection\n- **Event Handling**: Real-time change events with proper screen context and error handling\n- **Tooltips**: Multi-line tooltip support with various text formats\n- **State Management**: Control over active, visible, and focus states\n- **Builder Pattern**: Fluent API for easy slider construction\n- **Z-Index Support**: Layering control for complex UI layouts",
+    "constructors": [
+      {
+        "signature": "new SliderWidgetHelper(slider)",
+        "description": "Creates a new SliderWidgetHelper from an existing Slider instance.",
+        "parameters": [
+          {
+            "name": "slider",
+            "type": "Slider",
+            "description": "The underlying Slider to wrap"
+          }
+        ]
+      },
+      {
+        "signature": "new SliderWidgetHelper(slider, zIndex)",
+        "description": "Creates a new SliderWidgetHelper with a specified z-index.",
+        "parameters": [
+          {
+            "name": "slider",
+            "type": "Slider",
+            "description": "The underlying Slider to wrap"
+          },
+          {
+            "name": "zIndex",
+            "type": "int",
+            "description": "The z-index for rendering order"
+          }
+        ]
+      }
+    ],
+    "methods": []
+  },
+  {
+    "name": "SliderBuilder",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.SliderWidgetHelper$SliderBuilder",
+    "extends": "AbstractWidgetBuilder<SliderBuilder, Slider, SliderWidgetHelper>",
+    "since": "1.8.4",
+    "description": "The `SliderWidgetHelper.SliderBuilder` class is a builder pattern implementation for creating slider widgets with configurable ranges, step sizes, initial values, and event handling. It provides a fluent interface for constructing interactive slider controls that can be added to custom screens and overlays in JSMacros.",
+    "overview": "The `SliderBuilder` class enables the creation of customizable slider widgets with:\n- Configurable step ranges (minimum 2 steps)\n- Initial value positioning\n- Change event callbacks with MethodWrapper\n- Inherited positioning, sizing, and styling from AbstractWidgetBuilder\n- Method chaining for fluent configuration\n- Integration with IScreen rendering system",
+    "constructors": [
+      {
+        "signature": "new SliderBuilder(IScreen screen)",
+        "description": "Creates a new SliderBuilder instance for the specified screen.",
+        "parameters": [
+          {
+            "name": "screen",
+            "type": "IScreen",
+            "description": "The screen to which the slider will be added"
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "steps",
+        "signature": "builder.steps(steps)",
+        "returnType": "SliderBuilder",
+        "description": "Sets the number of steps for the slider.",
+        "parameters": [
+          {
+            "name": "steps",
+            "type": "int",
+            "description": "The amount of steps for the slider. Must be greater or equal to 2"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const slider = screen.sliderBuilder()\n    .steps(10)  // Slider will have 10 positions (0-9)\n    .build();"
+        ]
+      },
+      {
+        "name": "getSteps",
+        "signature": "builder.getSteps()",
+        "returnType": "int",
+        "description": "Returns the configured number of steps.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "initially",
+        "signature": "builder.initially(value)",
+        "returnType": "SliderBuilder",
+        "description": "Sets the initial value of the slider.",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "int",
+            "description": "The initial value of the slider. Must be between 0 and steps - 1"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const slider = screen.sliderBuilder()\n    .steps(100)\n    .initially(25)  // Start at 25% position\n    .build();"
+        ]
+      },
+      {
+        "name": "getValue",
+        "signature": "builder.getValue()",
+        "returnType": "int",
+        "description": "Returns the configured initial value.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "action",
+        "signature": "builder.action(action)",
+        "returnType": "SliderBuilder",
+        "description": "Sets the change listener callback for the slider.",
+        "parameters": [
+          {
+            "name": "action",
+            "type": "MethodWrapper<SliderWidgetHelper, IScreen, Object, ?>",
+            "description": "The change listener for the slider"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const changeHandler = JavaWrapper.methodToJava((slider, screen) => {\n    Chat.log(`Slider value changed to: ${slider.getValue()}`);\n});\n\nconst slider = screen.sliderBuilder()\n    .steps(50)\n    .action(changeHandler)\n    .build();"
+        ]
+      },
+      {
+        "name": "getAction",
+        "signature": "builder.getAction()",
+        "returnType": "MethodWrapper<SliderWidgetHelper, IScreen, Object, ?>",
+        "description": "Returns the configured change listener.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "createWidget",
+        "signature": "builder.createWidget()",
+        "returnType": "SliderWidgetHelper",
+        "description": "Creates and returns the actual SliderWidgetHelper instance.",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

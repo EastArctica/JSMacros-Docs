@@ -1,0 +1,27 @@
+{
+  "name": "fileObj",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.gui.overlays.FileChooser.fileObj",
+  "extends": null,
+  "since": "early JSMacros versions",
+  "description": "The FileChooser.fileObj class is a simple but essential wrapper class that associates a File object with its corresponding Button widget in the FileChooser's grid display. It serves as the bridge between the file system representation and the visual interface elements, allowing the FileChooser to manage file selection, display, and user interactions efficiently. Each file or directory shown in the FileChooser interface is represented by an instance of this class.",
+  "overview": "The `fileObj` class is a fundamental component of the FileChooser system that:\n- **Binds File to UI**: Creates a direct association between file system entries and their visual representations\n- **Manages State**: Tracks the selected state and visual appearance of each file entry\n- **Enables Interactions**: Provides the infrastructure for file selection, navigation, and user interactions\n- **Supports Grid Layout**: Works seamlessly with the 5-column grid display system\n- **Handles Both Types**: Uniformly represents both files and directories with appropriate visual differentiation",
+  "constructors": [
+    {
+      "signature": "new fileObj(file, btn)",
+      "description": "Creates a new fileObj instance that associates a File object with its corresponding Button widget.",
+      "parameters": [
+        {
+          "name": "file",
+          "type": "File",
+          "description": "The file or directory object this wrapper represents"
+        },
+        {
+          "name": "btn",
+          "type": "Button",
+          "description": "The button widget that displays this file in the FileChooser grid"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

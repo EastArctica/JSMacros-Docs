@@ -1,0 +1,29 @@
+{
+  "name": "EventDropSlot",
+  "fullClassName": "EventDropSlot",
+  "extends": null,
+  "since": null,
+  "description": "This event is triggered when an item is dropped from an inventory slot.",
+  "overview": "This event's payload includes two main fields:\n- `slot` (type `int`): The slot number from which the item is being dropped. This corresponds to the slot in the current inventory or hotbar. Hotbar slots are typically 0-8, while inventory slots start from higher numbers depending on the container type.\n- `all` (type `boolean`): Indicates whether the entire stack is being dropped or just one item. `true` means the entire stack of items is being dropped (e.g., Ctrl+Q), and `false` means only a single item is being dropped (e.g., Q).\n\nBehavior:\n- Fires when a player drops items from an inventory slot.\n- The `all` field indicates if the player dropped the entire stack or just one item.\n- This event is cancellable, preventing the drop action.\n- Works with both inventory screens and hotbar drops.\n- Can be used to prevent accidental dropping of valuable items.\n\nMinimal example:\n```js\nJsMacros.on(\"DropSlot\", JavaWrapper.methodToJavaAsync((e) => {\n  Chat.log(`Dropped from slot ${e.slot}, all: ${e.all}`);\n}));\n```\n\nAsync example:\n```js\nJsMacros.on(\"DropSlot\", JavaWrapper.methodToJavaAsync((e) => {\n  const slot = e.slot;\n  const dropAll = e.all;\n  const inventory = e.getInventory();\n  const slotItem = inventory.getSlot(slot);\n\n  const action = dropAll ? \"dropped entire stack\" : \"dropped one item\";\n  const itemName = slotItem ? slotItem.getName().getString() : \"Unknown item\";\n\n  Chat.log(`&6Item Drop: &f${itemName}`);\n  Chat.log(`&7Slot: &f${slot} &7- Action: &f${action}`);\n\n  // Prevent dropping valuable items\n  if (slotItem && isValuableItem(itemName)) {\n    e.cancel();\n    Chat.actionbar(\"&cCannot drop valuable items!\");\n    Chat.log(`&cPrevented drop of: &f${itemName}`);\n  }\n\n  // Warn when dropping stacks\n  if (dropAll && slotItem) {\n    const count = slotItem.getCount();\n    Chat.actionbar(`&eWarning: Dropping &f${count} &eitems!`);\n  }\n}));\n\nfunction isValuableItem(itemName) {\n  const valuableItems = [\n    \"diamond\", \"netherite\", \"elytra\", \"totem\", \"enchanted\",\n    \"god\", \"apple\", \"dragon\", \"beacon\", \"shulker\"\n  ];\n  return valuableItems.some(val => itemName.toLowerCase().includes(val));\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInventory",
+      "signature": "getInventory()",
+      "returnType": "Inventory<?>",
+      "description": "Returns the inventory object associated with this drop event. This provides access to the full inventory, allowing you to examine the item being dropped, check other slots, or perform additional inventory operations.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

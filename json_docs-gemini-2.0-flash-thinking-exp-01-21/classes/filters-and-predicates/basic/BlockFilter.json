@@ -1,0 +1,114 @@
+{
+  "name": "BlockFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter",
+  "extends": "ClassWrapperFilter<BlockHelper>",
+  "since": "1.6.5",
+  "description": "The `BlockFilter` class is a specialized filter in JSMacros used with the WorldScanner system to filter blocks based on their properties and method results. It extends the `ClassWrapperFilter` class and provides a powerful way to create complex block filtering logic using methods from the `BlockHelper` class.\nThis class is primarily used internally by the `WorldScannerBuilder` when creating block-based filters, but can also be instantiated directly for advanced filtering scenarios.",
+  "overview": "The `BlockFilter` works by:\n\n1. **Method Invocation**: Invokes a specified method from `BlockHelper` on each block being evaluated\n2. **Result Filtering**: Applies a comparison filter to the method result\n3. **Boolean Evaluation**: Returns `true` if the block matches the filter criteria\n\n**Key Features:**\n- Supports all public, no-parameter methods from `BlockHelper`\n- Works with different return types: String, Number, Boolean\n- Supports logical operations (AND, OR, XOR, NOT) through inheritance\n- Integrates seamlessly with the WorldScanner system\n- Provides high-performance parallel filtering capabilities",
+  "constructors": [
+    {
+      "signature": "new BlockFilter(methodName, methodArgs, filterArgs)",
+      "description": "Creates a new BlockFilter instance with the specified method and filter criteria.",
+      "parameters": [
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method from `BlockHelper` to invoke on each block"
+        },
+        {
+          "name": "methodArgs",
+          "type": "Object[]",
+          "description": "Arguments to pass to the method when invoked (typically empty for no-parameter methods)"
+        },
+        {
+          "name": "filterArgs",
+          "type": "Object[]",
+          "description": "Arguments for the filter comparison operation"
+        }
+      ],
+      "examples": [
+        "// Create a filter that matches blocks with hardness >= 2.0\nconst BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\nconst filter = new BlockFilter(\"getHardness\", [], [\">=\", 2.0]);",
+        "// Create a filter that matches blocks whose ID contains \"ore\"\nconst oreFilter = new BlockFilter(\"getId\", [], [\"CONTAINS\", \"ore\"]);",
+        "const BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\n\n// Find blocks that are relatively soft (hardness < 2.0)\nconst softBlockFilter = new BlockFilter(\"getHardness\", [], [\"<\", 2.0]);\n\n// Use with a custom scanner\nconst scanner = World.getWorldScanner(softBlockFilter, null);\nconst softBlocks = scanner.scanChunksAroundPlayer(2);\nChat.log(`Found ${softBlocks.length} soft blocks`);",
+        "const BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\n\n// Find all ore blocks\nconst oreFilter = new BlockFilter(\"getId\", [], [\"CONTAINS\", \"ore\"]);\n\n// Find specific valuable ores\nconst valuableOreFilter = new BlockFilter(\"getId\", [], [\n    \"EQUALS\", \"minecraft:diamond_ore\"\n]);\n\n// Find blocks matching multiple IDs (requires multiple filters combined)\nconst stoneFilter = new BlockFilter(\"getId\", [], [\"CONTAINS\", \"stone\"]);",
+        "const BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\n\n// Find blocks mobs can spawn inside\nconst spawnableFilter = new BlockFilter(\"canMobSpawnInside\", [], [true]);\n\n// Find blocks with dynamic bounds\nconst dynamicBoundsFilter = new BlockFilter(\"hasDynamicBounds\", [], [true]);\n\n// Find blocks with specific blast resistance\nconst resistantFilter = new BlockFilter(\"getBlastResistance\", [], [\">=\", 6.0]);",
+        "const BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\n\n// Create individual filters\nconst stoneFilter = new BlockFilter(\"getId\", [], [\"CONTAINS\", \"stone\"]);\nconst hardFilter = new BlockFilter(\"getHardness\", [], [\">=\", 1.5]);\nconst resistantFilter = new BlockFilter(\"getBlastResistance\", [], [\">=\", 2.0]);\n\n// Combine with logical operations (inherited from BasicFilter)\nconst combinedFilter = stoneFilter.and(hardFilter).or(resistantFilter);\n\n// Use the combined filter\nconst scanner = World.getWorldScanner(combinedFilter, null);\nconst results = scanner.scanChunksAroundPlayer(1);\nChat.log(`Found ${results.length} matching blocks`);",
+        "const BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\n\n// Find all building materials (blocks ending with specific patterns)\nconst buildingMaterialsFilter = new BlockFilter(\"getId\", [], [\n    \"ENDS_WITH\", \"_planks\"\n]);\n\n// Find all wood types\nconst woodFilter = new BlockFilter(\"getId\", [], [\"MATCHES\", \".*_log$\"]);\n\n// Find all glass types\nconst glassFilter = new BlockFilter(\"getId\", [], [\"MATCHES\", \".*glass.*\"]);",
+        "// Direct BlockFilter usage\nconst BlockFilter = Java.type(\"xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockFilter\");\nconst hardnessFilter = new BlockFilter(\"getHardness\", [], [\">=\", 2.0]);\nconst stoneFilter = new BlockFilter(\"getId\", [], [\"CONTAINS\", \"stone\"]);\nconst combinedFilter = hardnessFilter.and(stoneFilter);\nconst directScanner = World.getWorldScanner(combinedFilter, null);",
+        "try {\n    // This will fail - method doesn't exist\n    const badFilter = new BlockFilter(\"nonExistentMethod\", [], [true]);\n} catch (e) {\n    Chat.log(\"Method not found: \" + e.getMessage());\n}",
+        "try {\n    // This will fail - wrong filter arguments\n    const badFilter = new BlockFilter(\"getHardness\", [], [\"CONTAINS\", \"test\"]);\n} catch (e) {\n    Chat.log(\"Invalid filter arguments: \" + e.getMessage());\n}"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "apply",
+      "signature": "apply(BlockHelper block)",
+      "returnType": "boolean",
+      "description": "Applies the filter to a block and returns the result",
+      "parameters": [
+        {
+          "name": "block",
+          "type": "BlockHelper",
+          "description": "The block to apply the filter to"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "and",
+      "signature": "and(IFilter<BlockHelper> filter)",
+      "returnType": "BlockFilter",
+      "description": "Combines with another filter using AND logic",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<BlockHelper>",
+          "description": "Another filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "or",
+      "signature": "or(IFilter<BlockHelper> filter)",
+      "returnType": "BlockFilter",
+      "description": "Combines with another filter using OR logic",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<BlockHelper>",
+          "description": "Another filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "xor",
+      "signature": "xor(IFilter<BlockHelper> filter)",
+      "returnType": "BlockFilter",
+      "description": "Combines with another filter using XOR logic",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<BlockHelper>",
+          "description": "Another filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "BlockFilter",
+      "description": "Negates the current filter",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "NameChange",
+  "fullClassName": "EventNameChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a player's name changes in the world.",
+  "overview": "This event fires when a player's display name changes. The `oldName` field contains the previous name. The `newName` field contains the current name. It is not cancellable and is useful for tracking player identity changes.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

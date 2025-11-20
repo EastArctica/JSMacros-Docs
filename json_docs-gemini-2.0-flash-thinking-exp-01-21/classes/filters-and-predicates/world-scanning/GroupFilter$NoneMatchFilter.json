@@ -1,0 +1,116 @@
+{
+  "name": "NoneMatchFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.GroupFilter.NoneMatchFilter",
+  "extends": "GroupFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `NoneMatchFilter` class is a concrete implementation of `GroupFilter` that returns `true` when **none** of the child filters return `true` for the given object. This filter is essentially a way to exclude objects that match any of several criteria, making it perfect for filtering out unwanted items, blocks, or entities.\n\nNoneMatchFilter is particularly useful when you want to find everything except certain specific types. This is commonly used to exclude common blocks when searching for rare ones, or to filter out unwanted items from inventory searches.",
+  "overview": "The NoneMatchFilter class provides:\n\n- **Exclusion logic**: Returns true only when no child filters match\n- **Flexible exclusion count**: Can exclude based on any number of criteria\n- **Fluent interface**: Methods return the NoneMatchFilter instance for method chaining\n- **Negation pattern**: Equivalent to the negation of an AnyMatchFilter",
+  "constructors": [
+    {
+      "signature": "new NoneMatchFilter()",
+      "description": "Creates a new NoneMatchFilter with no child filters. Use the `add()` method to add filters to the group.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "add",
+      "signature": "add(filter)",
+      "returnType": "NoneMatchFilter",
+      "description": "Adds a child filter to the exclusion list.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to exclude"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const uncommonBlockFilter = new GroupFilter.NoneMatchFilter();\nuncommonBlockFilter\n    .add(airFilter)\n    .add(dirtFilter)\n    .add(grassFilter)\n    .add(stoneFilter);"
+      ]
+    },
+    {
+      "name": "remove",
+      "signature": "remove(filter)",
+      "returnType": "NoneMatchFilter",
+      "description": "Removes a child filter from the exclusion list.",
+      "parameters": [
+        {
+          "name": "filter",
+          "type": "IFilter<T>",
+          "description": "The filter to remove from exclusion"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFilters",
+      "signature": "getFilters()",
+      "returnType": "ImmutableList<IFilter<T>>",
+      "description": "Returns an immutable list of all exclusion filters.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "test",
+      "signature": "test(object)",
+      "returnType": "boolean",
+      "description": "Tests whether the given object matches NONE of the exclusion filters.",
+      "parameters": [
+        {
+          "name": "object",
+          "type": "T",
+          "description": "The object to test"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "and",
+      "signature": "and(other)",
+      "returnType": "AndFilter<T>",
+      "description": "Combines this filter with another using AND logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const perfectTargets = interestingBlockTypes\n    .and(commonBlocksFilter)\n    .and(dangerousBlocksFilter);"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(other)",
+      "returnType": "OrFilter<T>",
+      "description": "Combines this filter with another using OR logic.",
+      "parameters": [
+        {
+          "name": "other",
+          "type": "IFilter<T>",
+          "description": "The filter to combine with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "not",
+      "signature": "not()",
+      "returnType": "NotFilter<T>",
+      "description": "Creates a negated version of this filter.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const poorLightingFilter = hasGoodLighting.not(); // Equivalent to NoneMatchFilter\nconst noStorageFilter = hasStorage.not();"
+      ]
+    }
+  ]
+}

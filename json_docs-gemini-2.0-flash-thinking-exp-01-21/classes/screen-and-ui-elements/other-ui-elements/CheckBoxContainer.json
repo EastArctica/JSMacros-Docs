@@ -1,0 +1,61 @@
+{
+  "name": "CheckBoxContainer",
+  "fullClassName": "xyz.wagyourgui.wagyourgui.containers.CheckBoxContainer",
+  "extends": "MultiElementContainer<IContainerParent>",
+  "description": "The `CheckBoxContainer` class is a UI container component that combines a checkbox button with an associated text message. It provides a complete checkbox input component with click interaction handling, state management, and callback support. CheckBoxContainer is designed for use within custom screen layouts and UI systems where you need checkbox elements with descriptive text labels.",
+  "overview": "The `CheckBoxContainer` class provides a complete checkbox interface including:\n- Interactive checkbox button with visual check/uncheck states\n- Integrated text message/label displayed alongside the checkbox\n- Click event handling with optional state change callbacks\n- Position and size management within parent containers\n- Visibility control for show/hide functionality\n- Integration with the wagyourgui container system",
+  "constructors": [
+    {
+      "signature": "new CheckBoxContainer(x, y, width, height, textRenderer, defaultState, message, parent, setState)",
+      "description": "Creates a new CheckBoxContainer with specified position, size, appearance, and behavior.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the container's top-left corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the container's top-left corner"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the container in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the container in pixels"
+        },
+        {
+          "name": "textRenderer",
+          "type": "TextRenderer",
+          "description": "Minecraft text renderer for drawing text"
+        },
+        {
+          "name": "defaultState",
+          "type": "boolean",
+          "description": "Initial checked state of the checkbox"
+        },
+        {
+          "name": "message",
+          "type": "Text",
+          "description": "Text message/label to display next to the checkbox"
+        },
+        {
+          "name": "parent",
+          "type": "IContainerParent",
+          "description": "Parent container that manages this container"
+        },
+        {
+          "name": "setState",
+          "type": "Consumer<Boolean>",
+          "description": "Callback function called when checkbox state changes (optional)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

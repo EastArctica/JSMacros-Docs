@@ -1,0 +1,99 @@
+{
+  "name": "BossBarHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.BossBarHelper",
+  "extends": null,
+  "since": "JsMacros 1.2.1",
+  "description": "The `BossBarHelper` class is a World Interaction helper in JsMacros that provides access to Minecraft boss bar information. It allows scripts to inspect boss bar properties including names, progress percentages, colors, and styles. This is particularly useful for monitoring boss fights, health displays, and custom progress indicators that use Minecraft's boss bar system.",
+  "overview": "This class wraps around Minecraft's boss bar system and provides a scripting-friendly interface for interacting with boss bars that are currently displayed on the player's screen.\n\nBossBarHelper instances are typically obtained through:\n\n1. **From BossBar Events** - Bossbar events provide BossBarHelper objects directly\n2. **From World Methods** - Using `World.getBossBars()` to get all active boss bars\n3. **Through Java Utils** - Using conversion utilities when working with raw boss bar objects\n\n```javascript\n// Example from Bossbar event\nevent.on(\"Bossbar\", (event) => {\n    if (event.bossBar) {\n        const bossBar = event.bossBar;\n        Chat.log(`Boss bar update: ${bossBar.getName().getString()}`);\n    }\n});\n\n// Example from World.getBossBars()\nconst bossBars = World.getBossBars();\nfor (const [uuid, bossBar] of bossBars) {\n    Chat.log(`Boss bar ${uuid}: ${bossBar.getName().getString()}`);\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getUUID",
+      "signature": "getUUID()",
+      "returnType": "String",
+      "description": "Returns the unique identifier (UUID) for this boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst uuid = bossBar.getUUID();\nChat.log(`Boss bar UUID: ${uuid}`);\n\n// Use UUID to track specific boss bars\nif (uuid === \"12345678-1234-1234-1234-123456789abc\") {\n    Chat.log(\"This is the ender dragon boss bar!\");\n}"
+      ]
+    },
+    {
+      "name": "getPercent",
+      "signature": "getPercent()",
+      "returnType": "float",
+      "description": "Returns the current progress percentage of the boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst percent = bossBar.getPercent();\nconst percentDisplay = (percent * 100).toFixed(1);\n\nChat.log(`Boss bar progress: ${percentDisplay}%`);\n\n// Example: Alert when boss is below certain health\nif (percent < 0.25) {\n    Chat.log(\"WARNING: Boss is below 25% health!\");\n}"
+      ]
+    },
+    {
+      "name": "getColor",
+      "signature": "getColor()",
+      "returnType": "String",
+      "description": "Returns the color name of the boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst color = bossBar.getColor();\nChat.log(`Boss bar color: ${color}`);\n\n// React to different boss bar colors\nswitch (color) {\n    case \"RED\":\n        Chat.log(\"This appears to be an aggressive boss\");\n        break;\n    case \"BLUE\":\n        Chat.log(\"This might be a water-related boss\");\n        break;\n    case \"GREEN\":\n        Chat.log(\"This could be a nature-themed boss\");\n        break;\n}"
+      ]
+    },
+    {
+      "name": "getStyle",
+      "signature": "getStyle()",
+      "returnType": "String",
+      "description": "Returns the visual style of the boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst style = bossBar.getStyle();\nChat.log(`Boss bar style: ${style}`);\n\n// Handle different bar styles\nif (style === \"NOTCHED_6\") {\n    Chat.log(\"This boss bar shows 6 segments\");\n} else if (style === \"NOTCHED_20\") {\n    Chat.log(\"This boss bar shows 20 segments (detailed progress)\");\n} else if (style === \"PROGRESS\") {\n    Chat.log(\"This is a solid progress bar\");\n}"
+      ]
+    },
+    {
+      "name": "getColorValue",
+      "signature": "getColorValue()",
+      "returnType": "int",
+      "description": "Returns the numeric color value of the boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst colorValue = bossBar.getColorValue();\n\nif (colorValue !== -1) {\n    Chat.log(`Boss bar RGB color: ${colorValue}`);\n    Chat.log(`Hex color: #${colorValue.toString(16).padStart(6, '0')}`);\n} else {\n    Chat.log(\"Boss bar color doesn't have a specific RGB value\");\n}"
+      ]
+    },
+    {
+      "name": "getColorFormat",
+      "signature": "getColorFormat()",
+      "returnType": "FormattingHelper",
+      "description": "Returns a FormattingHelper object representing the color format of the boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst colorFormat = bossBar.getColorFormat();\n\n// Get formatting details\nChat.log(`Color format: ${colorFormat.getName()}`);\nChat.log(`Color code: ${colorFormat.getCode()}`);\n\n// Use the format for text styling\nconst formattedText = colorFormat.format(\"Boss Fight!\");\nChat.log(formattedText); // Will appear in boss bar color\n"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "TextHelper",
+      "description": "Returns the display name of the boss bar.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nconst name = bossBar.getName();\nconst nameString = name.getString();\n\nChat.log(`Boss bar name: ${nameString}`);\n\n// Check for specific boss names\nif (nameString.toLowerCase().includes(\"ender dragon\")) {\n    Chat.log(\"Ender Dragon boss bar detected!\");\n} else if (nameString.toLowerCase().includes(\"wither\")) {\n    Chat.log(\"Wither boss bar detected!\");\n}\n\n// Get JSON representation\nconst nameJson = name.getJson();\nChat.log(\"Boss bar name JSON:\", nameJson);\n"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this boss bar helper.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bossBar = event.bossBar;\nChat.log(bossBar.toString());\n// Example output: BossBarHelper:{\"name:\": \"Ender Dragon\", \"percent\": 0.750000}\n"
+      ]
+    }
+  ]
+}

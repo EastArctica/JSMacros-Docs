@@ -1,0 +1,66 @@
+{
+  "name": "DyeColorHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.DyeColorHelper",
+  "extends": "BaseHelper<DyeColor>",
+  "since": "1.8.4",
+  "description": "DyeColorHelper is a utility class that provides access to Minecraft dye color properties and variations. It wraps the native DyeColor enum and allows you to query various color representations including names, RGB values, and context-specific color variations used in different game elements like fireworks and signs.",
+  "overview": "## How to Access\n\nYou typically obtain a `DyeColorHelper` instance from:\n- Colored entities (sheep, wolves, cats, llamas, shulkers)\n- Dyed items and blocks\n- Various color-related game mechanics\n\n```javascript\n// Get dye color from a sheep\nconst sheep = World.findNearestEntity(entity => entity.getEntityType().getId() === \"minecraft:sheep\");\nif (sheep) {\n    const color = sheep.getColor();\n    log(\"Sheep color: \" + color.getName());\n}\n\n// Check the color properties\nconst colorValue = color.getColorValue();\nconst fireworkColor = color.getFireworkColor();\nlog(\"RGB value: 0x\" + colorValue.toString(16).padStart(6, '0'));\nlog(\"Firework color: 0x\" + fireworkColor.toString(16).padStart(6, '0'));\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Gets the localized name of this dye color",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = sheep.getColor();\nconst colorName = color.getName();\nlog(\"Color name: \" + colorName); // e.g., \"white\", \"red\", \"blue\""
+      ]
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "int",
+      "description": "Gets the unique ID for this dye color in the dye color enum",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = sheep.getColor();\nconst colorId = color.getId();\nlog(\"Color ID: \" + colorId); // 0-15, where 0=white, 1=orange, etc."
+      ]
+    },
+    {
+      "name": "getColorValue",
+      "signature": "getColorValue()",
+      "returnType": "int",
+      "description": "Gets the primary RGB color value used for entities and general rendering",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = sheep.getColor();\nconst rgb = color.getColorValue();\n\n// Convert to hex format for display\nconst hexColor = \"0x\" + rgb.toString(16).padStart(6, '0');\nlog(\"RGB color: \" + hexColor);\n\n// Extract individual RGB components\nconst r = (rgb >> 16) & 0xFF;\nconst g = (rgb >> 8) & 0xFF;\nconst b = rgb & 0xFF;\nlog(`RGB components: R=${r}, G=${g}, B=${b}`);"
+      ]
+    },
+    {
+      "name": "getFireworkColor",
+      "signature": "getFireworkColor()",
+      "returnType": "int",
+      "description": "Gets the specific RGB value used when this color appears in fireworks",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = sheep.getColor();\nconst fireworkRgb = color.getFireworkColor();\nlog(\"Firework color: 0x\" + fireworkRgb.toString(16).padStart(6, '0'));\n\n// Use for creating colored fireworks or particle effects\nconst fireworkColor = color.getFireworkColor();\n// fireworkColor can be used with particle or firework-related APIs"
+      ]
+    },
+    {
+      "name": "getSignColor",
+      "signature": "getSignColor()",
+      "returnType": "int",
+      "description": "Gets the specific RGB value used when this color appears on text signs",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const color = sheep.getColor();\nconst signRgb = color.getSignColor();\nlog(\"Sign text color: 0x\" + signRgb.toString(16).padStart(6, '0'));\n\n// This color would be used for text on signs with this dye color"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "EventRecvPacket",
+  "fullClassName": "EventRecvPacket",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a packet is received from the server.",
+  "overview": "This event fires when any packet is received from the server. The `packet` field contains the packet data. This event is cancellable, preventing packet processing. It is considered an advanced event for network-level monitoring and should be used with caution as it fires very frequently.\nThe `packet` field is of type `Packet` and represents the received packet object. It contains the raw packet data and methods to access packet information, with its structure varying by packet type.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

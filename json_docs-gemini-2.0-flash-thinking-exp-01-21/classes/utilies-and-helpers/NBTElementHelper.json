@@ -1,0 +1,22 @@
+{
+  "name": "NBTElementHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.NBTElementHelper",
+  "extends": "BaseHelper<T>",
+  "since": "JsMacros 1.5.1",
+  "description": "The `NBTElementHelper` class is a fundamental utility class for handling NBT (Named Binary Tag) data in JSMacros. It provides a unified interface for working with all types of NBT elements, including numbers, strings, lists, and compound tags. This class serves as the base for specialized helpers: `NBTNumberHelper`, `NBTListHelper`, and `NBTCompoundHelper`.\n\nNBT data is used throughout Minecraft to store and serialize various types of data, including item properties, entity data, block entity data, and world information. This helper class makes it easy to access, manipulate, and convert NBT data within your scripts.",
+  "overview": "The `NBTElementHelper` class provides:\n\n- Type checking and conversion methods for different NBT element types\n- String representation and parsing capabilities\n- NBT path resolution for complex data navigation\n- Specialized helper classes for different NBT types\n- Static factory methods for wrapping NBT elements",
+  "constructors": [
+    {
+      "signature": "new NBTElementHelper(base)",
+      "description": "NBTElementHelper instances are typically created through static factory methods rather than direct construction.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "T extends NbtElement",
+          "description": "The underlying NBT element"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

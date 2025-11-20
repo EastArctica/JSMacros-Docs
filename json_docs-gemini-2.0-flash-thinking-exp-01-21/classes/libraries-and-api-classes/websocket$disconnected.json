@@ -1,0 +1,10 @@
+{
+  "name": "Disconnected",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.Websocket$Disconnected",
+  "extends": null,
+  "since": "1.1.9",
+  "description": "The `Disconnected` class is a nested class within `Websocket` that provides detailed information about WebSocket disconnection events.",
+  "overview": "The `Disconnected` class is a nested class within `Websocket` that provides detailed information about WebSocket disconnection events. This class is passed to the `onDisconnect` callback when a WebSocket connection is terminated, allowing scripts to analyze the disconnection cause and implement appropriate reconnection or cleanup logic.\n\nThe class contains information about whether the disconnection was initiated by the server or client, and provides access to the WebSocket close frame that contains the close code and reason.",
+  "constructors": [],
+  "methods": []
+}

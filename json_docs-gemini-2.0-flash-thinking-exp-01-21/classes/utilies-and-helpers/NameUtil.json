@@ -1,0 +1,28 @@
+{
+  "name": "NameUtil",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.util.NameUtil",
+  "extends": null,
+  "since": "1.8.4",
+  "description": "The NameUtil class is a specialized utility class in JSMacros that provides intelligent parsing and extraction of player names and roles from Minecraft chat messages.",
+  "overview": "The `NameUtil` class is a specialized utility class in JSMacros that provides intelligent parsing and extraction of player names and roles from Minecraft chat messages. This class is particularly useful for scripts that need to analyze chat messages, identify player names, and extract role or rank information from various chat formats.\n\nNameUtil uses sophisticated pattern matching to handle different chat message formats, including:\n- Standard chat messages with colons (`PlayerName: message`)\n- Messages with angle brackets (`<PlayerName> message`)\n- Whisper/direct messages (`PlayerName whispers to you`)\n- Guild or team messages (`Guild > PlayerName: message`)\n- Messages with role prefixes or suffixes\n\nThe class is designed to work with a wide variety of server chat formats and can handle edge cases commonly found in multiplayer environments with different chat plugins and formatting styles.\n\n**Key Features:**\n- Extracts player names from complex chat message formats\n- Identifies and separates role information from player names\n- Handles whisper messages specially\n- Supports multiple chat formatting patterns\n- Robust against common edge cases and formatting variations\n- Optimized for performance with message length limits\n\nNameUtil is a static utility class, meaning you don't instantiate it. You call its methods directly on the class itself:\n\n```javascript\n// Import the class (optional but recommended)\nconst NameUtil = Java.type(\"xyz.wagyourtail.jsmacros.client.util.NameUtil\");\n\n// Use the static method directly\nconst result = NameUtil.guessNameAndRoles(chatMessage);\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "guessNameAndRoles",
+      "signature": "List<String> guessNameAndRoles(String text)",
+      "returnType": "java.util.List<String>",
+      "description": "This method analyzes a chat message and attempts to extract the player name and any associated roles. It uses a sophisticated algorithm that handles various chat formats:\n\n1. **Whisper Detection**: First checks for whisper messages (`\"PlayerName whispers to you\"`)\n2. **Pattern Matching**: Analyzes the message for common chat patterns:\n   - Messages with angle brackets: `<PlayerName> message`\n   - Messages with colons: `PlayerName: message`\n   - Messages with arrows: `Guild > PlayerName: message`\n   - Messages with role brackets: `[Admin] PlayerName: message`\n3. **Role Extraction**: Separates role information from the actual player name\n4. **Validation**: Ensures extracted names follow valid Minecraft username patterns (letters, numbers, underscores)",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "String",
+          "description": "The chat message text to analyze for name extraction"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const NameUtil = Java.type(\"xyz.wagyourtail.jsmacros.client.util.NameUtil\");\n\n// Example chat messages and their parsing results\nconst testMessages = [\n    \"PlayerName: Hello everyone!\",\n    \"<Admin> PlayerName: This is an announcement\",\n    \"GuildName > PlayerName: Guild chat message\",\n    \"PlayerName whispers to you: secret message\",\n    \"[Mod] PlayerName -> Staff chat: important info\",\n    \"PlayerName >> response to someone\",\n    \"Just a random message without player names\"\n];\n\ntestMessages.forEach(message => {\n    const result = NameUtil.guessNameAndRoles(message);\n    if (result.size() > 0) {\n        const name = result.get(0);\n        const roles = result.size() > 1 ? result.subList(1, result.size()).join(\", \") : \"none\";\n        Chat.log(`Message: \"${message}\"`);\n        Chat.log(`  Name: ${name}, Roles: ${roles}`);\n    } else {\n        Chat.log(`Message: \"${message}\" -> No name found`);\n    }\n});"
+      ]
+    }
+  ]
+}

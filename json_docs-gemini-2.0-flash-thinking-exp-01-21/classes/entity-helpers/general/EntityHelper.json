@@ -1,0 +1,434 @@
+{
+  "name": "EntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.EntityHelper",
+  "extends": "BaseHelper<Entity>",
+  "since": "JSMacros 1.0.0",
+  "description": "The `EntityHelper` class is a fundamental wrapper for Minecraft entities in JSMacros, providing access to entity properties, behaviors, and interactions.",
+  "overview": "It serves as the base class for all entity-related helpers and offers comprehensive methods for querying entity information, positions, states, and performing various operations on entities. This class is typically obtained through events, world queries, or as return values from other helper methods. EntityHelper instances represent specific entity objects in the game world, containing their current state and position.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getPos",
+      "signature": "entity.getPos()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBlockPos",
+      "signature": "entity.getBlockPos()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getEyePos",
+      "signature": "entity.getEyePos()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getChunkPos",
+      "signature": "entity.getChunkPos()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getX",
+      "signature": "entity.getX()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY",
+      "signature": "entity.getY()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZ",
+      "signature": "entity.getZ()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getEyeHeight",
+      "signature": "entity.getEyeHeight()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getVelocity",
+      "signature": "entity.getVelocity()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSpeed",
+      "signature": "entity.getSpeed()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFacingDirection",
+      "signature": "entity.getFacingDirection()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getName",
+      "signature": "entity.getName()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "entity.getType()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "is",
+      "signature": "entity.is()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getUUID",
+      "signature": "entity.getUUID()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBiome",
+      "signature": "entity.getBiome()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getChunk",
+      "signature": "entity.getChunk()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getNBT",
+      "signature": "entity.getNBT()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAlive",
+      "signature": "entity.isAlive()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isGlowing",
+      "signature": "entity.isGlowing()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isInLava",
+      "signature": "entity.isInLava()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOnFire",
+      "signature": "entity.isOnFire()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSneaking",
+      "signature": "entity.isSneaking()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isSprinting",
+      "signature": "entity.isSprinting()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAir",
+      "signature": "entity.getAir()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxAir",
+      "signature": "entity.getMaxAir()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setCustomName",
+      "signature": "entity.setCustomName()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setCustomNameVisible",
+      "signature": "entity.setCustomNameVisible()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setGlowing",
+      "signature": "entity.setGlowing()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setGlowingColor",
+      "signature": "entity.setGlowingColor()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getGlowingColor",
+      "signature": "entity.getGlowingColor()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "resetGlowing",
+      "signature": "entity.resetGlowing()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "resetGlowingColor",
+      "signature": "entity.resetGlowingColor()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getVehicle",
+      "signature": "entity.getVehicle()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getPassengers",
+      "signature": "entity.getPassengers()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "rayTraceBlock",
+      "signature": "entity.rayTraceBlock()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "rayTraceEntity",
+      "signature": "entity.rayTraceEntity()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "entity.distanceTo()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asClientPlayer",
+      "signature": "entity.asClientPlayer()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asPlayer",
+      "signature": "entity.asPlayer()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asVillager",
+      "signature": "entity.asVillager()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asMerchant",
+      "signature": "entity.asMerchant()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asLiving",
+      "signature": "entity.asLiving()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asAnimal",
+      "signature": "entity.asAnimal()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asItem",
+      "signature": "entity.asItem()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "asServerEntity",
+      "signature": "entity.asServerEntity()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "entity.toString()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

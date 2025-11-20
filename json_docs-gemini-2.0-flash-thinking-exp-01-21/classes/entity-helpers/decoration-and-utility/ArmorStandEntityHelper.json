@@ -1,0 +1,130 @@
+{
+  "name": "ArmorStandEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.decoration.ArmorStandEntityHelper",
+  "extends": "LivingEntityHelper<ArmorStandEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `ArmorStandEntityHelper` class provides specialized methods for interacting with armor stand entities in Minecraft. Armor stands are decorative entities that can be customized with different poses, visibility settings, and equipment. This helper allows you to query and manipulate various properties of armor stands including their pose, visibility, physical characteristics, and limb rotations.",
+  "overview": "This class inherits all methods from `LivingEntityHelper` and `EntityHelper`, providing access to standard entity operations like positioning, health tracking, and world interaction, in addition to armor stand-specific functionality.",
+  "constructors": [
+    {
+      "signature": "ArmorStandEntityHelper(Entity entity)",
+      "description": "ArmorStandEntityHelper instances are not typically created directly by scripters. Instead, they are obtained by casting a generic `EntityHelper` instance (e.g., using `entity.as()`) or from entity-related events when the entity type is `minecraft:armor_stand`. This conceptual constructor represents the wrapping of an existing `Entity` object that is an armor stand.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "Entity",
+          "description": "The base entity instance that is an Armor Stand."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "isVisible",
+      "signature": "isVisible()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand is currently visible. Invisible armor stands still exist but are not rendered.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Analyze all armor stands in the area\nfunction analyzeAllArmorStands() {\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const armorStands = World.getEntities(\"minecraft:armor_stand\");\n    const playerPos = player.getPos();\n    const range = 50; // Check within 50 blocks\n\n    Chat.log(\"=== Armor Stand Analysis ===\");\n    Chat.log(`Found ${armorStands.length} armor stands total`);\n\n    let nearbyCount = 0;\n    let invisibleCount = 0;\n    let smallCount = 0;\n    let markerCount = 0;\n    let armedCount = 0;\n    let floatingCount = 0;\n\n    armorStands.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        const armorStand = entity.as();\n        const pos = entity.getPos();\n\n        // Count nearby armor stands\n        if (distance <= range) {\n            nearbyCount++;\n\n            // Get detailed information\n            const isVisible = armorStand.isVisible();\n            const isSmall = armorStand.isSmall();\n            const hasArms = armorStand.hasArms();\n            const hasBasePlate = armorStand.hasBasePlate();\n            const isMarker = armorStand.isMarker();\n\n            // Count properties\n            if (!isVisible) invisibleCount++;\n            if (isSmall) smallCount++;\n            if (hasArms) armedCount++;\n            if (!hasBasePlate) floatingCount++;\n            if (isMarker) markerCount++;\n\n            // Log detailed info for nearby armor stands\n            Chat.log(`\\nArmor Stand at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}] (${distance.toFixed(1)}m):`);\n            Chat.log(`  Visible: ${isVisible ? \"Yes\" : \"No\"}`);\n            Chat.log(`  Small: ${isSmall ? \"Yes\" : \"No\"}`);\n            Chat.log(`  Has Arms: ${hasArms ? \"Yes\" : \"No\"}`);\n            Chat.log(`  Has Base Plate: ${hasBasePlate ? \"Yes\" : \"No\"}`);\n            Chat.log(`  Marker: ${isMarker ? \"Yes\" : \"No\"}`);\n\n            // Show pose information\n            if (!isMarker) {\n                const headRotation = armorStand.getHeadRotation();\n                const bodyRotation = armorStand.getBodyRotation();\n                Chat.log(`  Head Pose: Y=${headRotation[0].toFixed(1)}°, P=${headRotation[1].toFixed(1)}°, R=${headRotation[2].toFixed(1)}°`);\n                Chat.log(`  Body Pose: Y=${bodyRotation[0].toFixed(1)}°, P=${bodyRotation[1].toFixed(1)}°, R=${bodyRotation[2].toFixed(1)}°`);\n            }\n        }\n    });\n\n    // Summary statistics\n    Chat.log(`\\n=== Summary (within ${range} blocks) ===`);\n    Chat.log(`Nearby armor stands: ${nearbyCount}`);\n    Chat.log(`Invisible: ${invisibleCount}`);\n    Chat.log(`Small: ${smallCount}`);\n    Chat.log(`Armed: ${armedCount}`);\n    Chat.log(`Floating (no base): ${floatingCount}`);\n    Chat.log(`Markers: ${markerCount}`);\n}\n\nanalyzeAllArmorStands();"
+      ]
+    },
+    {
+      "name": "isSmall",
+      "signature": "isSmall()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand is a small (child-sized) variant.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasArms",
+      "signature": "hasArms()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand has visible arms.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check what armed armor stands are holding\nfunction checkArmorStandEquipment() {\n    const armorStands = World.getEntities(\"minecraft:armor_stand\");\n\n    Chat.log(\"=== Armed Armor Stand Equipment ===\");\n\n    armorStands.forEach(entity => {\n        const armorStand = entity.as();\n\n        if (armorStand.hasArms()) {\n            const pos = entity.getPos();\n            const livingEntity = entity.asLiving(); // Access equipment methods\n            const equipment = livingEntity.getEquipment();\n\n            Chat.log(`Armed armor stand at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]:`);\n\n            // Check main hand and off hand items\n            const mainHand = livingEntity.getMainHand();\n            const offHand = livingEntity.getOffHand();\n\n            if (mainHand) {\n                Chat.log(`  Main Hand: ${mainHand.getName()} x${mainHand.getCount()}`);\n            }\n\n            if (offHand) {\n                Chat.log(`  Off Hand: ${offHand.getName()} x${offHand.getCount()}`);\n            }\n\n            // Check armor slots\n            const headArmor = equipment.getHead();\n            const chestArmor = equipment.getChest();\n            const legArmor = equipment.getLegs();\n            const footArmor = equipment.getFeet();\n\n            if (headArmor) Chat.log(`  Head: ${headArmor.getName()}`);\n            if (chestArmor) Chat.log(`  Chest: ${chestArmor.getName()}`);\n            if (legArmor) Chat.log(`  Legs: ${legArmor.getName()}`);\n            if (footArmor) Chat.log(`  Feet: ${footArmor.getName()}`);\n\n            if (!mainHand && !offHand && !headArmor && !chestArmor && !legArmor && !footArmor) {\n                Chat.log(`  No equipment found`);\n            }\n\n            Chat.log(\"\"); // Empty line for readability\n        }\n    });\n}\n\ncheckArmorStandEquipment();"
+      ]
+    },
+    {
+      "name": "hasBasePlate",
+      "signature": "hasBasePlate()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand has a base plate.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isMarker",
+      "signature": "isMarker()",
+      "returnType": "boolean",
+      "description": "Checks if the armor stand is in marker mode. Marker armor stands have no collision box.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Track changes in armor stands over time\nclass ArmorStandTracker {\n    constructor() {\n        this.trackedStands = new Map();\n        this.lastCheck = 0;\n    }\n\n    updateTracking() {\n        const currentTime = Date.now();\n        if (currentTime - this.lastCheck < 5000) return; // Check every 5 seconds\n\n        const armorStands = World.getEntities(\"minecraft:armor_stand\");\n        const currentStands = new Map();\n\n        armorStands.forEach(entity => {\n            const uuid = entity.getUUID();\n            const armorStand = entity.as();\n            const pos = entity.getPos();\n\n            // Create current state snapshot\n            const currentState = {\n                entity: entity,\n                position: { x: pos.x, y: pos.y, z: pos.z },\n                visible: armorStand.isVisible(),\n                small: armorStand.isSmall(),\n                hasArms: armorStand.hasArms(),\n                hasBasePlate: armorStand.hasBasePlate(),\n                marker: armorStand.isMarker(),\n                headRotation: [...armorStand.getHeadRotation()],\n                bodyRotation: [...armorStand.getBodyRotation()]\n            };\n\n            currentStands.set(uuid, currentState);\n\n            // Check for changes\n            if (this.trackedStands.has(uuid)) {\n                const previousState = this.trackedStands.get(uuid);\n                this.detectChanges(previousState, currentState);\n            } else {\n                Chat.log(`New armor stand detected: [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]`);\n            }\n        });\n\n        // Check for removed armor stands\n        for (const [uuid, state] of this.trackedStands) {\n            if (!currentStands.has(uuid) && !state.entity.isAlive()) {\n                Chat.log(`Armor stand removed: [${state.position.x.toFixed(0)}, ${state.position.y.toFixed(0)}, ${state.position.z.toFixed(0)}]`);\n            }\n        }\n\n        this.trackedStands = currentStands;\n        this.lastCheck = currentTime;\n    }\n\n    detectChanges(previous, current) {\n        let changes = [];\n\n        // Check position change\n        const posDiff = Math.sqrt(\n            Math.pow(current.position.x - previous.position.x, 2) +\n            Math.pow(current.position.y - previous.position.y, 2) +\n            Math.pow(current.position.z - previous.position.z, 2)\n        );\n\n        if (posDiff > 0.1) {\n            changes.push(`moved ${posDiff.toFixed(1)} blocks`);\n        }\n\n        // Check property changes\n        if (previous.visible !== current.visible) {\n            changes.push(`visibility changed to ${current.visible ? 'visible' : 'invisible'}`);\n        }\n\n        if (previous.small !== current.small) {\n            changes.push(`size changed to ${current.small ? 'small' : 'normal'}`);\n        }\n\n        if (previous.hasArms !== current.hasArms) {\n            changes.push(`arms ${current.hasArms ? 'added' : 'removed'}`);\n        }\n\n        if (previous.hasBasePlate !== current.hasBasePlate) {\n            changes.push(`base plate ${current.hasBasePlate ? 'added' : 'removed'}`);\n        }\n\n        if (previous.marker !== current.marker) {\n            changes.push(`marker mode ${current.marker ? 'enabled' : 'disabled'}`);\n        }\n\n        // Check pose changes\n        const headDiff = this.calculateRotationDiff(previous.headRotation, current.headRotation);\n        if (headDiff > 5) {\n            changes.push(`head pose changed (${headDiff.toFixed(1)}°)`);\n        }\n\n        const bodyDiff = this.calculateRotationDiff(previous.bodyRotation, current.bodyRotation);\n        if (bodyDiff > 5) {\n            changes.push(`body pose changed (${bodyDiff.toFixed(1)}°)`);\n        }\n\n        // Report changes\n        if (changes.length > 0) {\n            const pos = current.position;\n            Chat.log(`Armor stand at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]: ${changes.join(', ')}`);\n        }\n    }\n\n    calculateRotationDiff(rot1, rot2) {\n        return Math.sqrt(\n            Math.pow(rot1[0] - rot2[0], 2) +\n            Math.pow(rot1[1] - rot2[1], 2) +\n            Math.pow(rot1[2] - rot2[2], 2)\n        );\n    }\n}\n\n// Create and use the tracker\nconst tracker = new ArmorStandTracker();\n\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    tracker.updateTracking();\n}));"
+      ]
+    },
+    {
+      "name": "getHeadRotation",
+      "signature": "getHeadRotation()",
+      "returnType": "number[]",
+      "description": "Gets the current rotation of the armor stand's head as an array `[yaw, pitch, roll]` in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Detect armor stands with specific poses or configurations\nfunction detectSpecialArmorStands() {\n    const armorStands = World.getEntities(\"minecraft:armor_stand\");\n\n    Chat.log(\"=== Special Armor Stand Detection ===\");\n\n    armorStands.forEach(entity => {\n        const armorStand = entity.as();\n        const pos = entity.getPos();\n        let isSpecial = false;\n        let reasons = [];\n\n        // Check for special properties\n        if (!armorStand.isVisible()) {\n            isSpecial = true;\n            reasons.push(\"Invisible\");\n        }\n\n        if (armorStand.isMarker()) {\n            isSpecial = true;\n            reasons.push(\"Marker\");\n        }\n\n        // Check for special poses\n        const headRotation = armorStand.getHeadRotation();\n        if (Math.abs(headRotation[1]) > 45 || Math.abs(headRotation[2]) > 45) {\n            isSpecial = true;\n            reasons.push(\"Unusual Head Pose\");\n        }\n\n        const leftArmRotation = armorStand.getLeftArmRotation();\n        const rightArmRotation = armorStand.getRightArmRotation();\n        if (Math.abs(leftArmRotation[2]) > 90 || Math.abs(rightArmRotation[2]) > 90) {\n            isSpecial = true;\n            reasons.push(\"Arms Raised\");\n        }\n\n        // Check for sitting pose\n        const leftLegRotation = armorStand.getLeftLegRotation();\n        const rightLegRotation = armorStand.getRightLegRotation();\n        if (leftLegRotation[1] < -45 && rightLegRotation[1] < -45) {\n            isSpecial = true;\n            reasons.push(\"Sitting Pose\");\n        }\n\n        // Report special armor stands\n        if (isSpecial) {\n            Chat.log(`Special armor stand at [${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}]:`);\n            Chat.log(`  Reasons: ${reasons.join(\", \")}`);\n        }\n    });\n}\n\ndetectSpecialArmorStands();"
+      ]
+    },
+    {
+      "name": "getBodyRotation",
+      "signature": "getBodyRotation()",
+      "returnType": "number[]",
+      "description": "Gets the current rotation of the armor stand's body as an array `[yaw, pitch, roll]` in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLeftArmRotation",
+      "signature": "getLeftArmRotation()",
+      "returnType": "number[]",
+      "description": "Gets the current rotation of the armor stand's left arm as an array `[yaw, pitch, roll]` in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRightArmRotation",
+      "signature": "getRightArmRotation()",
+      "returnType": "number[]",
+      "description": "Gets the current rotation of the armor stand's right arm as an array `[yaw, pitch, roll]` in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLeftLegRotation",
+      "signature": "getLeftLegRotation()",
+      "returnType": "number[]",
+      "description": "Gets the current rotation of the armor stand's left leg as an array `[yaw, pitch, roll]` in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRightLegRotation",
+      "signature": "getRightLegRotation()",
+      "returnType": "number[]",
+      "description": "Gets the current rotation of the armor stand's right leg as an array `[yaw, pitch, roll]` in degrees.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

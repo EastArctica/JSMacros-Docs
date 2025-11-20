@@ -1,0 +1,20 @@
+{
+  "name": "EventEntityDamaged",
+  "fullClassName": "EventEntityDamaged",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when any entity in the world takes damage.",
+  "overview": "Fires when any entity (not just the player) takes damage.\nIncludes mobs, animals, item entities, etc.\nThe `health` field represents current health after the damage.\nThe `damage` field is the amount of damage taken.\nNot cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

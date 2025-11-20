@@ -1,0 +1,82 @@
+{
+  "name": "ClassWrapperFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.ClassWrapperFilter<T>",
+  "extends": "BasicFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `ClassWrapperFilter` is an abstract base class that provides a powerful reflection-based filtering mechanism for the WorldScanner system. It acts as a generic wrapper that can invoke methods on objects and filter the results using appropriate comparison filters. This class enables dynamic filtering based on object method calls, making it extremely versatile for creating custom filtering criteria.\n\nWhile `ClassWrapperFilter` itself is abstract and cannot be instantiated directly, it serves as the foundation for concrete filter implementations like `BlockFilter` and `BlockStateFilter`. The class uses Java reflection to dynamically invoke methods on objects and applies appropriate filters to the returned values.",
+  "overview": "The ClassWrapperFilter provides:\n\n- **Reflection-based method invocation**: Calls methods on objects dynamically at runtime\n- **Automatic filter selection**: Chooses appropriate comparison filters based on return type\n- **Type safety**: Maintains generic type safety throughout the filtering process\n- **Multi-type support**: Handles boolean, string, character, and numeric return types\n- **Error handling**: Gracefully handles reflection exceptions during method invocation",
+  "constructors": [
+    {
+      "signature": "protected ClassWrapperFilter(methodName, methods, methodArgs, filterArgs)",
+      "description": "Creates a new ClassWrapperFilter with the specified method and filter parameters. This constructor is protected and intended for use by concrete subclasses.\n\nSince: `1.6.5`\nNote: This constructor is protected and should only be used by concrete implementations.",
+      "parameters": [
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method to invoke on objects"
+        },
+        {
+          "name": "methods",
+          "type": "Map<String, Method>",
+          "description": "Map of available methods for lookup"
+        },
+        {
+          "name": "methodArgs",
+          "type": "Object[]",
+          "description": "Arguments to pass when invoking the method"
+        },
+        {
+          "name": "filterArgs",
+          "type": "Object[]",
+          "description": "Arguments for creating the comparison filter"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getPublicNoParameterMethods",
+      "signature": "static Map<String, Method> getPublicNoParameterMethods(Class<?> clazz)",
+      "returnType": "Map<String, Method>",
+      "description": "A static utility method that discovers and returns a map of all public methods with no parameters for the given class. The map keys are method names, and values are `java.lang.reflect.Method` objects.",
+      "parameters": [
+        {
+          "name": "clazz",
+          "type": "Class<?>",
+          "description": "The class whose public, no-parameter methods are to be retrieved."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Discover available methods on a class\nconst methods = ClassWrapperFilter.getPublicNoParameterMethods(BlockHelper.class);\nChat.log(\"Available methods: \" + Object.keys(methods).join(\", \"));"
+      ]
+    },
+    {
+      "name": "getFilter",
+      "signature": "static IFilter getFilter(Class<?> targetClass, String methodName, Object... methodAndFilterArgs)",
+      "returnType": "IFilter",
+      "description": "A static factory method intended to create a `ClassWrapperFilter` instance dynamically. It takes a target class, a method name to invoke on instances of that class, and arguments for both method invocation and comparison filter creation. This method automatically selects the appropriate comparison filter based on the return type of the specified method. Note that it has limitations on supported return types (objects other than String are not supported).",
+      "parameters": [
+        {
+          "name": "targetClass",
+          "type": "Class<?>",
+          "description": "The class on which the method will be invoked."
+        },
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method to be invoked on objects of `targetClass`."
+        },
+        {
+          "name": "methodAndFilterArgs",
+          "type": "Object[]",
+          "description": "An array of arguments, potentially containing arguments for the method invocation and arguments for the underlying comparison filter."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// This will throw an exception due to unsupported return type\ntry {\n    const objectFilter = ClassWrapperFilter.getFilter(\n        SomeClass.class,\n        \"getObjectMethod\",\n        someObject\n    );\n} catch (e) {\n    Chat.log(\"Error: \" + e.getMessage());\n    // \"Methods that return objects besides String are currently not supported\"\n}"
+      ]
+    }
+  ]
+}

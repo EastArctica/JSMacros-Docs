@@ -1,0 +1,41 @@
+{
+  "name": "RabbitEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.RabbitEntityHelper",
+  "extends": "AnimalEntityHelper<RabbitEntity>",
+  "since": "1.8.4",
+  "description": "The `RabbitEntityHelper` class provides specialized access to rabbit entities in Minecraft, offering methods to monitor and interact with rabbit-specific behaviors such as variant identification and detection of the special \"killer bunny\" variant.",
+  "overview": "This class extends `AnimalEntityHelper` and inherits all functionality for animals including breeding mechanics, food preferences, and basic mob behaviors.\n\nThis helper is particularly useful for creating scripts that manage rabbit populations, analyze rabbit variants for breeding or collection purposes, or coordinate with multiple rabbits in automated farming systems.",
+  "constructors": [
+    {
+      "signature": "RabbitEntityHelper()",
+      "description": "RabbitEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through:\n\n- Entity-related events (e.g., `EntitySpawn`, `EntityDeath`, `EntityInteract`)\n- World entity queries using type filtering for rabbits\n- Casting from generic EntityHelper instances using `entity.asAnimal()` and subsequent type checks",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getVariant",
+      "signature": "String getVariant()",
+      "returnType": "String",
+      "description": "Returns the current variant of the rabbit, such as 'minecraft:brown', 'minecraft:white', 'minecraft:black', 'minecraft:gold', or 'minecraft:killer'. This variant affects both appearance and behavior.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const variant = rabbit.getVariant();\nthis.rabbitStats.variantCollection.add(variant);",
+        "const variant = rabbitEntity.getVariant();\nconst variantName = this.getVariantDisplayName(variant);"
+      ]
+    },
+    {
+      "name": "isKillerBunny",
+      "signature": "boolean isKillerBunny()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the rabbit is the special 'killer bunny' variant; otherwise, `false`. The killer bunny variant is hostile and attacks players.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isKiller = rabbit.isKillerBunny();\nif (isKiller) {\n    this.rabbitStats.killerBunnies++;\n} else if (this.isWild) {\n    this.rabbitStats.wildRabbits++;\n}",
+        "if (isKillerBunny) {\n    Chat.log(`&c⚠️ DANGER! Registered killer bunny: ${name}`);\n} else {\n    Chat.log(`&aRegistered rabbit: ${name} (${variant})`);\n}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,413 @@
+{
+  "name": "VideoOptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper$VideoOptionsHelper",
+  "since": "JsMacros 1.8.4",
+  "description": "The `VideoOptionsHelper` class provides comprehensive control over Minecraft's video and graphics settings. This helper allows scripts to read and modify various visual settings including graphics quality, render distance, performance options, visual effects, and display configuration. It's accessed through the `OptionsHelper.getVideoOptions()` method or directly via the `video` field.",
+  "overview": "The `VideoOptionsHelper` class manages all visual and graphics-related settings:\n- **Graphics quality** - Overall visual fidelity settings\n- **Render distance** - World loading and visibility distance\n- **Performance settings** - FPS limits, VSync, particle quality\n- **Visual effects** - Clouds, entity shadows, view bobbing\n- **Display settings** - GUI scale, fullscreen mode, resolution\n- **Advanced graphics** - Mipmapping, biome blending, gamma/brightness",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getGraphicsMode",
+      "signature": "getGraphicsMode()",
+      "returnType": "String",
+      "description": "Gets the current graphics quality mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nconst currentMode = video.getGraphicsMode();\nChat.log(`Current graphics mode: ${currentMode}`);"
+      ]
+    },
+    {
+      "name": "setGraphicsMode",
+      "signature": "setGraphicsMode(String mode)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the graphics quality mode.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "String",
+          "description": "\"fast\", \"fancy\", or \"fabulous\" - graphics quality level"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Set to maximum quality\nvideo.setGraphicsMode(\"fabulous\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Graphics set to fabulous quality\");\n\n// Set to performance mode\nvideo.setGraphicsMode(\"fast\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Graphics set to fast mode for performance\");"
+      ]
+    },
+    {
+      "name": "getRenderDistance",
+      "signature": "getRenderDistance()",
+      "returnType": "int",
+      "description": "Gets the current render distance in chunks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Current render distance: ${video.getRenderDistance()} chunks`);"
+      ]
+    },
+    {
+      "name": "setRenderDistance",
+      "signature": "setRenderDistance(int distance)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the render distance in chunks.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "New render distance in chunks (recommended 2-32)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Set for high-end system\nvideo.setRenderDistance(16);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Render distance set to 16 chunks\");\n\n// Set for low-end system\nvideo.setRenderDistance(6);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Render distance set to 6 chunks for performance\");"
+      ]
+    },
+    {
+      "name": "getSimulationDistance",
+      "signature": "getSimulationDistance()",
+      "returnType": "int",
+      "description": "Gets the current simulation distance in chunks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Simulation distance: ${video.getSimulationDistance()} chunks`);"
+      ]
+    },
+    {
+      "name": "setSimulationDistance",
+      "signature": "setSimulationDistance(int distance)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the simulation distance in chunks.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "New simulation distance in chunks (recommended 2-16)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Set simulation distance for balance\nvideo.setSimulationDistance(8);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Simulation distance set to 8 chunks\");"
+      ]
+    },
+    {
+      "name": "getMaxFps",
+      "signature": "getMaxFps()",
+      "returnType": "int",
+      "description": "Gets the current FPS (frames per second) limit.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Current FPS limit: ${video.getMaxFps()}`);"
+      ]
+    },
+    {
+      "name": "setMaxFps",
+      "signature": "setMaxFps(int fps)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the maximum FPS limit.",
+      "parameters": [
+        {
+          "name": "fps",
+          "type": "int",
+          "description": "Maximum FPS limit (0 for unlimited, typical values: 30, 60, 120, 144)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Set for 60Hz monitor\nvideo.setMaxFps(60);\nJsMacros.getOptions().saveOptions();\nChat.log(\"FPS limited to 60\");\n\n// Set for competitive gaming (144Hz)\nvideo.setMaxFps(144);\nJsMacros.getOptions().saveOptions();\nChat.log(\"FPS limited to 144 for competitive play\");\n\n// Unlimited FPS\nvideo.setMaxFps(0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"FPS limit removed\");"
+      ]
+    },
+    {
+      "name": "isVsyncEnabled",
+      "signature": "isVsyncEnabled()",
+      "returnType": "boolean",
+      "description": "Checks if VSync (vertical synchronization) is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`VSync is ${video.isVsyncEnabled() ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableVsync",
+      "signature": "enableVsync(boolean enabled)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Enables or disables VSync.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to enable VSync, `false` to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Enable VSync to prevent screen tearing\nvideo.enableVsync(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"VSync enabled\");\n\n// Disable VSync for lower input lag\nvideo.enableVsync(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"VSync disabled for lower input lag\");"
+      ]
+    },
+    {
+      "name": "getParticleMode",
+      "signature": "getParticleMode()",
+      "returnType": "String",
+      "description": "Gets the current particle quality mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Particle quality: ${video.getParticleMode()}`);"
+      ]
+    },
+    {
+      "name": "setParticleMode",
+      "signature": "setParticleMode(String mode)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the particle quality mode.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "String",
+          "description": "\"minimal\", \"decreased\", or \"all\" - particle quality level"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Maximum particle effects\nvideo.setParticleMode(\"all\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Particle quality set to all\");\n\n// Minimal particles for performance\nvideo.setParticleMode(\"minimal\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Particle quality set to minimal for performance\");"
+      ]
+    },
+    {
+      "name": "getGamma",
+      "signature": "getGamma()",
+      "returnType": "double",
+      "description": "Gets the current gamma (brightness) setting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Current brightness: ${video.getGamma().toFixed(2)}`);"
+      ]
+    },
+    {
+      "name": "setGamma",
+      "signature": "setGamma(double gamma)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the gamma (brightness) level.",
+      "parameters": [
+        {
+          "name": "gamma",
+          "type": "double",
+          "description": "Brightness value (0.0 = very dark, 1.0 = normal, higher = brighter)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Increase brightness for dark areas\nvideo.setGamma(1.5);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Brightness increased\");\n\n// Darken for atmosphere\nvideo.setGamma(0.5);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Brightness decreased for atmosphere\");"
+      ]
+    },
+    {
+      "name": "getCloudsMode",
+      "signature": "getCloudsMode()",
+      "returnType": "String",
+      "description": "Gets the current cloud rendering mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Cloud rendering: ${video.getCloudsMode()}`);"
+      ]
+    },
+    {
+      "name": "setCloudsMode",
+      "signature": "setCloudsMode(String mode)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the cloud rendering mode.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "String",
+          "description": "\"off\", \"fast\", or \"fancy\" - cloud quality setting"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Disable clouds for performance\nvideo.setCloudsMode(\"off\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Clouds disabled for performance\");\n\n// Fancy clouds for aesthetics\nvideo.setCloudsMode(\"fancy\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Clouds set to fancy quality\");"
+      ]
+    },
+    {
+      "name": "isViewBobbingEnabled",
+      "signature": "isViewBobbingEnabled()",
+      "returnType": "boolean",
+      "description": "Checks if view bobbing (head movement animation) is enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`View bobbing: ${video.isViewBobbingEnabled() ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableViewBobbing",
+      "signature": "enableViewBobbing(boolean enabled)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Enables or disables view bobbing.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to enable view bobbing, `false` to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Disable view bobbing to reduce motion sickness\nvideo.enableViewBobbing(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"View bobbing disabled\");\n\n// Enable for realistic movement\nvideo.enableViewBobbing(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"View bobbing enabled\");"
+      ]
+    },
+    {
+      "name": "areEntityShadowsEnabled",
+      "signature": "areEntityShadowsEnabled()",
+      "returnType": "boolean",
+      "description": "Checks if entity shadows are enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Entity shadows: ${video.areEntityShadowsEnabled() ? 'enabled' : 'disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableEntityShadows",
+      "signature": "enableEntityShadows(boolean enabled)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Enables or disables entity shadows.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to enable entity shadows, `false` to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Enable shadows for better depth perception\nvideo.enableEntityShadows(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Entity shadows enabled\");\n\n// Disable shadows for performance\nvideo.enableEntityShadows(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Entity shadows disabled for performance\");"
+      ]
+    },
+    {
+      "name": "getGuiScale",
+      "signature": "getGuiScale()",
+      "returnType": "int",
+      "description": "Gets the current GUI scale setting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nconst scale = video.getGuiScale();\nconst scaleText = scale === 0 ? \"Auto\" : scale;\nChat.log(`GUI scale: ${scaleText}`);"
+      ]
+    },
+    {
+      "name": "setGuiScale",
+      "signature": "setGuiScale(int scale)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the GUI scale.",
+      "parameters": [
+        {
+          "name": "scale",
+          "type": "int",
+          "description": "GUI scale: 0 = auto, 1 = small, 2 = normal, 3 = large, 4 = auto (alternative)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Small GUI for more screen space\nvideo.setGuiScale(1);\nJsMacros.getOptions().saveOptions();\nChat.log(\"GUI set to small\");\n\n// Large GUI for better visibility\nvideo.setGuiScale(3);\nJsMacros.getOptions().saveOptions();\nChat.log(\"GUI set to large\");\n\n// Auto scale based on resolution\nvideo.setGuiScale(0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"GUI scale set to auto\");"
+      ]
+    },
+    {
+      "name": "getFullscreenResolution",
+      "signature": "getFullscreenResolution()",
+      "returnType": "String",
+      "description": "Gets the current fullscreen resolution.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Fullscreen resolution: ${video.getFullscreenResolution()}`);"
+      ]
+    },
+    {
+      "name": "isFullscreen",
+      "signature": "isFullscreen()",
+      "returnType": "boolean",
+      "description": "Checks if the game is in fullscreen mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Display mode: ${video.isFullscreen() ? 'Fullscreen' : 'Windowed'}`);"
+      ]
+    },
+    {
+      "name": "setFullScreen",
+      "signature": "setFullScreen(boolean fullscreen)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets fullscreen mode.",
+      "parameters": [
+        {
+          "name": "fullscreen",
+          "type": "boolean",
+          "description": "`true` to enable fullscreen, `false` for windowed mode"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Switch to fullscreen\nvideo.setFullScreen(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Switched to fullscreen mode\");\n\n// Switch to windowed mode\nvideo.setFullScreen(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Switched to windowed mode\");"
+      ]
+    },
+    {
+      "name": "getBiomeBlendRadius",
+      "signature": "getBiomeBlendRadius()",
+      "returnType": "int",
+      "description": "Gets the current biome blending radius.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Biome blend radius: ${video.getBiomeBlendRadius()} chunks`);"
+      ]
+    },
+    {
+      "name": "setBiomeBlendRadius",
+      "signature": "setBiomeBlendRadius(int radius)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the biome blending radius.",
+      "parameters": [
+        {
+          "name": "radius",
+          "type": "int",
+          "description": "Biome blend radius in chunks (0-7, 0 = disabled)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Disable biome blending for sharp transitions\nvideo.setBiomeBlendRadius(0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Biome blending disabled\");\n\n// Smooth biome transitions\nvideo.setBiomeBlendRadius(5);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Biome blend radius set to 5 chunks\");"
+      ]
+    },
+    {
+      "name": "getMipMapLevels",
+      "signature": "getMipMapLevels()",
+      "returnType": "int",
+      "description": "Gets the current mipmap level setting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\nChat.log(`Mipmap levels: ${video.getMipMapLevels()}`);"
+      ]
+    },
+    {
+      "name": "setMipMapLevels",
+      "signature": "setMipMapLevels(int levels)",
+      "returnType": "VideoOptionsHelper",
+      "description": "Sets the mipmap level for texture filtering.",
+      "parameters": [
+        {
+          "name": "levels",
+          "type": "int",
+          "description": "Mipmap level (0 = no mipmapping, 1-4 = increasing quality)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const video = JsMacros.getOptions().getVideoOptions();\n\n// Disable mipmapping for sharp textures\nvideo.setMipMapLevels(0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Mipmapping disabled for sharp textures\");\n\n// Maximum mipmapping for smooth distant textures\nvideo.setMipMapLevels(4);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Mipmap levels set to maximum\");"
+      ]
+    }
+  ]
+}

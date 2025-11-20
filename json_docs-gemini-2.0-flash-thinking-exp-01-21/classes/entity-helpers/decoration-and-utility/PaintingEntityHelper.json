@@ -1,0 +1,44 @@
+{
+  "name": "PaintingEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.decoration.PaintingEntityHelper",
+  "extends": "EntityHelper<PaintingEntity>",
+  "since": "1.8.4",
+  "description": "The `PaintingEntityHelper` class provides specialized access to Minecraft painting entities, allowing you to inspect various properties of paintings in the world. Paintings are decorative entities that display artwork on walls and come in various sizes and designs. This helper extends the base `EntityHelper` class and adds specific functionality for querying painting dimensions and identifying the artwork being displayed.",
+  "overview": "Paintings in Minecraft come in 26 different art variants as of recent versions, each with unique dimensions and themes. They can be found naturally generated in structures like villages, strongholds, mansions, and ocean monuments, or placed by players. This helper allows you to programmatically identify and analyze paintings in your scripts for various purposes like gallery management, art collection tracking, or architectural analysis.\n\nThis class extends `EntityHelper` and inherits all methods for position tracking, entity identification, and world interaction, while adding painting-specific functionality for artwork analysis.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "int",
+      "description": "Returns the width of this painting in blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get the width of a painting\nconst painting = entity.as(\"minecraft:painting\");\nif (painting) {\n    const width = painting.getWidth();\n    Chat.log(`Painting width: ${width} blocks`);\n}"
+      ]
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "int",
+      "description": "Returns the height of this painting in blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get the height of a painting\nconst painting = entity.as(\"minecraft:painting\");\nif (painting) {\n    const height = painting.getHeight();\n    Chat.log(`Painting height: ${height} blocks`);\n}"
+      ]
+    },
+    {
+      "name": "getIdentifier",
+      "signature": "getIdentifier()",
+      "returnType": "String",
+      "description": "Returns the identifier of this painting's art variant. The identifier corresponds to the specific artwork design and may be null in some cases.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get the art identifier of a painting\nconst painting = entity.as(\"minecraft:painting\");\nif (painting) {\n    const artId = painting.getIdentifier();\n    if (artId) {\n        Chat.log(`Painting art: ${artId}`);\n    } else {\n        Chat.log(\"Painting art identifier not available\");\n    }\n}"
+      ]
+    }
+  ]
+}

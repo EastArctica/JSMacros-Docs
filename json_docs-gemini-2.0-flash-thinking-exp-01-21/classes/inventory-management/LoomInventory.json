@@ -1,0 +1,203 @@
+{
+  "name": "LoomInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.LoomInventory",
+  "extends": "Inventory<LoomScreen>",
+  "since": "1.5.1",
+  "description": "The `LoomInventory` class provides functionality for interacting with loom screens in Minecraft. Looms are used to add patterns to banners using various dye patterns and banner pattern items. This class extends the base `Inventory` class and adds loom-specific functionality while inheriting all standard inventory operations.",
+  "overview": "This class is automatically created when you open a loom screen and can be accessed through `Player.getInventory()` or `Inventory.create()` when a loom is open.\n\nThe loom interface consists of:\n- **Banner Slot** - The banner to be modified (Slot 0)\n- **Dye Slot** - The dye color to use (Slot 1)\n- **Pattern Slot** - Banner pattern items that unlock special patterns (Slot 2)\n- **Output Slot** - The resulting banner with applied pattern (Slot 3)\n- **Pattern Selection** - Scrollable list of available patterns\n\n**Notes and Limitations:**\n- LoomInventory instances are only valid while the loom screen is open\n- Pattern availability depends on the banner, dye, and pattern item combination\n- Some patterns require specific banner pattern items to be available\n- Pattern IDs follow the Minecraft resource location format (e.g., 'minecraft:stripe_bottom')\n- Always check if `inventory` and `inventory.getType().includes(\"Loom\")` return valid values before operations\n- Pattern selection may fail if the current combination doesn't support the selected pattern\n- The method `selectPatternName()` is deprecated and throws an exception - use `selectPatternId()` instead",
+  "constructors": [
+    {
+      "signature": "LoomInventory(LoomScreen inventory)",
+      "description": "Creates a new `LoomInventory` instance for the specified loom screen. This constructor is primarily used internally by JSMacros. Scripts typically obtain instances through `Player.getInventory()` or `Inventory.create()`.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "LoomScreen",
+          "description": "The loom screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "listAvailablePatterns",
+      "signature": "listAvailablePatterns()",
+      "returnType": "string[]",
+      "description": "Lists all available banner pattern IDs for the current banner and dye combination.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const availablePatterns = inventory.listAvailablePatterns();\nif (!availablePatterns.includes(patternId)) {\n    Chat.log(`Pattern not available: ${patternId}`);\n    Chat.log(\"Available patterns:\");\n    for (const pattern of availablePatterns.slice(0, 10)) {\n        Chat.log(`- ${pattern}`);\n    }\n}",
+        "const currentPatterns = inventory.listAvailablePatterns();\nChat.log(`Found ${currentPatterns.length} patterns:`);"
+      ]
+    },
+    {
+      "name": "selectPatternId",
+      "signature": "selectPatternId(string patternId)",
+      "returnType": "boolean",
+      "description": "Selects a banner pattern by its ID. Returns true if the pattern was successfully selected, false otherwise.",
+      "parameters": [
+        {
+          "name": "patternId",
+          "type": "string",
+          "description": "The ID of the pattern to select (e.g., 'minecraft:stripe_middle')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const success = inventory.selectPatternId(patternId);\nif (success) {\n    Chat.log(`Successfully applied pattern: ${patternId}`);\n    // Take the result after a short delay\n    JsMacros.waitForEvent(\"Tick\");\n    const output = inventory.getSlot(3);\n    if (!output.isEmpty()) {\n        inventory.click(3);\n        Chat.log(\"Took output from loom\");\n    }\n    return true;\n} else {\n    Chat.log(`Failed to apply pattern: ${patternId}`);\n    return false;\n}"
+      ]
+    },
+    {
+      "name": "selectPatternName",
+      "signature": "selectPatternName(string name)",
+      "returnType": "boolean",
+      "description": "Deprecated. Selects a banner pattern by its localized name. Use `selectPatternId()` instead. This method throws an exception.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The localized name of the pattern."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "string",
+      "description": "Returns the type of the current open inventory screen.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory && inventory.getType().includes(\"Loom\")) {\n    Chat.log(\"Currently viewing a loom\");\n}"
+      ]
+    },
+    {
+      "name": "getContainerTitle",
+      "signature": "getContainerTitle()",
+      "returnType": "string",
+      "description": "Returns the title of the current open inventory container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory && inventory.getType().includes(\"Loom\")) {\n    Chat.log(`Loom title: ${inventory.getContainerTitle()}`);\n}"
+      ]
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(int index)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the item stack in the specified slot index.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The slot index."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (inventory && inventory.getType().includes(\"Loom\")) {\n    // Slot 0: Banner\n    const banner = inventory.getSlot(0);\n    if (!banner.isEmpty()) {\n        Chat.log(`Banner: ${banner.getName().getString()}`);\n    }\n\n    // Slot 1: Dye\n    const dye = inventory.getSlot(1);\n    if (!dye.isEmpty()) {\n        Chat.log(`Dye: ${dye.getName().getString()}`);\n    }\n\n    // Slot 2: Pattern item\n    const patternItem = inventory.getSlot(2);\n    if (!patternItem.isEmpty()) {\n        Chat.log(`Pattern item: ${patternItem.getName().getString()}`);\n    }\n\n    // Slot 3: Output\n    const output = inventory.getSlot(3);\n    if (!output.isEmpty()) {\n        Chat.log(`Output: ${output.getName().getString()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getTotalSlots",
+      "signature": "getTotalSlots()",
+      "returnType": "int",
+      "description": "Returns the total number of slots in the current inventory container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst totalSlots = inventory.getTotalSlots();\nChat.log(`Total loom slots: ${totalSlots}`);"
+      ]
+    },
+    {
+      "name": "getLocation",
+      "signature": "getLocation(int slot)",
+      "returnType": "string",
+      "description": "Returns the type or location of the given slot (e.g., 'container', 'hotbar', 'player_inventory').",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The slot index."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst totalSlots = inventory.getTotalSlots();\n// ...\nfor (const slot of loomSlots) {\n    if (slot < totalSlots) {\n        const item = inventory.getSlot(slot);\n        if (!item.isEmpty()) {\n            const location = inventory.getLocation(slot);\n            Chat.log(`Slot ${slot} (${location}): ${item.getItemId()} x${item.getCount()}`);\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "contains",
+      "signature": "contains(string itemId)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains an item by its ID.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The item ID (e.g., 'minecraft:red_dye')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst hasRedDye = inventory.contains(\"minecraft:red_dye\");\nif (hasRedDye) {\n    Chat.log(\"Loom has red dye!\");\n}"
+      ]
+    },
+    {
+      "name": "contains",
+      "signature": "contains(ItemStackHelper itemStack)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory contains an item matching the provided `ItemStackHelper` instance.",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "An ItemStackHelper instance to compare with."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nconst mainHandItem = Player.getPlayer().getMainHand();\nif (!mainHandItem.isEmpty() && mainHandItem.getItemId().includes(\"banner\")) {\n    const hasSameBanner = inventory.contains(mainHandItem);\n    Chat.log(`Loom has ${mainHandItem.getName().getString()}: ${hasSameBanner}`);\n}"
+      ]
+    },
+    {
+      "name": "click",
+      "signature": "click(int slotIndex)",
+      "returnType": "void",
+      "description": "Performs a standard mouse click on the specified slot. Takes items if slot has, places if hand has, or moves from inventory to inventory.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "int",
+          "description": "The index of the slot to click."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n\ninventory.click(0); // Click banner slot\ninventory.click(1); // Click dye slot\ninventory.click(2); // Click pattern item slot\ninventory.click(3); // Click output slot",
+        "const inventory = Player.getInventory();\nif (inventory && inventory.getType().includes(\"Loom\")) {\n    const output = inventory.getSlot(3);\n    if (!output.isEmpty()) {\n        Chat.log(\"Taking output from loom\");\n        inventory.click(3); // Take the output\n    }\n}"
+      ]
+    },
+    {
+      "name": "quick",
+      "signature": "quick(int slotIndex)",
+      "returnType": "void",
+      "description": "Performs a quick move (shift-click) action on the specified slot, moving items between inventories.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "int",
+          "description": "The index of the slot to quick move."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n\ninventory.quick(36); // Move banner from player inventory to loom\ninventory.quick(37); // Move dye from player inventory to loom"
+      ]
+    }
+  ]
+}

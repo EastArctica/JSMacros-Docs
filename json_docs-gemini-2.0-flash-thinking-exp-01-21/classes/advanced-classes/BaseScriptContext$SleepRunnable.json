@@ -1,0 +1,42 @@
+{
+  "name": "SleepRunnable",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.language.BaseScriptContext$SleepRunnable",
+  "extends": null,
+  "since": "JSMacros 1.2.8",
+  "description": "The `SleepRunnable` class is a specialized runnable implementation used within JSMacros for handling delayed or timed script execution. It encapsulates script execution logic that needs to run after a specified delay, enabling asynchronous operations, timed events, and delayed script continuations within the JSMacros scripting environment.",
+  "overview": "The `SleepRunnable` class serves as a bridge between JSMacros' synchronous script execution model and asynchronous, timed operations. It provides:\n\n- Delayed execution of script code after specified time periods\n- Integration with JSMacros' thread management system\n- Safe execution context for delayed operations\n- Support for both one-time and recurring delayed tasks\n- Proper resource management and cleanup for delayed executions\n\nThis class is primarily used internally by JSMacros for operations like `Time.sleep()`, `Time.setTimeout()`, and other timing-related functionality.",
+  "constructors": [
+    {
+      "signature": "constructor(scriptContext, delay, runnableCode)",
+      "description": "Initializes a new SleepRunnable instance with the given script context, delay, and code to be executed. (Conceptual structure; actual implementation is internal).",
+      "parameters": [
+        {
+          "name": "scriptContext",
+          "type": "BaseScriptContext",
+          "description": "The script context in which the code will execute."
+        },
+        {
+          "name": "delay",
+          "type": "long",
+          "description": "The delay in milliseconds before the code is executed."
+        },
+        {
+          "name": "runnableCode",
+          "type": "Runnable | Function",
+          "description": "The code to be executed after the delay."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "run",
+      "signature": "run()",
+      "returnType": "void",
+      "description": "Executes the delayed code within the proper script context. This method is called by the execution framework after the specified delay.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

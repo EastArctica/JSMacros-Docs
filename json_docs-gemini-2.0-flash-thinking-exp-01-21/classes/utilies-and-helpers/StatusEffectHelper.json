@@ -1,0 +1,131 @@
+{
+  "name": "StatusEffectHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.StatusEffectHelper",
+  "extends": "BaseHelper<StatusEffectInstance>",
+  "since": "JsMacros 1.2.4",
+  "description": "The `StatusEffectHelper` class provides a wrapper around Minecraft's status effect instances (potions and effects), allowing scripts to query information about active status effects on entities.",
+  "overview": "This helper class provides methods to access all key properties of status effects including their type identifier, amplifier level, remaining duration, visual properties, and categorization. It's commonly used when examining player status effects, monitoring entity effects during combat, or tracking potion effects in automation scripts.\n\nStatusEffectHelper instances are typically obtained through:\n- Living entity status effect queries using `LivingEntityHelper.getStatusEffects()`\n- Status effect update events when effects are added or removed\n- Registry lookups using `RegistryHelper.getStatusEffect()`",
+  "constructors": [
+    {
+      "signature": "StatusEffectHelper(StatusEffectInstance statusEffectInstance)",
+      "description": "Internal constructor that wraps a Minecraft status effect instance.",
+      "parameters": [
+        {
+          "name": "statusEffectInstance",
+          "type": "StatusEffectInstance",
+          "description": "The underlying Minecraft status effect instance to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "String",
+      "description": "Retrieves the unique identifier (ID) of the status effect (e.g., \"minecraft:speed\").",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStrength",
+      "signature": "getStrength()",
+      "returnType": "int",
+      "description": "Returns the amplifier level of the status effect (0-based, so 0 for level I, 1 for level II, etc.).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTime",
+      "signature": "getTime()",
+      "returnType": "int",
+      "description": "Returns the remaining duration of the status effect in game ticks (20 ticks = 1 second).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCategory",
+      "signature": "getCategory()",
+      "returnType": "String",
+      "description": "Returns the category of the status effect as a string (e.g., \"BENEFICIAL\", \"HARMFUL\", \"NEUTRAL\").",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAmbient",
+      "signature": "isAmbient()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is ambient, typically originating from sources like beacons or conduits.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasIcon",
+      "signature": "hasIcon()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect has a visible icon in the game's user interface.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isVisible",
+      "signature": "isVisible()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is visually visible (e.g., displays particle effects around the entity).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isInstant",
+      "signature": "isInstant()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is an instant effect (like Instant Health or Instant Damage) rather than a duration-based one.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBeneficial",
+      "signature": "isBeneficial()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is categorized as beneficial (e.g., Speed, Strength).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isNeutral",
+      "signature": "isNeutral()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is categorized as neutral (e.g., Night Vision).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHarmful",
+      "signature": "isHarmful()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is categorized as harmful (e.g., Poison, Wither).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isPermanent",
+      "signature": "isPermanent()",
+      "returnType": "boolean",
+      "description": "Checks if the status effect is considered permanent (often indicated by a very large duration value rather than true permanence).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

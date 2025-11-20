@@ -1,0 +1,414 @@
+{
+  "name": "BlockPosHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.BlockPosHelper",
+  "extends": "BaseHelper<BlockPos>",
+  "since": "JsMacros 1.2.6",
+  "description": "The `BlockPosHelper` class is a helper class for working with block positions in Minecraft. It provides a convenient way to manipulate block coordinates, calculate distances, and perform spatial operations within the game world. This class wraps Minecraft's internal `BlockPos` class and exposes additional functionality useful for scripting.",
+  "overview": "The `BlockPosHelper` class is a helper class for working with block positions in Minecraft. It provides a convenient way to manipulate block coordinates, calculate distances, and perform spatial operations within the game world. This class wraps Minecraft's internal `BlockPos` class and exposes additional functionality useful for scripting.",
+  "constructors": [
+    {
+      "signature": "new BlockPosHelper(blockPos)",
+      "description": "Creates a new BlockPosHelper from an existing Minecraft BlockPos object.",
+      "parameters": [
+        {
+          "name": "blockPos",
+          "type": "BlockPos",
+          "description": "The original Minecraft BlockPos to wrap"
+        }
+      ]
+    },
+    {
+      "signature": "new BlockPosHelper(x, y, z)",
+      "description": "Creates a new BlockPosHelper with the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "The Z coordinate"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "int",
+      "description": "Returns the X coordinate of the block position.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "int",
+      "description": "Returns the Y coordinate of the block position.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getZ",
+      "signature": "getZ()",
+      "returnType": "int",
+      "description": "Returns the Z coordinate of the block position.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "up",
+      "signature": "up()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block directly above (Y + 1).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "up",
+      "signature": "up(distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block n levels above.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to move upward"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "down",
+      "signature": "down()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block directly below (Y - 1).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "down",
+      "signature": "down(distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block n levels below.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to move downward"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "north",
+      "signature": "north()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block to the north (Z - 1).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "north",
+      "signature": "north(distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block n blocks to the north.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to move north"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "south",
+      "signature": "south()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block to the south (Z + 1).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "south",
+      "signature": "south(distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block n blocks to the south.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to move south"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "east",
+      "signature": "east()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block to the east (X + 1).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "east",
+      "signature": "east(distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block n blocks to the east.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to move east"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "west",
+      "signature": "west()",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block to the west (X - 1).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "west",
+      "signature": "west(distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper representing the block n blocks to the west.",
+      "parameters": [
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to move west"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "offset",
+      "signature": "offset(direction)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper offset by one block in the specified direction.",
+      "parameters": [
+        {
+          "name": "direction",
+          "type": "String",
+          "description": "Direction name (\"down\", \"up\", \"north\", \"south\", \"west\", \"east\")"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "offset",
+      "signature": "offset(direction, distance)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper offset by n blocks in the specified direction.",
+      "parameters": [
+        {
+          "name": "direction",
+          "type": "String",
+          "description": "Direction name (\"down\", \"up\", \"north\", \"south\", \"west\", \"east\")"
+        },
+        {
+          "name": "distance",
+          "type": "int",
+          "description": "Number of blocks to offset"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "offset",
+      "signature": "offset(x, y, z)",
+      "returnType": "BlockPosHelper",
+      "description": "Returns a new BlockPosHelper offset by the specified coordinate values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X offset"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y offset"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "description": "Z offset"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toNetherCoords",
+      "signature": "toNetherCoords()",
+      "returnType": "BlockPosHelper",
+      "description": "Converts the current block position to corresponding Nether coordinates (X/8, Y, Z/8).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toOverworldCoords",
+      "signature": "toOverworldCoords()",
+      "returnType": "BlockPosHelper",
+      "description": "Converts the current block position to corresponding Overworld coordinates (X*8, Y, Z*8).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toPos3D",
+      "signature": "toPos3D()",
+      "returnType": "Pos3D",
+      "description": "Converts the block position to a Pos3D object with double precision.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(entity)",
+      "returnType": "double",
+      "description": "Calculates the distance from this block position to an entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to calculate distance to"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(blockPos)",
+      "returnType": "double",
+      "description": "Calculates the distance from this block position to another block position.",
+      "parameters": [
+        {
+          "name": "blockPos",
+          "type": "BlockPosHelper",
+          "description": "The block position to calculate distance to"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(pos3D)",
+      "returnType": "double",
+      "description": "Calculates the distance from this block position to a Pos3D position.",
+      "parameters": [
+        {
+          "name": "pos3D",
+          "type": "Pos3D",
+          "description": "The Pos3D position to calculate distance to"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "distanceTo",
+      "signature": "distanceTo(x, y, z)",
+      "returnType": "double",
+      "description": "Calculates the distance from this block position to the specified coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y coordinate"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z coordinate"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "equals",
+      "signature": "equals(obj)",
+      "returnType": "boolean",
+      "description": "Compares this BlockPosHelper with another object for equality.",
+      "parameters": [
+        {
+          "name": "obj",
+          "type": "Object",
+          "description": "Object to compare with"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns the hash code for this block position.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of this block position.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "BlockPos",
+      "description": "Returns the underlying Minecraft BlockPos object (inherited from BaseHelper).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

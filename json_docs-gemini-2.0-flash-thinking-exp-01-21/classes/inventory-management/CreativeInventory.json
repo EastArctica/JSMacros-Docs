@@ -1,0 +1,580 @@
+{
+  "name": "CreativeInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CreativeInventory",
+  "extends": "Inventory<CreativeInventoryScreen>",
+  "since": "1.8.4",
+  "description": "The `CreativeInventory` class provides specialized access to Minecraft's creative mode inventory interface, allowing scripts to interact with creative inventory tabs, search functionality, hotbar management, and item spawning capabilities. This class extends the base `Inventory` class and adds creative mode-specific functionality for browsing item categories, searching items, managing saved hotbars, and directly manipulating inventory contents in creative mode.",
+  "overview": "Creative mode inventory in Minecraft has the following main components:\n- **Creative Item Tabs:** Categorized item groups (Building Blocks, Decorations, Redstone, etc.)\n- **Search Tab:** Text-based item search functionality\n- **Inventory Tab:** Player's survival-style inventory\n- **Hotbar Tab:** Saved creative hotbar configurations\n- **Item List:** Scrollable list of all items in selected category\n- **Cursor Stack:** Creative mode's ability to hold item stacks on the mouse cursor\n\n## Accessing CreativeInventory\n\nYou typically get `CreativeInventory` instances when the player has the creative inventory screen open:\n\n```javascript\n// Check if current screen is creative inventory\nconst inv = Inventory.create();\nif (inv && inv.getType() === \"Creative\") {\n    const creative = inv; // Already typed as CreativeInventory\n    Chat.log(\"Creative inventory detected!\");\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "scroll",
+      "signature": "instance.scroll(amount)",
+      "returnType": "void",
+      "description": "Scrolls the creative item list by a given amount.",
+      "parameters": [
+        {
+          "name": "amount",
+          "type": "number",
+          "description": "The amount to scroll."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "scrollTo",
+      "signature": "instance.scrollTo(position)",
+      "returnType": "void",
+      "description": "Scrolls the creative item list to a specific position.",
+      "parameters": [
+        {
+          "name": "position",
+          "type": "number",
+          "description": "The target scroll position."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "selectTab",
+      "signature": "instance.selectTab(tabName)",
+      "returnType": "void",
+      "description": "Selects a creative inventory tab by its name. Tab names are case-sensitive.",
+      "parameters": [
+        {
+          "name": "tabName",
+          "type": "string",
+          "description": "The name of the tab to select (e.g., 'Building Blocks', 'Redstone')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.selectTab(tabName);"
+      ]
+    },
+    {
+      "name": "selectSearch",
+      "signature": "instance.selectSearch()",
+      "returnType": "CreativeInventory",
+      "description": "Selects the search tab in the creative inventory, allowing text-based item search.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "inv.selectSearch().search(term);"
+      ]
+    },
+    {
+      "name": "selectInventory",
+      "signature": "instance.selectInventory()",
+      "returnType": "CreativeInventory",
+      "description": "Selects the player's survival-style inventory tab within the creative inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "inv.selectInventory();"
+      ]
+    },
+    {
+      "name": "selectHotbar",
+      "signature": "instance.selectHotbar()",
+      "returnType": "CreativeInventory",
+      "description": "Selects the saved hotbars tab in the creative inventory, for managing hotbar configurations.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTabNames",
+      "signature": "instance.getTabNames()",
+      "returnType": "List<string>",
+      "description": "Gets a list of all available creative inventory tab names.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const tabNames = inv.getTabNames();"
+      ]
+    },
+    {
+      "name": "getTabTexts",
+      "signature": "instance.getTabTexts()",
+      "returnType": "List<string>",
+      "description": "Gets a list of all available creative inventory tab display texts.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "search",
+      "signature": "instance.search(searchString)",
+      "returnType": "void",
+      "description": "Performs a text-based search for items in the creative inventory. Requires the search tab to be selected.",
+      "parameters": [
+        {
+          "name": "searchString",
+          "type": "string",
+          "description": "The search query."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.selectSearch().search(term);"
+      ]
+    },
+    {
+      "name": "getShownItems",
+      "signature": "instance.getShownItems()",
+      "returnType": "List<ItemStack>",
+      "description": "Gets a list of items currently displayed in the creative item list (after a tab selection or search).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const items = inv.getShownItems();",
+        "const results = inv.getShownItems();"
+      ]
+    },
+    {
+      "name": "setStack",
+      "signature": "instance.setStack(slot, stack)",
+      "returnType": "void",
+      "description": "Sets an item stack in a specified inventory slot. Only works in creative mode. This can be used to spawn items.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index where the item should be placed."
+        },
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item stack to set."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.setStack(slot, itemStack);",
+        "inv.setStack(armor.slot, armorStack);"
+      ]
+    },
+    {
+      "name": "setCursorStack",
+      "signature": "instance.setCursorStack(stack)",
+      "returnType": "void",
+      "description": "Places an item stack onto the mouse cursor in creative mode.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStack",
+          "description": "The item stack to place on the cursor."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "destroyHeldItem",
+      "signature": "instance.destroyHeldItem()",
+      "returnType": "void",
+      "description": "Destroys the item currently held on the mouse cursor in creative mode.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "destroyAllItems",
+      "signature": "instance.destroyAllItems()",
+      "returnType": "void",
+      "description": "Destroys all items in the player's creative inventory. This action is permanent.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "saveHotbar",
+      "signature": "instance.saveHotbar(index)",
+      "returnType": "void",
+      "description": "Saves the current hotbar configuration to a creative hotbar save slot (0-8).",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "number",
+          "description": "The hotbar save slot index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.saveHotbar(emptySlot);"
+      ]
+    },
+    {
+      "name": "restoreHotbar",
+      "signature": "instance.restoreHotbar(index)",
+      "returnType": "void",
+      "description": "Restores a saved creative hotbar configuration from a slot (0-8) to the player's active hotbar.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "number",
+          "description": "The hotbar save slot index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inv.restoreHotbar(slotIndex);"
+      ]
+    },
+    {
+      "name": "getSavedHotbar",
+      "signature": "instance.getSavedHotbar(index)",
+      "returnType": "List<ItemStack>",
+      "description": "Retrieves the items stored in a specific creative hotbar save slot (0-8).",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "number",
+          "description": "The hotbar save slot index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const savedItems = inv.getSavedHotbar(i);"
+      ]
+    },
+    {
+      "name": "isInHotbar",
+      "signature": "instance.isInHotbar(slot)",
+      "returnType": "boolean",
+      "description": "Checks if the specified slot index corresponds to a creative hotbar save slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getOffhand",
+      "signature": "instance.getOffhand()",
+      "returnType": "ItemStack",
+      "description": "Gets the item in the offhand slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHelmet",
+      "signature": "instance.getHelmet()",
+      "returnType": "ItemStack",
+      "description": "Gets the item in the helmet armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getChestplate",
+      "signature": "instance.getChestplate()",
+      "returnType": "ItemStack",
+      "description": "Gets the item in the chestplate armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLeggings",
+      "signature": "instance.getLeggings()",
+      "returnType": "ItemStack",
+      "description": "Gets the item in the leggings armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBoots",
+      "signature": "instance.getBoots()",
+      "returnType": "ItemStack",
+      "description": "Gets the item in the boots armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(slot)",
+      "returnType": "ItemStack",
+      "description": "Get item at specific slot index.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = inv.getSlot(i);",
+        "const item = inv.getSlot(armor.slot);"
+      ]
+    },
+    {
+      "name": "getTotalSlots",
+      "signature": "getTotalSlots()",
+      "returnType": "number",
+      "description": "Get total number of slots.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSlotUnderMouse",
+      "signature": "getSlotUnderMouse()",
+      "returnType": "number",
+      "description": "Get slot index under mouse cursor.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHeld",
+      "signature": "getHeld()",
+      "returnType": "ItemStack",
+      "description": "Get item currently held by mouse.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "click",
+      "signature": "click(slot)",
+      "returnType": "void",
+      "description": "Click a slot (left click by default).",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index to click."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "click",
+      "signature": "click(slot, mouseButton)",
+      "returnType": "void",
+      "description": "Click a slot with a specific mouse button.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index to click."
+        },
+        {
+          "name": "mouseButton",
+          "type": "number",
+          "description": "The mouse button (0=left, 1=middle, 2=right)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "quick",
+      "signature": "quick(slot)",
+      "returnType": "void",
+      "description": "Shift-click to move items (quick move).",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index to quick move."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "dropSlot",
+      "signature": "dropSlot(slot)",
+      "returnType": "void",
+      "description": "Drop items from a specific slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index to drop items from."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "swapHotbar",
+      "signature": "swapHotbar(slot, hotbarSlot)",
+      "returnType": "void",
+      "description": "Swap item in a slot with an item in a hotbar slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The source slot index."
+        },
+        {
+          "name": "hotbarSlot",
+          "type": "number",
+          "description": "The target hotbar slot index (0-8)."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "swap",
+      "signature": "swap(slot1, slot2)",
+      "returnType": "void",
+      "description": "Swap two slots.",
+      "parameters": [
+        {
+          "name": "slot1",
+          "type": "number",
+          "description": "The first slot index."
+        },
+        {
+          "name": "slot2",
+          "type": "number",
+          "description": "The second slot index."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "contains",
+      "signature": "contains(item)",
+      "returnType": "boolean",
+      "description": "Check if inventory contains a specific item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The item stack to search for."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "findItem",
+      "signature": "findItem(item)",
+      "returnType": "List<number>",
+      "description": "Find all slots with a specific item.",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemStack",
+          "description": "The item stack to find."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItems",
+      "signature": "getItems()",
+      "returnType": "List<ItemStack>",
+      "description": "Get all non-empty items in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "inv.getItems().some(item => item.getItemId().includes(tool));",
+        "inv.getItems().some(item => [\"planks\", \"cobblestone\", \"wood\"].includes(item.getItemId().split('_').pop()));"
+      ]
+    },
+    {
+      "name": "getItemCount",
+      "signature": "getItemCount()",
+      "returnType": "Map<string, number>",
+      "description": "Get item counts by type.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItems",
+      "signature": "getItems(mapIdentifiers)",
+      "returnType": "List<ItemStack>",
+      "description": "Get items from specific mapped areas.",
+      "parameters": [
+        {
+          "name": "mapIdentifiers",
+          "type": "boolean",
+          "description": "Whether to map items by identifiers."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "close()",
+      "returnType": "void",
+      "description": "Close the inventory screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "string",
+      "description": "Get inventory type name.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "inv.getType() === \"Creative\""
+      ]
+    },
+    {
+      "name": "getMap",
+      "signature": "getMap()",
+      "returnType": "Map<string, List<number>>",
+      "description": "Get slot mapping information.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLocation",
+      "signature": "getLocation(slot)",
+      "returnType": "string",
+      "description": "Get location description for a slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSlotPos",
+      "signature": "getSlotPos(slot)",
+      "returnType": "Point",
+      "description": "Get screen position of a slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "number",
+          "description": "The slot index."
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

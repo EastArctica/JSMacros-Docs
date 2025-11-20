@@ -1,0 +1,16 @@
+{
+  "name": "SpellcastingIllagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.SpellcastingIllagerEntityHelper<T extends SpellcastingIllagerEntity>",
+  "extends": "IllagerEntityHelper<T>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `SpellcastingIllagerEntityHelper` class provides specialized functionality for spellcasting illager entities in JSMacros, particularly evokers and illusioners. This class extends `IllagerEntityHelper` and inherits all illager-specific methods while adding spellcasting-specific functionality for tracking magical attacks, spell identification, and combat pattern analysis.",
+  "overview": "This class represents intelligent hostile mobs that use magical spells in combat, making them significantly more dangerous than regular illagers. Spellcasting illagers can summon vexes, create evoker fangs, cast blindness spells, disappear and reappear, and use other magical abilities that require special defensive strategies and tactical awareness.",
+  "constructors": [
+    {
+      "signature": "",
+      "description": "SpellcastingIllagerEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through entity-related events where the entity is a spellcasting illager type, world entity queries that return evokers or illusioners, or type casting from EntityHelper or IllagerEntityHelper using specific entity type checks.",
+      "parameters": []
+    }
+  ],
+  "methods": []
+}

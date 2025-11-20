@@ -1,0 +1,44 @@
+{
+  "name": "SmithingInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.SmithingInventory",
+  "extends": "Inventory<SmithingScreen>",
+  "since": "1.8.4",
+  "description": "The SmithingInventory class provides specialized access to Minecraft's smithing table interface, allowing scripts to interact with smithing operations such as upgrading diamond gear to netherite gear.",
+  "overview": "This class extends the base Inventory class and adds smithing-specific functionality for managing the input slots and output slot. Smithing tables in Minecraft have three main slots: Left Input (Slot 0): The template item (e.g., Netherite Upgrade Smithing Template), Right Input (Slot 1): The base item to be upgraded (e.g., Diamond Sword) and the mineral (e.g., Netherite Ingot), Output (Slot 2): The resulting upgraded item after applying the smithing operation.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getLeftInput",
+      "signature": "getLeftInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack currently present in the left input slot (Slot 0) of the smithing table. This slot is typically used for the smithing template.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function upgradeToNetherite() {\n    const inv = Inventory.create();\n\n    // Check if we have a smithing table open\n    if (!inv || !inv.is(\"Smithing\")) {\n        Chat.log(\"Please open a smithing table first\");\n        return false;\n    }\n\n    const leftItem = inv.getLeftInput();\n    const rightItem = inv.getRightInput();\n    const output = inv.getOutput();\n\n    // Check if all required items are present\n    if (leftItem.isEmpty()) {\n        Chat.log(\"Please place a smithing template in the left slot\");\n        return false;\n    }\n\n    if (rightItem.isEmpty()) {\n        Chat.log(\"Please place items to upgrade in the right slot\");\n        return false;\n    }\n\n    if (output.isEmpty()) {\n        Chat.log(\"Invalid smithing combination\");\n        return false;\n    }\n\n    // Show upgrade information\n    Chat.log(\"=== Smithing Upgrade ===\");\n    Chat.log(`Template: ${leftItem.getName().getString()}`);\n    Chat.log(`Input: ${rightItem.getName().getString()}`);\n    Chat.log(`Output: ${output.getName().getString()}`);\n\n    // Apply the upgrade\n    inv.quick(2); // Shift-click output to inventory\n    Chat.log(`Successfully upgraded to ${output.getName().getString()}!`);\n\n    return true;\n}\n\n// Example usage\nupgradeToNetherite();"
+      ]
+    },
+    {
+      "name": "getRightInput",
+      "signature": "getRightInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack currently present in the right input slot (Slot 1) of the smithing table. This slot holds the base item to be upgraded and the mineral (e.g., Netherite Ingot).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function upgradeToNetherite() {\n    const inv = Inventory.create();\n\n    // Check if we have a smithing table open\n    if (!inv || !inv.is(\"Smithing\")) {\n        Chat.log(\"Please open a smithing table first\");\n        return false;\n    }\n\n    const leftItem = inv.getLeftInput();\n    const rightItem = inv.getRightInput();\n    const output = inv.getOutput();\n\n    // Check if all required items are present\n    if (leftItem.isEmpty()) {\n        Chat.log(\"Please place a smithing template in the left slot\");\n        return false;\n    }\n\n    if (rightItem.isEmpty()) {\n        Chat.log(\"Please place items to upgrade in the right slot\");\n        return false;\n    }\n\n    if (output.isEmpty()) {\n        Chat.log(\"Invalid smithing combination\");\n        return false;\n    }\n\n    // Show upgrade information\n    Chat.log(\"=== Smithing Upgrade ===\");\n    Chat.log(`Template: ${leftItem.getName().getString()}`);\n    Chat.log(`Input: ${rightItem.getName().getString()}`);\n    Chat.log(`Output: ${output.getName().getString()}`);\n\n    // Apply the upgrade\n    inv.quick(2); // Shift-click output to inventory\n    Chat.log(`Successfully upgraded to ${output.getName().getString()}!`);\n\n    return true;\n}\n\n// Example usage\nupgradeToNetherite();"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack currently present in the output slot (Slot 2) of the smithing table. This slot shows the resulting upgraded item after a valid smithing combination.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function upgradeToNetherite() {\n    const inv = Inventory.create();\n\n    // Check if we have a smithing table open\n    if (!inv || !inv.is(\"Smithing\")) {\n        Chat.log(\"Please open a smithing table first\");\n        return false;\n    }\n\n    const leftItem = inv.getLeftInput();\n    const rightItem = inv.getRightInput();\n    const output = inv.getOutput();\n\n    // Check if all required items are present\n    if (leftItem.isEmpty()) {\n        Chat.log(\"Please place a smithing template in the left slot\");\n        return false;\n    }\n\n    if (rightItem.isEmpty()) {\n        Chat.log(\"Please place items to upgrade in the right slot\");\n        return false;\n    }\n\n    if (output.isEmpty()) {\n        Chat.log(\"Invalid smithing combination\");\n        return false;\n    }\n\n    // Show upgrade information\n    Chat.log(\"=== Smithing Upgrade ===\");\n    Chat.log(`Template: ${leftItem.getName().getString()}`);\n    Chat.log(`Input: ${rightItem.getName().getString()}`);\n    Chat.log(`Output: ${output.getName().getString()}`);\n\n    // Apply the upgrade\n    inv.quick(2); // Shift-click output to inventory\n    Chat.log(`Successfully upgraded to ${output.getName().getString()}!`);\n\n    return true;\n}\n\n// Example usage\nupgradeToNetherite();"
+      ]
+    }
+  ]
+}

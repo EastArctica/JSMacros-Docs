@@ -1,0 +1,20 @@
+{
+  "name": "EventFallFlying",
+  "fullClassName": "EventFallFlying",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player starts or stops gliding with an Elytra.",
+  "overview": "Fires when the player starts or stops gliding with an Elytra. State is true when gliding starts, false when gliding stops. Not cancellable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

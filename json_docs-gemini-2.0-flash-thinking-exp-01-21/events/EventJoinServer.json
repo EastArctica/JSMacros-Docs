@@ -1,0 +1,18 @@
+{
+  "name": "JoinServer",
+  "fullClassName": "EventJoinServer",
+  "description": "This event is fired when the player successfully joins a server.",
+  "overview": "Fires when the player successfully connects to a server\nThe `player` field contains player information\nThe `address` field contains the server IP/domain\nNot cancellable\nGood for server-specific configurations and greetings",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

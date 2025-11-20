@@ -1,0 +1,49 @@
+{
+  "name": "BeeEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.BeeEntityHelper",
+  "extends": "AnimalEntityHelper<net.minecraft.entity.passive.BeeEntity>",
+  "description": "The `BeeEntityHelper` class is a thin wrapper around Minecraft’s `net.minecraft.entity.passive.BeeEntity`. It provides convenient methods for querying the bee’s state (nectar, anger, stinging) while exposing the underlying entity through the `base` field inherited from `AnimalEntityHelper`.",
+  "overview": "`BeeEntityHelper` is used when you have a reference to a bee entity (e.g., from a world scan, ray‑trace, or entity event) and need to check or react to its bee‑specific properties.",
+  "constructors": [
+    {
+      "signature": "new BeeEntityHelper(beeEntity)",
+      "description": "Creates a new helper instance that wraps the supplied `BeeEntity`.",
+      "parameters": [
+        {
+          "name": "beeEntity",
+          "type": "net.minecraft.entity.passive.BeeEntity",
+          "description": "The raw Minecraft bee entity to wrap."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "hasNectar",
+      "signature": "hasNectar(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the bee currently holds nectar.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAngry",
+      "signature": "isAngry(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the bee is angry at a player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "hasStung",
+      "signature": "hasStung(): boolean",
+      "returnType": "boolean",
+      "description": "Returns true if the bee has already stung a player.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

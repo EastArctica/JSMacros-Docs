@@ -1,0 +1,20 @@
+{
+  "name": "EventHealthChange",
+  "fullClassName": "EventHealthChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired whenever the player's health changes, either from taking damage or being healed. It serves as a general event for any health modification.",
+  "overview": "Fires for any health modification (damage or healing).\nThe change field is negative for damage, positive for healing.\nServes as a general-purpose health monitoring event.\nNot cancellable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

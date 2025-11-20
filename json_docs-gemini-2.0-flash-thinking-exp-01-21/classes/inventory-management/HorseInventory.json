@@ -1,0 +1,131 @@
+{
+  "name": "HorseInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.HorseInventory",
+  "extends": "Inventory<HorseScreen>",
+  "since": "1.8.4",
+  "description": "The `HorseInventory` class provides functionality for interacting with horse inventory screens in Minecraft. This includes managing saddles, armor, and chest inventories for horses, donkeys, mules, and similar equine mobs. It extends the base `Inventory` class and adds horse-specific functionality while inheriting all standard inventory operations.",
+  "overview": "This class is automatically created when you open a horse inventory screen and can be accessed through `Player.getInventory()` or `Inventory.create()` when a horse inventory is open.\n\nThe `HorseInventory` class handles various horse and donkey-type entities, including:\n- **Horses** - Can wear saddles and horse armor\n- **Donkeys** - Can wear saddles and have chest inventory\n- **Mules** - Can wear saddles and have chest inventory\n- **Llamas** - Can have chest inventory (special carpet decoration)\n- **Other AbstractHorseEntity subclasses**",
+  "constructors": [
+    {
+      "signature": "HorseInventory(inventory: HorseScreen)",
+      "description": "Creates a new `HorseInventory` instance for the specified horse inventory screen.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "`HorseScreen`",
+          "description": "The horse inventory screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "canBeSaddled",
+      "signature": "canBeSaddled(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the horse associated with this inventory can be saddled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Auto-equip saddle if available\nif (!inventory.isSaddled() && inventory.canBeSaddled()) {\n    // Look for saddle in player inventory\n    const saddleSlots = inventory.findItem(\"minecraft:saddle\");\n    const playerSaddleSlots = saddleSlots.filter(slot => {\n        const location = inventory.getLocation(slot);\n        return location === \"main\" || location === \"hotbar\";\n    });\n\n    if (playerSaddleSlots.length > 0) {\n        const saddleSlot = playerSaddleSlots[0];\n        Chat.log(\"Equipping saddle...\");\n        inventory.click(saddleSlot); // Pick up saddle\n        inventory.click(0); // Place in saddle slot\n        Chat.log(\"Saddle equipped!\");\n    } else {\n        Chat.log(\"No saddle found in inventory\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isSaddled",
+      "signature": "isSaddled(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the horse associated with this inventory currently has a saddle equipped.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (!inventory || inventory.getType() !== \"Horse\") {\n    Chat.log(\"No horse inventory open!\");\n    return;\n}\n\nconst horse = inventory.getHorse();\nChat.log(\"=== Horse Inventory Manager ===\");\nChat.log(`Horse Type: ${horse.getType()}`);\nChat.log(`Is Tamed: ${horse.isTame()}`);\nChat.log(`Is Saddled: ${inventory.isSaddled()}`);",
+        "// Auto-equip saddle if available\nif (!inventory.isSaddled() && inventory.canBeSaddled()) {\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "getSaddle",
+      "signature": "getSaddle(): ItemStackHelper",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack in the saddle slot of the horse.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n// ...\n\n// Check equipment\nif (inventory.canBeSaddled()) {\n    const saddle = inventory.getSaddle();\n    if (!saddle.isEmpty()) {\n        Chat.log(`Saddle: ${saddle.getName().getString()}`);\n    } else {\n        Chat.log(\"No saddle equipped\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "hasArmorSlot",
+      "signature": "hasArmorSlot(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the horse associated with this inventory has an armor slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if current inventory is a horse inventory\nconst inventory = Player.getInventory();\nif (inventory && inventory.getType() === \"Horse\") {\n    Chat.log(\"Currently viewing a horse inventory\");\n    Chat.log(`Horse type: ${inventory.getHorse().getType()}`);\n\n    if (inventory.hasChest()) {\n        Chat.log(\"Horse has chest inventory\");\n    }\n    if (inventory.hasArmorSlot()) {\n        Chat.log(\"Horse can wear armor\");\n    }\n}",
+        "// Equip armor (for horses)\n    if (inventory.hasArmorSlot() && playerItem.getItemId().includes(\"horse_armor\")) {\n        inventory.click(1); // Click armor slot\n        Chat.log(\"Armor equipped!\");\n    }"
+      ]
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor(): ItemStackHelper",
+      "returnType": "ItemStackHelper",
+      "description": "Gets the item stack in the armor slot of the horse.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\n// ...\n\n// Check equipment\nif (inventory.hasArmorSlot()) {\n    const armor = inventory.getArmor();\n    if (!armor.isEmpty()) {\n        Chat.log(`Armor: ${armor.getName().getString()}`);\n    } else {\n        Chat.log(\"No armor equipped\");\n    }\n}",
+        "// Auto-equip best armor for horses\n    if (inventory.hasArmorSlot()) {\n        const currentArmor = inventory.getArmor();\n        // ...\n    }"
+      ]
+    },
+    {
+      "name": "hasChest",
+      "signature": "hasChest(): boolean",
+      "returnType": "boolean",
+      "description": "Checks if the horse associated with this inventory has a chest (container) inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if current inventory is a horse inventory\nconst inventory = Player.getInventory();\nif (inventory && inventory.getType() === \"Horse\") {\n    Chat.log(\"Currently viewing a horse inventory\");\n    Chat.log(`Horse type: ${inventory.getHorse().getType()}`);\n\n    if (inventory.hasChest()) {\n        Chat.log(\"Horse has chest inventory\");\n    }\n    // ...\n}",
+        "// Check if horse chest contains specific items\n    const hasDiamonds = inventory.contains(\"minecraft:diamond\");\n    Chat.log(`Horse chest contains diamonds: ${hasDiamonds}`);\n\n    // Get item counts from horse chest\n    if (inventory.hasChest()) {\n        const chestItems = inventory.getItems(\"container\");\n        const itemCounts = {};\n\n        for (const item of chestItems) {\n            const itemId = item.getItemId();\n            itemCounts[itemId] = (itemCounts[itemId] || 0) + item.getCount();\n        }\n\n        Chat.log(\"Horse chest contents:\");\n        for (const [itemId, count] of Object.entries(itemCounts)) {\n            Chat.log(`- ${itemId}: ${count}`);\n        }\n    }",
+        "// Quick move items to horse chest\n    if (inventory.hasChest()) {\n        const chestSlots = inventory.getSlots(\"container\");\n        if (chestSlots.length > 0) {\n            // Quick move from player inventory to first chest slot\n            inventory.quick(36); // Assuming slot 36 is in player inventory\n            Chat.log(\"Item moved to horse chest\");\n        }\n    }"
+      ]
+    },
+    {
+      "name": "getInventorySize",
+      "signature": "getInventorySize(): number",
+      "returnType": "number",
+      "description": "Gets the number of slots available in the horse's chest inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (!inventory || inventory.getType() !== \"Horse\") {\n    Chat.log(\"No horse inventory open!\");\n    return;\n}\n\n// ...\n\n// Check chest\nif (inventory.hasChest()) {\n    const size = inventory.getInventorySize();\n    Chat.log(`Chest Size: ${size} slots`);\n\n    const chestItems = inventory.getHorseInventory();\n    const totalItems = chestItems.reduce((sum, item) => sum + item.getCount(), 0);\n    Chat.log(`Total items in chest: ${totalItems}`);\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "getHorseInventory",
+      "signature": "getHorseInventory(): ItemStackHelper[]",
+      "returnType": "ItemStackHelper[]",
+      "description": "Gets a list of all item stacks currently in the horse's chest inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const inventory = Player.getInventory();\nif (!inventory || inventory.getType() !== \"Horse\") {\n    Chat.log(\"No horse inventory open!\");\n    return;\n}\n\n// ...\n\n// Check chest\nif (inventory.hasChest()) {\n    const size = inventory.getInventorySize();\n    Chat.log(`Chest Size: ${size} slots`);\n\n    const chestItems = inventory.getHorseInventory();\n    const totalItems = chestItems.reduce((sum, item) => sum + item.getCount(), 0);\n    Chat.log(`Total items in chest: ${totalItems}`);\n\n    if (chestItems.length > 0) {\n        Chat.log(\"Chest contents:\");\n        for (const item of chestItems) {\n            Chat.log(`- ${item.getItemId()} x${item.getCount()}`);\n        }\n    }\n}",
+        "function organizeHorseChest() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Horse\") {\n        Chat.log(\"No horse inventory open!\");\n        return;\n    }\n\n    if (!inventory.hasChest()) {\n        Chat.log(\"Horse doesn't have a chest!\");\n        return;\n    }\n\n    Chat.log(\"Organizing horse chest...\");\n\n    // Get all chest items\n    const chestItems = inventory.getHorseInventory();\n    const itemGroups = {};\n\n    // ...\n}"
+      ]
+    },
+    {
+      "name": "getHorse",
+      "signature": "getHorse(): AbstractHorseEntityHelper<T>",
+      "returnType": "AbstractHorseEntityHelper<T>",
+      "description": "Gets the `AbstractHorseEntityHelper` object representing the horse associated with this inventory, providing access to horse-specific information and statistics.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if current inventory is a horse inventory\nconst inventory = Player.getInventory();\nif (inventory && inventory.getType() === \"Horse\") {\n    Chat.log(\"Currently viewing a horse inventory\");\n    Chat.log(`Horse type: ${inventory.getHorse().getType()}`);\n\n    if (inventory.hasChest()) {\n        Chat.log(\"Horse has chest inventory\");\n    }\n    // ...\n}",
+        "function manageHorseInventory() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Horse\") {\n        Chat.log(\"No horse inventory open!\");\n        return;\n    }\n\n    const horse = inventory.getHorse();\n    Chat.log(\"=== Horse Inventory Manager ===\");\n    Chat.log(`Horse Type: ${horse.getType()}`);\n    Chat.log(`Is Tamed: ${horse.isTame()}`);\n    Chat.log(`Is Saddled: ${inventory.isSaddled()}`);\n    // ...\n    Chat.log(`Jump Strength: ${horse.getJumpStrengthStat().toFixed(3)}`);\n    Chat.log(`Speed: ${horse.getHorseSpeed().toFixed(2)} blocks/sec`);\n    Chat.log(`Max Health: ${horse.getMaxHealth()}`);\n}",
+        "function equipHorse() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Horse\") {\n        Chat.log(\"No horse inventory open!\");\n        return;\n    }\n\n    const horse = inventory.getHorse();\n\n    // Check if horse is tamed\n    if (!horse.isTame()) {\n        Chat.log(\"Horse must be tamed first!\");\n        return;\n    }\n    // ...\n}",
+        "function calculateHorseCapacity() {\n    const inventory = Player.getInventory();\n    if (!inventory || inventory.getType() !== \"Horse\") {\n        Chat.log(\"No horse inventory open!\");\n        return;\n    }\n\n    const horse = inventory.getHorse();\n    Chat.log(\"=== Horse Transport Analysis ===\");\n\n    // ...\n\n    // Horse speed bonus\n    const speed = horse.getHorseSpeed();\n    const walkSpeed = 4.317; // Player walking speed in blocks/sec\n    const speedBonus = (speed / walkSpeed).toFixed(1);\n\n    Chat.log(`\\nSpeed Analysis:`);\n    Chat.log(`- Horse speed: ${speed.toFixed(2)} blocks/sec`);\n    Chat.log(`- Speed bonus: ${speedBonus}x walking speed`);\n\n    // ...\n}"
+      ]
+    }
+  ]
+}

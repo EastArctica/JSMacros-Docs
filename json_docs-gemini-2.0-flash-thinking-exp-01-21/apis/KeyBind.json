@@ -1,0 +1,176 @@
+{
+  "name": "KeyBind",
+  "fullClassName": "KeyBind",
+  "description": "Functions for getting and modifying key pressed states, and for simulating key presses. Accessible from scripts via the global `KeyBind` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getKeyCode",
+      "signature": "KeyBind.getKeyCode(keyName: string)",
+      "returnType": "InputUtil.Key",
+      "description": "This method is for advanced use. For simulating key presses, it is highly recommended to use `KeyBind.keyBind()` instead.",
+      "parameters": [
+        {
+          "name": "keyName",
+          "type": "string",
+          "description": "The name of the key (e.g., \"key.keyboard.w\", \"key.mouse.left\")."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const wKeyObject = KeyBind.getKeyCode(\"key.keyboard.w\");"
+      ]
+    },
+    {
+      "name": "getKeyBindings",
+      "signature": "KeyBind.getKeyBindings()",
+      "returnType": "java.util.Map<string, string>",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const bindings = KeyBind.getKeyBindings();\nconst forwardKey = bindings.get(\"key.forward\");\nChat.log(`The forward key is currently bound to: ${forwardKey}`);"
+      ]
+    },
+    {
+      "name": "setKeyBind",
+      "signature": "KeyBind.setKeyBind(bind: string, key: string)",
+      "returnType": "void",
+      "description": "",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "The name of the key to assign to the binding (e.g., \"key.keyboard.p\")."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Make the 'P' key open the inventory\nKeyBind.setKeyBind(\"key.inventory\", \"key.keyboard.p\");"
+      ]
+    },
+    {
+      "name": "key",
+      "signature": "KeyBind.key(keyName: string, keyState: boolean)",
+      "returnType": "void",
+      "description": "Sets the pressed state of a physical key by its name. This simulates a physical key press. It's often better to use `KeyBind.keyBind()` to simulate the *action* you want to perform, as it respects the user's current keybindings.",
+      "parameters": [
+        {
+          "name": "keyName",
+          "type": "string",
+          "description": "The name of the physical key to press (e.g., \"key.keyboard.w\")."
+        },
+        {
+          "name": "keyState",
+          "type": "boolean",
+          "description": "`true` to press the key, `false` to release it."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Hold down the 'W' key\nKeyBind.key(\"key.keyboard.w\", true);\n\n// A short time later...\n// Release the 'W' key\nKeyBind.key(\"key.keyboard.w\", false);"
+      ]
+    },
+    {
+      "name": "pressKey",
+      "signature": "KeyBind.pressKey(keyName: string)",
+      "returnType": "void",
+      "description": "A convenient shortcut for `KeyBind.key(keyName, true)`.",
+      "parameters": [
+        {
+          "name": "keyName",
+          "type": "string",
+          "description": "The name of the key to press."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Press the left shift key\nKeyBind.pressKey(\"key.keyboard.left.shift\");"
+      ]
+    },
+    {
+      "name": "releaseKey",
+      "signature": "KeyBind.releaseKey(keyName: string)",
+      "returnType": "void",
+      "description": "A convenient shortcut for `KeyBind.key(keyName, false)`.",
+      "parameters": [
+        {
+          "name": "keyName",
+          "type": "string",
+          "description": "The name of the key to release."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Release the left shift key\nKeyBind.releaseKey(\"key.keyboard.left.shift\");"
+      ]
+    },
+    {
+      "name": "keyBind",
+      "signature": "KeyBind.keyBind(keyBind: string, keyState: boolean)",
+      "returnType": "void",
+      "description": "Sets the pressed state of a keybinding by its name (e.g., \"key.forward\", \"key.attack\"). This is the **recommended method** for simulating in-game actions as it respects the player's control settings.",
+      "parameters": [
+        {
+          "name": "keyBind",
+          "type": "string",
+          "description": "The name of the keybinding to activate."
+        },
+        {
+          "name": "keyState",
+          "type": "boolean",
+          "description": "`true` to press the keybinding, `false` to release it."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Hold down the \"forward\" key, whatever it is bound to\nKeyBind.keyBind(\"key.forward\", true);\n\nTime.sleep(1000);\n\n// Release the \"forward\" key\nKeyBind.keyBind(\"key.forward\", false);"
+      ]
+    },
+    {
+      "name": "pressKeyBind",
+      "signature": "KeyBind.pressKeyBind(keyBind: string)",
+      "returnType": "void",
+      "description": "A convenient shortcut for `KeyBind.keyBind(keyBind, true)`.",
+      "parameters": [
+        {
+          "name": "keyBind",
+          "type": "string",
+          "description": "The name of the keybinding to press."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Start attacking\nKeyBind.pressKeyBind(\"key.attack\");"
+      ]
+    },
+    {
+      "name": "releaseKeyBind",
+      "signature": "KeyBind.releaseKeyBind(keyBind: string)",
+      "returnType": "void",
+      "description": "A convenient shortcut for `KeyBind.keyBind(keyBind, false)`.",
+      "parameters": [
+        {
+          "name": "keyBind",
+          "type": "string",
+          "description": "The name of the keybinding to release."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Stop attacking\nKeyBind.releaseKeyBind(\"key.attack\");"
+      ]
+    },
+    {
+      "name": "getPressedKeys",
+      "signature": "KeyBind.getPressedKeys()",
+      "returnType": "java.util.Set<string>",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const pressedKeys = KeyBind.getPressedKeys();\n\nif (pressedKeys.contains(\"key.keyboard.left.control\") && pressedKeys.contains(\"key.keyboard.s\")) {\n    Chat.log(\"Ctrl+S is pressed!\");\n}"
+      ]
+    }
+  ]
+}

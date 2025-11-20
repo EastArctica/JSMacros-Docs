@@ -1,0 +1,97 @@
+{
+  "name": "Websocket",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.Websocket",
+  "extends": "",
+  "since": "1.1.9",
+  "description": "A WebSocket client class that provides real-time, bidirectional communication with WebSocket servers. This class enables JsMacros scripts to establish persistent connections to WebSocket endpoints for live data streaming, real-time notifications, chat applications, IoT device communication, and other interactive network protocols.",
+  "overview": "The Websocket class uses the NV WebSocket library under the hood and provides a simple, event-driven API for handling WebSocket connections, message exchanges, and connection lifecycle events. It supports both secure (`wss://`) and non-secure (`ws://`) WebSocket connections and provides comprehensive error handling and connection state management.",
+  "constructors": [
+    {
+      "signature": "new Websocket(address)",
+      "description": "Creates a new `Websocket` instance with the specified server address. This constructor initializes the WebSocket connection but does not automatically connect to the server. You must call the `connect()` method to establish the actual connection.",
+      "parameters": [
+        {
+          "name": "address",
+          "type": "`string`",
+          "description": "The WebSocket server URL (e.g., `\"wss://example.com/socket\"` or `\"ws://localhost:8080\"`)"
+        }
+      ],
+      "examples": [
+        "// Create WebSocket instance for a public echo server\nconst echoWs = new Websocket(\"wss://echo.websocket.events\");\n\n// Set up event handlers before connecting\nechoWs.onConnect = JavaWrapper.methodToJava((websocket, headers) => {\n    Chat.log(\"&aConnected to echo server!\");\n});\n\nechoWs.onTextMessage = JavaWrapper.methodToJava((websocket, message) => {\n    Chat.log(`&6Echo received: ${message}`);\n});\n\n// Connect to the server\nechoWs.connect();"
+      ]
+    },
+    {
+      "signature": "new Websocket(url)",
+      "description": "Creates a new `Websocket` instance using a Java `URL` object. This constructor is useful when you already have a URL object or need to work with URLs programmatically.",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "`java.net.URL`",
+          "description": "The WebSocket server URL as a Java URL object"
+        }
+      ],
+      "examples": [
+        "// Build URL programmatically\nconst baseUrl = \"wss://echo.websocket.events\";\nconst wsUrl = new java.net.URL(baseUrl);\nconst ws = new Websocket(wsUrl);\n\n// Continue with event handler setup...\nws.onConnect = JavaWrapper.methodToJava((websocket, headers) => {\n    Chat.log(`Connected to ${baseUrl}`);\n});\n\nws.connect();"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "connect",
+      "signature": "instance.connect()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWs",
+      "signature": "instance.getWs()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "sendText",
+      "signature": "instance.sendText(text)",
+      "returnType": "",
+      "description": "",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "instance.close()",
+      "returnType": "",
+      "description": "",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "instance.close(closeCode)",
+      "returnType": "",
+      "description": "",
+      "parameters": [
+        {
+          "name": "closeCode",
+          "type": "",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

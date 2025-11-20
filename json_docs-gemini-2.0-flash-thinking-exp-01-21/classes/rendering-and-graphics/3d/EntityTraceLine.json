@@ -1,0 +1,58 @@
+{
+  "name": "EntityTraceLine",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.EntityTraceLine",
+  "extends": "TraceLine",
+  "since": "1.9.0",
+  "description": "The `EntityTraceLine` class is a specialized rendering component that draws a 3D trace line from the screen center to a target entity in the game world. It automatically tracks the entity's movement and updates the line endpoint in real-time, making it ideal for highlighting, targeting systems, or visual tracking of entities.\n\nThis class extends `TraceLine` and inherits its rendering capabilities while adding entity-specific functionality like automatic position tracking, entity removal detection, and customizable vertical offset.",
+  "overview": "EntityTraceLine creates a visual line that connects the screen center (crosshair position) to a specific entity in the 3D world. The line automatically updates its endpoint as the entity moves, making it perfect for:\n\n- Entity highlighting and marking\n- Visual tracking systems\n- Targeting indicators\n- Entity monitoring interfaces\n- Navigation aids",
+  "constructors": [
+    {
+      "signature": "new EntityTraceLine(entity, color, yOffset)",
+      "description": "Creates a new EntityTraceLine with the specified entity, color, and Y offset.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper<?>",
+          "description": "The target entity to track (can be null)"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "The RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "yOffset",
+          "type": "double",
+          "description": "Vertical offset from entity base position"
+        }
+      ]
+    },
+    {
+      "signature": "new EntityTraceLine(entity, color, alpha, yOffset)",
+      "description": "Creates a new EntityTraceLine with the specified entity, color, alpha, and Y offset.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper<?>",
+          "description": "The target entity to track (can be null)"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "The RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "The alpha/transparency value (0-255)"
+        },
+        {
+          "name": "yOffset",
+          "type": "double",
+          "description": "Vertical offset from entity base position"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

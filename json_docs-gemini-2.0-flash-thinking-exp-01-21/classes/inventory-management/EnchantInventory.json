@@ -1,0 +1,228 @@
+{
+  "name": "EnchantInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.EnchantInventory",
+  "extends": "Inventory<EnchantmentScreen>",
+  "since": "JsMacros 1.3.1",
+  "description": "The `EnchantInventory` class represents an enchantment table interface in JSMacros. It provides access to enchantment options, required experience levels, and methods for performing enchantments. This class is specifically designed to interact with Minecraft's enchantment table GUI, allowing scripts to read available enchantments, check requirements, and automate the enchanting process.",
+  "overview": "The `EnchantInventory` class extends the base `Inventory` class with enchantment-specific functionality:\n- Access to all three enchantment options available at the enchantment table\n- Required experience levels for each enchantment option\n- Enchantment details including names, IDs, and levels\n- Methods to perform enchantments programmatically\n- Access to the item being enchanted and lapis lazuli used\n- Integration with standard inventory operations",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "click",
+      "signature": "click(slot: int, mouseButton: int)",
+      "returnType": "void",
+      "description": "Clicks on a specific slot within the inventory. Inherited from `Inventory`.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The index of the slot to click."
+        },
+        {
+          "name": "mouseButton",
+          "type": "int",
+          "description": "The mouse button used for the click (e.g., 0 for left, 1 for right)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "enchantInv.click(sourceSlot).click(enchantSlot);"
+      ]
+    },
+    {
+      "name": "quick",
+      "signature": "quick(slot: int)",
+      "returnType": "void",
+      "description": "Performs a shift-click (quick move) on a specific slot to move items. Inherited from `Inventory`.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The index of the slot to quick move."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(slot: int)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves the `ItemStackHelper` for the item in a specific slot. Inherited from `Inventory`.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The index of the slot."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const itemSlot = enchantInv.getSlot(0);",
+        "const lapisSlot = enchantInv.getSlot(1);"
+      ]
+    },
+    {
+      "name": "getTotalSlots",
+      "signature": "getTotalSlots()",
+      "returnType": "int",
+      "description": "Returns the total number of slots in the inventory. Inherited from `Inventory`.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMap",
+      "signature": "getMap()",
+      "returnType": "Map<String, int[]>",
+      "description": "Returns a map detailing the slot ranges for different sections of the inventory (e.g., 'main', 'hotbar'). Inherited from `Inventory`.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const map = enchantInv.getMap();",
+        "Chat.log(`Available sections: ${Object.keys(map).join(', ')}`);"
+      ]
+    },
+    {
+      "name": "close",
+      "signature": "close()",
+      "returnType": "void",
+      "description": "Closes the current inventory screen. Inherited from `Inventory`.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "String",
+      "description": "Returns the type identifier string of the inventory (e.g., 'Enchanting Table'). Inherited from `Inventory`.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (inv && inv.getType() === \"Enchanting Table\") { ... }"
+      ]
+    },
+    {
+      "name": "is",
+      "signature": "is(type: String)",
+      "returnType": "boolean",
+      "description": "Checks if the inventory is of a specified type. Useful for verifying if the opened inventory is an enchantment table.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "String",
+          "description": "The string identifier of the inventory type (e.g., \"Enchanting Table\")."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (enchantInv.is(\"Enchanting Table\")) { ... }",
+        "if (!enchantInv || !enchantInv.is(\"Enchanting Table\")) { Chat.log(\"Not at an enchantment table\"); return; }"
+      ]
+    },
+    {
+      "name": "getRequiredLevels",
+      "signature": "getRequiredLevels()",
+      "returnType": "int[]",
+      "description": "Returns an array of integers representing the experience levels required for each of the three enchantment options (0-2).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const costs = enchantInv.getRequiredLevels();",
+        "Chat.log(`Required levels: ${costs.join(', ')}`);"
+      ]
+    },
+    {
+      "name": "getEnchantmentLevels",
+      "signature": "getEnchantmentLevels()",
+      "returnType": "int[]",
+      "description": "Returns an array of integers representing the actual enchantment levels (e.g., '5' for Sharpness V) offered for each option.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const levels = enchantInv.getEnchantmentLevels();",
+        "Chat.log(`Level: ${levels[i]}`);"
+      ]
+    },
+    {
+      "name": "getEnchantments",
+      "signature": "getEnchantments()",
+      "returnType": "TextHelper[]",
+      "description": "Returns an array of `TextHelper` objects, providing the display names of the enchantments offered for each option.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const names = enchantInv.getEnchantments();",
+        "Chat.log(`Name: ${names[i] ? names[i].getString() : 'None'}`);"
+      ]
+    },
+    {
+      "name": "getEnchantmentIds",
+      "signature": "getEnchantmentIds()",
+      "returnType": "String[]",
+      "description": "Returns an array of strings representing the full Minecraft IDs (e.g., 'minecraft:sharpness') of the enchantments offered.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const ids = enchantInv.getEnchantmentIds();",
+        "Chat.log(`ID: ${ids[i] || 'None'}`);"
+      ]
+    },
+    {
+      "name": "doEnchant",
+      "signature": "doEnchant(slot: int)",
+      "returnType": "boolean",
+      "description": "Attempts to perform the enchantment corresponding to the given slot index (0-2). Returns `true` if successful, `false` otherwise.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The 0-indexed slot of the enchantment option to perform (0, 1, or 2)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const success = enchantInv.doEnchant(bestSlot);",
+        "if (success) { Chat.log(\"Enchantment successful!\"); } else { Chat.log(\"Enchantment failed!\"); }"
+      ]
+    },
+    {
+      "name": "getEnchantmentHelpers",
+      "signature": "getEnchantmentHelpers()",
+      "returnType": "EnchantmentHelper[]",
+      "description": "Returns an array of `EnchantmentHelper` objects, offering detailed information about each enchantment option. (Added in JsMacros 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const helpers = enchantInv.getEnchantmentHelpers();",
+        "const enchant = helpers[i].getEnchantment();",
+        "const level = helpers[i].getLevel();"
+      ]
+    },
+    {
+      "name": "getItemToEnchant",
+      "signature": "getItemToEnchant()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns an `ItemStackHelper` for the item currently placed in the enchantment slot (slot 0). (Added in JsMacros 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const item = enchantInv.getItemToEnchant();",
+        "Chat.log(`Item to enchant: ${item.isEmpty() ? 'None' : item.getName()}`);"
+      ]
+    },
+    {
+      "name": "getLapis",
+      "signature": "getLapis()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns an `ItemStackHelper` for the Lapis Lazuli stack in the dedicated lapis slot (slot 1). (Added in JsMacros 1.8.4)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const lapis = enchantInv.getLapis();",
+        "Chat.log(`Lapis available: ${lapis.getCount()}`);"
+      ]
+    }
+  ]
+}

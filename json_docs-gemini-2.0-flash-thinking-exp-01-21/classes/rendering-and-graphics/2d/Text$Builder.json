@@ -1,0 +1,215 @@
+{
+  "name": "TextBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.TextBuilder",
+  "extends": null,
+  "since": "JsMacros 1.3.0",
+  "description": "The `TextBuilder` class is a utility class in JSMacros that provides a fluent builder pattern for creating complex text components with rich formatting, styling, hover events, and click interactions. It allows developers to construct sophisticated chat messages, HUD elements, and user interface text with method chaining for easy configuration.",
+  "overview": "The `TextBuilder` class provides a powerful way to build text components with:\n- Rich text formatting (colors, bold, italic, underline, strikethrough, obfuscated)\n- Custom RGB colors and legacy color codes\n- Hover events showing text, items, or entities\n- Click events for running commands, opening URLs, or custom actions\n- Method chaining for fluent, readable code\n- Integration with Minecraft's text system",
+  "constructors": [
+    {
+      "signature": "new TextBuilder()",
+      "description": "Creates a new empty TextBuilder instance.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "append",
+      "signature": "append(text: string | TextHelper): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Appends text or a TextHelper component to the current text component. Each call to append creates a new text section.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string | TextHelper",
+          "description": "The string or TextHelper component to append."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "new TextBuilder().append(\"Red\")",
+        ".append(\" | \")"
+      ]
+    },
+    {
+      "name": "withColor",
+      "signature": "withColor(colorCode: number): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Applies a legacy Minecraft color code (0-15 or hex) to the current text section.",
+      "parameters": [
+        {
+          "name": "colorCode",
+          "type": "number",
+          "description": "The legacy color code (e.g., 0xc for Red, 0x6 for Gold)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".append(\"Red\").withColor(0xc)",
+        ".append(\"Gold\").withColor(0x6)"
+      ]
+    },
+    {
+      "name": "withColor",
+      "signature": "withColor(r: number, g: number, b: number): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Applies a custom RGB color to the current text section.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "number",
+          "description": "The red component of the color (0-255)."
+        },
+        {
+          "name": "g",
+          "type": "number",
+          "description": "The green component of the color (0-255)."
+        },
+        {
+          "name": "b",
+          "type": "number",
+          "description": "The blue component of the color (0-255)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".append(\"Custom Purple\").withColor(128, 0, 128)",
+        ".append(\"Custom Orange\").withColor(255, 165, 0)"
+      ]
+    },
+    {
+      "name": "withFormatting",
+      "signature": "withFormatting(underline: boolean, bold: boolean, italic: boolean, strikethrough: boolean, obfuscated: boolean): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Applies multiple formatting styles (underline, bold, italic, strikethrough, obfuscated) to the current text section.",
+      "parameters": [
+        {
+          "name": "underline",
+          "type": "boolean",
+          "description": "True to underline the text."
+        },
+        {
+          "name": "bold",
+          "type": "boolean",
+          "description": "True to make the text bold."
+        },
+        {
+          "name": "italic",
+          "type": "boolean",
+          "description": "True to italicize the text."
+        },
+        {
+          "name": "strikethrough",
+          "type": "boolean",
+          "description": "True to strikethrough the text."
+        },
+        {
+          "name": "obfuscated",
+          "type": "boolean",
+          "description": "True to obfuscate (magic) the text."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".append(\"Bold\").withFormatting(false, true, false, false, false)",
+        ".append(\"Underline\").withFormatting(true, false, false, false, false)"
+      ]
+    },
+    {
+      "name": "withShowTextHover",
+      "signature": "withShowTextHover(hoverText: TextHelper): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Configures a hover event to display a custom TextHelper component when the mouse is over the current section.",
+      "parameters": [
+        {
+          "name": "hoverText",
+          "type": "TextHelper",
+          "description": "The TextHelper object to display when hovering."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const hoverText = Chat.createTextHelperFromString(\"&eThis is detailed hover text!\\n&7It can have multiple lines.\");\nconst text = new TextBuilder()\n    .append(\"&6Hover over this text for details\")\n    .withShowTextHover(hoverText)\n    .build();"
+      ]
+    },
+    {
+      "name": "withShowItemHover",
+      "signature": "withShowItemHover(itemStack: ItemStackHelper): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Configures a hover event to display an item's tooltip when the mouse is over the current section.",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The ItemStackHelper object representing the item to display on hover."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const player = Player.getPlayer();\nif (player) {\n    const item = player.getMainHand();\n    if (item && !item.isEmpty()) {\n        const text = new TextBuilder()\n            .append(\"&eCurrent Item: \" + item.getName())\n            .withShowItemHover(item)\n            .build();\n        Chat.log(text);\n    }\n}"
+      ]
+    },
+    {
+      "name": "withClickEvent",
+      "signature": "withClickEvent(action: string, value: string): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Configures a click event for the current section with a predefined action and value (e.g., open URL, run command, copy text).",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "The action to perform (e.g., 'open_url', 'run_command', 'copy_to_clipboard')."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The value associated with the action (e.g., URL, command string, text to copy)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".withClickEvent(\"open_url\", \"https://google.com\")",
+        ".withClickEvent(\"run_command\", \"/say Hello from text builder!\")",
+        ".withClickEvent(\"copy_to_clipboard\", \"This text was copied!\")"
+      ]
+    },
+    {
+      "name": "withCustomClickEvent",
+      "signature": "withCustomClickEvent(func: function): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Configures a click event for the current section to execute a custom JavaScript function.",
+      "parameters": [
+        {
+          "name": "func",
+          "type": "function",
+          "description": "The JavaScript function (wrapped with JavaWrapper.methodToJava) to execute on click."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const customFunction = JavaWrapper.methodToJava(() => {\n    const player = Player.getPlayer();\n    if (player) {\n        const pos = player.getPos();\n        Chat.log(`&aButton clicked at position: ${Math.floor(pos.x)}, ${Math.floor(pos.y)}, ${Math.floor(pos.z)}`);\n    }\n});\nconst text = new TextBuilder()\n    .append(\"&a[Get Position]\")\n    .withCustomClickEvent(customFunction)\n    .build();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build(): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Finalizes the text component construction and returns the immutable TextHelper object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const text = new TextBuilder()\n    .append(\"Red\").withColor(0xc)\n    .append(\"Gold\").withColor(0x6)\n    .append(\"Green\").withColor(0x2)\n    .append(\"Blue\").withColor(0x9)\n    .build();\nChat.log(text);",
+        "function createInteractiveStatusDisplay() {\n    const player = Player.getPlayer();\n    if (!player) return;\n\n    const health = player.getHealth();\n    const maxHealth = player.getMaxHealth();\n    const food = player.getHunger();\n    const pos = player.getPos();\n\n    const hoverText = Chat.createTextHelperFromString(\n        `&6Player Statistics:\\n` +\n        `&cHealth: ${health.toFixed(1)}/${maxHealth.toFixed(1)}\\n` +\n        `&eFood: ${food}/20\\n` +\n        `&bPosition: ${Math.floor(pos.x)}, ${Math.floor(pos.y)}, ${Math.floor(pos.z)}\\n` +\n        `&7Click for more info`\n    );\n\n    const moreInfoAction = JavaWrapper.methodToJava(() => {\n        Chat.log(`&6=== Player Info ===`);\n        Chat.log(`&aHealth: ${health}/${maxHealth}`);\n        Chat.log(`&eHunger: ${food}/20`);\n        Chat.log(`&bPosition: ${Math.floor(pos.x)}, ${Math.floor(pos.y)}, ${Math.floor(pos.z)}`);\n        Chat.log(`&dGame Time: ${World.getTime()}`);\n    });\n\n    return new TextBuilder()\n        .append(\"[Status]\").withColor(0x6).withFormatting(true, false, false, false, false)\n        .append(\" \")\n        .append(`❤ ${health.toFixed(0)}`).withColor(0xc)\n        .append(\" \")\n        .append(`🍖 ${food}`).withColor(0xe)\n        .append(\" \")\n        .append(`📍 ${Math.floor(pos.x)},${Math.floor(pos.z)}`).withColor(0x9)\n        .withShowTextHover(hoverText)\n        .withCustomClickEvent(moreInfoAction)\n        .build();\n}"
+      ]
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth(): number",
+      "returnType": "number",
+      "description": "Calculates and returns the width of the current text component in pixels. Note: This method does not return `this` for chaining.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "name": "FurnaceInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.FurnaceInventory",
+  "extends": "RecipeInventory<AbstractFurnaceScreen<?>>",
+  "since": "1.8.4",
+  "description": "The `FurnaceInventory` class is a specialized inventory helper that provides access to Minecraft furnace screen functionality. It wraps Minecraft's furnace GUI and allows scripters to programmatically interact with smelting operations, check smelting progress, manage fuel, and preview smelting results. This class is specifically designed for managing smelting operations when a furnace interface is open. This class provides methods for examining smelting recipes, checking valid fuels and smeltable items, monitoring smelting progress, and managing the input, fuel, and output slots of a furnace.",
+  "overview": "The `FurnaceInventory` represents the interface to a Minecraft furnace when its GUI is open. It provides access to furnace-specific operations such as:\n\n- Checking if items and fuels can be smelted together\n- Monitoring smelting progress and fuel levels\n- Accessing input slot, fuel slot, and output slot\n- Validating smelting recipes and fuel items\n- Getting comprehensive fuel value information\n\n**Key Features:**\n- Fuel validation and comprehensive fuel value lookup\n- Smelting progress tracking with time calculations\n- Individual slot access for input, fuel, and output\n- Recipe validation for smeltable items\n- Integration with standard inventory operations\n- Support for all furnace types (regular furnace, blast furnace, smoker)",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getSmeltedItem",
+      "signature": "getSmeltedItem()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the input slot (slot 0, top left). This is where items to be smelted are placed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const input = furnace.getSmeltedItem();\n\n    if (!input.isEmpty()) {\n        Chat.log(`Smelting: ${input.getName()} x${input.getCount()}`);\n\n        if (furnace.isSmeltable(input)) {\n            Chat.log(\"✓ This item can be smelted\");\n        } else {\n            Chat.log(\"✗ This item cannot be smelted\");\n        }\n    } else {\n        Chat.log(\"No item in input slot\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFuel",
+      "signature": "getFuel()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the fuel slot (slot 1, bottom left). This is where fuel items like coal, charcoal, wood, or lava buckets are placed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const fuel = furnace.getFuel();\n\n    if (!fuel.isEmpty()) {\n        Chat.log(`Fuel: ${fuel.getName()} x${fuel.getCount()}`);\n\n        if (furnace.canUseAsFuel(fuel)) {\n            const fuelValues = furnace.getFuelValues();\n            const fuelTime = fuelValues.get(fuel.getItemId());\n            Chat.log(`Burn time: ${fuelTime} ticks (${Math.round(fuelTime/20)}s)`);\n        } else {\n            Chat.log(\"✗ This item cannot be used as fuel\");\n        }\n    }\n} else {\n    Chat.log(\"No fuel in furnace\");\n}"
+      ]
+    },
+    {
+      "name": "getInput",
+      "signature": "getInput(x, y)",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the input slot at the specified position. For furnaces, this always returns the input slot regardless of the x, y parameters (which are ignored and should be 0, 0).",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x position of the input (will always be 0)"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y position of the input (will always be 0)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const input = furnace.getInput(0, 0); // Same as getSmeltedItem()\n\n    if (!input.isEmpty()) {\n        Chat.log(`Input item: ${input.getName()}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "canUseAsFuel",
+      "signature": "canUseAsFuel(stack)",
+      "returnType": "boolean",
+      "description": "Returns `true` if the given item can be used as fuel in a furnace, `false` otherwise.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    // Test various items for fuel capability\n    const testItems = [\n        furnace.getSlot(0), // Input slot\n        furnace.getSlot(1) // Fuel slot\n    ];\n\n    testItems.forEach((item, index) => {\n        if (!item.isEmpty()) {\n            const isFuel = furnace.canUseAsFuel(item);\n            const slotName = index === 0 ? \"Input\" : \"Fuel\";\n            Chat.log(`${slotName} (${item.getName()}): ${isFuel ? \"✓ Fuel\" : \"✗ Not fuel\"}`);\n        }\n    });\n\n    // Check items in player inventory\n    const inventorySlots = furnace.getSlots(\"main\", \"hotbar\");\n    let foundFuels = 0;\n\n    for (const slot of inventorySlots) {\n        const item = furnace.getSlot(slot);\n        if (!item.isEmpty() && furnace.canUseAsFuel(item)) {\n            foundFuels++;\n            Chat.log(`Found fuel: ${item.getName()} in slot ${slot}`);\n        }\n    }\n\n    Chat.log(`Total fuel items in inventory: ${foundFuels}`);\n}"
+      ]
+    },
+    {
+      "name": "isSmeltable",
+      "signature": "isSmeltable(stack)",
+      "returnType": "boolean",
+      "description": "Returns `true` if the given item can be smelted in a furnace, `false` otherwise.",
+      "parameters": [
+        {
+          "name": "stack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const input = furnace.getSmeltedItem();\n\n    if (!input.isEmpty()) {\n        const canSmelt = furnace.isSmeltable(input);\n        Chat.log(`${input.getName()}: ${canSmelt ? \"✓ Can be smelted\" : \"✗ Cannot be smelted\"}`);\n\n        if (canSmelt) {\n            // Estimate output based on common smelting recipes\n            const possibleOutputs = {\n                \"minecraft:iron_ore\": \"minecraft:iron_ingot\",\n                \"minecraft:gold_ore\": \"minecraft:gold_ingot\",\n                \"minecraft:cobblestone\": \"minecraft:stone\",\n                \"minecraft:log\": \"minecraft:charcoal\",\n                \"minecraft:potato\": \"minecraft:baked_potato\",\n                \"minecraft:beef\": \"minecraft:cooked_beef\"\n            };\n\n            const expectedOutput = possibleOutputs[input.getItemId()];\n            if (expectedOutput) {\n                Chat.log(`Expected output: ${expectedOutput.replace(\"minecraft:\", \"\")}`);\n            }\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFuelValues",
+      "signature": "getFuelValues()",
+      "returnType": "Map<String, Integer>",
+      "description": "Returns a map containing all valid fuel items and their burn times in ticks. The map keys are item IDs (like \"minecraft:coal\") and values are burn times in ticks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const fuelValues = furnace.getFuelValues();\n\n    Chat.log(\"=== Available Fuel Values ===\");\n\n    // Sort fuels by burn time (descending)\n    const sortedFuels = Array.from(fuelValues.entries())\n        .sort((a, b) => b[1] - a[1])\n        .slice(0, 20); // Show top 20 fuels\n\n    sortedFuels.forEach(([itemId, burnTime]) => {\n        const itemName = itemId.replace(\"minecraft:\", \"\").replace(\"_\", \" \");\n        const seconds = Math.round(burnTime / 20);\n        Chat.log(`${itemName}: ${burnTime} ticks (${seconds}s)`);\n    });\n\n    // Show best fuels for long smelting sessions\n    Chat.log(\"\\n=== Best Fuels for Extended Smelting ===\");\n    const bestFuels = sortedFuels.filter(([_, burnTime]) => burnTime >= 8000); // 400+ seconds\n\n    bestFuels.forEach(([itemId, burnTime]) => {\n        const itemName = itemId.replace(\"minecraft:\", \"\").replace(\"_\", \" \");\n        const itemsPerSmelt = Math.floor(burnTime / 200); // Average smelt time is 200 ticks\n        Chat.log(`${itemName}: ${itemsPerSmelt} items per fuel unit`);\n    });\n}"
+      ]
+    },
+    {
+      "name": "getSmeltingProgress",
+      "signature": "getSmeltingProgress()",
+      "returnType": "int",
+      "description": "Returns the current smelting progress in ticks. If this equals `getTotalSmeltingTime()`, the item is finished smelting. Returns 0 if no smelting is in progress.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const progress = furnace.getSmeltingProgress();\n    const totalTime = furnace.getTotalSmeltingTime();\n\n    if (progress > 0 && totalTime > 0) {\n        const progressPercent = Math.round((progress / totalTime) * 100);\n        Chat.log(`Smelting progress: ${progressPercent}%`);\n        Chat.log(`Progress: ${progress}/${totalTime} ticks`);\n\n        // Create progress bar\n        const barLength = 20;\n        const filled = Math.round((progressPercent / 100) * barLength);\n        const bar = \"█\".repeat(filled) + \"░\".repeat(barLength - filled);\n        Chat.log(`[${bar}]`);\n    } else {\n        Chat.log(\"No smelting in progress\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getTotalSmeltingTime",
+      "signature": "getTotalSmeltingTime()",
+      "returnType": "int",
+      "description": "Returns the total smelting time required for the current input item in ticks. Standard furnace smelting takes 200 ticks (10 seconds), but blast furnaces and smokers may be faster.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const totalTime = furnace.getTotalSmeltingTime();\n    const progress = furnace.getSmeltingProgress();\n\n    Chat.log(`Total smelting time: ${totalTime} ticks (${Math.round(totalTime/20)} seconds)`);\n\n    // Determine furnace type based on smelting time\n    let furnaceType = \"Regular Furnace\";\n    if (totalTime === 100) {\n        furnaceType = \"Blast Furnace or Smoker\";\n    } else if (totalTime === 50) {\n        furnaceType = \"Enhanced (modded)\";\n    }\n\n    Chat.log(`Furnace type: ${furnaceType}`);\n\n    if (progress > 0) {\n        const remaining = totalTime - progress;\n        Chat.log(`Time remaining: ${Math.round(remaining/20)} seconds`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getRemainingSmeltingTime",
+      "signature": "getRemainingSmeltingTime()",
+      "returnType": "int",
+      "description": "Returns the remaining time until the current smelting operation completes, in ticks. If no smelting is in progress, returns the full smelting time.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const remaining = furnace.getRemainingSmeltingTime();\n    const totalTime = furnace.getTotalSmeltingTime();\n\n    if (remaining < totalTime) { // Smelting is in progress\n        const seconds = Math.round(remaining / 20);\n        Chat.log(`Time remaining: ${seconds} seconds`);\n\n        // Calculate completion time\n        const now = new Date();\n        const completion = new Date(now.getTime() + remaining * 50); // 1 tick = 50ms\n        Chat.log(`Smelting completes at: ${completion.toLocaleTimeString()}`);\n\n        // Show countdown for critical items\n        const input = furnace.getSmeltedItem();\n        if (!input.isEmpty()) {\n            Chat.log(`Almost done: ${input.getName()}`);\n        }\n    } else {\n        Chat.log(\"No active smelting process\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getRemainingFuelTime",
+      "signature": "getRemainingFuelTime()",
+      "returnType": "int",
+      "description": "Returns the remaining burn time for the current fuel item in ticks. Returns 0 when no fuel is remaining.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const fuelTime = furnace.getRemainingFuelTime();\n    const totalFuelTime = furnace.getTotalFuelTime();\n\n    Chat.log(`Fuel remaining: ${fuelTime} ticks`);\n\n    if (totalFuelTime > 0) {\n        const fuelPercent = Math.round((fuelTime / totalFuelTime) * 100);\n        Chat.log(`Fuel: ${fuelPercent}%`);\n\n        // Create fuel progress bar\n        const barLength = 20;\n        const filled = Math.round((fuelPercent / 100) * barLength);\n        const bar = \"🔥\".repeat(filled) + \"░\".repeat(barLength - filled);\n        Chat.log(`[${bar}]`);\n\n        // Estimate remaining smelts\n        const smeltTime = furnace.getTotalSmeltingTime();\n        if (smeltTime > 0) {\n            const remainingSmelts = Math.floor(fuelTime / smeltTime);\n            Chat.log(`Can smelt ~${remainingSmelts} more items with current fuel`);\n        }\n    } else {\n        Chat.log(\"No fuel remaining\");\n\n        // Check for more fuel in inventory\n        const fuelSlots = furnace.getSlots(\"main\", \"hotbar\").filter(slot => {\n            const item = furnace.getSlot(slot);\n            return !item.isEmpty() && furnace.canUseAsFuel(item);\n        });\n\n        if (fuelSlots.length > 0) {\n            Chat.log(`Found ${fuelSlots.length} potential fuel items in inventory`);\n        } else {\n            Chat.log(\"⚠ No fuel available in inventory!\");\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getTotalFuelTime",
+      "signature": "getTotalFuelTime()",
+      "returnType": "int",
+      "description": "Returns the total burn time of the current fuel item in ticks. This represents how long the current fuel item can burn when first placed in the furnace.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const totalFuelTime = furnace.getTotalFuelTime();\n    const currentFuel = furnace.getFuel();\n\n    if (!currentFuel.isEmpty()) {\n        Chat.log(`Fuel item: ${currentFuel.getName()}`);\n        Chat.log(`Total burn time: ${totalFuelTime} ticks (${Math.round(totalFuelTime/20)} seconds)`);\n\n        // Compare with known fuel values\n        const fuelValues = furnace.getFuelValues();\n        const expectedTime = fuelValues.get(currentFuel.getItemId());\n\n        if (expectedTime) {\n            const efficiency = Math.round((totalFuelTime / expectedTime) * 100);\n            Chat.log(`Fuel efficiency: ${efficiency}%`);\n        }\n    } else {\n        Chat.log(\"No fuel in furnace\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "isBurning",
+      "signature": "isBurning()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the furnace is currently burning (has fuel and is actively smelting), `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const isBurning = furnace.isBurning();\n    const hasFuel = furnace.getRemainingFuelTime() > 0;\n    const hasInput = !furnace.getSmeltedItem().isEmpty();\n    const progress = furnace.getSmeltingProgress();\n\n    Chat.log(`Furnace status: ${isBurning ? \"🔥 Burning\" : \"❌ Not burning\"}`);\n    Chat.log(`Has fuel: ${hasFuel ? \"✓\" : \"✗\"}`);\n    Chat.log(`Has input: ${hasInput ? \"✓\" : \"✗\"}`);\n    Chat.log(`Smelting progress: ${progress > 0 ? \"✓ In progress\" : \"✗ Idle\"}`);\n\n    // Diagnose why not burning\n    if (!isBurning) {\n        Chat.log(\"\\nDiagnosis:\");\n        if (!hasFuel) {\n            Chat.log(\"  • No fuel available\");\n        }\n        if (!hasInput) {\n            Chat.log(\"  • No input to smelt\");\n        }\n        if (hasFuel && hasInput && progress === 0) {\n            Chat.log(\"  • Input item cannot be smelted\");\n        }\n    }\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns the item stack in the output slot (slot 2, right side). This contains the smelted items.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    const output = furnace.getOutput();\n\n    if (!output.isEmpty()) {\n        Chat.log(`Output: ${output.getName()} x${output.getCount()}`);\n\n        // Check if output is ready to collect\n        const progress = furnace.getSmeltingProgress();\n        const totalTime = furnace.getTotalSmeltingTime();\n\n        if (progress >= totalTime) {\n            Chat.log(\"✅ Smelting complete! Ready to collect.\");\n        } else {\n            const remaining = totalTime - progress;\n            Chat.log(`⏳ Still smelting... ${Math.round(remaining/20)}s remaining`);\n        }\n    } else {\n        Chat.log(\"No items in output slot\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getCraftableRecipes",
+      "signature": "getCraftableRecipes()",
+      "returnType": "List<RecipeHelper>",
+      "description": "Returns a list of recipes that can be crafted with the current input. For furnaces, this will show smelting recipes for the current input item.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    try {\n        const recipes = furnace.getCraftableRecipes();\n\n        if (recipes && recipes.length > 0) {\n            Chat.log(`Found ${recipes.length} available smelting recipes:`);\n\n            recipes.forEach((recipe, index) => {\n                Chat.log(`${index + 1}. ${recipe.toString()}`);\n            });\n        } else {\n            const input = furnace.getSmeltedItem();\n            if (!input.isEmpty()) {\n                Chat.log(`No smelting recipes available for: ${input.getName()}`);\n            } else {\n                Chat.log(\"No input item to check recipes for\");\n            }\n        }\n    } catch (e) {\n        Chat.log(\"Error getting recipes: \" + e.message);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getRecipes",
+      "signature": "getRecipes(craftable)",
+      "returnType": "List<RecipeHelper>",
+      "description": "Returns a list of recipes available in this furnace. When `craftable` is true, only returns recipes that can be made with current inputs.",
+      "parameters": [
+        {
+          "name": "craftable",
+          "type": "boolean",
+          "description": "Whether to only return craftable recipes"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const furnace = Inventory.create();\nif (furnace && furnace.getType().includes(\"Furnace\")) {\n    try {\n        // Get all possible recipes\n        const allRecipes = furnace.getRecipes(false);\n        Chat.log(`Total furnace recipes available: ${allRecipes ? allRecipes.length : 0}`);\n\n        // Get only craftable recipes\n        const craftableRecipes = furnace.getRecipes(true);\n        Chat.log(`Currently craftable: ${craftableRecipes ? craftableRecipes.length : 0}`);\n\n        if (craftableRecipes && craftableRecipes.length > 0) {\n            Chat.log(\"\\nCraftable recipes:\");\n            craftableRecipes.forEach(recipe => {\n                Chat.log(`  ${recipe.toString()}`);\n            });\n        }\n    } catch (e) {\n        Chat.log(\"Error fetching recipes: \" + e.message);\n    }\n}"
+      ]
+    }
+  ]
+}

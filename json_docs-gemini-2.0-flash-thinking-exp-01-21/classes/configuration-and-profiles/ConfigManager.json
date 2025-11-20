@@ -1,0 +1,122 @@
+{
+  "name": "ConfigManager",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.config.ConfigManager",
+  "extends": null,
+  "since": "JsMacros 1.0.0",
+  "description": "The `ConfigManager` class is a central component in JsMacros responsible for managing all configuration data, including core settings, profiles, and various option classes. It handles loading, saving, and converting configuration formats between different versions. The ConfigManager automatically creates necessary directories, handles backward compatibility, and provides a structured way to access configuration data throughout the JsMacros system.",
+  "overview": "The `ConfigManager` provides comprehensive configuration management functionality:\n- Manages configuration files in JSON format with pretty printing\n- Handles automatic configuration format conversion between versions\n- Provides structured access to different configuration option classes\n- Automatically creates and manages config and macro directories\n- Supports adding custom option classes dynamically\n- Handles configuration backup and recovery on errors\n- Manages profile-based script configurations",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getOptions",
+      "signature": "instance.getOptions(optionClass)",
+      "returnType": "T",
+      "description": "Retrieves the options object for a specific option class.",
+      "parameters": [
+        {
+          "name": "optionClass",
+          "type": "Class<T>",
+          "description": "The class of the options to retrieve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\n\n// Get core configuration options\nconst coreConfig = configManager.getOptions(CoreConfigV2);\nif (coreConfig) {\n    Chat.log(`Current default profile: ${coreConfig.defaultProfile}`);\n    Chat.log(`Ignored events: ${coreConfig.anythingIgnored}`);\n\n    // Access profile information\n    const profiles = coreConfig.profileOptions();\n    profiles.forEach(profile => {\n        Chat.log(`Available profile: ${profile}`);\n    });\n}"
+      ]
+    },
+    {
+      "name": "addOptions",
+      "signature": "instance.addOptions(key, optionClass)",
+      "returnType": null,
+      "description": "Adds a new option class to the configuration manager.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "String",
+          "description": "The unique key to identify this option class"
+        },
+        {
+          "name": "optionClass",
+          "type": "Class<?>",
+          "description": "The class that handles this configuration section"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\n\n// Add a custom option class (advanced usage)\ntry {\n    configManager.addOptions(\"myMod\", MyModConfigClass);\n    Chat.log(\"Custom options added successfully\");\n} catch (error) {\n    Chat.logColor(`&cFailed to add options: ${error.message}`);\n}"
+      ]
+    },
+    {
+      "name": "loadConfig",
+      "signature": "instance.loadConfig()",
+      "returnType": null,
+      "description": "Loads all configuration data from files, including format conversion if needed.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\nconst CoreConfigV2 = Packages.xyz.wagyourtail.jsmacros.core.config.CoreConfigV2;\n\n// Reload configuration from files\ntry {\n    configManager.loadConfig();\n    Chat.log(\"Configuration reloaded successfully\");\n\n    const coreConfig = configManager.getOptions(CoreConfigV2);\n    Chat.log(`Loaded profiles: ${coreConfig.profileOptions()}`);\n} catch (error) {\n    Chat.logColor(`&cFailed to load configuration: ${error.message}`);\n}"
+      ]
+    },
+    {
+      "name": "saveConfig",
+      "signature": "instance.saveConfig()",
+      "returnType": null,
+      "description": "Saves all current configuration data to the configuration file.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\n\n// Save current configuration to file\nconfigManager.saveConfig();\nChat.log(\"Configuration saved successfully\");"
+      ]
+    },
+    {
+      "name": "reloadRawConfigFromFile",
+      "signature": "instance.reloadRawConfigFromFile()",
+      "returnType": null,
+      "description": "Reloads the raw JSON configuration from the file without processing.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\n\n// Reload raw configuration data\ntry {\n    configManager.reloadRawConfigFromFile();\n    Chat.log(\"Raw configuration reloaded\");\n} catch (error) {\n    Chat.logColor(\"&cFailed to reload raw config:\", error.message);\n}"
+      ]
+    },
+    {
+      "name": "convertConfigFormat",
+      "signature": "instance.convertConfigFormat()",
+      "returnType": null,
+      "description": "Converts configuration format from an older version to the current version.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\n\n// Convert configuration format (usually handled internally)\ntry {\n    configManager.convertConfigFormat();\n    Chat.log(\"Configuration format converted successfully\");\n} catch (error) {\n    Chat.logColor(\"&cFailed to convert configuration:\", error.message);\n}"
+      ]
+    },
+    {
+      "name": "convertConfigFormat",
+      "signature": "instance.convertConfigFormat(clazz)",
+      "returnType": null,
+      "description": "Converts configuration format for a specific class.",
+      "parameters": [
+        {
+          "name": "clazz",
+          "type": "Class<?>",
+          "description": "The class whose configuration needs conversion"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Convert specific class configuration\ntry {\n    configManager.convertConfigFormat(MyConfigClass);\n    Chat.log(\"MyConfigClass configuration converted\");\n} catch (error) {\n    Chat.logColor(\"&cFailed to convert MyConfigClass:\", error.message);\n}"
+      ]
+    },
+    {
+      "name": "loadDefaults",
+      "signature": "instance.loadDefaults()",
+      "returnType": null,
+      "description": "Loads default configuration values for all registered option classes.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const configManager = JsMacros.getConfig();\n\n// Reset to default configuration\ntry {\n    configManager.loadDefaults();\n    configManager.saveConfig();\n    Chat.log(\"Configuration reset to defaults\");\n} catch (error) {\n    Chat.logColor(`&cFailed to load defaults: ${error.message}`);\n}"
+      ]
+    }
+  ]
+}

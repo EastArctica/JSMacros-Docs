@@ -1,0 +1,22 @@
+{
+  "name": "ScriptAssertionError",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.language.BaseScriptContext$ScriptAssertionError",
+  "extends": "Error",
+  "since": "JSMacros 1.2.0",
+  "description": "The `ScriptAssertionError` class is a specialized exception used within JSMacros for script-level assertions and control flow. Unlike traditional errors that indicate failures, ScriptAssertionError is primarily used for intentional script termination, conditional execution, and flow control mechanisms. It provides a way to stop script execution predictably while distinguishing intentional stops from actual errors.",
+  "overview": "The `ScriptAssertionError` class serves as a controlled exception mechanism for JSMacros scripts, enabling:\n\n- Intentional script termination with specific messages\n- Conditional script execution based on runtime conditions\n- Flow control for complex script logic\n- Distinguishing between errors and intentional script stops\n- Integration with JSMacros' error handling and logging systems\n\nThis exception is typically not shown to users as an error but is instead handled internally by the JSMacros system as a normal part of script execution flow.",
+  "constructors": [
+    {
+      "signature": "new ScriptAssertionError(message: string)",
+      "description": "Creates a new `ScriptAssertionError` instance with a descriptive message, indicating the reason for the script assertion or intentional stop.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "A descriptive message explaining why the script execution is being asserted or stopped."
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

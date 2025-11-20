@@ -1,0 +1,214 @@
+{
+  "name": "SelectorDropdownOverlay",
+  "fullClassName": "xyz.wagyourtip.wagyourgui.overlays.SelectorDropdownOverlay",
+  "extends": "OverlayContainer",
+  "description": "The `SelectorDropdownOverlay` class is a specialized overlay component that provides a dropdown selection interface for users. It displays a scrollable list of text choices that users can navigate through keyboard controls or mouse clicks. This overlay is commonly used for language selection, setting options, and other scenarios where users need to choose from a list of items.",
+  "overview": "Key Features:\n- Scrollable list of text choices\n- Keyboard navigation (arrow keys, enter/tab)\n- Mouse click selection\n- Visual selection highlighting\n- Automatic scrollbar for long lists\n- Click-outside-to-close functionality\n- Customizable positioning and dimensions\n\nKeyboard Navigation:\nThe overlay supports comprehensive keyboard navigation:\nNavigation Keys\n- ↑ Arrow: Move selection up one item\n- ↓ Arrow: Move selection down one item\n- Enter: Confirm current selection\n- Tab: Confirm current selection\nNavigation Behavior\n- Selection wraps within valid bounds\n- Visual highlighting shows current selection\n- Confirmation triggers the callback and closes the overlay\n- Clicking outside the overlay closes it without selection\n\nVisual Appearance:\nBackground Style\n- Black background (`0xFF000000`)\n- Two-layer border system with semi-transparent and opaque white borders\n- Consistent with Minecraft UI design language\nButton Styling\n- Default colors: Black background, white borders, white text\n- Hover highlighting: Semi-transparent overlay (`0x4FFFFFFF`)\n- Selection highlighting: Forced hover state on selected item\nScrollbar\n- Automatically appears when content exceeds available height\n- 8-pixel wide scrollbar on the right side\n- Customizable colors for thumb and track\n\nIntegration Notes:\nParent Container Requirements\n- Parent must implement `IOverlayParent` interface\n- Parent must support overlay management (open/close)\n- Parent should handle focus management\n\nMemory Management:\n- Choice buttons are automatically managed\n- Overlay cleans up buttons when closed\n- Parent button states are preserved during overlay display\n\nPerformance Considerations:\n- Efficient rendering with visibility culling\n- Scrollbar calculations use page-based system\n- Button creation is limited to visible choices\n\nCommon Use Cases:\n1. Language Selection: Choose from available translation languages\n2. Theme Switching: Select UI color themes and styles\n3. Server Browser: Pick from multiplayer server list\n4. Command History: Access previously executed commands\n5. Search Results: Display and select from search matches\n6. Profile Selection: Choose from user profiles or characters\n7. Settings Options: Select from configuration choices\n8. Inventory Categories: Filter or organize inventory items\n\nRelated Classes:\n- `OverlayContainer` - Base class for overlay management\n- `IOverlayParent` - Interface for overlay parent containers\n- `Button` - Individual choice buttons in the dropdown\n- `Scrollbar` - Scrolling functionality for long lists\n- `Text` - Minecraft text component for display\n- `TextRenderer` - Text rendering utilities\n\nImportant Notes:\n1. Internal Usage: This class is primarily used internally by JSMacros GUI components and may not be directly accessible to scripts in all contexts.\n2. Threading: All operations must be performed on the main client thread.\n3. Coordinate System: Uses Minecraft GUI coordinate system where (0,0) is the top-left corner.\n4. Text Formatting: Supports Minecraft text formatting codes in choice labels.\n5. Dynamic Content: Choice collection should be stable during overlay lifecycle to avoid indexing issues.\n6. Callback Execution: Selection callback is executed before overlay closure.\n7. Scroll Behavior: Scroll position is maintained during selection changes.\n8. Focus Management: Overlay automatically manages focus for keyboard input.\n\nVersion Information:\n- Part of the wagyourgui overlay system\n- Used extensively in JSMacros editor and settings screens\n- Stable API with consistent behavior across JSMacros versions\n- Compatible with Minecraft's GUI rendering system",
+  "constructors": [
+    {
+      "signature": "new SelectorDropdownOverlay(x, y, width, height, choices, textRenderer, parent, onChoice)",
+      "description": "Creates a new selector dropdown overlay with the specified parameters.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "The x coordinate of the overlay's top-left corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "The y coordinate of the overlay's top-left corner"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the overlay in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The height of the overlay in pixels"
+        },
+        {
+          "name": "choices",
+          "type": "Collection<Text>",
+          "description": "A collection of Text objects representing the selectable choices"
+        },
+        {
+          "name": "textRenderer",
+          "type": "TextRenderer",
+          "description": "The text renderer for drawing text elements"
+        },
+        {
+          "name": "parent",
+          "type": "IOverlayParent",
+          "description": "The parent overlay container"
+        },
+        {
+          "name": "onChoice",
+          "type": "Consumer<Integer>",
+          "description": "Callback function that accepts the index of the selected choice"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "init",
+      "signature": "init()",
+      "returnType": "void",
+      "description": "Initializes the overlay by creating buttons for each choice and setting up the scrollbar if needed. This method is called automatically when the overlay is opened.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Note: This is typically called internally, but here's how it works:\nconst overlay = new SelectorDropdownOverlay(x, y, width, height, choices, textRenderer, parent, onChoice);\noverlay.init(); // Creates buttons and scrollbar"
+      ]
+    },
+    {
+      "name": "setSelected",
+      "signature": "setSelected(sel)",
+      "returnType": "void",
+      "description": "Sets the currently selected choice by index and updates the visual highlighting.",
+      "parameters": [
+        {
+          "name": "sel",
+          "type": "int",
+          "description": "The index of the choice to select. Use `-1` for no selection."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Select the first item\noverlay.setSelected(0);\n\n// Clear selection\noverlay.setSelected(-1);\n\n// Select last item (note: this needs validation)\nconst lastIndex = overlay.choices.size() - 1;\noverlay.setSelected(lastIndex);"
+      ]
+    },
+    {
+      "name": "onScroll",
+      "signature": "onScroll(page)",
+      "returnType": "void",
+      "description": "Handles scrolling functionality by updating the visibility and positions of choice buttons based on the current scroll position.",
+      "parameters": [
+        {
+          "name": "page",
+          "type": "double",
+          "description": "The current scroll page offset"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Scroll to top (page 0)\noverlay.onScroll(0);\n\n// Scroll halfway through the list\nconst halfwayPoint = overlay.pages / 2;\noverlay.onScroll(halfwayPoint);"
+      ]
+    },
+    {
+      "name": "onClick",
+      "signature": "onClick(mouseX, mouseY, button)",
+      "returnType": "void",
+      "description": "Handles mouse click events. Closes the overlay if the click occurs outside the overlay bounds.",
+      "parameters": [
+        {
+          "name": "mouseX",
+          "type": "double",
+          "description": "The x coordinate of the mouse click"
+        },
+        {
+          "name": "mouseY",
+          "type": "double",
+          "description": "The y coordinate of the mouse click"
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "description": "The mouse button that was clicked"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This is typically called internally by the GUI system\noverlay.onClick(100, 50, 0); // Left click at position (100, 50)"
+      ]
+    },
+    {
+      "name": "keyPressed",
+      "signature": "keyPressed(keyCode, scanCode, modifiers)",
+      "returnType": "boolean",
+      "description": "Handles keyboard input for navigation and selection.\nKey Bindings:\n- `GLFW_KEY_UP`: Move selection up\n- `GLFW_KEY_DOWN`: Move selection down\n- `GLFW_KEY_ENTER` or `GLFW_KEY_TAB`: Confirm selection and close",
+      "parameters": [
+        {
+          "name": "keyCode",
+          "type": "int",
+          "description": "The GLFW key code"
+        },
+        {
+          "name": "scanCode",
+          "type": "int",
+          "description": "The platform-specific scan code"
+        },
+        {
+          "name": "modifiers",
+          "type": "int",
+          "description": "Modifier key flags"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Simulate keyboard input\noverlay.keyPressed(265, 0, 0); // Up arrow\noverlay.keyPressed(264, 0, 0); // Down arrow\noverlay.keyPressed(257, 0, 0); // Enter key"
+      ]
+    },
+    {
+      "name": "render",
+      "signature": "render(drawContext, mouseX, mouseY, delta)",
+      "returnType": "void",
+      "description": "Renders the overlay including background, buttons, and scrollbar.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The drawing context for rendering"
+        },
+        {
+          "name": "mouseX",
+          "type": "int",
+          "description": "Current mouse x position"
+        },
+        {
+          "name": "mouseY",
+          "type": "int",
+          "description": "Current mouse y position"
+        },
+        {
+          "name": "delta",
+          "type": "float",
+          "description": "Delta time for animations"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This is typically called automatically each frame\noverlay.render(drawContext, mouseX, mouseY, delta);"
+      ]
+    },
+    {
+      "name": "renderBackground",
+      "signature": "renderBackground(drawContext)",
+      "returnType": "void",
+      "description": "Renders the overlay background with borders. Note: This method is inherited from `OverlayContainer` and renders a black background with a two-layer border system.",
+      "parameters": [
+        {
+          "name": "drawContext",
+          "type": "DrawContext",
+          "description": "The drawing context for rendering"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "close()",
+      "returnType": "void",
+      "description": "Closes the overlay and returns control to the parent container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Close the dropdown programmatically\noverlay.close();"
+      ]
+    }
+  ]
+}

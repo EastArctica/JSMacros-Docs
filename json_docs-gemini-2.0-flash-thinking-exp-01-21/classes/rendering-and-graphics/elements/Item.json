@@ -1,0 +1,139 @@
+{
+  "name": "Item",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Item",
+  "extends": null,
+  "since": "JsMacros 1.0.5",
+  "description": "The Item class is a 2D rendering component in JSMacros that represents a Minecraft item that can be drawn on screen. It supports customizable positioning, scaling, rotation, overlay text, and item count display. Item objects are typically created through Draw2D methods or by using the constructor directly for custom HUD elements, item displays, and inventory overlays.",
+  "overview": "The Item class provides a flexible way to draw Minecraft items on screen with various properties:\n- Customizable position and z-index for layering\n- Scaling support for different item sizes\n- Rotation capabilities with center-based rotation option\n- Optional overlay display showing item count, durability, or custom text\n- Integration with the Draw2D rendering system\n- Support for both ItemStackHelper and item IDs",
+  "constructors": [
+    {
+      "signature": "new Item(x, y, zIndex, id, overlay, scale, rotation)",
+      "description": "Creates a new Item with the specified item ID and rendering properties.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Item ID (e.g., \"minecraft:diamond_sword\")"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "description": "Whether to show overlay (count/durability)"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees (clockwise)"
+        }
+      ]
+    },
+    {
+      "signature": "new Item(x, y, zIndex, itemStack, overlay, scale, rotation)",
+      "description": "Creates a new Item using an ItemStackHelper.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        },
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to display"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "description": "Whether to show overlay (count/durability)"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees (clockwise)"
+        }
+      ]
+    },
+    {
+      "signature": "new Item(x, y, zIndex, itemStack, overlay, scale, rotation, ovText)",
+      "description": "Creates a new Item with custom overlay text.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate on screen"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate on screen"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-index for rendering order"
+        },
+        {
+          "name": "itemStack",
+          "type": "ItemStackHelper",
+          "description": "The item stack to display"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "description": "Whether to show overlay (count/durability)"
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "description": "Scale factor (1.0 = normal size)"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation in degrees (clockwise)"
+        },
+        {
+          "name": "ovText",
+          "type": "string",
+          "description": "Custom overlay text (null for default)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

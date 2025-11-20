@@ -1,0 +1,118 @@
+{
+  "name": "JavaUtils",
+  "fullClassName": "JavaUtils",
+  "description": "Utility functions for creating and interacting with common Java objects and arrays. Accessible from scripts via the global `JavaUtils` variable.",
+  "overview": "Utility functions for creating and interacting with common Java objects and arrays. Accessible from scripts via the global `JavaUtils` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "createArrayList",
+      "signature": "createArrayList(array?: T[])",
+      "returnType": "java.util.ArrayList<T>",
+      "description": "Creates a new Java `ArrayList`.",
+      "parameters": [
+        {
+          "name": "array",
+          "type": "T[]",
+          "description": "An optional JavaScript array to initialize the list with."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create an empty ArrayList\nconst list = JavaUtils.createArrayList();\nlist.add(\"Hello\");\nlist.add(\"World\");\nChat.log(list.get(0)); // \"Hello\"",
+        "// Create an ArrayList from an existing JavaScript array\nconst jsArray = [\"Apple\", \"Banana\", \"Cherry\"];\nconst fruitList = JavaUtils.createArrayList(jsArray);\nChat.log(`There are ${fruitList.size()} fruits.`);"
+      ]
+    },
+    {
+      "name": "createHashMap",
+      "signature": "createHashMap()",
+      "returnType": "java.util.HashMap<?, ?>",
+      "description": "Creates a new Java `HashMap`.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const map = JavaUtils.createHashMap();\nmap.put(\"player_name\", \"Steve\");\nmap.put(\"player_score\", 100);\n\nChat.log(`Score for ${map.get(\"player_name\")}: ${map.get(\"player_score\")}`);"
+      ]
+    },
+    {
+      "name": "createHashSet",
+      "signature": "createHashSet()",
+      "returnType": "java.util.HashSet<?>",
+      "description": "Creates a new Java `HashSet`.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const set = JavaUtils.createHashSet();\nset.add(\"diamond\");\nset.add(\"gold\");\nset.add(\"diamond\"); // This will be ignored\n\nChat.log(`Set size: ${set.size()}`); // \"Set size: 2\""
+      ]
+    },
+    {
+      "name": "getRandom",
+      "signature": "getRandom(seed?: long)",
+      "returnType": "java.util.SplittableRandom",
+      "description": "Creates a Java random number generator.",
+      "parameters": [
+        {
+          "name": "seed",
+          "type": "long",
+          "description": "An optional seed to initialize the random number generator. Using the same seed will produce the same sequence of random numbers."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a random number generator with a random seed\nconst random = JavaUtils.getRandom();\nChat.log(`Random int: ${random.nextInt(100)}`); // A number between 0 and 99",
+        "// Create a generator with a fixed seed for predictable results\nconst seededRandom = JavaUtils.getRandom(12345);\nChat.log(`Seeded int: ${seededRandom.nextInt(100)}`); // Will always be 73"
+      ]
+    },
+    {
+      "name": "getHelperFromRaw",
+      "signature": "getHelperFromRaw(raw: any)",
+      "returnType": "BaseHelper | null",
+      "description": "Wraps a raw Minecraft object into its corresponding JSMacros helper object.",
+      "parameters": [
+        {
+          "name": "raw",
+          "type": "any",
+          "description": "The raw Minecraft object to wrap."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Get the raw Minecraft player object\nconst rawPlayer = Client.getMinecraft().field_1724; // .player in yarn mappings\n\n// Wrap it in the JSMacros PlayerHelper\nconst playerHelper = JavaUtils.getHelperFromRaw(rawPlayer);\n\nif (playerHelper) {\n    Chat.log(`Wrapped player's name: ${playerHelper.getName()}`);\n}"
+      ]
+    },
+    {
+      "name": "arrayToString",
+      "signature": "arrayToString(array: any[])",
+      "returnType": "string",
+      "description": "Converts an array into its string representation.",
+      "parameters": [
+        {
+          "name": "array",
+          "type": "any[]",
+          "description": "The array to convert."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const simpleArray = [\"one\", 2, true];\nconst str = JavaUtils.arrayToString(simpleArray);\nChat.log(str); // \"[one, 2, true]\""
+      ]
+    },
+    {
+      "name": "arrayDeepToString",
+      "signature": "arrayDeepToString(array: any[])",
+      "returnType": "string",
+      "description": "Converts an array into its string representation, handling nested arrays.",
+      "parameters": [
+        {
+          "name": "array",
+          "type": "any[]",
+          "description": "The array to convert, which may contain other arrays."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const nestedArray = [\"a\", [\"b\", \"c\"], [\"d\", [\"e\"]]];\nconst str = JavaUtils.arrayDeepToString(nestedArray);\nChat.log(str); // \"[a, [b, c], [d, [e]]]\""
+      ]
+    }
+  ]
+}

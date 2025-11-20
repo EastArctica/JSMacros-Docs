@@ -1,0 +1,33 @@
+{
+  "name": "SnowGolemEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.SnowGolemEntityHelper",
+  "extends": "MobEntityHelper<SnowGolemEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `SnowGolemEntityHelper` class provides specialized access to snow golem entities in Minecraft, offering methods to check their pumpkin hat status and shearing capabilities. This class extends `MobEntityHelper` and inherits all functionality for mob entities including AI states, health monitoring, and basic entity operations.",
+  "overview": "This helper is particularly useful for creating scripts that manage snow golem farms, monitor snow golem populations, automate snow production, or coordinate multiple snow golems for defensive purposes around your base. SnowGolemEntityHelper instances become invalid when the snow golem entity is removed from the world. Always check `isAlive()` before accessing snow golem data. Snow golems require clear line of sight to engage hostile mobs - they won't attack through solid blocks. They create snow particles in cold biomes and push entities away, making them useful for clearing areas or creating snow paths. For defensive purposes, consider positioning snow golems in elevated positions with good visibility of your base perimeter. Snow golems will attack most hostile mobs except for creepers (to avoid explosions), guardians/elder guardians (water-based), and shulkers (flying).",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "hasPumpkin",
+      "signature": "snowGolem.hasPumpkin()",
+      "returnType": "boolean",
+      "description": "Checks if a snow golem has its pumpkin hat. Snow golems require a pumpkin to attack hostile mobs. Without a pumpkin, they will not aggro or attack enemies, though they will still produce snow particles and push entities away.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if a snow golem has its pumpkin hat\nconst snowGolems = World.getEntities().filter(entity => entity.is(\"minecraft:snow_golem\"));\n\nsnowGolems.forEach(golem => {\n    const snowGolem = golem.asSnowGolem();\n    const hasPumpkin = snowGolem.hasPumpkin();\n\n    const status = hasPumpkin ? \"&aHas pumpkin\" : \"&cNo pumpkin\";\n    const distance = Player.getPlayer().distanceTo(golem);\n\n    Chat.log(`Snow Golem ${status} (${distance.toFixed(1)}m away)`);\n});"
+      ]
+    },
+    {
+      "name": "isShearable",
+      "signature": "snowGolem.isShearable()",
+      "returnType": "boolean",
+      "description": "Checks if this snow golem can be sheared. Snow golems can be sheared with shears, which removes their pumpkin hat and drops it as an item. This is useful for recovering pumpkins from damaged snow golems or for defensive purposes.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check which snow golems can be sheared\nconst player = Player.getPlayer();\nconst mainHand = player.getMainHand();\nconst shearableGolems = [];\n\nWorld.getEntities().forEach(entity => {\n    if (entity.is(\"minecraft:snow_golem\")) {\n        const snowGolem = entity.asSnowGolem();\n\n        if (snowGolem.isShearable()) {\n            shearableGolems.push({\n                entity: entity,\n                snowGolem: snowGolem,\n                distance: player.distanceTo(entity),\n                hasPumpkin: snowGolem.hasPumpkin()\n            });\n        }\n    }\n});\n\nif (shearableGolems.length > 0) {\n    Chat.log(`&aFound ${shearableGolems.length} snow golem${shearableGolems.length > 1 ? 's' : ''} that can be sheared:`);\n\n    shearableGolems.forEach((golem, index) => {\n        const status = golem.hasPumpkin ? \"&aWith pumpkin\" : \"&cNo pumpkin\";\n        Chat.log(`  ${index + 1}. ${golem.distance.toFixed(1)}m away ${status}`);\n        golem.entity.setGlowing(true);\n        golem.entity.setGlowingColor(0x00FF00); // Green for shearable\n    });\n} else {\n    Chat.log(\"&7No snow golems can be sheared at the moment.\");\n}"
+      ]
+    }
+  ]
+}

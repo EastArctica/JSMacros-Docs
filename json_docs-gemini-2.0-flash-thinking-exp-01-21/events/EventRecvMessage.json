@@ -1,0 +1,20 @@
+{
+  "name": "RecvMessage Event",
+  "fullClassName": "EventRecvMessage",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a message is received from the server.",
+  "overview": "The `RecvMessage` event provides a `text` field (string) containing the raw message received from the server. This field includes chat messages, system messages, and server announcements. It fires when any message is received from the server and is not cancellable. The raw `text` contains Minecraft formatting codes; it is recommended to remove them using regex `/§[0-9a-fk-or]/g` for clean text processing. This event is useful for message filtering, logging, and automated responses.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

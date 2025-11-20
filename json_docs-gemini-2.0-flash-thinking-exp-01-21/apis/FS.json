@@ -1,0 +1,364 @@
+[
+  {
+    "name": "FS",
+    "fullClassName": "FS",
+    "extends": null,
+    "since": null,
+    "description": "Provides enhanced functions for interacting with the file system. Accessible from scripts via the global `FS` variable.",
+    "overview": "All paths are relative to the script's folder unless specified otherwise.",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "list",
+        "signature": "FS.list(path: string)",
+        "returnType": "string[]",
+        "description": "Lists files and directories within the specified path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path to a directory, relative to the script's folder."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const files = FS.list(\"my_folder\");\nfor (const file of files) {\n    Chat.log(file); // e.g., \"config.json\"\n}"
+        ]
+      },
+      {
+        "name": "exists",
+        "signature": "FS.exists(path: string)",
+        "returnType": "boolean",
+        "description": "Checks if a file or directory exists at the given path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path to a file or directory, relative to the script's folder."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "if (FS.exists(\"config.json\")) {\n    Chat.log(\"Config file found!\");\n} else {\n    Chat.log(\"Config file not found.\");\n}"
+        ]
+      },
+      {
+        "name": "isDir",
+        "signature": "FS.isDir(path: string)",
+        "returnType": "boolean",
+        "description": "Checks if the path points to a directory.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path to check, relative to the script's folder."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "if (FS.isDir(\"assets\")) {\n    Chat.log(\"'assets' is a directory.\");\n}"
+        ]
+      },
+      {
+        "name": "isFile",
+        "signature": "FS.isFile(path: string)",
+        "returnType": "boolean",
+        "description": "Checks if the path points to a file.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path to check, relative to the script's folder."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "if (FS.isFile(\"README.md\")) {\n    Chat.log(\"README.md is a file.\");\n}"
+        ]
+      },
+      {
+        "name": "getName",
+        "signature": "FS.getName(path: string)",
+        "returnType": "string",
+        "description": "Returns the final component (name) of a given path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The full path to a file or directory."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const fullName = \"data/config.json\";\nconst fileName = FS.getName(fullName);\nChat.log(fileName); // \"config.json\""
+        ]
+      },
+      {
+        "name": "toRelativePath",
+        "signature": "FS.toRelativePath(absolutePath: string)",
+        "returnType": "string",
+        "description": "Converts an absolute file path to a path relative to the script's folder.",
+        "parameters": [
+          {
+            "name": "absolutePath",
+            "type": "string",
+            "description": "The absolute path to a file."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "// Assuming the script is in C:/Users/User/jsmacros/macros/my_script/\nconst absolute = \"C:/Users/User/jsmacros/macros/my_script/data/player_stats.json\";\nconst relative = FS.toRelativePath(absolute);\nChat.log(relative); // \"data/player_stats.json\""
+        ]
+      },
+      {
+        "name": "createFile",
+        "signature": "FS.createFile(path: string, name: string, createDirs?: boolean)",
+        "returnType": "boolean",
+        "description": "Creates a new file at a specified location, optionally creating parent directories.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The directory path where the file will be created, relative to the script's folder."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name of the file to create."
+          },
+          {
+            "name": "createDirs",
+            "type": "boolean",
+            "description": "If `true`, creates any non-existent parent directories in the path. Defaults to `false`."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "// Create a file, assuming the 'data' directory already exists\nFS.createFile(\"data\", \"log.txt\");\n\n// Create a file and any necessary parent directories\nFS.createFile(\"logs/today\", \"session.log\", true);"
+        ]
+      },
+      {
+        "name": "makeDir",
+        "signature": "FS.makeDir(path: string)",
+        "returnType": "boolean",
+        "description": "Creates a new directory at the specified path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path of the directory to create, relative to the script's folder."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "if (FS.makeDir(\"new_folder\")) {\n    Chat.log(\"Directory created!\");\n}"
+        ]
+      },
+      {
+        "name": "move",
+        "signature": "FS.move(from: string, to: string)",
+        "returnType": "void",
+        "description": "Moves a file or directory from a source path to a destination path.",
+        "parameters": [
+          {
+            "name": "from",
+            "type": "string",
+            "description": "The source path of the file or directory."
+          },
+          {
+            "name": "to",
+            "type": "string",
+            "description": "The destination path."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "FS.move(\"old_location/file.txt\", \"new_location/file.txt\");"
+        ]
+      },
+      {
+        "name": "copy",
+        "signature": "FS.copy(from: string, to: string)",
+        "returnType": "void",
+        "description": "Copies a file or directory from a source path to a destination path.",
+        "parameters": [
+          {
+            "name": "from",
+            "type": "string",
+            "description": "The source path of the file or directory."
+          },
+          {
+            "name": "to",
+            "type": "string",
+            "description": "The destination path."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "FS.copy(\"source.txt\", \"backup.txt\");"
+        ]
+      },
+      {
+        "name": "unlink",
+        "signature": "FS.unlink(path: string)",
+        "returnType": "boolean",
+        "description": "Deletes a file or directory at the specified path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path of the file or directory to delete."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "if (FS.unlink(\"temporary_file.tmp\")) {\n    Chat.log(\"File deleted.\");\n}"
+        ]
+      },
+      {
+        "name": "combine",
+        "signature": "FS.combine(patha: string, pathb: string)",
+        "returnType": "string",
+        "description": "Combines two path segments into a single path using the system's file separator.",
+        "parameters": [
+          {
+            "name": "patha",
+            "type": "string",
+            "description": "The first part of the path."
+          },
+          {
+            "name": "pathb",
+            "type": "string",
+            "description": "The second part of the path."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const folder = \"config\";\nconst file = \"settings.json\";\nconst fullPath = FS.combine(folder, file);\nChat.log(fullPath); // \"config/settings.json\" or \"config\\settings.json\""
+        ]
+      },
+      {
+        "name": "getDir",
+        "signature": "FS.getDir(path: string)",
+        "returnType": "string",
+        "description": "Returns the parent directory path of a given file or directory path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path to a file or directory."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const filePath = \"data/logs/latest.log\";\nconst dirPath = FS.getDir(filePath);\nChat.log(dirPath); // \"data/logs\""
+        ]
+      },
+      {
+        "name": "open",
+        "signature": "FS.open(path: string, charset?: string)",
+        "returnType": "FileHandler",
+        "description": "Opens a file for reading and writing, returning a FileHandler object.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The path to the file."
+          },
+          {
+            "name": "charset",
+            "type": "string",
+            "description": "The character set to use for reading/writing (e.g., \"UTF-8\", \"UTF-32\"). Defaults to \"UTF-8\"."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "// Write to a file\nconst file = FS.open(\"data.txt\");\nfile.write(\"Hello, World!\");\nfile.close();\n\n// Read from a file with a specific character set\nconst file32 = FS.open(\"utf32_text.txt\", \"UTF-32\");\nconst content = file32.read();\nfile32.close();"
+        ]
+      },
+      {
+        "name": "walkFiles",
+        "signature": "FS.walkFiles(path: string, maxDepth: int, followLinks: boolean, visitor: MethodWrapper(path: string, attributes: BasicFileAttributes))",
+        "returnType": "void",
+        "description": "Recursively walks through a directory tree, executing a visitor function for each encountered file and directory.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The starting directory path to walk."
+          },
+          {
+            "name": "maxDepth",
+            "type": "int",
+            "description": "The maximum depth of directories to traverse."
+          },
+          {
+            "name": "followLinks",
+            "type": "boolean",
+            "description": "If `true`, symbolic links will be followed."
+          },
+          {
+            "name": "visitor",
+            "type": "MethodWrapper(path: string, attributes: BasicFileAttributes)",
+            "description": "A function that is called for each file and directory found. It receives the path and file attributes."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const visitor = JavaWrapper.methodToJava((path, attributes) => {\n    if (attributes.isRegularFile()) {\n        Chat.log(`File: ${path}, Size: ${attributes.size()} bytes`);\n    }\n});\n\n// Walk through the current script's directory, up to 5 levels deep\nFS.walkFiles(\".\", 5, false, visitor);"
+        ]
+      },
+      {
+        "name": "toRawFile",
+        "signature": "FS.toRawFile(path: string)",
+        "returnType": "java.io.File",
+        "description": "Converts a relative path to a raw `java.io.File` object.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The relative path to the file."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const rawFile = FS.toRawFile(\"config.json\");\nChat.log(`Absolute path: ${rawFile.getAbsolutePath()}`);"
+        ]
+      },
+      {
+        "name": "toRawPath",
+        "signature": "FS.toRawPath(path: string)",
+        "returnType": "java.nio.file.Path",
+        "description": "Converts a relative path to a raw `java.nio.file.Path` object.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The relative path."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const rawPath = FS.toRawPath(\"config.json\");\nChat.log(`Path object: ${rawPath.toString()}`);"
+        ]
+      },
+      {
+        "name": "getRawAttributes",
+        "signature": "FS.getRawAttributes(path: string)",
+        "returnType": "java.nio.file.attribute.BasicFileAttributes",
+        "description": "Retrieves raw Java `BasicFileAttributes` for a file or directory at the specified path.",
+        "parameters": [
+          {
+            "name": "path",
+            "type": "string",
+            "description": "The relative path to the file or directory."
+          }
+        ],
+        "static": true,
+        "examples": [
+          "const attrs = FS.getRawAttributes(\"my_script.js\");\nif (attrs) {\n    Chat.log(`Creation time: ${attrs.creationTime()}`);\n    Chat.log(`Is directory: ${attrs.isDirectory()}`);\n}"
+        ]
+      }
+    ]
+  }
+]

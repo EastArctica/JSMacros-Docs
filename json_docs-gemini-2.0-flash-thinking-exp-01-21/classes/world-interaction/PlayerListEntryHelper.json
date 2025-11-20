@@ -1,0 +1,220 @@
+{
+  "name": "PlayerListEntryHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.PlayerListEntryHelper",
+  "extends": "BaseHelper<PlayerListEntry>",
+  "since": "1.0.2",
+  "description": "The `PlayerListEntryHelper` class provides access to player list entries from the server's player list (tab list). This class exposes information about players visible in the multiplayer tab list, including their profile data, connection status, game mode, and cosmetic information.",
+  "overview": "PlayerListEntryHelper acts as a wrapper around Minecraft's `PlayerListEntry` class, making player list information accessible to JsMacros scripts. It's commonly used in events related to player joining/leaving, and for accessing tab list data.\n\nYou typically get instances of this class from:\n- Events that provide player list information\n- Methods that return player list data\n- Manual iteration through the server's player list",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getUUID",
+      "signature": "getUUID()",
+      "returnType": "String | null",
+      "description": "Returns the unique identifier (UUID) of the player. This is a reliable way to identify players even if they change their username.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get player's UUID",
+        "const playerUUID = playerEntry.getUUID();",
+        "if (playerUUID) {",
+        "    Chat.log(`Player UUID: ${playerUUID}`);",
+        "}"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String | null",
+      "description": "Returns the display name of the player from their game profile.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get player name",
+        "const playerName = playerEntry.getName();",
+        "if (playerName) {",
+        "    Chat.log(`Player name: ${playerName}`);",
+        "}"
+      ]
+    },
+    {
+      "name": "getPing",
+      "signature": "getPing()",
+      "returnType": "int",
+      "description": "Returns the player's network latency (ping) in milliseconds. Lower values indicate better connection quality.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check player's connection quality",
+        "const ping = playerEntry.getPing();",
+        "if (ping < 50) {",
+        "    Chat.log(\"Excellent connection\");",
+        "} else if (ping < 150) {",
+        "    Chat.log(\"Good connection\");",
+        "} else {",
+        "    Chat.log(\"Poor connection\");",
+        "}"
+      ]
+    },
+    {
+      "name": "getGamemode",
+      "signature": "getGamemode()",
+      "returnType": "String | null",
+      "description": "Returns the current game mode of the player.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check player's game mode",
+        "const gamemode = playerEntry.getGamemode();",
+        "if (gamemode === \"creative\") {",
+        "    Chat.log(\"Player is in creative mode\");",
+        "}"
+      ]
+    },
+    {
+      "name": "getDisplayText",
+      "signature": "getDisplayText()",
+      "returnType": "TextHelper",
+      "description": "Returns the formatted display text as shown in the player list. This includes any custom formatting, prefixes, or suffixes applied by the server.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get formatted display text",
+        "const displayText = playerEntry.getDisplayText();",
+        "Chat.log(`Display text: ${displayText.getString()}`);"
+      ]
+    },
+    {
+      "name": "getPublicKey",
+      "signature": "getPublicKey()",
+      "returnType": "byte[]",
+      "description": "Returns the public key data associated with the player's session. This is primarily used for secure chat features.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get public key data (advanced usage)",
+        "const publicKey = playerEntry.getPublicKey();",
+        "Chat.log(`Public key length: ${publicKey.length} bytes`);"
+      ]
+    },
+    {
+      "name": "hasCape",
+      "signature": "hasCape()",
+      "returnType": "boolean",
+      "description": "`true` if the player has a cape enabled, `false` otherwise",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check if player has cape",
+        "if (playerEntry.hasCape()) {",
+        "    Chat.log(\"Player has a cape\");",
+        "}"
+      ]
+    },
+    {
+      "name": "hasSlimModel",
+      "signature": "hasSlimModel()",
+      "returnType": "boolean",
+      "description": "`true` if the player uses a slim (Alex) skin model, `false` for default (Steve) model",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Check player's skin model",
+        "if (playerEntry.hasSlimModel()) {",
+        "    Chat.log(\"Player uses Alex skin model\");",
+        "} else {",
+        "    Chat.log(\"Player uses Steve skin model\");",
+        "}"
+      ]
+    },
+    {
+      "name": "getSkinTexture",
+      "signature": "getSkinTexture()",
+      "returnType": "String",
+      "description": "Returns the texture identifier for the player's skin.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get skin texture identifier",
+        "const skinTexture = playerEntry.getSkinTexture();",
+        "Chat.log(`Skin texture: ${skinTexture}`);"
+      ]
+    },
+    {
+      "name": "getSkinUrl",
+      "signature": "getSkinUrl()",
+      "returnType": "String | null",
+      "description": "Returns the direct URL to the player's skin texture file.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get skin URL",
+        "const skinUrl = playerEntry.getSkinUrl();",
+        "if (skinUrl) {",
+        "    Chat.log(`Skin URL: ${skinUrl}`);",
+        "}"
+      ]
+    },
+    {
+      "name": "getCapeTexture",
+      "signature": "getCapeTexture()",
+      "returnType": "String | null",
+      "description": "Returns the texture identifier for the player's cape, if they have one.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get cape texture",
+        "const capeTexture = playerEntry.getCapeTexture();",
+        "if (capeTexture) {",
+        "    Chat.log(`Cape texture: ${capeTexture}`);",
+        "}"
+      ]
+    },
+    {
+      "name": "getElytraTexture",
+      "signature": "getElytraTexture()",
+      "returnType": "String | null",
+      "description": "Returns the texture identifier for the player's elytra, if applicable.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get elytra texture",
+        "const elytraTexture = playerEntry.getElytraTexture();",
+        "if (elytraTexture) {",
+        "    Chat.log(`Elytra texture: ${elytraTexture}`);",
+        "}"
+      ]
+    },
+    {
+      "name": "getTeam",
+      "signature": "getTeam()",
+      "returnType": "TeamHelper | null",
+      "description": "Returns a `TeamHelper` object containing information about the player's scoreboard team.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get player's team information",
+        "const team = playerEntry.getTeam();",
+        "if (team) {",
+        "    Chat.log(`Team name: ${team.getName()}`);",
+        "    Chat.log(`Team display: ${team.getDisplayName().getString()}`);",
+        "} else {",
+        "    Chat.log(\"Player is not in a team\");",
+        "}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "String",
+      "description": "Returns a formatted string containing basic player information (UUID and name).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: Get string representation",
+        "Chat.log(playerEntry.toString());",
+        "// Output: PlayerListEntryHelper:{\"uuid\": \"12345678-1234-1234-1234-123456789abc\", \"name\": \"PlayerName\"}"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "name": "AnvilInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.AnvilInventory",
+  "extends": "Inventory<AnvilScreen>",
+  "since": "1.8.4",
+  "description": "The `AnvilInventory` class provides specialized access to Minecraft's anvil interface, allowing scripts to interact with anvil operations such as renaming items, repairing items, and combining enchantments. This class extends the base `Inventory` class and adds anvil-specific functionality for managing the rename field, level costs, and input/output slots.",
+  "overview": "Anvils in Minecraft have three main slots:\n- **Left Input (Slot 0):** The item to be renamed, repaired, or enchanted\n- **Right Input (Slot 1):** The sacrifice material for repairing or enchanting\n- **Output (Slot 2):** The resulting item after applying the anvil operation\n\n## Accessing AnvilInventory\n\nYou typically get `AnvilInventory` instances when the player has an anvil screen open:\n\n```javascript\n// Check if current screen is an anvil\nconst inv = Inventory.create();\nif (inv && inv.getType() === \"Anvil\") {\n    const anvil = inv; // Already typed as AnvilInventory\n    Chat.log(\"Anvil inventory detected!\");\n}\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Retrieves the custom name currently set in the anvil's rename field. This reflects the text entered by the player, not necessarily the item's default name.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const currentName = inv.getName();",
+        "// Example from monitorAnvil function:\nif (currentName && currentName !== leftItem.getName().getString()) {\n    status += \" &8- &7Renamed to: &f\\\"\" + currentName + \"\\\"\";\n}"
+      ]
+    },
+    {
+      "name": "setName",
+      "signature": "setName(name: String)",
+      "returnType": "void",
+      "description": "Sets the custom name in the anvil's rename field. This will update the output item and recalculate the level cost.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "The new name to set for the item in the output slot."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Example from renameItem function:\ninv.setName(itemName);\nChat.log(`Set name to: \"${itemName}\"`);",
+        "// Example from smartAnvilManager function:\ninv.setName(suggestedName);\nChat.log(`Suggested name: \"${suggestedName}\"`);"
+      ]
+    },
+    {
+      "name": "getLevelCost",
+      "signature": "getLevelCost()",
+      "returnType": "int",
+      "description": "Returns the experience level cost for the current anvil operation (renaming, repairing, or combining enchantments). Returns 0 if no valid operation is possible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example from renameItem function:\nconst cost = inv.getLevelCost();\nif (cost === 0) { Chat.log(\"Operation not possible\"); return false; }",
+        "// Example from calculateAnvilCosts function:\nconst levelCost = inv.getLevelCost();\nChat.log(`Current operation cost: ${levelCost} levels`);"
+      ]
+    },
+    {
+      "name": "getItemRepairCost",
+      "signature": "getItemRepairCost()",
+      "returnType": "int",
+      "description": "Returns the prior work penalty (repair cost) of the item currently in the left input slot. This cost increases with each repair/operation performed on the item.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example from calculateAnvilCosts function:\nChat.log(`Base repair cost: ${inv.getItemRepairCost()}`);"
+      ]
+    },
+    {
+      "name": "getMaximumLevelCost",
+      "signature": "getMaximumLevelCost()",
+      "returnType": "int",
+      "description": "Returns the maximum experience level cost an anvil operation can have, which is typically 40 in Minecraft.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example from calculateAnvilCosts function:\nconst maxCost = inv.getMaximumLevelCost();\nChat.log(`Maximum possible cost: ${maxCost} levels`);"
+      ]
+    },
+    {
+      "name": "getLeftInput",
+      "signature": "getLeftInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns an `ItemStackHelper` object representing the item currently placed in the left input slot (slot 0) of the anvil.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example from renameItem function:\nconst leftItem = inv.getLeftInput();\nif (leftItem.isEmpty()) { Chat.log(\"Please place an item in the left slot\"); return false; }",
+        "// Example from autoRepair function:\nif (!leftItem.isDamageable()) { Chat.log(\"Item cannot be repaired\"); return; }"
+      ]
+    },
+    {
+      "name": "getRightInput",
+      "signature": "getRightInput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns an `ItemStackHelper` object representing the item currently placed in the right input slot (slot 1) of the anvil, used for repairs or enchantment combinations.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example from autoRepair function:\nconst rightItem = inv.getRightInput();\nif (rightItem.isEmpty()) { Chat.log(\"Please place repair material in the right slot\"); return; }",
+        "// Example from combineEnchantments function:\nif (leftItem.isEmpty() || rightItem.isEmpty()) { Chat.log(\"Please place two enchanted items in the anvil\"); return; }"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStackHelper",
+      "description": "Returns an `ItemStackHelper` object representing the item that will result from the current anvil operation, found in the output slot (slot 2). This item might be empty if no valid operation is possible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example from renameItem function:\nconst output = inv.getOutput();\nif (!output.isEmpty()) { inv.quick(2); Chat.log(`Successfully renamed to \"${output.getName().getString()}\"`); return true; }",
+        "// Example from autoRepair function:\nconst durabilityBefore = leftItem.getDurability();\nconst durabilityAfter = output.getDurability();"
+      ]
+    }
+  ]
+}

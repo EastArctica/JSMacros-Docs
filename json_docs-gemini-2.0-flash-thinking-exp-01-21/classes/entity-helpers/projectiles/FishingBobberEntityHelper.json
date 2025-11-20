@@ -1,0 +1,55 @@
+{
+  "name": "FishingBobberEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.projectile.FishingBobberEntityHelper",
+  "extends": "EntityHelper<FishingBobberEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `FishingBobberEntityHelper` class provides specialized methods for interacting with fishing bobber entities in Minecraft. Fishing bobbers are projectile entities created when a player uses a fishing rod. This helper allows you to query the state of the fishing bobber including whether a fish has been caught, if it's in open water, and whether it has hooked an entity instead of a fish.",
+  "overview": "This class inherits all methods from `EntityHelper`, providing access to standard entity operations like positioning, movement tracking, and world interaction, in addition to fishing-specific functionality.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "hasCaughtFish",
+      "signature": "fishingBobber.hasCaughtFish()",
+      "returnType": "boolean",
+      "description": "Returns whether the fishing bobber has caught a fish and is ready to be reeled in.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check if any fishing bobbers have caught fish\nconst bobbers = World.getEntities(\"minecraft:fishing_bobber\");\nlet fishCaught = false;\n\nbobbers.forEach(entity => {\n    const bobber = entity.as();\n    if (bobber.hasCaughtFish()) {\n        fishCaught = true;\n        const pos = entity.getPos();\n        Chat.log(`Fish caught at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n    }\n});\n\nif (fishCaught) {\n    Chat.log(\"Fish are ready to be reeled in!\");\n}"
+      ]
+    },
+    {
+      "name": "isInOpenWater",
+      "signature": "fishingBobber.isInOpenWater()",
+      "returnType": "boolean",
+      "description": "Returns whether the fishing bobber is in open water. When in open water, the player has a higher chance of catching treasure items while fishing.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor fishing conditions\nfunction checkFishingConditions() {\n    const bobbers = World.getEntities(\"minecraft:fishing_bobber\");\n\n    bobbers.forEach(entity => {\n        const bobber = entity.as();\n        const pos = entity.getPos();\n\n        if (bobber.isInOpenWater()) {\n            Chat.log(`Fishing in open water at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}] - Treasure chance increased!`);\n        } else {\n            Chat.log(`Fishing in confined waters at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n        }\n    });\n}\n\ncheckFishingConditions();"
+      ]
+    },
+    {
+      "name": "hasEntityHooked",
+      "signature": "fishingBobber.hasEntityHooked()",
+      "returnType": "boolean",
+      "description": "Returns whether the fishing bobber has hooked an entity instead of catching a fish.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Detect when entities are hooked instead of fish\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync(() => {\n    const bobbers = World.getEntities(\"minecraft:fishing_bobber\");\n\n    bobbers.forEach(entity => {\n        const bobber = entity.as();\n        if (bobber.hasEntityHooked()) {\n            const pos = entity.getPos();\n            Chat.log(`Entity hooked instead of fish at [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]`);\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "getHookedEntity",
+      "signature": "fishingBobber.getHookedEntity()",
+      "returnType": "EntityHelper<?>",
+      "description": "Returns the entity that has been hooked by the fishing bobber, if any.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Check what type of entity was hooked\nfunction checkHookedEntities() {\n    const bobbers = World.getEntities(\"minecraft:fishing_bobber\");\n\n    bobbers.forEach(entity => {\n        const bobber = entity.as();\n        const hookedEntity = bobber.getHookedEntity();\n\n        if (hookedEntity) {\n            const entityType = hookedEntity.getType();\n            const entityPos = hookedEntity.getPos();\n\n            Chat.log(`Hooked ${entityType} at [${entityPos.x.toFixed(1)}, ${entityPos.y.toFixed(1)}, ${entityPos.z.toFixed(1)}]`);\n\n            // Special handling for different entity types\n            if (entityType === \"minecraft:guardian\" || entityType === \"minecraft:elder_guardian\") {\n                Chat.log(\"Warning: Guardian hooked! Be careful!\");\n            } else if (entityType.startsWith(\"minecraft:item\")) {\n                Chat.log(\"An item was hooked!\");\n            }\n        }\n    });\n}\n\ncheckHookedEntities();"
+      ]
+    }
+  ]
+}

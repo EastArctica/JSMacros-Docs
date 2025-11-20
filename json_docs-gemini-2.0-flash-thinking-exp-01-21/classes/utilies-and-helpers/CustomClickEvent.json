@@ -1,0 +1,45 @@
+{
+  "name": "CustomClickEvent",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.access.CustomClickEvent",
+  "extends": "net.minecraft.text.ClickEvent",
+  "since": "JsMacros 1.3.0",
+  "description": "The `CustomClickEvent` class is a specialized click event that extends Minecraft's `ClickEvent` to allow custom JavaScript functions to be executed when text components are clicked. This enables interactive chat messages, GUI text elements, and other clickable text that can trigger any custom script functionality, making it possible to create dynamic user interfaces and interactive chat systems.",
+  "overview": "The `CustomClickEvent` class provides a way to bind JavaScript functions to clickable text in Minecraft. Unlike standard Minecraft click events that are limited to predefined actions like opening URLs or running commands, `CustomClickEvent` allows you to execute any custom JavaScript code when the text is clicked. This makes it particularly useful for:\n\n- Creating interactive chat messages with custom actions\n- Building script-controlled GUI elements with clickable text\n- Implementing custom command systems through text interfaces\n- Adding dynamic functionality to HUD elements and overlays\n- Creating script-driven menus and navigation systems",
+  "constructors": [
+    {
+      "signature": "new CustomClickEvent(event)",
+      "description": "Creates a new `CustomClickEvent` with a custom JavaScript function to execute when clicked.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "Runnable",
+          "description": "The JavaScript function to execute when the text is clicked"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getEvent",
+      "signature": "getEvent()",
+      "returnType": "Runnable",
+      "description": "Returns the JavaScript function associated with this click event.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const clickEvent = new CustomClickEvent(() => {\n    Chat.log(\"Custom action executed!\");\n});\n\nconst func = clickEvent.getEvent();\nif (func) {\n    Chat.log(\"Click event has an associated function\");\n}"
+      ]
+    },
+    {
+      "name": "hashCode",
+      "signature": "hashCode()",
+      "returnType": "int",
+      "description": "Returns a hash code value for this click event, based on the underlying function.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const clickEvent = new CustomClickEvent(() => {});\nconst hash = clickEvent.hashCode();\nChat.log(`Click event hash code: ${hash}`);"
+      ]
+    }
+  ]
+}

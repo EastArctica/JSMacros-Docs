@@ -1,0 +1,30 @@
+{
+  "name": "EventDeath",
+  "fullClassName": "EventDeath",
+  "description": "This event is fired when the player dies. It captures the state of the player, including their position and inventory, at the moment of death.",
+  "overview": "Fires when the player dies\nCaptures the exact position of death\nIncludes complete inventory snapshot at time of death\nProvides respawn capability\nNot cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "respawn",
+      "signature": "respawn()",
+      "returnType": "void",
+      "description": "Requests the player to respawn.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "JsMacros.on(\"Death\", JavaWrapper.methodToJavaAsync((e) => {\n  const pos = e.deathPos;\n  Chat.log(`Died at X: ${pos.getX()}, Y: ${pos.getY()}, Z: ${pos.getZ()}`);\n  e.respawn();\n}));",
+        "JsMacros.on(\"Death\", JavaWrapper.methodToJavaAsync((e) => {\n  const pos = e.deathPos;\n  Chat.log(`&cYou died at X: ${pos.getX()}, Y: ${pos.getY()}, Z: ${pos.getZ()}`);\n\n  // Find valuable items in the inventory\n  const valuables = e.inventory\n    .filter(item => item.getId().includes('diamond') || item.getId().includes('netherite'))\n    .map(item => `${item.getCount()}x ${item.getName().getString()}`)\n    .join(', ');\n\n  if (valuables) {\n    Chat.log(`&6Valuables on death: ${valuables}`);\n  }\n\n  // Respawn after a short delay (e.g., 20 ticks = 1 second)\n  JsMacros.syncContext().wait(20);\n  e.respawn();\n  Chat.log(\"&aAutomatically respawned.\");\n}));"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

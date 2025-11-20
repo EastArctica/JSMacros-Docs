@@ -1,0 +1,25 @@
+{
+  "name": "TranslationUtil",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.util.TranslationUtil",
+  "since": "JsMacros 1.6.4",
+  "description": "The `TranslationUtil` class is a utility class that provides translation and localization functionality for JSMacros. While this class is primarily used internally by JSMacros for translating UI elements and event names, it represents the broader translation system available to script developers through the Chat library.",
+  "overview": "The TranslationUtil class and the broader translation system in JSMacros provide access to Minecraft's built-in localization system, allowing scripts to:\n\n- Translate text using Minecraft's language files\n- Support multiple languages and locales\n- Access game translations for items, blocks, entities, and more\n- Create translatable user interfaces\n- Format text with language-aware parameters",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getTranslatedEventName",
+      "signature": "getTranslatedEventName(eventName)",
+      "returnType": "string",
+      "description": "Internal method to translate JSMacros event names for the UI",
+      "parameters": [
+        {
+          "name": "eventName",
+          "type": "string",
+          "description": "The name of the event to translate."
+        }
+      ],
+      "static": true,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "name": "PillagerEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.PillagerEntityHelper",
+  "extends": "IllagerEntityHelper<PillagerEntity>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `PillagerEntityHelper` class is a specialized wrapper for pillager entities in JSMacros, providing access to pillager-specific properties and behaviors. This class extends `IllagerEntityHelper` and inherits all illager methods while adding pillager-specific functionality like captain detection and raid-related behaviors.",
+  "overview": "Pillagers are hostile mobs armed with crossbows that commonly appear in raids, patrols, and illager outposts. They are a key part of the raid system and can serve as captains that lead illager groups and provide bad omen effects when defeated.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isCaptain",
+      "signature": "isCaptain()",
+      "returnType": "boolean",
+      "description": "Checks if the pillager is a captain, identifiable by a white banner in its head slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Getting PillagerEntityHelper from events\nJsMacros.on(\"EntitySpawn\", JavaWrapper.methodToJavaAsync((event) => {\n    const entity = event.getEntity();\n    if (entity.is(\"minecraft:pillager\")) {\n        const pillager = entity; // Already typed as PillagerEntityHelper\n        const isCaptain = pillager.isCaptain();\n        Chat.log(`Pillager spawned! Captain: ${isCaptain}`);\n    }\n}));",
+        "// Type casting from EntityHelper\nconst entity = event.getEntity();\nif (entity.is(\"minecraft:pillager\")) {\n    const pillager = entity; // Will be PillagerEntityHelper\n    const state = pillager.getState();\n    Chat.log(`Pillager state: ${state}, Captain: ${pillager.isCaptain()}`);\n}"
+      ]
+    },
+    {
+      "name": "isCelebrating",
+      "signature": "isCelebrating()",
+      "returnType": "boolean",
+      "description": "Check if the pillager is celebrating (post-raid)",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getState",
+      "signature": "getState()",
+      "returnType": "String",
+      "description": "Get current activity state (ATTACKING, CROSSBOW_CHARGE, etc.)",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Type casting from EntityHelper\nconst entity = event.getEntity();\nif (entity.is(\"minecraft:pillager\")) {\n    const pillager = entity; // Will be PillagerEntityHelper\n    const state = pillager.getState();\n    Chat.log(`Pillager state: ${state}, Captain: ${pillager.isCaptain()}`);\n}"
+      ]
+    },
+    {
+      "name": "isAttacking",
+      "signature": "isAttacking()",
+      "returnType": "boolean",
+      "description": "Check if the pillager is currently attacking",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAiDisabled",
+      "signature": "isAiDisabled()",
+      "returnType": "boolean",
+      "description": "Check if the pillager's AI is disabled",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHealth",
+      "signature": "getHealth()",
+      "returnType": "float",
+      "description": "Current health",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getMaxHealth",
+      "signature": "getMaxHealth()",
+      "returnType": "float",
+      "description": "Maximum health",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getAbsorptionHealth",
+      "signature": "getAbsorptionHealth()",
+      "returnType": "float",
+      "description": "Absorption hearts",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getArmor",
+      "signature": "getArmor()",
+      "returnType": "int",
+      "description": "Current armor value",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getStatusEffects",
+      "signature": "getStatusEffects()",
+      "returnType": "List<StatusEffectHelper>",
+      "description": "List of active status effects",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const player = Player.getPlayer();\nif (!player) return;\n\nconst effects = player.getStatusEffects();\nconst badOmenEffect = effects.find(effect =>\n    effect.getEffectName().toLowerCase().includes(\"bad_omen\")\n);"
+      ]
+    },
+    {
+      "name": "hasStatusEffect",
+      "signature": "hasStatusEffect(id)",
+      "returnType": "boolean",
+      "description": "Check for specific status effect",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "String",
+          "description": "The ID of the status effect to check for (e.g., 'minecraft:bad_omen')."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isOnGround",
+      "signature": "isOnGround()",
+      "returnType": "boolean",
+      "description": "Check if on ground",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canBreatheInWater",
+      "signature": "canBreatheInWater()",
+      "returnType": "boolean",
+      "description": "Check if can breathe underwater",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isFallFlying",
+      "signature": "isFallFlying()",
+      "returnType": "boolean",
+      "description": "Check if elytra is deployed",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isBaby",
+      "signature": "isBaby()",
+      "returnType": "boolean",
+      "description": "Check if is baby variant",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isHolding",
+      "signature": "isHolding(item)",
+      "returnType": "boolean",
+      "description": "Check if holding specific item",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "ItemHelper | String",
+          "description": "The item to check for, either an ItemHelper instance or its ID."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "canSeeEntity",
+      "signature": "canSeeEntity(entity)",
+      "returnType": "boolean",
+      "description": "Check if has line of sight to entity",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The target entity to check line of sight to."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getBowPullProgress",
+      "signature": "getBowPullProgress()",
+      "returnType": "float",
+      "description": "Get bow pull progress",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getItemUseTimeLeft",
+      "signature": "getItemUseTimeLeft()",
+      "returnType": "int",
+      "description": "Get item use time remaining",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

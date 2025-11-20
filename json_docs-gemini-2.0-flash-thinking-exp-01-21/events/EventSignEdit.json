@@ -1,0 +1,47 @@
+{
+  "name": "SignEdit",
+  "fullClassName": "EventSignEdit",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a sign is being edited.",
+  "overview": "Fires when a player edits a sign. The `pos` field contains the sign's world position. The `signText` field contains the current sign text lines. This event is cancellable, preventing the sign edit. Useful for sign filtering, validation, and automation.",
+  "constructors": [
+    {
+      "signature": "new EventSignEdit(pos, closeScreen, front, signText)",
+      "description": "Represents the data associated with a sign edit event. This object is passed to 'SignEdit' event listeners, providing access to sign properties and allowing modification or cancellation.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The world position of the sign being edited. This contains the X, Y, and Z coordinates of the sign block in the world."
+        },
+        {
+          "name": "closeScreen",
+          "type": "boolean",
+          "description": "Whether to close the sign editing screen. This can be modified to control whether the sign editing interface should be closed after processing."
+        },
+        {
+          "name": "front",
+          "type": "boolean",
+          "description": "Whether editing the front or back of the sign. `true` - Editing the front side of the sign, `false` - Editing the back side of the sign."
+        },
+        {
+          "name": "signText",
+          "type": "List<string> | null",
+          "description": "The current text lines on the sign. This contains up to 4 lines of sign text. Lines may be empty or null. This can be modified to change the sign content."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

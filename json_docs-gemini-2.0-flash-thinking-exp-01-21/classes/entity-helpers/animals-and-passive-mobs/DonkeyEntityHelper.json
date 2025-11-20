@@ -1,0 +1,242 @@
+{
+  "name": "DonkeyEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.DonkeyEntityHelper<T extends AbstractDonkeyEntity>",
+  "extends": "AbstractHorseEntityHelper<T>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `DonkeyEntityHelper` class provides specialized access to donkey entities in Minecraft. Donkeys are passive mobs that can be tamed, ridden, and equipped with chests for storage. This helper extends the functionality of AbstractHorseEntityHelper with donkey-specific features, making it ideal for scripts that manage donkey companions, track storage capabilities, or coordinate donkey-based transportation systems.",
+  "overview": "This helper is particularly useful for creating scripts that manage donkey inventories, analyze donkey performance statistics, coordinate mounted transport with storage, or track the status of tameable donkey entities in the world. Donkeys serve as excellent pack animals due to their ability to carry chests while maintaining the mobility of horses.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "hasChest",
+      "signature": "hasChest()",
+      "returnType": "boolean",
+      "description": "`true` if the donkey is carrying a chest, `false` otherwise. This method checks whether the donkey currently has a chest equipped. Donkeys with chests have increased inventory capacity (typically 15 slots for storage plus the saddle slot), making them valuable pack animals for long expeditions or resource gathering operations.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const donkey = event.entity.asDonkey();\nif (donkey.hasChest()) {\n    Chat.log(\"This donkey has a chest for storage!\");\n} else {\n    Chat.log(\"This donkey can be equipped with a chest\");\n}"
+      ]
+    },
+    {
+      "name": "getOwner",
+      "signature": "getOwner()",
+      "returnType": "string | null",
+      "description": "The UUID of this donkey's owner as a string, or `null` if it has no owner.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const donkey = event.entity.asDonkey();\nconst owner = donkey.getOwner();\nif (owner) {\n    Chat.log(`This donkey is owned by ${owner}`);\n} else {\n    Chat.log(\"This donkey is wild and can be tamed\");\n}"
+      ]
+    },
+    {
+      "name": "isTame",
+      "signature": "isTame()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey is already tamed, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.isTame()) {\n    Chat.log(\"This donkey is tame and can be ridden\");\n}"
+      ]
+    },
+    {
+      "name": "isAngry",
+      "signature": "isAngry()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey is angry, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.isAngry()) {\n    Chat.log(\"This donkey is angry and harder to approach\");\n}"
+      ]
+    },
+    {
+      "name": "isSaddled",
+      "signature": "isSaddled()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey is saddled, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.isSaddled()) {\n    Chat.log(\"This donkey is ready to ride\");\n}"
+      ]
+    },
+    {
+      "name": "canWearArmor",
+      "signature": "canWearArmor()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey can wear armor, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.canWearArmor()) {\n    Chat.log(\"This donkey can wear armor for protection\");\n}"
+      ]
+    },
+    {
+      "name": "canBeSaddled",
+      "signature": "canBeSaddled()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey can be saddled, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.canBeSaddled()) {\n    Chat.log(\"This donkey can be equipped with a saddle\");\n}"
+      ]
+    },
+    {
+      "name": "getInventorySize",
+      "signature": "getInventorySize()",
+      "returnType": "int",
+      "description": "This donkey's inventory size. Donkeys typically have 2 slots without a chest (saddle + armor) and 16 slots with a chest equipped (1 saddle + 15 storage). Donkeys cannot wear armor, so without a chest they only have 1 slot for the saddle.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const size = donkey.getInventorySize();\nChat.log(`This donkey has ${size} inventory slots`);\nconst chestSlots = donkey.hasChest() ? size - 1 : 0;\nChat.log(`Available storage slots: ${chestSlots}`);"
+      ]
+    },
+    {
+      "name": "isBred",
+      "signature": "isBred()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey was bred and not naturally spawned, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.isBred()) {\n    Chat.log(\"This donkey was bred by players\");\n} else {\n    Chat.log(\"This donkey spawned naturally\");\n}"
+      ]
+    },
+    {
+      "name": "isEating",
+      "signature": "isEating()",
+      "returnType": "boolean",
+      "description": "`true` if this donkey is currently eating grass, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (donkey.isEating()) {\n    Chat.log(\"The donkey is currently eating grass\");\n}"
+      ]
+    },
+    {
+      "name": "getJumpStrengthStat",
+      "signature": "getJumpStrengthStat()",
+      "returnType": "double",
+      "description": "This donkey's jump strength attribute value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const jumpStrength = donkey.getJumpStrengthStat();\nChat.log(`Jump strength: ${jumpStrength.toFixed(3)}`);"
+      ]
+    },
+    {
+      "name": "getHorseJumpHeight",
+      "signature": "getHorseJumpHeight()",
+      "returnType": "double",
+      "description": "This donkey's maximum jump height for its current jump strength. The result is only an approximation but is very close to actual Minecraft behavior.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const jumpHeight = donkey.getHorseJumpHeight();\nChat.log(`Maximum jump height: ${jumpHeight.toFixed(2)} blocks`);"
+      ]
+    },
+    {
+      "name": "getMaxJumpStrengthStat",
+      "signature": "getMaxJumpStrengthStat()",
+      "returnType": "int",
+      "description": "The maximum possible value of a donkey's jump strength (always returns 1).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxJump = donkey.getMaxJumpStrengthStat();\nChat.log(`Maximum possible jump strength: ${maxJump}`);"
+      ]
+    },
+    {
+      "name": "getMinJumpStrengthStat",
+      "signature": "getMinJumpStrengthStat()",
+      "returnType": "double",
+      "description": "The minimum possible value of a donkey's jump strength (always returns 0.4).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const minJump = donkey.getMinJumpStrengthStat();\nChat.log(`Minimum possible jump strength: ${minJump.toFixed(1)}`);"
+      ]
+    },
+    {
+      "name": "getSpeedStat",
+      "signature": "getSpeedStat()",
+      "returnType": "double",
+      "description": "This donkey's speed attribute value.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const speedStat = donkey.getSpeedStat();\nChat.log(`Speed stat: ${speedStat.toFixed(4)}`);"
+      ]
+    },
+    {
+      "name": "getHorseSpeed",
+      "signature": "getHorseSpeed()",
+      "returnType": "double",
+      "description": "This donkey's speed in blocks per second.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const speed = donkey.getHorseSpeed();\nChat.log(`Movement speed: ${speed.toFixed(2)} blocks per second`);"
+      ]
+    },
+    {
+      "name": "getMaxSpeedStat",
+      "signature": "getMaxSpeedStat()",
+      "returnType": "double",
+      "description": "The maximum possible value of a donkey's speed stat (always returns 0.3375).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxSpeed = donkey.getMaxSpeedStat();\nChat.log(`Maximum possible speed stat: ${maxSpeed.toFixed(4)}`);"
+      ]
+    },
+    {
+      "name": "getMinSpeedStat",
+      "signature": "getMinSpeedStat()",
+      "returnType": "double",
+      "description": "The minimum possible value of a donkey's speed stat (always returns 0.1125).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const minSpeed = donkey.getMinSpeedStat();\nChat.log(`Minimum possible speed stat: ${minSpeed.toFixed(4)}`);"
+      ]
+    },
+    {
+      "name": "getHealthStat",
+      "signature": "getHealthStat()",
+      "returnType": "double",
+      "description": "This donkey's health stat (equal to `getMaxHealth()`).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const health = donkey.getHealthStat();\nChat.log(`Health: ${health} hearts`);"
+      ]
+    },
+    {
+      "name": "getMaxHealthStat",
+      "signature": "getMaxHealthStat()",
+      "returnType": "int",
+      "description": "The maximum possible value of a donkey's health stat (always returns 30).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const maxHealth = donkey.getMaxHealthStat();\nChat.log(`Maximum possible health: ${maxHealth} hearts`);"
+      ]
+    },
+    {
+      "name": "getMinHealthStat",
+      "signature": "getMinHealthStat()",
+      "returnType": "int",
+      "description": "The minimum possible value of a donkey's health stat (always returns 15).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const minHealth = donkey.getMinHealthStat();\nChat.log(`Minimum possible health: ${minHealth} hearts`);"
+      ]
+    }
+  ]
+}

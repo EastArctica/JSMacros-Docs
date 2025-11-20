@@ -1,0 +1,151 @@
+[
+  {
+    "name": "LockButtonWidgetHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.LockButtonWidgetHelper",
+    "extends": "ClickableWidgetHelper<LockButtonWidgetHelper, LockButtonWidget>",
+    "since": "1.8.4",
+    "description": "The `LockButtonWidgetHelper` class is a specialized button widget in JSMacros that represents a lock button with toggle functionality. This button can be in one of two states: locked or unlocked, with visual feedback indicating the current state. Lock buttons are commonly used in custom screens for settings panels, security features, or configuration interfaces where users need to enable/disable functionality.\n\nThe helper provides methods to control the lock state and inherits all standard button functionality from `ClickableWidgetHelper`, including positioning, text management, click actions, and tooltips.",
+    "overview": "The `LockButtonWidgetHelper` provides a complete lock button solution with:\n\n- **Toggle Functionality**: Built-in locked/unlocked state management\n- **Visual Feedback**: Different icons/appearances for locked and unlocked states\n- **State Persistence**: The lock state can be programmatically controlled and queried\n- **Full Button Features**: Inherits all standard button capabilities (positioning, actions, tooltips, etc.)\n- **Builder Support**: Includes `LockButtonBuilder` for fluent widget creation\n- **Screen Integration**: Works seamlessly with JSMacros custom screens",
+    "constructors": [
+      {
+        "signature": "new LockButtonWidgetHelper(button)",
+        "description": "Creates a new lock button helper from an existing Minecraft lock button widget.",
+        "parameters": [
+          {
+            "name": "button",
+            "type": "LockButtonWidget",
+            "description": "The underlying Minecraft lock button widget"
+          }
+        ]
+      },
+      {
+        "signature": "new LockButtonWidgetHelper(button, zIndex)",
+        "description": "Creates a new lock button helper with a specific z-index for render ordering.",
+        "parameters": [
+          {
+            "name": "button",
+            "type": "LockButtonWidget",
+            "description": "The underlying Minecraft lock button widget"
+          },
+          {
+            "name": "zIndex",
+            "type": "int",
+            "description": "The z-index value for render ordering"
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "isLocked",
+        "signature": "isLocked()",
+        "returnType": "boolean",
+        "description": "Gets the current lock state of the button.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const currentState = lockButton.isLocked();\nif (currentState) {\n    Chat.log(\"Button is currently locked\");\n} else {\n    Chat.log(\"Button is currently unlocked\");\n}"
+        ]
+      },
+      {
+        "name": "setLocked",
+        "signature": "setLocked(locked)",
+        "returnType": "LockButtonWidgetHelper",
+        "description": "Sets the lock state of the button and updates its visual appearance.",
+        "parameters": [
+          {
+            "name": "locked",
+            "type": "boolean",
+            "description": "true to lock the button, false to unlock it"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Lock the button\nlockButton.setLocked(true);",
+          "// Unlock the button\nlockButton.setLocked(false);",
+          "// Chain with other methods\nlockButton.setLocked(true).setActive(false);"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "LockButtonBuilder",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.LockButtonWidgetHelper$LockButtonBuilder",
+    "extends": "AbstractWidgetBuilder<LockButtonBuilder, LockButtonWidget, LockButtonWidgetHelper>",
+    "since": "JsMacros 1.8.4",
+    "description": "The `LockButtonBuilder` class is a specialized builder for creating lock button widgets with toggle functionality. It provides a fluent, chainable API for configuring lock buttons with customizable initial states, actions, positioning, and appearance. This builder is the recommended way to create lock buttons for custom screens, offering a more readable and maintainable approach than direct instantiation.\n\nThe builder combines lock-specific functionality with all standard widget capabilities, allowing you to create buttons that can be toggled between locked and unlocked states with visual feedback.",
+    "overview": "The `LockButtonBuilder` provides:\n\n- **Lock State Configuration**: Set initial locked/unlocked state when creating the button\n- **Action Management**: Define click handlers with access to both the button and screen\n- **Builder Pattern**: Fluent API for readable widget configuration\n- **Complete Widget Control**: Full control over positioning, sizing, appearance, and behavior\n- **Screen Integration**: Automatic integration with JSMacros custom screens\n- **Error Handling**: Built-in error handling for button actions\n- **Visual Feedback**: Automatic appearance changes based on lock state",
+    "constructors": [
+      {
+        "signature": "new LockButtonBuilder(screen)",
+        "description": "Creates a new LockButtonBuilder for the specified screen.",
+        "parameters": [
+          {
+            "name": "screen",
+            "type": "IScreen",
+            "description": "The screen to add the lock button to"
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "isLocked",
+        "signature": "isLocked()",
+        "returnType": "boolean",
+        "description": "Gets the initial lock state that has been configured for the button being built.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const builder = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .locked(true);\n\nif (builder.isLocked()) {\n    Chat.log(\"Button will start in locked state\");\n}"
+        ]
+      },
+      {
+        "name": "locked",
+        "signature": "locked(locked)",
+        "returnType": "LockButtonBuilder",
+        "description": "Sets the initial lock state of the button when it is created. This determines whether the button starts in locked or unlocked state.",
+        "parameters": [
+          {
+            "name": "locked",
+            "type": "boolean",
+            "description": "Initial lock state (true for locked, false for unlocked)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Button starts locked\nconst lockedButton = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .locked(true)\n    .message(\"Locked Setting\")\n    .build();",
+          "// Button starts unlocked\nconst unlockedButton = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .locked(false)\n    .message(\"Unlocked Setting\")\n    .build();"
+        ]
+      },
+      {
+        "name": "getAction",
+        "signature": "getAction()",
+        "returnType": "MethodWrapper<LockButtonWidgetHelper, IScreen, Object, ?> | null",
+        "description": "Gets the click action that has been configured for the button being built.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const builder = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .action((btn, scr) => Chat.log(\"Button clicked!\"));\n\nconst action = builder.getAction();\nif (action) {\n    Chat.log(\"Button has an action configured\");\n}"
+        ]
+      },
+      {
+        "name": "action",
+        "signature": "action(action)",
+        "returnType": "LockButtonBuilder",
+        "description": "Sets the click action for the lock button. The action receives two parameters:\n- `lockBtn: LockButtonWidgetHelper` - The button helper that was clicked\n- `screen: IScreen` - The screen containing the button",
+        "parameters": [
+          {
+            "name": "action",
+            "type": "MethodWrapper<LockButtonWidgetHelper, IScreen, Object, ?> | null",
+            "description": "The action to execute when the button is clicked. Pass `null` to remove any existing action."
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const lockButton = new LockButtonWidgetHelper.LockButtonBuilder(screen)\n    .pos(50, 50)\n    .width(150)\n    .message(\"Toggle Lock\")\n    .action((lockBtn, currentScreen) => {\n        // Toggle the lock state\n        const currentState = lockBtn.isLocked();\n        const newState = !currentState;\n        lockBtn.setLocked(newState);\n\n        // Provide feedback\n        if (newState) {\n            Chat.log(\"Feature is now LOCKED\");\n            lockBtn.setTooltip(\"Click to unlock this feature\");\n        } else {\n            Chat.log(\"Feature is now UNLOCKED\");\n            lockBtn.setTooltip(\"Click to lock this feature\");\n        }\n    })\n    .build();"
+        ]
+      }
+    ]
+  }
+]

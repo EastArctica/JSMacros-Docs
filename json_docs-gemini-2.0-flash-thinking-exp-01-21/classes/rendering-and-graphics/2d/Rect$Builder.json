@@ -1,0 +1,383 @@
+{
+  "name": "Rect.Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Rect$Builder",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The `Rect.Builder` class provides a fluent interface for creating `Rect` instances with method chaining. It's the recommended way to create rectangles with complex configurations or when you need to set multiple properties in a readable manner.",
+  "overview": "The `Rect.Builder` class allows you to construct `Rect` objects through a chain of method calls, making the configuration process more readable and maintainable. Instead of passing multiple parameters to constructors, you can set properties individually using descriptive method names.\n\nThe builder is typically obtained through the `Draw2D.rect()` method and provides two final operations:\n- `build()` - Creates the Rect instance\n- `buildAndAdd()` - Creates the Rect instance and automatically adds it to the Draw2D context",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(x1, y1, x2, y2)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the rectangle position using two opposite corners in a single call.",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "int",
+          "description": "X coordinate of the first corner"
+        },
+        {
+          "name": "y1",
+          "type": "int",
+          "description": "Y coordinate of the first corner"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "description": "X coordinate of the second corner"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "description": "Y coordinate of the second corner"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const rect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "pos1",
+      "signature": "pos1(x, y)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the position of the first corner.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the first corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the first corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "pos2",
+      "signature": "pos2(x, y)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the position of the second corner.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the second corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the second corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "x1",
+      "signature": "x1(x)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the X coordinate of the first corner.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the first corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "y1",
+      "signature": "y1(y)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the Y coordinate of the first corner.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the first corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "x2",
+      "signature": "x2(x)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the X coordinate of the second corner.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the second corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "y2",
+      "signature": "y2(y)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the Y coordinate of the second corner.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the second corner"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "size",
+      "signature": "size(width, height)",
+      "returnType": "Rect.Builder",
+      "description": "Sets both width and height of the rectangle.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the rectangle in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the rectangle in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const rect = draw2D.rect()\n    .pos(10, 10)\n    .size(100, 50)\n    .color(0x00FF00)\n    .build();"
+      ]
+    },
+    {
+      "name": "width",
+      "signature": "width(width)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the width of the rectangle.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the rectangle in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "height",
+      "signature": "height(height)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the height of the rectangle.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the rectangle in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "color",
+      "signature": "color(color)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the rectangle color using RGB format with full alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const redRect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0xFF0000)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(color, alpha)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the rectangle color using RGB format with custom alpha.",
+      "parameters": [
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color value (0xRRGGBB)"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const semiTransparentBlue = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0x0000FF, 128)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the rectangle color using separate RGB values with full alpha.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const greenRect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0, 255, 0)\n    .build();"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(r, g, b, a)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the rectangle color using separate RGBA values.",
+      "parameters": [
+        {
+          "name": "r",
+          "type": "int",
+          "description": "Red component (0-255)"
+        },
+        {
+          "name": "g",
+          "type": "int",
+          "description": "Green component (0-255)"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "description": "Blue component (0-255)"
+        },
+        {
+          "name": "a",
+          "type": "int",
+          "description": "Alpha component (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const purpleRect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(128, 0, 128, 200)\n    .build();"
+      ]
+    },
+    {
+      "name": "alpha",
+      "signature": "alpha(alpha)",
+      "returnType": "Rect.Builder",
+      "description": "Sets only the alpha transparency value while preserving RGB color.",
+      "parameters": [
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency value (0-255)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const fadedRect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0xFF0000)\n    .alpha(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(degrees)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the rotation angle of the rectangle (clockwise).",
+      "parameters": [
+        {
+          "name": "degrees",
+          "type": "double",
+          "description": "Rotation angle in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const rotatedRect = draw2D.rect()\n    .pos(50, 50, 150, 100)\n    .rotation(45)\n    .color(0xFF00FF)\n    .build();"
+      ]
+    },
+    {
+      "name": "rotateCenter",
+      "signature": "rotateCenter(centerEnabled)",
+      "returnType": "Rect.Builder",
+      "description": "Sets whether the rectangle should rotate around its center point.",
+      "parameters": [
+        {
+          "name": "centerEnabled",
+          "type": "boolean",
+          "description": "true to rotate around center, false to rotate around origin"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const centeredRotation = draw2D.rect()\n    .pos(50, 50, 150, 100)\n    .rotation(45)\n    .rotateCenter(true)\n    .color(0x00FFFF)\n    .build();"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(index)",
+      "returnType": "Rect.Builder",
+      "description": "Sets the z-index for rendering order. Higher values render on top.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "Z-index value"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const topRect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0xFFFF00)\n    .zIndex(100)\n    .build();"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Rect",
+      "description": "Creates the configured `Rect` instance without adding it to the Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0xFF0000)\n    .build();\n\n// Add to context manually later\ndraw2D.addChild(rect);"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Rect",
+      "description": "Creates the configured `Rect` instance and automatically adds it to the Draw2D context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const rect = draw2D.rect()\n    .pos(10, 10, 110, 60)\n    .color(0x00FF00)\n    .buildAndAdd(); // Automatically added to Draw2D context"
+      ]
+    }
+  ]
+}

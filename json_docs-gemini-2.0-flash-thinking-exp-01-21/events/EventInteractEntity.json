@@ -1,0 +1,18 @@
+{
+  "name": "InteractEntity",
+  "fullClassName": "EventInteractEntity",
+  "description": "This event is fired when the player interacts with an entity.",
+  "overview": "Fires when the player right-clicks on an entity. Includes animals, villagers, players, item frames, etc. Occurs for trading, mounting, shearing, equipping, etc. This event is cancellable - preventing the interaction.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "event.toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

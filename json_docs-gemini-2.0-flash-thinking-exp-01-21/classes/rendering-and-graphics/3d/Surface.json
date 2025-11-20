@@ -1,0 +1,252 @@
+{
+  "name": "Surface",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.Surface",
+  "extends": "Draw2D",
+  "since": "JsMacros 1.6.5",
+  "description": "The `Surface` class is a 3D rendering component in JSMacros that represents a 2D drawing surface rendered in 3D world space. It acts as a canvas that can be positioned, rotated, and scaled in the 3D world while supporting 2D drawing operations. Surface objects are ideal for creating custom HUD elements, information displays, signs, billboards, and interactive interfaces that exist in the game world.",
+  "overview": "The `Surface` class provides a powerful way to render 2D content in 3D space with the following capabilities:\n\n- 3D positioning and rotation in world coordinates\n- Entity binding for dynamic positioning that follows entities\n- Customizable dimensions and subdivision levels for quality control\n- Player-facing rotation for billboarding effects\n- Full integration with Draw2D rendering capabilities\n- Depth testing and face culling options for performance\n- Flexible rotation centers and transform controls\n- Z-index scaling for managing depth precision",
+  "constructors": [
+    {
+      "signature": "new Surface(pos, rotations, sizes, minSubdivisions, renderBack, cull)",
+      "description": "Creates a new Surface with the specified position, rotation, size, and rendering options.",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "Pos3D",
+          "description": "The 3D position of the surface in world coordinates"
+        },
+        {
+          "name": "rotations",
+          "type": "Pos3D",
+          "description": "The rotation angles (x, y, z) in degrees"
+        },
+        {
+          "name": "sizes",
+          "type": "Pos2D",
+          "description": "The width and height of the surface"
+        },
+        {
+          "name": "minSubdivisions",
+          "type": "int",
+          "description": "Minimum subdivisions for rendering quality"
+        },
+        {
+          "name": "renderBack",
+          "type": "boolean",
+          "description": "Whether to render the back side of the surface"
+        },
+        {
+          "name": "cull",
+          "type": "boolean",
+          "description": "Whether to enable depth culling for performance"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addText",
+      "signature": "addText(textHelper, x, y)",
+      "returnType": "void",
+      "description": "Add text to the surface",
+      "parameters": [
+        {
+          "name": "textHelper",
+          "type": "TextHelper",
+          "description": ""
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addRect",
+      "signature": "addRect(x, y, width, height, color)",
+      "returnType": "void",
+      "description": "Add a rectangle",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addImage",
+      "signature": "addImage(x, y, width, height, imagePath)",
+      "returnType": "void",
+      "description": "Add an image",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "imagePath",
+          "type": "String",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addItemStack",
+      "signature": "addItemStack(itemStack, x, y)",
+      "returnType": "void",
+      "description": "Add an item stack display",
+      "parameters": [
+        {
+          "name": "itemStack",
+          "type": "ItemStack",
+          "description": ""
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addLine",
+      "signature": "addLine(x1, y1, x2, y2, color, width)",
+      "returnType": "void",
+      "description": "Add a line",
+      "parameters": [
+        {
+          "name": "x1",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y1",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "x2",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y2",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addEllipse",
+      "signature": "addEllipse(x, y, radiusX, radiusY, color)",
+      "returnType": "void",
+      "description": "Add an ellipse",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "radiusX",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "radiusY",
+          "type": "double",
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": ""
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "clear",
+      "signature": "clear()",
+      "returnType": "void",
+      "description": "Clear all drawn elements",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

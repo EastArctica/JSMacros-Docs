@@ -1,0 +1,177 @@
+{
+  "name": "ListContainer",
+  "fullClassName": "xyz.wagyourtail.wagyourgui.containers.ListContainer",
+  "extends": "MultiElementContainer<IContainerParent>",
+  "description": "The `ListContainer` class is a UI container component that displays scrollable lists of items in a grid layout. It provides built-in scrolling functionality, item selection, and customizable click handlers. ListContainer is ideal for displaying lists of options, menu items, or any collection of selectable elements in JSMacros screen overlays and custom UI components.",
+  "overview": "The `ListContainer` class provides a comprehensive list display solution with the following features:\n\n- **Scrollable List Display:** Supports automatic scrollbar generation for long lists\n- **Grid Layout:** Items are arranged in a 5-column grid layout for efficient space usage\n- **Item Selection:** Built-in selection system with visual feedback\n- **Customizable Callbacks:** Configurable selection handlers for interactive behavior\n- **Dynamic Item Management:** Add items dynamically at runtime\n- **Hover Tooltips:** Automatic tooltip display for items that can't display full text\n- **Integration Ready:** Seamless integration with JSMacros screen system",
+  "constructors": [
+    {
+      "signature": "new ListContainer(x, y, width, height, textRenderer, list, parent, onSelect)",
+      "description": "Creates a new ListContainer with specified position, dimensions, and content.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X coordinate of the container's top-left corner"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y coordinate of the container's top-left corner"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width of the container in pixels"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height of the container in pixels"
+        },
+        {
+          "name": "textRenderer",
+          "type": "TextRenderer",
+          "description": "Minecraft text renderer for drawing text"
+        },
+        {
+          "name": "list",
+          "type": "List<Text>",
+          "description": "Initial list of text items to display"
+        },
+        {
+          "name": "parent",
+          "type": "IOverlayParent",
+          "description": "Parent overlay/container for this list"
+        },
+        {
+          "name": "onSelect",
+          "type": "Consumer<Integer>",
+          "description": "Callback function when an item is selected"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "addItem",
+      "signature": "instance.addItem(name)",
+      "returnType": "void",
+      "description": "Adds a new item to the end of the list.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "Text",
+          "description": "The text content for the new list item"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Add a new item to the list\nlistContainer.addItem(Chat.createTextHelperFromString(\"New Item\"));"
+      ]
+    },
+    {
+      "name": "setSelected",
+      "signature": "instance.setSelected(index)",
+      "returnType": "void",
+      "description": "Sets the currently selected item and triggers the selection callback.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "Index of the item to select (0-based)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Select the third item\nlistContainer.setSelected(2);\n\n// Clear selection\nlistContainer.setSelected(-1);"
+      ]
+    },
+    {
+      "name": "onScrollbar",
+      "signature": "instance.onScrollbar(page)",
+      "returnType": "void",
+      "description": "Internal method called when the scrollbar position changes.",
+      "parameters": [
+        {
+          "name": "page",
+          "type": "double",
+          "description": "The new scrollbar position (0.0 to 1.0)"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setVisible",
+      "signature": "instance.setVisible(visible)",
+      "returnType": "void",
+      "description": "Sets the visibility of the container and all its child elements.",
+      "parameters": [
+        {
+          "name": "visible",
+          "type": "boolean",
+          "description": "Whether the container should be visible"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Hide the list container\nlistContainer.setVisible(false);\n\n// Show the list container\nlistContainer.setVisible(true);"
+      ]
+    },
+    {
+      "name": "getVisible",
+      "signature": "instance.getVisible()",
+      "returnType": "boolean",
+      "description": "Gets the current visibility state of the container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (listContainer.getVisible()) {\n    Chat.log(\"List container is currently visible\");\n}"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "instance.setPos(x, y, width, height)",
+      "returnType": "void",
+      "description": "Updates the position and dimensions of the container.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "New X coordinate"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "New Y coordinate"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "New width"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "New height"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Resize the container\nlistContainer.setPos(20, 20, 250, 200);"
+      ]
+    },
+    {
+      "name": "getButtons",
+      "signature": "instance.getButtons()",
+      "returnType": "List<ClickableWidget>",
+      "description": "Gets a list of all button widgets in the container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const buttons = listContainer.getButtons();\nChat.log(`Container has ${buttons.size()} buttons`);"
+      ]
+    }
+  ]
+}

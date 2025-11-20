@@ -1,0 +1,226 @@
+{
+  "name": "AnnotationArrayBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.AnnotationBuilder.AnnotationArrayBuilder<T>",
+  "extends": null,
+  "since": "JSMacros 1.8.4",
+  "description": "The ClassBuilder.AnnotationBuilder.AnnotationArrayBuilder class is a specialized builder for constructing array properties within annotation definitions. This builder allows you to add elements to annotation arrays, supporting various data types including strings, primitives, enums, classes, and nested annotations.",
+  "overview": "AnnotationArrayBuilder instances are obtained through the putArray() method of AnnotationBuilder and provide a fluent API for adding array elements before finalizing the array and returning to the parent annotation builder.\n\nObtaining an AnnotationArrayBuilder:\nAnnotationArrayBuilder instances are created through the putArray() method.\n\nUsage Examples:\nThe builder supports adding various types of arrays, including simple string arrays, mixed primitive arrays, class arrays, enum arrays, complex annotations with multiple array properties, field annotations with arrays, method annotations with parameter arrays, single element arrays, and even empty arrays.\n\nSupported Element Types:\nPrimitive Types: boolean, byte, char, short, int, long, float, double.\nReference Types: String, Class<?>, Enum.\n\nArray Limitations:\nAll elements in an array must be of the same type. Mixed-type arrays are not supported in Java annotations. Array elements are added in the order they are specified. Arrays can be empty (call finish() without adding any elements).\n\nType Safety:\nThe builder enforces type consistency within arrays. Attempting to add elements of different types to the same array will result in compilation errors when the annotation is finalized.\n\nBest Practices:\n1. Consistent Types: Ensure all elements in an array are of the same type as required by the annotation definition.\n2. Order Matters: Elements are added to arrays in the order they are specified.\n3. Empty Arrays: Call finish() without adding elements to create empty arrays where supported.\n4. Complete Arrays: Always call finish() to complete the array definition.\n5. Annotation Completion: Remember to call finish() on the parent AnnotationBuilder as well.\n\nRelated Classes:\n- ClassBuilder.AnnotationBuilder - Parent builder that creates AnnotationArrayBuilder instances\n- ClassBuilder - Main class builder\n- ClassBuilder.FieldBuilder - Field builder that supports annotations\n- ClassBuilder.MethodBuilder - Method builder that supports annotations\n\nThe AnnotationArrayBuilder provides a type-safe and convenient way to construct complex array properties within Java annotations, enabling rich metadata specification for generated classes.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "putString",
+      "signature": "putString(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a string element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The string value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putString(\"WARNING\");",
+        "arrayBuilder.putString(\"ERROR\");"
+      ]
+    },
+    {
+      "name": "putInt",
+      "signature": "putInt(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds an integer element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The integer value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putInt(1);",
+        "arrayBuilder.putInt(42);",
+        "arrayBuilder.putInt(100);"
+      ]
+    },
+    {
+      "name": "putLong",
+      "signature": "putLong(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a long element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The long value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putLong(1000);",
+        "arrayBuilder.putLong(System.currentTimeMillis());"
+      ]
+    },
+    {
+      "name": "putDouble",
+      "signature": "putDouble(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a double element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The double value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putDouble(3.14);",
+        "arrayBuilder.putDouble(2.718);"
+      ]
+    },
+    {
+      "name": "putFloat",
+      "signature": "putFloat(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a float element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The float value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putFloat(1.5);",
+        "arrayBuilder.putFloat(2.75);"
+      ]
+    },
+    {
+      "name": "putBoolean",
+      "signature": "putBoolean(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a boolean element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "boolean",
+          "description": "The boolean value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putBoolean(true);",
+        "arrayBuilder.putBoolean(false);"
+      ]
+    },
+    {
+      "name": "putByte",
+      "signature": "putByte(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a byte element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The byte value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putByte(10);",
+        "arrayBuilder.putByte(20);"
+      ]
+    },
+    {
+      "name": "putShort",
+      "signature": "putShort(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a short element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The short value to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putShort(100);",
+        "arrayBuilder.putShort(200);"
+      ]
+    },
+    {
+      "name": "putChar",
+      "signature": "putChar(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a char element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The char value to add to the array (single character)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putChar('A');",
+        "arrayBuilder.putChar('B');"
+      ]
+    },
+    {
+      "name": "putClass",
+      "signature": "putClass(value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds a Class element to the annotation array.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "Class<?>",
+          "description": "The Class object to add to the array"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putClass(String.class);",
+        "arrayBuilder.putClass(List.class);"
+      ]
+    },
+    {
+      "name": "putEnum",
+      "signature": "putEnum(enumClass, value)",
+      "returnType": "AnnotationArrayBuilder<T>",
+      "description": "Adds an enum element to the annotation array.",
+      "parameters": [
+        {
+          "name": "enumClass",
+          "type": "Class<?>",
+          "description": "The enum class"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The enum constant name"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "arrayBuilder.putEnum(Thread.State.class, \"RUNNABLE\");",
+        "arrayBuilder.putEnum(Priority.class, \"HIGH\");"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "AnnotationBuilder<T>",
+      "description": "Finalizes the array and returns to the parent AnnotationBuilder. This method must be called to apply the array to the annotation property. After calling finish(), the array is finalized and the builder returns to the annotation context. The annotation builder may need to be finalized again with its own finish() call.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = arrayBuilder.finish();"
+      ]
+    }
+  ]
+}

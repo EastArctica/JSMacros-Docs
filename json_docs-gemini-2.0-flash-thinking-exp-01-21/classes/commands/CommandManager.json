@@ -1,0 +1,95 @@
+{
+  "name": "CommandManager",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CommandManager",
+  "extends": "Object",
+  "since": "1.7.0",
+  "description": "Manages client-side commands in JsMacros, providing functionality to create, register, unregister, and manage custom commands. This class serves as the central point for command registration and handling, supporting both Fabric and Forge mod loaders.",
+  "overview": "The CommandManager is accessible via the Chat API and allows script developers to create sophisticated custom commands with argument parsing, auto-completion, and execution handling.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getValidCommands",
+      "signature": "getValidCommands()",
+      "returnType": "List<String>",
+      "description": "Returns a list of all currently registered client-side commands.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\nconst commands = cmdManager.getValidCommands();\nChat.log(`Available commands: ${commands.toArray().join(', ')}`);"
+      ]
+    },
+    {
+      "name": "createCommandBuilder",
+      "signature": "createCommandBuilder(name: string)",
+      "returnType": "CommandBuilder",
+      "description": "Creates a new CommandBuilder for defining a custom command with arguments and execution logic.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the command to create"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Create a simple command\nconst builder = cmdManager.createCommandBuilder(\"hello\");\n\n// Create a command with arguments\nconst giveCommand = cmdManager.createCommandBuilder(\"ugive\")\n    .itemArg(\"item\")\n    .intArg(\"count\", 1, 64)\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        const item = ctx.getArg(\"item\");\n        const count = ctx.getArg(\"count\");\n        Chat.log(`Giving ${count}x ${item} to player`);\n        return true;\n    }))\n    .register();\n\n// Create a command with literals\nconst adminCmd = cmdManager.createCommandBuilder(\"admin\")\n    .literalArg(\"reload\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.log(\"Reloading admin configuration...\");\n        // Reload logic here\n        return true;\n    }))\n    .or()\n    .literalArg(\"status\")\n    .executes(JavaWrapper.methodToJava((ctx) => {\n        Chat.log(\"Admin status: Online\");\n        return true;\n    }))\n    .register();"
+      ]
+    },
+    {
+      "name": "unregisterCommand",
+      "signature": "unregisterCommand(command: string)",
+      "returnType": "CommandNodeHelper | null",
+      "description": "Removes a command from the command registry, allowing it to be re-registered later if needed.",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "description": "The name of the command to unregister"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Unregister a command and store it for later re-registration\nconst removedCommand = cmdManager.unregisterCommand(\"hello\");\nif (removedCommand) {\n    Chat.log(\"Successfully unregistered 'hello' command\");\n} else {\n    Chat.log(\"Command 'hello' was not found\");\n}\n\n// Temporarily disable a command\nconst disabledCmd = cmdManager.unregisterCommand(\"admin\");\n// Later restore it\nif (disabledCmd) {\n    cmdManager.reRegisterCommand(disabledCmd);\n}"
+      ]
+    },
+    {
+      "name": "reRegisterCommand",
+      "signature": "reRegisterCommand(node: CommandNodeHelper)",
+      "returnType": "void",
+      "description": "Re-registers a previously unregistered command node back into the command system.",
+      "parameters": [
+        {
+          "name": "node",
+          "type": "CommandNodeHelper",
+          "description": "The command node to re-register (obtained from `unregisterCommand()`)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Store a command before unregistering it\nconst originalCommand = cmdManager.unregisterCommand(\"weather\");\n\n// Modify the command or perform other operations...\n\n// Re-register the original command\nif (originalCommand) {\n    cmdManager.reRegisterCommand(originalCommand);\n    Chat.log(\"Weather command restored\");\n}"
+      ]
+    },
+    {
+      "name": "getArgumentAutocompleteOptions",
+      "signature": "getArgumentAutocompleteOptions(commandPart: string, callback: MethodWrapper<List<String>, Object, Object, ?>)",
+      "returnType": "void",
+      "description": "Asynchronously retrieves argument autocomplete suggestions for a given partial command input.",
+      "parameters": [
+        {
+          "name": "commandPart",
+          "type": "string",
+          "description": "The partial command to get suggestions for"
+        },
+        {
+          "name": "callback",
+          "type": "MethodWrapper<List<String>, Object, Object, ?>",
+          "description": "A callback function that receives the list of suggestions"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();\n\n// Get autocomplete suggestions for a partial command\ncmdManager.getArgumentAutocompleteOptions(\"gamemode \", JavaWrapper.methodToJava((suggestions) => {\n    Chat.log(\"Available gamemode arguments:\");\n    for (const suggestion of suggestions.toArray()) {\n        Chat.log(`  - ${suggestion}`);\n    }\n}));\n\n// Dynamic autocomplete for custom scenarios\nfunction suggestNextArgs(partialCommand) {\n    cmdManager.getArgumentAutocompleteOptions(partialCommand, JavaWrapper.methodToJava((suggestions) => {\n        if (suggestions.length > 0) {\n            Chat.log(`Suggestions for \"${partialCommand}\":`);\n            suggestions.forEach(JavaWrapper.methodToJava(s => Chat.log(`  ${s}`)));\n        } else {\n            Chat.log(`No suggestions available for \"${partialCommand}\"`);\n        }\n    }));\n}\n\nsuggestNextArgs(\"give @p \");\nsuggestNextArgs(\"time set \");"
+      ]
+    }
+  ]
+}

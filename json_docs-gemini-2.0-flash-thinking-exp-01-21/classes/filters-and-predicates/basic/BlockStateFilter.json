@@ -1,0 +1,32 @@
+{
+  "name": "BlockStateFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.impl.BlockStateFilter",
+  "extends": "ClassWrapperFilter<BlockStateHelper>",
+  "since": "1.6.5",
+  "description": "A specialized filter implementation in JSMacros' World Scanner system, enabling filtering of block states based on their properties and methods by applying comparison operations to values returned from BlockStateHelper methods. It's typically created via WorldScannerBuilder.",
+  "overview": "The `BlockStateFilter` class is a specialized filter implementation in JSMacros' World Scanner system. It provides a way to filter block states based on their properties and methods by wrapping any public no-parameter method from the `BlockStateHelper` class and applying comparison operations to the returned values.\n\nThis class is typically not instantiated directly by users, but rather created through the `WorldScannerBuilder` when using state filtering methods like `withStateFilter()`. The filter leverages Java reflection to dynamically invoke methods on `BlockStateHelper` objects and compare their results using various criteria.",
+  "constructors": [
+    {
+      "signature": "new BlockStateFilter(methodName, methodArgs, filterArgs)",
+      "description": "Creates a new BlockStateFilter that will invoke the specified method on BlockStateHelper objects and apply filter criteria to the result.",
+      "parameters": [
+        {
+          "name": "methodName",
+          "type": "String",
+          "description": "The name of the method to invoke on BlockStateHelper (e.g., \"isAir\", \"getLuminance\", \"isOpaque\")"
+        },
+        {
+          "name": "methodArgs",
+          "type": "Object[]",
+          "description": "Arguments to pass to the method when invoked (empty array for no-parameter methods)"
+        },
+        {
+          "name": "filterArgs",
+          "type": "Object[]",
+          "description": "Arguments for the filter comparison operation (depends on return type)"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

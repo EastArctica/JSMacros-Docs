@@ -1,0 +1,311 @@
+{
+  "name": "OptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper",
+  "extends": "BaseHelper<GameOptions>",
+  "since": "JsMacros 1.1.7",
+  "description": "The `OptionsHelper` class provides comprehensive access to Minecraft's game options and settings, allowing scripts to read and modify various configuration aspects including video settings, audio controls, keybindings, skin customization, and accessibility features. This class serves as the main interface for all game configuration management through organized helper subclasses.",
+  "overview": "The `OptionsHelper` class wraps Minecraft's internal `GameOptions` object and provides a structured way to access and modify game settings. It's organized into several specialized helper classes, each managing a specific category of options:\n\n- **Skin Options** - Player appearance and model customization\n- **Video Options** - Graphics rendering and display settings\n- **Music Options** - Audio volume and sound device configuration\n- **Control Options** - Input settings and keybinding management\n- **Chat Options** - Chat display and communication settings\n- **Accessibility Options** - Visual and accessibility assistance features\n\n## Getting an OptionsHelper Instance\n\nYou typically obtain an `OptionsHelper` instance through the `JsMacros` class:\n\n```javascript\n// Get the global options helper\nconst options = JsMacros.getOptions();\n\n// Or access specific option categories directly\nconst videoOptions = JsMacros.getOptions().getVideoOptions();\nconst musicOptions = JsMacros.getOptions().getMusicOptions();\n```",
+  "constructors": [
+    {
+      "signature": "new OptionsHelper(GameOptions options)",
+      "description": "Creates a new OptionsHelper instance wrapping the specified GameOptions object.\n\nNote: This constructor is typically used internally by JSMacros. Most scripts should obtain an instance through `JsMacros.getOptions()`.",
+      "parameters": [
+        {
+          "name": "options",
+          "type": "GameOptions",
+          "description": "The underlying Minecraft GameOptions object to wrap"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "saveOptions",
+      "signature": "saveOptions()",
+      "returnType": "OptionsHelper",
+      "description": "Saves the current options to the options file.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const options = JsMacros.getOptions();\noptions.getVideoOptions().setRenderDistance(12);\noptions.saveOptions(); // Persist changes"
+      ]
+    },
+    {
+      "name": "getResourcePacks",
+      "signature": "getResourcePacks()",
+      "returnType": "List<String>",
+      "description": "Gets a list of all available resource pack names.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const packs = JsMacros.getOptions().getResourcePacks();\nChat.log(`Available resource packs: ${packs.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "getEnabledResourcePacks",
+      "signature": "getEnabledResourcePacks()",
+      "returnType": "List<String>",
+      "description": "Gets a list of currently enabled resource pack names.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const enabledPacks = JsMacros.getOptions().getEnabledResourcePacks();\nChat.log(`Enabled resource packs: ${enabledPacks.join(\", \")}`);"
+      ]
+    },
+    {
+      "name": "setEnabledResourcePacks",
+      "signature": "setEnabledResourcePacks(String[] enabled)",
+      "returnType": "OptionsHelper",
+      "description": "Sets which resource packs should be enabled.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "String[]",
+          "description": "Array of resource pack names to enable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const options = JsMacros.getOptions();\noptions.setEnabledResourcePacks([\"vanilla\", \"my_texture_pack\", \"shaders\"]);\noptions.saveOptions();"
+      ]
+    },
+    {
+      "name": "removeServerResourcePack",
+      "signature": "removeServerResourcePack(boolean state)",
+      "returnType": "OptionsHelper",
+      "description": "Removes or restores server resource packs.",
+      "parameters": [
+        {
+          "name": "state",
+          "type": "boolean",
+          "description": "true to remove server packs, false to restore them"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLanguage",
+      "signature": "getLanguage()",
+      "returnType": "String",
+      "description": "Gets the current language setting.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const language = JsMacros.getOptions().getLanguage();\nChat.log(`Current language: ${language}`);"
+      ]
+    },
+    {
+      "name": "setLanguage",
+      "signature": "setLanguage(String languageCode)",
+      "returnType": "OptionsHelper",
+      "description": "Changes the game language.",
+      "parameters": [
+        {
+          "name": "languageCode",
+          "type": "String",
+          "description": "Language code to change to (e.g., \"en_us\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Change to French\nJsMacros.getOptions().setLanguage(\"fr_fr\").saveOptions();"
+      ]
+    },
+    {
+      "name": "getDifficulty",
+      "signature": "getDifficulty()",
+      "returnType": "String",
+      "description": "Gets the current world difficulty.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const difficulty = JsMacros.getOptions().getDifficulty();\nChat.log(`Current difficulty: ${difficulty}`);"
+      ]
+    },
+    {
+      "name": "setDifficulty",
+      "signature": "setDifficulty(String name)",
+      "returnType": "OptionsHelper",
+      "description": "Sets the world difficulty (singleplayer only).",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "Difficulty name: \"peaceful\", \"easy\", \"normal\", or \"hard\""
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Set difficulty to hard\nJsMacros.getOptions().setDifficulty(\"hard\").saveOptions();"
+      ]
+    },
+    {
+      "name": "isDifficultyLocked",
+      "signature": "isDifficultyLocked()",
+      "returnType": "boolean",
+      "description": "Checks if the world difficulty is locked.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "lockDifficulty",
+      "signature": "lockDifficulty()",
+      "returnType": "OptionsHelper",
+      "description": "Locks the current world difficulty.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "unlockDifficulty",
+      "signature": "unlockDifficulty()",
+      "returnType": "OptionsHelper",
+      "description": "Unlocks the world difficulty.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getFov",
+      "signature": "getFov()",
+      "returnType": "int",
+      "description": "Gets the current field of view setting.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setFov",
+      "signature": "setFov(int fov)",
+      "returnType": "OptionsHelper",
+      "description": "Sets the field of view.",
+      "parameters": [
+        {
+          "name": "fov",
+          "type": "int",
+          "description": "New FOV value"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getCameraMode",
+      "signature": "getCameraMode()",
+      "returnType": "int",
+      "description": "Gets the current camera perspective mode.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setCameraMode",
+      "signature": "setCameraMode(int mode)",
+      "returnType": "OptionsHelper",
+      "description": "Sets the camera perspective mode.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "int",
+          "description": "0: first person, 2: front view"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getSmoothCamera",
+      "signature": "getSmoothCamera()",
+      "returnType": "boolean",
+      "description": "Gets smooth camera setting.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setSmoothCamera",
+      "signature": "setSmoothCamera(boolean val)",
+      "returnType": "OptionsHelper",
+      "description": "Sets smooth camera setting.",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "boolean",
+          "description": "Whether to enable smooth camera"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWidth",
+      "signature": "getWidth()",
+      "returnType": "int",
+      "description": "Gets the current window width.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHeight",
+      "signature": "getHeight()",
+      "returnType": "int",
+      "description": "Gets the current window height.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setWidth",
+      "signature": "setWidth(int w)",
+      "returnType": "OptionsHelper",
+      "description": "Sets the window width.",
+      "parameters": [
+        {
+          "name": "w",
+          "type": "int",
+          "description": "New window width in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setHeight",
+      "signature": "setHeight(int h)",
+      "returnType": "OptionsHelper",
+      "description": "Sets the window height.",
+      "parameters": [
+        {
+          "name": "h",
+          "type": "int",
+          "description": "New window height in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setSize",
+      "signature": "setSize(int w, int h)",
+      "returnType": "OptionsHelper",
+      "description": "Sets both window width and height.",
+      "parameters": [
+        {
+          "name": "w",
+          "type": "int",
+          "description": "New window width in pixels"
+        },
+        {
+          "name": "h",
+          "type": "int",
+          "description": "New window height in pixels"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

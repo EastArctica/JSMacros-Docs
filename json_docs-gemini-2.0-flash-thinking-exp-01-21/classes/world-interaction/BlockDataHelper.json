@@ -1,0 +1,192 @@
+{
+  "name": "BlockDataHelper",
+  "fullClassName": "BlockDataHelper",
+  "extends": null,
+  "since": null,
+  "description": "The `BlockDataHelper` class is a comprehensive helper class in JSMacros that provides access to block data and properties at specific positions in the Minecraft world.",
+  "overview": "It combines information about a block's state, position, and entity data (if the block has a tile entity) into a single, convenient interface.\n\nThis class is primarily used in world interaction contexts where you need to access detailed information about blocks in the world, such as in event handlers or when scanning the world for specific block types.\n\n### How to Access\n`BlockDataHelper` instances are typically obtained through:\n\n- **Block Events**: Many block-related events provide `BlockDataHelper` objects\n- **World Methods**: When querying blocks at specific coordinates\n- **Raycasting**: When targeting blocks with line of sight",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getX",
+      "signature": "getX()",
+      "returnType": "number",
+      "description": "The X coordinate of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: From a block interaction event\nevent.on(\"BlockInteract\", (e) => {\n    const blockData = e.block;\n    Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);\n});",
+        "// Example: Getting block data at specific position\nconst pos = World.getblockPos(Player.getPlayer().getX(), Player.getPlayer().getY(), Player.getPlayer().getZ());\nconst blockData = World.getBlock(pos.getX(), pos.getY(), pos.getZ());",
+        "// Get basic information about a block\nfunction analyzeBlock(blockData) {\n    if (!blockData) {\n        Chat.log(\"No block data available\");\n        return;\n    }\n\n    Chat.log(`Block Information:`);\n    Chat.log(`  Position: ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`  Type: ${blockData.getId()}`);\n    Chat.log(`  Name: ${blockData.getName().getString()}`);\n    Chat.log(`  Block State: ${JSON.stringify(blockData.getBlockState())}`);\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}",
+        "// Example: Handle block break events\nevent.on(\"BlockBreak\", (e) => {\n    const blockData = e.block;\n\n    // Log broken block info\n    Chat.log(`Block broken at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Broken block: ${blockData.getId()}`);\n\n    // Check if it was a valuable block\n    const valuableBlocks = [\"diamond_ore\", \"emerald_ore\", \"ancient_debris\"];\n    const isValuable = valuableBlocks.some(valuable =>\n        blockData.getId().includes(valuable)\n    );\n\n    if (isValuable) {\n        Chat.log(`⚠️ Valuable block detected: ${valuable}`);\n        // Additional handling for valuable blocks\n    }\n});",
+        "// Example: Handle block place events\nevent.on(\"BlockPlace\", (e) => {\n    const blockData = e.block;\n\n    Chat.log(`Block placed at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Placed block: ${blockData.getId()}`);\n\n    // Check if container was placed\n    if (blockData.getNBT()) {\n        Chat.log(\"Container block placed - has NBT data\");\n    }\n});"
+      ],
+      "since": "1.1.7"
+    },
+    {
+      "name": "getY",
+      "signature": "getY()",
+      "returnType": "number",
+      "description": "The Y coordinate of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: From a block interaction event\nevent.on(\"BlockInteract\", (e) => {\n    const blockData = e.block;\n    Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);\n});",
+        "// Example: Getting block data at specific position\nconst pos = World.getblockPos(Player.getPlayer().getX(), Player.getPlayer().getY(), Player.getPlayer().getZ());\nconst blockData = World.getBlock(pos.getX(), pos.getY(), pos.getZ());",
+        "// Get basic information about a block\nfunction analyzeBlock(blockData) {\n    if (!blockData) {\n        Chat.log(\"No block data available\");\n        return;\n    }\n\n    Chat.log(`Block Information:`);\n    Chat.log(`  Position: ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`  Type: ${blockData.getId()}`);\n    Chat.log(`  Name: ${blockData.getName().getString()}`);\n    Chat.log(`  Block State: ${JSON.stringify(blockData.getBlockState())}`);\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}",
+        "// Example: Handle block break events\nevent.on(\"BlockBreak\", (e) => {\n    const blockData = e.block;\n\n    // Log broken block info\n    Chat.log(`Block broken at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Broken block: ${blockData.getId()}`);\n\n    // Check if it was a valuable block\n    const valuableBlocks = [\"diamond_ore\", \"emerald_ore\", \"ancient_debris\"];\n    const isValuable = valuableBlocks.some(valuable =>\n        blockData.getId().includes(valuable)\n    );\n\n    if (isValuable) {\n        Chat.log(`⚠️ Valuable block detected: ${valuable}`);\n        // Additional handling for valuable blocks\n    }\n});",
+        "// Example: Handle block place events\nevent.on(\"BlockPlace\", (e) => {\n    const blockData = e.block;\n\n    Chat.log(`Block placed at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Placed block: ${blockData.getId()}`);\n\n    // Check if container was placed\n    if (blockData.getNBT()) {\n        Chat.log(\"Container block placed - has NBT data\");\n    }\n});"
+      ],
+      "since": "1.1.7"
+    },
+    {
+      "name": "getZ",
+      "signature": "getZ()",
+      "returnType": "number",
+      "description": "The Z coordinate of the block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: From a block interaction event\nevent.on(\"BlockInteract\", (e) => {\n    const blockData = e.block;\n    Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);\n});",
+        "// Example: Getting block data at specific position\nconst pos = World.getblockPos(Player.getPlayer().getX(), Player.getPlayer().getY(), Player.getPlayer().getZ());\nconst blockData = World.getBlock(pos.getX(), pos.getY(), pos.getZ());",
+        "// Get basic information about a block\nfunction analyzeBlock(blockData) {\n    if (!blockData) {\n        Chat.log(\"No block data available\");\n        return;\n    }\n\n    Chat.log(`Block Information:`);\n    Chat.log(`  Position: ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`  Type: ${blockData.getId()}`);\n    Chat.log(`  Name: ${blockData.getName().getString()}`);\n    Chat.log(`  Block State: ${JSON.stringify(blockData.getBlockState())}`);\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}",
+        "// Example: Handle block break events\nevent.on(\"BlockBreak\", (e) => {\n    const blockData = e.block;\n\n    // Log broken block info\n    Chat.log(`Block broken at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Broken block: ${blockData.getId()}`);\n\n    // Check if it was a valuable block\n    const valuableBlocks = [\"diamond_ore\", \"emerald_ore\", \"ancient_debris\"];\n    const isValuable = valuableBlocks.some(valuable =>\n        blockData.getId().includes(valuable)\n    );\n\n    if (isValuable) {\n        Chat.log(`⚠️ Valuable block detected: ${valuable}`);\n        // Additional handling for valuable blocks\n    }\n});",
+        "// Example: Handle block place events\nevent.on(\"BlockPlace\", (e) => {\n    const blockData = e.block;\n\n    Chat.log(`Block placed at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Placed block: ${blockData.getId()}`);\n\n    // Check if container was placed\n    if (blockData.getNBT()) {\n        Chat.log(\"Container block placed - has NBT data\");\n    }\n});"
+      ],
+      "since": "1.1.7"
+    },
+    {
+      "name": "getBlockPos",
+      "signature": "getBlockPos()",
+      "returnType": "BlockPosHelper",
+      "description": "A position helper for the block's location.",
+      "parameters": [],
+      "static": false,
+      "examples": [],
+      "since": "1.2.7"
+    },
+    {
+      "name": "getId",
+      "signature": "getId()",
+      "returnType": "string",
+      "description": "The block ID (e.g., \"minecraft:stone\", \"minecraft:oak_log\"). This returns the registered block ID in the format \"namespace:block_name\".",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Example: From a block interaction event\nevent.on(\"BlockInteract\", (e) => {\n    const blockData = e.block;\n    Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);\n});",
+        "// Example: Getting block data at specific position\nconst pos = World.getblockPos(Player.getPlayer().getX(), Player.getPlayer().getY(), Player.getPlayer().getZ());\nconst blockData = World.getBlock(pos.getX(), pos.getY(), pos.getZ());",
+        "// Get basic information about a block\nfunction analyzeBlock(blockData) {\n    if (!blockData) {\n        Chat.log(\"No block data available\");\n        return;\n    }\n\n    Chat.log(`Block Information:`);\n    Chat.log(`  Position: ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`  Type: ${blockData.getId()}`);\n    Chat.log(`  Name: ${blockData.getName().getString()}`);\n    Chat.log(`  Block State: ${JSON.stringify(blockData.getBlockState())}`);\n}",
+        "// Check if a block is a chest\nfunction isChest(blockData) {\n    if (!blockData) return false;\n\n    const blockId = blockData.getId();\n    return blockId.includes(\"chest\") || blockId.includes(\"shulker_box\");\n}",
+        "// Check if a block is a furnace\nfunction isFurnace(blockData) {\n    if (!blockData) return false;\n\n    const blockId = blockData.getId();\n    return blockId.includes(\"furnace\") || blockId.includes(\"smoker\") || blockId.includes(\"blast_furnace\");\n}",
+        "// Analyze container blocks\nfunction analyzeContainer(blockData) {\n    if (!blockData) return;\n\n    const nbt = blockData.getNBT();\n    if (!nbt) {\n        Chat.log(\"Block has no NBT data\");\n        return;\n    }\n\n    const blockId = blockData.getId();\n\n    if (blockId.includes(\"chest\") || blockId.includes(\"shulker_box\")) {\n        const items = nbt.get(\"Items\")?.asList() || [];\n        Chat.log(`Container has ${items.length} items`);\n\n        // List items in the container\n        items.forEach((itemNBT, index) => {\n            const itemName = itemNBT.get(\"id\")?.asString() || \"unknown\";\n            const count = itemNBT.get(\"Count\")?.asByte() || 0;\n            Chat.log(`  Slot ${index}: ${count}x ${itemName}`);\n        });\n    }\n\n    if (blockId.includes(\"sign\")) {\n        const text1 = nbt.get(\"Text1\")?.asString() || \"\";\n        const text2 = nbt.get(\"Text2\")?.asString() || \"\";\n        const text3 = nbt.get(\"Text3\")?.asString() || \"\";\n        const text4 = nbt.get(\"Text4\")?.asString() || \"\";\n\n        Chat.log(\"Sign text:\");\n        Chat.log(`  Line 1: ${text1}`);\n        Chat.log(`  Line 2: ${text2}`);\n        Chat.log(`  Line 3: ${text3}`);\n        Chat.log(`  Line 4: ${text4}`);\n    }\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}",
+        "// Example: Handle block break events\nevent.on(\"BlockBreak\", (e) => {\n    const blockData = e.block;\n\n    // Log broken block info\n    Chat.log(`Block broken at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Broken block: ${blockData.getId()}`);\n\n    // Check if it was a valuable block\n    const valuableBlocks = [\"diamond_ore\", \"emerald_ore\", \"ancient_debris\"];\n    const isValuable = valuableBlocks.some(valuable =>\n        blockData.getId().includes(valuable)\n    );\n\n    if (isValuable) {\n        Chat.log(`⚠️ Valuable block detected: ${valuable}`);\n        // Additional handling for valuable blocks\n    }\n});",
+        "// Example: Handle block place events\nevent.on(\"BlockPlace\", (e) => {\n    const blockData = e.block;\n\n    Chat.log(`Block placed at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Placed block: ${blockData.getId()}`);\n\n    // Check if container was placed\n    if (blockData.getNBT()) {\n        Chat.log(\"Container block placed - has NBT data\");\n    }\n});"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "TextHelper",
+      "description": "The translated name of the block. Before version 1.6.5, this returned a plain string. Now it returns a TextHelper object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get basic information about a block\nfunction analyzeBlock(blockData) {\n    if (!blockData) {\n        Chat.log(\"No block data available\");\n        return;\n    }\n\n    Chat.log(`Block Information:`);\n    Chat.log(`  Position: ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`  Type: ${blockData.getId()}`);\n    Chat.log(`  Name: ${blockData.getName().getString()}`);\n    Chat.log(`  Block State: ${JSON.stringify(blockData.getBlockState())}`);\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}"
+      ]
+    },
+    {
+      "name": "getBlockState",
+      "signature": "getBlockState()",
+      "returnType": "Map<string, string>",
+      "description": "Block state properties as key-value pairs. Example: For a door, this might return `{\"facing\": \"north\", \"open\": \"false\", \"half\": \"lower\"}`.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Get basic information about a block\nfunction analyzeBlock(blockData) {\n    if (!blockData) {\n        Chat.log(\"No block data available\");\n        return;\n    }\n\n    Chat.log(`Block Information:`);\n    Chat.log(`  Position: ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`  Type: ${blockData.getId()}`);\n    Chat.log(`  Name: ${blockData.getName().getString()}`);\n    Chat.log(`  Block State: ${JSON.stringify(blockData.getBlockState())}`);\n}",
+        "// Get specific block state properties\nfunction analyzeBlockState(blockData) {\n    if (!blockData) return;\n\n    const state = blockData.getBlockState();\n\n    // Check for directional blocks\n    if (state.facing) {\n        Chat.log(`Block faces: ${state.facing}`);\n    }\n\n    // Check for waterlogged blocks\n    if (state.waterlogged === \"true\") {\n        Chat.log(\"Block is waterlogged\");\n    }\n\n    // Check for doors and gates\n    if (state.open !== undefined) {\n        Chat.log(`Block is ${state.open === \"true\" ? \"open\" : \"closed\"}`);\n    }\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}"
+      ],
+      "since": "1.1.7"
+    },
+    {
+      "name": "getBlockStateHelper",
+      "signature": "getBlockStateHelper()",
+      "returnType": "BlockStateHelper",
+      "description": "A helper object providing detailed block state information. This provides access to more advanced block state properties like hardness, luminance, etc.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}"
+      ],
+      "since": "1.6.5"
+    },
+    {
+      "name": "getBlock",
+      "signature": "getBlock()",
+      "returnType": "BlockHelper",
+      "description": "A helper object for the block type.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}"
+      ],
+      "since": "1.6.5"
+    },
+    {
+      "name": "getBlockHelper",
+      "signature": "getBlockHelper()",
+      "returnType": "BlockHelper",
+      "description": "A helper object for the block type. **Deprecated**: Use `getBlock()` instead. This method still works but is kept for backward compatibility.",
+      "parameters": [],
+      "static": false,
+      "examples": [],
+      "since": "1.6.5"
+    },
+    {
+      "name": "getNBT",
+      "signature": "getNBT()",
+      "returnType": "NBTElementHelper.NBTCompoundHelper | null",
+      "description": "The NBT data of the block's tile entity. Returns `null` if the block has no tile entity. Before version 1.6.5, this returned a `Map<string, string>`. Only blocks with tile entities (chests, furnaces, signs, etc.) will have NBT data.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Analyze container blocks\nfunction analyzeContainer(blockData) {\n    if (!blockData) return;\n\n    const nbt = blockData.getNBT();\n    if (!nbt) {\n        Chat.log(\"Block has no NBT data\");\n        return;\n    }\n\n    const blockId = blockData.getId();\n\n    if (blockId.includes(\"chest\") || blockId.includes(\"shulker_box\")) {\n        const items = nbt.get(\"Items\")?.asList() || [];\n        Chat.log(`Container has ${items.length} items`);\n\n        // List items in the container\n        items.forEach((itemNBT, index) => {\n            const itemName = itemNBT.get(\"id\")?.asString() || \"unknown\";\n            const count = itemNBT.get(\"Count\")?.asByte() || 0;\n            Chat.log(`  Slot ${index}: ${count}x ${itemName}`);\n        });\n    }\n\n    if (blockId.includes(\"sign\")) {\n        const text1 = nbt.get(\"Text1\")?.asString() || \"\";\n        const text2 = nbt.get(\"Text2\")?.asString() || \"\";\n        const text3 = nbt.get(\"Text3\")?.asString() || \"\";\n        const text4 = nbt.get(\"Text4\")?.asString() || \"\";\n\n        Chat.log(\"Sign text:\");\n        Chat.log(`  Line 1: ${text1}`);\n        Chat.log(`  Line 2: ${text2}`);\n        Chat.log(`  Line 3: ${text3}`);\n        Chat.log(`  Line 4: ${text4}`);\n    }\n}",
+        "// Complete block analysis\nfunction fullBlockAnalysis(blockData) {\n    if (!blockData) return;\n\n    Chat.log(\"=== Complete Block Analysis ===\");\n\n    // Basic info\n    Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);\n    Chat.log(`Block ID: ${blockData.getId()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n\n    // Block state\n    const state = blockData.getBlockState();\n    if (Object.keys(state).length > 0) {\n        Chat.log(\"Block State Properties:\");\n        Object.entries(state).forEach(([key, value]) => {\n            Chat.log(`  ${key}: ${value}`);\n        });\n    }\n\n    // Block helper info\n    const blockHelper = blockData.getBlock();\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n    Chat.log(`Block luminance: ${blockStateHelper.getLuminance()}`);\n    Chat.log(`Is solid: ${blockStateHelper.isSolid()}`);\n    Chat.log(`Is air: ${blockStateHelper.isAir()}`);\n    Chat.log(`Is liquid: ${blockStateHelper.isLiquid()}`);\n    Chat.log(`Tool required: ${blockStateHelper.isToolRequired()}`);\n\n    // NBT data\n    const nbt = blockData.getNBT();\n    if (nbt) {\n        Chat.log(\"Has NBT data (tile entity present)\");\n    }\n\n    Chat.log(\"=== End Analysis ===\\n\");\n}",
+        "// Example: Handle block place events\nevent.on(\"BlockPlace\", (e) => {\n    const blockData = e.block;\n\n    Chat.log(`Block placed at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}`);\n    Chat.log(`Placed block: ${blockData.getId()}`);\n\n    // Check if container was placed\n    if (blockData.getNBT()) {\n        Chat.log(\"Container block placed - has NBT data\");\n    }\n});"
+      ],
+      "since": "1.5.1"
+    },
+    {
+      "name": "getRawBlock",
+      "signature": "getRawBlock()",
+      "returnType": "Block",
+      "description": "The raw Minecraft Block object (advanced use only).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRawBlockState",
+      "signature": "getRawBlockState()",
+      "returnType": "BlockState",
+      "description": "The raw Minecraft BlockState object (advanced use only).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getRawBlockEntity",
+      "signature": "getRawBlockEntity()",
+      "returnType": "BlockEntity | null",
+      "description": "The raw Minecraft BlockEntity object (advanced use only).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

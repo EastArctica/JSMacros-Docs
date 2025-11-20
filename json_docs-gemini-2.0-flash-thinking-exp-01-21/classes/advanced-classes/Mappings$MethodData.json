@@ -1,0 +1,33 @@
+{
+  "name": "Mappings$MethodData",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings$MethodData",
+  "extends": null,
+  "since": "JSMacros 1.3.1",
+  "description": "The `MethodData` class is a data structure that contains comprehensive mapping information for a single method within the JsMacros mapping system. It stores both the source method signature and the target method signature, enabling bidirectional translation between different naming conventions (e.g., intermediary obfuscated names and human-readable deobfuscated names).",
+  "overview": "The `MethodData` class serves as a container for method mapping information, providing:\n\n- Source method signature (typically obfuscated/intermediary format)\n- Target method signature (typically deobfuscated/named format)\n- Parameter and return type information\n- Method metadata for analysis and debugging\n\nThis class is primarily used internally by the `Mappings` system and `MappedClass` wrapper to perform automatic method name translation during reflection operations.\n\nMethodData objects contain the following key components:\n\n- **Source Signature:** The original method signature in the source mapping format\n- **Target Signature:** The translated method signature in the target format\n- **Method Name:** The translated method name\n- **Parameter Types:** Information about method parameters\n- **Return Type:** Information about the method's return type",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "name",
+      "signature": "name()",
+      "returnType": "String",
+      "description": "Human-readable method name after mapping translation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const methodData = getSomeMethodData();\nChat.log(`Method name: ${methodData.name}`); // e.g., \"getHealth\""
+      ]
+    },
+    {
+      "name": "sig",
+      "signature": "sig()",
+      "returnType": "MethodSigParts",
+      "description": "Contains detailed signature information including parameter types, return type, and translation data.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const methodData = getSomeMethodData();\nconst signatureParts = methodData.sig;\nChat.log(`Full signature: ${signatureParts.get()}`);"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "FiltererRecvPacket",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.event.filterer.FiltererRecvPacket",
+  "extends": null,
+  "since": "1.9.1",
+  "description": "The `FiltererRecvPacket` class is an event filterer designed specifically for filtering `RecvPacket` events based on packet type. This filterer allows you to create event listeners that only trigger for specific types of incoming packets from the server, providing fine-grained control over network-level event handling.",
+  "overview": "`FiltererRecvPacket` works by examining the `type` field of `EventRecvPacket` instances and only allowing events that match the specified packet type to pass through. This is particularly useful when you want to monitor or intercept specific network packets without being overwhelmed by the high frequency of all incoming packets.",
+  "constructors": [
+    {
+      "signature": "new FiltererRecvPacket()",
+      "description": "Creates a new `FiltererRecvPacket` instance with no type filter (will match all packet types).",
+      "parameters": []
+    }
+  ],
+  "methods": []
+}

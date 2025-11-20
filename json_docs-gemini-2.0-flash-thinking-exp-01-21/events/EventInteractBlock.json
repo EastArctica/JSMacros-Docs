@@ -1,0 +1,18 @@
+{
+  "name": "InteractBlock",
+  "fullClassName": "EventInteractBlock",
+  "description": "This event is fired when the player interacts with a block.",
+  "overview": "Fires when the player right-clicks on a block\nThe `block` field contains information about the clicked block\nThe `face` field indicates which side of the block was clicked\nOccurs for opening containers, using levers, pressing buttons, etc.\nThis event is cancellable - preventing the interaction",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

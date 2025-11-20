@@ -1,0 +1,20 @@
+{
+  "name": "EventHungerChange",
+  "fullClassName": "EventHungerChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player's hunger level changes.",
+  "overview": "This event fires when the player's hunger level increases or decreases. The event object, an instance of `EventHungerChange`, provides two key fields:\n- `hunger` (int): The player's current hunger level, ranging from 0 to 20. 20 means full hunger (10 hunger bars), 18 is the threshold for health regeneration, 6 is the threshold for sprinting, and 0 means starving (taking damage).\n- `change` (int): The amount by which the player's hunger changed. Positive values indicate hunger increase (from eating food), while negative values indicate hunger decrease (from exertion, healing, etc.).\nThe event occurs due to various actions such as eating, exertion, or healing, and it is not cancellable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "name": "FiltererComposed",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.event.impl.FiltererComposed",
+  "extends": null,
+  "since": null,
+  "description": "The `FiltererComposed` class is a powerful event filtering utility that allows you to combine multiple event filters using logical AND and OR operations. This enables complex filtering logic for JSMacros events, giving you fine-grained control over which events trigger your scripts.",
+  "overview": "FiltererComposed implements the `EventFilterer.Compound` interface and serves as a composite filter that can combine multiple individual filters. It uses a logical structure where:\n\n- **AND operations**: All filters in a group must pass for the group to pass\n- **OR operations**: Any group can pass for the entire filter to pass\n\nThis structure allows you to create sophisticated filtering conditions like \"filter events where (condition A AND condition B) OR (condition C AND condition D)\".",
+  "constructors": [
+    {
+      "signature": "new FiltererComposed(initial)",
+      "description": "Creates a new composed filterer with an initial filter.",
+      "parameters": [
+        {
+          "name": "initial",
+          "type": "EventFilterer",
+          "description": "The initial filter to start the composition with"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "and",
+      "signature": "and(filterer)",
+      "returnType": "FiltererComposed",
+      "description": "Adds a filter using AND logic to the current OR group. All filters in the current group must pass for the group to be considered successful.",
+      "parameters": [
+        {
+          "name": "filterer",
+          "type": "EventFilterer",
+          "description": "The filter to add with AND logic"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const filter = JsMacros.createComposedEventFilterer(someFilter)\n    .and(anotherFilter)\n    .and(yetAnotherFilter);"
+      ]
+    },
+    {
+      "name": "or",
+      "signature": "or(filterer)",
+      "returnType": "FiltererComposed",
+      "description": "Adds a filter using OR logic by starting a new group. Any group can pass for the entire filter to be successful.",
+      "parameters": [
+        {
+          "name": "filterer",
+          "type": "EventFilterer",
+          "description": "The filter to add with OR logic (starts a new group)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const filter = JsMacros.createComposedEventFilterer(group1Filter)\n    .and(group1AdditionalFilter)\n    .or(group2Filter)\n    .and(group2AdditionalFilter);"
+      ]
+    },
+    {
+      "name": "canFilter",
+      "signature": "canFilter(event)",
+      "returnType": "boolean",
+      "description": "Determines whether this composed filter can filter the specified event type.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The name of the event type to check"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (composedFilter.canFilter(\"Sound\")) {\n    // Filter can handle Sound events\n}"
+      ]
+    },
+    {
+      "name": "test",
+      "signature": "test(event)",
+      "returnType": "boolean",
+      "description": "Tests an event against the composed filter logic.",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event object to test against the filter"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const shouldProcess = composedFilter.test(eventObject);\nif (shouldProcess) {\n    // Event passes the filter, process it\n}"
+      ]
+    },
+    {
+      "name": "checkCyclicRef",
+      "signature": "checkCyclicRef(base)",
+      "returnType": "void",
+      "description": "Internal method to check for cyclic references between compound filters. This is called automatically when adding filters and prevents infinite loops.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer.Compound",
+          "description": "The base compound filter to check against"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

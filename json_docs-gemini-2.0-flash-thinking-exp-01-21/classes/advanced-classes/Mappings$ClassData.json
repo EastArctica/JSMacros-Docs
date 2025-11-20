@@ -1,0 +1,9 @@
+{
+  "name": "Mappings$ClassData",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.Mappings.ClassData",
+  "since": "JSMacros 1.3.1",
+  "description": "The `Mappings$ClassData` class is a comprehensive data structure that represents all mapping information for a single class within the JSMacros mapping system. It contains the class name along with complete mappings for all methods and fields, serving as the central repository for both forward (intermediary to named) and reverse (named to intermediary) mapping operations. This class is fundamental to JSMacros' ability to provide version-compatible scripting by maintaining the relationship between obfuscated Minecraft identifiers and their human-readable named equivalents.",
+  "overview": "The `ClassData` class serves as a container for all mapping-related information about a specific class. It acts as a bridge between the obfuscated Minecraft bytecode (using intermediary names like `class_1657`) and the human-readable development names (like `PlayerEntity`). Each instance maintains:\n- **Class Identity**: The class name in its respective mapping direction\n- **Method Mappings**: Complete mapping table for all class methods\n- **Field Mappings**: Complete mapping table for all class fields\n- **Metadata**: Additional information about the class structure",
+  "constructors": [],
+  "methods": []
+}

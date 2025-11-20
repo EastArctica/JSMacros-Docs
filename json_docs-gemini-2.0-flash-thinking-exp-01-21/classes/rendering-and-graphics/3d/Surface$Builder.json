@@ -1,0 +1,499 @@
+{
+  "name": "Surface$Builder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components3d.Surface$Builder",
+  "extends": "RenderElement3DBuilder<Surface>",
+  "since": "1.8.4",
+  "description": "The `Surface$Builder` class is a nested builder within `Surface` that provides a fluent API for creating and configuring `Surface` instances.",
+  "overview": "The `Surface$Builder` class is a nested builder within `Surface` that provides a fluent API for creating and configuring `Surface` instances. This builder implements the builder pattern, allowing you to construct complex 3D surfaces with all their properties set through a chainable, readable API.\n\nThe builder is the recommended way to create `Surface` instances for 3D rendering, as it provides type safety, method chaining, and validation during the construction process. It's typically accessed through the `Draw3D` context's `surfaceBuilder()` method.",
+  "constructors": [
+    {
+      "signature": "Builder()",
+      "description": "The builder constructor creates an empty builder that will construct a `Surface` instance. In most cases, you won't call this constructor directly - instead, you'll obtain a builder through the `Draw3D.surfaceBuilder()` method.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(double x, double y, double z)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the position of the surface in world coordinates.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The x-coordinate in world space"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The y-coordinate in world space"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "The z-coordinate in world space"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .pos(100, 65, 200); // Position at world coordinates"
+      ]
+    },
+    {
+      "name": "x",
+      "signature": "x(double x)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the x-coordinate of the surface position.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "The x-coordinate in world space"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .x(50); // Set x coordinate"
+      ]
+    },
+    {
+      "name": "y",
+      "signature": "y(double y)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the y-coordinate of the surface position.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "double",
+          "description": "The y-coordinate in world space"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .y(70); // Set y coordinate"
+      ]
+    },
+    {
+      "name": "z",
+      "signature": "z(double z)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the z-coordinate of the surface position.",
+      "parameters": [
+        {
+          "name": "z",
+          "type": "double",
+          "description": "The z-coordinate in world space"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .z(150); // Set z coordinate"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(double x, double y, double z)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the rotation angles for all three axes in degrees.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "Rotation angle around x-axis in degrees"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Rotation angle around y-axis in degrees"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Rotation angle around z-axis in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .rotation(0, 45, 0); // Rotate 45 degrees around y-axis"
+      ]
+    },
+    {
+      "name": "rotationX",
+      "signature": "rotationX(double x)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the rotation angle around the x-axis (pitch).",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "Rotation angle around x-axis in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .rotationX(30); // Pitch up 30 degrees"
+      ]
+    },
+    {
+      "name": "rotationY",
+      "signature": "rotationY(double y)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the rotation angle around the y-axis (yaw).",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Rotation angle around y-axis in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .rotationY(90); // Face east"
+      ]
+    },
+    {
+      "name": "rotationZ",
+      "signature": "rotationZ(double z)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the rotation angle around the z-axis (roll).",
+      "parameters": [
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Rotation angle around z-axis in degrees"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .rotationZ(15); // Roll 15 degrees"
+      ]
+    },
+    {
+      "name": "size",
+      "signature": "size(double width, double height)",
+      "returnType": "Surface$Builder",
+      "description": "Sets both width and height dimensions of the surface.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "double",
+          "description": "The width of the surface in world units"
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "description": "The height of the surface in world units"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .size(5.0, 3.0); // 5x3 blocks"
+      ]
+    },
+    {
+      "name": "width",
+      "signature": "width(double width)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the width dimension of the surface.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "double",
+          "description": "The width of the surface in world units"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .width(4.0); // 4 blocks wide"
+      ]
+    },
+    {
+      "name": "height",
+      "signature": "height(double height)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the height dimension of the surface.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "double",
+          "description": "The height of the surface in world units"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .height(2.0); // 2 blocks high"
+      ]
+    },
+    {
+      "name": "bindToEntity",
+      "signature": "bindToEntity(EntityHelper entity)",
+      "returnType": "Surface$Builder",
+      "description": "Binds the surface to follow the specified entity. The surface will automatically update its position to follow the entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "EntityHelper",
+          "description": "The entity to bind the surface to"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .bindToEntity(player); // Follow the player"
+      ]
+    },
+    {
+      "name": "bindToEntityId",
+      "signature": "bindToEntityId(String entityId)",
+      "returnType": "Surface$Builder",
+      "description": "Binds the surface to follow the entity with the specified UUID.",
+      "parameters": [
+        {
+          "name": "entityId",
+          "type": "String",
+          "description": "The UUID of the entity to bind to"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .bindToEntityId(\"550e8400-e29b-41d4-a716-446655440000\");"
+      ]
+    },
+    {
+      "name": "boundOffset",
+      "signature": "boundOffset(double x, double y, double z)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the offset position relative to the bound entity.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X offset from the bound entity"
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y offset from the bound entity"
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z offset from the bound entity"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .bindToEntity(player)\n    .boundOffset(0, 2.0, -3.0); // 2 blocks up, 3 blocks in front"
+      ]
+    },
+    {
+      "name": "boundOffsetX",
+      "signature": "boundOffsetX(double x)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the x offset from the bound entity.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "double",
+          "description": "X offset from the bound entity"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .boundOffsetX(1.0); // 1 block to the right"
+      ]
+    },
+    {
+      "name": "boundOffsetY",
+      "signature": "boundOffsetY(double y)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the y offset from the bound entity.",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "double",
+          "description": "Y offset from the bound entity"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .boundOffsetY(3.0); // 3 blocks above"
+      ]
+    },
+    {
+      "name": "boundOffsetZ",
+      "signature": "boundOffsetZ(double z)",
+      "returnType": "Surface$Builder",
+      "description": "Sets only the z offset from the bound entity.",
+      "parameters": [
+        {
+          "name": "z",
+          "type": "double",
+          "description": "Z offset from the bound entity"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .boundOffsetZ(-2.0); // 2 blocks behind"
+      ]
+    },
+    {
+      "name": "rotateToPlayer",
+      "signature": "rotateToPlayer(boolean rotateToPlayer)",
+      "returnType": "Surface$Builder",
+      "description": "Sets whether the surface should automatically rotate to face the player (billboarding effect).",
+      "parameters": [
+        {
+          "name": "rotateToPlayer",
+          "type": "boolean",
+          "description": "Whether to rotate the surface to face the player"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .rotateToPlayer(true); // Always face the player"
+      ]
+    },
+    {
+      "name": "facePlayer",
+      "signature": "facePlayer(boolean facePlayer)",
+      "returnType": "Surface$Builder",
+      "description": "Alternative method for setting player-facing behavior.",
+      "parameters": [
+        {
+          "name": "facePlayer",
+          "type": "boolean",
+          "description": "Whether to face the player"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .facePlayer(true);"
+      ]
+    },
+    {
+      "name": "minSubdivisions",
+      "signature": "minSubdivisions(int subdivisions)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the minimum subdivision level for rendering. Higher values provide better quality but impact performance.",
+      "parameters": [
+        {
+          "name": "subdivisions",
+          "type": "int",
+          "description": "Minimum subdivisions for rendering quality"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .minSubdivisions(2); // Higher quality rendering"
+      ]
+    },
+    {
+      "name": "subdivisions",
+      "signature": "subdivisions(int subdivisions)",
+      "returnType": "Surface$Builder",
+      "description": "Alternative method for setting subdivisions.",
+      "parameters": [
+        {
+          "name": "subdivisions",
+          "type": "int",
+          "description": "Minimum subdivisions for rendering quality"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .subdivisions(1); // Standard quality"
+      ]
+    },
+    {
+      "name": "renderBack",
+      "signature": "renderBack(boolean renderBack)",
+      "returnType": "Surface$Builder",
+      "description": "Sets whether the back side of the surface should be rendered.",
+      "parameters": [
+        {
+          "name": "renderBack",
+          "type": "boolean",
+          "description": "Whether to render the back side of the surface"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .renderBack(false); // Only show front side"
+      ]
+    },
+    {
+      "name": "cull",
+      "signature": "cull(boolean cull)",
+      "returnType": "Surface$Builder",
+      "description": "Sets whether depth culling should be enabled for performance optimization.",
+      "parameters": [
+        {
+          "name": "cull",
+          "type": "boolean",
+          "description": "Whether to enable depth culling"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .cull(true); // Enable depth culling"
+      ]
+    },
+    {
+      "name": "rotateCenter",
+      "signature": "rotateCenter(boolean rotateCenter)",
+      "returnType": "Surface$Builder",
+      "description": "Sets whether rotations should occur around the surface's center point.",
+      "parameters": [
+        {
+          "name": "rotateCenter",
+          "type": "boolean",
+          "description": "Whether to rotate around the center point"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .rotateCenter(true); // Rotate around center"
+      ]
+    },
+    {
+      "name": "zIndexScale",
+      "signature": "zIndexScale(double zIndexScale)",
+      "returnType": "Surface$Builder",
+      "description": "Sets the z-index scale for managing depth precision and preventing z-fighting.",
+      "parameters": [
+        {
+          "name": "zIndexScale",
+          "type": "double",
+          "description": "Scale factor for z-index depth precision"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const builder = draw3D.surfaceBuilder()\n    .zIndexScale(0.002); // Increased depth precision"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build()",
+      "returnType": "Surface",
+      "description": "Creates the `Surface` with the configured properties but does not add it to the parent container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const surface = draw3D.surfaceBuilder()\n    .pos(100, 65, 100)\n    .size(3, 2)\n    .build(); // Surface is created but not added"
+      ]
+    },
+    {
+      "name": "buildAndAdd",
+      "signature": "buildAndAdd()",
+      "returnType": "Surface",
+      "description": "Creates the `Surface` with the configured properties and automatically adds it to the parent `Draw3D` context.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const surface = draw3D.surfaceBuilder()\n    .pos(100, 65, 100)\n    .size(3, 2)\n    .buildAndAdd(); // Surface is created and added"
+      ]
+    }
+  ]
+}

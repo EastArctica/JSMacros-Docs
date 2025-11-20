@@ -1,0 +1,27 @@
+{
+  "name": "ProxyBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ProxyBuilder",
+  "extends": "Object",
+  "since": "JSMacros 1.6.0",
+  "description": "The `ProxyBuilder` class is a powerful utility for creating dynamic proxy objects that implement interfaces or extend classes at runtime.",
+  "overview": "This class enables advanced scripting techniques by allowing developers to create objects with custom method implementations, intercept method calls, and provide custom behavior for existing interfaces or classes.\n\nProxyBuilder uses Javassist's ProxyFactory under the hood to generate proxy classes that can delegate method calls to custom handlers defined through MethodWrapper objects. This is particularly useful for creating mock objects, testing stubs, event listeners, or custom implementations of interfaces without writing explicit Java classes.",
+  "constructors": [
+    {
+      "signature": "new ProxyBuilder(clazz, interfaces)",
+      "description": "Creates a new ProxyBuilder for the specified class or interface. Returns a new `ProxyBuilder<T>` instance.\n\nIf `clazz` is an interface, it will be automatically added to the interfaces array.\nIf `clazz` is a concrete class, the proxy will extend it.\nThe proxy will implement all specified interfaces.",
+      "parameters": [
+        {
+          "name": "clazz",
+          "type": "Class<T>",
+          "description": "The target class or interface to proxy"
+        },
+        {
+          "name": "interfaces",
+          "type": "Class<?>[]",
+          "description": "Additional interfaces for the proxy to implement"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

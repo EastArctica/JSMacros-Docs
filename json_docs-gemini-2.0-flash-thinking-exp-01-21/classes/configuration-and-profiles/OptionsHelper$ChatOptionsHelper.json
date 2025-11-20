@@ -1,0 +1,459 @@
+{
+  "name": "ChatOptionsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.OptionsHelper$ChatOptionsHelper",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The `ChatOptionsHelper` class provides comprehensive control over Minecraft's chat display, formatting, and communication settings. This helper allows scripts to read and modify various chat-related options including visibility settings, visual customization, link handling, and accessibility features. It's accessed through the `OptionsHelper.getChatOptions()` method or directly via the `chat` field.",
+  "overview": "The ChatOptionsHelper class manages all chat and communication settings:\n- Chat visibility: Control which messages appear in chat\n- Visual customization: Opacity, size, spacing, and colors\n- Link handling: Web link clickability and security prompts\n- Accessibility features: Subtitles, narrator, and command suggestions\n- Chat dimensions: Width, height, and layout configuration",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getChatVisibility",
+      "signature": "getChatVisibility()",
+      "returnType": "String",
+      "description": "Gets the current chat visibility mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nconst visibility = chat.getChatVisibility();\nChat.log(`Chat visibility: ${visibility}`);"
+      ]
+    },
+    {
+      "name": "setChatVisibility",
+      "signature": "setChatVisibility(String visibility)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat visibility mode.",
+      "parameters": [
+        {
+          "name": "visibility",
+          "type": "String",
+          "description": "`\"FULL\"`, `\"SYSTEM\"`, or `\"HIDDEN\"` - chat visibility level"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Show all chat messages\nchat.setChatVisibility(\"FULL\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat set to show all messages\");\n\n// Show only system messages\nchat.setChatVisibility(\"SYSTEM\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat set to system messages only\");\n\n// Hide all chat\nchat.setChatVisibility(\"HIDDEN\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat hidden\");"
+      ]
+    },
+    {
+      "name": "areColorsShown",
+      "signature": "areColorsShown()",
+      "returnType": "boolean",
+      "description": "Checks if color codes are allowed in chat.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Chat colors: ${chat.areColorsShown() ? 'Enabled' : 'Disabled'}`);"
+      ]
+    },
+    {
+      "name": "setShowColors",
+      "signature": "setShowColors(boolean show)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Enables or disables color codes in chat.",
+      "parameters": [
+        {
+          "name": "show",
+          "type": "boolean",
+          "description": "`true` to show color codes, `false` to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Enable colorful chat\nchat.setShowColors(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat colors enabled\");\n\n// Disable colors for clean text\nchat.setShowColors(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat colors disabled\");"
+      ]
+    },
+    {
+      "name": "areWebLinksEnabled",
+      "signature": "areWebLinksEnabled()",
+      "returnType": "boolean",
+      "description": "Checks if web links in chat are clickable.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Web links: ${chat.areWebLinksEnabled() ? 'Clickable' : 'Not clickable'}`);"
+      ]
+    },
+    {
+      "name": "enableWebLinks",
+      "signature": "enableWebLinks(boolean enabled)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Enables or disables clickable web links in chat.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to enable clickable links, `false` to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Enable clickable links\nchat.enableWebLinks(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Web links enabled\");\n\n// Disable links for security\nchat.enableWebLinks(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Web links disabled for security\");"
+      ]
+    },
+    {
+      "name": "isWebLinkPromptEnabled",
+      "signature": "isWebLinkPromptEnabled()",
+      "returnType": "boolean",
+      "description": "Checks if web link warning prompts are enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Link prompts: ${chat.isWebLinkPromptEnabled() ? 'Enabled' : 'Disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableWebLinkPrompt",
+      "signature": "enableWebLinkPrompt(boolean enabled)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Enables or disables web link warning prompts.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to show link warnings, `false` to hide prompts"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Enable link warnings for security\nchat.enableWebLinkPrompt(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Link warning prompts enabled\");\n\n// Disable prompts for convenience\nchat.enableWebLinkPrompt(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Link warning prompts disabled\");"
+      ]
+    },
+    {
+      "name": "getChatOpacity",
+      "signature": "getChatOpacity()",
+      "returnType": "double",
+      "description": "Gets the current chat window opacity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Chat opacity: ${(chat.getChatOpacity() * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setChatOpacity",
+      "signature": "setChatOpacity(double opacity)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat window opacity.",
+      "parameters": [
+        {
+          "name": "opacity",
+          "type": "double",
+          "description": "Opacity value (0.0 = fully transparent, 1.0 = fully opaque)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Make chat more transparent\nchat.setChatOpacity(0.7);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat opacity set to 70%\");\n\n// Make chat fully opaque\nchat.setChatOpacity(1.0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat opacity set to 100%\");"
+      ]
+    },
+    {
+      "name": "getTextBackgroundOpacity",
+      "signature": "getTextBackgroundOpacity()",
+      "returnType": "double",
+      "description": "Gets the current text background opacity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Text background opacity: ${(chat.getTextBackgroundOpacity() * 100).toFixed(0)}%`);"
+      ]
+    },
+    {
+      "name": "setTextBackgroundOpacity",
+      "signature": "setTextBackgroundOpacity(double opacity)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the text background opacity.",
+      "parameters": [
+        {
+          "name": "opacity",
+          "type": "double",
+          "description": "Background opacity value (0.0 = transparent, 1.0 = opaque)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Make text backgrounds more visible\nchat.setTextBackgroundOpacity(0.8);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Text background opacity increased\");\n\n// Remove text backgrounds\nchat.setTextBackgroundOpacity(0.0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Text backgrounds removed\");"
+      ]
+    },
+    {
+      "name": "getTextSize",
+      "signature": "getTextSize()",
+      "returnType": "double",
+      "description": "Gets the current chat text size.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Chat text size: ${chat.getTextSize()}`);"
+      ]
+    },
+    {
+      "name": "setTextSize",
+      "signature": "setTextSize(double size)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat text size.",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "double",
+          "description": "Text size multiplier (1.0 = normal, higher = larger, lower = smaller)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Increase text size for readability\nchat.setTextSize(1.2);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat text size increased by 20%\");\n\n// Decrease text size for compact display\nchat.setTextSize(0.9);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat text size decreased for compact display\");"
+      ]
+    },
+    {
+      "name": "getChatLineSpacing",
+      "signature": "getChatLineSpacing()",
+      "returnType": "double",
+      "description": "Gets the current line spacing in chat.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Chat line spacing: ${chat.getChatLineSpacing()}`);"
+      ]
+    },
+    {
+      "name": "setChatLineSpacing",
+      "signature": "setChatLineSpacing(double spacing)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the line spacing in chat.",
+      "parameters": [
+        {
+          "name": "spacing",
+          "type": "double",
+          "description": "Line spacing multiplier (1.0 = normal, higher = more spacing)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Increase line spacing for readability\nchat.setChatLineSpacing(1.3);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat line spacing increased for better readability\");\n\n// Decrease line spacing for compact display\nchat.setChatLineSpacing(0.9);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat line spacing decreased\");"
+      ]
+    },
+    {
+      "name": "getChatWidth",
+      "signature": "getChatWidth()",
+      "returnType": "int",
+      "description": "Gets the current chat width in pixels.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Chat width: ${chat.getChatWidth()} pixels`);"
+      ]
+    },
+    {
+      "name": "setChatWidth",
+      "signature": "setChatWidth(int width)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat width in pixels.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Chat width in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Make chat wider\nchat.setChatWidth(400);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat width increased\");\n\n// Make chat narrower\nchat.setChatWidth(250);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat width decreased\");"
+      ]
+    },
+    {
+      "name": "getChatFocusedHeight",
+      "signature": "getChatFocusedHeight()",
+      "returnType": "int",
+      "description": "Gets the chat height when focused (chat open).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Focused chat height: ${chat.getChatFocusedHeight()} pixels`);"
+      ]
+    },
+    {
+      "name": "setChatFocusedHeight",
+      "signature": "setChatFocusedHeight(int height)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat height when focused.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Focused chat height in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Increase focused chat height\nchat.setChatFocusedHeight(220);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Focused chat height increased\");"
+      ]
+    },
+    {
+      "name": "getChatUnfocusedHeight",
+      "signature": "getChatUnfocusedHeight()",
+      "returnType": "int",
+      "description": "Gets the chat height when unfocused (chat closed).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Unfocused chat height: ${chat.getChatUnfocusedHeight()} pixels`);"
+      ]
+    },
+    {
+      "name": "setChatUnfocusedHeight",
+      "signature": "setChatUnfocusedHeight(int height)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat height when unfocused.",
+      "parameters": [
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Unfocused chat height in pixels"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Set unfocused chat height\nchat.setChatUnfocusedHeight(100);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Unfocused chat height set\");"
+      ]
+    },
+    {
+      "name": "getChatDelay",
+      "signature": "getChatDelay()",
+      "returnType": "double",
+      "description": "Gets the chat message fade delay in seconds.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Chat delay: ${chat.getChatDelay()} seconds`);"
+      ]
+    },
+    {
+      "name": "setChatDelay",
+      "signature": "setChatDelay(double delay)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the chat message fade delay.",
+      "parameters": [
+        {
+          "name": "delay",
+          "type": "double",
+          "description": "Fade delay in seconds (0.0 = instant, higher = longer display)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Keep messages longer\nchat.setChatDelay(10.0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat messages will stay for 10 seconds\");\n\n// Quick fade\nchat.setChatDelay(2.0);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Chat messages will fade after 2 seconds\");"
+      ]
+    },
+    {
+      "name": "getNarratorMode",
+      "signature": "getNarratorMode()",
+      "returnType": "String",
+      "description": "Gets the current narrator mode.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Narrator mode: ${chat.getNarratorMode()}`);"
+      ]
+    },
+    {
+      "name": "setNarratorMode",
+      "signature": "setNarratorMode(String mode)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Sets the narrator mode.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "String",
+          "description": "`\"OFF\"`, `\"ALL\"`, `\"CHAT\"`, or `\"SYSTEM\"` - narration level"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Narrate all game elements\nchat.setNarratorMode(\"ALL\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Narrator set to read all game elements\");\n\n// Narrate only chat messages\nchat.setNarratorMode(\"CHAT\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Narrator set to read chat only\");\n\n// Disable narrator\nchat.setNarratorMode(\"OFF\");\nJsMacros.getOptions().saveOptions();\nChat.log(\"Narrator disabled\");"
+      ]
+    },
+    {
+      "name": "areCommandSuggestionsEnabled",
+      "signature": "areCommandSuggestionsEnabled()",
+      "returnType": "boolean",
+      "description": "Checks if command suggestions are enabled.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Command suggestions: ${chat.areCommandSuggestionsEnabled() ? 'Enabled' : 'Disabled'}`);"
+      ]
+    },
+    {
+      "name": "enableCommandSuggestions",
+      "signature": "enableCommandSuggestions(boolean enabled)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Enables or disables command suggestions.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to enable suggestions, `false` to disable"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Enable command suggestions\nchat.enableCommandSuggestions(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Command suggestions enabled\");\n\n// Disable command suggestions\nchat.enableCommandSuggestions(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Command suggestions disabled\");"
+      ]
+    },
+    {
+      "name": "areMatchedNamesHidden",
+      "signature": "areMatchedNamesHidden()",
+      "returnType": "boolean",
+      "description": "Checks if messages from blocked users are hidden.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Blocked messages: ${chat.areMatchedNamesHidden() ? 'Hidden' : 'Shown'}`);"
+      ]
+    },
+    {
+      "name": "enableHideMatchedNames",
+      "signature": "enableHideMatchedNames(boolean enabled)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Enables or disables hiding messages from blocked users.",
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "`true` to hide blocked messages, `false` to show all"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Hide blocked user messages\nchat.enableHideMatchedNames(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Blocked user messages will be hidden\");\n\n// Show all messages\nchat.enableHideMatchedNames(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"All messages will be shown\");"
+      ]
+    },
+    {
+      "name": "isDebugInfoReduced",
+      "signature": "isDebugInfoReduced()",
+      "returnType": "boolean",
+      "description": "Checks if debug info display is reduced.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\nChat.log(`Debug info: ${chat.isDebugInfoReduced() ? 'Reduced' : 'Full'}`);"
+      ]
+    },
+    {
+      "name": "reduceDebugInfo",
+      "signature": "reduceDebugInfo(boolean reduced)",
+      "returnType": "ChatOptionsHelper",
+      "description": "Enables or reduces debug info display.",
+      "parameters": [
+        {
+          "name": "reduced",
+          "type": "boolean",
+          "description": "`true` to reduce debug info, `false` for full debug info"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const chat = JsMacros.getOptions().getChatOptions();\n\n// Reduce debug info for cleaner display\nchat.reduceDebugInfo(true);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Debug info reduced\");\n\n// Show full debug info\nchat.reduceDebugInfo(false);\nJsMacros.getOptions().saveOptions();\nChat.log(\"Full debug info enabled\");"
+      ]
+    }
+  ]
+}

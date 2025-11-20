@@ -1,0 +1,78 @@
+{
+  "name": "ModLoader",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.ModLoader",
+  "extends": null,
+  "since": "JsMacros 1.8.4",
+  "description": "The `ModLoader` class provides access to information about the current mod loading environment and loaded mods. It allows scripts to detect the mod loader being used (Forge/Fabric), check if the game is running in a development environment, and retrieve detailed information about all loaded mods including their metadata, dependencies, and authors. This is particularly useful for creating scripts that adapt their behavior based on available mods or mod loader features.",
+  "overview": "The `ModLoader` interface serves as a bridge between JsMacros scripts and the underlying mod loading system. It provides comprehensive access to mod metadata and environment information, enabling scripts to:\n\n- **Environment Detection**: Determine whether running in development or production environment\n- **Mod Loader Identification**: Identify the current mod loader (Forge, Fabric, etc.)\n- **Mod Discovery**: List and inspect all loaded mods with their metadata\n- **Dependency Checking**: Verify if specific mods are loaded for compatibility\n- **Mod Information**: Access detailed mod information including versions, authors, and descriptions",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isDevEnv",
+      "signature": "isDevEnv()",
+      "returnType": "boolean",
+      "description": "Returns whether the game is currently running in a development environment.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const modLoader = Client.getModLoader();\n\nif (modLoader.isDevEnv()) {\n    Chat.log(\"§aRunning in development environment - debug features enabled\");\n    // Enable additional logging or debug features\n    enableDebugMode();\n} else {\n    Chat.log(\"§7Running in production environment\");\n    // Use optimized settings\n    enableProductionMode();\n}"
+      ]
+    },
+    {
+      "name": "getName",
+      "signature": "getName()",
+      "returnType": "String",
+      "description": "Returns the name of the current mod loader.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const modLoader = Client.getModLoader();\nconst loaderName = modLoader.getName();\n\nChat.log(`§bMod Loader: §f${loaderName}`);\n\n// Adapt behavior based on mod loader\nswitch(loaderName.toLowerCase()) {\n    case \"fabric\":\n        setupFabricSpecificFeatures();\n        break;\n    case \"forge\":\n        setupForgeSpecificFeatures();\n        break;\n    case \"quilt\":\n        setupQuiltSpecificFeatures();\n        break;\n    default:\n        Chat.log(`§cUnknown mod loader: ${loaderName}`);\n        break;\n}"
+      ]
+    },
+    {
+      "name": "getLoadedMods",
+      "signature": "getLoadedMods()",
+      "returnType": "List<ModContainerHelper<?>>",
+      "description": "Returns a list of all currently loaded mods as `ModContainerHelper` objects.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const modLoader = Client.getModLoader();\nconst loadedMods = modLoader.getLoadedMods();\n\nChat.log(`§aTotal loaded mods: §f${loadedMods.size()}`);\n\n// Display information about all loaded mods\nfor (const mod of loadedMods) {\n    Chat.log(`§e${mod.getName()} §7(v${mod.getVersion()}) §8- §f${mod.getId()}`);\n}\n\n// Find mods with specific characteristics\nconst cosmeticMods = loadedMods.filter(mod =>\n    mod.getId().includes(\"cosmetic\") ||\n    mod.getName().toLowerCase().includes(\"cosmetic\")\n);\n\nif (cosmeticMods.size() > 0) {\n    Chat.log(`§dFound ${cosmeticMods.size()} cosmetic mods:`);\n    for (const mod of cosmeticMods) {\n        Chat.log(`  §7- §f${mod.getName()} §8by ${mod.getAuthors().join(\", \")}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "isModLoaded",
+      "signature": "isModLoaded(modId)",
+      "returnType": "boolean",
+      "description": "Checks if a mod with the specified ID is currently loaded.",
+      "parameters": [
+        {
+          "name": "modId",
+          "type": "String",
+          "description": "The mod ID to check (e.g., \"fabric-api\", \"jei\", \"tweakeroo\")"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const modLoader = Client.getModLoader();\n\n// Check for commonly used mods\nconst usefulMods = [\n    \"jei\",           // Just Enough Items\n    \"tweakeroo\",     // Tweakeroo\n    \"litematica\",    // Litematica\n    \"minihud\",       // MiniHUD\n    \"fabric-api\",    // Fabric API\n    \"malilib\"        // MaLiLib\n];\n\nChat.log(\"§6Mod Availability Check:\");\nfor (const modId of usefulMods) {\n    const isLoaded = modLoader.isModLoaded(modId);\n    const status = isLoaded ? \"§a✓\" : \"§c✗\";\n    Chat.log(`  ${status} §7${modId}`);\n}\n\n// Conditional script behavior based on available mods\nif (modLoader.isModLoaded(\"jei\")) {\n    Chat.log(\"§aJEI detected - enabling recipe lookup features\");\n    enableRecipeIntegration();\n}\n\nif (modLoader.isModLoaded(\"litematica\")) {\n    Chat.log(\"§aLitematica detected - enabling schematic integration\");\n    enableSchematicFeatures();\n}"
+      ]
+    },
+    {
+      "name": "getMod",
+      "signature": "getMod(modId)",
+      "returnType": "ModContainerHelper<?> | null",
+      "description": "Retrieves the mod container for the specified mod ID, or null if the mod is not loaded.",
+      "parameters": [
+        {
+          "name": "modId",
+          "type": "String",
+          "description": "The mod ID to retrieve"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const modLoader = Client.getModLoader();\n\nfunction displayModInfo(modId) {\n    const mod = modLoader.getMod(modId);\n\n    if (!mod) {\n        Chat.log(`§cMod '${modId}' is not loaded`);\n        return;\n    }\n\n    Chat.log(`§e=== ${mod.getName()} ===`);\n    Chat.log(`§7ID: §f${mod.getId()}`);\n    Chat.log(`§7Version: §f${mod.getVersion()}`);\n    Chat.log(`§7Environment: §f${mod.getEnv()}`);\n\n    if (mod.getDescription() && mod.getDescription().trim()) {\n        Chat.log(`§7Description: §f${mod.getDescription()}`);\n    }\n\n    const authors = mod.getAuthors();\n    if (authors.size() > 0) {\n        Chat.log(`§7Authors: §f${authors.join(\", \")}`);\n    }\n\n    const dependencies = mod.getDependencies();\n    if (dependencies.size() > 0) {\n        Chat.log(`§7Dependencies: §f${dependencies.join(\", \")}`);\n    }\n}\n\n// Display information about specific mods\ndisplayModInfo(\"fabric-api\");\ndisplayModInfo(\"jsmacros\");\n\n// Get detailed information about JsMacros itself\nconst jsmacros = modLoader.getMod(\"jsmacros\");\nif (jsmacros) {\n    Chat.log(`§aJsMacros v${jsmacros.getVersion()} is loaded!`);\n    Chat.log(`§7Environment: ${jsmacros.getEnv()}`);\n}"
+      ]
+    }
+  ]
+}

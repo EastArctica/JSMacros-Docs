@@ -1,0 +1,92 @@
+{
+  "name": "MethodSigParts",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.WrappedClassInstance$MethodSigParts",
+  "extends": null,
+  "since": "JSMacros 1.6.5",
+  "description": "The `MethodSigParts` class is a utility class that parses and represents components of Java method signatures. It provides structured access to the individual parts of a method signature, including return type, method name, parameter types, and other metadata. This class is primarily used internally by `WrappedClassInstance` and `MappedClass` for method resolution and reflection operations.",
+  "overview": "The `MethodSigParts` class serves as a parser and container for JVM method signatures in their internal format. It breaks down complex method signatures into their constituent components, making it easier to work with method metadata, perform type checking, and resolve method calls accurately.\n\nA typical JVM method signature looks like:\n```\n\"methodName(LparamType1;LparamType2;)LreturnType;\"\n```\n\nThe MethodSigParts class parses this into structured components for easier manipulation.\n\n## Supported Signature Formats\nThe primary format supported is the JVM's internal method signature format:\n- Method names as plain text\n- Object types as `Lpackage/ClassName;`\n- Primitive types as single letters (`Z`, `B`, `C`, `S`, `I`, `J`, `F`, `D`, `V`)\n- Arrays with `[` prefix\n- Parameters in parentheses, return type after closing parenthesis\n\n### Examples\n```js\n// Basic method signatures\n\"toString()Ljava/lang/String;\"           // toString() -> String\n\"getHealth()F\"                           // getHealth() -> float\n\"setHealth(F)V\"                          // setHealth(float) -> void\n\n// Complex method signatures\n\"interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;\"\n\"put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;\"\n\"process([[ILjava/util/List;)[Ljava/lang/String;\"\n```",
+  "constructors": [
+    {
+      "signature": "new MethodSigParts(signature: java.lang.String)",
+      "description": "Parses a JVM internal method signature string into its constituent parts.",
+      "parameters": [
+        {
+          "name": "signature",
+          "type": "java.lang.String",
+          "description": "The JVM internal format method signature string."
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "get",
+      "signature": "get()Ljava/lang/String;",
+      "returnType": "java.lang.String",
+      "description": "Retrieves the full formatted method signature as a string. This might include the method name, parameter types, and return type.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const reflection = Fs.load(\"lib:FReflection.js\");\nconst object = SomeJavaObject;\nconst wrapped = reflection.wrapInstace(object);\n\n// Method calls that return MethodSigParts\nconst sigParts = wrapped.invokeMethod(\"someMethodReturningSignature\");\nconst formattedSig = sigParts.get(); // Get formatted signature",
+        "const methodSigParts = getMethodSigParts(); // Assume we have an instance\n\n// Get the full formatted method signature\nconst signature = methodSigParts.get();\nChat.log(`Method signature: ${signature}`);"
+      ]
+    },
+    {
+      "name": "getOriginal",
+      "signature": "getOriginal()Ljava/lang/String;",
+      "returnType": "java.lang.String",
+      "description": "Retrieves the original raw method signature string that was used for parsing.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(signature);\nChat.log(`Original: ${sigParts.getOriginal()}`);"
+      ]
+    },
+    {
+      "name": "getReturnType",
+      "signature": "getReturnType()Ljava/lang/String;",
+      "returnType": "java.lang.String",
+      "description": "Retrieves the method's return type in JVM internal format (e.g., 'V' for void, 'Ljava/lang/String;' for String, 'I' for int).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(signature);\nChat.log(`Return Type: ${sigParts.getReturnType()}`);",
+        "function analyzeMethodSignatureHumanReadable(methodSigParts) {\n    Chat.log(`=== Human-Readable Method Analysis ===`);\n\n    const returnType = formatJVMType(methodSigParts.getReturnType());\n    const parameters = methodSigParts.getParameters().map(formatJVMType);\n\n    Chat.log(`Return Type: ${returnType}`);\n    Chat.log(`Parameters: ${parameters.join(', ') || 'none'}`);\n\n    // Reconstruct human-readable signature\n    const paramStr = parameters.join(', ');\n    const humanReadable = `method(${paramStr}): ${returnType}`;\n    Chat.log(`Human-readable: ${humanReadable}`);\n}"
+      ]
+    },
+    {
+      "name": "getParameterCount",
+      "signature": "getParameterCount()I",
+      "returnType": "int",
+      "description": "Returns the number of parameters specified in the method signature.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const sigParts = new MethodSigParts(signature);\nChat.log(`Parameter Count: ${sigParts.getParameterCount()}`);"
+      ]
+    },
+    {
+      "name": "getParameters",
+      "signature": "getParameters()[Ljava/lang/String;",
+      "returnType": "java.lang.String[]",
+      "description": "Retrieves an array of parameter types, each in JVM internal format (e.g., 'Ljava/lang/Object;', 'F', '[I').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function analyzeMethodSignature(signature) {\n    // Create MethodSigParts from signature (hypothetical constructor)\n    const sigParts = new MethodSigParts(signature);\n\n    Chat.log(`=== Method Signature Analysis ===`);\n    Chat.log(`Original: ${sigParts.getOriginal()}`);\n    Chat.log(`Return Type: ${sigParts.getReturnType()}`);\n    Chat.log(`Parameter Count: ${sigParts.getParameterCount()}`);\n\n    const params = sigParts.getParameters();\n    Chat.log(`Parameters:`);\n    for (let i = 0; i < params.length; i++) {\n        Chat.log(`  ${i}: ${params[i]}`);\n    }\n}",
+        "function analyzeMethodSignatureHumanReadable(methodSigParts) {\n    Chat.log(`=== Human-Readable Method Analysis ===`);\n\n    const returnType = formatJVMType(methodSigParts.getReturnType());\n    const parameters = methodSigParts.getParameters().map(formatJVMType);\n\n    Chat.log(`Return Type: ${returnType}`);\n    Chat.log(`Parameters: ${parameters.join(', ') || 'none'}`);\n\n    // Reconstruct human-readable signature\n    const paramStr = parameters.join(', ');\n    const humanReadable = `method(${paramStr}): ${returnType}`;\n    Chat.log(`Human-readable: ${humanReadable}`);\n}"
+      ]
+    },
+    {
+      "name": "isValid",
+      "signature": "isValid()Z",
+      "returnType": "boolean",
+      "description": "Checks if the method signature was successfully parsed and is considered valid. Returns `true` if valid, `false` otherwise.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function safeParseMethodSignature(signature) {\n    try {\n        const sigParts = new MethodSigParts(signature);\n        return sigParts;\n    } catch (error) {\n        Chat.log(`Error parsing method signature \"${signature}\": ${error.message}`);\n\n        // Try to provide fallback information\n        return {\n            get: () => signature,\n            getReturnType: () => \"Ljava/lang/Object;\",\n            getParameters: () => [],\n            isValid: () => false\n        };\n    }\n}"
+      ]
+    }
+  ]
+}

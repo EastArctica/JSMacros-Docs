@@ -1,0 +1,60 @@
+{
+  "name": "CartographyInventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.CartographyInventory",
+  "extends": "Inventory<CartographyTableScreen>",
+  "since": "1.8.4",
+  "description": "The `CartographyInventory` class provides functionality for interacting with cartography table screens in Minecraft. It extends the base `Inventory` class and adds cartography-specific functionality while inheriting all standard inventory operations. This class allows you to automate map cloning, extending, locking, and other cartography operations.\n\nThis class is automatically created when you open a cartography table screen and can be accessed through `Player.getInventory()` or `Inventory.create()` when a cartography table is open.",
+  "overview": "The cartography table interface consists of three main slots:\n- **Map Item Slot** (Slot 0): Input slot for existing maps to be modified\n- **Material Slot** (Slot 1): Input slot for paper (for extending/zooming out) or empty maps (for cloning)\n- **Output Slot** (Slot 2): Result slot showing the modified map",
+  "constructors": [
+    {
+      "signature": "CartographyInventory()",
+      "description": "Creates a new `CartographyInventory` instance for the specified cartography table screen.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "CartographyTableScreen",
+          "description": "The cartography table screen handler"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getMapItem",
+      "signature": "getMapItem()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the `ItemStack` from the Map Item Slot (Slot 0) of the cartography table.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mapItem = cartographyInv.getMapItem();",
+        "const mapItem = cartographyInv.getMapItem();\nif (!mapItem.isEmpty()) {\n    Chat.log(`Map Input: ${mapItem.getName().getString()} x${mapItem.getCount()}`);\n    const nbt = mapItem.getNBT();\n    if (nbt) {\n        Chat.log(\"  - Map has custom data\");\n    }\n} else {\n    Chat.log(\"Map Input: Empty\");\n}"
+      ]
+    },
+    {
+      "name": "getMaterial",
+      "signature": "getMaterial()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the `ItemStack` from the Material Slot (Slot 1) of the cartography table.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const material = cartographyInv.getMaterial();",
+        "const material = cartographyInv.getMaterial();\nif (!material.isEmpty()) {\n    const materialId = material.getItemId();\n    Chat.log(`Material: ${material.getName().getString()} x${material.getCount()}`);\n    if (materialId === \"minecraft:paper\") {\n        Chat.log(\"  - Paper: Can extend or clone map\");\n    } else if (materialId === \"minecraft:map\") {\n        Chat.log(\"  - Empty Map: Can clone map\");\n    } else if (materialId === \"minecraft:glass_pane\") {\n        Chat.log(\"  - Glass Pane: Can lock map\");\n    } else {\n        Chat.log(\"  - Unknown material\");\n    }\n} else {\n    Chat.log(\"Material: Empty\");\n}"
+      ]
+    },
+    {
+      "name": "getOutput",
+      "signature": "getOutput()",
+      "returnType": "ItemStack",
+      "description": "Retrieves the `ItemStack` from the Output Slot (Slot 2) of the cartography table.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const output = cartographyInv.getOutput();",
+        "const output = cartographyInv.getOutput();\nif (!output.isEmpty()) {\n    cartographyInv.quick(2); // Take output\n    Chat.log(\"Output taken successfully!\");\n}",
+        "const output = cartographyInv.getOutput();\nif (!output.isEmpty()) {\n    Chat.log(`Output: ${output.getName().getString()} x${output.getCount()}`);\n    Chat.log(\"  - Ready to take!\");\n} else {\n    Chat.log(\"Output: Empty\");\n    // Detailed analysis of why output is empty (e.g., missing map, missing material, incompatible combination)\n}"
+      ]
+    }
+  ]
+}

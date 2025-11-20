@@ -1,0 +1,20 @@
+{
+  "name": "EventEXPChange",
+  "fullClassName": "EventEXPChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player's experience points or level changes.",
+  "overview": "Fires when experience points or level changes\nIncludes both current and previous values for comparison\nProgress is a float between 0.0 (inclusive) and 1.0 (exclusive)\nNot cancellable",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

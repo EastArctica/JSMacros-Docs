@@ -1,0 +1,10 @@
+{
+  "name": "GroupFilter",
+  "fullClassName": "xyz.wagyourhour.jsmacros.client.api.classes.worldscanner.filter.GroupFilter",
+  "extends": "IFilter<T>",
+  "since": "JsMacros 1.6.5",
+  "description": "The `GroupFilter` class is an abstract filter that provides a way to group multiple filters together and apply logical operations to them as a collection. This class serves as the foundation for specialized group filters that can evaluate multiple child filters using different matching strategies (all match, any match, none match, or count-based matching). GroupFilter is particularly useful in the WorldScanner system when you need to create complex filtering conditions that involve multiple criteria evaluated together. Unlike simple binary logical filters (like AndFilter or OrFilter), GroupFilter can work with any number of child filters and provides flexible matching strategies.",
+  "overview": "The GroupFilter class provides:\n- Multiple filter management: Add, remove, and organize any number of child filters\n- Immutable filter collection: Child filters are protected from external modification\n- Fluent interface: Methods return the GroupFilter instance for method chaining\n- Specialized implementations: Four concrete subclasses for different matching strategies\n- Generic type support: Can work with any type `T` that the child filters can handle",
+  "constructors": [],
+  "methods": []
+}

@@ -1,0 +1,218 @@
+{
+  "name": "ScoreboardsHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.ScoreboardsHelper",
+  "extends": "BaseHelper<Scoreboard>",
+  "since": "1.2.9",
+  "description": "The `ScoreboardsHelper` class provides a comprehensive interface for interacting with Minecraft's scoreboard system in JsMacros scripts.",
+  "overview": "The `ScoreboardsHelper` class provides a comprehensive interface for interacting with Minecraft's scoreboard system in JsMacros scripts. This class serves as the main entry point for accessing scoreboard objectives, teams, player team information, and display slots. It's particularly useful for scripts that need to monitor scoreboards, track team information, or work with competitive multiplayer features.\n\nThis class extends `BaseHelper<Scoreboard>` and wraps Minecraft's internal `Scoreboard` functionality, making it accessible to GraalJS scripts. It acts as a gateway to both scoreboard objectives and team management functionality.\n\nYou typically obtain a `ScoreboardsHelper` instance through the world helper or client context:\n\n```javascript\n// Access the scoreboard helper through the world context\nconst scoreboards = world.getScoreboards();\n\n// Or access it directly through client context in some cases\nconst scoreboards = client.getScoreboards();\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getObjectiveForTeamColorIndex",
+      "signature": "ScoreboardObjectiveHelper getObjectiveForTeamColorIndex(int index)",
+      "returnType": "ScoreboardObjectiveHelper",
+      "description": "Returns the scoreboard objective displayed in the slot corresponding to the specified team color index. This is primarily used for team-colored sidebars in competitive modes.",
+      "parameters": [
+        {
+          "name": "index",
+          "type": "int",
+          "description": "The team color index (0-based). Must be >= 0."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\nconst teamObjective = scoreboards.getObjectiveForTeamColorIndex(0); // Dark gray team\nif (teamObjective) {\n    Chat.log(\"Team objective found:\", teamObjective.getName());\n}"
+      ]
+    },
+    {
+      "name": "getObjectiveSlot",
+      "signature": "ScoreboardObjectiveHelper getObjectiveSlot(int slot)",
+      "returnType": "ScoreboardObjectiveHelper",
+      "description": "Returns the scoreboard objective displayed in the specified display slot. Different slots show scoreboards in different locations (tab list, sidebar, below name).",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "description": "The display slot number. Valid values:\n- `0`: Tab list\n- `1`: Sidebar (main display)\n- `2`: Below name\n- `3-18`: Team-colored sidebars (corresponding to team colors + 3)\n- Maximum slot number is 18"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get sidebar objective\nconst sidebar = scoreboards.getObjectiveSlot(1);\nif (sidebar) {\n    Chat.log(\"Sidebar objective:\", sidebar.getDisplayName().getString());\n}\n\n// Get tab list objective\nconst tabList = scoreboards.getObjectiveSlot(0);\nif (tabList) {\n    Chat.log(\"Tab list objective:\", tabList.getName());\n}\n\n// Get below name objective\nconst belowName = scoreboards.getObjectiveSlot(2);\nif (belowName) {\n    Chat.log(\"Below name objective:\", belowName.getName());\n}"
+      ]
+    },
+    {
+      "name": "getPlayerTeamColorIndex",
+      "signature": "int getPlayerTeamColorIndex(PlayerEntityHelper<PlayerEntity> entity)",
+      "returnType": "int",
+      "description": "Returns the team color index for the specified player entity.",
+      "parameters": [
+        {
+          "name": "entity",
+          "type": "PlayerEntityHelper",
+          "description": "The player entity to get the team color index for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\nconst player = world.getPlayer();\n\n// Get team color index for a specific player\nconst teamIndex = scoreboards.getPlayerTeamColorIndex(player);\nif (teamIndex !== -1) {\n    Chat.log(`Player is in team with color index: ${teamIndex}`);\n    const teamObjective = scoreboards.getObjectiveForTeamColorIndex(teamIndex);\n    if (teamObjective) {\n        Chat.log(\"Team objective:\", teamObjective.getName());\n    }\n}\n\n// Get team color index for client player\nconst myTeamIndex = scoreboards.getPlayerTeamColorIndex();\nChat.log(\"My team color index:\", myTeamIndex);"
+      ]
+    },
+    {
+      "name": "getPlayerTeamColorIndex",
+      "signature": "int getPlayerTeamColorIndex()",
+      "returnType": "int",
+      "description": "Returns the team color index for the client player.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\nconst player = world.getPlayer();\n\n// Get team color index for a specific player\nconst teamIndex = scoreboards.getPlayerTeamColorIndex(player);\nif (teamIndex !== -1) {\n    Chat.log(`Player is in team with color index: ${teamIndex}`);\n    const teamObjective = scoreboards.getObjectiveForTeamColorIndex(teamIndex);\n    if (teamObjective) {\n        Chat.log(\"Team objective:\", teamObjective.getName());\n    }\n}\n\n// Get team color index for client player\nconst myTeamIndex = scoreboards.getPlayerTeamColorIndex();\nChat.log(\"My team color index:\", myTeamIndex);"
+      ]
+    },
+    {
+      "name": "getTeamColorFormatting",
+      "signature": "FormattingHelper getTeamColorFormatting()",
+      "returnType": "FormattingHelper",
+      "description": "Returns the formatting code for the client player's team color.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team formatting\nconst myFormatting = scoreboards.getTeamColorFormatting();\nif (myFormatting) {\n    Chat.log(\"My team color code:\", myFormatting.toString());\n    Chat.log(\"Team color name:\", myFormatting.getName());\n}\n\n// Get another player's team formatting\nconst player = world.getClosestPlayer();\nif (player) {\n    const playerFormatting = scoreboards.getTeamColorFormatting(player);\n    if (playerFormatting) {\n        Chat.log(`${player.getName()}'s team color:`, playerFormatting.getName());\n    }\n}"
+      ]
+    },
+    {
+      "name": "getTeamColorFormatting",
+      "signature": "FormattingHelper getTeamColorFormatting(PlayerEntityHelper<PlayerEntity> player)",
+      "returnType": "FormattingHelper",
+      "description": "Returns the formatting code for the specified player's team color.",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "PlayerEntityHelper",
+          "description": "The player to get the team color formatting for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team formatting\nconst myFormatting = scoreboards.getTeamColorFormatting();\nif (myFormatting) {\n    Chat.log(\"My team color code:\", myFormatting.toString());\n    Chat.log(\"Team color name:\", myFormatting.getName());\n}\n\n// Get another player's team formatting\nconst player = world.getClosestPlayer();\nif (player) {\n    const playerFormatting = scoreboards.getTeamColorFormatting(player);\n    if (playerFormatting) {\n        Chat.log(`${player.getName()}'s team color:`, playerFormatting.getName());\n    }\n}"
+      ]
+    },
+    {
+      "name": "getTeamColor",
+      "signature": "int getTeamColor()",
+      "returnType": "int",
+      "description": "Returns the color value of the client player's team.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team color as RGB value\nconst myColor = scoreboards.getTeamColor();\nif (myColor !== -1) {\n    Chat.log(\"My team RGB color:\", myColor);\n}\n\n// Check all nearby players' team colors\nconst players = world.getPlayers();\nplayers.forEach(player => {\n    const teamColor = scoreboards.getTeamColor(player);\n    if (teamColor !== -1) {\n        Chat.log(`${player.getName()} is on team with color: ${teamColor}`);\n    }\n});"
+      ]
+    },
+    {
+      "name": "getTeamColor",
+      "signature": "int getTeamColor(PlayerEntityHelper<PlayerEntity> player)",
+      "returnType": "int",
+      "description": "Returns the color value of the specified player's team.",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "PlayerEntityHelper",
+          "description": "The player to get the team color for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team color as RGB value\nconst myColor = scoreboards.getTeamColor();\nif (myColor !== -1) {\n    Chat.log(\"My team RGB color:\", myColor);\n}\n\n// Check all nearby players' team colors\nconst players = world.getPlayers();\nplayers.forEach(player => {\n    const teamColor = scoreboards.getTeamColor(player);\n    if (teamColor !== -1) {\n        Chat.log(`${player.getName()} is on team with color: ${teamColor}`);\n    }\n});"
+      ]
+    },
+    {
+      "name": "getTeamColorName",
+      "signature": "String getTeamColorName()",
+      "returnType": "String",
+      "description": "Returns the name of the client player's team color.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team color name\nconst myColorName = scoreboards.getTeamColorName();\nif (myColorName) {\n    Chat.log(\"I'm on the\", myColorName, \"team\");\n}\n\n// Get team color names for all nearby players\nconst players = world.getPlayers();\nplayers.forEach(player => {\n    const colorName = scoreboards.getTeamColorName(player);\n    if (colorName) {\n        Chat.log(`${player.getName()} is on the ${colorName} team`);\n    } else {\n        Chat.log(`${player.getName()} is not on a team`);\n    }\n});"
+      ]
+    },
+    {
+      "name": "getTeamColorName",
+      "signature": "String getTeamColorName(PlayerEntityHelper<PlayerEntity> player)",
+      "returnType": "String",
+      "description": "Returns the name of the specified player's team color.",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "PlayerEntityHelper",
+          "description": "The player to get the team color name for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team color name\nconst myColorName = scoreboards.getTeamColorName();\nif (myColorName) {\n    Chat.log(\"I'm on the\", myColorName, \"team\");\n}\n\n// Get team color names for all nearby players\nconst players = world.getPlayers();\nplayers.forEach(player => {\n    const colorName = scoreboards.getTeamColorName(player);\n    if (colorName) {\n        Chat.log(`${player.getName()} is on the ${colorName} team`);\n    } else {\n        Chat.log(`${player.getName()} is not on a team`);\n    }\n});"
+      ]
+    },
+    {
+      "name": "getTeams",
+      "signature": "List<TeamHelper> getTeams()",
+      "returnType": "List<TeamHelper>",
+      "description": "Returns a list of all teams currently registered in the scoreboard system.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\nconst teams = scoreboards.getTeams();\n\nChat.log(`Total teams: ${teams.length}`);\nteams.forEach(team => {\n    Chat.log(`Team: ${team.getName()}`);\n    Chat.log(`Display: ${team.getDisplayName().getString()}`);\n    Chat.log(`Players: ${team.getPlayerList().join(\", \")}`);\n});"
+      ]
+    },
+    {
+      "name": "getPlayerTeam",
+      "signature": "TeamHelper getPlayerTeam()",
+      "returnType": "TeamHelper",
+      "description": "Returns the team for the client player.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team\nconst myTeam = scoreboards.getPlayerTeam();\nChat.log(\"My team:\", myTeam.getName());\nChat.log(\"My team members:\", myTeam.getPlayerList().join(\", \"));\n\n// Get a specific player's team\nconst player = world.getClosestPlayer();\nif (player) {\n    const playerTeam = scoreboards.getPlayerTeam(player);\n    Chat.log(`${player.getName()}'s team:`, playerTeam.getName());\n\n    // Check if we're on the same team\n    if (playerTeam.getName() === myTeam.getName()) {\n        Chat.log(\"We're on the same team!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getPlayerTeam",
+      "signature": "TeamHelper getPlayerTeam(PlayerEntityHelper<PlayerEntity> p)",
+      "returnType": "TeamHelper",
+      "description": "Returns the team for the specified player.",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "PlayerEntityHelper",
+          "description": "The player to get the team for."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\n\n// Get client player's team\nconst myTeam = scoreboards.getPlayerTeam();\nChat.log(\"My team:\", myTeam.getName());\nChat.log(\"My team members:\", myTeam.getPlayerList().join(\", \"));\n\n// Get a specific player's team\nconst player = world.getClosestPlayer();\nif (player) {\n    const playerTeam = scoreboards.getPlayerTeam(player);\n    Chat.log(`${player.getName()}'s team:`, playerTeam.getName());\n\n    // Check if we're on the same team\n    if (playerTeam.getName() === myTeam.getName()) {\n        Chat.log(\"We're on the same team!\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getCurrentScoreboard",
+      "signature": "ScoreboardObjectiveHelper getCurrentScoreboard()",
+      "returnType": "ScoreboardObjectiveHelper",
+      "description": "Returns the scoreboard objective that is currently displayed on the sidebar. This method intelligently selects between team-colored objectives and the main sidebar objective based on the client player's team.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\nconst currentScoreboard = scoreboards.getCurrentScoreboard();\n\nif (currentScoreboard) {\n    Chat.log(\"Current sidebar:\", currentScoreboard.getDisplayName().getString());\n\n    // Get all scores from the current sidebar\n    const scores = currentScoreboard.getPlayerScores();\n    Chat.log(\"Scores on display:\");\n    for (const [player, score] of scores) {\n        Chat.log(`  ${player}: ${score}`);\n    }\n} else {\n    Chat.log(\"No sidebar currently active\");\n}"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "String toString()",
+      "returnType": "String",
+      "description": "Returns a string representation of the ScoreboardsHelper, including information about the current scoreboard.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const scoreboards = world.getScoreboards();\nChat.log(scoreboards.toString());\n// Output: ScoreboardsHelper:{\"current\": ScoreboardObjectiveHelper:{\"name\": \"kills\", \"displayName\": \"§6Kills\"}}"
+      ]
+    }
+  ]
+}

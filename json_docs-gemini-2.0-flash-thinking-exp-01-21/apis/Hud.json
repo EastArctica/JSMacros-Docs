@@ -1,0 +1,329 @@
+{
+  "name": "Hud",
+  "fullClassName": "Hud",
+  "description": "Functions for creating custom screens, drawing on the screen (2D), and rendering in the world (3D). Accessible from scripts via the global `Hud` variable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "createScreen",
+      "signature": "createScreen(title: string, dirtBG: boolean)",
+      "returnType": "ScriptScreen",
+      "description": "",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "description": "The title of the screen."
+        },
+        {
+          "name": "dirtBG",
+          "type": "boolean",
+          "description": "If `true`, the screen will have the classic dirt background."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const myScreen = Hud.createScreen(\"My Custom Screen\", true);\nconst button = myScreen.addButton(10, 10, 100, 20, \"Click Me!\", JavaWrapper.methodToJava(() => {\n    Chat.log(\"Button clicked!\");\n}));\nHud.openScreen(myScreen);"
+      ]
+    },
+    {
+      "name": "openScreen",
+      "signature": "openScreen(s: IScreen)",
+      "returnType": "void",
+      "description": "",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "IScreen",
+          "description": "The screen object to open."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const screen = Hud.createScreen(\"Info\", false);\nscreen.addText(\"Hello!\", 10, 10, 0xFFFFFF, true);\nHud.openScreen(screen);"
+      ]
+    },
+    {
+      "name": "getOpenScreen",
+      "signature": "getOpenScreen()",
+      "returnType": "IScreen | null",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const currentScreen = Hud.getOpenScreen();\nif (currentScreen) {\n    Chat.log(`Current screen title: ${currentScreen.getTitle()}`);\n} else {\n    Chat.log(\"No custom screen is open.\");\n}"
+      ]
+    },
+    {
+      "name": "createTexture",
+      "signature": "createTexture(width: int, height: int, name: string)",
+      "returnType": "CustomImage",
+      "description": "",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "int",
+          "description": "The width of the new texture."
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "The height of the new texture."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The unique name for the texture."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Create a blank 16x16 texture\nconst blankTexture = Hud.createTexture(16, 16, \"my_blank_texture\");"
+      ]
+    },
+    {
+      "name": "createTexture",
+      "signature": "createTexture(path: string, name: string)",
+      "returnType": "CustomImage",
+      "description": "",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "The absolute path to an image file."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The unique name for the texture."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Load a texture from a file\n// Note: Requires an absolute path. Use FS.toRawFile().getAbsolutePath()\nconst imagePath = FS.toRawFile(\"my_image.png\").getAbsolutePath();\nconst imageTexture = Hud.createTexture(imagePath, \"my_image_texture\");"
+      ]
+    },
+    {
+      "name": "getRegisteredTextures",
+      "signature": "getRegisteredTextures()",
+      "returnType": "java.util.Map<string, CustomImage>",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const textures = Hud.getRegisteredTextures();\nChat.log(\"Registered textures:\");\nfor (const name of textures.keySet()) {\n    Chat.log(`- ${name}`);\n}"
+      ]
+    },
+    {
+      "name": "getScaleFactor",
+      "signature": "getScaleFactor()",
+      "returnType": "int",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const scale = Hud.getScaleFactor();\nChat.log(`GUI Scale Factor: ${scale}`);"
+      ]
+    },
+    {
+      "name": "getOpenScreenName",
+      "signature": "getOpenScreenName()",
+      "returnType": "string | null",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const screenName = Hud.getOpenScreenName();\nif (screenName) {\n    Chat.log(`Currently open screen: ${screenName}`);\n}"
+      ]
+    },
+    {
+      "name": "isContainer",
+      "signature": "isContainer()",
+      "returnType": "boolean",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "if (Hud.isContainer()) {\n    Chat.log(\"A container screen (like a chest) is open.\");\n}"
+      ]
+    },
+    {
+      "name": "createDraw2D",
+      "signature": "createDraw2D()",
+      "returnType": "Draw2D",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const overlay = Hud.createDraw2D();\noverlay.addText(\"Hello from an overlay!\", 10, 10, 0xFFFFFF, true);\noverlay.register(); // This makes it visible\n\n// To remove it later:\n// overlay.unregister();"
+      ]
+    },
+    {
+      "name": "registerDraw2D",
+      "signature": "registerDraw2D(overlay: IDraw2D<Draw2D>)",
+      "returnType": "void",
+      "description": "Deprecated: Use `myDraw2D.register()` instead.",
+      "parameters": [
+        {
+          "name": "overlay",
+          "type": "IDraw2D<Draw2D>",
+          "description": "The 2D overlay to register for rendering."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Deprecated way\nconst overlay = Hud.createDraw2D();\nHud.registerDraw2D(overlay);\n\n// Modern way\nconst overlay = Hud.createDraw2D();\noverlay.register();"
+      ]
+    },
+    {
+      "name": "unregisterDraw2D",
+      "signature": "unregisterDraw2D(overlay: IDraw2D<Draw2D>)",
+      "returnType": "void",
+      "description": "Deprecated: Use `myDraw2D.unregister()` instead.",
+      "parameters": [
+        {
+          "name": "overlay",
+          "type": "IDraw2D<Draw2D>",
+          "description": "The 2D overlay to unregister."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Deprecated way\nHud.unregisterDraw2D(overlay);\n\n// Modern way\noverlay.unregister();"
+      ]
+    },
+    {
+      "name": "listDraw2Ds",
+      "signature": "listDraw2Ds()",
+      "returnType": "java.util.List<IDraw2D<Draw2D>>",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const overlays = Hud.listDraw2Ds();\nChat.log(`There are ${overlays.size()} active overlays.`);"
+      ]
+    },
+    {
+      "name": "clearDraw2Ds",
+      "signature": "clearDraw2Ds()",
+      "returnType": "void",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Hud.clearDraw2Ds();\nChat.log(\"All 2D overlays have been cleared.\");"
+      ]
+    },
+    {
+      "name": "createDraw3D",
+      "signature": "createDraw3D()",
+      "returnType": "Draw3D",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const render = Hud.createDraw3D();\nconst playerPos = Player.getPlayer().getPos();\nrender.addBox(playerPos.x - 1, playerPos.y, playerPos.z - 1, playerPos.x + 1, playerPos.y + 2, playerPos.z + 1, 0xFF0000, 128, true);\nrender.register(); // This makes it visible\n\n// To remove it later:\n// render.unregister();"
+      ]
+    },
+    {
+      "name": "registerDraw3D",
+      "signature": "registerDraw3D(draw: Draw3D)",
+      "returnType": "void",
+      "description": "Deprecated: Use `myDraw3D.register()` instead.",
+      "parameters": [
+        {
+          "name": "draw",
+          "type": "Draw3D",
+          "description": "The 3D render object to register."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Deprecated way\nconst render = Hud.createDraw3D();\nHud.registerDraw3D(render);\n\n// Modern way\nconst render = Hud.createDraw33D();\nrender.register();"
+      ]
+    },
+    {
+      "name": "unregisterDraw3D",
+      "signature": "unregisterDraw3D(draw: Draw3D)",
+      "returnType": "void",
+      "description": "Deprecated: Use `myDraw3D.unregister()` instead.",
+      "parameters": [
+        {
+          "name": "draw",
+          "type": "Draw3D",
+          "description": "The 3D render object to unregister."
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Deprecated way\nHud.unregisterDraw3D(render);\n\n// Modern way\nrender.unregister();"
+      ]
+    },
+    {
+      "name": "listDraw3Ds",
+      "signature": "listDraw3Ds()",
+      "returnType": "java.util.List<Draw3D>",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const renders = Hud.listDraw3Ds();\nChat.log(`There are ${renders.size()} active 3D renders.`);"
+      ]
+    },
+    {
+      "name": "clearDraw3Ds",
+      "signature": "clearDraw3Ds()",
+      "returnType": "void",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "Hud.clearDraw3Ds();\nChat.log(\"All 3D renders have been cleared.\");"
+      ]
+    },
+    {
+      "name": "getMouseX",
+      "signature": "getMouseX()",
+      "returnType": "double",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const mouseX = Hud.getMouseX();"
+      ]
+    },
+    {
+      "name": "getMouseY",
+      "signature": "getMouseY()",
+      "returnType": "double",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const mouseY = Hud.getMouseY();"
+      ]
+    },
+    {
+      "name": "getWindowWidth",
+      "signature": "getWindowWidth()",
+      "returnType": "int",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const width = Hud.getWindowWidth();"
+      ]
+    },
+    {
+      "name": "getWindowHeight",
+      "signature": "getWindowHeight()",
+      "returnType": "int",
+      "description": "",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const height = Hud.getWindowHeight();"
+      ]
+    }
+  ]
+}

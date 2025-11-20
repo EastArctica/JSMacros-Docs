@@ -1,0 +1,22 @@
+{
+  "name": "CharCompareFilter",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.worldscanner.filter.compare.CharCompareFilter",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "A simple filter class used to compare character values during world scanning operations. This filter checks whether a given character matches a specified comparison character and is commonly used in conjunction with the WorldScanner to filter blocks or entities based on character properties, such as checking specific characters in block names, entity identifiers, or other character-based data.",
+  "overview": "Notes:\n- Simple Comparison: The filter performs a direct character equality check using `==`\n- Case Sensitivity: Character comparisons are case-sensitive. 'A' is different from 'a'\n- Type Safety: The filter expects Character input values and will handle null values according to Java's character comparison semantics\n- WorldScanner Integration: This class is primarily used internally by WorldScanner when filtering based on character properties\n- Performance: Being a simple character comparison, this filter has minimal performance overhead\n- Immutable: Once created, the filter's comparison character cannot be changed\n- Unicode Support: The filter works with any Unicode character, including special symbols and non-ASCII characters\n- Character vs String: This filter specifically works with single characters, not strings. For string comparisons, use `StringCompareFilter`\n\nCommon Use Cases:\n- Pattern Recognition: Identifying blocks or entities based on character patterns in their names\n- Text Processing: Filtering chat messages, signs, or book text based on character criteria\n- Special Character Detection: Finding formatting codes, punctuation, or other special characters\n- Initial Character Filtering: Filtering items based on the first character of their names\n- Validation: Checking for specific characters in custom data or user input",
+  "constructors": [
+    {
+      "signature": "new CharCompareFilter(compareTo)",
+      "description": "Creates a new CharCompareFilter with the specified character to compare against.",
+      "parameters": [
+        {
+          "name": "compareTo",
+          "type": "char",
+          "description": "The character value to compare input values against"
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

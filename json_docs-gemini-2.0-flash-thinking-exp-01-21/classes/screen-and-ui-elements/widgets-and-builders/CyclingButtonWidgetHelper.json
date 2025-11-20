@@ -1,0 +1,701 @@
+[
+  {
+    "name": "CyclingButtonWidgetHelper",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.CyclingButtonWidgetHelper<T>",
+    "extends": "ClickableWidgetHelper<CyclingButtonWidgetHelper<T>, CyclingButtonWidget<T>>",
+    "since": "JsMacros 1.8.4",
+    "description": "The `CyclingButtonWidgetHelper` class is a JSMacros helper for cycling button widgets that allows users to cycle through predefined values when clicked. This widget is perfect for settings toggles, option selections, and any UI element where users need to choose from a discrete set of options. Cycling buttons automatically advance through their values each time they're clicked and display the current value as text.",
+    "overview": "The `CyclingButtonWidgetHelper` provides a user-friendly way to create buttons that cycle through a sequence of values. Each click advances to the next value in the sequence, wrapping around when reaching the end. This makes it ideal for:\n\n- **Settings toggles** (On/Off, True/False, etc.)\n- **Mode selection** (Easy/Medium/Hard, Day/Night, etc.)\n- **Option cycling** (Red/Green/Blue, Small/Medium/Large, etc.)\n- **Configuration interfaces** where users need to select from predefined options\n\n**Key Features:**\n- Automatic value cycling with wrap-around\n- Customizable value-to-text conversion for display\n- Support for default and alternate value sets\n- Optional prefix text for labels\n- Builder pattern for easy configuration\n- Action callbacks on value changes\n- Chainable method calls for fluent API",
+    "constructors": [],
+    "methods": [
+      {
+        "name": "getValue",
+        "signature": "getValue()",
+        "returnType": "T",
+        "description": "Retrieves the current value selected in the cycling button.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const currentValue = modeButton.getValue();\nChat.log(\"Current difficulty: \" + currentValue);"
+        ]
+      },
+      {
+        "name": "getStringValue",
+        "signature": "getStringValue()",
+        "returnType": "String",
+        "description": "Returns the current value as it would be displayed on the button, using the value-to-text conversion function.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const displayText = modeButton.getStringValue();\nChat.log(\"Button displays: \" + displayText);"
+        ]
+      },
+      {
+        "name": "setValue",
+        "signature": "setValue(val)",
+        "returnType": "boolean",
+        "description": "Sets the cycling button to a specific value. The value must be one of the configured values.",
+        "parameters": [
+          {
+            "name": "val",
+            "type": "T",
+            "description": "The new value to set"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const changed = modeButton.setValue(\"Hard\");\nif (changed) {\n    Chat.log(\"Difficulty changed to Hard\");\n} else {\n    Chat.log(\"Difficulty was already Hard\");\n}"
+        ]
+      },
+      {
+        "name": "cycle",
+        "signature": "cycle(amount)",
+        "returnType": "CyclingButtonWidgetHelper<T>",
+        "description": "Cycles the button by the specified amount of steps. Positive values move forward through the values, negative values move backward.",
+        "parameters": [
+          {
+            "name": "amount",
+            "type": "int",
+            "description": "Number of steps to cycle (positive for forward, negative for backward)"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "// Cycle forward by 2 steps\nmodeButton.cycle(2);\n\n// Cycle backward by 1 step\nmodeButton.cycle(-1);"
+        ]
+      },
+      {
+        "name": "forward",
+        "signature": "forward()",
+        "returnType": "CyclingButtonWidgetHelper<T>",
+        "description": "Cycles the button forward by one step (equivalent to `cycle(1)`).",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "modeButton.forward(); // Move to next value"
+        ]
+      },
+      {
+        "name": "backward",
+        "signature": "backward()",
+        "returnType": "CyclingButtonWidgetHelper<T>",
+        "description": "Cycles the button backward by one step (equivalent to `cycle(-1)`).",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "modeButton.backward(); // Move to previous value"
+        ]
+      },
+      {
+        "name": "getX",
+        "signature": "getX()",
+        "returnType": "int",
+        "description": "Gets the x coordinate",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "getY",
+        "signature": "getY()",
+        "returnType": "int",
+        "description": "Gets the y coordinate",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setPos",
+        "signature": "setPos(x, y)",
+        "returnType": "void",
+        "description": "Sets the position",
+        "parameters": [
+          {
+            "name": "x",
+            "type": "int",
+            "description": ""
+          },
+          {
+            "name": "y",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "getWidth",
+        "signature": "getWidth()",
+        "returnType": "int",
+        "description": "Gets the width",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "getHeight",
+        "signature": "getHeight()",
+        "returnType": "int",
+        "description": "Gets the height",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setWidth",
+        "signature": "setWidth(width)",
+        "returnType": "void",
+        "description": "Sets the width",
+        "parameters": [
+          {
+            "name": "width",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setLabel",
+        "signature": "setLabel(String label)",
+        "returnType": "void",
+        "description": "Sets the button label (deprecated)",
+        "parameters": [
+          {
+            "name": "label",
+            "type": "String",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setLabel",
+        "signature": "setLabel(TextHelper helper)",
+        "returnType": "void",
+        "description": "Sets the button label",
+        "parameters": [
+          {
+            "name": "helper",
+            "type": "TextHelper",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "getLabel",
+        "signature": "getLabel()",
+        "returnType": "TextHelper",
+        "description": "Gets the current label",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setAlpha",
+        "signature": "setAlpha(alpha)",
+        "returnType": "void",
+        "description": "Sets transparency",
+        "parameters": [
+          {
+            "name": "alpha",
+            "type": "float",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "getActive",
+        "signature": "getActive()",
+        "returnType": "boolean",
+        "description": "Gets whether the button is clickable",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setActive",
+        "signature": "setActive(boolean active)",
+        "returnType": "void",
+        "description": "Sets whether the button is clickable",
+        "parameters": [
+          {
+            "name": "active",
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setVisible",
+        "signature": "setVisible(boolean visible)",
+        "returnType": "void",
+        "description": "Sets whether the button is visible",
+        "parameters": [
+          {
+            "name": "visible",
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "click",
+        "signature": "click()",
+        "returnType": "void",
+        "description": "Programmatically clicks the button",
+        "parameters": [],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "click",
+        "signature": "click(boolean await)",
+        "returnType": "void",
+        "description": "Clicks with optional waiting",
+        "parameters": [
+          {
+            "name": "await",
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "setTooltip",
+        "signature": "setTooltip(Object... tooltips)",
+        "returnType": "void",
+        "description": "Sets tooltip text",
+        "parameters": [
+          {
+            "name": "tooltips",
+            "type": "Object[]",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      }
+    ]
+  },
+  {
+    "name": "CyclicButtonBuilder",
+    "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.CyclingButtonWidgetHelper.CyclicButtonBuilder<T>",
+    "extends": "AbstractWidgetBuilder<CyclicButtonBuilder<T>, CyclingButtonWidget<T>, CyclingButtonWidgetHelper<T>>",
+    "since": "JsMacros 1.8.4",
+    "description": "The `CyclicButtonBuilder` class is a fluent builder for creating cycling button widgets that allow users to cycle through predefined values with each click. This builder provides a comprehensive API for configuring all aspects of cycling buttons including value sets, display formatting, behavior customization, and event handling. It's designed to create intuitive UI elements for settings toggles, mode selections, and any interface requiring discrete value selection.",
+    "overview": "The `CyclicButtonBuilder` class offers a powerful and flexible way to create cycling buttons with:\n\n- **Value Management**: Support for default and alternative value sets with automatic cycling\n- **Custom Display Formatting**: Configurable value-to-text conversion for rich text display\n- **Behavior Control**: Toggle functions for conditional value sets and custom actions\n- **Visual Customization**: Optional prefix text and display formatting options\n- **Event Handling**: Action callbacks for responding to value changes\n- **Builder Pattern**: Fluent API with method chaining for easy configuration\n\nThis builder is particularly useful for creating settings interfaces, mode selectors, and any UI component where users need to choose from a predefined set of options.",
+    "constructors": [
+      {
+        "signature": "new CyclicButtonBuilder(screen, valueToText)",
+        "description": "Creates a new CyclicButtonBuilder with the specified screen and value-to-text conversion function.",
+        "parameters": [
+          {
+            "name": "screen",
+            "type": "IScreen",
+            "description": "The screen to add the button to"
+          },
+          {
+            "name": "valueToText",
+            "type": "MethodWrapper<T, ?, TextHelper, ?>",
+            "description": "Function to convert values to display text"
+          }
+        ]
+      }
+    ],
+    "methods": [
+      {
+        "name": "initially",
+        "signature": "initially(value)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the initial value for the cycling button.",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "T",
+            "description": "The initial value for the button"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.initially(\"Medium\");"
+        ]
+      },
+      {
+        "name": "values",
+        "signature": "values(values...)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the default values that the button will cycle through.",
+        "parameters": [
+          {
+            "name": "values",
+            "type": "T...",
+            "description": "Variable number of values to cycle through"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.values(\"Easy\", \"Medium\", \"Hard\", \"Extreme\");"
+        ]
+      },
+      {
+        "name": "alternatives",
+        "signature": "alternatives(values...)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets alternative values that the button will cycle through when the alternate toggle condition is true.",
+        "parameters": [
+          {
+            "name": "values",
+            "type": "T...",
+            "description": "Variable number of alternative values"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.alternatives(\"Peaceful\", \"Normal\", \"Hard\");"
+        ]
+      },
+      {
+        "name": "values",
+        "signature": "values(defaults, alternatives)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets both default and alternative value arrays.",
+        "parameters": [
+          {
+            "name": "defaults",
+            "type": "T[]",
+            "description": "Default value array"
+          },
+          {
+            "name": "alternatives",
+            "type": "T[]",
+            "description": "Alternative value array"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.values(\n    [\"Day\", \"Night\"],           // Default values\n    [\"Morning\", \"Evening\"]      // Alternative values\n);"
+        ]
+      },
+      {
+        "name": "values",
+        "signature": "values(defaults, alternatives)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets both default and alternative value lists.",
+        "parameters": [
+          {
+            "name": "defaults",
+            "type": "List<T>",
+            "description": "Default value list"
+          },
+          {
+            "name": "alternatives",
+            "type": "List<T>",
+            "description": "Alternative value list"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "const defaultList = Java.to([\"Red\", \"Green\", \"Blue\"], \"java.util.List\");\nconst alternateList = Java.to([\"Light Red\", \"Light Green\", \"Light Blue\"], \"java.util.List\");\nbuilder.values(defaultList, alternateList);"
+        ]
+      },
+      {
+        "name": "option",
+        "signature": "option(option)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets a prefix text that appears before the button value, separated by a colon.",
+        "parameters": [
+          {
+            "name": "option",
+            "type": "String",
+            "description": "The prefix text to display"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.option(\"Difficulty:\");\n// Result display: \"Difficulty: Medium\""
+        ]
+      },
+      {
+        "name": "option",
+        "signature": "option(option)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets a prefix text using a TextHelper object.",
+        "parameters": [
+          {
+            "name": "option",
+            "type": "TextHelper",
+            "description": "The prefix text to display"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.option(Chat.createTextHelperFromString(\"§bGame Mode:\"));"
+        ]
+      },
+      {
+        "name": "omitTextOption",
+        "signature": "omitTextOption(optionTextOmitted)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Controls whether the prefix option text should be displayed or omitted.",
+        "parameters": [
+          {
+            "name": "optionTextOmitted",
+            "type": "boolean",
+            "description": "Whether to omit the prefix text"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.omitTextOption(true); // Only show the value, no prefix"
+        ]
+      },
+      {
+        "name": "action",
+        "signature": "action(action)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the action to run when the button is clicked.",
+        "parameters": [
+          {
+            "name": "action",
+            "type": "MethodWrapper<CyclingButtonWidgetHelper<T>, IScreen, Object, ?>",
+            "description": "The action callback"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.action((button, screen) => {\n    const newValue = button.getValue();\n    Chat.log(\"New value: \" + newValue);\n});"
+        ]
+      },
+      {
+        "name": "valueToText",
+        "signature": "valueToText(valueToText)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets a custom function to convert button values to display text.",
+        "parameters": [
+          {
+            "name": "valueToText",
+            "type": "MethodWrapper<T, ?, TextHelper, ?>",
+            "description": "Function to convert values to text"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.valueToText(JavaWrapper.methodToJava((value) => {\n    switch (value) {\n        case \"Easy\":\n            return Chat.createTextHelperFromString(\"§aEasy\");\n        case \"Hard\":\n            return Chat.createTextHelperFromString(\"§cHard\");\n        default:\n            return Chat.createTextHelperFromString(value.toString());\n    }\n}));"
+        ]
+      },
+      {
+        "name": "alternateToggle",
+        "signature": "alternateToggle(alternateToggle)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets a function to determine whether the button should use alternative values.",
+        "parameters": [
+          {
+            "name": "alternateToggle",
+            "type": "MethodWrapper<?, ?, Boolean, ?>",
+            "description": "Function returning true for alternatives"
+          }
+        ],
+        "static": false,
+        "examples": [
+          "builder.alternateToggle(JavaWrapper.methodToJava(() => {\n    const player = Player.getPlayer();\n    return player && player.getHealth() >= 18; // Use alternatives at full health\n}));"
+        ]
+      },
+      {
+        "name": "createWidget",
+        "signature": "createWidget()",
+        "returnType": "CyclingButtonWidgetHelper<T>",
+        "description": "Creates the cycling button widget with all configured settings.",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const button = builder\n    .pos(10, 10)\n    .size(150, 20)\n    .values(\"Option 1\", \"Option 2\", \"Option 3\")\n    .initially(\"Option 1\")\n    .createWidget();"
+        ]
+      },
+      {
+        "name": "build",
+        "signature": "build()",
+        "returnType": "CyclingButtonWidgetHelper<T>",
+        "description": "Creates the cycling button and adds it to the screen (alias for createWidget).",
+        "parameters": [],
+        "static": false,
+        "examples": [
+          "const button = builder\n    .pos(10, 10)\n    .size(150, 20)\n    .values(\"Red\", \"Green\", \"Blue\")\n    .initially(\"Green\")\n    .build();"
+        ]
+      },
+      {
+        "name": "pos",
+        "signature": "pos(x, y)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the position",
+        "parameters": [
+          {
+            "name": "x",
+            "type": "int",
+            "description": ""
+          },
+          {
+            "name": "y",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "x",
+        "signature": "x(x)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the x coordinate",
+        "parameters": [
+          {
+            "name": "x",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "y",
+        "signature": "y(y)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the y coordinate",
+        "parameters": [
+          {
+            "name": "y",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "size",
+        "signature": "size(width, height)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the dimensions",
+        "parameters": [
+          {
+            "name": "width",
+            "type": "int",
+            "description": ""
+          },
+          {
+            "name": "height",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "width",
+        "signature": "width(width)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the width",
+        "parameters": [
+          {
+            "name": "width",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "height",
+        "signature": "height(height)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the height",
+        "parameters": [
+          {
+            "name": "height",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "alpha",
+        "signature": "alpha(alpha)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets transparency",
+        "parameters": [
+          {
+            "name": "alpha",
+            "type": "float",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "visible",
+        "signature": "visible(visible)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets visibility",
+        "parameters": [
+          {
+            "name": "visible",
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "active",
+        "signature": "active(active)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets whether the widget is interactive",
+        "parameters": [
+          {
+            "name": "active",
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      },
+      {
+        "name": "zIndex",
+        "signature": "zIndex(zIndex)",
+        "returnType": "CyclicButtonBuilder<T>",
+        "description": "Sets the rendering order",
+        "parameters": [
+          {
+            "name": "zIndex",
+            "type": "int",
+            "description": ""
+          }
+        ],
+        "static": false,
+        "examples": []
+      }
+    ]
+  }
+]

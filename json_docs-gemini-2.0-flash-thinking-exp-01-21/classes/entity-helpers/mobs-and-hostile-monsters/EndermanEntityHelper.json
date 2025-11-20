@@ -1,0 +1,67 @@
+{
+  "name": "EndermanEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.mob.EndermanEntityHelper",
+  "extends": "MobEntityHelper<EndermanEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "Represents an Enderman entity in the world.",
+  "overview": "EndermanEntityHelper provides access to enderman-specific behaviors, states, and properties that are unique to the Enderman mob. This specialized helper allows you to monitor the enderman's aggression state, check if it's holding blocks, and track its provoked status. Instances are typically obtained from entity events, world entity queries, or by casting existing entity helpers that represent Endermen.",
+  "constructors": [
+    {
+      "signature": "N/A (Instances obtained via events/queries)",
+      "description": "EndermanEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through entity-related events (e.g., `EntityDeath`, `EntityInteract`), world entity queries and filters, or type casting from generic `EntityHelper` instances.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "isScreaming",
+      "signature": "isScreaming()",
+      "returnType": "boolean",
+      "description": "Checks if the Enderman is currently in its screaming/aggro animation state. This is primarily a visual and audio indicator.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isScreaming = enderman.isScreaming();",
+        "Chat.log(`Enderman is screaming: ${isScreaming}`);"
+      ]
+    },
+    {
+      "name": "isProvoked",
+      "signature": "isProvoked()",
+      "returnType": "boolean",
+      "description": "Checks if the Enderman is currently provoked and aggressive towards the player or other entities. This state persists even after the Enderman stops screaming.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isProvoked = enderman.isProvoked();",
+        "Chat.log(`Enderman provoked: ${isProvoked}`);"
+      ]
+    },
+    {
+      "name": "isHoldingBlock",
+      "signature": "isHoldingBlock()",
+      "returnType": "boolean",
+      "description": "Checks if the Enderman is currently holding a block. This status can change frequently as Endermen pick up and place blocks.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const isHolding = enderman.isHoldingBlock();",
+        "Chat.log(`Enderman holding block: ${isHolding}`);"
+      ]
+    },
+    {
+      "name": "getHeldBlock",
+      "signature": "getHeldBlock()",
+      "returnType": "BlockStateHelper",
+      "description": "Returns the `BlockStateHelper` instance representing the block the Enderman is currently holding. Returns `null` if the Enderman is not holding a block.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (enderman.isHoldingBlock()) {",
+        "    const heldBlock = enderman.getHeldBlock();",
+        "    Chat.log(`Holding block: ${heldBlock.getBlock().getName()}`);",
+        "}"
+      ]
+    }
+  ]
+}

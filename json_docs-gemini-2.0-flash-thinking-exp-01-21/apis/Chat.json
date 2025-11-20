@@ -1,0 +1,463 @@
+{
+  "name": "Chat",
+  "fullClassName": "Chat",
+  "extends": null,
+  "since": null,
+  "description": "Functions for interacting with chat. Accessible from scripts via the global `Chat` variable.",
+  "overview": null,
+  "constructors": [],
+  "methods": [
+    {
+      "name": "log",
+      "signature": "log(message: string, await?: boolean): void",
+      "returnType": "void",
+      "description": "Logs the given message into chat.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to log into chat"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Block the thread until the message is sent"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.log(\"Hello World!\");"
+      ]
+    },
+    {
+      "name": "logf",
+      "signature": "logf(message: string, await?: boolean, args: any[]): void",
+      "returnType": "void",
+      "description": "Sends the formatted message to the local chat. The message is formatted using the default java.lang.String.format(java.lang.String, java.lang.Object...) syntax.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to format and log"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Block the thread until the message is sent"
+        },
+        {
+          "name": "args",
+          "type": "any[]",
+          "description": "The arguments used to format the message"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.logf(\"Hello, %s!\", [\"Steve\"]);",
+        "Chat.logf(\"Hello, %s!\", true, [\"Steve\"]);"
+      ]
+    },
+    {
+      "name": "logColor",
+      "signature": "logColor(message: string, await?: boolean): void",
+      "returnType": "void",
+      "description": "This method logs a message to chat, replacing any ampersands with section symbols to be used with the minecraft chat formatting.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to log into chat"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Block the thread until the message is sent"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.logColor(\"Colors: &0Black &1Dark Blue &2Dark Green &3Dark Turqoise &4Dark Red &5Purple &6Dark Yellow &7Light Gray &8Dark Gray &9Light Blue &aLight Green &bLight Turquoise &cLight Red &dMagenta &eLight Yellow &fWhite\");"
+      ]
+    },
+    {
+      "name": "say",
+      "signature": "say(message: string, await?: boolean): void",
+      "returnType": "void",
+      "description": "Sends the given message to the server's chat.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to send in chat"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Block the thread until the message is sent"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.say(\"Hello fellow players!\");",
+        "Chat.say(\"/say Hello fellow players!\");",
+        "Chat.say(`/tp ${x} ${y} ${z}`);"
+      ]
+    },
+    {
+      "name": "sayf",
+      "signature": "sayf(message: string, await?: boolean, args: any[]): void",
+      "returnType": "void",
+      "description": "Sends the formatted message to the server. The message is formatted using the default String#format(java.lang.String, java.lang.Object...) syntax.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to format and log"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Block the thread until the message is sent"
+        },
+        {
+          "name": "args",
+          "type": "any[]",
+          "description": "The arguments used to format the message"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const name = \"John\";\nChat.sayf(\"Hello everyone! I'm %s and I've run %.2f meters.\", [name, 100.93]);",
+        "Chat.sayf(\"Hello everyone! I'm %s and I've run %.2f meters.\", true, [name, 100.93]);"
+      ]
+    },
+    {
+      "name": "open",
+      "signature": "open(message: string, await?: boolean): void",
+      "returnType": "void",
+      "description": "Opens the chat input box with a pre-filled message.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to open the chat screen with"
+        },
+        {
+          "name": "await",
+          "type": "boolean",
+          "description": "Block the thread until the chat is opened"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.open(\"This message is in the chat input box\");"
+      ]
+    },
+    {
+      "name": "title",
+      "signature": "title(title: string | TextHelper | null, subtitle: string | TextHelper | null, fadeIn: int, remain: int, fadeOut: int): void",
+      "returnType": "void",
+      "description": "Displays a title and subtitle on the screen with specified fade in, remain, and fade out times.",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string | TextHelper | null",
+          "description": "The primary title to display"
+        },
+        {
+          "name": "subtitle",
+          "type": "string | TextHelper | null",
+          "description": "The subtitle to display"
+        },
+        {
+          "name": "fadeIn",
+          "type": "int",
+          "description": "Time in seconds to fade the text in"
+        },
+        {
+          "name": "remain",
+          "type": "int",
+          "description": "Time in seconds the text will remain on screen"
+        },
+        {
+          "name": "fadeOut",
+          "type": "int",
+          "description": "Time in seconds to fade the text out"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.title(\"Primary Title\", \"Some subtitle\", 1, 5, 1);"
+      ]
+    },
+    {
+      "name": "actionbar",
+      "signature": "actionbar(text: string | TextHelper, tinted?: boolean): void",
+      "returnType": "void",
+      "description": "Displays text in the action bar.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string | TextHelper",
+          "description": "The text to display"
+        },
+        {
+          "name": "tinted",
+          "type": "boolean",
+          "description": "Whether the text should appear tinted"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.actionbar(\"You may not rest now; there are monsters nearby‌\");"
+      ]
+    },
+    {
+      "name": "toast",
+      "signature": "toast(title: string | TextHelper | null, desc: string | TextHelper | null): void",
+      "returnType": "void",
+      "description": "Toasts are informational text boxes shown on the top right corner of the screen. They typically show up when the player unlocks new crafting recipes, grants advancements, a song starts playing, or loads up a new world. Tutorial hints are also specific toasts which serve to teach the player how to play the game.",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string | TextHelper | null",
+          "description": "The title of the toast"
+        },
+        {
+          "name": "desc",
+          "type": "string | TextHelper | null",
+          "description": "The description of the toast"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.toast(\"New Recipes Unlocked!\", \"Check your recipe book\");"
+      ]
+    },
+    {
+      "name": "createTextHelperFromString",
+      "signature": "createTextHelperFromString(content: string): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Creates a new TextHelper instance from a plain string.",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Text to initialize with"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const helper = Chat.createTextHelperFromString(\"Example String\");"
+      ]
+    },
+    {
+      "name": "createTextHelperFromTranslationKey",
+      "signature": "createTextHelperFromTranslationKey(key: string, content: any[]): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Creates a new TextHelper instance from a translation key and optional content arguments.",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Translation key to initialize with"
+        },
+        {
+          "name": "content",
+          "type": "any[]",
+          "description": "objects to be used to initialize a dynamic translation key with"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.createTextHelperFromTranslationKey(\"multiplayer.player.joined\", \"notch\");"
+      ]
+    },
+    {
+      "name": "getLogger",
+      "signature": "getLogger(name?: string): org.slf4j.Logger",
+      "returnType": "org.slf4j.Logger",
+      "description": "Retrieves an SLF4J logger for logging to the console.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The logger name"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const logger = Chat.getLogger(\"MyLogger\");\nlogger.debug(\"Position moved from {} {} {} to {} {} {}\", oldX, oldY, oldZ, x, y, z);\nlogger.info(\"Player moved!\");"
+      ]
+    },
+    {
+      "name": "createTextHelperFromJSON",
+      "signature": "createTextHelperFromJSON(jsonText: string): TextHelper",
+      "returnType": "TextHelper",
+      "description": "Creates a new TextHelper instance from a JSON string representing formatted text components.",
+      "parameters": [
+        {
+          "name": "jsonText",
+          "type": "string",
+          "description": "The json text used to build the text helper"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const block = \"minecraft:stone\";\nconst helper = Chat.createTextHelperFromJSON(JSON.stringify([{\n    \"text\": \"Searching for \",\n    \"italic\": true,\n    \"color\": \"#AAAAAA\"\n}, {\n    \"text\": block,\n    \"italic\": true,\n    \"color\": \"#FF0000\"\n}]));"
+      ]
+    },
+    {
+      "name": "createTextBuilder",
+      "signature": "createTextBuilder(): TextBuilder",
+      "returnType": "TextBuilder",
+      "description": "Creates a new TextBuilder instance for fluent construction of formatted text.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const text = Chat.createTextBuilder()\n    .withColor(0x6)\n    .append(\"Hello World! This is gold!\")\n    .build();"
+      ]
+    },
+    {
+      "name": "createCommandBuilder",
+      "signature": "createCommandBuilder(name: string): CommandBuilder",
+      "returnType": "CommandBuilder",
+      "description": "Creates a builder for registering new commands. This method is deprecated. Please use `Chat.getCommandManager()` when possible.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Name of the command"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "// Accessible via /ugive\nconst command = Chat.createCommandBuilder(\"ugive\")\n    .itemArg(\"item\")\n    .intArg(\"count\", 0, 1_000_000)\n    .executes(...)\n    .register();"
+      ]
+    },
+    {
+      "name": "unregisterCommand",
+      "signature": "unregisterCommand(name: string): CommandNodeHelper",
+      "returnType": "CommandNodeHelper",
+      "description": "Unregisters a command by its name. This method is deprecated. Please use `Chat.getCommandManager()` when possible.",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Name of the command to unregister"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "Chat.unregisterCommand(\"ugive\");"
+      ]
+    },
+    {
+      "name": "reRegisterCommand",
+      "signature": "reRegisterCommand(node: CommandNodeHelper): void",
+      "returnType": "void",
+      "description": "Re-registers a previously unregistered command node. This method is deprecated. Please use `Chat.getCommandManager()` when possible.",
+      "parameters": [
+        {
+          "name": "node",
+          "type": "CommandNodeHelper",
+          "description": "The node to re-register"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const node = Chat.unregisterCommand(\"ugive\");\nChat.reRegisterCommand(node);"
+      ]
+    },
+    {
+      "name": "getCommandManager",
+      "signature": "getCommandManager(): CommandManager",
+      "returnType": "CommandManager",
+      "description": "Retrieves the command manager for more advanced command handling.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const cmdManager = Chat.getCommandManager();"
+      ]
+    },
+    {
+      "name": "getHistory",
+      "signature": "getHistory(): ChatHistoryManager",
+      "returnType": "ChatHistoryManager",
+      "description": "Retrieves the chat history manager.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const hist = Chat.getHistory();"
+      ]
+    },
+    {
+      "name": "getTextWidth",
+      "signature": "getTextWidth(text: string): int",
+      "returnType": "int",
+      "description": "Calculates the pixel width of the given text.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": "The text to get the width of"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const width = Chat.getTextWidth(\"Example String\");"
+      ]
+    },
+    {
+      "name": "sectionSymbolToAmpersand",
+      "signature": "sectionSymbolToAmpersand(text: string): string",
+      "returnType": "string",
+      "description": "Converts Minecraft's section symbols (`§`) in a string to ampersands (`&`). Escapes `&` to `&&` to distinguish from formatting codes.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": "The text to convert"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const newStr = Chat.sectionSymbolToAmpersand(\"§aHello World! I'm so happy & excited!\");\n// newStr will be \"&aHello World! I'm so happy && excited!\""
+      ]
+    },
+    {
+      "name": "ampersandToSectionSymbol",
+      "signature": "ampersandToSectionSymbol(text: string): string",
+      "returnType": "string",
+      "description": "Converts ampersands (`&`) in a string to Minecraft's section symbols (`§`) for chat formatting. Escapes `&&` to `&`.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": "The text to convert"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const newStr = Chat.ampersandToSectionSymbol(\"&aHello World! I'm so happy && excited!\");\n// newStr will be \"§aHello World! I'm so happy & excited!\""
+      ]
+    },
+    {
+      "name": "stripFormatting",
+      "signature": "stripFormatting(text: string): string",
+      "returnType": "string",
+      "description": "Removes all Minecraft chat formatting (section symbols) from a string.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": "The text to convert"
+        }
+      ],
+      "static": true,
+      "examples": [
+        "const newStr = Chat.stripFormatting(\"&aHello World! I'm so happy & excited!\");\n// newStr will be \"Hello World! I'm so happy & excited!\""
+      ]
+    }
+  ]
+}

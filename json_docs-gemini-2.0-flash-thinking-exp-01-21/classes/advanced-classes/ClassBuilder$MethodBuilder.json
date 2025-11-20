@@ -1,0 +1,86 @@
+{
+  "name": "ClassBuilder.MethodBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.MethodBuilder<T>",
+  "extends": null,
+  "since": "1.6.5",
+  "description": "The `ClassBuilder.MethodBuilder` class is a specialized builder for creating and configuring methods within generated classes. This builder provides a fluent API for defining method signatures, parameters, return types, method bodies, annotations, and visibility modifiers, allowing you to create comprehensive method implementations.\n\nMethodBuilder instances are obtained through the `addMethod()` methods of ClassBuilder and support both simple code-based method creation and advanced body building with mixed Java/JavaScript execution.",
+  "overview": "The MethodBuilder provides a comprehensive and flexible API for creating methods that can range from simple getters/setters to complex mixed-language implementations with full annotation support and error handling capabilities.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "body",
+      "signature": "body(code)",
+      "returnType": "MethodBuilder",
+      "description": "Sets the method body using complete Java code.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Complete Java method body code"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "methodBuilder.body(`\n    return \"Hello, \" + name + \"! You are \" + age + \" years old.\";\n`);"
+      ],
+      "since": "1.8.4"
+    },
+    {
+      "name": "buildBody",
+      "signature": "buildBody()",
+      "returnType": "BodyBuilder<MethodBuilder>",
+      "description": "Creates a BodyBuilder for mixed Java/JavaScript method implementation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const bodyBuilder = methodBuilder.buildBody();"
+      ]
+    },
+    {
+      "name": "guestBody",
+      "signature": "guestBody(methodWrapper)",
+      "returnType": "MethodBuilder",
+      "description": "Sets the method body to execute JavaScript (Guest) code.",
+      "parameters": [
+        {
+          "name": "methodWrapper",
+          "type": "MethodWrapper",
+          "description": "JavaScript function to execute as method body"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const wrapper = JavaWrapper.methodToJava((self, args) => {\n    const input = args[0];\n    const result = input.toUpperCase();\n    Chat.log(`Processed: ${input} -> ${result}`);\n    return result;\n});\n\nmethodBuilder.guestBody(wrapper);"
+      ]
+    },
+    {
+      "name": "addAnnotation",
+      "signature": "addAnnotation(type)",
+      "returnType": "AnnotationBuilder<MethodBuilder>",
+      "description": "Adds an annotation to the method.",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "Class<?>",
+          "description": "The annotation type to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const annotationBuilder = methodBuilder.addAnnotation(MyMethodAnnotation.class);",
+        "methodBuilder\n    .addAnnotation(Override.class)\n    .finish()\n    .addAnnotation(MyMethodAnnotation.class)\n        .putString(\"description\", \"Calculates user display name\")\n        .putString(\"version\", \"1.0\")\n        .finish()\n    .body(`return this.name;`);"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "ClassBuilder<T>",
+      "description": "Finalizes the method and returns to the parent ClassBuilder.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = methodBuilder.finish();"
+      ]
+    }
+  ]
+}

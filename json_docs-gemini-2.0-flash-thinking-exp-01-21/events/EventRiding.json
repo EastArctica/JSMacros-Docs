@@ -1,0 +1,38 @@
+{
+  "name": "EventRiding",
+  "fullClassName": "EventRiding",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the player starts or stops riding an entity.",
+  "overview": "Fires when the player starts or stops riding any entity\nThe `state` field indicates if riding is starting (true) or stopping (false)\nThe `entity` field contains the entity being ridden\nNot cancellable\nUseful for travel tracking and vehicle management",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "state",
+      "signature": "state",
+      "returnType": "boolean",
+      "description": "Whether the player is starting to ride or stopping. `true` - Player is starting to ride an entity; `false` - Player is stopping riding an entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "entity",
+      "signature": "entity",
+      "returnType": "EntityHelper | null",
+      "description": "A helper object for the entity being ridden. This provides access to the entity's properties like name, type, position, health, etc. Can be `null` when stopping riding or in some edge cases.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

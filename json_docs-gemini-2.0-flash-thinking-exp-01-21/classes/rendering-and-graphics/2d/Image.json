@@ -1,0 +1,424 @@
+{
+  "name": "Image",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.components.Image",
+  "extends": null,
+  "since": "JsMacros 1.2.3",
+  "description": "The `Image` class is a powerful rendering component for displaying images in JSMacros 2D rendering contexts. It provides comprehensive control over image positioning, sizing, coloring, rotation, and texture region selection.",
+  "overview": "The `Image` class is a powerful rendering component for displaying images in JSMacros 2D rendering contexts. It provides comprehensive control over image positioning, sizing, coloring, rotation, and texture region selection. This class is commonly used for creating custom HUDs, overlays, GUI elements, and visual effects in Minecraft scripts.\n\nImage instances can display portions of textures, apply color tints and transparency, support rotation transformations, and can be easily positioned relative to other elements using the built-in alignment system.",
+  "constructors": [
+    {
+      "signature": "new Image(x, y, width, height, zIndex, color, id, imageX, imageY, regionWidth, regionHeight, textureWidth, textureHeight, rotation)",
+      "description": "Creates a new Image with the specified properties.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position of the image"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position of the image"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width to render the image"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height to render the image"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-order depth for rendering"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color tint (0xRRGGBB)"
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "description": "Texture identifier (e.g., \"minecraft:texture/gui/icons.png\")"
+        },
+        {
+          "name": "imageX",
+          "type": "int",
+          "description": "X coordinate in texture to start from"
+        },
+        {
+          "name": "imageY",
+          "type": "int",
+          "description": "Y coordinate in texture to start from"
+        },
+        {
+          "name": "regionWidth",
+          "type": "int",
+          "description": "Width of the region in texture to use"
+        },
+        {
+          "name": "regionHeight",
+          "type": "int",
+          "description": "Height of the region in texture to use"
+        },
+        {
+          "name": "textureWidth",
+          "type": "int",
+          "description": "Total width of the texture"
+        },
+        {
+          "name": "textureHeight",
+          "type": "int",
+          "description": "Total height of the texture"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        }
+      ]
+    },
+    {
+      "signature": "new Image(x, y, width, height, zIndex, alpha, color, id, imageX, imageY, regionWidth, regionHeight, textureWidth, textureHeight, rotation)",
+      "description": "Creates a new Image with separate alpha and color values.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "description": "X position of the image"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "description": "Y position of the image"
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "description": "Width to render the image"
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "description": "Height to render the image"
+        },
+        {
+          "name": "zIndex",
+          "type": "int",
+          "description": "Z-order depth for rendering"
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "description": "Alpha transparency (0-255)"
+        },
+        {
+          "name": "color",
+          "type": "int",
+          "description": "RGB color tint (0xRRGGBB)"
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "description": "Texture identifier"
+        },
+        {
+          "name": "imageX",
+          "type": "int",
+          "description": "X coordinate in texture to start from"
+        },
+        {
+          "name": "imageY",
+          "type": "int",
+          "description": "Y coordinate in texture to start from"
+        },
+        {
+          "name": "regionWidth",
+          "type": "int",
+          "description": "Width of the region in texture to use"
+        },
+        {
+          "name": "regionHeight",
+          "type": "int",
+          "description": "Height of the region in texture to use"
+        },
+        {
+          "name": "textureWidth",
+          "type": "int",
+          "description": "Total width of the texture"
+        },
+        {
+          "name": "textureHeight",
+          "type": "int",
+          "description": "Total height of the texture"
+        },
+        {
+          "name": "rotation",
+          "type": "float",
+          "description": "Rotation angle in degrees (clockwise)"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "pos",
+      "signature": "pos(x: number, y: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the X and Y position of the image during the builder configuration.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "X position of the image."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "Y position of the image."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".pos(50, 50)"
+      ]
+    },
+    {
+      "name": "size",
+      "signature": "size(width: number, height: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the rendering width and height of the image during the builder configuration.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "number",
+          "description": "Width to render the image."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "Height to render the image."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".size(16, 16)"
+      ]
+    },
+    {
+      "name": "regions",
+      "signature": "regions(imageX: number, imageY: number, regionWidth: number, regionHeight: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the texture region to use within the source texture during the builder configuration.",
+      "parameters": [
+        {
+          "name": "imageX",
+          "type": "number",
+          "description": "X coordinate in texture to start from."
+        },
+        {
+          "name": "imageY",
+          "type": "number",
+          "description": "Y coordinate in texture to start from."
+        },
+        {
+          "name": "regionWidth",
+          "type": "number",
+          "description": "Width of the region in texture to use."
+        },
+        {
+          "name": "regionHeight",
+          "type": "number",
+          "description": "Height of the region in texture to use."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".regions(16, 16, 16, 16)"
+      ]
+    },
+    {
+      "name": "color",
+      "signature": "color(rgbColor: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the RGB color tint for the image during the builder configuration.",
+      "parameters": [
+        {
+          "name": "rgbColor",
+          "type": "number",
+          "description": "RGB color tint (0xRRGGBB)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".color(0x00FF00)"
+      ]
+    },
+    {
+      "name": "alpha",
+      "signature": "alpha(alphaValue: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the alpha transparency for the image during the builder configuration.",
+      "parameters": [
+        {
+          "name": "alphaValue",
+          "type": "number",
+          "description": "Alpha transparency (0-255)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".alpha(200)"
+      ]
+    },
+    {
+      "name": "rotation",
+      "signature": "rotation(angle: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the rotation angle for the image during the builder configuration.",
+      "parameters": [
+        {
+          "name": "angle",
+          "type": "number",
+          "description": "Rotation angle in degrees (clockwise)."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".rotation(45)"
+      ]
+    },
+    {
+      "name": "zIndex",
+      "signature": "zIndex(value: number): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the Z-order depth for rendering during the builder configuration.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "Z-order depth value."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".zIndex(10)"
+      ]
+    },
+    {
+      "name": "build",
+      "signature": "build(): Image",
+      "returnType": "Image",
+      "description": "Constructs and returns a new Image instance from the builder's current configuration.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        ".build()"
+      ]
+    },
+    {
+      "name": "setRotation",
+      "signature": "setRotation(angle: number): void",
+      "returnType": "void",
+      "description": "Sets the rotation angle of an already created Image instance.",
+      "parameters": [
+        {
+          "name": "angle",
+          "type": "number",
+          "description": "Rotation angle in degrees."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "icon.setRotation(rotation);"
+      ]
+    },
+    {
+      "name": "setSize",
+      "signature": "setSize(width: number, height: number): void",
+      "returnType": "void",
+      "description": "Sets the rendering width and height of an already created Image instance.",
+      "parameters": [
+        {
+          "name": "width",
+          "type": "number",
+          "description": "Width to render the image."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "Height to render the image."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "icon.setSize(newSize, newSize);"
+      ]
+    },
+    {
+      "name": "setPos",
+      "signature": "setPos(x: number, y: number): void",
+      "returnType": "void",
+      "description": "Sets the X and Y position of an already created Image instance.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "X position of the image."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "Y position of the image."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "icon.setPos(100 - (newSize - baseSize) / 2, 100 - (newSize - baseSize) / 2);"
+      ]
+    },
+    {
+      "name": "align",
+      "signature": "align(horizontal: string, vertical: string): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Sets the alignment of the image relative to its parent container during the builder configuration.",
+      "parameters": [
+        {
+          "name": "horizontal",
+          "type": "string",
+          "description": "Horizontal alignment (e.g., 'left', 'center', 'right')."
+        },
+        {
+          "name": "vertical",
+          "type": "string",
+          "description": "Vertical alignment (e.g., 'top', 'center', 'bottom')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".align(\"center\", \"center\")"
+      ]
+    },
+    {
+      "name": "fromCustomImage",
+      "signature": "fromCustomImage(customImage: CustomImage): Image.Builder",
+      "returnType": "Image.Builder",
+      "description": "Configures the image to use a CustomImage object, automatically setting its dimensions and regions based on the custom image's properties, via the builder.",
+      "parameters": [
+        {
+          "name": "customImage",
+          "type": "CustomImage",
+          "description": "The custom image object to use."
+        }
+      ],
+      "static": false,
+      "examples": [
+        ".fromCustomImage(customImage)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "name": "WrappedClassInstance",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.classes.WrappedClassInstance",
+  "extends": null,
+  "since": "JSMacros 1.6.5",
+  "description": "The `WrappedClassInstance` class is an advanced reflection-based wrapper that provides dynamic access to Java class instances and their members in JSMacros scripts. This class enables scripters to interact with any Java object, invoke methods, and access fields using reflection, making it possible to work with classes that don't have dedicated helper classes.\n\nThis class is primarily used through the `FReflection` library and provides powerful capabilities for advanced users who need to interact with Minecraft's internal APIs or external libraries.",
+  "overview": "The `WrappedClassInstance` class serves as a universal wrapper around any Java object, allowing:\n\n- Dynamic method invocation using method names or signatures\n- Field access and modification for any accessible field\n- Support for inheritance hierarchies and interface implementation\n- Automatic parameter type conversion and compatibility checking\n- Method signature parsing for precise method identification",
+  "constructors": [
+    {
+      "signature": "new WrappedClassInstance(instance)",
+      "description": "Creates a new wrapper around an existing Java instance, automatically detecting its class type.",
+      "parameters": [
+        {
+          "name": "instance",
+          "type": "T",
+          "description": "The Java object to wrap"
+        }
+      ]
+    },
+    {
+      "signature": "new WrappedClassInstance(instance, tClass)",
+      "description": "Creates a wrapper for a class type, useful when working with static members or when the instance is null.",
+      "parameters": [
+        {
+          "name": "instance",
+          "type": "T",
+          "description": "The Java object to wrap (can be null)"
+        },
+        {
+          "name": "tClass",
+          "type": "Class<T>",
+          "description": "The class type to use for reflection"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "getRawInstance",
+      "signature": "getRawInstance()",
+      "returnType": "T",
+      "description": "Returns the raw Java instance wrapped by this object.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function exploreObject(obj, name) {\n    const wrapped = reflection.wrapInstace(obj);\n    Chat.log(`\\n=== Exploring ${name} ===`);\n\n    try {\n        // Get basic info\n        const rawClass = wrapped.getRawClass();\n        Chat.log(`Class: ${rawClass.getName()}`);\n\n        // Try some common Object methods\n        const toString = wrapped.invokeMethod(\"toString\");\n        const hashCode = wrapped.invokeMethod(\"hashCode\");\n\n        Chat.log(`toString(): ${toString}`);\n        Chat.log(`hashCode(): ${hashCode}`);\n\n    } catch (e) {\n        Chat.log(`Error exploring ${name}: ${e.message}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getRawClass",
+      "signature": "getRawClass()",
+      "returnType": "Class<T>",
+      "description": "Returns the raw Java Class object of the wrapped instance.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "function exploreObject(obj, name) {\n    const wrapped = reflection.wrapInstace(obj);\n    Chat.log(`\\n=== Exploring ${name} ===`);\n\n    try {\n        // Get basic info\n        const rawClass = wrapped.getRawClass();\n        Chat.log(`Class: ${rawClass.getName()}`);\n\n        // Try some common Object methods\n        const toString = wrapped.invokeMethod(\"toString\");\n        const hashCode = wrapped.invokeMethod(\"hashCode\");\n\n        Chat.log(`toString(): ${toString}`);\n        Chat.log(`hashCode(): ${hashCode}`);\n\n    } catch (e) {\n        Chat.log(`Error exploring ${name}: ${e.message}`);\n    }\n}"
+      ]
+    },
+    {
+      "name": "getFieldValue",
+      "signature": "getFieldValue(fieldName)",
+      "returnType": "Object",
+      "description": "Retrieves the value of a field by its name from the wrapped instance. The returned value is often a `WrappedClassInstance` if it's a Java object, or a primitive JavaScript type.",
+      "parameters": [
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to retrieve."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Working with StringBuilder internals\nconst StringBuilder = Java.type(\"java.lang.StringBuilder\");\nconst sb = new StringBuilder(\"Initial text\");\nconst wrapped = reflection.wrapInstace(sb);\n\n// Access internal fields\nconst value = wrapped.getFieldValue(\"value\");\nconst count = wrapped.getFieldValue(\"count\");\n\nChat.log(`Internal array length: ${value.length}`);\nChat.log(`Character count: ${count}`);",
+        "// Advanced collection manipulation\nconst reflection = Fs.load(\"lib:FReflection.js\");\n\n// Create and manipulate ArrayList\nconst ArrayList = Java.type(\"java.util.ArrayList\");\nconst list = new ArrayList();\nconst wrapped = reflection.wrapInstace(list);\n\n// Add elements\nwrapped.invokeMethod(\"add\", \"Item 1\");\nwrapped.invokeMethod(\"add\", \"Item 2\");\nwrapped.invokeMethod(\"add\", \"Item 3\");\n\n// Access internal storage\nconst elementData = wrapped.getFieldValue(\"elementData\");\nconst size = wrapped.invokeMethod(\"size\");\n\nChat.log(`Array capacity: ${elementData.length}`);\nChat.log(`Actual size: ${size}`);",
+        "function safeGetField(wrapped, fieldName) {\n    try {\n        return wrapped.getFieldValue(fieldName);\n    } catch (e) {\n        Chat.log(`Error getting field ${fieldName}: ${e.message}`);\n        return null;\n    }\n}\n\n// Safe field access\nconst capacity = safeGetField(wrapped, \"elementData\");\nif (capacity !== null) {\n    Chat.log(`Array length: ${capacity.length}`);\n}"
+      ]
+    },
+    {
+      "name": "getFieldValueAsClass",
+      "signature": "getFieldValueAsClass(asClass, fieldName)",
+      "returnType": "Object",
+      "description": "Retrieves the value of a field by its name from the wrapped instance, ensuring the returned value is wrapped with the specified class type if it's a Java object.",
+      "parameters": [
+        {
+          "name": "asClass",
+          "type": "Class<?>",
+          "description": "The class type to wrap the field value as."
+        },
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to retrieve."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setFieldValue",
+      "signature": "setFieldValue(fieldName, fieldValue)",
+      "returnType": "void",
+      "description": "Sets the value of a field by its name on the wrapped instance.",
+      "parameters": [
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to set."
+        },
+        {
+          "name": "fieldValue",
+          "type": "Object",
+          "description": "The new value to set for the field."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Working with StringBuilder internals\nconst StringBuilder = Java.type(\"java.lang.StringBuilder\");\nconst sb = new StringBuilder(\"Initial text\");\nconst wrapped = reflection.wrapInstace(sb);\n\n// Access internal fields\nconst value = wrapped.getFieldValue(\"value\");\nconst count = wrapped.getFieldValue(\"count\");\n\nChat.log(`Internal array length: ${value.length}`);\nChat.log(`Character count: ${count}`);\n\n// Modify internal state\nwrapped.setFieldValue(\"count\", 5);\nChat.log(`New length: ${sb.length()}`);"
+      ]
+    },
+    {
+      "name": "setFieldValueAsClass",
+      "signature": "setFieldValueAsClass(asClass, fieldName, fieldValue)",
+      "returnType": "void",
+      "description": "Sets the value of a field by its name on the wrapped instance, using the specified class type for reflection and the given value.",
+      "parameters": [
+        {
+          "name": "asClass",
+          "type": "Class<?>",
+          "description": "The class type to use for reflection when setting the field."
+        },
+        {
+          "name": "fieldName",
+          "type": "String",
+          "description": "The name of the field to set."
+        },
+        {
+          "name": "fieldValue",
+          "type": "Object",
+          "description": "The new value to set for the field."
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "invokeMethod",
+      "signature": "invokeMethod(methodNameOrSig, ...params)",
+      "returnType": "Object",
+      "description": "Invokes a method on the wrapped instance by its name or full signature with the given parameters. Returns the result of the method call, wrapped as a `WrappedClassInstance` if it's a Java object.",
+      "parameters": [
+        {
+          "name": "methodNameOrSig",
+          "type": "String",
+          "description": "The name of the method or its full JNI-style signature."
+        },
+        {
+          "name": "...params",
+          "type": "Object[]",
+          "description": "The parameters to pass to the method."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Basic Object Interaction\nconst reflection = Fs.load(\"lib:FReflection.js\");\n\n// Wrap a Java HashMap\nconst HashMap = Java.type(\"java.util.HashMap\");\nconst map = new HashMap();\nconst wrappedMap = reflection.wrapInstace(map);\n\n// Use methods through reflection\nwrappedMap.invokeMethod(\"put\", \"key1\", \"value1\");\nwrappedMap.invokeMethod(\"put\", \"key2\", \"value2\");\n\n// Get values\nconst value = wrappedMap.invokeMethod(\"get\", \"key1\");\nChat.log(`Retrieved value: ${value}`);\n\n// Check size\nconst size = wrappedMap.invokeMethod(\"size\");\nChat.log(`Map size: ${size}`);",
+        "// Using exact method signatures for overloaded methods\nconst String = Java.type(\"java.lang.String\");\nconst testString = new String(\"Hello World\");\nconst wrapped = reflection.wrapInstace(testString);\n\n// Different ways to call substring\nconst sub1 = wrapped.invokeMethod(\"substring\", 3); // By name\nconst sub2 = wrapped.invokeMethod(\"substring(II)Ljava/lang/String;\", 3, 8); // By signature\n\nChat.log(`Substring by name: ${sub1}`);\nChat.log(`Substring by signature: ${sub2}`);",
+        "function safeInvoke(wrapped, methodName, ...params) {\n    try {\n        return wrapped.invokeMethod(methodName, ...params);\n    } catch (e) {\n        Chat.log(`Error invoking ${methodName}: ${e.message}`);\n        return null;\n    }\n}\n\n// Example usage with error handling\nconst list = new java.util.ArrayList();\nconst wrapped = reflection.wrapInstace(list);\n\n// Safe method invocation\nconst result = safeInvoke(wrapped, \"get\", 0);\nif (result !== null) {\n    Chat.log(`Got result: ${result}`);\n} else {\n    Chat.log(\"Method failed gracefully\");\n}"
+      ]
+    },
+    {
+      "name": "invokeMethodAsClass",
+      "signature": "invokeMethodAsClass(asClass, methodNameOrSig, ...params)",
+      "returnType": "Object",
+      "description": "Invokes a method on the wrapped instance by its name or full signature, using the specified class type for reflection and the given parameters. Returns the result of the method call, wrapped as a `WrappedClassInstance` if it's a Java object.",
+      "parameters": [
+        {
+          "name": "asClass",
+          "type": "Class<?>",
+          "description": "The class type to use for method lookup."
+        },
+        {
+          "name": "methodNameOrSig",
+          "type": "String",
+          "description": "The name of the method or its full JNI-style signature."
+        },
+        {
+          "name": "...params",
+          "type": "Object[]",
+          "description": "The parameters to pass to the method."
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

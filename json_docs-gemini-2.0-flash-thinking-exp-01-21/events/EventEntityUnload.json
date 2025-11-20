@@ -1,0 +1,20 @@
+{
+  "name": "EventEntityUnload",
+  "fullClassName": "EventEntityUnload",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when an entity unloads from the world.",
+  "overview": "Fires when any entity unloads from the world\nOccurs when entities move out of render distance or are removed\nIncludes entity death, despawning, or moving too far away\nNot cancellable\nCan be used to clean up entity tracking systems",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

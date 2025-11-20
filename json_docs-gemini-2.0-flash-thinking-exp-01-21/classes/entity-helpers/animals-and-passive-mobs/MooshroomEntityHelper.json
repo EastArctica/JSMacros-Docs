@@ -1,0 +1,53 @@
+{
+  "name": "MooshroomEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.passive.MooshroomEntityHelper",
+  "extends": "AnimalEntityHelper<MooshroomEntity>",
+  "since": "JSMacros 1.8.4",
+  "description": "The `MooshroomEntityHelper` class provides specialized access to Mooshroom entities in Minecraft, offering methods for shearing mechanics, variant identification, and mooshroom-specific behaviors. This class extends `AnimalEntityHelper`, inheriting comprehensive functionality for animal breeding, feeding behaviors, and mob management while adding mooshroom-specific features like variant checking and shearing capabilities.",
+  "overview": "This helper is essential for scripts that manage mooshroom farms, automate mushroom collection, handle mooshroom breeding, or any functionality that requires interaction with Minecraft's unique mooshroom entities that combine cow behaviors with mushroom-related mechanics.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "isShearable",
+      "signature": "isShearable()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the mooshroom is currently shearable and ready to drop 5 mushrooms of its corresponding variant color. When a mooshroom is sheared, it transforms into a regular cow entity, making the original MooshroomEntityHelper instance invalid.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mooshroom = entity.asAnimal();\nconst shearableStatus = mooshroom.isShearable();",
+        "if (mooshroom.isShearable() && player.getMainHand().getId() === \"minecraft:shears\") {",
+        "  // Logic to shear the mooshroom",
+        "}"
+      ]
+    },
+    {
+      "name": "isRed",
+      "signature": "isRed()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the mooshroom is a red variant. This affects the color of mushrooms dropped when sheared.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mooshroom = entity.asAnimal();\nconst variant = mooshroom.isRed() ? \"red\" : mooshroom.isBrown() ? \"brown\" : \"unknown\";",
+        "if (mooshroom.isRed()) {",
+        "  Chat.log(\"This is a red mooshroom!\");",
+        "}"
+      ]
+    },
+    {
+      "name": "isBrown",
+      "signature": "isBrown()",
+      "returnType": "boolean",
+      "description": "Returns `true` if the mooshroom is a brown variant. This affects the color of mushrooms dropped when sheared.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const mooshroom = entity.asAnimal();\nconst variant = mooshroom.isRed() ? \"red\" : mooshroom.isBrown() ? \"brown\" : \"unknown\";",
+        "if (mooshroom.isBrown()) {",
+        "  Chat.log(\"This is a brown mooshroom!\");",
+        "}"
+      ]
+    }
+  ]
+}

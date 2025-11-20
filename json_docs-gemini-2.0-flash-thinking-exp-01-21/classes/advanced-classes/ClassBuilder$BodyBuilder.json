@@ -1,0 +1,78 @@
+{
+  "name": "BodyBuilder",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.library.impl.classes.ClassBuilder.BodyBuilder<T>",
+  "extends": null,
+  "since": "JSMacros 1.8.4",
+  "description": "The `ClassBuilder.BodyBuilder` class is an advanced builder for creating method bodies that combine Java bytecode with JavaScript (Guest) code. This powerful tool enables seamless integration between compiled Java code and runtime JavaScript execution, allowing you to build sophisticated methods with mixed execution contexts.",
+  "overview": "BodyBuilder instances are obtained through the `buildBody()` method of MethodBuilder or ConstructorBuilder and provide a fluent API for constructing method bodies that can execute both Java code and JavaScript functions within the same method implementation.\n\nBodyBuilder instances are created through the buildBody() method of MethodBuilder or ConstructorBuilder.\n\nThe \"Usage Examples\" section provides various scenarios for combining Java and JavaScript logic, including simple mixed code, data processing with JavaScript enhancement, error handling, complex state management, and asynchronous JavaScript integration.\n\n\"Advanced Patterns\" demonstrates conditional JavaScript execution and multi-step processing pipelines.\n\n\"Performance Considerations\" highlights important aspects such as minimizing execution context switching, managing memory usage, and implementing robust error handling at both Java and JavaScript levels. Best practices include grouping related operations, validating parameters early, leveraging JavaScript for complex logic, and balancing performance with flexibility.\n\nRelated classes include `ClassBuilder.MethodBuilder`, `ClassBuilder.ConstructorBuilder` for obtaining BodyBuilder instances, and `JavaWrapper` and `MethodWrapper` for integrating JavaScript functions.\n\nThe BodyBuilder represents one of the most powerful features of the ClassBuilder system, enabling seamless integration between compiled Java bytecode and dynamic JavaScript execution, creating unprecedented flexibility in runtime code generation and execution.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "appendJavaCode",
+      "signature": "appendJavaCode(code)",
+      "returnType": "BodyBuilder<T>",
+      "description": "Appends Java bytecode code to the method body.",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "The Java code to append"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "bodyBuilder.appendJavaCode(\"int result = this.calculate();\");",
+        "bodyBuilder.appendJavaCode(\"if (result > 0) {\");",
+        "bodyBuilder.appendJavaCode(\"    Chat.log(\\\"Positive result: \\\" + result);\");",
+        "}"
+      ]
+    },
+    {
+      "name": "appendGuestCode",
+      "signature": "appendGuestCode(methodWrapper, parameterCode, returnCode)",
+      "returnType": "BodyBuilder<T>",
+      "description": "Appends JavaScript (Guest) code that will be executed at runtime.",
+      "parameters": [
+        {
+          "name": "methodWrapper",
+          "type": "MethodWrapper",
+          "description": "JavaScript function wrapped for Java execution"
+        },
+        {
+          "name": "parameterCode",
+          "type": "string",
+          "description": "Java code that creates Object[] parameter array"
+        },
+        {
+          "name": "returnCode",
+          "type": "string",
+          "description": "Java code for return type casting (can be null)"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const wrapper = JavaWrapper.methodToJava((self, args) => {",
+        "    const value = args[0];",
+        "    return value.toUpperCase();",
+        "});",
+        "",
+        "bodyBuilder.appendGuestCode(",
+        "    wrapper,",
+        "    \"new Object[]{input}\",           // Parameters to pass to JavaScript",
+        "    \"String.class\"                   // Return type casting",
+        ");"
+      ]
+    },
+    {
+      "name": "finish",
+      "signature": "finish()",
+      "returnType": "T",
+      "description": "Finalizes the method body and returns to the parent builder.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const parentBuilder = bodyBuilder.finish();"
+      ]
+    }
+  ]
+}

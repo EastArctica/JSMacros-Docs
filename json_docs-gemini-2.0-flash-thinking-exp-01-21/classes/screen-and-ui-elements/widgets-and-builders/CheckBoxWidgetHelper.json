@@ -1,0 +1,114 @@
+{
+  "name": "CheckBoxWidgetHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.screen.CheckBoxWidgetHelper",
+  "extends": "ClickableWidgetHelper<CheckBoxWidgetHelper, CheckboxWidget>",
+  "since": "JsMacros 1.8.4",
+  "description": "The `CheckBoxWidgetHelper` class provides a wrapper for Minecraft's checkbox widget functionality in JSMacros custom screens. It represents a checkbox UI element that can be checked or unchecked, display text labels, handle user interactions, and trigger callback functions when the state changes. CheckBox widgets are commonly used for boolean settings, toggle options, and user preferences in custom UI screens.",
+  "overview": "The `CheckBoxWidgetHelper` class offers comprehensive checkbox functionality including:\n- Visual checkbox with check/uncheck states\n- Customizable text labels and positioning\n- Click interaction handling with callback support\n- Tooltip support for additional information\n- Builder pattern for easy creation and configuration\n- Integration with JSMacros custom screen system\n- Inherited widget properties (positioning, sizing, visibility, etc.)",
+  "constructors": [
+    {
+      "signature": "screen.addCheckbox(x: number, y: number, width: number, height: number, message: string, checked: boolean, action: Consumer<CheckBoxWidgetHelper>)",
+      "description": "Creates a basic checkbox widget at the specified position and size, with a given message, initial checked state, and a callback function for state changes. This is one of the primary ways to instantiate a CheckBoxWidgetHelper.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The x-coordinate of the top-left corner of the checkbox."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The y-coordinate of the top-left corner of the checkbox."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the checkbox area."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the checkbox area."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The text label displayed next to the checkbox."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "description": "The initial checked state of the checkbox (true for checked, false for unchecked)."
+        },
+        {
+          "name": "action",
+          "type": "Consumer<CheckBoxWidgetHelper>",
+          "description": "A callback function executed when the checkbox state changes. Receives the CheckBoxWidgetHelper instance as an argument."
+        }
+      ]
+    },
+    {
+      "signature": "screen.addCheckbox(x: number, y: number, width: number, height: number, zIndex: number, message: string, checked: boolean, showMessage: boolean, action: Consumer<CheckBoxWidgetHelper>)",
+      "description": "Creates a checkbox widget with additional control over its z-index (render order) and whether its message label is visible. This provides more granular control during instantiation.",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "number",
+          "description": "The x-coordinate of the top-left corner of the checkbox."
+        },
+        {
+          "name": "y",
+          "type": "number",
+          "description": "The y-coordinate of the top-left corner of the checkbox."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "The width of the checkbox area."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "The height of the checkbox area."
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "description": "The z-index (render order) of the checkbox. Higher values render on top."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The text label displayed next to the checkbox."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "description": "The initial checked state of the checkbox (true for checked, false for unchecked)."
+        },
+        {
+          "name": "showMessage",
+          "type": "boolean",
+          "description": "If true, the text label is displayed; otherwise, it's hidden."
+        },
+        {
+          "name": "action",
+          "type": "Consumer<CheckBoxWidgetHelper>",
+          "description": "A callback function executed when the checkbox state changes. Receives the CheckBoxWidgetHelper instance as an argument."
+        }
+      ]
+    },
+    {
+      "signature": "screen.checkBoxBuilder(initialChecked?: boolean): CheckBoxWidgetHelper.CheckBoxBuilder",
+      "description": "Initializes a fluent builder for creating and configuring a `CheckBoxWidgetHelper` instance. The final `build()` method, called on the returned builder, constructs and adds the widget to the screen. This pattern allows for more complex and readable configuration.",
+      "parameters": [
+        {
+          "name": "initialChecked",
+          "type": "boolean",
+          "description": "Optional. The initial checked state for the checkbox to be built (true for checked, false for unchecked). Defaults to false if not provided."
+        }
+      ]
+    }
+  ],
+  "methods": []
+}

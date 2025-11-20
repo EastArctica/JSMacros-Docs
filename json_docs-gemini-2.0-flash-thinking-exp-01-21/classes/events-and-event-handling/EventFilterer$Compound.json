@@ -1,0 +1,58 @@
+{
+  "name": "EventFilterer$Compound",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.event.EventFilterer$Compound",
+  "extends": "EventFilterer",
+  "since": "1.9.1",
+  "description": "The `EventFilterer$Compound` interface is a specialized interface within the EventFilterer system that defines filters capable of being combined with other filters using logical operations.",
+  "overview": "The `EventFilterer$Compound` interface is a specialized interface within the EventFilterer system that defines filters capable of being combined with other filters using logical operations. This interface is implemented by filter classes that can participate in complex filtering compositions, allowing scripts to create sophisticated event filtering logic using AND, OR, and NOT operations.\n\nFilters implementing this interface can be combined using methods like `JsMacros.createComposedEventFilterer()` and `JsMacros.invertEventFilterer()`, enabling the creation of compound filters that can evaluate multiple conditions simultaneously. This is essential for building complex event processing systems that need to handle multiple criteria in a single, efficient filter operation.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "checkCyclic",
+      "signature": "void checkCyclic(EventFilterer.Compound base)",
+      "returnType": "void",
+      "description": "This method is used to detect and prevent infinite loops in compound filter chains by checking if a filter references itself either directly or indirectly through other compound filters.",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "EventFilterer.Compound",
+          "description": "The base compound filter to check against for cyclic references"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// This method is typically used internally by JsMacros\n// when combining filters to prevent infinite loops\n\n// Example of what would cause a cyclic reference (this is prevented internally):\nconst filterA = JsMacros.createEventFilterer(\"RecvMessage\");\nconst composed = JsMacros.createComposedEventFilterer(filterA);\n// composed.and(composed); // This would be detected as cyclic"
+      ]
+    },
+    {
+      "name": "canFilter",
+      "signature": "boolean canFilter(String event)",
+      "returnType": "boolean",
+      "description": "`true` if the filterer can handle this event type",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "String",
+          "description": "The event name to check"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "test",
+      "signature": "boolean test(BaseEvent event)",
+      "returnType": "boolean",
+      "description": "`true` if the event should be processed, `false` if it should be filtered out",
+      "parameters": [
+        {
+          "name": "event",
+          "type": "BaseEvent",
+          "description": "The event to test"
+        }
+      ],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "name": "Inventory",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.inventory.Inventory<T extends HandledScreen<?>>",
+  "extends": null,
+  "since": "JsMacros 1.0.8",
+  "description": "The `Inventory` class is a fundamental component in JSMacros that provides comprehensive interaction with Minecraft inventory systems. It represents any open inventory interface, including player inventory, containers, crafting stations, and special GUIs. The Inventory class enables automated item management, slot manipulation, and inventory operations through a unified API.",
+  "overview": "The `Inventory` class serves as the base class for all inventory interactions in JSMacros and provides:\n\n- Universal inventory slot access and manipulation\n- Item searching and filtering capabilities\n- Automated clicking, dragging, and moving operations\n- Support for all vanilla Minecraft inventory types\n- Chain-able methods for complex inventory operations\n- Integration with Minecraft's native inventory handling",
+  "constructors": [
+    {
+      "signature": "new Inventory(inventory)",
+      "description": "Creates a new Inventory instance from a HandledScreen.",
+      "parameters": [
+        {
+          "name": "inventory",
+          "type": "HandledScreen<T>",
+          "description": "The screen handler to create inventory from"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "create",
+      "signature": "static create()",
+      "returnType": "Inventory",
+      "description": "Creates a new Inventory instance for the currently open screen.",
+      "parameters": [],
+      "static": true,
+      "examples": [
+        "const inventory = Inventory.create();",
+        "const inventory = Inventory.create();",
+        "const inventory = Inventory.create();",
+        "const inventory = Inventory.create();",
+        "const inventory = Inventory.create();",
+        "const inventory = Inventory.create();"
+      ]
+    },
+    {
+      "name": "getItems",
+      "signature": "getItems()",
+      "returnType": "java.util.Set<ItemStackHelper>",
+      "description": "Retrieves a set of unique ItemStackHelper objects representing all items currently present in the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const allItems = inventory.getItems();\nChat.log(`Inventory contains ${allItems.size()} different items`);"
+      ]
+    },
+    {
+      "name": "findItem",
+      "signature": "findItem(itemId: string)",
+      "returnType": "number[]",
+      "description": "Finds all slots containing a specific item by its ID.",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type": "string",
+          "description": "The ID of the item to search for (e.g., 'minecraft:oak_planks')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const woodSlots = inventory.findItem(\"minecraft:oak_planks\");\nif (woodSlots.length > 0) {\n    Chat.log(`Found wood in ${woodSlots.length} slots`);\n}",
+        "const slots = inventory.findItem(itemId);",
+        "const coalSlots = inventory.findItem(\"minecraft:coal\");",
+        "const oreSlots = inventory.findItem(\"minecraft:iron_ore\");",
+        "const plankSlots = inventory.findItem(\"minecraft:oak_planks\");"
+      ]
+    },
+    {
+      "name": "swapHotbar",
+      "signature": "swapHotbar(sourceSlot: number, targetHotbarIndex: number)",
+      "returnType": "void",
+      "description": "Swaps an item from a source slot to a hotbar slot, or to another general slot.",
+      "parameters": [
+        {
+          "name": "sourceSlot",
+          "type": "number",
+          "description": "The index of the slot to move the item from."
+        },
+        {
+          "name": "targetHotbarIndex",
+          "type": "number",
+          "description": "The target hotbar index (0-8) or general slot index to move the item to."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.swapHotbar(woodSlots[0], 0);",
+        "inventory.swapHotbar(coalSlots[0], fuelSlot);",
+        "inventory.swapHotbar(oreSlots[0], inputSlot);",
+        "inventory.swapHotbar(plankSlots[0], inputSlots[0]);\nTime.sleep(50);\ninventory.swapHotbar(plankSlots[1], inputSlots[1]);"
+      ]
+    },
+    {
+      "name": "findFreeSlot",
+      "signature": "findFreeSlot(section: string)",
+      "returnType": "number",
+      "description": "Finds the index of the first empty slot within a specified inventory section.",
+      "parameters": [
+        {
+          "name": "section",
+          "type": "string",
+          "description": "The inventory section (e.g., 'main', 'hotbar')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const freeSlot = inventory.findFreeSlot(\"main\");\nif (freeSlot !== -1) {\n    Chat.log(`Empty slot available at: ${freeSlot}`);\n}",
+        "const freeHotbar = inventory.findFreeSlot(\"hotbar\");\nif (freeHotbar !== -1) {\n    inventory.swapHotbar(slot, freeHotbar - 36); // Convert to hotbar index\n    Time.sleep(100);\n}"
+      ]
+    },
+    {
+      "name": "getItemCount",
+      "signature": "getItemCount()",
+      "returnType": "Object<string, number>",
+      "description": "Returns an object mapping item IDs to their total counts across the inventory.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const itemCounts = inventory.getItemCount();\n\n    // Move items to optimal locations\n    for (const [itemId, count] of Object.entries(itemCounts)) {\n        const slots = inventory.findItem(itemId);\n\n        // Consolidate stacks\n        for (let i = 1; i < slots.length; i++) {\n            // Try to quick-move to consolidate\n            inventory.quick(slots[i]);\n            Time.sleep(50); // Small delay for server sync\n        }\n    }",
+        "const itemCounts = inventory.getItemCount();"
+      ]
+    },
+    {
+      "name": "quick",
+      "signature": "quick(slotIndex: number)",
+      "returnType": "void",
+      "description": "Performs a quick-move (shift-click) operation on the specified slot, moving the item to an appropriate location.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The index of the slot to quick-move."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "inventory.quick(slots[i]);\n            Time.sleep(50); // Small delay for server sync",
+        "inventory.quick(outputSlot);\nChat.log(`Collected ${output.getCount()} smelted items`);",
+        "inventory.quick(outputSlot);\nChat.log(`Crafted ${result.getCount()} ${result.getItemId()}`);"
+      ]
+    },
+    {
+      "name": "is",
+      "signature": "is(...types: string[])",
+      "returnType": "boolean",
+      "description": "Checks if the current inventory's type matches any of the provided type names.",
+      "parameters": [
+        {
+          "name": "types",
+          "type": "string[]",
+          "description": "One or more inventory type names to check against (e.g., 'Furnace', 'Creative Inventory')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "if (!inventory.is(\"1 Row Chest\", \"2 Row Chest\", \"3 Row Chest\",\n                     \"4 Row Chest\", \"5 Row Chest\", \"6 Row Chest\",\n                     \"7 Row Chest\", \"8 Row Chest\", \"9 Row Chest\")) {\n        Chat.log(\"Not a chest inventory\");\n        return;\n    }",
+        "if (!inventory.is(\"Furnace\", \"Blast Furnace\", \"Smoker\")) {\n        Chat.log(\"Not a furnace\");\n        return;\n    }",
+        "if (!inventory.is(\"Crafting Table\")) {\n        Chat.log(\"Not a crafting table\");\n        return;\n    }"
+      ]
+    },
+    {
+      "name": "getSlots",
+      "signature": "getSlots(section: string)",
+      "returnType": "number[]",
+      "description": "Retrieves an array of slot indices belonging to a specified inventory section.",
+      "parameters": [
+        {
+          "name": "section",
+          "type": "string",
+          "description": "The inventory section identifier (e.g., 'container', 'input', 'hotbar')."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const containerSlots = inventory.getSlots(\"container\");\n    const hotbarSlots = inventory.getSlots(\"hotbar\");",
+        "const inputSlots = inventory.getSlots(\"input\");\n    const fuelSlots = inventory.getSlots(\"fuel\");\n    const outputSlots = inventory.getSlots(\"output\");",
+        "const inputSlots = inventory.getSlots(\"input\");\n    const outputSlot = inventory.getSlots(\"output\")[0];"
+      ]
+    },
+    {
+      "name": "getSlot",
+      "signature": "getSlot(slotIndex: number)",
+      "returnType": "ItemStackHelper",
+      "description": "Retrieves an ItemStackHelper object representing the item in the specified slot.",
+      "parameters": [
+        {
+          "name": "slotIndex",
+          "type": "number",
+          "description": "The index of the slot to retrieve."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const item = inventory.getSlot(slot);",
+        "const fuel = inventory.getSlot(fuelSlot);",
+        "const input = inventory.getSlot(inputSlot);",
+        "const output = inventory.getSlot(outputSlot);",
+        "const result = inventory.getSlot(outputSlot);"
+      ]
+    },
+    {
+      "name": "getSelectedHotbarSlotIndex",
+      "signature": "getSelectedHotbarSlotIndex()",
+      "returnType": "number",
+      "description": "Gets the index of the currently selected hotbar slot.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const hotbarSlot = inventory.getSelectedHotbarSlotIndex();"
+      ]
+    },
+    {
+      "name": "getType",
+      "signature": "getType()",
+      "returnType": "string",
+      "description": "Returns the string identifier for the type of the current open inventory (e.g., 'Player Inventory', 'Furnace').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "type: inventory.getType()"
+      ]
+    }
+  ]
+}

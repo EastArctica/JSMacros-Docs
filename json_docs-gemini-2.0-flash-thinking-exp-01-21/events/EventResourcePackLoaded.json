@@ -1,0 +1,20 @@
+{
+  "name": "EventResourcePackLoaded",
+  "fullClassName": "EventResourcePackLoaded",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when a resource pack is loaded.",
+  "overview": "Fires when any resource pack is loaded\nOccurs during server connection or resource pack changes\nNot cancellable\nUseful for resource pack monitoring and compatibility checks",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

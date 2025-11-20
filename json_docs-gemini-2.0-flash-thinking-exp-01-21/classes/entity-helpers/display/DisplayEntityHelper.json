@@ -1,0 +1,204 @@
+{
+  "name": "DisplayEntityHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.world.entity.specialized.display.DisplayEntityHelper",
+  "extends": "EntityHelper<DisplayEntity>",
+  "since": "JSMacros 1.9.1",
+  "description": "The `DisplayEntityHelper` class is a specialized wrapper for Minecraft display entities (introduced in 1.19.4), providing access to display entity properties such as transformation, rendering settings, brightness, and visual effects. It serves as the base class for all display entity helpers and offers comprehensive methods for querying display entity information, positioning, interpolation states, and rendering properties.",
+  "overview": "Display entities are special entities used to display blocks, items, or text in the world with advanced customization options for positioning, rotation, scaling, and visual effects. This class is typically obtained through entity-related events, world queries, or when specifically filtering for display entity types.",
+  "constructors": [
+    {
+      "signature": "DisplayEntityHelper()",
+      "description": "DisplayEntityHelper instances are not typically created directly by scripters. Instead, they are obtained through entity-related events (e.g., `EntitySpawn`, `EntityInteract`), world entity queries with display entity filtering, methods that return entities and can be cast to display entities, or entity type checking with `entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")`.",
+      "parameters": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "getLerpTargetX",
+      "signature": "getLerpTargetX()",
+      "returnType": "double",
+      "description": "Gets the target X coordinate for display entity interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor display entity animations and transitions\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    displayEntities.forEach(entity => {\n        const currentPos = entity.getPos();\n        const targetX = entity.getLerpTargetX();\n        const targetY = entity.getLerpTargetY();\n        const targetZ = entity.getLerpTargetZ();\n        const progress = entity.getLerpProgress(1.0);\n\n        // Check if entity is currently animating\n        if (progress < 1.0) {\n            const distance = Math.sqrt(\n                Math.pow(targetX - currentPos.x, 2) +\n                Math.pow(targetY - currentPos.y, 2) +\n                Math.pow(targetZ - currentPos.z, 2)\n            );\n\n            if (distance > 0.01) { // Only report significant movement\n                Chat.actionbar(`Display entity: ${Math.round(progress * 100)}% moved, ${distance.toFixed(2)} blocks remaining`);\n            }\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "getLerpTargetY",
+      "signature": "getLerpTargetY()",
+      "returnType": "double",
+      "description": "Gets the target Y coordinate for display entity interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor display entity animations and transitions\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    displayEntities.forEach(entity => {\n        const currentPos = entity.getPos();\n        const targetX = entity.getLerpTargetX();\n        const targetY = entity.getLerpTargetY();\n        const targetZ = entity.getLerpTargetZ();\n        const progress = entity.getLerpProgress(1.0);\n\n        // Check if entity is currently animating\n        if (progress < 1.0) {\n            const distance = Math.sqrt(\n                Math.pow(targetX - currentPos.x, 2) +\n                Math.pow(targetY - currentPos.y, 2) +\n                Math.pow(targetZ - currentPos.z, 2)\n            );\n\n            if (distance > 0.01) { // Only report significant movement\n                Chat.actionbar(`Display entity: ${Math.round(progress * 100)}% moved, ${distance.toFixed(2)} blocks remaining`);\n            }\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "getLerpTargetZ",
+      "signature": "getLerpTargetZ()",
+      "returnType": "double",
+      "description": "Gets the target Z coordinate for display entity interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Monitor display entity animations and transitions\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    displayEntities.forEach(entity => {\n        const currentPos = entity.getPos();\n        const targetX = entity.getLerpTargetX();\n        const targetY = entity.getLerpTargetY();\n        const targetZ = entity.getLerpTargetZ();\n        const progress = entity.getLerpProgress(1.0);\n\n        // Check if entity is currently animating\n        if (progress < 1.0) {\n            const distance = Math.sqrt(\n                Math.pow(targetX - currentPos.x, 2) +\n                Math.pow(targetY - currentPos.y, 2) +\n                Math.pow(targetZ - currentPos.z, 2)\n            );\n\n            if (distance > 0.01) { // Only report significant movement\n                Chat.actionbar(`Display entity: ${Math.round(progress * 100)}% moved, ${distance.toFixed(2)} blocks remaining`);\n            }\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "getLerpTargetPitch",
+      "signature": "getLerpTargetPitch()",
+      "returnType": "float",
+      "description": "Gets the target pitch (X-rotation) for display entity interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLerpTargetYaw",
+      "signature": "getLerpTargetYaw()",
+      "returnType": "float",
+      "description": "Gets the target yaw (Y-rotation) for display entity interpolation.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getLerpProgress",
+      "signature": "getLerpProgress(float partialTicks)",
+      "returnType": "float",
+      "description": "Gets the current interpolation progress (0.0 to 1.0) for the display entity's transformation.",
+      "parameters": [
+        {
+          "name": "partialTicks",
+          "type": "float",
+          "description": "The partial tick value used for interpolation."
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Monitor display entity animations and transitions\nevents.on(\"Tick\", JavaWrapper.methodToJavaAsync((e) => {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    displayEntities.forEach(entity => {\n        const currentPos = entity.getPos();\n        const targetX = entity.getLerpTargetX();\n        const targetY = entity.getLerpTargetY();\n        const targetZ = entity.getLerpTargetZ();\n        const progress = entity.getLerpProgress(1.0);\n\n        // Check if entity is currently animating\n        if (progress < 1.0) {\n            const distance = Math.sqrt(\n                Math.pow(targetX - currentPos.x, 2) +\n                Math.pow(targetY - currentPos.y, 2) +\n                Math.pow(targetZ - currentPos.z, 2)\n            );\n\n            if (distance > 0.01) { // Only report significant movement\n                Chat.actionbar(`Display entity: ${Math.round(progress * 100)}% moved, ${distance.toFixed(2)} blocks remaining`);\n            }\n        }\n    });\n}));"
+      ]
+    },
+    {
+      "name": "getBillboardMode",
+      "signature": "getBillboardMode()",
+      "returnType": "String",
+      "description": "Gets the billboard mode of the display entity (e.g., 'FIXED', 'VERTICAL', 'HORIZONTAL').",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a comprehensive info panel for display entities\nfunction getDisplayEntityInfo(entity) {\n    const pos = entity.getPos();\n    const billboardMode = entity.getBillboardMode();\n    const viewRange = entity.getViewRange();\n    const width = entity.getDisplayWidth();\n    const height = entity.getDisplayHeight();\n    const glowColor = entity.getGlowColorOverride();\n\n    let info = [];\n    info.push(`=== ${entity.getName().getString()} ===`);\n    info.push(`Type: ${entity.getType()}`);\n    info.push(`Position: [${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}]`);\n    info.push(`Billboard: ${billboardMode}`);\n    info.push(`View Range: ${viewRange.toFixed(1)} blocks`);\n    info.push(`Dimensions: ${width.toFixed(2)} x ${height.toFixed(2)}`);\n\n    if (glowColor !== 0) {\n        info.push(`Glow Color: #${glowColor.toString(16).padStart(6, '0').toUpperCase()}`);\n    }\n\n    // Type-specific information\n    if (entity.is(\"minecraft:block_display\")) {\n        const blockDisplay = entity.asBlockDisplay();\n        if (blockDisplay) {\n            const blockState = blockDisplay.getBlockState();\n            if (blockState) {\n                info.push(`Block: ${blockState.getBlock().getName().getString()}`);\n            }\n        }\n    } else if (entity.is(\"minecraft:item_display\")) {\n        const itemDisplay = entity.asItemDisplay();\n        if (itemDisplay) {\n            const item = itemDisplay.getItem();\n            const transform = itemDisplay.getTransform();\n            info.push(`Item: ${item.getName()} x${item.getCount()}`);\n            if (transform) info.push(`Transform: ${transform}`);\n        }\n    } else if (entity.is(\"minecraft:text_display\")) {\n        const textDisplay = entity.asTextDisplay();\n        if (textDisplay) {\n            const data = textDisplay.getData();\n            if (data) {\n                const text = data.getText().getString();\n                const alignment = data.getAlignment();\n                const lineWidth = data.getLineWidth();\n                info.push(`Text: \"${text}\"`);\n                info.push(`Alignment: ${alignment}`);\n                info.push(`Line Width: ${lineWidth}`);\n            }\n        }\n    }\n\n    return info;\n}\n\n// Display information for the nearest display entity\nconst player = Player.getPlayer();\nif (player) {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    let nearest = null;\n    let minDistance = Infinity;\n\n    displayEntities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance < minDistance) {\n            minDistance = distance;\n            nearest = entity;\n        }\n    });\n\n    if (nearest && minDistance <= 20) {\n        const info = getDisplayEntityInfo(nearest);\n        info.forEach(line => Chat.log(line));\n        Chat.log(`Distance: ${minDistance.toFixed(1)} blocks`);\n    } else {\n        Chat.log(\"No display entities found within 20 blocks\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getVisibilityBoundingBox",
+      "signature": "getVisibilityBoundingBox()",
+      "returnType": "Box",
+      "description": "Gets the visibility bounding box of the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getViewRange",
+      "signature": "getViewRange()",
+      "returnType": "float",
+      "description": "Gets the maximum distance at which the display entity is visible.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a comprehensive info panel for display entities\nfunction getDisplayEntityInfo(entity) {\n    const pos = entity.getPos();\n    const billboardMode = entity.getBillboardMode();\n    const viewRange = entity.getViewRange();\n    const width = entity.getDisplayWidth();\n    const height = entity.getDisplayHeight();\n    const glowColor = entity.getGlowColorOverride();\n\n    let info = [];\n    info.push(`=== ${entity.getName().getString()} ===`);\n    info.push(`Type: ${entity.getType()}`);\n    info.push(`Position: [${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}]`);\n    info.push(`Billboard: ${billboardMode}`);\n    info.push(`View Range: ${viewRange.toFixed(1)} blocks`);\n    info.push(`Dimensions: ${width.toFixed(2)} x ${height.toFixed(2)}`);\n\n    if (glowColor !== 0) {\n        info.push(`Glow Color: #${glowColor.toString(16).padStart(6, '0').toUpperCase()}`);\n    }\n\n    // Type-specific information\n    if (entity.is(\"minecraft:block_display\")) {\n        const blockDisplay = entity.asBlockDisplay();\n        if (blockDisplay) {\n            const blockState = blockDisplay.getBlockState();\n            if (blockState) {\n                info.push(`Block: ${blockState.getBlock().getName().getString()}`);\n            }\n        }\n    } else if (entity.is(\"minecraft:item_display\")) {\n        const itemDisplay = entity.asItemDisplay();\n        if (itemDisplay) {\n            const item = itemDisplay.getItem();\n            const transform = itemDisplay.getTransform();\n            info.push(`Item: ${item.getName()} x${item.getCount()}`);\n            if (transform) info.push(`Transform: ${transform}`);\n        }\n    } else if (entity.is(\"minecraft:text_display\")) {\n        const textDisplay = entity.asTextDisplay();\n        if (textDisplay) {\n            const data = textDisplay.getData();\n            if (data) {\n                const text = data.getText().getString();\n                const alignment = data.getAlignment();\n                const lineWidth = data.getLineWidth();\n                info.push(`Text: \"${text}\"`);\n                info.push(`Alignment: ${alignment}`);\n                info.push(`Line Width: ${lineWidth}`);\n            }\n        }\n    }\n\n    return info;\n}\n\n// Display information for the nearest display entity\nconst player = Player.getPlayer();\nif (player) {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    let nearest = null;\n    let minDistance = Infinity;\n\n    displayEntities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance < minDistance) {\n            minDistance = distance;\n            nearest = entity;\n        }\n    });\n\n    if (nearest && minDistance <= 20) {\n        const info = getDisplayEntityInfo(nearest);\n        info.forEach(line => Chat.log(line));\n        Chat.log(`Distance: ${minDistance.toFixed(1)} blocks`);\n    }\n} else {\n        Chat.log(\"No display entities found within 20 blocks\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getDisplayWidth",
+      "signature": "getDisplayWidth()",
+      "returnType": "float",
+      "description": "Gets the rendered width of the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a comprehensive info panel for display entities\nfunction getDisplayEntityInfo(entity) {\n    const pos = entity.getPos();\n    const billboardMode = entity.getBillboardMode();\n    const viewRange = entity.getViewRange();\n    const width = entity.getDisplayWidth();\n    const height = entity.getDisplayHeight();\n    const glowColor = entity.getGlowColorOverride();\n\n    let info = [];\n    info.push(`=== ${entity.getName().getString()} ===`);\n    info.push(`Type: ${entity.getType()}`);\n    info.push(`Position: [${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}]`);\n    info.push(`Billboard: ${billboardMode}`);\n    info.push(`View Range: ${viewRange.toFixed(1)} blocks`);\n    info.push(`Dimensions: ${width.toFixed(2)} x ${height.toFixed(2)}`);\n\n    if (glowColor !== 0) {\n        info.push(`Glow Color: #${glowColor.toString(16).padStart(6, '0').toUpperCase()}`);\n    }\n\n    // Type-specific information\n    if (entity.is(\"minecraft:block_display\")) {\n        const blockDisplay = entity.asBlockDisplay();\n        if (blockDisplay) {\n            const blockState = blockDisplay.getBlockState();\n            if (blockState) {\n                info.push(`Block: ${blockState.getBlock().getName().getString()}`);\n            }\n        }\n    } else if (entity.is(\"minecraft:item_display\")) {\n        const itemDisplay = entity.asItemDisplay();\n        if (itemDisplay) {\n            const item = itemDisplay.getItem();\n            const transform = itemDisplay.getTransform();\n            info.push(`Item: ${item.getName()} x${item.getCount()}`);\n            if (transform) info.push(`Transform: ${transform}`);\n        }\n    } else if (entity.is(\"minecraft:text_display\")) {\n        const textDisplay = entity.asTextDisplay();\n        if (textDisplay) {\n            const data = textDisplay.getData();\n            if (data) {\n                const text = data.getText().getString();\n                const alignment = data.getAlignment();\n                const lineWidth = data.getLineWidth();\n                info.push(`Text: \"${text}\"`);\n                info.push(`Alignment: ${alignment}`);\n                info.push(`Line Width: ${lineWidth}`);\n            }\n        }\n    }\n\n    return info;\n}\n\n// Display information for the nearest display entity\nconst player = Player.getPlayer();\nif (player) {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    let nearest = null;\n    let minDistance = Infinity;\n\n    displayEntities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance < minDistance) {\n            minDistance = distance;\n            nearest = entity;\n        }\n    });\n\n    if (nearest && minDistance <= 20) {\n        const info = getDisplayEntityInfo(nearest);\n        info.forEach(line => Chat.log(line));\n        Chat.log(`Distance: ${minDistance.toFixed(1)} blocks`);\n    }\n} else {\n        Chat.log(\"No display entities found within 20 blocks\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getDisplayHeight",
+      "signature": "getDisplayHeight()",
+      "returnType": "float",
+      "description": "Gets the rendered height of the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a comprehensive info panel for display entities\nfunction getDisplayEntityInfo(entity) {\n    const pos = entity.getPos();\n    const billboardMode = entity.getBillboardMode();\n    const viewRange = entity.getViewRange();\n    const width = entity.getDisplayWidth();\n    const height = entity.getDisplayHeight();\n    const glowColor = entity.getGlowColorOverride();\n\n    let info = [];\n    info.push(`=== ${entity.getName().getString()} ===`);\n    info.push(`Type: ${entity.getType()}`);\n    info.push(`Position: [${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}]`);\n    info.push(`Billboard: ${billboardMode}`);\n    info.push(`View Range: ${viewRange.toFixed(1)} blocks`);\n    info.push(`Dimensions: ${width.toFixed(2)} x ${height.toFixed(2)}`);\n\n    if (glowColor !== 0) {\n        info.push(`Glow Color: #${glowColor.toString(16).padStart(6, '0').toUpperCase()}`);\n    }\n\n    // Type-specific information\n    if (entity.is(\"minecraft:block_display\")) {\n        const blockDisplay = entity.asBlockDisplay();\n        if (blockDisplay) {\n            const blockState = blockDisplay.getBlockState();\n            if (blockState) {\n                info.push(`Block: ${blockState.getBlock().getName().getString()}`);\n            }\n        }\n    } else if (entity.is(\"minecraft:item_display\")) {\n        const itemDisplay = entity.asItemDisplay();\n        if (itemDisplay) {\n            const item = itemDisplay.getItem();\n            const transform = itemDisplay.getTransform();\n            info.push(`Item: ${item.getName()} x${item.getCount()}`);\n            if (transform) info.push(`Transform: ${transform}`);\n        }\n    }\n else if (entity.is(\"minecraft:text_display\")) {\n        const textDisplay = entity.asTextDisplay();\n        if (textDisplay) {\n            const data = textDisplay.getData();\n            if (data) {\n                const text = data.getText().getString();\n                const alignment = data.getAlignment();\n                const lineWidth = data.getLineWidth();\n                info.push(`Text: \"${text}\"`);\n                info.push(`Alignment: ${alignment}`);\n                info.push(`Line Width: ${lineWidth}`);\n            }\n        }\n    }\n\n    return info;\n}\n\n// Display information for the nearest display entity\nconst player = Player.getPlayer();\nif (player) {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    let nearest = null;\n    let minDistance = Infinity;\n\n    displayEntities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance < minDistance) {\n            minDistance = distance;\n            nearest = entity;\n        }\n    });\n\n    if (nearest && minDistance <= 20) {\n        const info = getDisplayEntityInfo(nearest);\n        info.forEach(line => Chat.log(line));\n        Chat.log(`Distance: ${minDistance.toFixed(1)} blocks`);\n    }\n} else {\n        Chat.log(\"No display entities found within 20 blocks\");\n    }\n}"
+      ]
+    },
+    {
+      "name": "getBrightness",
+      "signature": "getBrightness()",
+      "returnType": "int",
+      "description": "Gets the overall brightness value (0-15) used for rendering the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive lighting analysis for display entities\nfunction analyzeDisplayEntityLighting(entity) {\n    const brightness = entity.getBrightness();\n    const skyBrightness = entity.getSkyBrightness();\n    const blockBrightness = entity.getBlockBrightness();\n    const shadowRadius = entity.getShadowRadius();\n    const shadowStrength = entity.getShadowStrength();\n\n    Chat.log(`=== Lighting Analysis for ${entity.getName().getString()} ===`);\n    Chat.log(`Overall Brightness: ${brightness}/15`);\n    Chat.log(`Sky Light: ${skyBrightness}/15`);\n    Chat.log(`Block Light: ${blockBrightness}/15`);\n    Chat.log(`Shadow: ${(shadowStrength * 100).toFixed(0)}% strength, ${shadowRadius.toFixed(1)} radius`);\n\n    // Lighting quality assessment\n    let quality = \"Poor\";\n    if (brightness >= 12) quality = \"Excellent\";\n    else if (brightness >= 8) quality = \"Good\";\n    else if (brightness >= 4) quality = \"Fair\";\n\n    Chat.log(`Lighting Quality: ${quality}`);\n\n    // Light source analysis\n    if (skyBrightness > blockBrightness) {\n        Chat.log(\"Primary light source: Natural daylight/sky light\");\n    } else if (blockBrightness > 0) {\n        Chat.log(\"Primary light source: Artificial block lighting\");\n    } else {\n        Chat.log(\"Primary light source: Minimal or ambient lighting\");\n    }\n}\n\n// Usage example\nconst displayEntities = World.getEntities().filter(entity =>\n    entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n);\n\ndisplayEntities.forEach(entity => {\n    analyzeDisplayEntityLighting(entity);\n});"
+      ]
+    },
+    {
+      "name": "getSkyBrightness",
+      "signature": "getSkyBrightness()",
+      "returnType": "int",
+      "description": "Gets the sky light component (0-15) of the display entity's brightness.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive lighting analysis for display entities\nfunction analyzeDisplayEntityLighting(entity) {\n    const brightness = entity.getBrightness();\n    const skyBrightness = entity.getSkyBrightness();\n    const blockBrightness = entity.getBlockBrightness();\n    const shadowRadius = entity.getShadowRadius();\n    const shadowStrength = entity.getShadowStrength();\n\n    Chat.log(`=== Lighting Analysis for ${entity.getName().getString()} ===`);\n    Chat.log(`Overall Brightness: ${brightness}/15`);\n    Chat.log(`Sky Light: ${skyBrightness}/15`);\n    Chat.log(`Block Light: ${blockBrightness}/15`);\n    Chat.log(`Shadow: ${(shadowStrength * 100).toFixed(0)}% strength, ${shadowRadius.toFixed(1)} radius`);\n\n    // Lighting quality assessment\n    let quality = \"Poor\";\n    if (brightness >= 12) quality = \"Excellent\";\n    else if (brightness >= 8) quality = \"Good\";\n    else if (brightness >= 4) quality = \"Fair\";\n\n    Chat.log(`Lighting Quality: ${quality}`);\n\n    // Light source analysis\n    if (skyBrightness > blockBrightness) {\n        Chat.log(\"Primary light source: Natural daylight/sky light\");\n    } else if (blockBrightness > 0) {\n        Chat.log(\"Primary light source: Artificial block lighting\");\n    } else {\n        Chat.log(\"Primary light source: Minimal or ambient lighting\");\n    }\n}\n\n// Usage example\nconst displayEntities = World.getEntities().filter(entity =>\n    entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n);\n\ndisplayEntities.forEach(entity => {\n    analyzeDisplayEntityLighting(entity);\n});"
+      ]
+    },
+    {
+      "name": "getBlockBrightness",
+      "signature": "getBlockBrightness()",
+      "returnType": "int",
+      "description": "Gets the block light component (0-15) of the display entity's brightness.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive lighting analysis for display entities\nfunction analyzeDisplayEntityLighting(entity) {\n    const brightness = entity.getBrightness();\n    const skyBrightness = entity.getSkyBrightness();\n    const blockBrightness = entity.getBlockBrightness();\n    const shadowRadius = entity.getShadowRadius();\n    const shadowStrength = entity.getShadowStrength();\n\n    Chat.log(`=== Lighting Analysis for ${entity.getName().getString()} ===`);\n    Chat.log(`Overall Brightness: ${brightness}/15`);\n    Chat.log(`Sky Light: ${skyBrightness}/15`);\n    Chat.log(`Block Light: ${blockBrightness}/15`);\n    Chat.log(`Shadow: ${(shadowStrength * 100).toFixed(0)}% strength, ${shadowRadius.toFixed(1)} radius`);\n\n    // Lighting quality assessment\n    let quality = \"Poor\";\n    if (brightness >= 12) quality = \"Excellent\";\n    else if (brightness >= 8) quality = \"Good\";\n    else if (brightness >= 4) quality = \"Fair\";\n\n    Chat.log(`Lighting Quality: ${quality}`);\n\n    // Light source analysis\n    if (skyBrightness > blockBrightness) {\n        Chat.log(\"Primary light source: Natural daylight/sky light\");\n    } else if (blockBrightness > 0) {\n        Chat.log(\"Primary light source: Artificial block lighting\");\n    } else {\n        Chat.log(\"Primary light source: Minimal or ambient lighting\");\n    }\n}\n\n// Usage example\nconst displayEntities = World.getEntities().filter(entity =>\n    entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n);\n\ndisplayEntities.forEach(entity => {\n    analyzeDisplayEntityLighting(entity);\n});"
+      ]
+    },
+    {
+      "name": "getShadowRadius",
+      "signature": "getShadowRadius()",
+      "returnType": "float",
+      "description": "Gets the radius of the shadow cast by the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive lighting analysis for display entities\nfunction analyzeDisplayEntityLighting(entity) {\n    const brightness = entity.getBrightness();\n    const skyBrightness = entity.getSkyBrightness();\n    const blockBrightness = entity.getBlockBrightness();\n    const shadowRadius = entity.getShadowRadius();\n    const shadowStrength = entity.getShadowStrength();\n\n    Chat.log(`=== Lighting Analysis for ${entity.getName().getString()} ===`);\n    Chat.log(`Overall Brightness: ${brightness}/15`);\n    Chat.log(`Sky Light: ${skyBrightness}/15`);\n    Chat.log(`Block Light: ${blockBrightness}/15`);\n    Chat.log(`Shadow: ${(shadowStrength * 100).toFixed(0)}% strength, ${shadowRadius.toFixed(1)} radius`);\n\n    // Lighting quality assessment\n    let quality = \"Poor\";\n    if (brightness >= 12) quality = \"Excellent\";\n    else if (brightness >= 8) quality = \"Good\";\n    else if (brightness >= 4) quality = \"Fair\";\n\n    Chat.log(`Lighting Quality: ${quality}`);\n\n    // Light source analysis\n    if (skyBrightness > blockBrightness) {\n        Chat.log(\"Primary light source: Natural daylight/sky light\");\n    } else if (blockBrightness > 0) {\n        Chat.log(\"Primary light source: Artificial block lighting\");\n    } else {\n        Chat.log(\"Primary light source: Minimal or ambient lighting\");\n    }\n}\n\n// Usage example\nconst displayEntities = World.getEntities().filter(entity =>\n    entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n);\n\ndisplayEntities.forEach(entity => {\n    analyzeDisplayEntityLighting(entity);\n});"
+      ]
+    },
+    {
+      "name": "getShadowStrength",
+      "signature": "getShadowStrength()",
+      "returnType": "float",
+      "description": "Gets the strength or opacity of the shadow cast by the display entity.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Comprehensive lighting analysis for display entities\nfunction analyzeDisplayEntityLighting(entity) {\n    const brightness = entity.getBrightness();\n    const skyBrightness = entity.getSkyBrightness();\n    const blockBrightness = entity.getBlockBrightness();\n    const shadowRadius = entity.getShadowRadius();\n    const shadowStrength = entity.getShadowStrength();\n\n    Chat.log(`=== Lighting Analysis for ${entity.getName().getString()} ===`);\n    Chat.log(`Overall Brightness: ${brightness}/15`);\n    Chat.log(`Sky Light: ${skyBrightness}/15`);\n    Chat.log(`Block Light: ${blockBrightness}/15`);\n    Chat.log(`Shadow: ${(shadowStrength * 100).toFixed(0)}% strength, ${shadowRadius.toFixed(1)} radius`);\n\n    // Lighting quality assessment\n    let quality = \"Poor\";\n    if (brightness >= 12) quality = \"Excellent\";\n    else if (brightness >= 8) quality = \"Good\";\n    else if (brightness >= 4) quality = \"Fair\";\n\n    Chat.log(`Lighting Quality: ${quality}`);\n\n    // Light source analysis\n    if (skyBrightness > blockBrightness) {\n        Chat.log(\"Primary light source: Natural daylight/sky light\");\n    } else if (blockBrightness > 0) {\n        Chat.log(\"Primary light source: Artificial block lighting\");\n    } else {\n        Chat.log(\"Primary light source: Minimal or ambient lighting\");\n    }\n}\n\n// Usage example\nconst displayEntities = World.getEntities().filter(entity =>\n    entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n);\n\ndisplayEntities.forEach(entity => {\n    analyzeDisplayEntityLighting(entity);\n});"
+      ]
+    },
+    {
+      "name": "getGlowColorOverride",
+      "signature": "getGlowColorOverride()",
+      "returnType": "int",
+      "description": "Gets the override glow color (ARGB integer) applied to the display entity, or 0 if none.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Create a comprehensive info panel for display entities\nfunction getDisplayEntityInfo(entity) {\n    const pos = entity.getPos();\n    const billboardMode = entity.getBillboardMode();\n    const viewRange = entity.getViewRange();\n    const width = entity.getDisplayWidth();\n    const height = entity.getDisplayHeight();\n    const glowColor = entity.getGlowColorOverride();\n\n    let info = [];\n    info.push(`=== ${entity.getName().getString()} ===`);\n    info.push(`Type: ${entity.getType()}`);\n    info.push(`Position: [${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}]`);\n    info.push(`Billboard: ${billboardMode}`);\n    info.push(`View Range: ${viewRange.toFixed(1)} blocks`);\n    info.push(`Dimensions: ${width.toFixed(2)} x ${height.toFixed(2)}`);\n\n    if (glowColor !== 0) {\n        info.push(`Glow Color: #${glowColor.toString(16).padStart(6, '0').toUpperCase()}`);\n    }\n\n    // Type-specific information\n    if (entity.is(\"minecraft:block_display\")) {\n        const blockDisplay = entity.asBlockDisplay();\n        if (blockDisplay) {\n            const blockState = blockDisplay.getBlockState();\n            if (blockState) {\n                info.push(`Block: ${blockState.getBlock().getName().getString()}`);\n            }\n        }\n    } else if (entity.is(\"minecraft:item_display\")) {\n        const itemDisplay = entity.asItemDisplay();\n        if (itemDisplay) {\n            const item = itemDisplay.getItem();\n            const transform = itemDisplay.getTransform();\n            info.push(`Item: ${item.getName()} x${item.getCount()}`);\n            if (transform) info.push(`Transform: ${transform}`);\n        }\n    } else if (entity.is(\"minecraft:text_display\")) {\n        const textDisplay = entity.asTextDisplay();\n        if (textDisplay) {\n            const data = textDisplay.getData();\n            if (data) {\n                const text = data.getText().getString();\n                const alignment = data.getAlignment();\n                const lineWidth = data.getLineWidth();\n                info.push(`Text: \"${text}\"`);\n                info.push(`Alignment: ${alignment}`);\n                info.push(`Line Width: ${lineWidth}`);\n            }\n        }\n    }\n\n    return info;\n}\n\n// Display information for the nearest display entity\nconst player = Player.getPlayer();\nif (player) {\n    const displayEntities = World.getEntities().filter(entity =>\n        entity.is(\"minecraft:block_display\", \"minecraft:item_display\", \"minecraft:text_display\")\n    );\n\n    let nearest = null;\n    let minDistance = Infinity;\n\n    displayEntities.forEach(entity => {\n        const distance = player.distanceTo(entity);\n        if (distance < minDistance) {\n            minDistance = distance;\n            nearest = entity;\n        }\n    });\n\n    if (nearest && minDistance <= 20) {\n        const info = getDisplayEntityInfo(nearest);\n        info.forEach(line => Chat.log(line));\n        Chat.log(`Distance: ${minDistance.toFixed(1)} blocks`);\n    }\n} else {\n        Chat.log(\"No display entities found within 20 blocks\");\n    }\n}"
+      ]
+    }
+  ]
+}

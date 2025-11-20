@@ -1,0 +1,96 @@
+{
+  "name": "EventContainer",
+  "fullClassName": "xyz.wagyourtail.jsmacros.core.language.EventContainer",
+  "extends": null,
+  "since": "JSMacros 1.4.0",
+  "description": "The `EventContainer` class is a synchronization mechanism used by JSMacros to manage event execution and thread locking for script contexts.",
+  "overview": "The `EventContainer` class is a synchronization mechanism used by JSMacros to manage event execution and thread locking for script contexts. It provides a way to coordinate between different threads and ensure proper event handling order, particularly when scripts need to wait for certain conditions or events to complete.\n\nThis class is primarily used internally by JSMacros for managing the execution flow of events and scripts, but it may be accessible in certain advanced scripting scenarios.",
+  "constructors": [
+    {
+      "signature": "new EventContainer(context)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "context",
+          "type": "BaseScriptContext",
+          "description": "The script context that this container will manage"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "isLocked",
+      "signature": "isLocked()",
+      "returnType": "boolean",
+      "description": "Checks if the container is currently locked.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "if (eventContainer.isLocked()) {\n    Chat.log(\"Container is locked, waiting...\");\n}"
+      ]
+    },
+    {
+      "name": "getCtx",
+      "signature": "getCtx()",
+      "returnType": "BaseScriptContext",
+      "description": "Returns the script context associated with this container.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const context = eventContainer.getCtx();\nChat.log(\"Context file:\", context.getFile());"
+      ]
+    },
+    {
+      "name": "getLockThread",
+      "signature": "getLockThread()",
+      "returnType": "Thread",
+      "description": "Returns the thread that currently holds the lock.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const lockThread = eventContainer.getLockThread();\nif (lockThread) {\n    Chat.log(\"Locked by thread:\", lockThread.getName());\n}"
+      ]
+    },
+    {
+      "name": "awaitLock",
+      "signature": "awaitLock(callback)",
+      "returnType": "void",
+      "description": "Waits for the container to be unlocked, then executes the provided callback. This method is primarily used internally and requires careful handling to avoid deadlocks.",
+      "parameters": [
+        {
+          "name": "callback",
+          "type": "MethodWrapper or Runnable",
+          "description": "The function to execute when the lock is released"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "// Example using MethodWrapper (recommended for scripts)\neventContainer.awaitLock(new MethodWrapper(() => {\n    Chat.log(\"Lock released, executing callback\");\n}));",
+        "// Direct usage (not recommended for scripts)\neventContainer.awaitLock(() => {\n    Chat.log(\"This may cause issues in scripts\");\n});"
+      ]
+    },
+    {
+      "name": "releaseLock",
+      "signature": "releaseLock()",
+      "returnType": "void",
+      "description": "Releases the lock on the container, allowing waiting threads to proceed. This method executes all pending callbacks and notifies all waiting threads.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "// Release the lock manually (use with caution)\neventContainer.releaseLock();\nChat.log(\"Lock released\");"
+      ]
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the container's current state.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "Chat.log(eventContainer.toString());\n// Output: ContextContainer:{\"locked\": true, \"lockThread\": \"Thread-1\"}"
+      ]
+    }
+  ]
+}

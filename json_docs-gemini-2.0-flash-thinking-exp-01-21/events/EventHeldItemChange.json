@@ -1,0 +1,20 @@
+{
+  "name": "EventHeldItemChange",
+  "fullClassName": "EventHeldItemChange",
+  "extends": null,
+  "since": null,
+  "description": "This event is fired when the item stack in the player's main hand or off-hand changes.",
+  "overview": "Fires when the item in main hand or off-hand changes. Triggers on swap, consume, drop, hotbar scroll. `offHand` is false for main hand changes, true for off-hand changes. Item helpers may be empty when the hand is empty. Not cancellable.",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

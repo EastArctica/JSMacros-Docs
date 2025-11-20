@@ -1,0 +1,289 @@
+{
+  "name": "SuggestionsBuilderHelper",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.helpers.SuggestionsBuilderHelper",
+  "extends": "BaseHelper<SuggestionsBuilder>",
+  "since": "1.6.5",
+  "description": "The `SuggestionsBuilderHelper` class is a utility helper class that wraps Minecraft's Brigadier `SuggestionsBuilder` to provide convenient methods for creating tab completion suggestions in custom JSMacros commands. This class is primarily used within command suggestion callbacks to build dynamic autocomplete suggestions for players typing commands in the chat.",
+  "overview": "The `SuggestionsBuilderHelper` provides a fluent interface for adding various types of suggestions to command arguments. It supports simple string suggestions, numeric suggestions, suggestions with tooltips, position-based suggestions, identifier suggestions, and more. The class is designed to be used within custom command suggestion callbacks created with `CommandBuilder.suggest()`.\n\n**Key Features:**\n- Method chaining support for fluent API usage\n- Multiple suggestion types (strings, numbers, positions, identifiers)\n- Tooltip support for suggestions\n- Collection and array support for batch suggestions\n- Minecraft-specific position and identifier validation\n- Integration with JSMacros helper classes like `BlockPosHelper` and `TextHelper`\n\n## Accessing SuggestionsBuilderHelper\n\nYou don't typically create `SuggestionsBuilderHelper` instances directly. Instead, they are provided as parameters to suggestion callbacks in `CommandBuilder`:\n\n```javascript\nconst command = Chat.createCommandBuilder(\"mycommand\")\n    .suggest((context, builder) => {\n        // builder is a SuggestionsBuilderHelper instance\n        builder.suggest(\"option1\");\n        builder.suggest(\"option2\");\n        builder.suggestWithTooltip(\"help\", TextHelper.of(\"Shows help information\"));\n        return builder.buildFuture();\n    })\n    .executes((context) => {\n        // Command execution logic\n        return true;\n    })\n    .register();\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getInput",
+      "signature": "getInput()",
+      "returnType": "String",
+      "description": "Returns the complete current input string being processed for suggestions.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"test\")\n    .suggest((context, builder) => {\n        const fullInput = builder.getInput();\n        Chat.log(`Full input: ${fullInput}`);\n        // Suggest based on full input analysis\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "getStart",
+      "signature": "getStart()",
+      "returnType": "int",
+      "description": "Returns the starting index in the input string where suggestions should apply.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"test\")\n    .suggest((context, builder) => {\n        const startIndex = builder.getStart();\n        Chat.log(`Suggestions start at index: ${startIndex}`);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "getRemaining",
+      "signature": "getRemaining()",
+      "returnType": "String",
+      "description": "Returns the remaining portion of the input string after the start index that should be matched against suggestions.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"test\")\n    .suggest((context, builder) => {\n        const remaining = builder.getRemaining();\n        Chat.log(`Remaining text to match: ${remaining}`);\n\n        // Only suggest items that match the remaining text\n        if (remaining.startsWith(\"d\")) {\n            builder.suggest(\"diamond\");\n            builder.suggest(\"dirt\");\n        }\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "getRemainingLowerCase",
+      "signature": "getRemainingLowerCase()",
+      "returnType": "String",
+      "description": "Returns the remaining portion of the input string converted to lowercase for case-insensitive matching.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"test\")\n    .suggest((context, builder) => {\n        const remaining = builder.getRemainingLowerCase();\n\n        // Case-insensitive matching\n        [\"Diamond\", \"Dirt\", \"Stone\"].forEach(item => {\n            if (item.toLowerCase().startsWith(remaining)) {\n                builder.suggest(item);\n            }\n        });\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggest",
+      "signature": "suggest(suggestion)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds a simple string suggestion to the suggestion list.",
+      "parameters": [
+        {
+          "name": "suggestion",
+          "type": "String",
+          "description": "The suggestion string to add"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"weather\")\n    .suggest((context, builder) => {\n        builder.suggest(\"clear\");\n        builder.suggest(\"rain\");\n        builder.suggest(\"thunder\");\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggest",
+      "signature": "suggest(value)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds an integer value as a string suggestion.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "int",
+          "description": "The integer value to suggest as a string"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"difficulty\")\n    .suggest((context, builder) => {\n        // Suggest standard difficulty values\n        builder.suggest(0); // peaceful\n        builder.suggest(1); // easy\n        builder.suggest(2); // normal\n        builder.suggest(3); // hard\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestWithTooltip",
+      "signature": "suggestWithTooltip(suggestion, tooltip)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds a suggestion with an associated tooltip that appears when the player hovers over the suggestion.",
+      "parameters": [
+        {
+          "name": "suggestion",
+          "type": "String",
+          "description": "The suggestion string to add"
+        },
+        {
+          "name": "tooltip",
+          "type": "TextHelper",
+          "description": "The tooltip text to display when hovering over the suggestion"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"gamemode\")\n    .suggest((context, builder) => {\n        builder.suggestWithTooltip(\"survival\", TextHelper.of(\"Survival mode - gather resources, craft, build\"));\n        builder.suggestWithTooltip(\"creative\", TextHelper.of(\"Creative mode - unlimited resources, flight\"));\n        builder.suggestWithTooltip(\"adventure\", TextHelper.of(\"Adventure mode - explore but can't break blocks\"));\n        builder.suggestWithTooltip(\"spectator\", TextHelper.of(\"Spectator mode - fly through blocks, observe\"));\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestWithTooltip",
+      "signature": "suggestWithTooltip(value, tooltip)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds an integer suggestion with an associated tooltip.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "int",
+          "description": "The integer value to suggest as a string"
+        },
+        {
+          "name": "tooltip",
+          "type": "TextHelper",
+          "description": "The tooltip text to display when hovering over the suggestion"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"time\")\n    .suggest((context, builder) => {\n        builder.suggestWithTooltip(0, TextHelper.of(\"Dawn - 6:00 AM\"));\n        builder.suggestWithTooltip(6000, TextHelper.of(\"Noon - 12:00 PM\"));\n        builder.suggestWithTooltip(12000, TextHelper.of(\"Dusk - 6:00 PM\"));\n        builder.suggestWithTooltip(18000, TextHelper.of(\"Midnight - 12:00 AM\"));\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestMatching",
+      "signature": "suggestMatching(suggestions)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds multiple suggestions that will be matched against the remaining input using fuzzy matching.",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "String[]",
+          "description": "Array of suggestion strings to match against"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"tp\")\n    .suggest((context, builder) => {\n        const commonLocations = [\"spawn\", \"home\", \"base\", \"nether\", \"end\"];\n        builder.suggestMatching(commonLocations);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestMatching",
+      "signature": "suggestMatching(suggestions)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Overload that accepts a Collection instead of an array.",
+      "parameters": [
+        {
+          "name": "suggestions",
+          "type": "Collection<String>",
+          "description": "Collection of suggestion strings to match against"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"effect\")\n    .suggest((context, builder) => {\n        // Get all available effects as a collection\n        const effects = new JavaUtil.ArrayList([\n            \"speed\", \"slowness\", \"haste\", \"mining_fatigue\",\n            \"strength\", \"weakness\", \"regeneration\", \"poison\"\n        ]);\n        builder.suggestMatching(effects);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestIdentifier",
+      "signature": "suggestIdentifier(identifiers)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds suggestions for resource identifiers (namespace:path format). Validates that the identifiers follow Minecraft's identifier format.",
+      "parameters": [
+        {
+          "name": "identifiers",
+          "type": "String[]",
+          "description": "Array of identifier strings to suggest"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"summon\")\n    .suggest((context, builder) => {\n        const commonMobs = [\n            \"minecraft:zombie\",\n            \"minecraft:skeleton\",\n            \"minecraft:creeper\",\n            \"minecraft:spider\",\n            \"minecraft:enderman\"\n        ];\n        builder.suggestIdentifier(commonMobs);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestIdentifier",
+      "signature": "suggestIdentifier(identifiers)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Overload that accepts a Collection instead of an array.",
+      "parameters": [
+        {
+          "name": "identifiers",
+          "type": "Collection<String>",
+          "description": "Collection of identifier strings to suggest"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"give\")\n    .suggest((context, builder) => {\n        // Suggest common items as identifiers\n        const items = new JavaUtil.ArrayList([\n            \"minecraft:diamond_sword\",\n            \"minecraft:diamond_pickaxe\",\n            \"minecraft:iron_ingot\",\n            \"minecraft:golden_apple\"\n        ]);\n        builder.suggestIdentifier(items);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestPositions",
+      "signature": "suggestPositions(positions)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds position suggestions using string coordinates. Supports relative coordinates with ~ and ^.",
+      "parameters": [
+        {
+          "name": "positions",
+          "type": "String[]",
+          "description": "Array of position strings in \"x y z\" format"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"waypoint\")\n    .suggest((context, builder) => {\n        const waypoints = [\n            \"0 64 0\",           // World spawn\n            \"~ ~ ~\",           // Current position\n            \"100 80 -50\",      // Specific coordinates\n            \"~10 ~5 ~-20\"      // Relative position\n        ];\n        builder.suggestPositions(waypoints);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestPositions",
+      "signature": "suggestPositions(positions)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Overload that accepts a Collection instead of an array.",
+      "parameters": [
+        {
+          "name": "positions",
+          "type": "Collection<String>",
+          "description": "Collection of position strings in \"x y z\" format"
+        }
+      ],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "suggestBlockPositions",
+      "signature": "suggestBlockPositions(positions)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Adds position suggestions using BlockPosHelper objects.",
+      "parameters": [
+        {
+          "name": "positions",
+          "type": "BlockPosHelper[]",
+          "description": "Array of BlockPosHelper objects to suggest"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"tppreset\")\n    .suggest((context, builder) => {\n        // Create preset locations\n        const spawn = new BlockPosHelper(0, 64, 0);\n        const home = new BlockPosHelper(100, 70, 100);\n        const netherPortal = new BlockPosHelper(-50, 64, -50);\n\n        builder.suggestBlockPositions([spawn, home, netherPortal]);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "suggestBlockPositions",
+      "signature": "suggestBlockPositions(positions)",
+      "returnType": "SuggestionsBuilderHelper",
+      "description": "Overload that accepts a Collection instead of an array.",
+      "parameters": [
+        {
+          "name": "positions",
+          "type": "Collection<BlockPosHelper>",
+          "description": "Collection of BlockPosHelper objects to suggest"
+        }
+      ],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"important\")\n    .suggest((context, builder) => {\n        // Get important positions from a data structure\n        const importantPlaces = new JavaUtil.ArrayList();\n\n        // Add some important locations\n        importantPlaces.add(new BlockPosHelper(player.getX(), player.getY(), player.getZ()));\n        importantPlaces.add(new BlockPosHelper(0, 64, 0)); // spawn\n\n        builder.suggestBlockPositions(importantPlaces);\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "buildFuture",
+      "signature": "buildFuture()",
+      "returnType": "CompletableFuture<Suggestions>",
+      "description": "Builds and returns the suggestions future that should be returned from suggestion callbacks. This method is typically the last call in a suggestion callback.",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"mycommand\")\n    .suggest((context, builder) => {\n        // Add all your suggestions\n        builder.suggest(\"option1\");\n        builder.suggest(\"option2\");\n\n        // Build and return the suggestions future\n        return builder.buildFuture();\n    })\n    .executes((context) => {\n        return true;\n    })\n    .register();"
+      ]
+    },
+    {
+      "name": "getRaw",
+      "signature": "getRaw()",
+      "returnType": "SuggestionsBuilder",
+      "description": "Returns the underlying Minecraft SuggestionsBuilder object (inherited from BaseHelper).",
+      "parameters": [],
+      "static": false,
+      "examples": [
+        "const command = Chat.createCommandBuilder(\"advanced\")\n    .suggest((context, builder) => {\n        // Access the raw SuggestionsBuilder for advanced operations\n        const rawBuilder = builder.getRaw();\n\n        // Use raw Brigadier API if needed\n        // (usually not necessary, but available for edge cases)\n\n        return builder.buildFuture();\n    })\n    .register();"
+      ]
+    }
+  ]
+}

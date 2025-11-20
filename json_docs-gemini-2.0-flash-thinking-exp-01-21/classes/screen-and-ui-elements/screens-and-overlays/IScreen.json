@@ -1,0 +1,470 @@
+{
+  "name": "IScreen",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.classes.render.IScreen",
+  "extends": "IDraw2D<IScreen>",
+  "since": "JSMacros 1.0.5",
+  "description": "The `IScreen` class is a powerful interface for creating and managing custom GUI screens in JSMacros. It provides comprehensive functionality for drawing graphics, adding interactive widgets, handling user input, and managing screen lifecycle events. IScreen serves as the foundation for creating custom user interfaces, overlays, and interactive displays within Minecraft.",
+  "overview": "This interface extends `IDraw2D<IScreen>`, inheriting all drawing capabilities including text rendering, shapes, images, items, and lines, while adding screen-specific functionality like widgets, event handling, and screen management.\n\nIScreen instances are typically created through screen events or by using `ScriptScreen` for custom script-driven interfaces.\n\n### Important Notes\n\n**Screen Lifecycle**\n- Screens are automatically managed by Minecraft's screen system\n- Always provide a way for users to close your screens (ESC key or close button)\n- Use `setOnClose()` to clean up resources when screens close\n- Screen instances become invalid after being closed\n\n**Event Handling**\n- Event callbacks are executed on the main thread\n- Avoid long-running operations in event handlers\n- Use `setTimeout()` or intervals for background tasks\n- Key codes and mouse button codes follow Minecraft's conventions\n\n**Performance Considerations**\n- Limit the number of elements on a screen for better performance\n- Use `reloadScreen()` sparingly as it recreates all elements\n- Consider using z-index layering for complex layouts\n- Remove unused elements to prevent memory leaks\n\n**Thread Safety**\n- All screen operations must be performed on the main thread\n- Use proper synchronization when accessing shared data from multiple threads\n- Event handlers provide thread-safe access to screen elements\n\n**Version Compatibility**\n- Some methods may have different behavior across Minecraft versions\n- Builder patterns are preferred for complex widget creation\n- Older methods may be deprecated but still functional\n- Always check the \"Since\" version in documentation\n\n**Integration with Other JSMacros Features**\n- Screens work seamlessly with JSMacros events system\n- Can access World, Player, and other global helpers\n- Support for MethodWrapper callbacks for Java interop\n- Compatible with JSMacros script lifecycle management\n\n### Usage Examples\n\n**Complete Custom GUI Application**\n```js\n// Create a comprehensive custom GUI application\nfunction createApplication() {\n    const screen = new ScriptScreen(\"JSMacros Control Panel\", true);\n\n    // Title\n    screen.addText(screen.getWidth() / 2 - 100, 20, 0xFFFFFF, \"JSMacros Control Panel\", true, 2.0, 0);\n\n    // Tab system using cycling buttons\n    const tabs = [\"Player\", \"World\", \"Scripts\", \"Settings\"];\n    const currentTab = { value: \"Player\" };\n\n    // Tab buttons\n    tabs.forEach((tab, index) => {\n        const tabBtn = screen.addCyclingButton(\n            50 + index * 80, 60, 70, 20,\n            [tab], tab,\n            JavaWrapper.methodToJava((btn) => {\n                currentTab.value = btn.getValue();\n                screen.reloadScreen();\n            })\n        );\n    });\n\n    // Content areas\n    function drawContent() {\n        const y = 100;\n\n        if (currentTab.value === \"Player\") {\n            // Player info tab\n            const player = Player.getPlayer();\n            if (player) {\n                screen.addText(50, y, 0x00FF00, `Player: ${player.getName().getString()}`, true);\n                screen.addText(50, y + 20, 0xFFFFFF, `Health: ${player.getHealth()}/${player.getMaxHealth()}`, true);\n                screen.addText(50, y + 40, 0xFFFFFF, `Position: ${Math.floor(player.getX())}, ${Math.floor(player.getY())}, ${Math.floor(player.getZ())}`, true);\n                screen.addText(50, y + 60, 0xFFFFFF, `Game Mode: ${player.getGameMode()}`, true);\n            }\n\n            // Player actions\n            screen.addButton(50, y + 90, 120, 20, \"Heal Player\", JavaWrapper.methodToJava((btn) => {\n                // Note: This would require additional permissions or server-side mod\n                Chat.log(\"Heal player action requested\");\n            }));\n\n        } else if (currentTab.value === \"World\") {\n            // World info tab\n            screen.addText(50, y, 0x00FFFF, \"World Information\", true);\n\n            const entities = World.getEntities();\n            screen.addText(50, y + 20, 0xFFFFFF, `Entities loaded: ${entities.length}`, true);\n\n            const player = Player.getPlayer();\n            if (player) {\n                const biome = player.getBiome();\n                screen.addText(50, y + 40, 0xFFFFFF, `Current biome: ${biome}`, true);\n\n                const time = World.getTime();\n                screen.addText(50, y + 60, 0xFFFFFF, `World time: ${time}`, true);\n            }\n\n        } else if (currentTab.value === \"Scripts\") {\n            // Scripts management tab\n            screen.addText(50, y, 0xFFFF00, \"Script Management\", true);\n            screen.addText(50, y + 20, 0x808080, \"Script status and controls\", true);\n\n            // Script controls\n            screen.addButton(50, y + 50, 100, 20, \"Reload Scripts\", JavaWrapper.methodToJava((btn) => {\n                Chat.log(\"Script reload requested\");\n            }));\n\n            screen.addButton(160, y + 50, 100, 20, \"Script Stats\", JavaWrapper.methodToJava((btn) => {\n                Chat.log(\"Script statistics requested\");\n            }));\n\n        } else if (currentTab.value === \"Settings\") {\n            // Settings tab\n            screen.addText(50, y, 0xFF00FF, \"Application Settings\", true);\n\n            // Settings checkboxes\n            screen.addCheckbox(50, y + 20, 200, 20, \"Enable Notifications\", true,\n                JavaWrapper.methodToJava((box) => {\n                    Chat.log(`Notifications: ${box.isChecked() ? \"enabled\" : \"disabled\"}`);\n                }));\n\n            screen.addCheckbox(50, y + 45, 200, 20, \"Auto-save Settings\", false,\n                JavaWrapper.methodToJava((box) => {\n                    Chat.log(`Auto-save: ${box.isChecked() ? \"enabled\" : \"disabled\"}`);\n                }));\n\n            // Settings slider\n            screen.addSlider(50, y + 70, 200, 20, \"Update Rate\", 50, 100,\n                JavaWrapper.methodToJava((slider) => {\n                    const rate = Math.floor(slider.getValue());\n                    Chat.log(`Update rate: ${rate}%`);\n                }));\n        }\n    }\n\n    drawContent();\n\n    // Bottom controls\n    screen.addButton(50, screen.getHeight() - 30, 100, 20, \"Refresh\", JavaWrapper.methodToJava((btn) => {\n        screen.reloadScreen();\n    }));\n\n    screen.addButton(screen.getWidth() - 150, screen.getHeight() - 30, 100, 20, \"Close\", JavaWrapper.methodToJava((btn) => {\n        screen.close();\n    }));\n\n    // Auto-refresh every 2 seconds\n    const refreshInterval = setInterval(() => {\n        if (currentTab.value === \"Player\" || currentTab.value === \"World\") {\n            screen.reloadScreen();\n            drawContent();\n        }\n    }, 2000);\n\n    screen.setOnClose(JavaWrapper.methodToJava((closingScreen) => {\n        clearInterval(refreshInterval);\n        Chat.log(\"Control Panel closed - auto-refresh stopped\");\n    }));\n\n    return screen;\n}\n\n// Launch the application\nClient.openScreen(createApplication());\n```\n\n**Interactive Drawing Tool**\n```js\n// Create an interactive drawing and annotation tool\nfunction createDrawingTool() {\n    const screen = new ScriptScreen(\"Drawing Tool\", true);\n    const elements = [];\n    let currentTool = \"line\";\n    let currentColor = 0xFF0000;\n    let startPos = null;\n\n    // Tool selection\n    screen.addText(50, 20, 0xFFFFFF, \"Drawing Tool - Select a tool:\", true);\n\n    const tools = [\"line\", \"rect\", \"circle\", \"text\"];\n    tools.forEach((tool, index) => {\n        screen.addCyclingButton(\n            50 + index * 80, 45, 70, 20,\n            [tool], currentTool === tool ? tool : tools[index],\n            JavaWrapper.methodToJava((btn) => {\n                currentTool = btn.getValue();\n                Chat.log(`Selected tool: ${currentTool}`);\n            })\n        );\n    });\n\n    // Color picker\n    const colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0xFF00FF, 0x00FFFF, 0xFFFFFF];\n    colors.forEach((color, index) => {\n        screen.addRect(50 + index * 25, 80, 70 + index * 25, 100, color, 255);\n        screen.addButton(50 + index * 25, 80, 20, 20, \"\", JavaWrapper.methodToJava((btn) => {\n            currentColor = color;\n            Chat.log(`Color selected: ${color.toString(16)}`);\n        }));\n    });\n\n    // Drawing area\n    screen.addText(50, 110, 0xFFFFFF, \"Click and drag to draw:\", true);\n\n    // Mouse event handlers\n    screen.setOnMouseDown(JavaWrapper.methodToJava((pos, button) => {\n        if (button === 1 && pos.y > 120) { // Left click in drawing area\n            startPos = pos;\n            Chat.log(`Started drawing ${currentTool} at ${pos.x}, ${pos.y}`);\n        }\n    }));\n\n    screen.setOnMouseUp(JavaWrapper.methodToJava((pos, button) => {\n        if (button === 1 && startPos && pos.y > 120) {\n            let element = null;\n\n            if (currentTool === \"line\") {\n                element = screen.addLine(startPos.x, startPos.y, pos.x, pos.y, currentColor, 2.0);\n            } else if (currentTool === \"rect\") {\n                element = screen.addRect(\n                    Math.min(startPos.x, pos.x), Math.min(startPos.y, pos.y),\n                    Math.max(startPos.x, pos.x), Math.max(startPos.y, pos.y),\n                    currentColor, 128\n                );\n            } else if (currentTool === \"circle\") {\n                // Approximate circle with small lines\n                const radius = Math.sqrt(Math.pow(pos.x - startPos.x, 2) + Math.pow(pos.y - startPos.y, 2));\n                const segments = 32;\n                for (let i = 0; i < segments; i++) {\n                    const angle1 = (i / segments) * 2 * Math.PI;\n                    const angle2 = ((i + 1) / segments) * 2 * Math.PI;\n                    const x1 = startPos.x + radius * Math.cos(angle1);\n                    const y1 = startPos.y + radius * Math.sin(angle1);\n                    const x2 = startPos.x + radius * Math.cos(angle2);\n                    const y2 = startPos.y + radius * Math.sin(angle2);\n                    screen.addLine(x1, y1, x2, y2, currentColor, 1.0);\n                }\n            }\n\n            if (element) {\n                elements.push(element);\n                Chat.log(`Drew ${currentTool} from ${startPos.x},${startPos.y} to ${pos.x},${pos.y}`);\n            }\n\n            startPos = null;\n        }\n    }));\n\n    // Controls\n    screen.addButton(50, screen.getHeight() - 60, 100, 20, \"Clear All\", JavaWrapper.methodToJava((btn) => {\n        elements.forEach(element => screen.removeElement(element));\n        elements.length = 0;\n        screen.reloadScreen();\n        Chat.log(\"All drawings cleared\");\n    }));\n\n    screen.addButton(160, screen.getHeight() - 60, 100, 20, \"Undo Last\", JavaWrapper.methodToJava((btn) => {\n        if (elements.length > 0) {\n            const lastElement = elements.pop();\n            screen.removeElement(lastElement);\n            Chat.log(\"Undid last drawing\");\n        }\n    }));\n\n    screen.addButton(50, screen.getHeight() - 30, 100, 20, \"Save Drawing\", JavaWrapper.methodToJava((btn) => {\n        Chat.log(`Drawing saved with ${elements.length} elements`);\n    }));\n\n    screen.addButton(160, screen.getHeight() - 30, 100, 20, \"Close\", JavaWrapper.methodToJava((btn) => {\n        screen.close();\n    }));\n\n    // Instructions\n    screen.addText(300, 120, 0x808080, \"Instructions:\", true);\n    screen.addText(300, 140, 0x808080, \"1. Select a tool (line, rect, circle)\", true);\n    screen.addText(300, 160, 0x808080, \"2. Choose a color from palette\", true);\n    screen.addText(300, 180, 0x808080, \"3. Click and drag to draw\", true);\n    screen.addText(300, 200, 0x808080, \"4. Use controls to manage drawings\", true);\n\n    return screen;\n}\n\nClient.openScreen(createDrawingTool());\n```",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "getScreenClassName",
+      "signature": "screen.getScreenClassName()",
+      "returnType": "String",
+      "description": "Gets the class name of the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTitleText",
+      "signature": "screen.getTitleText()",
+      "returnType": "String",
+      "description": "Gets the title text of the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getWidth",
+      "signature": "screen.getWidth()",
+      "returnType": "Number",
+      "description": "Gets the width of the screen (inherited from IDraw2D).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getHeight",
+      "signature": "screen.getHeight()",
+      "returnType": "Number",
+      "description": "Gets the height of the screen (inherited from IDraw2D).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getButtonWidgets",
+      "signature": "screen.getButtonWidgets()",
+      "returnType": "Array<ButtonWidget>",
+      "description": "Retrieves a list of button widgets on the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getTextFields",
+      "signature": "screen.getTextFields()",
+      "returnType": "Array<TextFieldWidget>",
+      "description": "Retrieves a list of text input fields on the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addButton",
+      "signature": "screen.addButton()",
+      "returnType": "ButtonWidget",
+      "description": "Adds a new button widget to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addCheckbox",
+      "signature": "screen.addCheckbox()",
+      "returnType": "CheckboxWidget",
+      "description": "Adds a new checkbox widget to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addSlider",
+      "signature": "screen.addSlider()",
+      "returnType": "SliderWidget",
+      "description": "Adds a new slider widget to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addLockButton",
+      "signature": "screen.addLockButton()",
+      "returnType": "LockButtonWidget",
+      "description": "Adds a new lock button widget to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addCyclingButton",
+      "signature": "screen.addCyclingButton()",
+      "returnType": "CyclingButtonWidget",
+      "description": "Adds a new cycling button widget to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addTextInput",
+      "signature": "screen.addTextInput()",
+      "returnType": "TextInputWidget",
+      "description": "Adds a new text input field to the screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "buttonBuilder",
+      "signature": "screen.buttonBuilder()",
+      "returnType": "ButtonBuilder",
+      "description": "Returns a builder for creating button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "checkBoxBuilder",
+      "signature": "screen.checkBoxBuilder()",
+      "returnType": "CheckBoxBuilder",
+      "description": "Returns a builder for creating checkbox widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "sliderBuilder",
+      "signature": "screen.sliderBuilder()",
+      "returnType": "SliderBuilder",
+      "description": "Returns a builder for creating slider widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "lockButtonBuilder",
+      "signature": "screen.lockButtonBuilder()",
+      "returnType": "LockButtonBuilder",
+      "description": "Returns a builder for creating lock button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "cyclicButtonBuilder",
+      "signature": "screen.cyclicButtonBuilder()",
+      "returnType": "CyclingButtonBuilder",
+      "description": "Returns a builder for creating cycling button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textFieldBuilder",
+      "signature": "screen.textFieldBuilder()",
+      "returnType": "TextFieldBuilder",
+      "description": "Returns a builder for creating text input fields.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "texturedButtonBuilder",
+      "signature": "screen.texturedButtonBuilder()",
+      "returnType": "TexturedButtonBuilder",
+      "description": "Returns a builder for creating textured button widgets.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnMouseDown",
+      "signature": "screen.setOnMouseDown()",
+      "returnType": "void",
+      "description": "Sets the callback for mouse down events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnMouseDrag",
+      "signature": "screen.setOnMouseDrag()",
+      "returnType": "void",
+      "description": "Sets the callback for mouse drag events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnMouseUp",
+      "signature": "screen.setOnMouseUp()",
+      "returnType": "void",
+      "description": "Sets the callback for mouse up events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnScroll",
+      "signature": "screen.setOnScroll()",
+      "returnType": "void",
+      "description": "Sets the callback for mouse scroll events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnKeyPressed",
+      "signature": "screen.setOnKeyPressed()",
+      "returnType": "void",
+      "description": "Sets the callback for key pressed events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnCharTyped",
+      "signature": "screen.setOnCharTyped()",
+      "returnType": "void",
+      "description": "Sets the callback for character typed events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "setOnClose",
+      "signature": "screen.setOnClose()",
+      "returnType": "void",
+      "description": "Sets the callback for screen close events.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "close",
+      "signature": "screen.close()",
+      "returnType": "void",
+      "description": "Closes the current screen.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "reloadScreen",
+      "signature": "screen.reloadScreen()",
+      "returnType": "void",
+      "description": "Reloads and re-renders the screen content.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isShiftDown",
+      "signature": "screen.isShiftDown()",
+      "returnType": "boolean",
+      "description": "Checks if the Shift key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isCtrlDown",
+      "signature": "screen.isCtrlDown()",
+      "returnType": "boolean",
+      "description": "Checks if the Control key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "isAltDown",
+      "signature": "screen.isAltDown()",
+      "returnType": "boolean",
+      "description": "Checks if the Alt key is currently pressed.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addText",
+      "signature": "screen.addText()",
+      "returnType": "TextElement",
+      "description": "Adds text to the screen for rendering (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeText",
+      "signature": "screen.removeText()",
+      "returnType": "void",
+      "description": "Removes a text element from the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "textBuilder",
+      "signature": "screen.textBuilder()",
+      "returnType": "TextBuilder",
+      "description": "Returns a builder for creating text elements (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addRect",
+      "signature": "screen.addRect()",
+      "returnType": "RectElement",
+      "description": "Adds a rectangle to the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addLine",
+      "signature": "screen.addLine()",
+      "returnType": "LineElement",
+      "description": "Adds a line to the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeRect",
+      "signature": "screen.removeRect()",
+      "returnType": "void",
+      "description": "Removes a rectangle element from the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeLine",
+      "signature": "screen.removeLine()",
+      "returnType": "void",
+      "description": "Removes a line element from the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "rectBuilder",
+      "signature": "screen.rectBuilder()",
+      "returnType": "RectBuilder",
+      "description": "Returns a builder for creating rectangle elements (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "lineBuilder",
+      "signature": "screen.lineBuilder()",
+      "returnType": "LineBuilder",
+      "description": "Returns a builder for creating line elements (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addImage",
+      "signature": "screen.addImage()",
+      "returnType": "ImageElement",
+      "description": "Adds an image to the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeImage",
+      "signature": "screen.removeImage()",
+      "returnType": "void",
+      "description": "Removes an image element from the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "imageBuilder",
+      "signature": "screen.imageBuilder()",
+      "returnType": "ImageBuilder",
+      "description": "Returns a builder for creating image elements (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addItem",
+      "signature": "screen.addItem()",
+      "returnType": "ItemElement",
+      "description": "Adds a Minecraft item icon to the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeItem",
+      "signature": "screen.removeItem()",
+      "returnType": "void",
+      "description": "Removes an item element from the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "itemBuilder",
+      "signature": "screen.itemBuilder()",
+      "returnType": "ItemBuilder",
+      "description": "Returns a builder for creating item elements (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "addDraw2D",
+      "signature": "screen.addDraw2D()",
+      "returnType": "Draw2DElement",
+      "description": "Adds a nested 2D drawing element (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeDraw2D",
+      "signature": "screen.removeDraw2D()",
+      "returnType": "void",
+      "description": "Removes a nested 2D drawing element (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "getElements",
+      "signature": "screen.getElements()",
+      "returnType": "Array<RenderElement>",
+      "description": "Retrieves all drawable elements on the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "removeElement",
+      "signature": "screen.removeElement()",
+      "returnType": "void",
+      "description": "Removes a generic drawable element from the screen (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    },
+    {
+      "name": "reAddElement",
+      "signature": "screen.reAddElement()",
+      "returnType": "void",
+      "description": "Re-adds an existing element to refresh its position/state (inherited).",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}
