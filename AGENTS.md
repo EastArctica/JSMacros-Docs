@@ -22,7 +22,7 @@ If you notice that this file is inaccurate based on the current state of the cod
 
 ## 🤖 Documentation Generator Agent
 
-*   **Identity**: `core-core`
+*   **Identity**: `@jsm-docs/core`
 *   **Source**: [`packages/core/convert_docs.mjs`](file:///f:/js/jsm-docs/packages/core/convert_docs.mjs)
 *   **Type**: LLM-based Automation
 *   **Model**: `gemini-2.0-flash-thinking-exp-01-21` by default (override with `MODEL_NAME`)
