@@ -190,8 +190,8 @@ Use the sidebar to navigate through:
 
 ## Resources
 
-- [GitHub Repository](https://github.com/JsMacros/JsMacros)
-- [Discord Community](https://discord.gg/jsmacros)
+- [GitHub Repository](https://github.com/EastArctica/JsMacros-Docs/tree/new)
+- [Discord Community](https://discord.gg/P6W58J8)
 `
   
   await fs.writeFile(path.join(OUTPUT_DIR, 'index.md'), indexContent)

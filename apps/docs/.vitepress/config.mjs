@@ -11,13 +11,13 @@ export default defineConfig({
       { text: 'APIs', link: '/apis/Client' },
       { text: 'Classes', link: '/classes/advanced-classes/BaseScriptContext$ScriptAssertionError.html' },
       { text: 'Events', link: '/events/' },
-      { text: 'GitHub', link: 'https://github.com/JsMacros/JsMacros' }
+      { text: 'GitHub', link: 'https://github.com/EastArctica/JsMacros-Docs/tree/new' }
     ],
     
     sidebar: sidebarConfig,
     
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/JsMacros/JsMacros' }
+      { icon: 'github', link: 'https://github.com/EastArctica/JsMacros-Docs/tree/new' }
     ],
     
     search: {
