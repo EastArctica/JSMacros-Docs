@@ -1,5 +1,5 @@
 {
-  "name": "@doc-gen/cost-visualizer",
+  "name": "@jsm-docs/cost-visualizer",
   "private": true,
   "version": "0.0.0",
   "type": "module",

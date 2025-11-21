@@ -1,4 +1,4 @@
-# @doc-gen/core
+# @jsm-docs/core
 
 This package contains the core scripts and data for the JsMacros documentation generator.
 

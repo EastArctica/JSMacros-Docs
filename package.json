@@ -1,5 +1,5 @@
 {
-  "name": "doc-gen-monorepo",
+  "name": "jsm-docs-monorepo",
   "version": "1.0.0",
   "private": true,
   "scripts": {

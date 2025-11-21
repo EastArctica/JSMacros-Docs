@@ -1,10 +1,10 @@
-# @doc-gen/docs
+# @jsm-docs/docs
 
 This is the documentation website for JsMacros, built with VitePress.
 
 ## Features
 
-*   **Static Site Generation**: Converts the JSON documentation from `@doc-gen/core` into a full static website.
+*   **Static Site Generation**: Converts the JSON documentation from `@jsm-docs/core` into a full static website.
 *   **Search**: Full-text search for APIs, Classes, and Events.
 *   **Responsive**: Mobile-friendly design.
 

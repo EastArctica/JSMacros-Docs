@@ -7,10 +7,10 @@ This repository contains the documentation system for JsMacros, organized as a m
 ```
 doc-gen/
 ├── apps/
-│   ├── docs/               # VitePress documentation site (@doc-gen/docs)
-│   └── cost-visualizer/    # LLM Cost Visualizer tool (@doc-gen/cost-visualizer)
+│   ├── docs/               # VitePress documentation site (@jsm-docs/docs)
+│   └── cost-visualizer/    # LLM Cost Visualizer tool (@jsm-docs/cost-visualizer)
 ├── packages/
-│   └── doc-gen/            # Core scripts and data (@doc-gen/core)
+│   └── doc-gen/            # Core scripts and data (@jsm-docs/core)
 ├── package.json            # Workspace root
 └── pnpm-workspace.yaml     # Workspace configuration
 ```
@@ -26,26 +26,26 @@ pnpm install
 ### Run Documentation Site
 
 ```bash
-pnpm --filter @doc-gen/docs run dev
+pnpm --filter @jsm-docs/docs run dev
 ```
 
 ### Run Cost Visualizer
 
 ```bash
-pnpm --filter @doc-gen/cost-visualizer run dev
+pnpm --filter @jsm-docs/cost-visualizer run dev
 ```
 
 ### Run Documentation Conversion
 
 ```bash
-pnpm --filter @doc-gen/core run convert
+pnpm --filter @jsm-docs/core run convert
 ```
 
 ## 📦 Packages
 
-- **@doc-gen/docs**: The static documentation site built with VitePress.
-- **@doc-gen/cost-visualizer**: A React application to visualize the costs of LLM generation.
-- **@doc-gen/core**: Scripts for converting markdown to JSON using Google Generative AI, and the source documentation data.
+- **@jsm-docs/docs**: The static documentation site built with VitePress.
+- **@jsm-docs/cost-visualizer**: A React application to visualize the costs of LLM generation.
+- **@jsm-docs/core**: Scripts for converting markdown to JSON using Google Generative AI, and the source documentation data.
 
 ## 🔧 Development
 
