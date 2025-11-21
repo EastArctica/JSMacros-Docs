@@ -103,7 +103,7 @@ importers:
         specifier: ^5
         version: 5.8.3
 
-  packages/doc-gen:
+  packages/core:
     dependencies:
       '@google/generative-ai':
         specifier: ^0.21.0

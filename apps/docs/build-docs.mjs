@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-const JSON_DOCS_DIR = path.resolve('../../packages/doc-gen/json_docs-gemini-3-pro-preview')
+const JSON_DOCS_DIR = path.resolve('../../packages/core/json_docs-gemini-3-pro-preview')
 const OUTPUT_DIR = path.resolve('./docs')
 
 async function processJsonFile(jsonPath, outputPath) {

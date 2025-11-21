@@ -19,7 +19,7 @@ pnpm dev
 ```
 
 This command will:
-1.  Read JSON files from `../../packages/doc-gen/json_docs-*`.
+1.  Read JSON files from `../../packages/core/json_docs-*`.
 2.  Generate temporary markdown files in `docs/`.
 3.  Start the VitePress server at http://localhost:5173.
 

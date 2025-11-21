@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-const DOCS_ROOT = path.resolve(process.cwd(), '../../packages/doc-gen');
+const DOCS_ROOT = path.resolve(process.cwd(), '../../packages/core');
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
