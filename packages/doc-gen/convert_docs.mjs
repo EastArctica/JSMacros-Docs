@@ -92,10 +92,16 @@ Return ONLY valid JSON matching the schema above.`);
     // Log costs - Google AI provides usage metadata
     const usageMetadata = response.usageMetadata || {};
     
+    // TODO: Not accurate for tokens above 200k
+
     // Calculate cost based on Google's pricing
     // Gemini 2.0 Flash Thinking: $0.00001875 per 1K input tokens, $0.000075 per 1K output tokens
-    const inputCostPer1k = 0.00001875;
-    const outputCostPer1k = 0.000075;
+    // const inputCostPer1k = 0.00001875;
+    // const outputCostPer1k = 0.000075;
+
+    // Gemini 3.0 Pro Preview: $0.002 per 1K input tokens, $0.012 per 1K output tokens
+    const inputCostPer1k = 0.002;
+    const outputCostPer1k = 0.012;
     
     const promptTokens = usageMetadata.promptTokenCount || 0;
     const candidatesTokens = usageMetadata.candidatesTokenCount || 0;
