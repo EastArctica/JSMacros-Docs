@@ -70,8 +70,6 @@ export default function MonacoWrapper({ label, onMount, ...props }: MonacoWrappe
           onMount={handleEditorDidMount}
           options={{
             minimap: { enabled: false },
-            scrollBeyondLastLine: false,
-            padding: { bottom: 10 },
             fontSize: 14,
             lineNumbers: 'on',
             folding: true,
