@@ -2,7 +2,7 @@
   "name": "Chat",
   "fullClassName": "Chat",
   "description": "Functions for interacting with chat. Accessible from scripts via the global `Chat` variable.",
-  "overview": "Functions for interacting with chat. Accessible from scripts via the global `Chat` variable.",
+  "overview": "",
   "constructors": [],
   "methods": [
     {
@@ -25,7 +25,8 @@
       "static": true,
       "examples": [
         "Chat.log(\"Hello World!\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "logf",
@@ -53,7 +54,8 @@
       "examples": [
         "Chat.logf(\"Hello, %s!\", [\"Steve\"]);",
         "Chat.logf(\"Hello, %s!\", true, [\"Steve\"]);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "logColor",
@@ -75,7 +77,8 @@
       "static": true,
       "examples": [
         "Chat.logColor(\"Colors: &0Black &1Dark Blue &2Dark Green &3Dark Turqoise &4Dark Red &5Purple &6Dark Yellow &7Light Gray &8Dark Gray &9Light Blue &aLight Green &bLight Turquoise &cLight Red &dMagenta &eLight Yellow &fWhite\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "say",
@@ -99,7 +102,8 @@
         "Chat.say(\"Hello fellow players!\");",
         "Chat.say(\"/say Hello fellow players!\");",
         "Chat.say(`/tp ${x} ${y} ${z}`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "sayf",
@@ -127,7 +131,8 @@
       "examples": [
         "const name = \"John\";\nChat.sayf(\"Hello everyone! I'm %s and I've run %.2f meters.\", [name, 100.93]);",
         "Chat.sayf(\"Hello everyone! I'm %s and I've run %.2f meters.\", true, [name, 100.93]);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "open",
@@ -149,7 +154,8 @@
       "static": true,
       "examples": [
         "Chat.open(\"This message is in the chat input box\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "title",
@@ -186,7 +192,8 @@
       "static": true,
       "examples": [
         "Chat.title(\"Primary Title\", \"Some subtitle\", 1, 5, 1);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "actionbar",
@@ -208,7 +215,8 @@
       "static": true,
       "examples": [
         "Chat.actionbar(\"You may not rest now; there are monsters nearby‌\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "toast",
@@ -230,7 +238,8 @@
       "static": true,
       "examples": [
         "Chat.toast(\"New Recipes Unlocked!\", \"Check your recipe book\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createTextHelperFromString",
@@ -247,7 +256,8 @@
       "static": true,
       "examples": [
         "const helper = Chat.createTextHelperFromString(\"Example String\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createTextHelperFromTranslationKey",
@@ -269,7 +279,8 @@
       "static": true,
       "examples": [
         "Chat.createTextHelperFromTranslationKey(\"multiplayer.player.joined\", \"notch\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getLogger",
@@ -286,7 +297,8 @@
       "static": true,
       "examples": [
         "const logger = Chat.getLogger(\"MyLogger\");\nlogger.debug(\"Position moved from {} {} {} to {} {} {}\", oldX, oldY, oldZ, x, y, z);\nlogger.info(\"Player moved!\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createTextHelperFromJSON",
@@ -303,7 +315,8 @@
       "static": true,
       "examples": [
         "const block = \"minecraft:stone\";\nconst helper = Chat.createTextHelperFromJSON(JSON.stringify([{\n    \"text\": \"Searching for \",\n    \"italic\": true,\n    \"color\": \"#AAAAAA\"\n}, {\n    \"text\": block,\n    \"italic\": true,\n    \"color\": \"#FF0000\"\n}]));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createTextBuilder",
@@ -314,7 +327,8 @@
       "static": true,
       "examples": [
         "const text = Chat.createTextBuilder()\n    .withColor(0x6)\n    .append(\"Hello World! This is gold!\")\n    .build();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createCommandBuilder",
@@ -331,7 +345,8 @@
       "static": true,
       "examples": [
         "// Accessible via /ugive\nconst command = Chat.createCommandBuilder(\"ugive\")\n    .itemArg(\"item\")\n    .intArg(\"count\", 0, 1_000_000)\n    .executes(...)\n    .register();"
-      ]
+      ],
+      "deprecated": true
     },
     {
       "name": "unregisterCommand",
@@ -348,7 +363,8 @@
       "static": true,
       "examples": [
         "Chat.unregisterCommand(\"ugive\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "reRegisterCommand",
@@ -365,7 +381,8 @@
       "static": true,
       "examples": [
         "const node = Chat.unregisterCommand(\"ugive\");\nChat.reRegisterCommand(node);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getCommandManager",
@@ -376,7 +393,8 @@
       "static": true,
       "examples": [
         "const cmdManager = Chat.getCommandManager();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getHistory",
@@ -387,7 +405,8 @@
       "static": true,
       "examples": [
         "const hist = Chat.getHistory();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getTextWidth",
@@ -404,7 +423,8 @@
       "static": true,
       "examples": [
         "const width = Chat.getTextWidth(\"Example String\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "sectionSymbolToAmpersand",
@@ -421,7 +441,8 @@
       "static": true,
       "examples": [
         "const newStr = Chat.sectionSymbolToAmpersand(\"§aHello World! I'm so happy & excited!\");\n// newStr will be \"&aHello World! I'm so happy && excited!\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "ampersandToSectionSymbol",
@@ -438,7 +459,8 @@
       "static": true,
       "examples": [
         "const newStr = Chat.ampersandToSectionSymbol(\"&aHello World! I'm so happy && excited!\");\n// newStr will be \"§aHello World! I'm so happy & excited!\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "stripFormatting",
@@ -455,7 +477,11 @@
       "static": true,
       "examples": [
         "const newStr = Chat.stripFormatting(\"&aHello World! I'm so happy & excited!\");\n// newStr will be \"Hello World! I'm so happy & excited!\""
-      ]
+      ],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }

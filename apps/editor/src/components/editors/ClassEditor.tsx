@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { Save, Plus, Trash2 } from 'lucide-react';
-import MonacoWrapper from '../MonacoWrapper';
+import { Save, Plus, CheckCircle2, AlertTriangle } from 'lucide-react';
 import MethodEditor from './MethodEditor';
 import FieldEditor from './FieldEditor';
 import clsx from 'clsx';
@@ -27,6 +26,7 @@ interface ClassEditorProps {
 
 export default function ClassEditor({ initialData, filePath }: ClassEditorProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'constructors' | 'methods' | 'fields'>('overview');
+  const [saveStatus, setSaveStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const { register, control, handleSubmit, reset, watch, formState: { dirtyFields } } = useForm<ClassData>({
     defaultValues: initialData,
   });
@@ -46,7 +46,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
 
   const changeCount = countChanges(dirtyFields);
 
-  const onSubmit = async (data: ClassData) => {
+  const onSubmit = useCallback(async (data: ClassData) => {
     try {
       const res = await fetch(`/api/content?path=${encodeURIComponent(filePath)}`, {
         method: 'POST',
@@ -54,12 +54,31 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error('Failed to save');
-      alert('Saved successfully!');
+      reset(data, { keepValues: true });
+      setSaveStatus({ type: 'success', message: 'Changes saved successfully.' });
     } catch (error) {
       console.error(error);
-      alert('Error saving file');
+      setSaveStatus({ type: 'error', message: 'Failed to save file.' });
     }
-  };
+  }, [filePath]);
+
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+        event.preventDefault();
+        handleSubmit(onSubmit)();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
+  }, [handleSubmit, onSubmit]);
+
+  useEffect(() => {
+    if (!saveStatus) return;
+    const timeout = window.setTimeout(() => setSaveStatus(null), 3500);
+    return () => window.clearTimeout(timeout);
+  }, [saveStatus]);
 
   const { fields: methods, append: appendMethod, remove: removeMethod } = useFieldArray({
     control,
@@ -78,7 +97,30 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
+    <>
+      {saveStatus && (
+        <div
+          role="status"
+          className={clsx(
+            'fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-lg px-4 py-3 shadow-lg border text-sm font-medium',
+            saveStatus.type === 'success'
+              ? 'bg-emerald-600/95 border-emerald-500 text-white'
+              : 'bg-rose-600/95 border-rose-500 text-white'
+          )}
+        >
+          {saveStatus.type === 'success' ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
+          <span>{saveStatus.message}</span>
+          <button
+            type="button"
+            className="ml-2 text-white/80 hover:text-white"
+            onClick={() => setSaveStatus(null)}
+            aria-label="Dismiss save notification"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full">
       {/* Header */}
       <div className="border-b border-border-base p-4 bg-bg-surface flex justify-between items-center sticky top-0 z-10">
         <div>
@@ -274,6 +316,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
 
         </div>
       </div>
-    </form>
+      </form>
+    </>
   );
 }
