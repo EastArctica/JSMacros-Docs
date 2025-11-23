@@ -5,7 +5,20 @@
   "since": "1.8.4",
   "description": "The AdvancementProgressHelper class is a World Interaction helper class in JSMacros that provides access to Minecraft advancement progress information.",
   "overview": "The `AdvancementProgressHelper` class is a World Interaction helper class in JSMacros that provides access to Minecraft advancement progress information. This class allows you to track, query, and analyze the completion status of advancements and their specific criteria in your scripts.\n\nSince JSMacros 1.8.4, this class has been available to help scripters monitor advancement progress, check completion status, and retrieve detailed information about advancement criteria.",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new AdvancementProgressHelper(base)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "net.minecraft.advancement.AdvancementProgress",
+          "description": ""
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "isDone",
@@ -15,8 +28,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "if (progress.isDone()) {\n    Chat.log(\"Advancement completed!\");\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  if (progress.isDone()) {\n    Chat.log(`Advancement is done`);\n  } else {\n    Chat.log(`Advancement is not done`);\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "isAnyObtained",
@@ -26,8 +40,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "if (progress.isAnyObtained()) {\n    Chat.log(\"Progress made on advancement!\");\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  if (progress.isAnyObtained()) {\n    Chat.log(\"Progress made on advancement!\");\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getPercentage",
@@ -37,19 +52,21 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const percent = Math.round(progress.getPercentage() * 100);\nChat.log(`Advancement is ${percent}% complete`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const percent = Math.round(progress.getPercentage() * 100);\n  Chat.log(`Advancement is ${percent}% complete`);\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getFraction",
       "signature": "getFraction()",
-      "returnType": "TextHelper",
+      "returnType": "TextHelper | null",
       "description": "Returns a TextHelper containing the fraction of finished requirements to total requirements (e.g., \"3/5\").",
       "parameters": [],
       "static": false,
       "examples": [
-        "const fraction = progress.getFraction();\nChat.log(`Progress: ${fraction.getString()}`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const fraction = progress.getFraction();\n  if (fraction) {\n    Chat.log(`Progress: ${fraction.getString()}`);\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "countObtainedRequirements",
@@ -59,8 +76,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const completed = progress.countObtainedRequirements();\nChat.log(`Completed ${completed} requirements`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const completed = progress.countObtainedRequirements();\n  Chat.log(`Completed ${completed} requirements`);\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getCriteria",
@@ -70,8 +88,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const criteria = progress.getCriteria();\nfor (const [name, timestamp] of criteria) {\n    const date = new Date(timestamp);\n    Chat.log(`Criteria \"${name}\" completed on ${date.toLocaleDateString()}`);\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const criteria = progress.getCriteria();\n  for (const [id, timestamp] of criteria) {\n    const date = new Date(timestamp);\n    Chat.log(`Criteria \"${id}\" completed on ${date.toLocaleDateString()}`);\n    // e.g. 'Criteria \"has_quartz\" completed on 11/21/2025'\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getObtainedCriteria",
@@ -81,8 +100,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const completed = progress.getObtainedCriteria();\nChat.log(`Completed criteria: ${completed.join(\", \")}`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const completed = progress.getObtainedCriteria();\n  Chat.log(`Completed criteria: ${completed.join(\", \")}`);\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getUnobtainedCriteria",
@@ -92,8 +112,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const remaining = progress.getUnobtainedCriteria();\nChat.log(`Still need: ${remaining.join(\", \")}`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const remaining = progress.getUnobtainedCriteria();\n  Chat.log(`Still need ${remaining.length} criteria: ${remaining.join(\", \")}`);\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getRequirements",
@@ -103,12 +124,13 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const requirements = progress.getRequirements();\nfor (let i = 0; i < requirements.length; i++) {\n    Chat.log(`Requirement group ${i + 1}: ${requirements[i].join(\" OR \")}`);\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const requirements = progress.getRequirements();\n  for (let i = 0; i < requirements.length; i++) {\n    Chat.log(`Requirement group ${i + 1}: ${requirements[i].join(\" OR \")}`);\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getCriterionProgress",
-      "signature": "getCriterionProgress(String criteria)",
+      "signature": "getCriterionProgress(criteria)",
       "returnType": "number",
       "description": "Returns the completion timestamp of the given criteria in milliseconds since epoch, or -1 if the criteria is not met yet.",
       "parameters": [
@@ -120,12 +142,13 @@
       ],
       "static": false,
       "examples": [
-        "const timestamp = progress.getCriterionProgress(\"minecraft:adventure/adventuring_time\");\nif (timestamp !== -1) {\n    const date = new Date(timestamp);\n    Chat.log(`Adventure time criteria completed on ${date.toLocaleDateString()}`);\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancement(\n  \"minecraft:adventure/adventuring_time\",\n);\nconst progress = advancement.getProgress();\nconst requirements = advancement.getRequirements();\nfor (const criteriaList of requirements) {\n  const timestamp = progress.getCriterionProgress(criteriaList[0]);\n  if (timestamp !== -1) {\n    const date = new Date(timestamp);\n    Chat.log(\n      `Adventure time criteria '${criteriaList[0]}' completed on ${date.toLocaleDateString()}`,\n    );\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "isCriteriaObtained",
-      "signature": "isCriteriaObtained(String criteria)",
+      "signature": "isCriteriaObtained(criteria)",
       "returnType": "boolean",
       "description": "Returns true if the given criteria is met, false otherwise.",
       "parameters": [
@@ -137,8 +160,9 @@
       ],
       "static": false,
       "examples": [
-        "if (progress.isCriteriaObtained(\"minecraft:adventure/adventuring_time\")) {\n    Chat.log(\"Adventure time criteria completed!\");\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancement(\n  \"minecraft:adventure/adventuring_time\",\n);\nconst progress = advancement.getProgress();\nconst requirements = advancement.getRequirements();\nfor (const criteriaList of requirements) {\n  const isObtained = progress.isCriteriaObtained(criteriaList[0]);\n  if (isObtained) {\n    Chat.log(`Adventure time criteria '${criteriaList[0]}' is obtained`);\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getEarliestProgressObtainDate",
@@ -148,8 +172,22 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const earliestDate = new Date(progress.getEarliestProgressObtainDate());\nChat.log(`First criteria completed on ${earliestDate.toLocaleDateString()}`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancements = advancementManager.getAdvancements();\nfor (const advancement of advancements) {\n  const progress = advancement.getProgress();\n  const earliestDate = new Date(progress.getEarliestProgressObtainDate());\n  Chat.log(`First criteria completed on ${earliestDate.toLocaleDateString()}`);\n}\n"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "",
+      "examples": [
+        "const player = Player.getPlayer();\r\nconst advancementManager = player.getAdvancementManager();\r\nconst advancements = advancementManager.getAdvancements();\r\nfor (const advancement of advancements) {\r\n  const progress = advancement.getProgress();\r\n  Chat.log(`${progress.toString()}`); // e.g. 'AdvancementProgressHelper:{\"percent\":1.000000}'\r\n}\r\n"
+      ],
+      "static": false,
+      "deprecated": false,
+      "parameters": []
     }
-  ]
+  ],
+  "fields": []
 }

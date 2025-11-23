@@ -4,7 +4,20 @@
   "since": "1.8.4",
   "description": "The AdvancementHelper class is a World Interaction helper in JsMacros that provides access to Minecraft advancement information.",
   "overview": "The `AdvancementHelper` class is a World Interaction helper in JsMacros that provides access to Minecraft advancement information. It allows scripts to inspect advancement details, check progress, retrieve rewards, and navigate advancement trees.\n\nThis class wraps around Minecraft's `PlacedAdvancement` and provides a scripting-friendly interface for interacting with the advancement system.\n\n### Accessing AdvancementHelper\n\nAdvancementHelper instances are typically obtained through:\n\n1. **From Advancement Events** - Many advancement-related events provide AdvancementHelper objects\n2. **From Client Methods** - Using methods that return advancement information\n3. **Through Navigation** - Using `getParent()` and `getChildren()` methods to traverse advancement trees",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new AdvancementHelper(base)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "base",
+          "type": "net.minecraft.advancement.PlacedAdvancement",
+          "description": ""
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "getParent",
@@ -14,8 +27,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst parent = advancement.getParent();\n\nif (parent) {\n    Chat.log(`Parent: ${parent.getId()}`);\n} else {\n    Chat.log(\"This is a root advancement\");\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getRootAdvancements()[0];\nconst parent = advancement.getParent();\n\nif (parent) {\n  Chat.log(`Parent: ${parent.getId()}`);\n} else {\n  Chat.log(\"This is a root advancement\");\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getChildren",
@@ -25,8 +39,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst children = advancement.getChildren();\n\nChat.log(`Found ${children.length} child advancements:`);\nchildren.forEach(child => {\n    Chat.log(`- ${child.getId()}`);\n});"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getRootAdvancements()[0];\nconst children = advancement.getChildren();\n\nChat.log(`Found ${children.length} child advancements:`);\nchildren.forEach((child) => {\n  Chat.log(`- ${child.getId()}`);\n});\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getRequirements",
@@ -36,8 +51,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst requirements = advancement.getRequirements();\n\nChat.log(`Requirement groups: ${requirements.length}`);\nrequirements.forEach((group, index) => {\n    Chat.log(`Group ${index + 1}: ${group.join(\", \")}`);\n});"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancements()[1];\nconst requirements = advancement.getRequirements();\n\nChat.log(`Requirement groups: ${requirements.length}`);\nrequirements.forEach((groups) => {\n  Chat.log(`Groups ${groups.join(\", \")}`);\n});\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getRequirementCount",
@@ -47,8 +63,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst count = advancement.getRequirementCount();\nChat.log(`Advancement has ${count} requirement groups`);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancements()[0];\nconst count = advancement.getRequirementCount();\nChat.log(`Advancement has ${count} requirement groups`);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getId",
@@ -58,8 +75,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst id = advancement.getId();\nChat.log(`Advancement ID: ${id}`);\n\n// Example: Check for specific advancements\nif (id === \"minecraft:story/mine_diamond\") {\n    Chat.log(\"Player mined their first diamond!\");\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancements()[0];\nconst id = advancement.getId();\nChat.log(`Advancement ID: ${id}`);\n\n// Example: Check for specific advancements\nfor (const advancement of advancementManager.getAdvancements()) {\n  const id = advancement.getId();\n  if (id === \"minecraft:story/mine_diamond\") {\n    Chat.log(\"Player mined their first diamond!\");\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getExperience",
@@ -69,8 +87,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst experience = advancement.getExperience();\n\nif (experience > 0) {\n    Chat.log(`This advancement awards ${experience} XP`);\n} else {\n    Chat.log(\"This advancement doesn't award XP\");\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancements()[0];\nconst experience = advancement.getExperience();\n\nif (experience > 0) {\n  Chat.log(`This advancement awards ${experience} XP`);\n} else {\n  Chat.log(\"This advancement doesn't award XP\");\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getLoot",
@@ -80,8 +99,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst loot = advancement.getLoot();\n\nif (loot.length > 0) {\n    Chat.log(\"Loot rewards:\");\n    loot.forEach(lootTable => {\n        Chat.log(`- ${lootTable}`);\n    });\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nfor (const advancement of advancementManager.getAdvancements()) {\n  for (const lootTable of advancement.getLoot()) {\n    // TODO: untested, no vanilla advancements award loot\n    Chat.log(`- ${lootTable}`);\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getRecipes",
@@ -91,8 +111,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst recipes = advancement.getRecipes();\n\nif (recipes.length > 0) {\n    Chat.log(`Unlocks ${recipes.length} recipes:`);\n    recipes.forEach(recipe => {\n        Chat.log(`- ${recipe}`);\n    });\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nfor (const advancement of advancementManager.getAdvancements()) {\n  // TODO: As of 11/20/2025 there is a bug in getRecipes due to the main JsMacros/JsMacros using `.toArray()` insetad of `.toArray(String[]::new)` at AdvancementHelper.java:96\n  const recipes = advancement.getRecipes();\n\n  // TODO: untested, no vanilla advancements award recipes\n  if (recipes.length > 0) {\n    recipes.forEach((recipe) => {\n      Chat.log(`- ${recipe}`);\n    });\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getProgress",
@@ -102,8 +123,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst progress = advancement.getProgress();\n\nChat.log(`Progress: ${(progress.getPercentage() * 100).toFixed(1)}%`);\nChat.log(`Completed: ${progress.isDone()}`);\nChat.log(`Requirements met: ${progress.countObtainedRequirements()}`);\n\n// Get obtained criteria\nconst obtained = progress.getObtainedCriteria();\nif (obtained.length > 0) {\n    Chat.log(\"Obtained criteria:\", obtained.join(\", \"));\n}"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nfor (const advancement of advancementManager.getAdvancements()) {\n  const progress = advancement.getProgress();\n\n  Chat.log(`Progress: ${(progress.getPercentage() * 100).toFixed(1)}%`);\n  Chat.log(`Completed: ${progress.isDone()}`);\n  Chat.log(`Requirements met: ${progress.countObtainedRequirements()}`);\n\n  // Get obtained criteria\n  const obtained = progress.getObtainedCriteria();\n  if (obtained.length > 0) {\n    Chat.log(`Obtained criteria: ${obtained.join(\", \")}`);\n    break;\n  }\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "toJson",
@@ -113,8 +135,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nconst jsonData = advancement.toJson();\nChat.log(\"Advancement JSON:\", jsonData);\n\n// You can parse this for detailed inspection\nconst advancementData = JSON.parse(jsonData);\nChat.log(\"Display name:\", advancementData.display?.title);"
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nfor (const advancement of advancementManager.getAdvancements()) {\n  // TODO: Currently the toJson function of this causes \"Advancement completion requirements did not exactly match specified criteria. Missing: []. Unknown: [has_cobblestone, has_the_recipe]\"\n  const jsonData = advancement.toJson();\n  Chat.log(`Advancement JSON: ${jsonData}`);\n\n  // You can parse this for detailed inspection\n  const advancementData = JSON.parse(jsonData);\n  Chat.log(`Display name: ${advancementData.display?.title}`);\n}\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "toString",
@@ -124,8 +147,11 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const advancement = event.advancement;\nChat.log(advancement.toString()); // e.g., \"AdvancementHelper:{\\\"id\\\": \\\"minecraft:story/root\\\"}\""
-      ]
+        "const player = Player.getPlayer();\nconst advancementManager = player.getAdvancementManager();\nconst advancement = advancementManager.getAdvancements()[0]\n\nChat.log(advancement.toString()); // e.g., \"AdvancementHelper:{\\\"id\\\": \\\"minecraft:story/root\\\"}\""
+      ],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [],
+  "extends": ""
 }

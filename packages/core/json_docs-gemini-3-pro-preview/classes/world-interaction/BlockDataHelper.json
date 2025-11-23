@@ -3,7 +3,30 @@
   "fullClassName": "BlockDataHelper",
   "description": "The BlockDataHelper class is a comprehensive helper class in JSMacros that provides access to block data and properties at specific positions in the Minecraft world.",
   "overview": "The `BlockDataHelper` class is a comprehensive helper class in JSMacros that provides access to block data and properties at specific positions in the Minecraft world. It combines information about a block's state, position, and entity data (if the block has a tile entity) into a single, convenient interface.\n\nThis class is primarily used in world interaction contexts where you need to access detailed information about blocks in the world, such as in event handlers or when scanning the world for specific block types.\n\nInstances are typically obtained through Block Events, World Methods (querying coordinates), or Raycasting.",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new BlockDataHelper(state, entity, pos)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "state",
+          "type": "net.minecraft.block.BlockState",
+          "description": ""
+        },
+        {
+          "name": "entity",
+          "type": "net.minecraft.block.entity.BlockEntity",
+          "description": ""
+        },
+        {
+          "name": "pos",
+          "type": "net.minecraft.util.math.BlockPos",
+          "description": ""
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "getX",
@@ -13,9 +36,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);",
-        "Chat.log(`Position: [${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()}]`);"
-      ]
+        "const listener = JsMacros.on(\n  \"BlockUpdate\",\n  JavaWrapper.methodToJava((event) => {\n    Chat.log(\n      `Block Pos: ${event.block.getX()}, ${event.block.getY()}, ${event.block.getZ()}`,\n    );\n  }),\n);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getY",
@@ -25,8 +48,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);"
-      ]
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    Chat.log(\r\n      `Block Pos: ${event.block.getX()}, ${event.block.getY()}, ${event.block.getZ()}`,\r\n    );\r\n  }),\r\n);\r\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getZ",
@@ -36,8 +60,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "Chat.log(`Block at ${blockData.getX()}, ${blockData.getY()}, ${blockData.getZ()} is ${blockData.getId()}`);"
-      ]
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    Chat.log(\r\n      `Block Pos: ${event.block.getX()}, ${event.block.getY()}, ${event.block.getZ()}`,\r\n    );\r\n  }),\r\n);\r\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getBlockPos",
@@ -46,7 +71,10 @@
       "description": "A position helper for the block's location",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    const pos = event.block.getBlockPos();\r\n    const netherCoords = pos.toNetherCoords();\r\n    const overworldCoords = pos.toOverworldCoords();\r\n    Chat.log(`Nether: ${netherCoords.toString()}`);\r\n    Chat.log(`Overworld: ${overworldCoords.toString()}`);\r\n  }),\r\n);\r\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getId",
@@ -56,22 +84,21 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const blockId = blockData.getId();",
-        "Chat.log(`Block ID: ${blockData.getId()}`);",
-        "return blockId.includes(\"chest\") || blockId.includes(\"shulker_box\");"
-      ]
+        "const listener = JsMacros.on(\n  \"BlockUpdate\",\n  JavaWrapper.methodToJava((event) => {\n    const blockData = event.block;\n    const blockId = blockData.getId();\n    Chat.log(`Block ID: ${blockId}`);\n  }),\n);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getName",
       "signature": "getName()",
       "returnType": "TextHelper",
-      "description": "The translated name of the block. Returns a TextHelper object.",
+      "description": "The translated name of the block e.g., \"Trapped Chest\". Returns a TextHelper object.",
       "parameters": [],
       "static": false,
       "examples": [
-        "Chat.log(`Name: ${blockData.getName().getString()}`);",
-        "Chat.log(`Display Name: ${blockData.getName().getString()}`);"
-      ]
+        "const listener = JsMacros.on(\n  \"BlockUpdate\",\n  JavaWrapper.methodToJava((event) => {\n    const blockData = event.block;\n    Chat.log(`Name: ${blockData.getName().getString()}`);\n    Chat.log(`Display Name: ${blockData.getName().getString()}`);\n  }),\n);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getBlockState",
@@ -81,10 +108,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const state = blockData.getBlockState();",
-        "if (state.facing) { Chat.log(`Block faces: ${state.facing}`); }",
-        "if (state.waterlogged === \"true\") { Chat.log(\"Block is waterlogged\"); }"
-      ]
+        "const listener = JsMacros.on(\n  \"BlockUpdate\",\n  JavaWrapper.methodToJava((event) => {\n    const blockData = event.block;\n    const state = blockData.getBlockState();\n    if (state.facing) {\n      Chat.log(`Block faces: ${state.facing}`);\n    }\n    if (state.waterlogged === \"true\") {\n      Chat.log(\"Block is waterlogged\");\n    }\n  }),\n);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getBlockStateHelper",
@@ -94,9 +120,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const blockStateHelper = blockData.getBlockStateHelper();",
-        "Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);"
-      ]
+        "const listener = JsMacros.on(\n  \"BlockUpdate\",\n  JavaWrapper.methodToJava((event) => {\n    const blockData = event.block;\n    const blockStateHelper = blockData.getBlockStateHelper();\n\n    Chat.log(`Block hardness: ${blockStateHelper.getHardness()}`);\n  }),\n);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getBlock",
@@ -106,8 +132,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const blockHelper = blockData.getBlock();"
-      ]
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    const blockData = event.block;\r\n    const blockHelper = blockData.getBlock();\r\n\r\n    Chat.log(`Can spawn: ${blockHelper.canMobSpawnInside()}`);\r\n  }),\r\n);\r\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getBlockHelper",
@@ -116,7 +143,10 @@
       "description": "A helper object for the block type. DEPRECATED: Use getBlock() instead. Kept for backward compatibility.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    const blockData = event.block;\r\n    const blockHelper = blockData.getBlockHelper();\r\n\r\n    Chat.log(`Can spawn: ${blockHelper.canMobSpawnInside()}`);\r\n  }),\r\n);\r\n"
+      ],
+      "deprecated": true
     },
     {
       "name": "getNBT",
@@ -126,37 +156,56 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const nbt = blockData.getNBT();",
-        "const items = nbt.get(\"Items\")?.asList() || [];",
-        "if (blockData.getNBT()) { Chat.log(\"Container block placed - has NBT data\"); }"
-      ]
+        "const listener = JsMacros.on(\n  \"BlockUpdate\",\n  JavaWrapper.methodToJava((event) => {\n    const blockData = event.block;\n    const nbt = blockData.getNBT();\n    if (!nbt) return;\n\n    // On any server (including integrated), this will only return items for placed items that have nbt data\n    // e.g., a shulker box or ctrl+middle mouse clicked chest being placed.\n    const items = nbt.get(\"Items\") || [];\n    if (blockData.getNBT()) {\n      Chat.log(\n        `Container block placed - has NBT data. Found ${items.length()} items`,\n      );\n    }\n  }),\n);\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getRawBlock",
       "signature": "getRawBlock()",
-      "returnType": "Block",
+      "returnType": "net.minecraft.block.Block",
       "description": "The raw Minecraft Block object (advanced use only).",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    const blockData = event.block;\r\n    const rawBlock = blockData.getRawBlock();\r\n    Chat.log(rawBlock.getRegistryEntry().getKey());\r\n    // e.g., \"Optional[ResourceKey[minecraft:block / minecraft:dirt]]\"\r\n  }),\r\n);\r\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "getRawBlockState",
       "signature": "getRawBlockState()",
-      "returnType": "BlockState",
+      "returnType": "net.minecraft.block.BlockState",
       "description": "The raw Minecraft BlockState object (advanced use only).",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getRawBlockEntity",
       "signature": "getRawBlockEntity()",
-      "returnType": "BlockEntity | null",
+      "returnType": "net.minecraft.block.BlockEntity | null",
       "description": "The raw Minecraft BlockEntity object (advanced use only).",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
+    },
+    {
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "",
+      "examples": [
+        "const listener = JsMacros.on(\r\n  \"BlockUpdate\",\r\n  JavaWrapper.methodToJava((event) => {\r\n    const blockData = event.block;\r\n    Chat.log(blockData.toString());\r\n    // e.g., 'BlockDataHelper:{\"x\": 31, \"y\": 71, \"z\": -12, \"id\": \"minecraft:dirt\"}'\r\n  }),\r\n);\r\n"
+      ],
+      "static": false,
+      "deprecated": false,
+      "parameters": []
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }
