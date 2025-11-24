@@ -91,3 +91,27 @@ If you notice that this file is inaccurate based on the current state of the cod
 ### Usage
 *   Run with `pnpm --filter @jsm-docs/editor dev` and open `http://localhost:3000`.
 *   Requires local access to the workspace (no extra environment variables at this time).
+
+---
+
+## 🌐 Docs Pages Publisher
+
+*   **Identity**: `docs-site`
+*   **Source**: [`.github/workflows/docs-site.yml`](file:///c:/Users/Easta/src/js/JSMacros-Docs/.github/workflows/docs-site.yml)
+*   **Type**: GitHub Actions Workflow
+*   **Purpose**: Regenerates the VitePress site from the `packages/core/json_docs-gemini-3-pro-preview` snapshot and deploys the static output to GitHub Pages.
+
+### Capabilities
+*   **Automated Builds**: Runs `pnpm --filter @jsm-docs/docs build`, which invokes `build-docs.mjs`/`generate-sidebar.mjs` before executing `vitepress build`.
+*   **Artifact Publishing**: Uploads `apps/docs/.vitepress/dist` via `actions/upload-pages-artifact@v3` to hand off to the Pages deployment pipeline.
+*   **Safe Deployments**: Uses `actions/deploy-pages@v4` with concurrency control to ensure only the latest run publishes to the `github-pages` environment.
+
+### Configuration
+*   **Triggers**:
+    *   `push` to the `main` branch.
+    *   Manual `workflow_dispatch` events.
+*   **Environment**:
+    *   Node.js `20.x` with `pnpm@10.13.1`.
+    *   Requires repository Pages to use the “GitHub Actions” source.
+*   **Permissions**:
+    *   `contents: read`, `pages: write`, `id-token: write` (set at the workflow level; deploy job repeats the Pages-specific permissions).
