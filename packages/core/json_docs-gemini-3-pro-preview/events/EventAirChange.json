@@ -1,6 +1,6 @@
 {
   "name": "EventAirChange",
-  "fullClassName": "EventAirChange",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.event.impl.player.EventAirChange",
   "description": "This event is fired when the player's air supply changes, such as when diving underwater or resurfacing.",
   "constructors": [],
   "methods": [
@@ -11,7 +11,20 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [
+    {
+      "name": "air",
+      "type": "int",
+      "description": "",
+      "static": false,
+      "final": false
+    }
+  ],
+  "since": "",
+  "extends": "",
+  "overview": ""
 }

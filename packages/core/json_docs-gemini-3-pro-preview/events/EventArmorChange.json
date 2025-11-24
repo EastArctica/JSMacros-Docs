@@ -1,6 +1,6 @@
 {
   "name": "EventArmorChange",
-  "fullClassName": "EventArmorChange",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.event.impl.player.EventArmorChange",
   "extends": null,
   "description": "This event is fired when the player equips, unequips, or swaps a piece of armor.",
   "overview": "This event is fired when the player equips, unequips, or swaps a piece of armor.\n\n## Example\n```javascript\n// Announce armor changes in chat\nconst listener = JsMacros.on('ArmorChange', JavaWrapper.methodToJavaAsync(event => {\n    JsMacros.assertEvent(event, 'ArmorChange');\n\n    const slot = event.slot;\n    const newItem = event.item;\n    const oldItem = event.oldItem;\n\n    if (!newItem.isEmpty()) {\n        if (!oldItem.isEmpty()) {\n            // Armor was swapped\n            Chat.log(`Swapped ${oldItem.getName()} for ${newItem.getName()} on ${slot}.`);\n        } else {\n            // Armor was equipped\n            Chat.log(`Equipped ${newItem.getName()} on ${slot}.`);\n        }\n    } else {\n        // Armor was unequipped\n        Chat.log(`Unequipped ${oldItem.getName()} from ${slot}.`);\n    }\n}));\n```",
@@ -15,5 +15,29 @@
       "static": false,
       "examples": []
     }
-  ]
+  ],
+  "fields": [
+    {
+      "name": "slot",
+      "type": "java.lang.String",
+      "description": "",
+      "static": false,
+      "final": false
+    },
+    {
+      "name": "item",
+      "type": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.ItemStackHelper",
+      "description": "",
+      "static": false,
+      "final": false
+    },
+    {
+      "name": "oldItem",
+      "type": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.ItemStackHelper",
+      "description": "",
+      "static": false,
+      "final": false
+    }
+  ],
+  "since": ""
 }
