@@ -30,5 +30,5 @@ export default defineConfig({
   },
   
   srcDir: './docs',
-  base: './',
+  base: '/JsMacros-Docs/',
 })
