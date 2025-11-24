@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  editor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    restart: unless-stopped

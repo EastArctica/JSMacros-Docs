@@ -84,14 +84,15 @@ If you notice that this file is inaccurate based on the current state of the cod
 *   **Purpose**: Provides a structured UI for reviewing and editing the generated JSON docs without hand-editing files.
 
 ### Capabilities
-*   **File Explorer**: `/api/files` lists every `json_docs-*` directory under `packages/core` and exposes the contained `.json` documents.
+*   **File Explorer**: `/api/files` only exposes `packages/core/json_docs-gemini-3-pro-preview` and lists its `apis/`, `classes/`, and `events/` JSON descendants.
 *   **Schema-Aware Editing**: React Hook Form editors for overview metadata, constructors, methods, fields, and inline Monaco-powered code example blocks.
-*   **Safe Read/Write APIs**: `/api/content` enforces path whitelisting so edits stay inside `packages/core`. Saves prettified JSON with 2-space indents.
+*   **Safe Read/Write APIs**: `/api/content` now pins edits to `packages/core/json_docs-gemini-3-pro-preview`, validates payloads against the doc schema, enforces basic rate limits (60 req/min/IP) and tracks a 1 GB per-IP write quota (24h) before writing prettified JSON.
 *   **Type Context**: `/api/ecosystem` streams `.d.ts` headers from `apps/editor/example-ecosystem/headers` into Monaco for IntelliSense during example editing.
 
 ### Usage
 *   Run with `pnpm --filter @jsm-docs/editor dev` and open `http://localhost:3000`.
 *   Requires local access to the workspace (no extra environment variables at this time).
+*   Containerized option: `docker compose up --build editor` runs the production build on port `3000` (or override with `PORT`).
 
 ---
 

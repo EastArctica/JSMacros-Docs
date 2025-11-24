@@ -1,0 +1,12 @@
+node_modules
+apps/**/node_modules
+packages/**/node_modules
+apps/**/.next
+apps/**/dist
+packages/**/dist
+.git
+.gitignore
+pnpm-debug.log
+.env
+.env.*
+.DS_Store

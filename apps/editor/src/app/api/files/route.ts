@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-const DOCS_ROOT = path.resolve(process.cwd(), '../../packages/core');
+const SNAPSHOT_DIR = 'json_docs-gemini-3-pro-preview';
+const DOCS_ROOT = path.resolve(process.cwd(), '../../packages/core', SNAPSHOT_DIR);
 
 interface FileNode {
     name: string;
@@ -20,11 +21,6 @@ async function getFiles(dir: string, relativePath: string = ''): Promise<FileNod
         const entryRelativePath = path.join(relativePath, entry.name);
 
         if (entry.isDirectory()) {
-            // Only include json_docs directories or their subdirectories
-            if (relativePath === '' && !entry.name.startsWith('json_docs-')) {
-                continue;
-            }
-
             nodes.push({
                 name: entry.name,
                 path: entryRelativePath,
