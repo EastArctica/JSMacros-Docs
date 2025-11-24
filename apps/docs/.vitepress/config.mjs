@@ -29,5 +29,6 @@ export default defineConfig({
     }
   },
   
-  srcDir: './docs'
+  srcDir: './docs',
+  base: './',
 })
