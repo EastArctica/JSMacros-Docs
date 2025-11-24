@@ -31,6 +31,8 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
     defaultValues: initialData,
   });
 
+  const className = watch('name');
+
   // Update form when initialData changes (file switch)
   useEffect(() => {
     reset(initialData);
@@ -264,7 +266,7 @@ export default function ClassEditor({ initialData, filePath }: ClassEditorProps)
                 <h2 className="text-lg font-semibold text-text-primary">Constructors ({constructors.length})</h2>
                 <button
                   type="button"
-                  onClick={() => appendConstructor({ signature: 'new Constructor()', description: '', parameters: [], examples: [] })}
+                  onClick={() => appendConstructor({ signature: `new ${className || 'Constructor'}()`, description: '', parameters: [], examples: [] })}
                   className="flex items-center gap-1 text-sm text-primary hover:text-primary-hover transition-colors"
                 >
                   <Plus size={16} /> Add Constructor
