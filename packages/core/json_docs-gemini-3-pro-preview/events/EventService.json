@@ -1,0 +1,19 @@
+{
+  "name": "EventService",
+  "fullClassName": "EventService",
+  "extends": null,
+  "since": null,
+  "description": "",
+  "overview": "",
+  "constructors": [],
+  "methods": [{
+      "name": "toString",
+      "signature": "toString()",
+      "returnType": "string",
+      "description": "Returns a string representation of the event object.",
+      "parameters": [],
+      "static": false,
+      "examples": []
+    }
+  ]
+}

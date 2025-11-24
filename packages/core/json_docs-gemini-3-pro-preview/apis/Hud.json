@@ -25,7 +25,8 @@
       "static": true,
       "examples": [
         "const myScreen = Hud.createScreen(\"My Custom Screen\", true);\nconst button = myScreen.addButton(10, 10, 100, 20, \"Click Me!\", JavaWrapper.methodToJava(() => {\n    Chat.log(\"Button clicked!\");\n}));\nHud.openScreen(myScreen);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "openScreen",
@@ -42,7 +43,8 @@
       "static": true,
       "examples": [
         "const screen = Hud.createScreen(\"Info\", false);\nscreen.addText(\"Hello!\", 10, 10, 0xFFFFFF, true);\nHud.openScreen(screen);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getOpenScreen",
@@ -53,7 +55,8 @@
       "static": true,
       "examples": [
         "const currentScreen = Hud.getOpenScreen();\nif (currentScreen) {\n    Chat.log(`Current screen title: ${currentScreen.getTitle()}`);\n} else {\n    Chat.log(\"No custom screen is open.\");\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createTexture",
@@ -80,7 +83,8 @@
       "static": true,
       "examples": [
         "// Create a blank 16x16 texture\nconst blankTexture = Hud.createTexture(16, 16, \"my_blank_texture\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createTexture",
@@ -102,7 +106,8 @@
       "static": true,
       "examples": [
         "// Load a texture from a file\n// Note: Requires an absolute path. Use FS.toRawFile().getAbsolutePath()\nconst imagePath = FS.toRawFile(\"my_image.png\").getAbsolutePath();\nconst imageTexture = Hud.createTexture(imagePath, \"my_image_texture\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getRegisteredTextures",
@@ -113,7 +118,8 @@
       "static": true,
       "examples": [
         "const textures = Hud.getRegisteredTextures();\nChat.log(\"Registered textures:\");\nfor (const name of textures.keySet()) {\n    Chat.log(`- ${name}`);\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getScaleFactor",
@@ -124,7 +130,8 @@
       "static": true,
       "examples": [
         "const scale = Hud.getScaleFactor();\nChat.log(`GUI Scale Factor: ${scale}`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getOpenScreenName",
@@ -135,7 +142,8 @@
       "static": true,
       "examples": [
         "const screenName = Hud.getOpenScreenName();\nif (screenName) {\n    Chat.log(`Currently open screen: ${screenName}`);\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "isContainer",
@@ -146,7 +154,8 @@
       "static": true,
       "examples": [
         "if (Hud.isContainer()) {\n    Chat.log(\"A container screen (like a chest) is open.\");\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createDraw2D",
@@ -156,8 +165,9 @@
       "parameters": [],
       "static": true,
       "examples": [
-        "const overlay = Hud.createDraw2D();\noverlay.addText(\"Hello from an overlay!\", 10, 10, 0xFFFFFF, true);\noverlay.register(); // This makes it visible\n\n// To remove it later:\n// overlay.unregister();"
-      ]
+        "const overlay = Hud.createDraw2D();\noverlay.register(); // This makes it visible, also clear existing elements\noverlay.addText(\"Hello from an overlay!\", 10, 10, 0xFFFFFF, true);\n\n// To remove it later:\n// overlay.unregister();"
+      ],
+      "deprecated": false
     },
     {
       "name": "registerDraw2D",
@@ -174,7 +184,8 @@
       "static": true,
       "examples": [
         "// Deprecated way\nconst overlay = Hud.createDraw2D();\nHud.registerDraw2D(overlay);\n\n// Modern way\nconst overlay = Hud.createDraw2D();\noverlay.register();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "unregisterDraw2D",
@@ -191,7 +202,8 @@
       "static": true,
       "examples": [
         "// Deprecated way\nHud.unregisterDraw2D(overlay);\n\n// Modern way\noverlay.unregister();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "listDraw2Ds",
@@ -202,7 +214,8 @@
       "static": true,
       "examples": [
         "const overlays = Hud.listDraw2Ds();\nChat.log(`There are ${overlays.size()} active overlays.`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "clearDraw2Ds",
@@ -213,7 +226,8 @@
       "static": true,
       "examples": [
         "Hud.clearDraw2Ds();\nChat.log(\"All 2D overlays have been cleared.\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createDraw3D",
@@ -224,7 +238,8 @@
       "static": true,
       "examples": [
         "const render = Hud.createDraw3D();\nconst playerPos = Player.getPlayer().getPos();\nrender.addBox(playerPos.x - 1, playerPos.y, playerPos.z - 1, playerPos.x + 1, playerPos.y + 2, playerPos.z + 1, 0xFF0000, 128, true);\nrender.register(); // This makes it visible\n\n// To remove it later:\n// render.unregister();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "registerDraw3D",
@@ -241,7 +256,8 @@
       "static": true,
       "examples": [
         "// Deprecated way\nconst render = Hud.createDraw3D();\nHud.registerDraw3D(render);\n\n// Modern way\nconst render = Hud.createDraw3D();\nrender.register();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "unregisterDraw3D",
@@ -258,7 +274,8 @@
       "static": true,
       "examples": [
         "// Deprecated way\nHud.unregisterDraw3D(render);\n\n// Modern way\nrender.unregister();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "listDraw3Ds",
@@ -269,7 +286,8 @@
       "static": true,
       "examples": [
         "const renders = Hud.listDraw3Ds();\nChat.log(`There are ${renders.size()} active 3D renders.`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "clearDraw3Ds",
@@ -280,7 +298,8 @@
       "static": true,
       "examples": [
         "Hud.clearDraw3Ds();\nChat.log(\"All 3D renders have been cleared.\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getMouseX",
@@ -291,7 +310,8 @@
       "static": true,
       "examples": [
         "const mouseX = Hud.getMouseX();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getMouseY",
@@ -302,7 +322,8 @@
       "static": true,
       "examples": [
         "const mouseY = Hud.getMouseY();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getWindowWidth",
@@ -313,7 +334,8 @@
       "static": true,
       "examples": [
         "const width = Hud.getWindowWidth();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getWindowHeight",
@@ -324,7 +346,11 @@
       "static": true,
       "examples": [
         "const height = Hud.getWindowHeight();"
-      ]
+      ],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }

@@ -326,7 +326,7 @@
       "parameters": [],
       "static": true,
       "examples": [
-        "const text = Chat.createTextBuilder()\n    .withColor(0x6)\n    .append(\"Hello World! This is gold!\")\n    .build();"
+        "const text = Chat.createTextBuilder()\n    .append(\"Hello World! This is gold!\")\n    .withColor(0x6)\n    .build();"
       ],
       "deprecated": false
     },
