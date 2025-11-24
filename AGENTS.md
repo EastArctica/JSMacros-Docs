@@ -58,6 +58,7 @@ If you notice that this file is inaccurate based on the current state of the cod
 *   **Markdown Generation**: Builds metadata blocks, constructor/method tables, parameter tables, and example code fences for each JSON file.
 *   **Dataset Targeting**: Currently reads from `packages/core/json_docs-gemini-3-pro-preview` (update `JSON_DOCS_DIR` when a new snapshot becomes canonical).
 *   **Navigation Output**: `generate-sidebar.mjs` scans the freshly-written Markdown in `apps/docs/docs` and emits `.vitepress/sidebar-config.json` used by VitePress.
+*   **Safe Markdown Output**: Automatically escapes raw `<`/`>` characters outside of code blocks to keep Vue's compiler from interpreting generic type declarations as HTML tags.
 *   **Clean Builds**: Clears and recreates `apps/docs/docs` on every run to avoid stale content before invoking VitePress `dev` or `build`.
 
 ---

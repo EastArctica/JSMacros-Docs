@@ -4,6 +4,35 @@ import path from 'path'
 const JSON_DOCS_DIR = path.resolve('../../packages/core/json_docs-gemini-3-pro-preview')
 const OUTPUT_DIR = path.resolve('./docs')
 
+function escapeAngleBrackets(text = '') {
+  if (!text) return ''
+
+  const codeRegex = /(```[\s\S]*?```|`[^`]*`)/g
+  let lastIndex = 0
+  let result = ''
+  let match
+
+  while ((match = codeRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      result += text
+        .slice(lastIndex, match.index)
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+    }
+    result += match[0]
+    lastIndex = codeRegex.lastIndex
+  }
+
+  if (lastIndex < text.length) {
+    result += text
+      .slice(lastIndex)
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+  }
+
+  return result
+}
+
 async function processJsonFile(jsonPath, outputPath) {
   try {
     const content = await fs.readFile(jsonPath, 'utf-8')
@@ -26,12 +55,12 @@ async function processJsonFile(jsonPath, outputPath) {
     
     // Description
     if (doc.description) {
-      md += `${doc.description}\n\n`
+      md += `${escapeAngleBrackets(doc.description)}\n\n`
     }
     
     // Overview
     if (doc.overview) {
-      md += `## Overview\n\n${doc.overview}\n\n`
+      md += `## Overview\n\n${escapeAngleBrackets(doc.overview)}\n\n`
     }
     
     // Constructors
@@ -40,7 +69,7 @@ async function processJsonFile(jsonPath, outputPath) {
       for (const constructor of doc.constructors) {
         md += `### \`${constructor.signature}\`\n\n`
         if (constructor.description) {
-          md += `${constructor.description}\n\n`
+          md += `${escapeAngleBrackets(constructor.description)}\n\n`
         }
         
         if (constructor.parameters && constructor.parameters.length > 0) {
@@ -48,7 +77,7 @@ async function processJsonFile(jsonPath, outputPath) {
           md += `| Parameter | Type | Description |\n`
           md += `| :--- | :--- | :--- |\n`
           for (const param of constructor.parameters) {
-            md += `| \`${param.name}\` | \`${param.type}\` | ${param.description || ''} |\n`
+            md += `| \`${param.name}\` | \`${param.type}\` | ${escapeAngleBrackets(param.description || '')} |\n`
           }
           md += `\n`
         }
@@ -83,7 +112,7 @@ async function processJsonFile(jsonPath, outputPath) {
           md += `**Returns:** \`${method.returnType}\`\n\n`
         }
         if (method.description) {
-          md += `${method.description}\n\n`
+          md += `${escapeAngleBrackets(method.description)}\n\n`
         }
         
         if (method.parameters && method.parameters.length > 0) {
@@ -91,7 +120,7 @@ async function processJsonFile(jsonPath, outputPath) {
           md += `| Parameter | Type | Description |\n`
           md += `| :--- | :--- | :--- |\n`
           for (const param of method.parameters) {
-            md += `| \`${param.name}\` | \`${param.type}\` | ${param.description || ''} |\n`
+            md += `| \`${param.name}\` | \`${param.type}\` | ${escapeAngleBrackets(param.description || '')} |\n`
           }
           md += `\n`
         }
@@ -117,7 +146,7 @@ async function processJsonFile(jsonPath, outputPath) {
           md += `**Type:** \`${field.type}\`\n\n`
         }
         if (field.description) {
-          md += `${field.description}\n\n`
+          md += `${escapeAngleBrackets(field.description)}\n\n`
         }
         
         md += `---\n\n`
@@ -130,7 +159,7 @@ async function processJsonFile(jsonPath, outputPath) {
       md += `| Property | Type | Description |\n`
       md += `| :--- | :--- | :--- |\n`
       for (const prop of doc.properties) {
-        md += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.description || ''} |\n`
+        md += `| \`${prop.name}\` | \`${prop.type}\` | ${escapeAngleBrackets(prop.description || '')} |\n`
       }
       md += `\n`
     }
