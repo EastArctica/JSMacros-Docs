@@ -3,7 +3,14 @@
   "fullClassName": "EventChunkLoad",
   "description": "This event is fired when a chunk is loaded into the world.",
   "overview": "Backed by class `EventChunkLoad`.\n\n### Fields\n* **x** (`int`): The X coordinate of the loaded chunk. (Chunk coordinates, multiply by 16 for block).\n* **z** (`int`): The Z coordinate of the loaded chunk. (Chunk coordinates, multiply by 16 for block).\n* **isFull** (`boolean`): Indicates whether this is a full chunk load.\n\n### Behavior\n* Fires when a chunk is loaded by the client\n* Chunk coordinates are in chunk units (not block coordinates)\n* The `isFull` field indicates if this is a complete chunk load\n* Not cancellable",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new EventChunkLoad(int x, int z, boolean isFull)",
+      "description": "",
+      "parameters": [],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "toString",
@@ -12,7 +19,33 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [
+    {
+      "name": "x",
+      "type": "int",
+      "description": "",
+      "static": false,
+      "final": true
+    },
+    {
+      "name": "z",
+      "type": "int",
+      "description": "",
+      "static": false,
+      "final": true
+    },
+    {
+      "name": "isFull",
+      "type": "boolean",
+      "description": "TODO: What does this mean? The code always returns true as of 2.0.0",
+      "static": false,
+      "final": true
+    }
+  ],
+  "since": "",
+  "extends": ""
 }

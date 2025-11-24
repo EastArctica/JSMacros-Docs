@@ -3,7 +3,35 @@
   "fullClassName": "EventClickSlot",
   "description": "This event is fired when the user clicks a slot in an inventory interface.",
   "overview": "Fires when a player clicks on any inventory slot.\nDifferent click modes and buttons represent different click actions.\nThis event is cancellable - preventing the original click action.\nThe mode and button values follow Minecraft's window click protocol.\nCan be used to intercept or modify inventory interactions.",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new EventClickSlot(HandledScreen<?> screen, int mode, int button, int slot)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "net.minecraft.client.gui.screen.ingame.HandledScreen<?>",
+          "description": ""
+        },
+        {
+          "name": "mode",
+          "type": "int",
+          "description": ""
+        },
+        {
+          "name": "button",
+          "type": "int",
+          "description": ""
+        },
+        {
+          "name": "slot",
+          "type": "int",
+          "description": ""
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "getInventory",
@@ -13,8 +41,9 @@
       "parameters": [],
       "static": false,
       "examples": [
-        "const inventory = e.getInventory();\nconst slotItem = inventory.getSlot(slot);"
-      ]
+        "JsMacros.on('ClickSlot', JavaWrapper.methodToJava((event) => {\n    const inventory = event.getInventory();\n    const slotItem = inventory.getSlot(1);\n    if (slotItem.getItemId() == 'minecraft:diamond') {\n        Chat.log('First item is a diamond!');\n    }\n}));\n"
+      ],
+      "deprecated": false
     },
     {
       "name": "toString",
@@ -23,7 +52,33 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [
+    {
+      "name": "mode",
+      "type": "int",
+      "description": "The container click execution mode as described here: https://minecraft.wiki/w/Java_Edition_protocol/Packets#Click_Container",
+      "static": false,
+      "final": false
+    },
+    {
+      "name": "button",
+      "type": "int",
+      "description": "",
+      "static": false,
+      "final": true
+    },
+    {
+      "name": "slot",
+      "type": "int",
+      "description": "",
+      "static": false,
+      "final": true
+    }
+  ],
+  "since": "",
+  "extends": ""
 }

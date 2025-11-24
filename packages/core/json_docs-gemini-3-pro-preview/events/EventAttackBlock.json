@@ -1,9 +1,27 @@
 {
   "name": "EventAttackBlock",
-  "fullClassName": "EventAttackBlock",
+  "fullClassName": "xyz.wagyourtail.jsmacros.client.api.event.impl.player.EventAttackBlock",
   "description": "This event is fired when the player left-clicks (attacks) a block. It triggers on the initial click, not when the block is broken.",
   "overview": "## Example\n```javascript\n// Log the details of a block when it is attacked\nconst listener = JsMacros.on('AttackBlock', JavaWrapper.methodToJavaAsync(event => {\n    JsMacros.assertEvent(event, 'AttackBlock');\n    \n    const sideNames = ['Bottom', 'Top', 'North', 'South', 'West', 'East'];\n    const sideName = sideNames[event.side] || 'Unknown';\n    \n    Chat.log(`Attacked block: ${event.block.getId()} on the ${sideName} face.`);\n}));\n```\n\n## Fields\n- **event.block** (`BlockDataHelper`): A helper object containing information about the block that was attacked.\n- **event.side** (`int`): An integer representing the side of the block that was hit.\n  - `0`: Bottom (y-)\n  - `1`: Top (y+)\n  - `2`: North (z-)\n  - `3`: South (z+)\n  - `4`: West (x-)\n  - `5`: East (x+)",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new EventAttackBlock(BlockDataHelper block, int side)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "block",
+          "type": "BlockDataHelper",
+          "description": "The block that was attacked."
+        },
+        {
+          "name": "side",
+          "type": "Side | int",
+          "description": "The side being hit. This is a number from 0-5 representing down, up, north, south, west, east"
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "toString",
@@ -12,7 +30,26 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [
+    {
+      "name": "block",
+      "type": "int",
+      "description": "The side being hit. This is a number from 0-5 representing down, up, north, south, west, east",
+      "static": false,
+      "final": true
+    },
+    {
+      "name": "block",
+      "type": "BlockDataHelper",
+      "description": "The block that was attacked.",
+      "static": false,
+      "final": true
+    }
+  ],
+  "since": "",
+  "extends": ""
 }

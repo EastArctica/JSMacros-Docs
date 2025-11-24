@@ -5,7 +5,14 @@
   "since": null,
   "description": "This event is fired when a block in the world is updated.",
   "overview": "Backed by class `EventBlockUpdate`.\n\nBehavior:\n* Fires when a block in the world changes state or its block entity updates\n* The `updateType` field indicates whether it's a block state change or entity update\n* Can be filtered using `FiltererBlockUpdate` to target specific blocks or update types\n* Not cancellable\n\nFields available on the event object:\n* `block` (BlockDataHelper): The block data helper for the updated block.\n* `updateType` (string): The type of update that occurred (e.g., 'STATE' or 'ENTITY').",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new EventBlockUpdate(BlockState block, BlockEntity blockEntity, BlockPos blockPos, String updateType)",
+      "description": "",
+      "parameters": [],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "toString",
@@ -14,7 +21,24 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
+    }
+  ],
+  "fields": [
+    {
+      "name": "block",
+      "type": "BlockDataHelper",
+      "description": "",
+      "static": false,
+      "final": true
+    },
+    {
+      "name": "updateType",
+      "type": "String",
+      "description": "One of the following strings: 'STATE' | 'ENTITY'",
+      "static": false,
+      "final": true
     }
   ]
 }

@@ -4,7 +4,30 @@
   "extends": null,
   "description": "This event is fired when the player equips, unequips, or swaps a piece of armor.",
   "overview": "This event is fired when the player equips, unequips, or swaps a piece of armor.\n\n## Example\n```javascript\n// Announce armor changes in chat\nconst listener = JsMacros.on('ArmorChange', JavaWrapper.methodToJavaAsync(event => {\n    JsMacros.assertEvent(event, 'ArmorChange');\n\n    const slot = event.slot;\n    const newItem = event.item;\n    const oldItem = event.oldItem;\n\n    if (!newItem.isEmpty()) {\n        if (!oldItem.isEmpty()) {\n            // Armor was swapped\n            Chat.log(`Swapped ${oldItem.getName()} for ${newItem.getName()} on ${slot}.`);\n        } else {\n            // Armor was equipped\n            Chat.log(`Equipped ${newItem.getName()} on ${slot}.`);\n        }\n    } else {\n        // Armor was unequipped\n        Chat.log(`Unequipped ${oldItem.getName()} from ${slot}.`);\n    }\n}));\n```",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new EventArmorChange(String slot, ItemStack item, ItemStack oldItem)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "String",
+          "description": ""
+        },
+        {
+          "name": "item",
+          "type": "net.minecraft.item.ItemStack",
+          "description": ""
+        },
+        {
+          "name": "oldItem",
+          "type": "net.minecraft.item.ItemStack",
+          "description": ""
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "toString",
@@ -19,24 +42,24 @@
   "fields": [
     {
       "name": "slot",
-      "type": "java.lang.String",
+      "type": "string",
       "description": "",
       "static": false,
-      "final": false
+      "final": true
     },
     {
       "name": "item",
-      "type": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.ItemStackHelper",
+      "type": "ItemStackHelper",
       "description": "",
       "static": false,
-      "final": false
+      "final": true
     },
     {
       "name": "oldItem",
-      "type": "xyz.wagyourtail.jsmacros.client.api.helpers.inventory.ItemStackHelper",
+      "type": "ItemStackHelper",
       "description": "",
       "static": false,
-      "final": false
+      "final": true
     }
   ],
   "since": ""

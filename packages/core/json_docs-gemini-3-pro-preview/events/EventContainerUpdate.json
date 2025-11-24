@@ -3,7 +3,20 @@
   "fullClassName": "EventContainerUpdate",
   "description": "This event is fired when a container's contents are updated.",
   "overview": "Fires when any container contents change. The `inventory` field provides access to the updated container. Includes chests, furnaces, crafting tables, etc. This event is not cancellable. Useful for container monitoring and automation.",
-  "constructors": [],
+  "constructors": [
+    {
+      "signature": "new EventContainerUpdate(HandledScreen<?> screen)",
+      "description": "",
+      "parameters": [
+        {
+          "name": "screen",
+          "type": "net.minecraft.client.gui.screen.ingame.HandledScreen<?>",
+          "description": ""
+        }
+      ],
+      "examples": []
+    }
+  ],
   "methods": [
     {
       "name": "toString",
@@ -12,7 +25,26 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [
+    {
+      "name": "inventory",
+      "type": "Inventory<?>",
+      "description": "",
+      "static": false,
+      "final": true
+    },
+    {
+      "name": "screen",
+      "type": "IScreen",
+      "description": "",
+      "static": false,
+      "final": true
+    }
+  ],
+  "since": "",
+  "extends": ""
 }

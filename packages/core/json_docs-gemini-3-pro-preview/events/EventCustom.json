@@ -5,13 +5,13 @@
   "overview": "Allows creation of user-defined events with custom data.\nCan store various data types (int, string, double, boolean, objects).\nEvents can be triggered manually using trigger() or triggerAsync().\nCustom events can be registered to appear in the GUI.\nSupports both synchronous and asynchronous triggering.",
   "constructors": [
     {
-      "signature": "new EventCustom(eventName)",
+      "signature": "new EventCustom(string eventName)",
       "description": "Creates a new custom event instance.",
       "parameters": [
         {
           "name": "eventName",
           "type": "string",
-          "description": "The name of the custom event."
+          "description": "The name of the custom event. Avoid using the name of an existing event"
         }
       ]
     }
@@ -26,7 +26,8 @@
       "static": false,
       "examples": [
         "const customEvent = new EventCustom(\"MyCustomEvent\");\ncustomEvent.putString(\"message\", \"Hello from custom event!\");\ncustomEvent.putInt(\"value\", 42);\n\n// Register the event (optional, makes it visible in GUI)\ncustomEvent.registerEvent();\n\n// Trigger the event\ncustomEvent.trigger();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "triggerAsync",
@@ -43,7 +44,8 @@
       "static": false,
       "examples": [
         "const event = new EventCustom(\"AsyncCustomEvent\");\nevent.putString(\"task\", \"Process data\");\nevent.putInt(\"amount\", 100);\n\n// Trigger with callback that runs after listeners finish\nevent.triggerAsync(JavaWrapper.methodToJava(() => {\n  Chat.log(\"&aCustom event processing completed!\");\n}));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "putInt",
@@ -65,7 +67,8 @@
       "static": false,
       "examples": [
         "customEvent.putInt(\"value\", 42);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "putString",
@@ -87,7 +90,8 @@
       "static": false,
       "examples": [
         "customEvent.putString(\"message\", \"Hello from custom event!\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "putDouble",
@@ -107,7 +111,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "putBoolean",
@@ -127,7 +132,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "putObject",
@@ -147,7 +153,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getType",
@@ -162,7 +169,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getInt",
@@ -179,7 +187,8 @@
       "static": false,
       "examples": [
         "const value = e.getInt(\"value\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getString",
@@ -196,7 +205,8 @@
       "static": false,
       "examples": [
         "const message = e.getString(\"message\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getDouble",
@@ -211,7 +221,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getBoolean",
@@ -226,7 +237,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getObject",
@@ -241,7 +253,8 @@
         }
       ],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getUnderlyingMap",
@@ -250,7 +263,8 @@
       "description": "Returns the underlying map that stores the event data.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "registerEvent",
@@ -261,7 +275,8 @@
       "static": false,
       "examples": [
         "customEvent.registerEvent();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "toString",
@@ -270,7 +285,31 @@
       "description": "Returns a string representation of the event object.",
       "parameters": [],
       "static": false,
-      "examples": []
+      "examples": [],
+      "deprecated": false
+    },
+    {
+      "name": "joinable",
+      "signature": "joinable()",
+      "returnType": "boolean",
+      "description": "",
+      "examples": [],
+      "static": false,
+      "deprecated": false,
+      "parameters": []
+    },
+    {
+      "name": "cancellable",
+      "signature": "cancellable()",
+      "returnType": "boolean",
+      "description": "",
+      "examples": [],
+      "static": false,
+      "deprecated": false,
+      "parameters": []
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }
