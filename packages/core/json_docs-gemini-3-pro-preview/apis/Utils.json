@@ -1,8 +1,8 @@
 {
   "name": "Utils",
   "fullClassName": "Utils",
-  "description": "A collection of miscellaneous utility functions, including clipboard access, hashing, encoding, and more.",
-  "overview": "A collection of miscellaneous utility functions, including clipboard access, hashing, encoding, and more. Accessible from scripts via the global `Utils` variable.",
+  "description": "A collection of miscellaneous utility functions, hashing, encoding, and more.",
+  "overview": "A collection of miscellaneous utility functions, hashing, encoding, and more. Accessible from scripts via the global `Utils` variable.",
   "constructors": [],
   "methods": [
     {
