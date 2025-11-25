@@ -432,7 +432,7 @@
       "name": "setClipboard",
       "signature": "setClipboard(string text)",
       "returnType": "void",
-      "description": "Previously Located in `Utils` as `copyToClipboard`. Sets the system clipboard to the supplied string.",
+      "description": "Previously located in `Utils` as `copyToClipboard`. Sets the system clipboard to the supplied string.",
       "examples": [
         "Client.setClipboard(\"This text is now on the clipboard!\");\r\n"
       ],
@@ -442,7 +442,7 @@
         {
           "name": "text",
           "type": "string",
-          "description": ""
+          "description": "The text to be copied to the clipboard."
         }
       ]
     }

@@ -25,7 +25,8 @@
       "static": true,
       "examples": [
         "// Get a standard Java class\nconst StringClass = Reflection.getClass(\"java.lang.String\");\n\n// Get a Minecraft class using mappings for cross-version compatibility\n// On 1.16.5, this will resolve \"net.minecraft.class_2248\"\n// On 1.17+, this will resolve \"net.minecraft.block.Block\"\nconst BlockClass = Reflection.getClass(\"net.minecraft.class_2248\", \"net.minecraft.block.Block\");\n\n// Get a primitive type class\nconst intClass = Reflection.getClass(\"int\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getDeclaredMethod",
@@ -57,7 +58,8 @@
       "static": true,
       "examples": [
         "const StringClass = Reflection.getClass(\"java.lang.String\");\nconst intClass = Reflection.getClass(\"int\");\n// Get the method: public String substring(int beginIndex)\nconst substringMethod = Reflection.getDeclaredMethod(StringClass, \"substring\", [intClass]);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getMethod",
@@ -87,7 +89,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getDeclaredField",
@@ -114,7 +117,8 @@
       "static": true,
       "examples": [
         "const mc = Client.getMinecraft();\nconst MinecraftClientClass = mc.getClass();\n// Get the \"player\" field from the MinecraftClient instance\nconst playerField = Reflection.getDeclaredField(MinecraftClientClass, \"field_1724\", \"player\");\nplayerField.setAccessible(true); // Make private fields accessible\nconst player = playerField.get(mc);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getField",
@@ -139,7 +143,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "invokeMethod",
@@ -166,7 +171,8 @@
       "static": true,
       "examples": [
         "const substringMethod = Reflection.getDeclaredMethod(Reflection.getClass(\"java.lang.String\"), \"substring\", [Reflection.getClass(\"int\")]);\nconst result = Reflection.invokeMethod(substringMethod, \"Hello World\", [6]);\nChat.log(result); // \"World\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "newInstance",
@@ -188,7 +194,8 @@
       "static": true,
       "examples": [
         "const FileClass = Reflection.getClass(\"java.io.File\");\nconst file = Reflection.newInstance(FileClass, [\"my_file.txt\"]);\nChat.log(`File exists: ${file.exists()}`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createClassProxyBuilder",
@@ -210,7 +217,8 @@
       "static": true,
       "examples": [
         "const Runnable = Reflection.getClass(\"java.lang.Runnable\");\nconst builder = Reflection.createClassProxyBuilder(null, [Runnable]);\n\nbuilder.addMethod(\"run\", JavaWrapper.methodToJava(() => {\n    Chat.log(\"Hello from a proxied Runnable!\");\n}));\n\nconst runnableInstance = builder.build();\nconst Thread = Reflection.getClass(\"java.lang.Thread\");\nconst thread = new Thread(runnableInstance);\nthread.start();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createClassBuilder",
@@ -235,7 +243,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getClassFromClassBuilderResult",
@@ -250,7 +259,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "createLibraryBuilder",
@@ -275,7 +285,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "createLibrary",
@@ -295,7 +306,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "compileJavaClass",
@@ -317,7 +329,8 @@
       "static": true,
       "examples": [
         "const code = `\n    package custom;\n    public class Greeter {\n        public String getGreeting() {\n            return \"Hello from a runtime-compiled class!\";\n        }\n    }\n`;\nconst GreeterClass = Reflection.compileJavaClass(\"custom.Greeter\", code);\nconst greeter = GreeterClass.newInstance();\nChat.log(greeter.getGreeting());"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getCompiledJavaClass",
@@ -332,7 +345,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getAllCompiledJavaClassVersions",
@@ -347,12 +361,13 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getReflect",
       "signature": "getReflect(Object obj)",
-      "returnType": "org.jooq.lambda.Reflect",
+      "returnType": "org.joor.Reflect",
       "description": "Wraps an object in a jOOR `Reflect` object, which provides a fluent API for reflection.",
       "parameters": [
         {
@@ -364,7 +379,8 @@
       "static": true,
       "examples": [
         "const text = \"hello world\";\nconst reflected = Reflection.getReflect(text)\n    .call(\"substring\", 6)\n    .call(\"toUpperCase\")\n    .get();\nChat.log(reflected); // \"WORLD\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "loadJarFile",
@@ -381,7 +397,8 @@
       "static": true,
       "examples": [
         "const success = Reflection.loadJarFile(\"libs/my-java-library.jar\");\nif (success) {\n    const MyClass = Reflection.getClass(\"com.example.MyClass\");\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "loadCurrentMappingHelper",
@@ -390,7 +407,8 @@
       "description": "Gets the currently loaded mapping helper, if any.",
       "parameters": [],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getClassName",
@@ -407,7 +425,8 @@
       "static": true,
       "examples": [
         "const mc = Client.getMinecraft();\nconst className = Reflection.getClassName(mc);\nChat.log(className); // e.g., \"net.minecraft.class_310\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "loadMappingHelper",
@@ -422,7 +441,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "wrapInstace",
@@ -437,7 +457,8 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     },
     {
       "name": "getWrappedClass",
@@ -452,7 +473,11 @@
         }
       ],
       "static": true,
-      "examples": []
+      "examples": [],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }
