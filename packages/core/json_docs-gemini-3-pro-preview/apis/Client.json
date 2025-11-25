@@ -14,7 +14,8 @@
       "static": true,
       "examples": [
         "const mc = Client.getMinecraft();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getRegistryManager",
@@ -25,7 +26,8 @@
       "static": true,
       "examples": [
         "const registryManager = Client.getRegistryManager();\nconst stoneBlock = registryManager.getBlock(\"minecraft:stone\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "createPacketByteBuffer",
@@ -36,7 +38,8 @@
       "static": true,
       "examples": [
         "const buffer = Client.createPacketByteBuffer();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "runOnMainThread",
@@ -63,7 +66,8 @@
       "static": true,
       "examples": [
         "Client.runOnMainThread(JavaWrapper.methodToJava(() => {\n    Chat.log(\"This runs on the main thread!\");\n}));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getGameOptions",
@@ -74,7 +78,8 @@
       "static": true,
       "examples": [
         "const options = Client.getGameOptions();\nconst fov = options.getFov();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "mcVersion",
@@ -85,7 +90,8 @@
       "static": true,
       "examples": [
         "const version = Client.mcVersion();\nChat.log(`Running on Minecraft ${version}`); // e.g., \"25w06a\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getFPS",
@@ -96,7 +102,8 @@
       "static": true,
       "examples": [
         "const fps = Client.getFPS();\nChat.log(fps); // e.g., \"120 fps\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "loadWorld",
@@ -113,7 +120,8 @@
       "static": true,
       "examples": [
         "Client.loadWorld(\"New World\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "connect",
@@ -136,7 +144,8 @@
       "examples": [
         "Client.connect(\"hypixel.net\");",
         "Client.connect(\"localhost\", 25565);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "disconnect",
@@ -154,7 +163,8 @@
       "examples": [
         "Client.disconnect();",
         "Client.disconnect(JavaWrapper.methodToJava((success) => {\n    if (success) {\n        Chat.log(\"Successfully disconnected.\");\n    }\n}));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "shutdown",
@@ -165,7 +175,8 @@
       "static": true,
       "examples": [
         "Client.shutdown();\n// No more code will be executed"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "waitTick",
@@ -183,7 +194,8 @@
       "examples": [
         "Chat.log(\"Waiting one tick...\");\nClient.waitTick();\nChat.log(\"Done waiting!\");",
         "Chat.log(\"Waiting 20 ticks (1 second)...\");\nClient.waitTick(20);\nChat.log(\"Done waiting!\");"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "ping",
@@ -200,7 +212,8 @@
       "static": true,
       "examples": [
         "const serverInfo = Client.ping(\"mc.hypixel.net\");\nif (serverInfo) {\n    Chat.log(`Players online: ${serverInfo.getPlayerCountLabel().getString()}`);\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "pingAsync",
@@ -222,7 +235,8 @@
       "static": true,
       "examples": [
         "Client.pingAsync(\"mc.hypixel.net\", JavaWrapper.methodToJava((serverInfo, error) => {\n    if (error) {\n        Chat.log(`Ping failed: ${error.getMessage()}`);\n        return;\n    }\n    Chat.log(`Players online: ${serverInfo.getPlayerCountLabel().getString()}`);\n}));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "cancelAllPings",
@@ -233,7 +247,8 @@
       "static": true,
       "examples": [
         "Client.cancelAllPings();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getLoadedMods",
@@ -244,7 +259,8 @@
       "static": true,
       "examples": [
         "const mods = Client.getLoadedMods();\nChat.log(`Loaded ${mods.size()} mods.`);\nif (mods.size() > 0) {\n    Chat.log(`mods[0] has id: ${mods.get(0).getId()}`);\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "isModLoaded",
@@ -261,7 +277,8 @@
       "static": true,
       "examples": [
         "if (Client.isModLoaded(\"sodium\")) {\n    Chat.log(\"Sodium is loaded!\");\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getMod",
@@ -278,7 +295,8 @@
       "static": true,
       "examples": [
         "const jsmacrosMod = Client.getMod(\"jsmacros\");\nif (jsmacrosMod) {\n    Chat.log(`JSMacros version: ${jsmacrosMod.getVersion()}`);\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "grabMouse",
@@ -289,7 +307,8 @@
       "static": true,
       "examples": [
         "Client.grabMouse();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "isDevEnv",
@@ -300,7 +319,8 @@
       "static": true,
       "examples": [
         "if (Client.isDevEnv()) {\n    Chat.log(\"Running in a development environment.\");\n}"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getModLoader",
@@ -311,7 +331,8 @@
       "static": true,
       "examples": [
         "const loader = Client.getModLoader();\nChat.log(`Mod loader: ${loader}`); // e.g., \"Fabric\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getRegisteredBlocks",
@@ -322,7 +343,8 @@
       "static": true,
       "examples": [
         "const blocks = Client.getRegisteredBlocks();\nChat.log(`There are ${blocks.size()} registered blocks.`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "getRegisteredItems",
@@ -333,7 +355,8 @@
       "static": true,
       "examples": [
         "const items = Client.getRegisteredItems();\nChat.log(`There are ${items.size()} registered items.`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "exitGamePeacefully",
@@ -344,7 +367,8 @@
       "static": true,
       "examples": [
         "Client.exitGamePeacefully();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "exitGameForcefully",
@@ -355,7 +379,8 @@
       "static": true,
       "examples": [
         "Client.exitGameForcefully();"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "sendPacket",
@@ -372,7 +397,8 @@
       "static": true,
       "examples": [
         "const HandSwingC2SPacket = Java.type(\"net.minecraft.class_2879\");\nconst Hand = Java.type(\"net.minecraft.class_1268\");\nconst MainHandSwingPacket = new HandSwingC2SPacket(Hand.MAIN_HAND);\nClient.sendPacket(MainHandSwingPacket);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "receivePacket",
@@ -389,7 +415,39 @@
       "static": true,
       "examples": [
         "const KeepAliveS2CPacket = Java.type(\"net.minecraft.class_2670\");\nClient.receivePacket(new KeepAliveS2CPacket(123456789n));"
+      ],
+      "deprecated": false
+    },
+    {
+      "name": "getClipboard",
+      "signature": "getClipboard()",
+      "returnType": "string",
+      "description": "Previously located in `Utils` as `getClipboard`. Gets the system clipboard as a string.",
+      "examples": [],
+      "static": false,
+      "deprecated": false,
+      "parameters": []
+    },
+    {
+      "name": "setClipboard",
+      "signature": "setClipboard(string text)",
+      "returnType": "void",
+      "description": "Previously Located in `Utils` as `copyToClipboard`. Sets the system clipboard to the supplied string.",
+      "examples": [
+        "Client.setClipboard(\"This text is now on the clipboard!\");\r\n"
+      ],
+      "static": false,
+      "deprecated": false,
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": ""
+        }
       ]
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }

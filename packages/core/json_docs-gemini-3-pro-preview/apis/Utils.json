@@ -6,100 +6,40 @@
   "constructors": [],
   "methods": [
     {
-      "name": "openUrl",
-      "signature": "openUrl(String url)",
-      "returnType": "void",
-      "description": "Opens the specified URL in the system's default web browser.",
-      "parameters": [
-        {
-          "name": "url",
-          "type": "string",
-          "description": "The URL to open."
-        }
-      ],
-      "static": true,
-      "examples": [
-        "Utils.openUrl(\"https://jsmacros.wagyourtail.xyz/\");"
-      ]
-    },
-    {
-      "name": "openFile",
-      "signature": "openFile(String path)",
-      "returnType": "void",
-      "description": "Opens the specified file or directory path with the system's default application.",
-      "parameters": [
-        {
-          "name": "path",
-          "type": "string",
-          "description": "The path to open, relative to the Minecraft config folder (`.minecraft/config/`)."
-        }
-      ],
-      "static": true,
-      "examples": [
-        "// Opens the JsMacros config folder\nUtils.openFile(\".\");\n\n// Opens a file inside the config folder\nUtils.openFile(\"jsmacros.json\");"
-      ]
-    },
-    {
-      "name": "copyToClipboard",
-      "signature": "copyToClipboard(String text)",
-      "returnType": "void",
-      "description": "Copies the given text to the system clipboard.",
-      "parameters": [
-        {
-          "name": "text",
-          "type": "string",
-          "description": "The text to copy."
-        }
-      ],
-      "static": true,
-      "examples": [
-        "Utils.copyToClipboard(\"This text is now on the clipboard!\");"
-      ]
-    },
-    {
-      "name": "getClipboard",
-      "signature": "getClipboard()",
-      "returnType": "string",
-      "description": "Retrieves the current text content from the system clipboard.",
-      "parameters": [],
-      "static": true,
-      "examples": [
-        "const clipboardContent = Utils.getClipboard();\nChat.log(`Clipboard contains: ${clipboardContent}`);"
-      ]
-    },
-    {
       "name": "guessName",
-      "signature": "guessName(String | TextHelper text)",
+      "signature": "guessName(String text)",
       "returnType": "string | null",
       "description": "Tries to guess the username of a message sender from a chat message. This works for many common chat formats but is not guaranteed to be accurate on all servers.",
       "parameters": [
         {
           "name": "text",
-          "type": "string | TextHelper",
+          "type": "string",
           "description": "The chat message to analyze."
         }
       ],
       "static": true,
       "examples": [
         "// Example usage within a RecvMessage event\nJsMacros.on('RecvMessage', JavaWrapper.methodToJavaAsync(event => {\n    const sender = Utils.guessName(event.text);\n    if (sender) {\n        Chat.log(`Guessed sender: ${sender}`);\n    }\n}));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "guessNameAndRoles",
-      "signature": "guessNameAndRoles(String | TextHelper text)",
+      "signature": "guessNameAndRoles(String text)",
       "returnType": "java.util.List<string>",
       "description": "Similar to `guessName`, but attempts to extract all parts of the sender's name, including ranks or titles.",
       "parameters": [
         {
           "name": "text",
-          "type": "string | TextHelper",
+          "type": "string",
           "description": "The chat message to analyze."
         }
       ],
       "static": true,
       "examples": [
         "JsMacros.on('RecvMessage', JavaWrapper.methodToJavaAsync(event => {\n    const parts = Utils.guessNameAndRoles(event.text);\n    // For a message like \"[Admin] Steve: hello\", parts might be [\"Admin\", \"Steve\"]\n    if (parts.size() > 0) {\n        Chat.log(`Guessed parts: ${JavaUtils.arrayToString(parts.toArray())}`);\n    }\n}));"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "hashString",
@@ -114,19 +54,20 @@
         },
         {
           "name": "algorithm",
-          "type": "string",
+          "type": "string?",
           "description": "The hashing algorithm to use. Supported values: `sha1`, `sha256`, `sha384`, `sha512`, `md2`, `md5`. Defaults to \"sha256\"."
         },
         {
           "name": "base64",
-          "type": "boolean",
+          "type": "boolean?",
           "description": "If `true`, the resulting hash is encoded in Base64. Otherwise, it's encoded in hexadecimal. Defaults to false."
         }
       ],
       "static": true,
       "examples": [
         "// SHA-256 hash (default)\nconst hash1 = Utils.hashString(\"hello world\");\nChat.log(`SHA-256: ${hash1}`);\n\n// MD5 hash\nconst hash2 = Utils.hashString(\"hello world\", \"md5\");\nChat.log(`MD5: ${hash2}`);\n\n// SHA-1 hash, encoded in Base64\nconst hash3 = Utils.hashString(\"hello world\", \"sha1\", true);\nChat.log(`SHA-1 (Base64): ${hash3}`);"
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "encode",
@@ -143,7 +84,8 @@
       "static": true,
       "examples": [
         "const original = \"Hello World!\";\nconst encoded = Utils.encode(original);\nChat.log(`Encoded: ${encoded}`); // \"SGVsbG8gV29ybGQh\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "decode",
@@ -160,7 +102,8 @@
       "static": true,
       "examples": [
         "const encoded = \"SGVsbG8gV29ybGQh\";\nconst decoded = Utils.decode(encoded);\nChat.log(`Decoded: ${decoded}`); // \"Hello World!\""
-      ]
+      ],
+      "deprecated": false
     },
     {
       "name": "requireNonNull",
@@ -182,7 +125,11 @@
       "static": true,
       "examples": [
         "function processItem(item) {\n    // This will throw a NullPointerException if item is null, stopping the script.\n    const validItem = Utils.requireNonNull(item, \"Item cannot be null!\");\n    // ... continue processing validItem\n}\n\nprocessItem(Player.openInventory().getSlot(0)); // Works if slot 0 has an item\nprocessItem(null); // Throws an error with the custom message"
-      ]
+      ],
+      "deprecated": false
     }
-  ]
+  ],
+  "fields": [],
+  "since": "",
+  "extends": ""
 }
